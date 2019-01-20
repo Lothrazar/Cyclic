@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -43,10 +43,11 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmFire extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmFire extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private static final int durability = 16;
   private static final int seconds = 10;
+  private static final ItemStack craftItem = new ItemStack(Items.BLAZE_ROD);
 
   public ItemCharmFire() {
     super(durability);
@@ -86,7 +87,12 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(Items.BLAZE_ROD);
+    return super.addRecipe(craftItem);
   }
 }

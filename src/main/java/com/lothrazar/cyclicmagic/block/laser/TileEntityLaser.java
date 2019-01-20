@@ -52,6 +52,7 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
 
   public TileEntityLaser() {
     super(4);
+    this.setSetRenderGlobally(true);
   }
 
   @Override

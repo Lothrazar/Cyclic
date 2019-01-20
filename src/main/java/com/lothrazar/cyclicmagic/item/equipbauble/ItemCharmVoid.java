@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -43,11 +43,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmVoid extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmVoid extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private static final int durability = 16;
   private static final int yLowest = -30;
   private static final int yDest = 255;
+  private static final ItemStack craftItem = new ItemStack(Items.ENDER_EYE);
 
   public ItemCharmVoid() {
     super(durability);
@@ -72,11 +73,6 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
-  public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(Items.ENDER_EYE);
-  }
-
-  @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) {
       return;
@@ -88,5 +84,15 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe, IContent {
       UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
     }
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
+  public IRecipe addRecipe() {
+    return super.addRecipe(craftItem);
   }
 }

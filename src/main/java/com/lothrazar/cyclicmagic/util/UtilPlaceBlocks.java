@@ -101,10 +101,13 @@ public class UtilPlaceBlocks {
         }
         else {
           //it might not have metadata, and it might have some crazy own way of doing this (chisels&bits/NBT data)
-          state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(), placePos.getX(), placePos.getY(), placePos.getZ(),
+          state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(),
+              placePos.getX() + .5f,
+              placePos.getY() + .5f,
+              placePos.getZ() + .5f,
               stack.getMetadata(), fake, EnumHand.MAIN_HAND);
         }
-        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
+        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.UP, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
           world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
           stack.shrink(1);
           return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;

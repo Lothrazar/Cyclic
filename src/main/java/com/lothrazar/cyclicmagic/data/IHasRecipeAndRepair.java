@@ -21,34 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.scaffolding;
+package com.lothrazar.cyclicmagic.data;
 
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-public class BlockScaffoldingResponsive extends BlockScaffolding implements IHasRecipe {
+public interface IHasRecipeAndRepair extends IHasRecipe {
 
-  public BlockScaffoldingResponsive() {
-    super(false);
-  }
-
-  @Override
-  public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 64), "dirt", "stickWood");
-  }
-
-  @SuppressWarnings("deprecation")
-  @Override
-  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    super.neighborChanged(state, world, pos, blockIn, fromPos);
-    if (blockIn == this) {
-      world.destroyBlock(pos, true);
-    }
-  }
+  boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack);
 }

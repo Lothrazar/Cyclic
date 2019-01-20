@@ -21,34 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.scaffolding;
+package com.lothrazar.cyclicmagic.command;
 
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.server.MinecraftServer;
 
-public class BlockScaffoldingResponsive extends BlockScaffolding implements IHasRecipe {
+public class CommandNbtSet extends BaseCommand implements ICommand {
 
-  public BlockScaffoldingResponsive() {
-    super(false);
+  public static final String name = "nbtset";
+
+  public CommandNbtSet(boolean op) {
+    super(name, op);
   }
 
   @Override
-  public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 64), "dirt", "stickWood");
+  public String getUsage(ICommandSender sender) {
+    return "/" + getName() + " <key> <value>";
   }
 
-  @SuppressWarnings("deprecation")
   @Override
-  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    super.neighborChanged(state, world, pos, blockIn, fromPos);
-    if (blockIn == this) {
-      world.destroyBlock(pos, true);
+  public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
+    if (ic instanceof EntityPlayer == false) {
+      return;
+    }
+    try {
+      String key = args[0];
+      String value = args[1];
+      EntityPlayer player = (EntityPlayer) ic;
+      ItemStack held = player.getHeldItemMainhand();
+      UtilNBT.setItemStackNBTVal(held, key, value);
+    }
+    catch (Exception e) {
+      UtilChat.addChatMessage(ic, getUsage(ic));
+      return;
     }
   }
 }

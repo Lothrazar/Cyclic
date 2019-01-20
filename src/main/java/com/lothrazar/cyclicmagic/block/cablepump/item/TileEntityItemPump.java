@@ -186,9 +186,13 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
           tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe) == false) {
         continue;
       }
-      ItemStack pulled = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
-      if (pulled.getCount() != stackToExport.getCount()) {
-        this.setInventorySlotContents(SLOT_TRANSFER, pulled);
+      stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
+      if (stackToExport.isEmpty()) {
+        continue;
+      }
+      ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
+      if (leftAfterDeposit.isEmpty() || leftAfterDeposit.getCount() != stackToExport.getCount()) {
+        this.setInventorySlotContents(SLOT_TRANSFER, leftAfterDeposit);
         //one or more was put in
         outputSuccess = true;
       }
@@ -198,8 +202,9 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
           cable.updateIncomingItemFace(themFacingMe);
         }
       }
-      if (outputSuccess)
+      if (outputSuccess) {
         break;
+      }
     }
   }
 

@@ -152,6 +152,8 @@ fluid.poison=Poison
 fluid.xpjuice=Experience
 gui.chatexp=Not enough experience
 gui.enderbook.go=Go
+gui.enderbook.back=Back
+gui.enderbook.back.tooltip=To previous location, saves for 
 gui.enderbook.new=New
 gui.enderbook.title=Ender Book Waypoints
 guide.category.block=Blocks
@@ -360,7 +362,7 @@ item.horse_upgrade_type.name=Infected Carrot
 item.horse_upgrade_variant.effect=Change horse variant color
 item.horse_upgrade_variant.guide=Feed this to your horse and it will change color.  Stays within the rules for vanilla Minecraft horse spawning.
 item.horse_upgrade_variant.name=Lapis Carrot
-item.inventory_food.guide=Eating this will unlock a second inventory screen for you, that can be opened with a button in your GUI or with a keybinding.
+item.inventory_food.guide=Eating this will unlock two new keybindings, and a second inventory screen.  Open the inventory either as a normal screen for storage, or as an array of Tool buttons to swap any item out with any slot in one click.  
 item.inventory_food.name=Inventory Upgrade
 item.inventory_food.tooltip=Eat to Upgrade your inventory
 item.magic_net.guide=Capture any living creature (non-player) in this magical ball by throwing it at your target.  Release it by throwing it again.
@@ -539,7 +541,7 @@ potion.magnet=Magnet
 potion.slowfall=Slowfall
 potion.snow=Snow
 potion.swimspeed=Swim Speed
-potion.waterwalk=Waterwalk
+potion.waterwalk=Waterwalking
 screentext.flying.seconds=Flying: 
 screentext.noclip.seconds=NoClip: 
 spell.builder.info=Build by matching the targeted block exactly out of your inventory
@@ -935,6 +937,8 @@ tool.action.x3=3x3
 tool.action.x5=5x5
 tool.action.x7=7x7
 tool.action.x9=9x9
+tool.action.x19=1x9
+tool.action.x91=9x1
 tool_prospector.found=Found: 
 tool_prospector.none=Nothing of interest up to 
 tool_spelunker.cave=Hollow at distance 
@@ -989,10 +993,10 @@ splash_potion.effect.butter2=Splash Potion of Butterfingers II
 lingering_potion.effect.butter2=Lingering Potion of Butterfingers II
 tipped_arrow.effect.butter2=Arrow of Butterfingers II
 
-potion.effect.waterwalk=Potion of Waterwalk
-splash_potion.effect.waterwalk=Splash Potion of Waterwalk
-lingering_potion.effect.waterwalk=Lingering Potion of Waterwalk
-tipped_arrow.effect.waterwalk=Arrow of Waterwalk
+potion.effect.waterwalk=Potion of Waterwalking
+splash_potion.effect.waterwalk=Splash Potion of Waterwalking
+lingering_potion.effect.waterwalk=Lingering Potion of Waterwalking
+tipped_arrow.effect.waterwalk=Arrow of Waterwalking
 
 potion.effect.snow=Potion of Snow
 splash_potion.effect.snow=Splash Potion of Snow
@@ -1009,15 +1013,15 @@ splash_potion.effect.swim2=Splash Potion of Swim Speed II
 lingering_potion.effect.swim2=Lingering Potion of Swim Speed II
 tipped_arrow.effect.swim2=Arrow of Swim Speed II
 
-potion.effect.bounce=Potion of Bounce
-splash_potion.effect.bounce=Splash Potion of Bounce
-lingering_potion.effect.bounce=Lingering Potion of Bounce
-tipped_arrow.effect.bounce=Arrow of Bounce
+potion.effect.bounce=Potion of Bouncing
+splash_potion.effect.bounce=Splash Potion of Bouncing
+lingering_potion.effect.bounce=Lingering Potion of Bouncing
+tipped_arrow.effect.bounce=Arrow of Bouncing
 
-potion.effect.magnet=Potion of Magnet
-splash_potion.effect.magnet=Splash Potion of Magnet
-lingering_potion.effect.magnet=Lingering Potion of Magnet
-tipped_arrow.effect.magnet=Arrow of Magnet
+potion.effect.magnet=Potion of Magnetism
+splash_potion.effect.magnet=Splash Potion of Magnetism
+lingering_potion.effect.magnet=Lingering Potion of Magnetism
+tipped_arrow.effect.magnet=Arrow of Magnetism
 
 potion.effect.haste=Potion of Haste
 splash_potion.effect.haste=Splash Potion of Haste
@@ -1063,10 +1067,10 @@ lingering_potion.effect.saturation=Lingering Potion of Saturation
 tipped_arrow.effect.saturation=Arrow of Saturation
 
 potion.frostwalker=Frost Walker
-potion.effect.frostwalker=Potion of Frost Walker
-splash_potion.effect.frostwalker=Splash Potion of Frost Walker
-lingering_potion.effect.frostwalker=Lingering Potion of Frost Walker
-tipped_arrow.effect.frostwalker=Arrow of Frost Walker
+potion.effect.frostwalker=Potion of Frostwalking
+splash_potion.effect.frostwalker=Splash Potion of Frostwalking
+lingering_potion.effect.frostwalker=Lingering Potion of Frostwalking
+tipped_arrow.effect.frostwalker=Arrow of Frostwalking
 
 tile.fluid_pump.name=Fluid Extraction Cable
 tile.fluid_pump.tooltip=Extract liquid into cables or machines
@@ -1343,7 +1347,7 @@ pump.rate=Transfer Rate
 
 item.card_location.name=GPS Marker
 item.card_location.tooltip=Saves the location of a block
-item.card_location.guide=Saves the location of a block
+item.card_location.guide=Use on a block to save a location and use in a wireless machine
 item.location.saved=Saved 
 
 wireless.target=Detect target block
@@ -1390,3 +1394,6 @@ tile.laser.guide=Use GPS Markers to target lasers and heavily customize their ap
 tile.water_candle.name=Water Candle
 tile.water_candle.tooltip=Increase nearby spawns when lit
 tile.water_candle.guide=Light with flint and steel.  Greatly increases natural mobs spawns nearby.  Follows normal spawning rules of mobs and biome.  Has a chance of being extinguished on every spawn.  Many propertes in config file.
+
+extended.toolbelt= key to open in tool-belt mode
+

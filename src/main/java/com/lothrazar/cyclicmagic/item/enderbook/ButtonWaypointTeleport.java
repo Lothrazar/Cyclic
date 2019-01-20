@@ -57,6 +57,11 @@ public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton 
     return tooltips;
   }
 
+  public void setTooltipLine(String s) {
+    tooltips = new ArrayList<String>();
+    tooltips.add(s);
+  }
+
   public void addTooltipLine(String s) {
     tooltips.add(s);
   }

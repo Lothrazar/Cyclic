@@ -44,7 +44,7 @@ public class RenderUtil {
   }
 
   public static final int MAX_LIGHT_X = 0xF000F0;
-  public static final int MAX_LIGHT_Y = 0xF000F0;
+  public static final int MAX_LIGHT_Y = MAX_LIGHT_X;
 
   @SideOnly(Side.CLIENT)
   public static void renderLaser(LaserConfig conf) {
@@ -81,17 +81,14 @@ public class RenderUtil {
     double length = combinedVec.length();
     length = length * (timer / (TileEntityLaser.MAX_TIMER * 1.0));
     GlStateManager.pushMatrix();
-    GlStateManager.disableLighting();
-    GlStateManager.enableBlend();
-    GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
-    int alphaTestFunc = GL11.glGetInteger(GL11.GL_ALPHA_TEST_FUNC);
-    float alphaTestRef = GL11.glGetFloat(GL11.GL_ALPHA_TEST_REF);
-    GlStateManager.alphaFunc(GL11.GL_ALWAYS, 0);
     GlStateManager.translate(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
     GlStateManager.rotate((float) (180 * yaw / Math.PI), 0, 1, 0);
     GlStateManager.rotate((float) (180 * pitch / Math.PI), 0, 0, 1);
     GlStateManager.rotate((float) rot, 1, 0, 0);
     GlStateManager.disableTexture2D();
+    GlStateManager.disableLighting();
+    GlStateManager.enableBlend();
+    GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
     buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
     for (double i = 0; i < 4; i++) {//four corners of the quad 
       double width = beamWidth * (i / 4.0);
@@ -113,11 +110,10 @@ public class RenderUtil {
       buffer.pos(length, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
     }
     tessy.draw();
-    GlStateManager.enableTexture2D();
-    GlStateManager.alphaFunc(alphaTestFunc, alphaTestRef);
     GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
     GlStateManager.disableBlend();
     GlStateManager.enableLighting();
+    GlStateManager.enableTexture2D();
     GlStateManager.popMatrix();
   }
 }

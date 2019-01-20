@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.compat.jei;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.packager.RecipePackage;
+import com.lothrazar.cyclicmagic.block.packager.RecipePackager;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -10,9 +10,9 @@ import net.minecraft.item.ItemStack;
 
 public class PackagerWrapper implements IRecipeWrapper {
 
-  private RecipePackage src;
+  private RecipePackager src;
 
-  public PackagerWrapper(RecipePackage source) {
+  public PackagerWrapper(RecipePackager source) {
     this.src = source;
   }
 

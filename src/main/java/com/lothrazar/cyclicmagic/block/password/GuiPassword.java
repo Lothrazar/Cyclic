@@ -87,10 +87,9 @@ public class GuiPassword extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s;// = UtilChat.lang(namePref + "name");
+    String s;
     int y = 6;
     int xCenter = this.xSize / 2;
-    //    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     if (txtPassword != null) {
       txtPassword.drawTextBox();
     }
@@ -105,7 +104,7 @@ public class GuiPassword extends GuiBaseContainer {
         y = 18;
         this.drawString(s, xCenter - this.fontRenderer.getStringWidth(s) / 2, y);
         y = 32;
-        s = ctr.tile.userName;//ctr.tile.getClaimedHash();
+        s = ctr.tile.getClaimedName();
         this.drawString(s, xCenter - this.fontRenderer.getStringWidth(s) / 2, y);
       }
       this.buttonUserClaim.displayString = UtilChat.lang(namePref + this.buttonUserClaim.type.name().toLowerCase() + ".unclaim");

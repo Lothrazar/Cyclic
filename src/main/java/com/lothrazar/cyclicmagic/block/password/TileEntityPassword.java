@@ -30,20 +30,17 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITickable, IPlayerClaimed {
 
   private static final String NBT_ATYPE = "type";
   private static final String NBT_USERP = "up";
   private static final String NBT_PASSWORD = "myPass";
-  private static final String NBT_UHASH = "uhash";
-  private static final String NBT_UNAME = "uname";
 
   public static enum ActiveType {
     TOGGLE, PULSE;
@@ -63,7 +60,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   private UsersAllowed userPerm;
   private String myPassword = "";
   private String userHash = "";
-  public String userName = "";
+  private String userName = "";
   private int powerTimeout = 0;
 
   public TileEntityPassword() {
@@ -209,19 +206,23 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     }
   }
 
+  @Override
   public boolean isClaimedBy(EntityPlayer p) {
     return p.getUniqueID().toString().equals(this.userHash);
   }
 
+  @Override
   public boolean isClaimedBySomeone() {
     return this.userHash != null && !this.userHash.isEmpty();
   }
 
+  @Override
   public String getClaimedHash() {
     return userHash;
   }
 
-  public void toggleClaimedHash(EntityPlayerMP player) {
+  @Override
+  public void toggleClaimedHash(EntityPlayer player) {
     if (isClaimedBySomeone()) {
       this.userHash = "";
       this.userName = "";
@@ -230,5 +231,10 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
       this.userHash = player.getUniqueID().toString();
       this.userName = player.getDisplayNameString();
     }
+  }
+
+  @Override
+  public String getClaimedName() {
+    return userName;
   }
 }

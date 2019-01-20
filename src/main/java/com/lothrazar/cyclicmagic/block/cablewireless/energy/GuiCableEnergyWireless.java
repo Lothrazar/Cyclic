@@ -94,13 +94,10 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
           //get target
           IBlockState statehere = tile.getWorld().getBlockState(target);
           Block block = statehere.getBlock();
-          //    if (block.getLocalizedName().equals(block.getUnlocalizedName())) {
-          //example: thermal machiens use crazy item stack NBT + Block metadata 
-          ItemStack dropped = new ItemStack(block.getItemDropped(statehere, player.world.rand, 0), 1, block.damageDropped(statehere));
-          UtilChat.addChatMessage(player, dropped.getDisplayName());
-          //   }
-          // else
-          //   UtilChat.addChatMessage(player, block.getLocalizedName());
+          //example: mek/thermal use crazy item stack NBT + Block metadata 
+          int meta = block.damageDropped(statehere);
+          ItemStack dropped = new ItemStack(block.getItemDropped(statehere, player.world.rand, 0), 1, meta);
+          UtilChat.addChatMessage(player, dropped.getDisplayName() + " <" + block.getRegistryName().toString() + ":" + meta + ">");
         }
         else {
           UtilChat.addChatMessage(player, "wireless.unloaded");

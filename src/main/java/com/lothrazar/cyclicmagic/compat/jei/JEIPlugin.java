@@ -33,7 +33,7 @@ import com.lothrazar.cyclicmagic.block.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.block.packager.ContainerPackager;
 import com.lothrazar.cyclicmagic.block.packager.GuiPackager;
-import com.lothrazar.cyclicmagic.block.packager.RecipePackage;
+import com.lothrazar.cyclicmagic.block.packager.RecipePackager;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastPlayerBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastWorkbench;
@@ -105,8 +105,8 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
     // Packager
     if (CyclicContent.packager.enabled()) {
       registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
-      registry.handleRecipes(RecipePackage.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
-      registry.addRecipes(RecipePackage.recipes, RECIPE_CATEGORY_PACKAGER);
+      registry.handleRecipes(RecipePackager.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
+      registry.addRecipes(RecipePackager.recipes, RECIPE_CATEGORY_PACKAGER);
       registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
     }
     //DEHydrator
