@@ -51,7 +51,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   private int recipeIsLocked = 0;
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
-  private RecipeHydrate irecipe;
+  private RecipeHydrate currentRecipe;
 
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE);// in, out 
@@ -76,10 +76,14 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   @Override
   public void update() {
+    if (this.currentRecipe == null) {
+      this.findMatchingRecipe();
+      this.updateLockSlots();
+    }
     if (this.isRunning() == false || this.isInventoryFull(RECIPE_SIZE)) {
       return;//dont drain power when full  
     }
-    if (this.updateEnergyIsBurning() == false) {
+    if (currentRecipe == null || this.updateEnergyIsBurning() == false) {
       return;
     }
     //ignore timer when filling up water
@@ -95,7 +99,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   private void updateLockSlots() {
     if (this.recipeIsLocked == 1) {
-      if (this.irecipe != null) {
+      if (this.currentRecipe != null) {
         List<Integer> slotsImport = new ArrayList<Integer>();
         for (int slot = 0; slot < RECIPE_SIZE; slot++) {
           if (this.getStackInSlot(slot).isEmpty() == false) {
@@ -111,13 +115,12 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
   public boolean tryProcessRecipe() {
-    this.irecipe = findMatchingRecipe();
-    if (irecipe != null) {
-      if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()
-          && this.inventoryHasRoom(4, irecipe.getRecipeOutput().copy())) {
-        if (irecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+    if (currentRecipe != null) {
+      if (this.getCurrentFluidStackAmount() >= currentRecipe.getFluidCost()
+          && this.inventoryHasRoom(4, currentRecipe.getRecipeOutput().copy())) {
+        if (currentRecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
           //only create the output if cost was successfully paid
-          this.sendOutputItem(irecipe.getRecipeOutput().copy());
+          this.sendOutputItem(currentRecipe.getRecipeOutput().copy());
         }
         return true;
       }
@@ -130,22 +133,21 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
    * 
    * @return
    */
-  private RecipeHydrate findMatchingRecipe() {
+  private void findMatchingRecipe() {
     boolean allAir = true;
     for (int i = 0; i < RECIPE_SIZE; i++) {
-      //if ANY slot is non empty, we will get an && false which makes false
-      allAir = allAir && this.getStackInSlot(i).isEmpty();
+      //if ANY slot is non empty, we will get an && false which makes false 
+      allAir = (allAir && this.getStackInSlot(i).isEmpty());
       this.crafting.setInventorySlotContents(i, this.getStackInSlot(i).copy());
     }
-    if (allAir) {
-      return null;
+    if (allAir) {//short cut 
+      return;
     }
-    for (RecipeHydrate irecipe : RecipeHydrate.recipes) {
-      if (irecipe.matches(this.crafting, world)) {
-        return irecipe;
+    for (RecipeHydrate rec : RecipeHydrate.recipes) {
+      if (rec.matches(this.crafting, world)) {
+        currentRecipe = rec;
       }
     }
-    return null;
   }
 
   public void sendOutputItem(ItemStack itemstack) {
