@@ -51,6 +51,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   private int recipeIsLocked = 0;
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
+  private RecipeHydrate irecipe;
 
   public TileEntityHydrator() {
     super(2 * RECIPE_SIZE);// in, out 
@@ -75,7 +76,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   @Override
   public void update() {
-    this.updateLockSlots();
     if (this.isRunning() == false || this.isInventoryFull(RECIPE_SIZE)) {
       return;//dont drain power when full  
     }
@@ -95,13 +95,15 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   private void updateLockSlots() {
     if (this.recipeIsLocked == 1) {
-      List<Integer> slotsImport = new ArrayList<Integer>();
-      for (int slot = 0; slot < RECIPE_SIZE; slot++) {
-        if (this.getStackInSlot(slot).isEmpty() == false) {
-          slotsImport.add(slot);
+      if (this.irecipe != null) {
+        List<Integer> slotsImport = new ArrayList<Integer>();
+        for (int slot = 0; slot < RECIPE_SIZE; slot++) {
+          if (this.getStackInSlot(slot).isEmpty() == false) {
+            slotsImport.add(slot);
+          }
         }
+        this.setSlotsForInsert(slotsImport);
       }
-      this.setSlotsForInsert(slotsImport);
     }
     else {//all are free game
       this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
@@ -109,7 +111,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
   public boolean tryProcessRecipe() {
-    RecipeHydrate irecipe = findMatchingRecipe();
+    this.irecipe = findMatchingRecipe();
     if (irecipe != null) {
       if (this.getCurrentFluidStackAmount() >= irecipe.getFluidCost()
           && this.inventoryHasRoom(4, irecipe.getRecipeOutput().copy())) {
@@ -147,7 +149,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   }
 
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = 4; i < 8; i++) {
+    for (int i = RECIPE_SIZE; i < RECIPE_SIZE * 2; i++) {
       if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
@@ -200,6 +202,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
       break;
       case RECIPELOCKED:
         this.recipeIsLocked = value % 2;
+        this.updateLockSlots();
       break;
     }
   }
