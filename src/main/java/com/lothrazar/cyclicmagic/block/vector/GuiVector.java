@@ -61,9 +61,6 @@ public class GuiVector extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityVector.Fields.REDSTONE.ordinal();
   }
 
-  //  public String getTitle() {
-  //    return "tile.plate_vector.name";
-  //  }
   @Override
   public void initGui() {
     super.initGui();
