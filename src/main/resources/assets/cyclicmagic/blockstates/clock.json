@@ -2,6 +2,7 @@
   "forge_marker": 1,
     "defaults": {
         "textures": {
+			"particle": "cyclicmagic:blocks/clock_off",
 			"down" : "cyclicmagic:blocks/clock_off",
 			"up"   : "cyclicmagic:blocks/clock_off",
 			"north": "cyclicmagic:blocks/clock_off",

@@ -146,12 +146,13 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
       TileEntityClock clock = (TileEntityClock) tile;
       try {
         ModCyclic.logger.error("DOWN ?" + clock.getSideHasPower(EnumFacing.DOWN));
-        state = state.withProperty(U, clock.getSideHasPower(EnumFacing.UP));
-        state = state.withProperty(D, clock.getSideHasPower(EnumFacing.DOWN));
-        state = state.withProperty(N, clock.getSideHasPower(EnumFacing.NORTH));
-        state = state.withProperty(E, clock.getSideHasPower(EnumFacing.EAST));
-        state = state.withProperty(S, clock.getSideHasPower(EnumFacing.SOUTH));
-        state = state.withProperty(W, clock.getSideHasPower(EnumFacing.WEST));
+        boolean powered = state.getValue(POWERED);
+        state = state.withProperty(U, clock.getSideHasPower(EnumFacing.UP) && powered);
+        state = state.withProperty(D, clock.getSideHasPower(EnumFacing.DOWN) && powered);
+        state = state.withProperty(N, clock.getSideHasPower(EnumFacing.NORTH) && powered);
+        state = state.withProperty(E, clock.getSideHasPower(EnumFacing.EAST) && powered);
+        state = state.withProperty(S, clock.getSideHasPower(EnumFacing.SOUTH) && powered);
+        state = state.withProperty(W, clock.getSideHasPower(EnumFacing.WEST) && powered);
         ModCyclic.logger.error("DD after set   ?" + state.getValue(D));
       }
       catch (Exception e) {
