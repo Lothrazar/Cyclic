@@ -1,10 +1,19 @@
 {
     "forge_marker": 1,
 	"defaults":{
-		"model": "cyclicmagic:battery"
+        "textures": {
+			"particle": "cyclicmagic:blocks/battery",
+			"down" : "cyclicmagic:blocks/battery",
+			"up"   : "cyclicmagic:blocks/battery",
+			"north": "cyclicmagic:blocks/battery",
+			"south": "cyclicmagic:blocks/battery",
+			"west" : "cyclicmagic:blocks/battery",
+			"east" : "cyclicmagic:blocks/battery"
+        },
+        "model": "cube",
+        "uvlock": true
 	},
 	 "variants": {
-	    "normal": { "model": "cyclicmagic:battery" },
 		"amount": {
 		  "empty": { "model": "cyclicmagic:battery"  },
 		  "g0":  { "submodel": { "overlaya": { "model": "cyclicmagic:overlayamountg0",  "textures": { "overlaya": "cyclicmagic:blocks/overlayamount" } } } },

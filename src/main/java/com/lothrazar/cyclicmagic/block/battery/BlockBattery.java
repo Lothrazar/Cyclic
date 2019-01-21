@@ -130,7 +130,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
   @SuppressWarnings("deprecation")
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-    //?? world instanceof ChunkCache ? ((ChunkCache) world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : 
     TileEntity tile = world.getTileEntity(pos);
     if (tile instanceof TileEntityBattery) {
       IEnergyStorage handlerHere = tile.getCapability(CapabilityEnergy.ENERGY, null);
@@ -191,14 +190,13 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
       //map [0-100] into [0-8]  
       //TODO: measuure tile energy level, and map to the G0-8
       return state.withProperty(AMOUNT, p);
-      //return state;
+
     }
     return super.getActualState(state, world, pos);
   }
 
   @Override
   protected BlockStateContainer createBlockState() {
-    //  return super.createBlockState();
     return new BlockStateContainer(this, new IProperty[] { AMOUNT });
   }
 
@@ -222,7 +220,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
     else if (stack.getTagCompound() != null && world.getTileEntity(pos) instanceof TileEntityBattery) {
       NBTTagCompound tags = stack.getTagCompound();
       int energy = tags.getInteger(ItemBlockBattery.ENERGY);
-      //  IEnergyStorage handlerHere =  world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, null);
       TileEntityBattery container = (TileEntityBattery) world.getTileEntity(pos);
       container.setEnergyCurrent(energy);
     }

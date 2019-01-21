@@ -96,6 +96,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       if (recipe != null && !world.isRemote) {
         ItemStack craftResult = recipe.getCraftingResult(this.crafter);
         if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
+
           if (tryPayCost()) {
             sendOutput(craftResult);
             timer = TIMER_FULL;
@@ -275,6 +276,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.recipe == null) {
       return ItemStack.EMPTY;
     }
-    return recipe.getCraftingResult(this.crafter);//  recipe.getRecipeOutput().copy();
+    return recipe.getCraftingResult(this.crafter);
   }
 }
