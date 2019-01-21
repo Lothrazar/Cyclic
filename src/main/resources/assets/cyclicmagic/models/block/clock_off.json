@@ -1,6 +1,12 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "cyclicmagic:blocks/clock_off"
-    }
+    "parent": "block/cube",
+
+        "textures": {
+			"down" : "cyclicmagic:blocks/clock_off",
+			"up"   : "cyclicmagic:blocks/clock_off",
+			"north": "cyclicmagic:blocks/clock_off",
+			"south": "cyclicmagic:blocks/clock_off",
+			"west" : "cyclicmagic:blocks/clock_off",
+			"east" : "cyclicmagic:blocks/clock_off"
+        },
 }

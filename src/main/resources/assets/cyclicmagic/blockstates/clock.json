@@ -1,6 +1,69 @@
 {
+  "forge_marker": 1,
+    "defaults": {
+        "textures": {
+			"down" : "cyclicmagic:blocks/clock_off",
+			"up"   : "cyclicmagic:blocks/clock_off",
+			"north": "cyclicmagic:blocks/clock_off",
+			"south": "cyclicmagic:blocks/clock_off",
+			"west" : "cyclicmagic:blocks/clock_off",
+			"east" : "cyclicmagic:blocks/clock_off"
+        },
+        "model": "cube",
+        "uvlock": true
+    },
     "variants": {
-        "powered=true":  { "model": "cyclicmagic:clock_on" },
-        "powered=false": { "model": "cyclicmagic:clock_off" }
+		"powered":{
+			"true":{}, 
+			"false":{}
+		},
+		"d":{
+			"true":{
+				"textures": {
+					"down"   : "cyclicmagic:blocks/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"u":{
+			"true":{
+				"textures": {
+					"up"   : "cyclicmagic:blocks/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"n":{
+			"true":{
+				"textures": {
+					"north"   : "cyclicmagic:blocks/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"s":{
+			"true":{
+				"textures": {
+					"south"   : "cyclicmagic:blocks/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"w":{
+			"true":{
+				"textures": {
+					"west"   : "cyclicmagic:blocks/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"e":{
+			"true":{
+				"textures": {
+					"east"   : "cyclicmagic:blocks/clock_on"
+				}
+			},
+			"false": {}
+		}
     }
 }
