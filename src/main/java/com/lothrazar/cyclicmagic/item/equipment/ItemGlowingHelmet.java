@@ -68,7 +68,6 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
     player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
   }
 
-
   public static void setGlowing(EntityPlayer player, boolean hidden) {
     player.setGlowing(hidden);//hidden means dont render
     //flag it so we know the purple glow was from this item, not something else
@@ -119,6 +118,7 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
       setGlowing(player, false);
     }
   }
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     //reduce check to only once per second instead  of per tick
