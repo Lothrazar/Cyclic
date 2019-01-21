@@ -145,7 +145,6 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
     if (tile instanceof TileEntityClock) {
       TileEntityClock clock = (TileEntityClock) tile;
       try {
-        ModCyclic.logger.error("DOWN ?" + clock.getSideHasPower(EnumFacing.DOWN));
         boolean powered = state.getValue(POWERED);
         state = state.withProperty(U, clock.getSideHasPower(EnumFacing.UP) && powered);
         state = state.withProperty(D, clock.getSideHasPower(EnumFacing.DOWN) && powered);
@@ -153,7 +152,6 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
         state = state.withProperty(E, clock.getSideHasPower(EnumFacing.EAST) && powered);
         state = state.withProperty(S, clock.getSideHasPower(EnumFacing.SOUTH) && powered);
         state = state.withProperty(W, clock.getSideHasPower(EnumFacing.WEST) && powered);
-        ModCyclic.logger.error("DD after set   ?" + state.getValue(D));
       }
       catch (Exception e) {
         ModCyclic.logger.error("fail", e);
