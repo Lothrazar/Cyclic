@@ -25,6 +25,9 @@ package com.lothrazar.cyclicmagic.block.crafter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
@@ -34,6 +37,7 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -94,12 +98,12 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       if (recipe != null && !world.isRemote) {
         ItemStack craftResult = recipe.getCraftingResult(this.crafter);
         if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
-          // if (tryPayCost()) {
-          doCraft();
-          sendOutput(craftResult);
-          timer = TIMER_FULL;
-          this.consumeEnergy();
-          //}
+          if (tryPayCost()) {
+            doCraft();
+            sendOutput(craftResult);
+            timer = TIMER_FULL;
+            this.consumeEnergy();
+          }
         }
       }
     }
@@ -115,98 +119,113 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
 
   private void doCraft() {
     //pull craft result from inner 3x3
-    NonNullList<ItemStack> cache = NonNullList.withSize(crafter.getSizeInventory(), ItemStack.EMPTY);
-    for (int i = SIZE_INPUT; i < SIZE_INPUT + SIZE_GRID; i++) {
-      ModCyclic.logger.error("build cache  " + this.getStackInSlot(i));
-      cache.set(i - SIZE_INPUT, this.getStackInSlot(i).copy());
-    }
+    //    NonNullList<ItemStack> cache = NonNullList.withSize(crafter.getSizeInventory(), ItemStack.EMPTY);
+    //    for (int i = SIZE_INPUT; i < SIZE_INPUT + SIZE_GRID; i++) {
+    //      ModCyclic.logger.error("build cache  " + this.getStackInSlot(i));
+    //      cache.set(i - SIZE_INPUT, this.getStackInSlot(i).copy());
+    //    }
+
+    //    // THEN pull 
+    //    for (int i = 0; i < cache.size(); i++) {
+    //      int craftSlot = i + SIZE_INPUT;
+    //      ItemStack lookFor = cache.get(i);
+    //      ItemStack fromInput;
+    //      if (!lookFor.isEmpty()) {
+    //        ModCyclic.logger.error(i + "look for " + lookFor);
+    //        //if its not empty (IE not a bucket or damage taking item)
+    //        //look for this in inventory
+    //        for (int j = 0; j < SIZE_INPUT; j++) {
+    //          fromInput = this.getStackInSlot(j);
+    //          ModCyclic.logger.error(j + "fromInput TEST  " + fromInput);
+    //          if (UtilItemStack.isItemStackEqualIgnoreCount(lookFor, fromInput)) {
+    //            ModCyclic.logger.error("fromInput matchy " + fromInput);
+    //            //yep found it
+    //            ItemStack newOne = fromInput.copy();
+    //            newOne.setCount(1);
+    //            this.setInventorySlotContents(craftSlot, newOne);
+    //            fromInput.shrink(1);
+    //            this.setInventorySlotContents(j, fromInput);
+    //          }
+    //        }
+    //      }
+    //    }
+  }
+
+  private boolean tryPayCost() {
+    List<Integer> toIgnore = new ArrayList<>();
     NonNullList<ItemStack> remaining = recipe.getRemainingItems(crafter);
     for (int i = 0; i < remaining.size(); i++) {
-      // 
-      this.crafter.setInventorySlotContents(i, remaining.get(i));
-      this.setInventorySlotContents(i + SIZE_INPUT, remaining.get(i));
-      //  
+      ItemStack stackRemain = remaining.get(i);
+      if (!stackRemain.isEmpty()) {
+        toIgnore.add(i);
+      }
     }
-    // THEN pull 
-    for (int i = 0; i < cache.size(); i++) {
-      int craftSlot = i + SIZE_INPUT;
-      ItemStack lookFor = cache.get(i);
-      ItemStack fromInput;
-      if (!lookFor.isEmpty()) {
-        ModCyclic.logger.error(i + "look for " + lookFor);
-        //if its not empty (IE not a bucket or damage taking item)
-        //look for this in inventory
-        for (int j = 0; j < SIZE_INPUT; j++) {
-          fromInput = this.getStackInSlot(j);
-          ModCyclic.logger.error(j + "fromInput TEST  " + fromInput);
-          if (UtilItemStack.isItemStackEqualIgnoreCount(lookFor, fromInput)) {
-            ModCyclic.logger.error("fromInput matchy " + fromInput);
-            //yep found it
-            ItemStack newOne = fromInput.copy();
-            newOne.setCount(1);
-            this.setInventorySlotContents(craftSlot, newOne);
-            fromInput.shrink(1);
-            this.setInventorySlotContents(j, fromInput);
+    ItemStack fromRecipe;
+    ItemStack fromInput;
+    boolean thisPaid = false;
+    //map is <slotNumber, amtToPay>
+    Map<Integer, Integer> slotsToPay = new HashMap<Integer, Integer>();//can have dupes
+    for (int i = 0; i < this.crafter.getSizeInventory(); i++) {
+      //for ever i val, we must pay the cost
+      thisPaid = false;
+      fromRecipe = this.crafter.getStackInSlot(i);
+      if (fromRecipe.isEmpty()) {
+        continue;
+      }
+      //try to pay its cost
+      for (int j = 0; j < SIZE_INPUT; j++) {
+        if (toIgnore.contains(i)) {
+          thisPaid = true;
+          continue;
+        }
+        fromInput = this.getStackInSlot(j);
+        if (fromRecipe.isItemEqual(fromInput)) {
+          //now set the key 'j' slot to need one more extra item
+          if (!slotsToPay.containsKey(j)) {
+            slotsToPay.put(j, 0);
+          }
+          //if what we are going to be pulling from this slot not more than what it contains
+          if (slotsToPay.get(j) + 1 <= fromInput.getCount()) {
+            slotsToPay.put(j, slotsToPay.get(j) + 1);
+            thisPaid = true;
+            break;//break only the j loop
           }
         }
       }
+      if (thisPaid == false) {//required input not even fond 
+        //        ModCyclic.logger.error("recipe input not found");
+        return false;
+      }
     }
+    //TODO: in retroscpect this 2econd pass might be redndant since we already validated in above loop. but keeping it doesnt hurt
+    //we need to do 2 passes. one pass to make sure we haven enough and another to cost
+    //otherwise we could start spending and halfway thru run out and we would havce to rollback ransacions
+    //and couldnt have done it above because of the slot spread
+    //EX: stairs need 6 wood planks. This could be 6 all from one stack, or split over a few
+    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
+      // if there isnt enough, in any one of these spots, stop now
+      if (entry.getValue() > this.getStackInSlot(entry.getKey()).getCount()) {
+        return false;
+      }
+    }
+    //now we know there is enough everywhere. we validated
+    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
+      Item bucketThing = this.getStackInSlot(entry.getKey()).getItem().getContainerItem();
+      if (bucketThing != null && this.getStackInSlot(entry.getKey()).getCount() == 1) {
+        //example: making cake, dump out empty bucket
+        this.sendOutput(new ItemStack(bucketThing));
+      }
+      this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
+    }
+    for (int i = 0; i < remaining.size(); i++) {
+      ItemStack stackRemain = remaining.get(i);
+      if (!stackRemain.isEmpty()) {
+        this.crafter.setInventorySlotContents(i, stackRemain);
+        this.setInventorySlotContents(i + SIZE_INPUT, stackRemain);
+      }
+    }
+    return true;
   }
-  //  private boolean tryPayCost() {
-  //    ItemStack fromRecipe;
-  //    ItemStack fromInput;
-  //    boolean thisPaid = false;
-  //    //map is <slotNumber, amtToPay>
-  //    Map<Integer, Integer> slotsToPay = new HashMap<Integer, Integer>();//can have dupes
-  //    for (int i = 0; i < this.crafter.getSizeInventory(); i++) {
-  //      //for ever i val, we must pay the cost
-  //      thisPaid = false;
-  //      fromRecipe = this.crafter.getStackInSlot(i);
-  //      if (fromRecipe.isEmpty()) {
-  //        continue;
-  //      }
-  //      //try to pay its cost
-  //      for (int j = 0; j < SIZE_INPUT; j++) {
-  //        fromInput = this.getStackInSlot(j);
-  //        if (fromRecipe.isItemEqual(fromInput)) {
-  //          //now set the key 'j' slot to need one more extra item
-  //          if (!slotsToPay.containsKey(j)) {
-  //            slotsToPay.put(j, 0);
-  //          }
-  //          //if what we are going to be pulling from this slot not more than what it contains
-  //          if (slotsToPay.get(j) + 1 <= fromInput.getCount()) {
-  //            slotsToPay.put(j, slotsToPay.get(j) + 1);
-  //            thisPaid = true;
-  //            break;//break only the j loop
-  //          }
-  //        }
-  //      }
-  //      if (thisPaid == false) {//required input not even fond
-  //        return false;
-  //      }
-  //    }
-  //    //TODO: in retroscpect this 2econd pass might be redndant since we already validated in above loop. but keeping it doesnt hurt
-  //    //we need to do 2 passes. one pass to make sure we haven enough and another to cost
-  //    //otherwise we could start spending and halfway thru run out and we would havce to rollback ransacions
-  //    //and couldnt have done it above because of the slot spread
-  //    //EX: stairs need 6 wood planks. This could be 6 all from one stack, or split over a few
-  //    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
-  //      // if there isnt enough, in any one of these spots, stop now
-  //      if (entry.getValue() > this.getStackInSlot(entry.getKey()).getCount()) {
-  //        return false;
-  //      }
-  //    }
-  //    //now we know there is enough everywhere. we validated
-  //    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
-  //      Item bucketThing = this.getStackInSlot(entry.getKey()).getItem().getContainerItem();
-  //      if (bucketThing != null && this.getStackInSlot(entry.getKey()).getCount() == 1) {
-  //        //example: making cake, dump out empty bucket
-  //        this.sendOutput(new ItemStack(bucketThing));
-  //      }
-  //      this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
-  //    }
-  //    return true;
-  //  }
 
   private void sendOutput(ItemStack craftingResult) {
     //bit o a hack since util method assmes takes a list, and we have only one, so just wrap it eh
