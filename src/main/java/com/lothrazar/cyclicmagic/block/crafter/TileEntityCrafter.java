@@ -99,7 +99,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         ItemStack craftResult = recipe.getCraftingResult(this.crafter);
         if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
           if (tryPayCost()) {
-            doCraft();
             sendOutput(craftResult);
             timer = TIMER_FULL;
             this.consumeEnergy();
@@ -115,40 +114,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       craftSlot = i - gridStart;
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
     }
-  }
-
-  private void doCraft() {
-    //pull craft result from inner 3x3
-    //    NonNullList<ItemStack> cache = NonNullList.withSize(crafter.getSizeInventory(), ItemStack.EMPTY);
-    //    for (int i = SIZE_INPUT; i < SIZE_INPUT + SIZE_GRID; i++) {
-    //      ModCyclic.logger.error("build cache  " + this.getStackInSlot(i));
-    //      cache.set(i - SIZE_INPUT, this.getStackInSlot(i).copy());
-    //    }
-
-    //    // THEN pull 
-    //    for (int i = 0; i < cache.size(); i++) {
-    //      int craftSlot = i + SIZE_INPUT;
-    //      ItemStack lookFor = cache.get(i);
-    //      ItemStack fromInput;
-    //      if (!lookFor.isEmpty()) {
-    //        ModCyclic.logger.error(i + "look for " + lookFor);
-    //        //if its not empty (IE not a bucket or damage taking item)
-    //        //look for this in inventory
-    //        for (int j = 0; j < SIZE_INPUT; j++) {
-    //          fromInput = this.getStackInSlot(j);
-    //          ModCyclic.logger.error(j + "fromInput TEST  " + fromInput);
-    //          if (UtilItemStack.isItemStackEqualIgnoreCount(lookFor, fromInput)) {
-    //            ModCyclic.logger.error("fromInput matchy " + fromInput);
-    //            //yep found it
-    //            ItemStack newOne = fromInput.copy();
-    //            newOne.setCount(1);
-    //            this.setInventorySlotContents(craftSlot, newOne);
-    //            fromInput.shrink(1);
-    //            this.setInventorySlotContents(j, fromInput);
-    //          }
-    //        }
-    //      }
-    //    }
   }
 
   private boolean tryPayCost() {
@@ -193,7 +158,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         }
       }
       if (thisPaid == false) {//required input not even fond 
-        //        ModCyclic.logger.error("recipe input not found");
+        //               ModCyclic.logger.error("recipe input not found");
         return false;
       }
     }
