@@ -576,7 +576,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return true;
   }
 
-  protected boolean inventoryHasRoom(int start, ItemStack wouldInsert) {
+  protected boolean inventoryHasRoom(int start, final ItemStack wouldInsert) {
     int emptySlots = 0;
     for (int i = start; i < this.inv.size(); i++) {
       //if its empty or it is below max count, then it has room -> not full
