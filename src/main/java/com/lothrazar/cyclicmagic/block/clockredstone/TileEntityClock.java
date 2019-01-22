@@ -85,7 +85,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
 
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-
     return !(newSate.getBlock() instanceof BlockRedstoneClock);// : oldState != newSate;
   }
 

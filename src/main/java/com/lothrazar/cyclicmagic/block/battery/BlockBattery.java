@@ -205,7 +205,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
       //map [0-100] into [0-8]  
       //TODO: measuure tile energy level, and map to the G0-8
       return state.withProperty(AMOUNT, p);
-
     }
     return super.getActualState(state, world, pos);
   }
