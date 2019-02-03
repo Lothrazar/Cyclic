@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.disenchanter;
 
-import java.util.Arrays;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
@@ -58,17 +57,20 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
     this.initEnergy(BlockDisenchanter.FUEL_COST);
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4));
-    this.setSlotsForExtract(Arrays.asList(5, 6, 7, 8, 9, 10, 11, 12, 13));
+    this.setSlotsForInsert(0, 4);
+    this.setSlotsForExtract(5, 13);
   }
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     if (index == SLOT_INPUT) {
-      return stack.isItemEnchanted();
+      return stack.isItemEnchanted() || stack.getItem() == Items.ENCHANTED_BOOK;
     }
     else if (index == SLOT_BOTTLE) {
-      return stack.getItem() == Items.GLASS_BOTTLE;
+      return stack.getItem() == Items.EXPERIENCE_BOTTLE;
+    }
+    else if (index == SLOT_BOOK) {
+      return stack.getItem() == Items.BOOK;
     }
     else if (index == SLOT_REDSTONE) {
       return UtilOreDictionary.doesMatchOreDict(stack, "dustRedstone");
