@@ -115,13 +115,21 @@ public class GuiEnderBook extends GuiScreen {
       btn = new ButtonWaypointTeleport(buttonID++, x, y, w, h, buttonText, loc.id);
       BlockPos toPos = list.get(i).toBlockPos();
       int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, entityPlayer.getPosition());
-      int cost = ItemEnderBook.getExpCostPerTeleport(entityPlayer, bookStack, loc.id);
-      btn.addTooltipLine(list.get(i).coordsDisplay());
-      btn.addTooltipLine(UtilChat.lang("button.waypoint.distance") + " " + distance);
-      if (cost > 0) {
-        btn.addTooltipLine(UtilChat.lang("button.waypoint.cost") + " " + cost);
+      if (loc.dimension == this.entityPlayer.dimension) {
+        btn.enabled = true;
+        btn.addTooltipLine(list.get(i).coordsDisplay());
+        if (distance > 0) {
+          btn.addTooltipLine(UtilChat.lang("button.waypoint.distance") + " " + distance);
+        }
+        int cost = ItemEnderBook.getExpCostPerTeleport(entityPlayer, bookStack, loc.id);
+        if (cost > 0) {
+          btn.addTooltipLine(UtilChat.lang("button.waypoint.cost") + " " + cost);
+        }
       }
-      btn.enabled = (loc.dimension == this.entityPlayer.dimension);
+      else {
+        btn.enabled = false;
+        btn.addTooltipLine(UtilChat.lang("button.waypoint.dimension") + " " + loc.dimension);
+      }
       buttonList.add(btn);
       del = new ButtonWaypointDelete(buttonID++, x - delete_w - 2, y, delete_w, h, "X", loc.id);
       buttonList.add(del);
