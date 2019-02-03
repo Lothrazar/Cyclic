@@ -214,12 +214,14 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "ene",
+        "ebe",
+        "eee",
         'e', "enderpearl",
         'b', Items.BOOK,
         'n', "blockEmerald");
-    // if you want to clean out the book and start over
+
   }
 
   @Override
@@ -228,7 +230,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     if (stack == null || stack.getItem() == null) {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
-    //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
     entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(world, entityPlayer, hand);
   }
