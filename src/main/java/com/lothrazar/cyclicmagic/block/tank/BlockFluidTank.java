@@ -49,7 +49,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -59,7 +58,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -146,14 +144,10 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    if (stack.getTagCompound() != null) {
-      NBTTagCompound tags = stack.getTagCompound();
-      int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
-      String resourceStr = tags.getString(NBT_FLUIDTYPE);
+    FluidStack fluid = ItemBlockFluidTank.copyFluidFromStack(stack);
+    if (fluid != null) {
       TileEntityFluidTank container = (TileEntityFluidTank) worldIn.getTileEntity(pos);
-      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
-      if (fluidObj != null)
-        container.fill(new FluidStack(fluidObj, fluidAmt), true);
+      container.fill(fluid, true);
     }
   }
 
