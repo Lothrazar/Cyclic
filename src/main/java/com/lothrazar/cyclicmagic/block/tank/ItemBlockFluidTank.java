@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.tank;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.block.core.BlockBase;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
@@ -34,10 +33,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,17 +44,6 @@ public class ItemBlockFluidTank extends ItemBlock {
     super(block);
   }
 
-  //these dont exist?
-  //  @Override
-  //  public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-  //    return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
-  //  }
-  //
-  //  @Override
-  //  public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-  //    //NULL POINTER here so idk
-  //??   
-  //   }
   @Override
   public boolean showDurabilityBar(ItemStack stack) {
     FluidStack fstack = copyFluidFromStack(stack);
@@ -92,31 +77,28 @@ public class ItemBlockFluidTank extends ItemBlock {
 
   public static FluidStack copyFluidFromStack(ItemStack stack) {
     if (stack.getTagCompound() != null) {
-      NBTTagCompound tags = stack.getTagCompound();
-      int fluidAmt = tags.getInteger(BlockBase.NBT_FLUIDSIZE);
-      String resourceStr = tags.getString(BlockBase.NBT_FLUIDTYPE);
-      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
-      if (fluidObj == null) {
+      FluidHandler handler = new FluidHandler(stack);
+      FluidStack fstack = handler.getFluid();
+      if (fstack == null) {
         return null;
       }
-      return new FluidStack(fluidObj, fluidAmt);
+      return handler.getFluid();
     }
     return null;
   }
 
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-    FluidBucketWrapper cap = new FluidBucketWrapper(stack);
-    cap.fill(copyFluidFromStack(stack), true);
-    return cap;
+    return new FluidHandler(stack);
   }
 
   @SideOnly(Side.CLIENT)
   @Override
   public void addInformation(ItemStack item, World player, List<String> tooltip, ITooltipFlag advanced) {
-    if (item.getTagCompound() != null) {
-      int amt = item.getTagCompound().getInteger(BlockFluidTank.NBT_FLUIDSIZE);
-      String rsc = item.getTagCompound().getString(BlockFluidTank.NBT_FLUIDTYPE);
+    FluidStack fstack = copyFluidFromStack(item);
+    if (fstack != null && fstack.amount > 0) {
+      int amt = fstack.amount;//   item.getTagCompound().getInteger(BlockFluidTank.NBT_FLUIDSIZE);
+      String rsc = fstack.getLocalizedName();
       tooltip.add(amt + " " + rsc);
     }
     else
