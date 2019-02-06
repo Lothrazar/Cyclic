@@ -27,9 +27,9 @@ import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.TileEntityLibraryCtrl;
+import com.lothrazar.cyclicmagic.data.EnchantStack;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -125,7 +125,7 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
-      ItemStack theThing = library.addEnchantmentFromPlayer(playerHeld, segment);
+      ItemStack theThing = library.addEnchantmentToQuadrant(playerHeld, segment);
       player.setHeldItem(hand, ItemStack.EMPTY);
       if (theThing.isEmpty() == false) {
         player.addItemStackToInventory(theThing);

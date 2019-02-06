@@ -23,36 +23,54 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStorageTarget;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements ITickable {
 
+  private static final int SLOT_IN = 0;
+  private static final int SLOT_OUT = 1;
+
   public TileEntityLibraryCtrl() {
     super(2);
+    this.setSlotsForInsert(SLOT_IN);
+    this.setSlotsForExtract(SLOT_OUT);
   }
 
   @Override
   public void update() {
-    if (this.getStackInSlot(0).isEmpty() == false) {
+    ItemStack stack = this.getStackInSlot(SLOT_IN);
+    if (stack.isEmpty() == false) {
       //try to apply its action to nearby book hey
+      EnchantStorageTarget target = BlockLibraryController.findMatchingTarget(world, pos, stack);
+      if (target.isEmpty() == false) {
+        ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
+        ItemStack theThing = target.library.addEnchantmentToQuadrant(stack, target.quad);
+        target.library.markDirty();
+        this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
+        if (theThing.isEmpty() == false) {
+          this.setInventorySlotContents(SLOT_OUT, theThing);
+        }
+        else {
+          //TODO merge 
+          this.setInventorySlotContents(SLOT_OUT, new ItemStack(Items.BOOK));
+        }
+      }
     }
-
-
   }
-
 
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
-
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-
     return super.writeToNBT(tags);
   }
-
 }

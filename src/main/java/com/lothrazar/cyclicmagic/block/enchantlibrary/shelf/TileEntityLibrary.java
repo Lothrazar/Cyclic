@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.enchantlibrary.shelf;
 
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachine;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
+import com.lothrazar.cyclicmagic.data.EnchantStack;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.enchantment.Enchantment;
@@ -70,7 +70,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     storage[area.ordinal()].remove();
   }
 
-  public boolean addEnchantment(QuadrantEnum area, Enchantment ench, int level) {
+  private boolean addEnchantment(QuadrantEnum area, Enchantment ench, int level) {
     int index = area.ordinal();
     EnchantStack enchStackCurrent = storage[index];
     if (enchStackCurrent.getCount() >= MAX_COUNT) {
@@ -91,7 +91,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     }
   }
 
-  public ItemStack addEnchantmentFromPlayer(ItemStack playerHeld, QuadrantEnum segment) {
+  public ItemStack addEnchantmentToQuadrant(ItemStack playerHeld, QuadrantEnum segment) {
     Enchantment enchToRemove = null;
 
     Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
