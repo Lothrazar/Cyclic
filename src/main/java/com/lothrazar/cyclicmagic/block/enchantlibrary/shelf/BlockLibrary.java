@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.TileEntityLibraryCtrl;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -70,7 +71,8 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
   public void register() {
     BlockRegistry.registerBlock(this, "block_library", GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
-    BlockLibraryController lc = new BlockLibraryController(this);
+    GameRegistry.registerTileEntity(TileEntityLibraryCtrl.class, Const.MODID + "library_ctrl_te");
+    BlockLibraryController lc = new BlockLibraryController();
     BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
     ModCyclic.instance.events.register(this);
   }

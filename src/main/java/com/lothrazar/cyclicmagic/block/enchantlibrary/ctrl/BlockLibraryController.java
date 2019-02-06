@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -42,15 +43,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockLibraryController extends BlockBase implements IHasRecipe {
 
   private static final int RANGE = 4;
-  Block libraryInstance;
 
-  public BlockLibraryController(Block lib) {
+  @GameRegistry.ObjectHolder(Const.MODRES + "block_library")
+  static Block libraryInstance;
+
+  public BlockLibraryController() {
     super(Material.WOOD);
-    libraryInstance = lib;
   }
 
   @Override
@@ -96,7 +99,8 @@ public class BlockLibraryController extends BlockBase implements IHasRecipe {
       }
     }
     //now try insert here 
-    if (libMatch != null && quadMatch != null && libMatch.addEnchantmentFromPlayer(player, hand, quadMatch)) {
+    if (libMatch != null && quadMatch != null &&
+        libMatch.addEnchantmentFromPlayer(player, hand, quadMatch)) {
       libMatch.markDirty();
       world.markChunkDirty(libMatch.getPos(), libMatch);
       return true;
