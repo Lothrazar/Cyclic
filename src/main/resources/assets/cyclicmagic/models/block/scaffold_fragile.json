@@ -1,5 +1,5 @@
 {
-	"parent": "cyclicmagic:/block/scaffold",
+	"parent": "cyclicmagic:block/scaffold",
 
 	"textures": {
 		"all": "cyclicmagic:blocks/scaffold_fragile",

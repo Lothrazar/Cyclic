@@ -26,28 +26,19 @@ package com.lothrazar.cyclicmagic.item.equipment.sandstone;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemSandstoneAxe extends ItemAxe implements IHasRecipe {
+public class ItemSandstoneSword extends ItemSword implements IHasRecipe {
 
-  public ItemSandstoneAxe() {
-    super(MaterialRegistry.sandstoneToolMaterial, 6, -3.2F);
+  public ItemSandstoneSword() {
+    super(MaterialRegistry.sandstoneToolMaterial);
   }
 
-  @Override
-  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-    if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
-      return true;
-    }
-    return super.getIsRepairable(toRepair, repair);
-  }
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', "sandstone", 's', "stickWood");
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', "sandstone", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', "sandstone", 's', "stickWood");
   }
 }
