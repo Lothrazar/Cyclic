@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -89,30 +90,30 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
             "odo",
             "ooo",
             'o', "obsidian",
-            'd', "gemDiamond",
-            'p', Items.CHORUS_FRUIT);
+            'd', Items.DIAMOND_CHESTPLATE,
+            'p', Blocks.PURPUR_BLOCK);
       case FEET:
         return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
             "p p",
             "odo",
             'o', "obsidian",
-            'd', "gemDiamond",
-            'p', Items.CHORUS_FRUIT);
+            'd', Items.DIAMOND_BOOTS,
+            'p', Blocks.PURPUR_BLOCK);
       case HEAD:
         return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
             "odo",
             "p p",
             'o', "obsidian",
-            'd', "gemDiamond",
-            'p', Items.CHORUS_FRUIT);
+            'd', Items.DIAMOND_HELMET,
+            'p', Blocks.PURPUR_BLOCK);
       case LEGS:
         return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
             "odo",
             "p p",
             "o o",
             'o', "obsidian",
-            'd', "gemDiamond",
-            'p', Items.CHORUS_FRUIT);
+            'd', Items.DIAMOND_LEGGINGS,
+            'p', Blocks.PURPUR_BLOCK);
     }
     return null;
   }
