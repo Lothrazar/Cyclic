@@ -125,11 +125,18 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
-      if (library.addEnchantmentFromPlayer(player, hand, segment)) {
+      ItemStack theThing = library.addEnchantmentFromPlayer(playerHeld, segment);
+      player.setHeldItem(hand, ItemStack.EMPTY);
+      if (theThing.isEmpty() == false) {
+        player.addItemStackToInventory(theThing);
+      }
+      else {
+        player.addItemStackToInventory(new ItemStack(Items.BOOK));
+      }
         onSuccess(player);
         library.markDirty();
         return true;
-      }
+      //      }
     }
     else if (playerHeld.getItem().equals(Items.BOOK)
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {

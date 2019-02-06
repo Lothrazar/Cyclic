@@ -99,8 +99,15 @@ public class BlockLibraryController extends BlockBase implements IHasRecipe {
       }
     }
     //now try insert here 
-    if (libMatch != null && quadMatch != null &&
-        libMatch.addEnchantmentFromPlayer(player, hand, quadMatch)) {
+    if (libMatch != null && quadMatch != null) {
+      ItemStack theThing = libMatch.addEnchantmentFromPlayer(playerHeld, quadMatch);
+      player.setHeldItem(hand, ItemStack.EMPTY);
+      if (theThing.isEmpty() == false) {
+        player.addItemStackToInventory(theThing);
+      }
+      else {
+        player.addItemStackToInventory(new ItemStack(Items.BOOK));
+      }
       libMatch.markDirty();
       world.markChunkDirty(libMatch.getPos(), libMatch);
       return true;

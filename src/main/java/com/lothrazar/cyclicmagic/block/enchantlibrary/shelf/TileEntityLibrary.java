@@ -30,11 +30,9 @@ import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 
 public class TileEntityLibrary extends TileEntityBaseMachine implements ITickable {
@@ -93,9 +91,9 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     }
   }
 
-  public boolean addEnchantmentFromPlayer(EntityPlayer player, EnumHand hand, QuadrantEnum segment) {
+  public ItemStack addEnchantmentFromPlayer(ItemStack playerHeld, QuadrantEnum segment) {
     Enchantment enchToRemove = null;
-    ItemStack playerHeld = player.getHeldItem(hand);
+
     Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
     for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
       if (this.addEnchantment(segment, entry.getKey(), entry.getValue())) {
@@ -107,10 +105,10 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
       // success
       if (enchants.size() == 1) {
         //if it only has 1, and we are going to reomve that last thing, well its just a book now
-        //TODO: merge shared with TileENtityDisenchanter
-        player.addItemStackToInventory(new ItemStack(Items.BOOK));
-        player.setHeldItem(hand, ItemStack.EMPTY);
-        player.getCooldownTracker().setCooldown(Items.BOOK, 50);
+        return ItemStack.EMPTY;
+        //        player.addItemStackToInventory(new ItemStack(Items.BOOK));
+        //        player.setHeldItem(hand, ItemStack.EMPTY);
+        //        player.getCooldownTracker().setCooldown(Items.BOOK, 50);
       }
       else {
         //it has more than one, so downshift by 1
@@ -119,14 +117,16 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
         ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(enchants, inputCopy);
         //        player.setHeldItem(hand, inputCopy);
-        player.addItemStackToInventory(inputCopy);
-        player.setHeldItem(hand, ItemStack.EMPTY);
+
+        //        player.addItemStackToInventory(inputCopy);
+        //        player.setHeldItem(hand, ItemStack.EMPTY);
+        return inputCopy;
       }
       //        library.markDirty();
-      //      onSuccess(player);
-      return true;
+      //      onSuccess(player); 
     }
-    return false;
+    //    return false;
+    return playerHeld;
   }
 
   @Override
