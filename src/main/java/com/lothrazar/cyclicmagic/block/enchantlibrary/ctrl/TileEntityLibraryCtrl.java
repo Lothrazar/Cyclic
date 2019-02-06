@@ -26,15 +26,19 @@ package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStorageTarget;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 
 public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements ITickable {
 
   private static final int SLOT_IN = 0;
   private static final int SLOT_OUT = 1;
+  private static final int TIMER_MAX = 20;
 
   public TileEntityLibraryCtrl() {
     super(2);
@@ -44,22 +48,50 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
 
   @Override
   public void update() {
-    ItemStack stack = this.getStackInSlot(SLOT_IN);
-    if (stack.isEmpty() == false) {
-      //try to apply its action to nearby book hey
-      EnchantStorageTarget target = BlockLibraryController.findMatchingTarget(world, pos, stack);
-      if (target.isEmpty() == false) {
-        ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
-        ItemStack theThing = target.library.addEnchantmentToQuadrant(stack, target.quad);
-        target.library.markDirty();
-        this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
-        if (theThing.isEmpty() == false) {
-          this.setInventorySlotContents(SLOT_OUT, theThing);
+    if (timer > 0) {
+      timer--;
+      return;
+    }
+    //its at zero restart
+    timer = TIMER_MAX;
+    if (this.getStackInSlot(SLOT_OUT).isEmpty() == false) {
+      return;
+    }
+    ItemStack stackIn = this.getStackInSlot(SLOT_IN);
+    if (stackIn.isEmpty()) {
+      return;
+    }
+    //is it an enchanted book 
+    if (stackIn.getItem().equals(Items.ENCHANTED_BOOK) == false) {
+      //move it to output i dont want it yuky 
+      this.setInventorySlotContents(SLOT_OUT, stackIn);
+      this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
+      return;
+    }
+    ModCyclic.logger.error("book time  " + world.isRemote);
+    //try to apply its action to nearby book hey
+    EnchantStorageTarget target = BlockLibraryController.findMatchingTarget(world, pos, stackIn);
+    if (target.isEmpty() == false) {
+      ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
+      ItemStack theThing = target.library.addEnchantmentToQuadrant(stackIn, target.quad);
+      target.library.markDirty();
+      world.scheduleUpdate(target.library.getPos(), target.library.getBlockType(), 2);
+      this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
+      if (theThing.isEmpty() == false) {
+        UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS);
+        //its not empty, but what is it 
+        if (theThing.getItem().equals(Items.ENCHANTED_BOOK)) {
+          //a book with multi enchants, keep going 
+          this.setInventorySlotContents(SLOT_IN, theThing);
         }
         else {
-          //TODO merge 
-          this.setInventorySlotContents(SLOT_OUT, new ItemStack(Items.BOOK));
+          this.setInventorySlotContents(SLOT_OUT, theThing);
         }
+      }
+      else {
+        //is it still an enchanted book? 
+        //TODO merge 
+        this.setInventorySlotContents(SLOT_OUT, new ItemStack(Items.BOOK));
       }
     }
   }
