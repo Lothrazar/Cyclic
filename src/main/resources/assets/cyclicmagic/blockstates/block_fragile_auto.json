@@ -1,5 +1,5 @@
 {
-    "variants": {
-        "normal": { "model": "cyclicmagic:block_fragile_auto" }
-    }
+	"variants": {
+		"normal": { "model": "cyclicmagic:scaffold_responsive" }
+	}
 }
