@@ -24,11 +24,13 @@
 package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.core.BlockBase;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStorageTarget;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.shelf.TileEntityLibrary;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -42,43 +44,74 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockLibraryController extends BlockBase implements IHasRecipe {
+public class BlockLibraryController extends BlockBaseHasTile implements IHasRecipe {
 
   private static final int RANGE = 4;
-  Block libraryInstance;
 
-  public BlockLibraryController(Block lib) {
+  @GameRegistry.ObjectHolder(Const.MODRES + "block_library")
+  static Block libraryInstance;
+
+  public BlockLibraryController() {
     super(Material.WOOD);
-    libraryInstance = lib;
+  }
+
+  @Override
+  public TileEntity createTileEntity(World worldIn, IBlockState state) {
+    return new TileEntityLibraryCtrl();
   }
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    List<BlockPos> connectors = UtilWorld.getMatchingInRange(world, pos, libraryInstance, RANGE);
-    TileEntity te;
-    TileEntityLibrary lib;
+
     ItemStack playerHeld = player.getHeldItem(hand);
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
       return false;
     }
     //first look for the same enchant and level
-    TileEntityLibrary libMatch = null;
-    QuadrantEnum quadMatch = null;
+    EnchantStorageTarget target = findMatchingTarget(world, pos, playerHeld);
+    //now try insert here 
+    if (target.isEmpty() == false) {
+      ItemStack theThing = target.library.addEnchantmentToQuadrant(playerHeld, target.quad);
+      player.setHeldItem(hand, ItemStack.EMPTY);
+      if (theThing.isEmpty() == false) {
+        player.addItemStackToInventory(theThing);
+      }
+      else {
+        player.addItemStackToInventory(new ItemStack(Items.BOOK));
+      }
+      target.library.markDirty();
+      world.markChunkDirty(target.library.getPos(), target.library);
+      return true;
+    }
+    // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
+    return false;
+  }
+
+  public static EnchantStorageTarget findMatchingTarget(World world, BlockPos pos, ItemStack playerHeld) {
+    EnchantStorageTarget target = new EnchantStorageTarget();
+    if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
+      return target;
+    }
+    List<BlockPos> connectors = UtilWorld.getMatchingInRange(world, pos, libraryInstance, RANGE);
+    TileEntity te;
+    TileEntityLibrary lib;
+
     for (BlockPos p : connectors) {
       te = world.getTileEntity(p);
       if (te instanceof TileEntityLibrary) {
         lib = (TileEntityLibrary) te;
         QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld);
         if (quad != null) {
-          libMatch = lib;
-          quadMatch = quad;
+          target.library = lib;
+          target.quad = quad;
           break;
         }
       }
     }
     //just find the first empty slot
-    if (libMatch == null) {
+    if (target.library == null) {
       for (BlockPos p : connectors) {
         te = world.getTileEntity(p);
         if (te instanceof TileEntityLibrary) {
@@ -88,21 +121,14 @@ public class BlockLibraryController extends BlockBase implements IHasRecipe {
             quad = lib.findEmptyQuadrant();
           }
           if (quad != null) {
-            libMatch = lib;
-            quadMatch = quad;
+            target.library = lib;
+            target.quad = quad;
             break;
           }
         }
       }
     }
-    //now try insert here 
-    if (libMatch != null && quadMatch != null && libMatch.addEnchantmentFromPlayer(player, hand, quadMatch)) {
-      libMatch.markDirty();
-      world.markChunkDirty(libMatch.getPos(), libMatch);
-      return true;
-    }
-    // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
-    return false;
+    return target;
   }
 
   @Override
