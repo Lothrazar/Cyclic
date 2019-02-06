@@ -71,7 +71,7 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
     //try to apply its action to nearby book hey
     EnchantStorageTarget target = BlockLibraryController.findMatchingTarget(world, pos, stackIn);
     if (target.isEmpty() == false) {
-      //      ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
+      //ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
       ItemStack theThing = target.library.addEnchantmentToQuadrant(stackIn, target.quad);
       IBlockState oldState = world.getBlockState(target.library.getPos());
       world.notifyBlockUpdate(target.library.getPos(), oldState, oldState, 3);
@@ -88,8 +88,6 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
         }
       }
       else {
-        //is it still an enchanted book? 
-        //TODO merge 
         this.setInventorySlotContents(SLOT_OUT, new ItemStack(Items.BOOK));
       }
     }
