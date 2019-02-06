@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStorageTarget;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -68,14 +68,13 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
       this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
       return;
     }
-    ModCyclic.logger.error("book time  " + world.isRemote);
     //try to apply its action to nearby book hey
     EnchantStorageTarget target = BlockLibraryController.findMatchingTarget(world, pos, stackIn);
     if (target.isEmpty() == false) {
-      ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
+      //      ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
       ItemStack theThing = target.library.addEnchantmentToQuadrant(stackIn, target.quad);
-      target.library.markDirty();
-      world.scheduleUpdate(target.library.getPos(), target.library.getBlockType(), 2);
+      IBlockState oldState = world.getBlockState(target.library.getPos());
+      world.notifyBlockUpdate(target.library.getPos(), oldState, oldState, 3);
       this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
       if (theThing.isEmpty() == false) {
         UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS);
@@ -95,6 +94,7 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
       }
     }
   }
+
 
   @Override
   public void readFromNBT(NBTTagCompound tags) {

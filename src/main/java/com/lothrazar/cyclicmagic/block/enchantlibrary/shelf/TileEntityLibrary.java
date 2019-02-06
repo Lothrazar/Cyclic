@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachine;
 import com.lothrazar.cyclicmagic.data.EnchantStack;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -120,6 +121,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
 
         //        player.addItemStackToInventory(inputCopy);
         //        player.setHeldItem(hand, ItemStack.EMPTY);
+        refreshTarget();
         return inputCopy;
       }
       //        library.markDirty();
@@ -129,6 +131,11 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     return playerHeld;
   }
 
+  private void refreshTarget() {
+    this.markDirty();
+    IBlockState oldState = world.getBlockState(getPos());
+    world.notifyBlockUpdate(getPos(), oldState, oldState, 3);
+  }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
