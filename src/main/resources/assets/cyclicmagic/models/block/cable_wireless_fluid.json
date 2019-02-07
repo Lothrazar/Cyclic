@@ -3,7 +3,7 @@
 	"textures": {
 		"main": "cyclicmagic:blocks/node/main",
 		"particle": "cyclicmagic:blocks/node/main",
-		"plate_front": "cyclicmagic:blocks/node/front_item",
+		"plate_front": "cyclicmagic:blocks/node/front_fluid",
 		"plate_back": "cyclicmagic:blocks/node/back"
 	}
 }

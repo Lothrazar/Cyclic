@@ -4,7 +4,7 @@ buildertype.cup.name=Cup
 buildertype.dome.name=Dome
 buildertype.diagonal.name=Diagonal
 buildertype.facing.name=Facing
-buildertype.solid.name=Solid
+buildertype.solid.name=Solid_
 buildertype.pyramid.name=Pyramid
 buildertype.sphere.name=Sphere
 buildertype.square.name=Square
@@ -1357,10 +1357,13 @@ wireless.empty=Bind a location to a GPS Marker
 wireless.dimension=Cannot cross dimensions
 
 
-tile.cable_wireless.name=Transfer Node
-tile.cable_wireless.tooltip=Wireless transmission of fluid and items
-tile.cable_wireless.guide=Wireless transmission of fluid and items
+tile.cable_wireless.name=Item Transfer Node
+tile.cable_wireless.tooltip=Wireless transmission of items
+tile.cable_wireless.guide=Wireless transmission of items
 
+tile.cable_wireless_fluid.name=Fluid Transfer Node
+tile.cable_wireless_fluid.tooltip=Wireless transmission of fluid
+tile.cable_wireless_fluid.guide=Wireless transmission of fluid
 
 tile.cable_wireless_energy.name=Energy Transfer Node
 tile.cable_wireless_energy.tooltip=Wireless transmission of energy

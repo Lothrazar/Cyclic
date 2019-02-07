@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.cablewireless.content;
+package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
+import com.lothrazar.cyclicmagic.gui.FluidBar;
+import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
@@ -39,20 +41,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.math.BlockPos;
 
-public class GuiCableContentWireless extends GuiBaseContainer {
+public class GuiCableFluidWireless extends GuiBaseContainer {
 
-  private int colLeft;
-  //private int colMid;
-  private int colRight;
 
-  public GuiCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
-    super(new ContainerCableContentWireless(inventoryPlayer, te), te);
+
+  public GuiCableFluidWireless(InventoryPlayer inventoryPlayer, TileCableFluidWireless te) {
+    super(new ContainerCableFluidWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.STANDARD);
-    this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
-    int xCenter = this.getScreenSize().width() / 2;
-    colLeft = this.guiLeft + 42;
-    // colMid = xCenter - 8;
-    colRight = xCenter + 26;
+    this.fieldRedstoneBtn = TileCableFluidWireless.Fields.REDSTONE.ordinal();
+    int x = this.guiLeft + 152;
+    int y = 6;
+    this.fluidBar = new FluidBar(this, x, y);
+    fluidBar.setHeight(72);
+    fluidBar.setCapacity(TileCableFluidWireless.TANK_FULL);
   }
 
   @Override
@@ -60,26 +61,25 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     super.initGui();
     int y = 106;
     int size = Const.SQ;
-    GuiButtonTooltip btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ITEM,
-        this.guiLeft + colLeft,
+    GuiButtonTooltip btnSize = new GuiButtonTooltip(TileCableFluidWireless.SLOT_CARD_ITEM,
+        this.guiLeft + this.width / 2,
         this.guiTop + y, size, size, "?");
     btnSize.setTooltip("wireless.target");
     this.addButton(btnSize);
-    //    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_FLUID,
-    //        this.guiLeft + colRight,
-    //        this.guiTop + y, size, size, "?");
-    //    btnSize.setTooltip("wireless.target");
-    //    this.addButton(btnSize);
-    //    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ENERGY,
-    //        this.guiLeft + colRight,
-    //        this.guiTop + y, size, size, "?");
-    //    btnSize.setTooltip("wireless.target");
-    //    this.addButton(btnSize);
+
+    int x = this.guiLeft + 6;
+    y = this.guiTop + 64;
+
+    GuiSliderInteger slider = new GuiSliderInteger(tile, 77,
+        x, y, 140, 14, 1, TileCableFluidWireless.MAX_TRANSFER,
+        TileCableFluidWireless.Fields.TRANSFER_RATE.ordinal());
+    slider.setTooltip("pump.rate");
+    this.addButton(slider);
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id == TileCableContentWireless.SLOT_CARD_ITEM) {
+    if (button.id == TileCableFluidWireless.SLOT_CARD_ITEM) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
@@ -106,24 +106,15 @@ public class GuiCableContentWireless extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     int u = 0, v = 0, x, y;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    // item transfer slot 
-    x = this.guiLeft + colLeft;
-    y = this.guiTop + 42;
+
+    x = guiLeft + 4;
+    y = guiTop + 42;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y,
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    //now draw target location card slots 
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
-    x = this.guiLeft + colLeft;
-    y = this.guiTop + 86;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    x = this.guiLeft + colRight;
-    //    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-    //        x, y,
-    //        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+
+    fluidBar.draw(((TileCableFluidWireless) tile).getCurrentFluidStack());
   }
 }

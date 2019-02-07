@@ -19,6 +19,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
+  //ITilePreviewToggle
   public static final int ENERGY_FULL = 1000 * 64;
   public static final int MAX_TRANSFER = 1000;
   public static final int SLOT_COUNT = 9;

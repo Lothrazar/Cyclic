@@ -48,6 +48,8 @@ import com.lothrazar.cyclicmagic.block.cablewireless.content.BlockCableContentWi
 import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.BlockCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.BlockCableFluidWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.TileCableFluidWireless;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
@@ -587,6 +589,10 @@ public class MultiContent implements IContent {
       BlockCableEnergyWireless w_energy = new BlockCableEnergyWireless();
       BlockRegistry.registerBlock(w_energy, "cable_wireless_energy", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
+      // f
+      BlockCableFluidWireless cable_wireless_fluid = new BlockCableFluidWireless();
+      BlockRegistry.registerBlock(cable_wireless_fluid, "cable_wireless_fluid", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileCableFluidWireless.class, Const.MODID + "cable_wireless_fluid_te");
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);

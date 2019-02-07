@@ -62,6 +62,9 @@ import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWir
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.ContainerCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.GuiCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.ContainerCableFluidWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.GuiCableFluidWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.TileCableFluidWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.ContainerClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.GuiClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
@@ -243,6 +246,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DEHYDRATOR = 47;
   public static final int GUI_INDEX_LASER = 48;
   public static final int GUI_INDEX_TOOLSWAPPER = 49;
+  public static final int GUI_INDEX_W_FLUID = 50;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -487,6 +491,11 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_LASER:
         if (te instanceof TileEntityLaser) {
           return new ContainerLaser(player.inventory, (TileEntityLaser) te);
+        }
+      break;
+      case GUI_INDEX_W_FLUID:
+        if (te instanceof TileCableFluidWireless) {
+          return new ContainerCableFluidWireless(player.inventory, (TileCableFluidWireless) te);
         }
       break;
     }
@@ -736,6 +745,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_LASER:
           if (te instanceof TileEntityLaser) {
             return new GuiLaser(player.inventory, (TileEntityLaser) te);
+          }
+        break;
+        case GUI_INDEX_W_FLUID:
+          if (te instanceof TileCableFluidWireless) {
+            return new GuiCableFluidWireless(player.inventory, (TileCableFluidWireless) te);
           }
         break;
       }

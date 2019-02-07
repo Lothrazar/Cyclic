@@ -1,28 +1,32 @@
-package com.lothrazar.cyclicmagic.block.cablewireless.content;
+package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 
-import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileCableContentWireless extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileCableFluidWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
+  //ITilePreviewToggle
+  public static final int TRANSFER_FLUID_PER_TICK = 500;
+  public static final int TANK_FULL = 10000;
   public static final int SLOT_CARD_ITEM = 0;
-  public static final int SLOT_TRANSFER = 1;
-
+  public static final int MAX_TRANSFER = 1000;
+  private int transferRate = MAX_TRANSFER / 2;
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, TRANSFER_RATE;
   }
 
   private int needsRedstone = 0;
 
-  public TileCableContentWireless() {
-    super(2);
-    this.setSlotsForInsert(SLOT_TRANSFER);
+  public TileCableFluidWireless() {
+    super(1);
+    tank = new FluidTankBase(TANK_FULL);
   }
 
   @Override
@@ -35,6 +39,8 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TRANSFER_RATE:
+        return this.transferRate;
     }
     return 0;
   }
@@ -45,12 +51,15 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
+      case TRANSFER_RATE:
+        transferRate = value;
+      break;
     }
   }
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    if (index == SLOT_TRANSFER) {
+    if (index == SLOT_CARD_ITEM) {
       return true;
     }
     return stack.getItem() instanceof ItemLocation;
@@ -65,7 +74,7 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
     if (isRunning() == false) {
       return;
     }
-    outputItems();
+    outputFluid();
   }
 
   @Override
@@ -85,22 +94,12 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
         world.isAreaLoaded(target.toBlockPos(), target.toBlockPos().up());
   }
 
-  private void outputItems() {
+  private void outputFluid() {
     BlockPosDim dim = this.getTarget(SLOT_CARD_ITEM);
     if (!this.isTargetValid(dim)) {
       return;
     }
     BlockPos target = dim.toBlockPos();
-    ItemStack stackToExport;
-    stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
-    stackToExport.setCount(1);
-    if (stackToExport.isEmpty() == false) {
-      ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, target, null, stackToExport);
-      if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
-        //then save result
-        this.decrStackSize(SLOT_TRANSFER);
-      }
-    }
+    UtilFluid.tryFillPositionFromTank(world, target, null, this.tank, TRANSFER_FLUID_PER_TICK);
   }
-
 }
