@@ -48,9 +48,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
     TIMER, REDSTONE, FUEL;
   }
 
-  private int timer = 0;
-  private int needsRedstone = 0;
-
   public TileEntityEnchanter() {
     super(2);
     this.initEnergy(BlockEnchanter.FUEL_COST);

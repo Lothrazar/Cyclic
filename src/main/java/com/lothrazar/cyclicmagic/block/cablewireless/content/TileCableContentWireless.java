@@ -18,7 +18,6 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
     REDSTONE;
   }
 
-  private int needsRedstone = 0;
 
   public TileCableContentWireless() {
     super(2);

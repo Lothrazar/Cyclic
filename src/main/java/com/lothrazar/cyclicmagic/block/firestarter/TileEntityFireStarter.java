@@ -19,7 +19,6 @@ public class TileEntityFireStarter extends TileEntityBaseMachineInvo implements 
 
   private int yOffset = 0;
   private int fireType = 0;
-  private int needsRedstone = 1;
   private int hOffset = 0;
   private int delay = 11;
 

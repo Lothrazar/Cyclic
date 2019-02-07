@@ -54,8 +54,6 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     TIMER, REDSTONE;
   }
 
-  private int timer;
-  private int needsRedstone = 1;
   private UUID uuid;
 
   public TileEntityPlacer() {

@@ -7,12 +7,9 @@ import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
-
-  private int needsRedstone = 0;
 
   public static enum Fields {
     REDSTONE, TIMER, FUEL;
@@ -107,15 +104,5 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
     }
   }
 
-  @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-  }
 
-  @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    return super.writeToNBT(tagCompound);
-  }
 }

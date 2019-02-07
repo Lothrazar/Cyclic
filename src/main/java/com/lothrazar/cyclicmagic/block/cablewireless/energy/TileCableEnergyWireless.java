@@ -31,7 +31,6 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
   }
 
   List<Integer> slotList;
-  private int needsRedstone = 0;
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);

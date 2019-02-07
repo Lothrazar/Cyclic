@@ -34,7 +34,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemCrystalHoe extends ItemHoe implements IHasRecipe {
 
   public ItemCrystalHoe() {
-    super(MaterialRegistry.powerToolMaterial);
+    super(MaterialRegistry.crystalToolMaterial);
   }
 
   @Override

@@ -60,7 +60,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
 
   private Container fakeContainer;
   private IRecipe recipe;
-  private int needsRedstone = 1;
   private InventoryCrafting crafter;
 
   public TileEntityCrafter() {

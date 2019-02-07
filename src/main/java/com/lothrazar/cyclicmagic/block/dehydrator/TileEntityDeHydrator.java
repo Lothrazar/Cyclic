@@ -41,7 +41,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   public static final int LAVA_DRAIN = 10;
   public static final int STASH_SIZE = 4;
   public static final int TANK_FULL = 10000;
-  private int needsRedstone = 1;
+
   private int timerMax = 1;
   private RecipeDeHydrate lastRecipe = null;
 

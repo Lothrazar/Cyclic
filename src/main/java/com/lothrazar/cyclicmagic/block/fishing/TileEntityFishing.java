@@ -66,7 +66,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
 
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
-  private int needsRedstone = 1;
 
   public TileEntityFishing() {
     super(1 + FISHSLOTS);

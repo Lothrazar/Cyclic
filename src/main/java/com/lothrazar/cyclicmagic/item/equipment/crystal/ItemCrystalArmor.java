@@ -42,7 +42,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemCrystalArmor extends ItemArmor implements IHasRecipe {
 
   public ItemCrystalArmor(EntityEquipmentSlot armorType) {
-    super(MaterialRegistry.powerArmorMaterial, 0, armorType);
+    super(MaterialRegistry.crystalArmorMaterial, 0, armorType);
   }
 
   @Override

@@ -34,7 +34,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemCrystalSpade extends ItemSpade implements IHasRecipe {
 
   public ItemCrystalSpade() {
-    super(MaterialRegistry.powerToolMaterial);
+    super(MaterialRegistry.crystalToolMaterial);
   }
 
   @Override

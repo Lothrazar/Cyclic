@@ -68,7 +68,7 @@ public class ItemCrystalSword extends ItemSword implements IHasRecipe, IHasConfi
   private boolean enableShooting;
 
   public ItemCrystalSword(SwordType t) {
-    super(MaterialRegistry.powerToolMaterial);
+    super(MaterialRegistry.crystalToolMaterial);
     this.type = t;
     this.setMaxDamage(1);
   }

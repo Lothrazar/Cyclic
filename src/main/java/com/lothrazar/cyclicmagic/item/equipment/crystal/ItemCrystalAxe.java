@@ -34,7 +34,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemCrystalAxe extends ItemAxe implements IHasRecipe {
 
   public ItemCrystalAxe() {
-    super(MaterialRegistry.powerToolMaterial, 6, -3.2F);
+    super(MaterialRegistry.crystalToolMaterial, 6, -3.2F);
   }
 
   @Override

@@ -34,7 +34,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemCrystalPickaxe extends ItemPickaxe implements IHasRecipe {
 
   public ItemCrystalPickaxe() {
-    super(MaterialRegistry.powerToolMaterial);
+    super(MaterialRegistry.crystalToolMaterial);
   }
 
   @Override

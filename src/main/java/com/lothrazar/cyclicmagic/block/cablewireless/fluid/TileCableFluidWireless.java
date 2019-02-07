@@ -19,13 +19,11 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   public static final int SLOT_CARD_ITEM = 0;
   public static final int MAX_TRANSFER = 1000;
   private int transferRate = MAX_TRANSFER / 2;
-  private int renderParticles = 0;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE, RENDERPARTICLES;
   }
 
-  private int needsRedstone = 0;
 
   public TileCableFluidWireless() {
     super(1);

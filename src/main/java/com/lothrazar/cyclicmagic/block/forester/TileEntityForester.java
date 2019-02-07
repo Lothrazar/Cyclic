@@ -72,8 +72,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private boolean isCurrentlyMining;
   private float curBlockDamage;
   private BlockPos targetPos = null;
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
 

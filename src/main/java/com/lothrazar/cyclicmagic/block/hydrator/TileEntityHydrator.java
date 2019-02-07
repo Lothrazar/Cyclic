@@ -43,7 +43,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
   public final static int TIMER_FULL = 40;
-  private int needsRedstone = 1;
 
   public static enum Fields {
     REDSTONE, TIMER, RECIPELOCKED, FUEL;
