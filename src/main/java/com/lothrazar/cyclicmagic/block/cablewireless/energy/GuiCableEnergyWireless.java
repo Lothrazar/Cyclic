@@ -85,7 +85,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       if (dim == null) {
         UtilChat.addChatMessage(player, "wireless.empty");
       }
-      else if (dim.dimension != player.dimension) {
+      else if (dim.getDimension() != player.dimension) {
         UtilChat.addChatMessage(player, "wireless.dimension");
       }
       else {

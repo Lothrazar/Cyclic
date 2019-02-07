@@ -1,16 +1,17 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 
+import com.lothrazar.cyclicmagic.block.cablewireless.ILaserTarget;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 
-public class TileCableFluidWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
+public class TileCableFluidWireless extends TileEntityBaseMachineFluid implements ITickable, ILaserTarget, ITileRedstoneToggle {
 
   //ITilePreviewToggle
   public static final int TRANSFER_FLUID_PER_TICK = 500;
@@ -18,8 +19,10 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   public static final int SLOT_CARD_ITEM = 0;
   public static final int MAX_TRANSFER = 1000;
   private int transferRate = MAX_TRANSFER / 2;
+  private int renderParticles = 0;
+
   public static enum Fields {
-    REDSTONE, TRANSFER_RATE;
+    REDSTONE, TRANSFER_RATE, RENDERPARTICLES;
   }
 
   private int needsRedstone = 0;
@@ -41,6 +44,8 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
         return this.needsRedstone;
       case TRANSFER_RATE:
         return this.transferRate;
+      case RENDERPARTICLES:
+        return this.renderParticles;
     }
     return 0;
   }
@@ -53,6 +58,9 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
       break;
       case TRANSFER_RATE:
         transferRate = value;
+      break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
       break;
     }
   }
@@ -90,16 +98,35 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
 
   private boolean isTargetValid(BlockPosDim target) {
     return target != null &&
-        target.dimension == this.getDimension() &&
+        target.getDimension() == this.getDimension() &&
         world.isAreaLoaded(target.toBlockPos(), target.toBlockPos().up());
   }
 
   private void outputFluid() {
     BlockPosDim dim = this.getTarget(SLOT_CARD_ITEM);
-    if (!this.isTargetValid(dim)) {
-      return;
+    if (this.isTargetValid(dim)) {
+      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), null, this.tank, TRANSFER_FLUID_PER_TICK);
     }
-    BlockPos target = dim.toBlockPos();
-    UtilFluid.tryFillPositionFromTank(world, target, null, this.tank, TRANSFER_FLUID_PER_TICK);
+  }
+
+  @Override
+  public boolean isVisible() {
+    return this.renderParticles == 1;
+  }
+
+  @Override
+  public LaserConfig getTarget() {
+    //find laser endpoints and go
+    BlockPosDim first = new BlockPosDim(this.getPos(), this.getDimension());
+    BlockPosDim second = this.getTarget(SLOT_CARD_ITEM);
+    if (second != null && first != null && second.getDimension() == first.getDimension()) {
+      float[] color = new float[] { 0.8F, 0.8F, 0.8F };
+      double rotationTime = 0;
+      double beamWidth = 0.09;
+      float alpha = 0.5F;
+      return new LaserConfig(first.toBlockPos(), second.toBlockPos(),
+          rotationTime, alpha, beamWidth, color);
+    }
+    return null;
   }
 }

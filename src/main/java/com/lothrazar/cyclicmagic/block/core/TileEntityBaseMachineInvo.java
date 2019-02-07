@@ -76,6 +76,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private int energyCost = 0;
   protected int speed = 1;
   protected int timer;
+  protected int renderParticles = 0;
+  protected int needsRedstone = 1;
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
   InvWrapperRestricted invHandler;
   protected EnergyStore energyStorage;
@@ -443,8 +445,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
-    timer = compound.getInteger(NBT_TIMER);
+    renderParticles = compound.getInteger(NBT_RENDER);
     speed = compound.getInteger(NBT_SPEED);
+    needsRedstone = compound.getInteger(NBT_REDST);
+    timer = compound.getInteger(NBT_TIMER);
+    needsRedstone = compound.getInteger(NBT_REDST);
     if (this.hasEnergy && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     }
@@ -454,8 +459,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     this.writeInvoToNBT(compound);
+    compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_TIMER, timer);
+    compound.setInteger(NBT_REDST, needsRedstone);
     if (hasEnergy && energyStorage != null) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     }

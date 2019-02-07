@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class LaserTESR extends TileEntitySpecialRenderer<TileEntityLaser> {
+public class LaserAnimatedTESR extends TileEntitySpecialRenderer<TileEntityLaser> {
 
   @Override
   public void render(TileEntityLaser te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -51,7 +51,7 @@ public class LaserTESR extends TileEntitySpecialRenderer<TileEntityLaser> {
     }
     for (int i = 0; i < te.getSizeInventory(); i++) {
       second = te.getTarget(i);
-      if (second != null && second.toBlockPos() != null && second.dimension == te.getDimension()) {
+      if (second != null && second.toBlockPos() != null && second.getDimension() == te.getDimension()) {
         LaserConfig laserCnf = new LaserConfig(first, second.toBlockPos(),
             rotationTime, te.alphaCalculated(), beamWidth, color);
         laserCnf.xOffset = te.getxOffset();

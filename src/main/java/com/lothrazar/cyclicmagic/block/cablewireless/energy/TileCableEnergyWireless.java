@@ -103,7 +103,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
 
   private boolean isTargetValid(BlockPosDim target) {
     return target != null &&
-        target.dimension == this.getDimension() &&
+        target.getDimension() == this.getDimension() &&
         world.isAreaLoaded(target.toBlockPos(), target.toBlockPos().up());
   }
 

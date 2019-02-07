@@ -95,8 +95,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private int size;
   private int vRange = 2;
   public int yOffset = 0;
@@ -441,7 +439,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     compound.setInteger(NBT_REDST, needsRedstone);
     compound.setInteger(NBT_LR, rightClickIfZero);
     compound.setInteger(NBT_SIZE, size);
-    compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger("yoff", yOffset);
     compound.setInteger("tickDelay", tickDelay);
     return super.writeToNBT(compound);
