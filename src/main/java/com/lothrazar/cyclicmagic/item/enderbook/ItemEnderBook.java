@@ -221,7 +221,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
         'e', "enderpearl",
         'b', Items.BOOK,
         'n', "blockEmerald");
-
   }
 
   @Override

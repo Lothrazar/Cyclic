@@ -49,7 +49,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockLibraryController extends BlockBaseHasTile implements IHasRecipe {
 
   private static final int RANGE = 4;
-
   @GameRegistry.ObjectHolder(Const.MODRES + "block_library")
   static Block libraryInstance;
 
@@ -64,7 +63,6 @@ public class BlockLibraryController extends BlockBaseHasTile implements IHasReci
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-
     ItemStack playerHeld = player.getHeldItem(hand);
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
       return false;
@@ -97,7 +95,6 @@ public class BlockLibraryController extends BlockBaseHasTile implements IHasReci
     List<BlockPos> connectors = UtilWorld.getMatchingInRange(world, pos, libraryInstance, RANGE);
     TileEntity te;
     TileEntityLibrary lib;
-
     for (BlockPos p : connectors) {
       te = world.getTileEntity(p);
       if (te instanceof TileEntityLibrary) {

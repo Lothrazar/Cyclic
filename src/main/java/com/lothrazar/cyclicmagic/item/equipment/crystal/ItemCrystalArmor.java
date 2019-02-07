@@ -39,9 +39,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
-public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
+public class ItemCrystalArmor extends ItemArmor implements IHasRecipe {
 
-  public ItemPowerArmor(EntityEquipmentSlot armorType) {
+  public ItemCrystalArmor(EntityEquipmentSlot armorType) {
     super(MaterialRegistry.powerArmorMaterial, 0, armorType);
   }
 

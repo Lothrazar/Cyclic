@@ -93,7 +93,6 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
     }
   }
 
-
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);

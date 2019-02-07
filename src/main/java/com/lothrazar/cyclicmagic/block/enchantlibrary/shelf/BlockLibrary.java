@@ -133,9 +133,9 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
       else {
         player.addItemStackToInventory(new ItemStack(Items.BOOK));
       }
-        onSuccess(player);
-        library.markDirty();
-        return true;
+      onSuccess(player);
+      library.markDirty();
+      return true;
       //      }
     }
     else if (playerHeld.getItem().equals(Items.BOOK)

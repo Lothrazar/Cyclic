@@ -94,7 +94,6 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
 
   public ItemStack addEnchantmentToQuadrant(ItemStack playerHeld, QuadrantEnum segment) {
     Enchantment enchToRemove = null;
-
     Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(playerHeld);
     for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
       if (this.addEnchantment(segment, entry.getKey(), entry.getValue())) {
@@ -107,7 +106,6 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
       if (enchants.size() == 1) {
         //if it only has 1, and we are going to reomve that last thing, well its just a book now
         return ItemStack.EMPTY;
-
       }
       else {
         //it has more than one, so downshift by 1
@@ -115,7 +113,6 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
         enchants.remove(enchToRemove);
         ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(enchants, inputCopy);
-
         refreshTarget();
         return inputCopy;
       }
@@ -131,6 +128,7 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     IBlockState oldState = world.getBlockState(getPos());
     world.notifyBlockUpdate(getPos(), oldState, oldState, 3);
   }
+
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);

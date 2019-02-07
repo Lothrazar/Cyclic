@@ -21,23 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.equipment.sandstone;
+package com.lothrazar.cyclicmagic.item.equipment.crystal;
 
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemSandstoneSword extends ItemSword implements IHasRecipe {
+public class ItemCrystalHoe extends ItemHoe implements IHasRecipe {
 
-  public ItemSandstoneSword() {
-    super(MaterialRegistry.sandstoneToolMaterial);
+  public ItemCrystalHoe() {
+    super(MaterialRegistry.powerToolMaterial);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    if (OreDictionary.itemMatches(this.toolMaterial.getRepairItemStack(), repair, false)) {
+      return true;
+    }
+    return super.getIsRepairable(toRepair, repair);
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', "sandstone", 's', "stickWood");
+    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', "sandstone", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', "sandstone", 's', "stickWood");
   }
 }
