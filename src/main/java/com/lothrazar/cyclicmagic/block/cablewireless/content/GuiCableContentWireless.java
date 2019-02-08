@@ -42,18 +42,13 @@ import net.minecraft.util.math.BlockPos;
 
 public class GuiCableContentWireless extends GuiBaseContainer {
 
-  private int colLeft;
-  //private int colMid;
-  private int colRight;
 
   public GuiCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
     super(new ContainerCableContentWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
     int xCenter = this.getScreenSize().width() / 2;
-    colLeft = this.guiLeft + 42;
-    // colMid = xCenter - 8;
-    colRight = xCenter + 26;
+
   }
 
   @Override
@@ -71,16 +66,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
       //      btnSize.height = 14;
       this.addButton(btnSize);
     }
-    //    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_FLUID,
-    //        this.guiLeft + colRight,
-    //        this.guiTop + y, size, size, "?");
-    //    btnSize.setTooltip("wireless.target");
-    //    this.addButton(btnSize);
-    //    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ENERGY,
-    //        this.guiLeft + colRight,
-    //        this.guiTop + y, size, size, "?");
-    //    btnSize.setTooltip("wireless.target");
-    //    this.addButton(btnSize);
+
   }
 
   @Override
@@ -115,7 +101,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     // item transfer slot 
-    x = this.guiLeft + colLeft;
+    x = this.guiLeft + 42;
     y = this.guiTop + 42;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y,

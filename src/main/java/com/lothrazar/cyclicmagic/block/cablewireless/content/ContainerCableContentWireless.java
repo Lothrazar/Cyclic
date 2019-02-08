@@ -42,8 +42,8 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
   public ContainerCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
-    int x = 43;
-    int y = 43;
+    int x = 152;
+    int y = 46;
     addSlotToContainer(new SlotCheckTileValid(te, TileCableContentWireless.SLOT_TRANSFER, x, y));
     //other three slots 
     y = 87;
