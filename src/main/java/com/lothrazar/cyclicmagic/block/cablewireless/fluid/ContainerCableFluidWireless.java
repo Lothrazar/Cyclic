@@ -23,9 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -39,17 +41,21 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
 
   public ContainerCableFluidWireless(InventoryPlayer inventoryPlayer, TileCableFluidWireless te) {
     super(te);
-    this.setScreenSize(ScreenSize.STANDARD);
+    this.setScreenSize(ScreenSize.LARGE);
     int x = 43;
     int y = 43;
     y = 87;
-    addSlotToContainer(new SlotCheckTileValid(te, TileCableFluidWireless.SLOT_CARD_ITEM, x, y) {
+    for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
+      addSlotToContainer(new SlotCheckTileValid(te, i, x, y) {
 
-      @Override
-      public int getSlotStackLimit() {
-        return 1;
-      }
-    });
+        //one per slot
+        @Override
+        public int getSlotStackLimit() {
+          return 1;
+        }
+      });
+      x += Const.SQ;
+    }
     //    x += 72;
     //    addSlotToContainer(new SlotCheckTileValid(te, TileCableFluidWireless.SLOT_CARD_ITEM, x, y) {
     //

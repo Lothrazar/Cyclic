@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.cablewireless.content;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
@@ -47,7 +48,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
 
   public GuiCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
     super(new ContainerCableContentWireless(inventoryPlayer, te), te);
-    this.setScreenSize(ScreenSize.STANDARD);
+    this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
     int xCenter = this.getScreenSize().width() / 2;
     colLeft = this.guiLeft + 42;
@@ -58,13 +59,18 @@ public class GuiCableContentWireless extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    int x;
     int y = 106;
     int size = Const.SQ;
-    GuiButtonTooltip btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_ITEM,
-        this.guiLeft + colLeft,
-        this.guiTop + y, size, size, "?");
-    btnSize.setTooltip("wireless.target");
-    this.addButton(btnSize);
+    GuiButtonTooltip btnSize;
+    for (int i = 0; i < TileCableContentWireless.SLOT_COUNT - 1; i++) {
+      btnSize = new GuiButtonTooltip(i,
+          this.guiLeft + i * (size) + 8,
+          this.guiTop + y, size, size, "?");
+      btnSize.setTooltip("wireless.target");
+      //      btnSize.height = 14;
+      this.addButton(btnSize);
+    }
     //    btnSize = new GuiButtonTooltip(TileCableContentWireless.SLOT_CARD_FLUID,
     //        this.guiLeft + colRight,
     //        this.guiTop + y, size, size, "?");
@@ -79,7 +85,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id == TileCableContentWireless.SLOT_CARD_ITEM) {
+    if (button.id != redstoneBtn.id) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
@@ -116,14 +122,13 @@ public class GuiCableContentWireless extends GuiBaseContainer {
         u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     //now draw target location card slots 
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
-    x = this.guiLeft + colLeft;
+    x = this.guiLeft + 8;
     y = this.guiTop + 86;
-    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-        x, y,
-        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    x = this.guiLeft + colRight;
-    //    Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
-    //        x, y,
-    //        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
+      Gui.drawModalRectWithCustomSizedTexture(// this is for item transfer
+          x, y,
+          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      x += Const.SQ;
+    }
   }
 }
