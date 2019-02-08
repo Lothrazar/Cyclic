@@ -23,20 +23,18 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
   public static final int ENERGY_FULL = 1000 * 64;
   public static final int MAX_TRANSFER = 1000;
   public static final int SLOT_COUNT = 9;
-  //it transfers this to each location if possible
+  List<Integer> slotList = IntStream.rangeClosed(
+      0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
+
   private int transferRate = MAX_TRANSFER / 2;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
   }
 
-  List<Integer> slotList;
-
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
     this.initEnergy(new EnergyStore(ENERGY_FULL, ENERGY_FULL, ENERGY_FULL));
-    slotList = IntStream.rangeClosed(
-        0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
   }
 
   @Override
