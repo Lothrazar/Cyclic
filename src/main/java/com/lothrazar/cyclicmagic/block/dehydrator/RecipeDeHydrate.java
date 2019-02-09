@@ -108,8 +108,6 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public static void initAllRecipes() {
     int defaultTime = 10;
     int defaultFluid = 100;
-    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE),
-        new ItemStack(Items.STICK), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CLAY),
         new ItemStack(Blocks.HARDENED_CLAY), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.DIRT),
@@ -122,6 +120,12 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
         new ItemStack(Blocks.DIRT, 1, 2), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Items.ROTTEN_FLESH, 12),
         new ItemStack(Items.LEATHER), defaultTime, defaultFluid));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE),
+        new ItemStack(Items.STICK), defaultTime, defaultFluid));
+    for (int i = 0; i < 6; i++) {
+      RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING, 1, i),
+          new ItemStack(Items.STICK), defaultTime, defaultFluid));
+    }
     //dry out concrete back to powder
     for (EnumDyeColor col : EnumDyeColor.values()) {
       addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CONCRETE, 1, col.getMetadata()),

@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dehydrator;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
@@ -118,16 +117,12 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       lastRecipe = null;
       return false;
     }
-    //    int newfill = this.getCurrentFluidStackAmount() + lastRecipe.getFluid();
-    //    if (newfill >= this.tank.getCapacity()) {
-    //      //if we try to add what the recipe gives, will we be ovefull?
-    //      return false;  
-    //    }
-    if (lastRecipe.tryPayCost(this)) {
+    if (tank.getCapacity() == tank.getFluidAmount()) {
+      return false;//full water
+    }
 
-      ModCyclic.logger.error("fillby" + lastRecipe.getFluid());
-      this.fill(new FluidStack(FluidRegistry.WATER, lastRecipe.getFluid()), true);
-      ModCyclic.logger.error("-getCurrentFluidStackAmount" + this.getCurrentFluidStackAmount());
+    if (lastRecipe.tryPayCost(this)) {
+      tank.fill(new FluidStack(FluidRegistry.WATER, lastRecipe.getFluid()), true);
       //only create the output if cost was successfully paid
       this.sendOutputItem(lastRecipe.getRecipeOutput());
       return true;
