@@ -45,6 +45,10 @@ public class GuiScreenBlock extends GuiBaseContainer {
   private GuiTextFieldMulti txtInput;
   TileEntityScreen screen;
   private ButtonTileEntityField btnToggle;
+  private GuiSliderInteger sliderR;
+  private GuiSliderInteger sliderG;
+  private GuiSliderInteger sliderB;
+  private GuiSliderInteger sliderPadding;
 
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
@@ -68,22 +72,22 @@ public class GuiScreenBlock extends GuiBaseContainer {
     int h = 12;
     id++;
     int y = this.guiTop + txtInput.height + Const.PAD;
-    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
-    sliderX.setTooltip("screen.red");
-    this.addButton(sliderX);
+    sliderR = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
+    sliderR.setTooltip("screen.red");
+    this.addButton(sliderR);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderG = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
+    sliderG = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
     sliderG.setTooltip("screen.green");
     this.addButton(sliderG);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
+    sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDING.ordinal());
+    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDING.ordinal());
     sliderPadding.setTooltip("screen.padding");
     this.addButton(sliderPadding);
     //text box of course
@@ -124,10 +128,18 @@ public class GuiScreenBlock extends GuiBaseContainer {
     if (txtInput != null) {
       txtInput.updateCursorCounter();
     }
+    sliderR.updateScreen();
+    sliderG.updateScreen();
+    sliderB.updateScreen();
+    sliderPadding.updateScreen();
   }
 
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    sliderR.keyTyped(typedChar, keyCode);
+    sliderG.keyTyped(typedChar, keyCode);
+    sliderB.keyTyped(typedChar, keyCode);
+    sliderPadding.keyTyped(typedChar, keyCode);
     if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
       super.keyTyped(typedChar, keyCode);
     }

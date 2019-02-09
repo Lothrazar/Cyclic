@@ -49,6 +49,7 @@ public class GuiDropperExact extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     // buttons!  
     int id = 1;
     int width = 90;

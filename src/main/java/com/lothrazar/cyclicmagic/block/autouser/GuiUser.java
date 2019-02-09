@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.autouser;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
@@ -58,6 +59,7 @@ public class GuiUser extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int btnId = 3;
     btnSize = new ButtonTileEntityField(btnId++,
         this.guiLeft + 24 + Const.PAD,
@@ -83,6 +85,11 @@ public class GuiUser extends GuiBaseContainer {
         Fields.SPEED.ordinal());
     slider.setTooltip("tile.block_user.speed.tooltip");
     this.addButton(slider);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
 
   @Override

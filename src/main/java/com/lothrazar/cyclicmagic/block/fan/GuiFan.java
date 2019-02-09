@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fan;
 
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
@@ -38,6 +40,8 @@ public class GuiFan extends GuiBaseContainer {
   private TileEntityFan tile;
   boolean debugLabels = false;
   private ButtonTileEntityField btnTogglePush;
+  private GuiSliderInteger sliderDelay;
+  private GuiSliderInteger sliderOffset;
 
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
@@ -49,12 +53,13 @@ public class GuiFan extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 2;
     int w = 18, h = 10;
     int x = this.guiLeft + 30;
     int y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
+    sliderDelay = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
         field);
     sliderDelay.setTooltip("button.fan.range.tooltip");
     this.addButton(sliderDelay);
@@ -62,7 +67,7 @@ public class GuiFan extends GuiBaseContainer {
     ///////////////// SPEED BUTTONS
     y += 18;
     field = TileEntityFan.Fields.SPEED.ordinal();
-    GuiSliderInteger sliderOffset = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
+    sliderOffset = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
         field);
     sliderOffset.setTooltip("button.fan.speed.tooltip");
     this.addButton(sliderOffset);
@@ -74,6 +79,25 @@ public class GuiFan extends GuiBaseContainer {
     btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.addButton(btnTogglePush);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    sliderDelay.keyTyped(typedChar, keyCode);
+    sliderOffset.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    sliderDelay.updateScreen();
+    sliderOffset.updateScreen();
   }
 
   @Override

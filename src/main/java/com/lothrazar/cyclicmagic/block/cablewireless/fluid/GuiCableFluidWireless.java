@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
@@ -46,6 +47,8 @@ public class GuiCableFluidWireless extends GuiBaseContainer {
 
 
 
+  private GuiSliderInteger slider;
+
   public GuiCableFluidWireless(InventoryPlayer inventoryPlayer, TileCableFluidWireless te) {
     super(new ContainerCableFluidWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
@@ -60,6 +63,7 @@ public class GuiCableFluidWireless extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int x;
     int y = 106;
     int size = Const.SQ;
@@ -74,11 +78,28 @@ public class GuiCableFluidWireless extends GuiBaseContainer {
     x = this.guiLeft + 6;
     y = this.guiTop + 64;
 
-    GuiSliderInteger slider = new GuiSliderInteger(tile, 77,
+    slider = new GuiSliderInteger(tile, 77,
         x, y, 140, 14, 1, TileCableFluidWireless.MAX_TRANSFER,
         TileCableFluidWireless.Fields.TRANSFER_RATE.ordinal());
     slider.setTooltip("pump.rate");
     this.addButton(slider);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 
   @Override

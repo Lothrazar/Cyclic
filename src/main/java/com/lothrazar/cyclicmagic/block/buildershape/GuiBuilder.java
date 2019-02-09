@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.buildershape;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
@@ -68,6 +69,7 @@ public class GuiBuilder extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     //first the main top left type button
     TileEntityStructureBuilder.Fields fld;
     int id = 1;
@@ -192,6 +194,11 @@ public class GuiBuilder extends GuiBaseContainer {
     btnRotDown.displayString = "-";
     this.addButton(btnRotDown);
     this.registerButtonDisableTrigger(btnRotDown, ButtonTriggerType.EQUAL, fld.ordinal(), 0);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
 
   @Override

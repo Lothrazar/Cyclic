@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.controlledminer;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -59,6 +60,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     //first the main top left type button
     int id = 2, x, y;
     btnWhitelist = new ButtonTileEntityField(id++,
@@ -81,6 +83,10 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.addButton(slider);
   }
 
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     super.keyTyped(typedChar, keyCode);
