@@ -247,14 +247,12 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private void tickCableFlow() {
-    ArrayList<Integer> shuffledFaces = new ArrayList<>();
+    ArrayList<EnumFacing> shuffledFaces = new ArrayList<>();
     for (int i = 0; i < EnumFacing.values().length; i++) {
-      shuffledFaces.add(i);
+      shuffledFaces.add(EnumFacing.values()[i]);
     }
     Collections.shuffle(shuffledFaces);
-    EnumFacing exportToSide;
-    for (int i : shuffledFaces) {
-      exportToSide = EnumFacing.values()[i];
+    for (EnumFacing exportToSide : shuffledFaces) {
       if (this.isItemPipe() && this.isItemIncomingFromFace(exportToSide) == false
           && this.getBlacklist(exportToSide) == false) {
         moveItems(exportToSide);
@@ -275,7 +273,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (this.getStackInSlot(SLOT).isEmpty()) {
       return;
     }
-    EnumFacing themFacingMe = myFacingDir.getOpposite();
     ItemStack stackToExport = this.getStackInSlot(SLOT).copy();
     //ok,  not incoming from here. so lets output some
     BlockPos posTarget = pos.offset(myFacingDir);
@@ -284,6 +281,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       return;
     }
     boolean outputSuccess = false;
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
     if (leftAfterDeposit.isEmpty() || leftAfterDeposit.getCount() != stackToExport.getCount()) {
       //   if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
