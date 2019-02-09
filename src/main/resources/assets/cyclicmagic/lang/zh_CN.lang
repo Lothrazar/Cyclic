@@ -77,6 +77,7 @@ button.terraria.deposit=存储全部
 button.terraria.lootall=拿走全部
 button.terraria.quickstack=堆叠物品栏物品
 button.terraria.restock=堆叠箱子物品
+button.waypoint.dimension=只有在以下维度才可用：
 button.waypoint.cost=花费经验：
 button.waypoint.distance=距离：
 command.gethome.bed=你用于设置家的床已丢失或未设置
@@ -394,6 +395,7 @@ item.sack_ender.guide=便携式的末影箱。打开这个袋子相当于打开�
 item.sack_ender.name=末影袋
 item.sack_ender.tooltip=便携式末影箱子
 
+item.sandstone_sword.name=Sandstone Sword
 item.sandstone_axe.name=砂岩斧
 item.sandstone_hoe.name=砂岩锄
 item.sandstone_pickaxe.name=砂岩镐
@@ -1355,10 +1357,13 @@ wireless.empty=请先用GPS标记器标记要传输到的节点位置，然后�
 wireless.dimension=不能跨维度传输
 
 
-tile.cable_wireless.name=传输节点
-tile.cable_wireless.tooltip=无线传输流体和物品
-tile.cable_wireless.guide=无线传输流体和物品
+tile.cable_wireless.name=物品传输节点
+tile.cable_wireless.tooltip=无线传输物品
+tile.cable_wireless.guide=无线传输物品
 
+tile.cable_wireless_fluid.name=流体传输节点
+tile.cable_wireless_fluid.tooltip=无线传输流体
+tile.cable_wireless_fluid.guide=无线传输流体
 
 tile.cable_wireless_energy.name=能量传输节点
 tile.cable_wireless_energy.tooltip=无线传输能量
@@ -1396,3 +1401,4 @@ tile.water_candle.tooltip=提升附近的生物生成率
 tile.water_candle.guide=使用打火石以点燃。它能大幅提升附近生物的生成率，并且遵循生物和生物群系的正常生成规则。每次生成它都有机会自动熄灭。可在配置文件中设置更多选项。
 
 extended.toolbelt=键可以在未打开物品栏时开启它
+
