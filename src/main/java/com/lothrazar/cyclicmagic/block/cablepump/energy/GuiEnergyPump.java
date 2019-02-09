@@ -23,12 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiEnergyPump extends GuiBaseContainer {
+
+  private GuiSliderInteger slider;
 
   public GuiEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
     super(new ContainerEnergyPump(inventoryPlayer, tileEntity), tileEntity);
@@ -38,15 +44,39 @@ public class GuiEnergyPump extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 1;
     int width = 164;
     int h = 20;
     int x = this.guiLeft + 6;
     int y = this.guiTop + 28;
     //not more than the cable can handle
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK,
+    slider = new GuiSliderInteger(tile, id++, x, y, width, h, 1, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK,
         TileEntityEnergyPump.Fields.TRANSFER_RATE.ordinal());
-    sliderDelay.setTooltip("pump.rate");
-    this.addButton(sliderDelay);
+    slider.setTooltip("pump.rate");
+    this.addButton(slider);
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    //    slider.setTooltip("pump.rate");
+  }
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 }

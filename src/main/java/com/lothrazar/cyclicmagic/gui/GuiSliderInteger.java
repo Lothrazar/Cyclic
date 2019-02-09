@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
@@ -32,6 +33,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
@@ -43,7 +45,14 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   private final TileEntityBaseMachineInvo responder;
   private int responderField;
   private boolean appendPlusSignLabel = true;
+  private List<String> tooltip = new ArrayList<String>();
+  private String tooltipOriginal;
 
+  public GuiSliderInteger(TileEntityBaseMachineInvo guiResponder, int idIn, int x, int y,
+      int widthIn, int heightIn,
+      final int minIn, final int maxIn, int fieldId) {
+    this(guiResponder, idIn, x, y, widthIn, heightIn, minIn, maxIn, fieldId, "");
+  }
   /**
    * mimic of net.minecraft.client.gui.GuiSlider; uses integers instead of float
    * 
@@ -51,7 +60,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
    */
   public GuiSliderInteger(TileEntityBaseMachineInvo guiResponder, int idIn, int x, int y,
       int widthIn, int heightIn,
-      final int minIn, final int maxIn, int fieldId) {
+      final int minIn, final int maxIn, int fieldId, String tooltip) {
     super(idIn, x, y, widthIn, heightIn, "");
     this.updateDisplay();
     responder = guiResponder;
@@ -60,6 +69,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
     this.responderField = fieldId;
     appendPlusSignLabel = (getMin() < 0);//if it can be negative, we should distinguish
     this.setSliderValue(responder.getField(responderField), false);
+    tooltipOriginal = tooltip;
   }
 
   public void setSliderValue(float value, boolean notifyResponder) {
@@ -99,16 +109,13 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   }
 
   public void setTooltip(final String t) {
+    tooltipOriginal = t;
     List<String> remake = new ArrayList<String>();
     remake.add(UtilChat.lang(t));
+    if (this.isMouseOver())
+      remake.add(TextFormatting.GRAY + UtilChat.lang("pump.secondline") + amt());
     tooltip = remake;
   }
-
-  public void addTooltip(final String t) {
-    tooltip.add(t);
-  }
-
-  private List<String> tooltip = new ArrayList<String>();
 
   @Override
   public List<String> getTooltips() {
@@ -173,5 +180,37 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
 
   public int getMin() {
     return min;
+  }
+
+  public int amt() {
+    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+      return 5;
+    }
+    if (Keyboard.isKeyDown(Keyboard.KEY_RMENU) || Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+      return 25;
+    }
+    return 1;
+  }
+
+  public void keyTyped(char typedChar, int keyCode) {
+    if (this.isMouseOver()) {
+      //left is 30 or 203
+      //right is 205 32
+      int dir = 0;
+      if (keyCode == 30 || keyCode == 203) {
+        dir = -1;
+      }
+      else if (keyCode == 32 || keyCode == 205) {
+        dir = 1;
+      }
+      if (dir != 0 && this.getSliderValue() + dir * this.amt() <= this.getMax()) {
+        this.setSliderValue(this.getSliderValue() + dir * this.amt(), false);
+      }
+    }
+  }
+
+  public void updateScreen() {
+    this.setTooltip(tooltipOriginal);
+
   }
 }

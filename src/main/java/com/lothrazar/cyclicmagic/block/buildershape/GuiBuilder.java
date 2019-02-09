@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.buildershape;
 
+import java.io.IOException;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
@@ -49,6 +50,9 @@ public class GuiBuilder extends GuiBaseContainer {
   private int xControlsStart = 158;
   private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
+  private GuiSliderInteger sliderX;
+  private GuiSliderInteger sliderY;
+  private GuiSliderInteger sliderZ;
 
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
@@ -72,17 +76,17 @@ public class GuiBuilder extends GuiBaseContainer {
     int h = 10;
     int x = this.guiLeft + 24;
     int y = this.guiTop + 15;
-    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OX.ordinal());
+    sliderX = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OX.ordinal());
     sliderX.setTooltip("X");
     this.addButton(sliderX);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderY = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OY.ordinal());
+    sliderY = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OY.ordinal());
     sliderY.setTooltip("Y");
     this.addButton(sliderY);
     id++;
     y += h + 1;
-    GuiSliderInteger sliderZ = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OZ.ordinal());
+    sliderZ = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OZ.ordinal());
     sliderZ.setTooltip("Z");
     this.addButton(sliderZ);
     id++;
@@ -190,6 +194,21 @@ public class GuiBuilder extends GuiBaseContainer {
     this.registerButtonDisableTrigger(btnRotDown, ButtonTriggerType.EQUAL, fld.ordinal(), 0);
   }
 
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    sliderX.keyTyped(typedChar, keyCode);
+    sliderY.keyTyped(typedChar, keyCode);
+    sliderZ.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    sliderX.updateScreen();
+    sliderY.updateScreen();
+    sliderZ.updateScreen();
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
