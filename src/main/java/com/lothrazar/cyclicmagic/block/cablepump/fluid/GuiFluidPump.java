@@ -77,7 +77,7 @@ public class GuiFluidPump extends GuiBaseContainer {
   }
 
   @Override
-  public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
+  public void updateScreen() {
     super.updateScreen();
     slider.updateScreen();
   }
@@ -86,8 +86,5 @@ public class GuiFluidPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    //    slider.setTooltip("pump.rate");
-
   }
-
 }

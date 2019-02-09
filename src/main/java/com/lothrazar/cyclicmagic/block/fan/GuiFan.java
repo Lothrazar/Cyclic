@@ -113,16 +113,7 @@ public class GuiFan extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    //    btnTogglePrt.updateDisplayStringWith(tile);
-    //    btnTogglePush.updateDisplayStringWith(tile);
     btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(TileEntityFan.Fields.PUSHPULL.ordinal()));
-    //    String display = "" + this.tile.getRange();
-    //    int x = (display.length() > 1) ? xRange + 2 : xRange + 3;
-    //    this.drawString(display, x, yHeightTxtbox);
-    //    display = "" + this.tile.getSpeed();
-    //    x -= 20;
-    //    this.drawString(display, x, yHeightTxtbox);
-    //    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

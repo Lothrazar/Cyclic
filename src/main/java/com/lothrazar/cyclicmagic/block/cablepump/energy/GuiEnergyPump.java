@@ -61,7 +61,6 @@ public class GuiEnergyPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    //    slider.setTooltip("pump.rate");
   }
   @Override
   public void onGuiClosed() {

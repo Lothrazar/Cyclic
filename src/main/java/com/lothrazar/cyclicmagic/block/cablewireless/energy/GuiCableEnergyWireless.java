@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -58,6 +59,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int y = 106;
     int size = Const.SQ;
     GuiButtonTooltip btnSize;
@@ -104,6 +106,23 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
         }
       }
     }
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 
   @Override
