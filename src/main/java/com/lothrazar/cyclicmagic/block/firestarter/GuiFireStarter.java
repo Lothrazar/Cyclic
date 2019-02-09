@@ -67,6 +67,7 @@ public class GuiFireStarter extends GuiBaseContainer {
     super.updateScreen();
     slider.updateScreen();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

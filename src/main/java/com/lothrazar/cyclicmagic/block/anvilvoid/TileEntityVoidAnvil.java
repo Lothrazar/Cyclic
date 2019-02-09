@@ -103,6 +103,4 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
       //consume resources
     }
   }
-
-
 }

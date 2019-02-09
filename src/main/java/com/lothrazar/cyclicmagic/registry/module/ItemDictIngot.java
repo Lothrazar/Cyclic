@@ -8,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
-
 public class ItemDictIngot extends Item implements IHasOreDict, IHasRecipe {
 
   @Override

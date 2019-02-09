@@ -62,6 +62,7 @@ public class GuiEnergyPump extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
+
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);

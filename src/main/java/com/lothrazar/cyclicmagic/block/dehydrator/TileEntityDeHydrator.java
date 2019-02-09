@@ -42,7 +42,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   static final int SLOT_RECIPE = 0;
   public static final int STASH_SIZE = 4;
   public static final int TANK_FULL = 16 * Fluid.BUCKET_VOLUME;
-
   private int timerMax = 1;
   private RecipeDeHydrate lastRecipe = null;
 
@@ -120,7 +119,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     if (tank.getCapacity() == tank.getFluidAmount()) {
       return false;//full water
     }
-
     if (lastRecipe.tryPayCost(this)) {
       tank.fill(new FluidStack(FluidRegistry.WATER, lastRecipe.getFluid()), true);
       //only create the output if cost was successfully paid

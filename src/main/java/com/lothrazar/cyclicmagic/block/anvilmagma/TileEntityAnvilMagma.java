@@ -45,7 +45,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     TIMER, REDSTONE;
   }
 
-
   public TileEntityAnvilMagma() {
     super(2);
     tank = new FluidTankBase(TANK_FULL);
@@ -100,7 +99,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     FluidStack contains = this.tank.getFluid();
     return (contains != null && contains.amount >= FLUID_COST);
   }
-
 
   @Override
   public int getFieldCount() {

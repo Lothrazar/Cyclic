@@ -95,7 +95,6 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         cable.updateIncomingFluidFace(themFacingMe);
       }
     }
-
   }
 
   @Override

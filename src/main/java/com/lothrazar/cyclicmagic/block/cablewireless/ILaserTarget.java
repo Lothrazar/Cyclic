@@ -7,5 +7,4 @@ public interface ILaserTarget {
   boolean isVisible();
 
   LaserConfig getTarget();
-
 }

@@ -42,13 +42,11 @@ import net.minecraft.util.math.BlockPos;
 
 public class GuiCableContentWireless extends GuiBaseContainer {
 
-
   public GuiCableContentWireless(InventoryPlayer inventoryPlayer, TileCableContentWireless te) {
     super(new ContainerCableContentWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
     int xCenter = this.getScreenSize().width() / 2;
-
   }
 
   @Override
@@ -66,7 +64,6 @@ public class GuiCableContentWireless extends GuiBaseContainer {
       //      btnSize.height = 14;
       this.addButton(btnSize);
     }
-
   }
 
   @Override

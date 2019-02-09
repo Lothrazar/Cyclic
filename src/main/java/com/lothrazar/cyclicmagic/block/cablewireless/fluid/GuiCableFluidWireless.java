@@ -45,8 +45,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class GuiCableFluidWireless extends GuiBaseContainer {
 
-
-
   private GuiSliderInteger slider;
 
   public GuiCableFluidWireless(InventoryPlayer inventoryPlayer, TileCableFluidWireless te) {
@@ -77,7 +75,6 @@ public class GuiCableFluidWireless extends GuiBaseContainer {
     }
     x = this.guiLeft + 6;
     y = this.guiTop + 64;
-
     slider = new GuiSliderInteger(tile, 77,
         x, y, 140, 14, 1, TileCableFluidWireless.MAX_TRANSFER,
         TileCableFluidWireless.Fields.TRANSFER_RATE.ordinal());
@@ -133,7 +130,6 @@ public class GuiCableFluidWireless extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     int u = 0, v = 0, x, y;
-
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
     x = this.guiLeft + 8;
     y = this.guiTop + 86;

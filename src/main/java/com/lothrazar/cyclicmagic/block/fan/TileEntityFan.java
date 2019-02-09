@@ -247,7 +247,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     this.setField(Fields.REDSTONE.ordinal(), val % 2);
   }
 
-
   private void setPushPull(int value) {
     this.pushIfZero = value % 2;
     this.markDirty();

@@ -76,7 +76,6 @@ public class MaterialRegistry { // thanks for help:
 
   private static void registerPurpleMaterial() {
     ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
-
     MaterialRegistry.crystalArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
         diamondDurability * 2, // affects DURABILITY . 15 is the same as iron
         new int[] {

@@ -367,7 +367,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     else if (!main.isEmpty() && !second.isEmpty()) { // if the one below this is not
       if (ItemStack.areItemsEqual(main, second)
           && UtilNBT.stacksTagsEqual(main, second)) {
-        
         //temSt        main.stack
         if (main.getCount() + second.getCount() < 64) {
           main.setCount(second.getCount() + main.getCount());
@@ -375,7 +374,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         }
       }
       // empty, move it up
-      
     }
   }
 

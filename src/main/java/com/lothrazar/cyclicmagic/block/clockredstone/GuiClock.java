@@ -126,7 +126,6 @@ public class GuiClock extends GuiBaseContainer {
     checkboxes.initGui();
   }
 
-
   private void addButton(int x, int y, int field, int value, String tooltip) {
     ButtonTileEntityField btn = new ButtonTileEntityField(field + 50,
         this.guiLeft + x,
@@ -152,7 +151,6 @@ public class GuiClock extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3 + rowOffset);
   }
 

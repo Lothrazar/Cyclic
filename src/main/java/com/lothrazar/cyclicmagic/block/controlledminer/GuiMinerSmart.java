@@ -87,6 +87,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
   }
+
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     super.keyTyped(typedChar, keyCode);

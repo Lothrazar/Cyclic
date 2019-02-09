@@ -216,6 +216,7 @@ public class GuiBuilder extends GuiBaseContainer {
     sliderY.updateScreen();
     sliderZ.updateScreen();
   }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

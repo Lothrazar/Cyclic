@@ -22,13 +22,11 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
   public static final int SLOT_COUNT = 9 + 1;
   List<Integer> slotList = IntStream.rangeClosed(
       0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
-
   private int transferRate = MAX_TRANSFER / 2;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
   }
-
 
   public TileCableContentWireless() {
     super(SLOT_COUNT);
@@ -67,7 +65,6 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return index == SLOT_TRANSFER ? true : stack.getItem() instanceof ItemLocation;
   }
-
 
   private BlockPosDim getTarget(int slot) {
     return ItemLocation.getPosition(this.getStackInSlot(slot));

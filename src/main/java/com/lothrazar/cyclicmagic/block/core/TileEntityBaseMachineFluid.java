@@ -83,7 +83,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     if (resource.amount + tank.getFluidAmount() > tank.getCapacity()) {//enForce limit
       resource.amount = tank.getCapacity() - tank.getFluidAmount();
     }
-
     int result = tank.fill(resource, doFill);
     tank.setFluid(resource);
     return result;

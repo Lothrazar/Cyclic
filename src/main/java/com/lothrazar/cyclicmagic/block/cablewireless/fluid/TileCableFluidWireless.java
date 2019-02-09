@@ -32,7 +32,6 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
     REDSTONE, TRANSFER_RATE, RENDERPARTICLES;
   }
 
-
   public TileCableFluidWireless() {
     super(SLOT_COUNT);
     tank = new FluidTankBase(TANK_FULL);
@@ -70,7 +69,6 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
       break;
     }
   }
-
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {

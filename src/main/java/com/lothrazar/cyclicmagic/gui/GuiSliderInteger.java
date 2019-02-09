@@ -53,6 +53,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
       final int minIn, final int maxIn, int fieldId) {
     this(guiResponder, idIn, x, y, widthIn, heightIn, minIn, maxIn, fieldId, "");
   }
+
   /**
    * mimic of net.minecraft.client.gui.GuiSlider; uses integers instead of float
    * 
@@ -211,6 +212,5 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
 
   public void updateScreen() {
     this.setTooltip(tooltipOriginal);
-
   }
 }

@@ -18,7 +18,6 @@ import net.minecraft.util.SoundEvent;
 public class TileEntitySoundPlayer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable, IPlayerClaimed {
 
   private static final int TIMER_MAX = 100;
-
   private int soundIndex = -1;
   private String userHash = "";
   private String userName = "";
