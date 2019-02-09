@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.dehydrator;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
@@ -33,14 +34,15 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   static final int SLOT_RECIPE = 0;
-  public static final int LAVA_DRAIN = 10;
   public static final int STASH_SIZE = 4;
-  public static final int TANK_FULL = 10000;
+  public static final int TANK_FULL = 16 * Fluid.BUCKET_VOLUME;
 
   private int timerMax = 1;
   private RecipeDeHydrate lastRecipe = null;
@@ -55,7 +57,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     super(1 + 2 * STASH_SIZE);// in, out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setTileEntity(this);
-    tank.setFluidAllowed(FluidRegistry.LAVA);
+    tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(1, 4);
     this.setSlotsForExtract(5, 8);
     this.initEnergy(BlockDeHydrator.FUEL_COST);
@@ -89,8 +91,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-    //if we have lava, reduce timer an extra time
-    this.tryLavaSpeedup();
+    //if we have lava, reduce timer an extra time 
     if (this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
       if (tryProcessRecipe()) {
         if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
@@ -101,18 +102,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
         }
         //else recipe became null
       }
-    }
-  }
-
-  private void tryLavaSpeedup() {
-    // try to burn off some lava
-    if (timer == 0 || lastRecipe == null) {
-      return;
-    }
-    //if it works, hit up a timer-- to speed it up
-    if (tank.getFluidAmount() >= LAVA_DRAIN) {
-      tank.drain(LAVA_DRAIN, true);
-      this.timer--;
     }
   }
 
@@ -129,7 +118,16 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       lastRecipe = null;
       return false;
     }
+    //    int newfill = this.getCurrentFluidStackAmount() + lastRecipe.getFluid();
+    //    if (newfill >= this.tank.getCapacity()) {
+    //      //if we try to add what the recipe gives, will we be ovefull?
+    //      return false;  
+    //    }
     if (lastRecipe.tryPayCost(this)) {
+
+      ModCyclic.logger.error("fillby" + lastRecipe.getFluid());
+      this.fill(new FluidStack(FluidRegistry.WATER, lastRecipe.getFluid()), true);
+      ModCyclic.logger.error("-getCurrentFluidStackAmount" + this.getCurrentFluidStackAmount());
       //only create the output if cost was successfully paid
       this.sendOutputItem(lastRecipe.getRecipeOutput());
       return true;

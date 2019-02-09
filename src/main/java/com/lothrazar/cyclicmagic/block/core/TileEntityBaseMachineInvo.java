@@ -74,10 +74,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_UNAME = "uname";
   protected NonNullList<ItemStack> inv;
   private int energyCost = 0;
+  /**
+   * speed > 0
+   */
   protected int speed = 1;
   protected int timer;
   protected int renderParticles = 0;
-  protected int needsRedstone = 1;
+  protected int needsRedstone = 0;
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
   InvWrapperRestricted invHandler;
   protected EnergyStore energyStorage;

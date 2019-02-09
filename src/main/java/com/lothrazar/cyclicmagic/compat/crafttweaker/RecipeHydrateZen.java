@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.hydrator;
+package com.lothrazar.cyclicmagic.compat.crafttweaker;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
@@ -41,8 +42,8 @@ public class RecipeHydrateZen {
     ItemStack out = toStack(output);
     for (RecipeHydrate rec : RecipeHydrate.recipes) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
-        RecipeHydrate.recipes.remove(rec);
-        ModCyclic.logger.info("ZenScript: removed hydrator recipe for " + output.getDisplayName());
+        boolean success = RecipeHydrate.recipes.remove(rec);
+        ModCyclic.logger.info("ZenScript: removed hydrator recipe " + success + output.getDisplayName());
       }
     }
   }
