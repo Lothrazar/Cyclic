@@ -32,8 +32,10 @@ import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.FluidBar;
+import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonToggleRedstone;
 import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
@@ -88,6 +90,40 @@ public abstract class GuiBaseContainer extends GuiContainer {
 
   protected Const.ScreenSize getScreenSize() {
     return screenSize;
+  }
+
+  @Override
+  public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
+    super.updateScreen();
+    for (GuiTextField txt : txtBoxes) {
+      if (txt != null) {
+        txt.updateCursorCounter();
+      }
+    }
+  }
+
+  protected GuiTextFieldInteger addTextbox(int fieldId, int x, int y, String text, int maxLen) {
+    int width = 10 * maxLen, height = 20;
+    GuiTextFieldInteger txt = new GuiTextFieldInteger(fieldId, this.fontRenderer, x, y, width, height);
+    txt.setMaxStringLength(maxLen);
+    txt.setText(text);
+    txtBoxes.add(txt);
+    return txt;
+  }
+
+  @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+    super.actionPerformed(button);
+    if (button instanceof ButtonTileEntityField) {
+      ButtonTileEntityField btn = (ButtonTileEntityField) button;
+      for (GuiTextField t : txtBoxes) { //push value to the matching textbox
+        GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
+        if (txt.getTileFieldId() == btn.getFieldId()) {
+          int val = btn.getValue() + txt.getCurrent();
+          txt.setText(val + "");
+        }
+      }
+    }
   }
 
   @Override

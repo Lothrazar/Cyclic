@@ -134,7 +134,8 @@ public class GuiVector extends GuiBaseContainer {
     }
   }
 
-  private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
+  @Override
+  protected GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
     int width = 10 * maxLen, height = 20;
     GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
     txt.setMaxStringLength(maxLen);

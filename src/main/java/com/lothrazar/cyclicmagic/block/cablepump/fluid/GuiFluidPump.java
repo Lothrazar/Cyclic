@@ -23,12 +23,20 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFluidPump extends GuiBaseContainer {
+
+  private GuiSliderInteger sliderDelay;
 
   public GuiFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
     super(new ContainerFluidPump(inventoryPlayer, tileEntity), tileEntity);
@@ -36,18 +44,61 @@ public class GuiFluidPump extends GuiBaseContainer {
   }
 
   @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+    super.actionPerformed(button);
+  }
+  @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 1;
     int width = 164;
     int h = 20;
     int x = this.guiLeft + 6;
     int y = this.guiTop + 28;
     //not more than the cable can handle
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1,
+    int fld = TileEntityFluidPump.Fields.TRANSFER_RATE.ordinal();
+    sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1,
         TileEntityCableBase.TRANSFER_FLUID_PER_TICK,
-        TileEntityFluidPump.Fields.TRANSFER_RATE.ordinal());
+        fld);
     sliderDelay.setTooltip("pump.rate");
     this.addButton(sliderDelay);
+
   }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    ModCyclic.logger.log(typedChar + " TODO: OTHER CABLE/OTHER SLIDERS +" + keyCode);
+    if (sliderDelay.isMouseOver()) {
+      //left is 30 or 203
+      //right is 205 32
+      int amt = 0;
+      if (keyCode == 30 || keyCode == 203) {
+        amt = -1;
+      }
+      else if (keyCode == 32 || keyCode == 205) {
+        amt = 1;
+      }
+      if (amt != 0)
+        sliderDelay.setSliderValue(sliderDelay.getSliderValue() + amt, false);
+    }
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+
+  }
+
+  @Override
+  public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
+    super.updateScreen();
+  }
+
 }
