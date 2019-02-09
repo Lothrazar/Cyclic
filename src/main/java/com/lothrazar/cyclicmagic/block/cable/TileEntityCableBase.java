@@ -252,21 +252,21 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       shuffledFaces.add(i);
     }
     Collections.shuffle(shuffledFaces);
-    EnumFacing f;
+    EnumFacing exportToSide;
     for (int i : shuffledFaces) {
-      f = EnumFacing.values()[i];
-      if (this.isItemPipe() && this.isItemIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
-        moveItems(f);
+      exportToSide = EnumFacing.values()[i];
+      if (this.isItemPipe() && this.isItemIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
+        moveItems(exportToSide);
       }
-      if (this.isFluidPipe() && this.isFluidIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
+      if (this.isFluidPipe() && this.isFluidIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
         //ok, fluid is not incoming from here. so lets output some
-        moveFluid(f);
+        moveFluid(exportToSide);
       }
-      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
-        moveEnergy(f);
+      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
+        moveEnergy(exportToSide);
       }
     }
   }
@@ -288,6 +288,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (leftAfterDeposit.isEmpty() || leftAfterDeposit.getCount() != stackToExport.getCount()) {
       //   if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
       //then save result
+      //tood capability for sided
       this.setInventorySlotContents(SLOT, leftAfterDeposit);
       outputSuccess = true;
     }
