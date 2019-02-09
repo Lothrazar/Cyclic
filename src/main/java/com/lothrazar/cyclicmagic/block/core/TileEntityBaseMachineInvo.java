@@ -357,10 +357,22 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected void shiftPairUp(int low, int high) {
     ItemStack main = getStackInSlot(low);
     ItemStack second = getStackInSlot(high);
-    if (main.isEmpty() && !second.isEmpty()) { // if the one below this is not
-      // empty, move it up
+    if (main.isEmpty() && !second.isEmpty()) {
       this.setInventorySlotContents(high, ItemStack.EMPTY);
       this.setInventorySlotContents(low, second);
+    }
+    else if (!main.isEmpty() && !second.isEmpty()) { // if the one below this is not
+      if (ItemStack.areItemsEqual(main, second)
+          && UtilNBT.stacksTagsEqual(main, second)) {
+        
+        //temSt        main.stack
+        if (main.getCount() + second.getCount() < 64) {
+          main.setCount(second.getCount() + main.getCount());
+          second.setCount(0);
+        }
+      }
+      // empty, move it up
+      
     }
   }
 

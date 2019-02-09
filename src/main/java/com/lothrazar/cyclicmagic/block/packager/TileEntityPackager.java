@@ -70,6 +70,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     if (this.isRunning() == false) {
       return;
     }
+    this.shiftAllUp(INPUT_SIZE);
     //ignore timer when filling up water
     if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
       if (this.lastRecipe != null
