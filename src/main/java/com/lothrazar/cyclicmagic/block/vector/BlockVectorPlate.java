@@ -116,6 +116,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return COLLISION_AABB;
   }
+
   @Nullable
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {

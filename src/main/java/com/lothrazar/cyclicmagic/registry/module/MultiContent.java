@@ -48,6 +48,8 @@ import com.lothrazar.cyclicmagic.block.cablewireless.content.BlockCableContentWi
 import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.BlockCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.BlockCableFluidWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.TileCableFluidWireless;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.conveyor.BlockConveyor.SpeedType;
@@ -87,8 +89,12 @@ import com.lothrazar.cyclicmagic.item.dynamite.ItemProjectileTNT;
 import com.lothrazar.cyclicmagic.item.dynamite.ItemProjectileTNT.ExplosionType;
 import com.lothrazar.cyclicmagic.item.enderpearl.ItemEnderPearlReuse;
 import com.lothrazar.cyclicmagic.item.equipment.ItemGlowingHelmet;
-import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemPowerArmor;
-import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemPowerSword;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalArmor;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalAxe;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalHoe;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalPickaxe;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalSpade;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalSword;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldHoe;
@@ -103,9 +109,9 @@ import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstonePickaxe;
 import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneSpade;
+import com.lothrazar.cyclicmagic.item.equipment.sandstone.ItemSandstoneSword;
 import com.lothrazar.cyclicmagic.item.firemagic.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.item.firemagic.ItemProjectileBlaze;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.EntityGoldMinecartChest;
@@ -258,14 +264,25 @@ public class MultiContent implements IContent {
       GuideRegistry.register(GuideCategory.GEAR, emerald_head, "item.emeraldgear.title", "item.emeraldgear.guide");
     }
     if (enablePurpleGear) {
-      Item purple_boots = new ItemPowerArmor(EntityEquipmentSlot.FEET);
+      Item crystal_ingot = new ItemDictIngot();
+      ItemRegistry.register(crystal_ingot, "crystal_ingot", GuideCategory.GEAR);
+      Item purple_boots = new ItemCrystalArmor(EntityEquipmentSlot.FEET);
       ItemRegistry.register(purple_boots, "purple_boots", GuideCategory.GEAR);
-      Item purple_leggings = new ItemPowerArmor(EntityEquipmentSlot.LEGS);
+      Item purple_leggings = new ItemCrystalArmor(EntityEquipmentSlot.LEGS);
       ItemRegistry.register(purple_leggings, "purple_leggings", GuideCategory.GEAR);
-      Item purple_chestplate = new ItemPowerArmor(EntityEquipmentSlot.CHEST);
+      Item purple_chestplate = new ItemCrystalArmor(EntityEquipmentSlot.CHEST);
       ItemRegistry.register(purple_chestplate, "purple_chestplate", GuideCategory.GEAR);
-      Item purple_helmet = new ItemPowerArmor(EntityEquipmentSlot.HEAD);
+      Item purple_helmet = new ItemCrystalArmor(EntityEquipmentSlot.HEAD);
       ItemRegistry.register(purple_helmet, "purple_helmet", GuideCategory.GEAR);
+      // 
+      Item crystal_pickaxe = new ItemCrystalPickaxe();
+      ItemRegistry.register(crystal_pickaxe, "crystal_pickaxe", null);
+      Item crystal_axe = new ItemCrystalAxe();
+      ItemRegistry.register(crystal_axe, "crystal_axe", null);
+      Item crystal_spade = new ItemCrystalSpade();
+      ItemRegistry.register(crystal_spade, "crystal_spade", null);
+      Item crystal_hoe = new ItemCrystalHoe();
+      ItemRegistry.register(crystal_hoe, "crystal_hoe", null);
     }
     if (glowingHelmet) {
       Item glowing_helmet = new ItemGlowingHelmet(EntityEquipmentSlot.HEAD);
@@ -273,11 +290,11 @@ public class MultiContent implements IContent {
       ModCyclic.instance.events.register(glowing_helmet);
     }
     if (enablePurpleSwords) {
-      ItemPowerSword sword_weakness = new ItemPowerSword(ItemPowerSword.SwordType.WEAK);
+      ItemCrystalSword sword_weakness = new ItemCrystalSword(ItemCrystalSword.SwordType.WEAK);
       ItemRegistry.register(sword_weakness, "sword_weakness", GuideCategory.GEAR);
-      ItemPowerSword sword_slowness = new ItemPowerSword(ItemPowerSword.SwordType.SLOW);
+      ItemCrystalSword sword_slowness = new ItemCrystalSword(ItemCrystalSword.SwordType.SLOW);
       ItemRegistry.register(sword_slowness, "sword_slowness", GuideCategory.GEAR);
-      ItemPowerSword sword_ender = new ItemPowerSword(ItemPowerSword.SwordType.ENDER);
+      ItemCrystalSword sword_ender = new ItemCrystalSword(ItemCrystalSword.SwordType.ENDER);
       ItemRegistry.register(sword_ender, "sword_ender", GuideCategory.GEAR);
     }
     if (enableNetherbrickTools) {
@@ -304,6 +321,8 @@ public class MultiContent implements IContent {
       ItemRegistry.register(sandstone_spade, "sandstone_spade", null);
       Item sandstone_hoe = new ItemSandstoneHoe();
       ItemRegistry.register(sandstone_hoe, "sandstone_hoe", null);
+      Item sandstone_sword = new ItemSandstoneSword();
+      ItemRegistry.register(sandstone_sword, "sandstone_sword", null);
       LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
@@ -570,6 +589,10 @@ public class MultiContent implements IContent {
       BlockCableEnergyWireless w_energy = new BlockCableEnergyWireless();
       BlockRegistry.registerBlock(w_energy, "cable_wireless_energy", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
+      // f
+      BlockCableFluidWireless cable_wireless_fluid = new BlockCableFluidWireless();
+      BlockRegistry.registerBlock(cable_wireless_fluid, "cable_wireless_fluid", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileCableFluidWireless.class, Const.MODID + "cable_wireless_fluid_te");
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);

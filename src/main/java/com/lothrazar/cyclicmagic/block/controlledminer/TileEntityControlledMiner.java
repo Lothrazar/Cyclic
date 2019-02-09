@@ -73,10 +73,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private float curBlockDamage;
   private BlockPos targetPos = null;
   private int size = 4;//center plus 4 in each direction = 9x9
-  private int needsRedstone = 1;
   private int height = 6;
   private int blacklistIfZero = 0;
-  private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(4, new StackWrapper());

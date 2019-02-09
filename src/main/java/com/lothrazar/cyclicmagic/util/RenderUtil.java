@@ -48,6 +48,9 @@ public class RenderUtil {
 
   @SideOnly(Side.CLIENT)
   public static void renderLaser(LaserConfig conf) {
+    if (conf.first == null || conf.second == null) {
+      return;
+    }
     double offsetX = conf.xOffset.getOffset();
     double offsetY = conf.yOffset.getOffset();
     double offsetZ = conf.zOffset.getOffset();

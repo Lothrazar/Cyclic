@@ -98,7 +98,6 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return EnumActionResult.PASS;
     }
-
     summonFangRay(player, pos.getX() + hitX, pos.getY() + hitY + 1, pos.getZ() + hitZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return EnumActionResult.SUCCESS;

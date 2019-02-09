@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.dehydrator;
+package com.lothrazar.cyclicmagic.compat.crafttweaker;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.dehydrator.RecipeDeHydrate;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,7 @@ public class RecipeDeHydrateZen {
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void removeShapedRecipe(IItemStack output) {
+    ModCyclic.logger.info("ZenScript: attempt remove dehydrator recipe for " + output.getDisplayName());
     ItemStack out = toStack(output);
     for (RecipeDeHydrate rec : RecipeDeHydrate.recipes) {
       if (rec.getRecipeOutput().isItemEqual(out)) {
@@ -57,8 +59,16 @@ public class RecipeDeHydrateZen {
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack inputs, int ticks) {
-    ModCyclic.logger.info("ZenScript: added dehydrator recipe for " + output.getDisplayName());
-    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(toStack(inputs), toStack(output), ticks));
+    //bak compatibility 
+    ModCyclic.logger.info("ZenScript: dehydrator addRecipe: outputs, inputs, ticks, waterCreated=default:  " + output.getDisplayName());
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(toStack(inputs), toStack(output), ticks, 100));
+  }
+
+  @Optional.Method(modid = "crafttweaker")
+  @ZenMethod
+  public static void addRecipe(IItemStack output, IItemStack inputs, int ticks, int waterCreated) {
+    ModCyclic.logger.info("ZenScript: dehydrator addRecipe: outputs, inputs, ticks, waterCreated:  " + output.getDisplayName());
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(toStack(inputs), toStack(output), ticks, waterCreated));
   }
 
   /**

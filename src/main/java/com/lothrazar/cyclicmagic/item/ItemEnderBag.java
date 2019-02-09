@@ -71,7 +71,7 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe, IContent {
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_OPEN);
     else
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_CLOSE);
-    return super.onItemRightClick(world, player, hand);///return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+    return super.onItemRightClick(world, player, hand);
   }
 
   @Override

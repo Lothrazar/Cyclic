@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -25,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -37,6 +39,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IContent {
 
   public static final PropertyEnum<EnergyFlatMap> AMOUNT = PropertyEnum.create("amount", EnergyFlatMap.class);
+  private static final PropertyBool U = PropertyBool.create("u");
+  private static final PropertyBool D = PropertyBool.create("d");
+  private static final PropertyBool N = PropertyBool.create("n");
+  private static final PropertyBool E = PropertyBool.create("e");
+  private static final PropertyBool S = PropertyBool.create("s");
+  private static final PropertyBool W = PropertyBool.create("w");
 
   enum EnergyFlatMap implements IStringSerializable {
     AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_G8("g8"), AMOUNT_G9("g9"), AMOUNT_G10("g10"), AMOUNT_G11("g11"), AMOUNT_G12("g12"), AMOUNT_G13("g13"), AMOUNT_G14("g14"), AMOUNT_G15("g15"), AMOUNT_G16("g16");
@@ -130,58 +138,65 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
   @SuppressWarnings("deprecation")
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-    //?? world instanceof ChunkCache ? ((ChunkCache) world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : 
     TileEntity tile = world.getTileEntity(pos);
     if (tile instanceof TileEntityBattery) {
+      TileEntityBattery battery = (TileEntityBattery) tile;
+      state = state.withProperty(U, battery.getSideHasPower(EnumFacing.UP));
+      state = state.withProperty(D, battery.getSideHasPower(EnumFacing.DOWN));
+      state = state.withProperty(N, battery.getSideHasPower(EnumFacing.NORTH));
+      state = state.withProperty(E, battery.getSideHasPower(EnumFacing.EAST));
+      state = state.withProperty(S, battery.getSideHasPower(EnumFacing.SOUTH));
+      state = state.withProperty(W, battery.getSideHasPower(EnumFacing.WEST));
       IEnergyStorage handlerHere = tile.getCapability(CapabilityEnergy.ENERGY, null);
       double percent = (double) handlerHere.getEnergyStored() / (double) handlerHere.getMaxEnergyStored();
       EnergyFlatMap p = EnergyFlatMap.AMOUNT_G0;
+      double max = 16.0;
       if (percent == 0.0) {
         p = EnergyFlatMap.AMOUNT_G0;
       }
-      else if (percent < 1.0 / 16.0) {
+      else if (percent < 1.0 / max) {
         p = EnergyFlatMap.AMOUNT_G1;
       }
-      else if (percent < 2.0 / 16.0) {
+      else if (percent < 2.0 / max) {
         p = EnergyFlatMap.AMOUNT_G2;
       }
-      else if (percent < 3.0 / 16.0) {
+      else if (percent < 3.0 / max) {
         p = EnergyFlatMap.AMOUNT_G3;
       }
-      else if (percent < 4.0 / 16.0) {
+      else if (percent < 4.0 / max) {
         p = EnergyFlatMap.AMOUNT_G4;
       }
-      else if (percent < 5.0 / 16.0) {
+      else if (percent < 5.0 / max) {
         p = EnergyFlatMap.AMOUNT_G5;
       }
-      else if (percent < 6.0 / 16.0) {
+      else if (percent < 6.0 / max) {
         p = EnergyFlatMap.AMOUNT_G6;
       }
-      else if (percent < 7.0 / 16.0) {
+      else if (percent < 7.0 / max) {
         p = EnergyFlatMap.AMOUNT_G7;
       }
-      else if (percent < 8.0 / 16.0) {
+      else if (percent < 8.0 / max) {
         p = EnergyFlatMap.AMOUNT_G8;
       }
-      else if (percent < 9.0 / 16.0) {
+      else if (percent < 9.0 / max) {
         p = EnergyFlatMap.AMOUNT_G9;
       }
-      else if (percent < 10.0 / 16.0) {
+      else if (percent < 10.0 / max) {
         p = EnergyFlatMap.AMOUNT_G10;
       }
-      else if (percent < 11.0 / 16.0) {
+      else if (percent < 11.0 / max) {
         p = EnergyFlatMap.AMOUNT_G11;
       }
-      else if (percent < 12.0 / 16.0) {
+      else if (percent < 12.0 / max) {
         p = EnergyFlatMap.AMOUNT_G12;
       }
-      else if (percent < 13.0 / 16.0) {
+      else if (percent < 13.0 / max) {
         p = EnergyFlatMap.AMOUNT_G13;
       }
-      else if (percent < 14.0 / 16.0) {
+      else if (percent < 14.0 / max) {
         p = EnergyFlatMap.AMOUNT_G14;
       }
-      else if (percent < 15.0 / 16.0) {
+      else if (percent < 15.0 / max) {
         p = EnergyFlatMap.AMOUNT_G15;
       }
       else { //close enough to full 
@@ -190,15 +205,13 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
       //map [0-100] into [0-8]  
       //TODO: measuure tile energy level, and map to the G0-8
       return state.withProperty(AMOUNT, p);
-      //return state;
     }
     return super.getActualState(state, world, pos);
   }
 
   @Override
   protected BlockStateContainer createBlockState() {
-    //  return super.createBlockState();
-    return new BlockStateContainer(this, new IProperty[] { AMOUNT });
+    return new BlockStateContainer(this, new IProperty[] { AMOUNT, U, D, N, E, S, W });
   }
 
   @Override
@@ -221,7 +234,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
     else if (stack.getTagCompound() != null && world.getTileEntity(pos) instanceof TileEntityBattery) {
       NBTTagCompound tags = stack.getTagCompound();
       int energy = tags.getInteger(ItemBlockBattery.ENERGY);
-      //  IEnergyStorage handlerHere =  world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, null);
       TileEntityBattery container = (TileEntityBattery) world.getTileEntity(pos);
       container.setEnergyCurrent(energy);
     }

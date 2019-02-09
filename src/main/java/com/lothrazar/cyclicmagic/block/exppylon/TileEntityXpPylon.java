@@ -60,9 +60,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     SPRAY, COLLECT;
   }
 
-  private int timer = 0;
   private int collect = 1;
-  private int needsRedstone = 0;
 
   public TileEntityXpPylon() {
     super(2);

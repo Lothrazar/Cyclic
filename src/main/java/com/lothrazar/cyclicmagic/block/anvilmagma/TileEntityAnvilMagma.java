@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -46,8 +45,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     TIMER, REDSTONE;
   }
 
-  private int timer = 0;
-  private int needsRedstone = 0;
 
   public TileEntityAnvilMagma() {
     super(2);
@@ -104,19 +101,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     return (contains != null && contains.amount >= FLUID_COST);
   }
 
-  @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-    tags.setInteger(NBT_TIMER, timer);
-    tags.setInteger(NBT_REDST, this.needsRedstone);
-    return super.writeToNBT(tags);
-  }
-
-  @Override
-  public void readFromNBT(NBTTagCompound tags) {
-    super.readFromNBT(tags);
-    timer = tags.getInteger(NBT_TIMER);
-    this.needsRedstone = tags.getInteger(NBT_REDST);
-  }
 
   @Override
   public int getFieldCount() {

@@ -187,7 +187,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     if (loc == null) {
       return null;
     }
-    return new BlockPos(loc.X, loc.Y, loc.Z);
+    return new BlockPos(loc.getX(), loc.getY(), loc.getZ());
   }
 
   public static boolean teleport(EntityPlayer player, int slot) {
@@ -196,7 +196,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     if (GuiEnderBook.BACK_BTN_ID == slot) {
       loc = getBackLocation(book);
     }
-    if (player.dimension != loc.dimension) {
+    if (player.dimension != loc.getDimension()) {
       return false;//button was disabled anyway,... but just in case 
     }
     //something in vanilla 
@@ -204,9 +204,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
       // thanks so much to
       // http://www.minecraftforge.net/forum/index.php?topic=18308.0 
       //also moving up so  not stuck in floor
-      boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
+      boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.getX(), loc.getY() + 0.1, loc.getZ());
       if (success) { // try and force chunk loading it it worked 
-        player.getEntityWorld().getChunk(new BlockPos(loc.X, loc.Y, loc.Z)).setModified(true);
+        player.getEntityWorld().getChunk(new BlockPos(loc.getX(), loc.getY(), loc.getZ())).setModified(true);
       }
     }
     return true;
@@ -214,12 +214,13 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "ene",
+        "ebe",
+        "eee",
         'e', "enderpearl",
         'b', Items.BOOK,
         'n', "blockEmerald");
-    // if you want to clean out the book and start over
   }
 
   @Override
@@ -228,7 +229,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     if (stack == null || stack.getItem() == null) {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
-    //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
     entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(world, entityPlayer, hand);
   }

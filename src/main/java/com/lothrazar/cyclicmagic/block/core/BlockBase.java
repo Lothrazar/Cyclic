@@ -35,9 +35,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BlockBase extends Block {
+  //
+  //  public static final String NBT_FLUIDSIZE = "fluidtotal";
+  //  public static final String NBT_FLUIDTYPE = "fluidtype";
 
-  public static final String NBT_FLUIDSIZE = "fluidtotal";
-  public static final String NBT_FLUIDTYPE = "fluidtype";
+  public static final String NBT_FLUIDSIZE = "FluidName";
+  public static final String NBT_FLUIDTYPE = "Amount";
 
   public BlockBase(Material materialIn) {
     super(materialIn);

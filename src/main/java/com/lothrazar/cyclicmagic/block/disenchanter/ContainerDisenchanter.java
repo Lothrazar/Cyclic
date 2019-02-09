@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.disenchanter;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestricted;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyEnchanted;
@@ -108,6 +109,7 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = inventorySlots.get(slot);
+    ModCyclic.logger.error("" + slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
     if (slotObject != null && slotObject.getHasStack()) {
       ItemStack stackInSlot = slotObject.getStack();

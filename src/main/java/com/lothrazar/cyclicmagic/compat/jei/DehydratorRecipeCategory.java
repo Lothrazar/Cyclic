@@ -19,6 +19,7 @@ public class DehydratorRecipeCategory implements IRecipeCategory<DehydratorWrapp
   private IDrawable icon;
 
   public DehydratorRecipeCategory(IGuiHelper helper) {
+
     gui = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/gui/dehydrate_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/blocks/dehydrator_bush.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
   }

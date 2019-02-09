@@ -27,7 +27,6 @@ import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 
@@ -42,9 +41,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public static enum Fields {
     TIMER, REDSTONE, FUEL;
   }
-
-  private int timer = 0;
-  private int needsRedstone = 0;
 
   public TileEntityAnvilAuto() {
     super(2);
@@ -93,20 +89,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
         //pay fluid each repair update 
       }
     }
-  }
-
-  @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-    tags.setInteger(NBT_TIMER, timer);
-    tags.setInteger(NBT_REDST, this.needsRedstone);
-    return super.writeToNBT(tags);
-  }
-
-  @Override
-  public void readFromNBT(NBTTagCompound tags) {
-    super.readFromNBT(tags);
-    timer = tags.getInteger(NBT_TIMER);
-    this.needsRedstone = tags.getInteger(NBT_REDST);
   }
 
   @Override

@@ -27,8 +27,9 @@ import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStack;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.BlockLibraryController;
+import com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl.TileEntityLibraryCtrl;
+import com.lothrazar.cyclicmagic.data.EnchantStack;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -70,7 +71,8 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
   public void register() {
     BlockRegistry.registerBlock(this, "block_library", GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
-    BlockLibraryController lc = new BlockLibraryController(this);
+    GameRegistry.registerTileEntity(TileEntityLibraryCtrl.class, Const.MODID + "library_ctrl_te");
+    BlockLibraryController lc = new BlockLibraryController();
     BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
     ModCyclic.instance.events.register(this);
   }
@@ -123,11 +125,18 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
-      if (library.addEnchantmentFromPlayer(player, hand, segment)) {
-        onSuccess(player);
-        library.markDirty();
-        return true;
+      ItemStack theThing = library.addEnchantmentToQuadrant(playerHeld, segment);
+      player.setHeldItem(hand, ItemStack.EMPTY);
+      if (theThing.isEmpty() == false) {
+        player.addItemStackToInventory(theThing);
       }
+      else {
+        player.addItemStackToInventory(new ItemStack(Items.BOOK));
+      }
+      onSuccess(player);
+      library.markDirty();
+      return true;
+      //      }
     }
     else if (playerHeld.getItem().equals(Items.BOOK)
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {

@@ -74,8 +74,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_UNAME = "uname";
   protected NonNullList<ItemStack> inv;
   private int energyCost = 0;
+  /**
+   * speed > 0
+   */
   protected int speed = 1;
   protected int timer;
+  protected int renderParticles = 0;
+  protected int needsRedstone = 0;
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
   InvWrapperRestricted invHandler;
   protected EnergyStore energyStorage;
@@ -355,10 +360,22 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   protected void shiftPairUp(int low, int high) {
     ItemStack main = getStackInSlot(low);
     ItemStack second = getStackInSlot(high);
-    if (main.isEmpty() && !second.isEmpty()) { // if the one below this is not
-      // empty, move it up
+    if (main.isEmpty() && !second.isEmpty()) {
       this.setInventorySlotContents(high, ItemStack.EMPTY);
       this.setInventorySlotContents(low, second);
+    }
+    else if (!main.isEmpty() && !second.isEmpty()) { // if the one below this is not
+      if (ItemStack.areItemsEqual(main, second)
+          && UtilNBT.stacksTagsEqual(main, second)) {
+        
+        //temSt        main.stack
+        if (main.getCount() + second.getCount() < 64) {
+          main.setCount(second.getCount() + main.getCount());
+          second.setCount(0);
+        }
+      }
+      // empty, move it up
+      
     }
   }
 
@@ -443,8 +460,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
-    timer = compound.getInteger(NBT_TIMER);
+    renderParticles = compound.getInteger(NBT_RENDER);
     speed = compound.getInteger(NBT_SPEED);
+    needsRedstone = compound.getInteger(NBT_REDST);
+    timer = compound.getInteger(NBT_TIMER);
+    needsRedstone = compound.getInteger(NBT_REDST);
     if (this.hasEnergy && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     }
@@ -454,8 +474,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     this.writeInvoToNBT(compound);
+    compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_TIMER, timer);
+    compound.setInteger(NBT_REDST, needsRedstone);
     if (hasEnergy && energyStorage != null) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     }
@@ -576,7 +598,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return true;
   }
 
-  protected boolean inventoryHasRoom(int start, ItemStack wouldInsert) {
+  protected boolean inventoryHasRoom(int start, final ItemStack wouldInsert) {
     int emptySlots = 0;
     for (int i = start; i < this.inv.size(); i++) {
       //if its empty or it is below max count, then it has room -> not full

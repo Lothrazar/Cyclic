@@ -33,7 +33,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  private int needsRedstone = 1;
   private int slotCurrent = 0;
   private int dropCount = 1;
   private int delay = 10;

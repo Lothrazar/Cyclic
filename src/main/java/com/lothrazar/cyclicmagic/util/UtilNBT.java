@@ -308,4 +308,16 @@ public class UtilNBT {
     return held.hasTagCompound() &&
         held.getTagCompound().getSize() > 0;
   }
+
+  public static boolean stacksTagsEqual(ItemStack main, ItemStack second) {
+    if (!main.hasTagCompound() && !second.hasTagCompound()) {
+      return true;//both no tag, so ==
+    }
+    if (main.hasTagCompound() && second.hasTagCompound()) {
+      return main.getTagCompound().equals(second.getTagCompound());//both have tag
+    }
+    else {
+      return false;//exactly 1 has tag 
+    }
+  }
 }
