@@ -1344,7 +1344,7 @@ item.netherbrick_hoe.guide=Stone mining level with improved stats
 
 pump.rate=Transfer Rate
 
-
+pump.secondline=<- / -> 
 
 
 item.card_location.name=GPS Marker

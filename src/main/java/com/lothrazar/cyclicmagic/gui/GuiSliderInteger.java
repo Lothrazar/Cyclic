@@ -58,12 +58,18 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
     this.min = minIn;
     this.max = maxIn;
     this.responderField = fieldId;
-    appendPlusSignLabel = (min < 0);//if it can be negative, we should distinguish
+    appendPlusSignLabel = (getMin() < 0);//if it can be negative, we should distinguish
     this.setSliderValue(responder.getField(responderField), false);
   }
 
   public void setSliderValue(float value, boolean notifyResponder) {
-    this.sliderPosition = (value - this.min) / (this.max - this.min);
+    this.sliderPosition = (value - this.getMin()) / (this.getMax() - this.getMin());
+    if (sliderPosition < 0) {
+      sliderPosition = 0;
+    }
+    if (sliderPosition > this.getMax()) {
+      sliderPosition = this.getMax();
+    }
     this.updateDisplay();
     if (notifyResponder) {
       notifyResponder();
@@ -77,7 +83,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   }
 
   public float getSliderValue() {
-    float val = this.min + (this.max - this.min) * this.sliderPosition;
+    float val = this.getMin() + (this.getMax() - this.getMin()) * this.sliderPosition;
     return MathHelper.floor(val);
   }
 
@@ -96,6 +102,10 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
     List<String> remake = new ArrayList<String>();
     remake.add(UtilChat.lang(t));
     tooltip = remake;
+  }
+
+  public void addTooltip(final String t) {
+    tooltip.add(t);
   }
 
   private List<String> tooltip = new ArrayList<String>();
@@ -155,5 +165,13 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   @Override
   protected int getHoverState(boolean mouseOver) {
     return 0;
+  }
+
+  public int getMax() {
+    return max;
+  }
+
+  public int getMin() {
+    return min;
   }
 }

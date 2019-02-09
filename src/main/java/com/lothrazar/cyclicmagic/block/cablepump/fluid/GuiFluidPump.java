@@ -25,18 +25,19 @@ package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFluidPump extends GuiBaseContainer {
 
-  private GuiSliderInteger sliderDelay;
+  private GuiSliderInteger slider;
 
   public GuiFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
     super(new ContainerFluidPump(inventoryPlayer, tileEntity), tileEntity);
@@ -58,11 +59,12 @@ public class GuiFluidPump extends GuiBaseContainer {
     int y = this.guiTop + 28;
     //not more than the cable can handle
     int fld = TileEntityFluidPump.Fields.TRANSFER_RATE.ordinal();
-    sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1,
-        TileEntityCableBase.TRANSFER_FLUID_PER_TICK,
+    slider = new GuiSliderInteger(tile, id++, x, y,
+        width, h,
+        1, TileEntityCableBase.TRANSFER_FLUID_PER_TICK, //min max
         fld);
-    sliderDelay.setTooltip("pump.rate");
-    this.addButton(sliderDelay);
+
+    this.addButton(slider);
 
   }
 
@@ -71,28 +73,41 @@ public class GuiFluidPump extends GuiBaseContainer {
     Keyboard.enableRepeatEvents(false);
   }
 
+  public int amt() {
+    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+      return 5;
+    }
+    if (Keyboard.isKeyDown(Keyboard.KEY_RMENU) || Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+      return 25;
+    }
+    return 1;
+  }
+
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     super.keyTyped(typedChar, keyCode);
-    ModCyclic.logger.log(typedChar + " TODO: OTHER CABLE/OTHER SLIDERS +" + keyCode);
-    if (sliderDelay.isMouseOver()) {
+    if (slider.isMouseOver()) {
+
       //left is 30 or 203
       //right is 205 32
-      int amt = 0;
+      int dir = 0;
       if (keyCode == 30 || keyCode == 203) {
-        amt = -1;
+        dir = -1;
       }
       else if (keyCode == 32 || keyCode == 205) {
-        amt = 1;
+        dir = 1;
       }
-      if (amt != 0)
-        sliderDelay.setSliderValue(sliderDelay.getSliderValue() + amt, false);
+      if (dir != 0 && slider.getSliderValue() + dir * amt() <= TileEntityCableBase.TRANSFER_FLUID_PER_TICK) {
+        slider.setSliderValue(slider.getSliderValue() + dir * amt(), false);
+      }
     }
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    slider.setTooltip("pump.rate");
+    slider.addTooltip(TextFormatting.GRAY + UtilChat.lang("pump.secondline") + amt());
 
   }
 
