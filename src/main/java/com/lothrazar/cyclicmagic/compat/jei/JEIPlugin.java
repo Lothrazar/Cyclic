@@ -41,15 +41,20 @@ import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastPlayerBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ContainerFastWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.potion.PotionTypeCyclic;
+import com.lothrazar.cyclicmagic.potion.PotionTypeRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionUtils;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModPlugin {
@@ -122,6 +127,11 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
       // i found something similar... and didnt work when i tried
       //https://github.com/mezz/JustEnoughItems/wiki/Recipes-Overview 
       registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, item.getTranslationKey() + ".guide");
+    }
+    for (PotionTypeCyclic pt : PotionTypeRegistry.potions) {
+      ItemStack item = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), pt);
+      registry.addIngredientInfo(item, VanillaTypes.ITEM, item.getTranslationKey() + "." +
+          pt.getRegistryName().toString().replace(Const.MODRES, "") + ".guide");
     }
     //end of Info tab
     //FB Compat

@@ -978,6 +978,23 @@ potion.potency.4=V
 potion.potency.3=IV
 potion.potency.2=III
 
+item.potion.slowfall.guide=Reduces fall speed just like a parachute
+item.potion.bounce.guide=Continually bounce and gain momentum
+item.potion.frostwalker.guide=Frost walk over water with magic cold
+item.potion.butter.guide=Randomly drop items whenever you move
+item.potion.waterwalk.guide=Walk on water
+item.potion.swim.guide=Increase swim speed well beyond normal
+item.potion.magnet.guide=Pull items and exp towards you
+item.potion.resistance.guide=Resistance for standard combat defense
+item.potion.haste.guide=Haste for improved mining speed
+item.potion.ender.guide=No damage from ender pearl throws
+item.potion.snow.guide=Place snow wherever you walk
+item.potion.levitation.guide=Levitate out of control
+item.potion.healthboost.guide=Temporary boost to max health
+item.potion.saturation.guide=Food is satisfied completely
+item.potion.wither.guide=Withered
+item.potion.blindness.guide=Blinded
+
 potion.butter.oops=Butterfingers!  Dropped something when you moved.
 potion.effect.slowfall=Potion of Slowfall
 splash_potion.effect.slowfall=Splash Potion of Slowfall
