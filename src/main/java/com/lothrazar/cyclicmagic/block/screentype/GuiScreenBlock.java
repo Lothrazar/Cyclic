@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.screen;
+package com.lothrazar.cyclicmagic.block.screentype;
 
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen.Fields;
+import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen.Fields;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.GuiTextFieldMulti;
@@ -61,17 +61,20 @@ public class GuiScreenBlock extends GuiBaseContainer {
     super.initGui();
     Keyboard.enableRepeatEvents(true);
     int id = 1;
-    int width = 124;
+    int width = 144;
     int xCenter = (xSize / 2 - width / 2);
-    int x = this.guiLeft + 26;
-    txtInput = new GuiTextFieldMulti(id, this.fontRenderer, xCenter, Const.PAD / 2, width, 12 * 6);
-    txtInput.setMaxStringLength(ScreenTESR.MAX_TOTAL);
+    int x = 26;
+    int y = Const.PAD / 2;
+    txtInput = new GuiTextFieldMulti(id, this.fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, 60);
+    txtInput.setMaxStringLength(1230);
     txtInput.setText(screen.getText());
     txtInput.setFocused(true);
     txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
+    // hmm multi lines are better? 
     int h = 12;
     id++;
-    int y = this.guiTop + txtInput.height + Const.PAD;
+    x = guiLeft + 26;
+    y = this.guiTop + txtInput.height + Const.PAD;
     sliderR = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderR.setTooltip("screen.red");
     this.addButton(sliderR);

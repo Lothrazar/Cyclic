@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.screen;
+package com.lothrazar.cyclicmagic.block.screentype;
 
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import net.minecraft.entity.player.InventoryPlayer;

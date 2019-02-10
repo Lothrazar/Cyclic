@@ -46,7 +46,7 @@ import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
 import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
-import com.lothrazar.cyclicmagic.block.screen.BlockScreen;
+import com.lothrazar.cyclicmagic.block.screentype.BlockScreen;
 import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclicmagic.block.tank.BlockFluidTank;

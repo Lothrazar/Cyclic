@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.screen;
+package com.lothrazar.cyclicmagic.block.screentype;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.BaseTESR;
@@ -30,7 +30,7 @@ import net.minecraft.block.Block;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
 
-  public static final int SCREEN_WIDTH = 96;
+  public static final int SCREEN_WIDTH = 148;
   // TODO: GUI selects how much padding to use? side padding and top padding? 
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;

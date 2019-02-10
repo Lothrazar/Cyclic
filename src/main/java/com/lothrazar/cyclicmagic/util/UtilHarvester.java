@@ -243,19 +243,16 @@ public class UtilHarvester {
       return drops;
     }
     if (isBreakGetDrops(blockId)) {
-      ModCyclic.logger.log("[harvest] getBreak " + blockId);
       blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
       world.setBlockToAir(posCurrent);
       return drops;
     }
     if (isBreakGetDropsDeprec(blockId)) {
-      ModCyclic.logger.log("[harvest] getBreak " + blockId);
       drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
       world.setBlockToAir(posCurrent);
       return drops;
     }
     if (isSimpleSilktouch(blockId)) {
-      ModCyclic.logger.log("[harvest] isSimpleSilktouch " + blockId);
       drops.add(new ItemStack(blockCheck));
       world.setBlockToAir(posCurrent);
       return drops;
@@ -271,7 +268,6 @@ public class UtilHarvester {
     }
     //boolean hasberry type of flag harvests
     if (useBooleanProperty.containsKey(blockId)) {
-      ModCyclic.logger.log("[harvest] useBooleanProperty " + blockId);
       String property = useBooleanProperty.get(blockId);
       PropertyBool propFlag = getBoolProperty(blockState, property);
       if (blockState.getValue(propFlag)) {
@@ -285,7 +281,6 @@ public class UtilHarvester {
     //age growth 
     PropertyInteger propInt = getAgeProperty(blockState, blockId);
     if (propInt != null) {
-      ModCyclic.logger.log("[harvest] age Property " + blockId);
       int currentAge = blockState.getValue(propInt);
       int minAge = Collections.min(propInt.getAllowedValues());
       int maxAge = Collections.max(propInt.getAllowedValues());
@@ -298,7 +293,7 @@ public class UtilHarvester {
         return drops;
       }
       if (isHarvestReflectionRegrow(blockId)) {
-        ModCyclic.logger.log("[harvest] isHarvestReflectionRegrow " + blockId);
+        //        ModCyclic.logger.log("[harvest] isHarvestReflectionRegrow " + blockId);
         Object toDrop = UtilReflection.getFirstPrivate(blockCheck, ItemStack.class);
         if (toDrop != null) {
           ItemStack crop = (ItemStack) toDrop;
@@ -312,7 +307,7 @@ public class UtilHarvester {
       }
       //first get the drops
       if (isHarvestingGetDropsOld(blockId)) {
-        ModCyclic.logger.log("[harvest] isHarvestingGetDropsOld " + blockId);
+        //        ModCyclic.logger.log("[harvest] isHarvestingGetDropsOld " + blockId);
         //added for rustic, it uses this version, other one does not work
         //https://github.com/the-realest-stu/Rustic/blob/c9bbdece4a97b159c63c7e3ba9bbf084aa7245bb/src/main/java/rustic/common/blocks/crops/BlockStakeCrop.java#L119
         drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
@@ -324,12 +319,12 @@ public class UtilHarvester {
       if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
         //for example: a 3 high block like corn 
         if (doesBlockMatch(world, blockCheck, posCurrent.up())) {
-          ModCyclic.logger.log("[harvest] up(1) break " + blockId);
+          //ModCyclic.logger.log("[harvest] up(1) break " + blockId);
           //TODO: corn still drops a few from multiblock on ground. not the worst.
           world.destroyBlock(posCurrent.up(), false);
         }
         if (doesBlockMatch(world, blockCheck, posCurrent.up(2))) {
-          ModCyclic.logger.log("[harvest] up(2) break " + blockId);
+          //  ModCyclic.logger.log("[harvest] up(2) break " + blockId);
           //TODO: corn still drops a few from multiblock on ground. not the worst.
           world.destroyBlock(posCurrent.up(2), false);
         }
