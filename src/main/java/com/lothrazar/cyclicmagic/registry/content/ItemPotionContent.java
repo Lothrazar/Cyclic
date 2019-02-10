@@ -84,67 +84,78 @@ public class ItemPotionContent implements IContent {
   //  private static final int LONG = 9600;
   @Override
   public void register() {
-    if (ItemPotionContent.enableButter) {
-      potionTypeButter = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, NORMAL), "butter", new ItemStack(Items.GOLD_INGOT));
-      potionTypeButterII = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, SHORT, Const.Potions.II), "butter2", Item.getItemFromBlock(Blocks.HARDENED_CLAY));
-      potionTypeButterII.base = potionTypeButter;
-    }
-    if (ItemPotionContent.enableSlowfall) {
-      potionTypeSlowfall = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL), "slowfall", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()));
-    }
-    if (ItemPotionContent.enableWaterwalk) {
-      potionTypeWaterwalk = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL), "waterwalk", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.COD.getMetadata()));
+    if (ItemPotionContent.enableEnder) {
+      potionEnder = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.ENDER, NORMAL), "ender", Items.ENDER_PEARL);
     }
     if (ItemPotionContent.enableSnow) {
       potionTypeSnow = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SNOW, NORMAL), "snow", Items.SNOWBALL);
     }
+    if (ItemPotionContent.enableButter) {
+      potionTypeButter = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, NORMAL), "butter", new ItemStack(Items.GOLD_INGOT));
+      potionTypeButterII = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.DROPS, SHORT, Const.Potions.II), "butter2", Item.getItemFromBlock(Blocks.HARDENED_CLAY));
+      potionTypeButterII.setBase(potionTypeButter);
+    }
+    if (ItemPotionContent.enableSlowfall) {
+      potionTypeSlowfall = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SLOWFALL, NORMAL),
+          "slowfall", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()));
+      potionTypeSlowfall.setBase(potionEnder);
+    }
+    if (ItemPotionContent.enableWaterwalk) {
+      potionTypeWaterwalk = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.WATERWALK, NORMAL), "waterwalk", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.COD.getMetadata()));
+      potionTypeWaterwalk.setBase(potionTypeSnow);
+    }
     if (ItemPotionContent.enableSwimspeed) {
       potionTypeSwim = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, NORMAL), "swim", Items.CARROT_ON_A_STICK);
+      potionTypeSwim.setBase(potionTypeSnow);
       potionTypeSwimII = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SWIMSPEED, SHORT, Const.Potions.II), "swim2", Items.GLOWSTONE_DUST);
-      potionTypeSwimII.base = potionTypeSwim;
+      potionTypeSwimII.setBase(potionTypeSwim);
     }
     if (ItemPotionContent.enableBounce) {
       potionTypeBounce = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL), "bounce", Items.SLIME_BALL);
+      potionTypeSlowfall.setBase(potionEnder);
     }
     if (ItemPotionContent.enableFrostw) {
       potionTypeIce = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.FROSTW, NORMAL), "frostwalker", new ItemStack(Blocks.ICE));
+      potionTypeIce.setBase(potionTypeSnow);
     }
     if (ItemPotionContent.enableMagnet) {
       potionTypeMagnet = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.MAGNET, NORMAL), "magnet", new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
     }
     if (ItemPotionContent.enableLevit) {
       potionTypeLevitation = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.LEVITATION, NORMAL), "levitation", Items.CHORUS_FRUIT);
+      potionTypeLevitation.setBase(potionTypeSnow);
     }
     if (ItemPotionContent.enableHaste) {
       potionTypeHaste = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.HASTE, NORMAL), "haste", Items.COOKIE);
+      potionTypeHaste.setBase(potionEnder);
       PotionTypeCyclic potionTypeHasteII = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.HASTE, SHORT, Const.Potions.II), "haste2", Items.GLOWSTONE_DUST);
-      potionTypeHasteII.base = potionTypeHaste;
+      potionTypeHasteII.setBase(potionTypeHaste);
     }
     if (ItemPotionContent.enableResist) {
       potionTypeResistance = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.RESISTANCE, NORMAL), "resistance", new ItemStack(Blocks.OBSIDIAN));
+      potionTypeResistance.setBase(potionEnder);
       potionTypeResistanceII = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.RESISTANCE, SHORT, Const.Potions.II), "resistance2", Items.GLOWSTONE_DUST);
-      potionTypeResistanceII.base = potionTypeResistance;
+      potionTypeResistanceII.setBase(potionTypeResistance);
     }
     if (ItemPotionContent.enableHBoost) {
       potionHealth = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V), "healthboost", Items.GOLDEN_APPLE);
-    }
-    if (ItemPotionContent.enableEnder) {
-      potionEnder = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.ENDER, NORMAL), "ender", Items.ENDER_PEARL);
+      potionHealth.setBase(potionEnder);
     }
     if (ItemPotionContent.enableLuck) {
       potionTypeLuck = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.LUCK, NORMAL), "luck", new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()));
+
     }
     if (ItemPotionContent.enableWither) {
       potionTypeWither = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.WITHER, NORMAL), "wither", Items.FERMENTED_SPIDER_EYE);
-      potionTypeWither.base = PotionTypes.WEAKNESS;
+      potionTypeWither.setBase(PotionTypes.WEAKNESS);
     }
     if (ItemPotionContent.enableBlindness) {
       potionTypeBlindness = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.BLINDNESS, NORMAL), "blindness", Items.FERMENTED_SPIDER_EYE);
-      potionTypeBlindness.base = PotionTypes.INVISIBILITY;
+      potionTypeBlindness.setBase(PotionTypes.INVISIBILITY);
     }
     if (ItemPotionContent.enableSaturation) {
       potionTypeSat = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.SATURATION, NORMAL), "saturation", Items.CAKE);
-      potionTypeSat.base = PotionTypes.HEALING;
+      potionTypeSat.setBase(PotionTypes.HEALING);
     }
     // wither
     // blindness
