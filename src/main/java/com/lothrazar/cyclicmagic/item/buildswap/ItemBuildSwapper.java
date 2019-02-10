@@ -139,8 +139,15 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
+
     ItemStack held = player.getHeldItem(event.getHand());
     if (!held.isEmpty() && held.getItem() == this) {
+      //      if (event.getFace() != null && player.isSneaking()) {
+      //        //hita block
+      //        IBlockState hit = player.world.getBlockState(event.getPos());
+      //        ModCyclic.logger.log("HIT" + hit.getBlock());
+      //        return;
+      //      }
       if (ActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
         return;
