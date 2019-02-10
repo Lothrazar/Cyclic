@@ -49,7 +49,7 @@ public class ContainerCableContentWireless extends ContainerBaseMachine {
     x = 9;
     y = 87;
     for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
-      addSlotToContainer(new SlotCheckTileValid(te, i, x, y) {
+      addSlotToContainer(new SlotCheckTileValid(te, i + 1, x, y) {
 
         //one per slot
         @Override
