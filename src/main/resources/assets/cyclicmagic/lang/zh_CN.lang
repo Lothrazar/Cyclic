@@ -979,9 +979,9 @@ potion.potency.3=IV
 potion.potency.2=III
 
 item.potion.slowfall.guide=如降落伞般降低你的掉落速度
-item.potion.bounce.guide=让你不断地反弹来获得动力
-item.potion.frostwalker.guide=用魔法般的寒冷来冻结你走过的水面
-item.potion.butter.guide=在你移动时随机掉落背包物品
+item.potion.bounce.guide=让你能通过不断地反弹来获得动力
+item.potion.frostwalker.guide=让你能用魔法般的寒冷来冻结你走过的水面
+item.potion.butter.guide=让你在移动时随机掉落背包物品
 item.potion.waterwalk.guide=让你能在水上行走
 item.potion.swim.guide=大幅提高你的游泳速度
 item.potion.magnet.guide=让你能吸引掉落物品和经验
@@ -992,7 +992,7 @@ item.potion.snow.guide=在你走过的地方留下雪的痕迹
 item.potion.levitation.guide=让你失去控制地漂浮起来
 item.potion.healthboost.guide=暂时提高你的最大生命值
 item.potion.saturation.guide=让你对食物一本满足
-item.potion.wither.guide=让你慢慢地凋零
+item.potion.wither.guide=让你凋零
 item.potion.blindness.guide=让你失明
 
 potion.butter.oops=你获得了笨拙效果！它生效时会在你移动时掉落背包物品。
