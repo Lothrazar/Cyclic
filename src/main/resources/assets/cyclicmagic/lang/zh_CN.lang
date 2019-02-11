@@ -395,7 +395,7 @@ item.sack_ender.guide=便携式的末影箱。打开这个袋子相当于打开�
 item.sack_ender.name=末影袋
 item.sack_ender.tooltip=便携式末影箱子
 
-item.sandstone_sword.name=Sandstone Sword
+item.sandstone_sword.name=砂岩剑
 item.sandstone_axe.name=砂岩斧
 item.sandstone_hoe.name=砂岩锄
 item.sandstone_pickaxe.name=砂岩镐
@@ -978,7 +978,24 @@ potion.potency.4=V
 potion.potency.3=IV
 potion.potency.2=III
 
-potion.butter.oops=你获得了笨拙效果！它生效时会在你移动时掉落手中物品。
+item.potion.slowfall.guide=如降落伞般降低你的掉落速度
+item.potion.bounce.guide=让你不断地反弹来获得动力
+item.potion.frostwalker.guide=用魔法般的寒冷来冻结你走过的水面
+item.potion.butter.guide=在你移动时随机掉落背包物品
+item.potion.waterwalk.guide=让你能在水上行走
+item.potion.swim.guide=大幅提高你的游泳速度
+item.potion.magnet.guide=让你能吸引掉落物品和经验
+item.potion.resistance.guide=提高你在一般战斗中的防御力
+item.potion.haste.guide=提高你的挖掘速度
+item.potion.ender.guide=让你能免疫使用末影珍珠传送的伤害
+item.potion.snow.guide=在你走过的地方留下雪的痕迹
+item.potion.levitation.guide=让你失去控制地漂浮起来
+item.potion.healthboost.guide=暂时提高你的最大生命值
+item.potion.saturation.guide=让你对食物一本满足
+item.potion.wither.guide=让你慢慢地凋零
+item.potion.blindness.guide=让你失明
+
+potion.butter.oops=你获得了笨拙效果！它生效时会在你移动时掉落背包物品。
 potion.effect.slowfall=缓落药水
 splash_potion.effect.slowfall=喷溅型缓落药水
 lingering_potion.effect.slowfall=滞留型缓落药水
@@ -1288,8 +1305,8 @@ item.laser_cannon.tooltip=随机地发射任意颜色的光束
 item.laser_cannon.guide=随机地发射任意颜色的光束
 
 tile.imbuer.name=注入站
-tile.imbuer.tooltip=给你的弓注入神秘的力量
-tile.imbuer.guide=给你的弓注入神秘的力量。放入弓和对应的材料，然后通入红石信号即可。在它是空的时候右击可以列出有效的合成。
+tile.imbuer.tooltip=能给你的弓注入神秘的力量
+tile.imbuer.guide=能给你的弓注入神秘的力量。放入弓和对应的材料，然后通入红石信号即可。在它是空的时候右击可以列出有效的合成。
 imbue.recipes=注入合成：
 imbue.prefix=已注入的效果：
 imbue.type.fire=火焰
@@ -1344,7 +1361,7 @@ item.netherbrick_hoe.guide=这个工具有着更好的属性，其挖掘等级�
 
 pump.rate=传输速率
 
-
+pump.secondline=<- / -> 
 
 
 item.card_location.name=GPS标记器
