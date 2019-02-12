@@ -103,7 +103,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     transferRate = compound.getInteger("transfer");
-    ModCyclic.logger.log("readFromNBT xferrate " + transferRate);
+    //    ModCyclic.logger.log("readFromNBT xferrate " + transferRate);
   }
 
   @Override
@@ -111,7 +111,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     compound.setInteger(NBT_REDST, needsRedstone);
     if (transferRate != 0) {
       compound.setInteger("transfer", this.transferRate);
-      ModCyclic.logger.log("writeToNBT xferrate " + transferRate);
+      //      ModCyclic.logger.log("writeToNBT xferrate " + transferRate);
     }
     return super.writeToNBT(compound);
   }
