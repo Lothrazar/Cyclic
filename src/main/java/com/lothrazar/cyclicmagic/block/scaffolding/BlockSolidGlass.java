@@ -56,7 +56,6 @@ public class BlockSolidGlass extends BlockBase implements IHasRecipe, IContent {
     //    this.lightOpacity = 15;
     setLightOpacity(255);//water gets 3, leaves get 1
     //        this.lightOpacity = this.fullBlock ? 255 : 0;
-
   }
 
   @Override
@@ -98,6 +97,4 @@ public class BlockSolidGlass extends BlockBase implements IHasRecipe, IContent {
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("block_screen", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
-
-
 }

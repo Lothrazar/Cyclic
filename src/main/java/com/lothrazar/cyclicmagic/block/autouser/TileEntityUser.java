@@ -457,7 +457,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     renderParticles = compound.getInteger(NBT_RENDER);
     yOffset = compound.getInteger("yoff");
     tickDelay = compound.getInteger("tickDelay");
-
   }
 
   @Override

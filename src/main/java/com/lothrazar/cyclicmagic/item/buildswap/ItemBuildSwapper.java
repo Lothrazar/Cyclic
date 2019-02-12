@@ -139,7 +139,6 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
-
     ItemStack held = player.getHeldItem(event.getHand());
     if (!held.isEmpty() && held.getItem() == this) {
       //      if (event.getFace() != null && player.isSneaking()) {

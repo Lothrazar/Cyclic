@@ -143,7 +143,6 @@ public class ItemPotionContent implements IContent {
     }
     if (ItemPotionContent.enableLuck) {
       potionTypeLuck = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.LUCK, NORMAL), "luck", new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()));
-
     }
     if (ItemPotionContent.enableWither) {
       potionTypeWither = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.WITHER, NORMAL), "wither", Items.FERMENTED_SPIDER_EYE);
