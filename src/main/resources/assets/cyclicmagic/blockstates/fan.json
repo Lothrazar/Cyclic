@@ -1,10 +1,22 @@
 {
-    "variants": {
-        "facing=north":  { "model": "cyclicmagic:fan", "y": 180, "uvlock": true  },
-        "facing=south":  { "model": "cyclicmagic:fan" },
-        "facing=up":  { "model": "cyclicmagic:fan_up" },
-        "facing=down":  { "model": "cyclicmagic:fan_down"  },
-        "facing=west":  { "model": "cyclicmagic:fan", "y": 90, "uvlock": true },
-        "facing=east": { "model": "cyclicmagic:fan", "y": 270, "uvlock": true  }
-    }
+	"comment": "Model locally faces north, but air direction is south in-game. Model is flipped to match air direction.",
+	"variants": {
+		"facing=north,enabled=false":	{ "model": "cyclicmagic:fan", "y": 180 },
+		"facing=north,enabled=true":	{ "model": "cyclicmagic:fan_on", "y": 180 },
+
+		"facing=east,enabled=false":	{ "model": "cyclicmagic:fan", "y": 270 },
+		"facing=east,enabled=true":		{ "model": "cyclicmagic:fan_on", "y": 270 },
+
+		"facing=south,enabled=false":	{ "model": "cyclicmagic:fan" },
+		"facing=south,enabled=true":	{ "model": "cyclicmagic:fan_on" },
+
+		"facing=west,enabled=false":	{ "model": "cyclicmagic:fan", "y": 90 },
+		"facing=west,enabled=true":		{ "model": "cyclicmagic:fan_on", "y": 90 },
+
+		"facing=up,enabled=false":		{ "model": "cyclicmagic:fan_up" },
+		"facing=up,enabled=true":		{ "model": "cyclicmagic:fan_up_on" },
+
+		"facing=down,enabled=false":	{ "model": "cyclicmagic:fan_up", "x": 180 },
+		"facing=down,enabled=true":		{ "model": "cyclicmagic:fan_up_on", "x": 180 }
+	}
 }

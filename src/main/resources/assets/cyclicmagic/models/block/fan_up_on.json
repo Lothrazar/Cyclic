@@ -1,0 +1,7 @@
+{
+	"parent": "cyclicmagic:block/fan_up",
+
+	"textures": {
+		"blades": "cyclicmagic:blocks/fan_blades_on"
+	}
+}
