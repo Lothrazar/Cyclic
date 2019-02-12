@@ -1419,3 +1419,6 @@ tile.water_candle.guide=Light with flint and steel.  Greatly increases natural m
 
 extended.toolbelt= key to open in tool-belt mode
 
+tile.glass_strong.name=Tempered Glass
+tile.glass_strong.tooltip=Light resistance
+tile.glass_strong.guide=Tempered with void properties to resist light

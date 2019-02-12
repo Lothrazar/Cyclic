@@ -18,7 +18,6 @@ import com.lothrazar.cyclicmagic.block.builderpattern.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.buttondoorbell.BlockDoorbell;
 import com.lothrazar.cyclicmagic.block.buttonflat.BlockButtonLarge;
-import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
 import com.lothrazar.cyclicmagic.block.controlledminer.BlockMinerSmart;
@@ -46,6 +45,7 @@ import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
 import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
+import com.lothrazar.cyclicmagic.block.scaffolding.BlockSolidGlass;
 import com.lothrazar.cyclicmagic.block.screentype.BlockScreen;
 import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
@@ -67,7 +67,6 @@ import com.lothrazar.cyclicmagic.enchant.EnchantReach;
 import com.lothrazar.cyclicmagic.enchant.EnchantVenom;
 import com.lothrazar.cyclicmagic.enchant.EnchantWaterwalking;
 import com.lothrazar.cyclicmagic.enchant.EnchantXpBoost;
-import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderWing;
@@ -129,15 +128,11 @@ import com.lothrazar.cyclicmagic.playerupgrade.ItemCraftingUnlock;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemFlight;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemInventoryUnlock;
 import com.lothrazar.cyclicmagic.playerupgrade.ItemNoclipGhost;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.content.DynamiteContent;
 import com.lothrazar.cyclicmagic.registry.content.ItemPotionContent;
 import com.lothrazar.cyclicmagic.registry.module.MultiContent;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CyclicContent {
 
@@ -265,6 +260,7 @@ public class CyclicContent {
     content.add(new BlockTrash());
     content.add(new BlockWorkbench());
     content.add(new BlockScreen());
+    content.add(new BlockSolidGlass());
     content.add(new BlockSoundSuppress());
     content.add(new BlockCrafter());
     content.add(new BlockDetector());
