@@ -614,22 +614,21 @@ public class MultiContent implements IContent {
       GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
       //Item
       BlockRegistry.registerBlock(new BlockCableItem(), "item_pipe", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
       BlockRegistry.registerBlock(new BlockItemPump(), "item_pump", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
       //ENERGY
       BlockRegistry.registerBlock(new BlockPowerCable(), "energy_pipe", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       BlockRegistry.registerBlock(new BlockEnergyPump(), "energy_pump", null);
       GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
       // FLUID 
       BlockRegistry.registerBlock(new BlockCableFluid(), "fluid_pipe", GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
       BlockRegistry.registerBlock(new BlockFluidPump(), "fluid_pump", null);
       GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
       //bundled
       BlockRegistry.registerBlock(new BlockCableBundle(), "bundled_pipe", GuideCategory.BLOCK);
-      //pipes // TODO: fix block registry
-      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
-      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
-      GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
   }

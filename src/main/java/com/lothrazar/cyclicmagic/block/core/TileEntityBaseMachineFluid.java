@@ -101,7 +101,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
-    // tank.setFluid(result);
     return result;
   }
 
@@ -118,7 +117,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    if (tank != null) {
+    if (tank != null && tagCompound.hasKey(NBT_TANK)) {
       //      ModCyclic.logger.info("basefluid save " + tagCompound.getCompoundTag(NBT_TANK));
       tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
     }

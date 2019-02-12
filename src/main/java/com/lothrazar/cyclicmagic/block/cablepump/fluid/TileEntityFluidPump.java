@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -101,13 +102,17 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
-    transferRate = compound.getInteger("transferRate");
+    transferRate = compound.getInteger("transfer");
+    ModCyclic.logger.log("readFromNBT xferrate " + transferRate);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
-    compound.setInteger("transferRate", this.transferRate);
+    if (transferRate != 0) {
+      compound.setInteger("transfer", this.transferRate);
+      ModCyclic.logger.log("writeToNBT xferrate " + transferRate);
+    }
     return super.writeToNBT(compound);
   }
 
@@ -129,6 +134,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         this.needsRedstone = value % 2;
       break;
       case TRANSFER_RATE:
+        ModCyclic.logger.log("Set pump xferrate " + value);
         transferRate = value;
       break;
     }

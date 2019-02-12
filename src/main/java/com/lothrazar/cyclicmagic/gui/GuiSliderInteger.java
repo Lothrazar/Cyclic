@@ -205,7 +205,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
         dir = 1;
       }
       if (dir != 0 && this.getSliderValue() + dir * this.amt() <= this.getMax()) {
-        this.setSliderValue(this.getSliderValue() + dir * this.amt(), false);
+        this.setSliderValue(this.getSliderValue() + dir * this.amt(), true);
       }
     }
   }
