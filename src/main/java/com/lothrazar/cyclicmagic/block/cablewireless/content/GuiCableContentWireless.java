@@ -56,9 +56,9 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     int y = 106;
     int size = Const.SQ;
     GuiButtonTooltip btnSize;
-    for (int i = 0; i < TileCableContentWireless.SLOT_COUNT - 1; i++) {
+    for (int i = 1; i < TileCableContentWireless.SLOT_COUNT; i++) {
       btnSize = new GuiButtonTooltip(i,
-          this.guiLeft + i * (size) + 8,
+          this.guiLeft + (i - 1) * (size) + 8,
           this.guiTop + y, size, size, "?");
       btnSize.setTooltip("wireless.target");
       //      btnSize.height = 14;
