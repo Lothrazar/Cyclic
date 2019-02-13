@@ -72,6 +72,11 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       this.timer = 0;
       return;
     }
+    if (timer % 3000 == 0) {
+      //sound works for sure 
+      //    UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS);
+    }
+    if (timer < 10) {}
     if (this.timer == 0) {
       this.timer = TIMER_FULL;
       //rm this its ugly, keep in case i add a custom particle

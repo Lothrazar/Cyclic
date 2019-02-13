@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -73,6 +74,17 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
     GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
   }
 
+  @Override
+  protected BlockStateContainer createBlockState() {
+    BlockStateContainer state = super.createBlockState();
+
+    return state;
+  }
+
+  @Override
+  public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
+    return super.getActualState(state, world, origin);
+  }
   private boolean enabled;
 
   @Override

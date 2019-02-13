@@ -1,6 +1,21 @@
 {
 	"comment": "Model locally faces north, but air direction is south in-game. Model is flipped to match air direction.",
 	"variants": {
+	
+		"facing=north":	{ "model": "cyclicmagic:fan", "y": 180 },
+
+		"facing=east":	{ "model": "cyclicmagic:fan", "y": 270 },
+
+		"facing=south":	{ "model": "cyclicmagic:fan" },
+
+		"facing=west":	{ "model": "cyclicmagic:fan", "y": 90 },
+
+		"facing=up":		{ "model": "cyclicmagic:fan_up" },
+
+		"facing=down":	{ "model": "cyclicmagic:fan_up", "x": 180 },
+	
+	
+	
 		"facing=north,enabled=false":	{ "model": "cyclicmagic:fan", "y": 180 },
 		"facing=north,enabled=true":	{ "model": "cyclicmagic:fan_on", "y": 180 },
 
