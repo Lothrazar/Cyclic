@@ -70,8 +70,10 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public void update() {
     if (this.isRunning() == false) {
       this.timer = 0;
+      setAnimation(false);
       return;
     }
+    setAnimation(true);
     if (timer % 3000 == 0) {
       //sound works for sure 
       //    UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS);
@@ -88,6 +90,10 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
       this.timer--;
     }
     pushEntities();
+  }
+
+  private void setAnimation(boolean lit) {
+    this.world.setBlockState(pos, this.world.getBlockState(pos).withProperty(BlockFan.IS_LIT, lit));
   }
 
   @Override
