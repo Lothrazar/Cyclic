@@ -58,7 +58,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private int timer;
   private int pushIfZero = 0;//else pull. 0 as default 
   private int range = 16;
-
   public TileEntityFan() {
     super(0);
     this.needsRedstone = 1;
@@ -74,8 +73,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public void update() {
     if (this.isRunning() == false) {
       setAnimation(false);
-      if (this.timer != 0) {
-        UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_off, SoundCategory.BLOCKS);
+      if (this.timer != 0 && timer > 30) {
+        UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_off, SoundCategory.BLOCKS, 1.0F);
       }
       timer = 0;
       return;
@@ -91,10 +90,10 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     int lengthOn = 31;
     int lengthLoop = 40;
     if (timer == 0) {
-      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_on, SoundCategory.BLOCKS);
+      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_on, SoundCategory.BLOCKS, 0.8F);
     }
     else if (timer == lengthOn || (timer - lengthOn) % lengthLoop == 0) {
-      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS);
+      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS, 0.4F);
     }
   }
 
