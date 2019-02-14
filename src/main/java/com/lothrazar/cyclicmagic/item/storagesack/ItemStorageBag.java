@@ -38,6 +38,7 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -47,6 +48,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -266,19 +268,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           UtilSound.playSound(player, SoundRegistry.sack_holding);
         }
       }
-      //      else { //hit something not an invenotry
-      //        if (StorageActionType.getTimeout(held) > 0) {
-      //          //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
-      //          return;
-      //        }
-      //        StorageActionType.setTimeout(held);
-      //        event.setCanceled(true);
-      //        UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS, 0.1F);
-      //        if (!player.getEntityWorld().isRemote) { // server side
-      //          StorageActionType.toggle(held);
-      //          UtilChat.addChatMessage(player, UtilChat.lang(StorageActionType.getName(held)));
-      //        }
-      //      }
     }
   }
 
@@ -286,6 +275,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack wand = player.getHeldItem(hand);
     setIdIfEmpty(wand);
+    UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.PLAYERS, 0.1F);
     if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
         && hand == EnumHand.MAIN_HAND) {
       BlockPos pos = player.getPosition();
