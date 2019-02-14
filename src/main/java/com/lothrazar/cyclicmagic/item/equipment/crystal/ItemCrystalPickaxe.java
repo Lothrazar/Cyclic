@@ -48,7 +48,7 @@ public class ItemCrystalPickaxe extends ItemPickaxe implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ",
-        'e', "sandstone",
-        's', "stickWood");
+        'e', "gemObsidian",
+        's', "gemDiamond");
   }
 }

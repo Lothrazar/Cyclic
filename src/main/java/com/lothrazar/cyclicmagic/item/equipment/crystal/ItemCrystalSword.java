@@ -97,13 +97,12 @@ public class ItemCrystalSword extends ItemSword implements IHasRecipe, IHasConfi
       break;
     }
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "ded",
-        "ded",
+        "dsd",
+        "dsd",
         "wsw",
         'w', item,
-        'e', Items.NETHER_STAR,
         'd', Items.DRAGON_BREATH,
-        's', "blockEmerald");
+        's', "gemObsidian");
   }
 
   @Override

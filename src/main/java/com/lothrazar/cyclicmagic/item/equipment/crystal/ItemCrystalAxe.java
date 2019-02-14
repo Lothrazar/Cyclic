@@ -47,7 +47,7 @@ public class ItemCrystalAxe extends ItemAxe implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', "sandstone", 's', "diamond");
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', "sandstone", 's', "diamond");
+    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', "gemObsidian", 's', "gemDiamond");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', "gemObsidian", 's', "gemDiamond");
   }
 }

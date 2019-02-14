@@ -87,6 +87,7 @@ public class MaterialRegistry { // thanks for help:
         mimicArmor.getEnchantability() / 4,
         mimicArmor.getSoundEvent(),
         mimicArmor.getToughness() + 2);
+    // gemObsidian
     MaterialRegistry.crystalArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
     //now the tool material
     MaterialRegistry.crystalToolMaterial = EnumHelper.addToolMaterial(MATERIALNAME,

@@ -264,8 +264,8 @@ public class MultiContent implements IContent {
       GuideRegistry.register(GuideCategory.GEAR, emerald_head, "item.emeraldgear.title", "item.emeraldgear.guide");
     }
     if (enablePurpleGear) {
-      Item crystal_ingot = new ItemDictIngot();
-      ItemRegistry.register(crystal_ingot, "crystal_ingot", GuideCategory.GEAR);
+      Item crystallized_obsidian = new ItemDictIngot();
+      ItemRegistry.register(crystallized_obsidian, "crystallized_obsidian", GuideCategory.GEAR);
       Item purple_boots = new ItemCrystalArmor(EntityEquipmentSlot.FEET);
       ItemRegistry.register(purple_boots, "purple_boots", GuideCategory.GEAR);
       Item purple_leggings = new ItemCrystalArmor(EntityEquipmentSlot.LEGS);
