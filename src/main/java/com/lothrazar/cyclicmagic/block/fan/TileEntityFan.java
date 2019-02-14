@@ -27,14 +27,17 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
@@ -58,6 +61,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
 
   public TileEntityFan() {
     super(0);
+    this.needsRedstone = 1;
     this.speed = 5;
   }
 
@@ -69,27 +73,45 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   @Override
   public void update() {
     if (this.isRunning() == false) {
-      this.timer = 0;
       setAnimation(false);
+      if (this.timer != 0) {
+        UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_off, SoundCategory.BLOCKS);
+      }
+      timer = 0;
       return;
     }
+    sounds();
     setAnimation(true);
-    if (timer % 3000 == 0) {
-      //sound works for sure 
-      //    UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS);
+    tick();
+    particles();
+    pushEntities();
+  }
+
+  private void sounds() {
+    int lengthOn = 31;
+    int lengthLoop = 40;
+    if (timer == 0) {
+      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_on, SoundCategory.BLOCKS);
     }
-    if (timer < 10) {}
-    if (this.timer == 0) {
-      this.timer = TIMER_FULL;
+    else if (timer == lengthOn || (timer - lengthOn) % lengthLoop == 0) {
+      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS);
+    }
+  }
+
+  private void tick() {
+    this.timer++;
+    if (timer >= Integer.MAX_VALUE - 1) {
+      timer = 0;
+    }
+  }
+
+  private void particles() {
+    if (timer % 30 == 0) {
       //rm this its ugly, keep in case i add a custom particle
       if (isPreviewVisible()) {
         doParticles();
       }
     }
-    else {
-      this.timer--;
-    }
-    pushEntities();
   }
 
   private void setAnimation(boolean lit) {
