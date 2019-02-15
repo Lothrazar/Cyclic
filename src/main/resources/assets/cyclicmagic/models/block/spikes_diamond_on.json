@@ -1,0 +1,10 @@
+{
+	"parent": "cyclicmagic:parent/spikes_on",
+
+	"textures": {
+		"side": "cyclicmagic:blocks/spikes_diamond_side",
+		"base_up": "cyclicmagic:blocks/spikes_diamond_base_up",
+		"down": "cyclicmagic:blocks/spikes_diamond_base_down",
+		"particle": "cyclicmagic:blocks/spikes_diamond_side"
+	}
+}
