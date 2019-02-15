@@ -1422,3 +1422,7 @@ extended.toolbelt= key to open in tool-belt mode
 tile.glass_strong.name=Tempered Glass
 tile.glass_strong.tooltip=Light resistance
 tile.glass_strong.guide=Tempered with void properties to resist light
+
+item.crystallized_obsidian.name=Crystallized Obsidian
+item.crystallized_obsidian.tooltip=Crafting material
+item.crystallized_obsidian.guide=Crystal made from an obsidial alloy.  Crafting material
