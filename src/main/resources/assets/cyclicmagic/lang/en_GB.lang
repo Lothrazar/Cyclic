@@ -1427,14 +1427,17 @@ item.crystallized_obsidian.name=Crystallized Obsidian
 item.crystallized_obsidian.tooltip=Crafting material
 item.crystallized_obsidian.guide=Crystal made from an obsidian alloy.  Crafting material
 
+item.crystal_sword.name=Crystal Sword
 item.crystal_pickaxe.name=Crystal Hoe
 item.crystal_spade.name=Crystal Shovel
 item.crystal_axe.name=Crystal Axe
 item.crystal_hoe.name=Crystal Hoe
+item.crystal_sword.guide=Crystal Sword
 item.crystal_pickaxe.guide=Crystal Hoe
 item.crystal_spade.guide=Crystal Shovel
 item.crystal_axe.guide=Crystal Axe
 item.crystal_hoe.guide=Crystal Hoe
+item.crystal_sword.tooltip=Crystal Sword
 item.crystal_pickaxe.tooltip=Crystal Hoe
 item.crystal_spade.tooltip=Crystal Shovel
 item.crystal_axe.tooltip=Crystal Axe

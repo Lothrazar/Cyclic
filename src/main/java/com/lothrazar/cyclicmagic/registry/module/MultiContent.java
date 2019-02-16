@@ -283,6 +283,8 @@ public class MultiContent implements IContent {
       ItemRegistry.register(crystal_spade, "crystal_spade", null);
       Item crystal_hoe = new ItemCrystalHoe();
       ItemRegistry.register(crystal_hoe, "crystal_hoe", null);
+      ItemCrystalSword crystal_sword = new ItemCrystalSword(ItemCrystalSword.SwordType.ENDER);
+      ItemRegistry.register(crystal_sword, "crystal_sword", GuideCategory.GEAR);
     }
     if (glowingHelmet) {
       Item glowing_helmet = new ItemGlowingHelmet(EntityEquipmentSlot.HEAD);
