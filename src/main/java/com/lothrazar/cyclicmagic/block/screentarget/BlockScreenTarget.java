@@ -55,7 +55,7 @@ public class BlockScreenTarget extends BlockBaseFacing implements IBlockHasTESR,
 
   public BlockScreenTarget() {
     super(Material.ROCK);
-    this.setGuiId(ForgeGuiHandler.GUI_INDEX_SCREEN);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_SCREENTARGET);
     this.setLightOpacity(0);
   }
 

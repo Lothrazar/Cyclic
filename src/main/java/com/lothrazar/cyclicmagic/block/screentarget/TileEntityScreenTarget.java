@@ -23,17 +23,26 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.screentarget;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
+import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements ITileTextbox {
+public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements ITileTextbox, ITickable {
 
+  public static final int SLOT_TRANSFER = 0;
   private String text = "";
   private int red = 100;
   private int green = 100;
   private int blue = 100;
-  private int cursorPos = 0;
   private int padding = 0;
   private Justification justif = Justification.LEFT;
 
@@ -42,11 +51,20 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   }
 
   public static enum Fields {
-    RED, GREEN, BLUE, CURSORPOS, JUSTIFICATION, PADDING;
+    RED, GREEN, BLUE, JUSTIFICATION, PADDING;
   }
 
   public TileEntityScreenTarget() {
-    super(0);
+    super(1);
+  }
+
+  BlockPosDim getTarget(int slot) {
+    return ItemLocation.getPosition(this.getStackInSlot(slot));
+  }
+
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    return stack.getItem() instanceof ItemLocation;
   }
 
   @Override
@@ -88,7 +106,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     red = tags.getInteger("red");
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
-    cursorPos = tags.getInteger("cursorPos");
     padding = tags.getInteger("padding");
     int just = tags.getInteger("justif");
     if (just < Justification.values().length) {
@@ -102,7 +119,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
-    tags.setInteger("cursorPos", cursorPos);
     tags.setInteger("padding", padding);
     tags.setInteger("justif", justif.ordinal());
     return super.writeToNBT(tags);
@@ -117,8 +133,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         return green;
       case RED:
         return red;
-      case CURSORPOS:
-        return cursorPos;
       case JUSTIFICATION:
         return this.justif.ordinal();
       case PADDING:
@@ -139,9 +153,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       case RED:
         red = value;
       break;
-      case CURSORPOS:
-        cursorPos = value;
-      break;
       case JUSTIFICATION:
         int val = value % Justification.values().length;
         justif = Justification.values()[val];
@@ -154,5 +165,26 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
 
   public Justification getJustification() {
     return this.justif;
+  }
+
+  @Override
+  public void update() {
+    if (isRunning() == false) {
+      return;
+    }
+    BlockPosDim target = this.getTarget(SLOT_TRANSFER);
+    if (target == null || target.getDimension() != world.provider.getDimension()) {
+      return;
+    }
+    // 
+    TileEntity te = world.getTileEntity(target.toBlockPos());
+
+    if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
+      IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+      //therefore  
+      String label = energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
+      ModCyclic.logger.log(label);
+      //todo: send server to client? 
+    }
   }
 }

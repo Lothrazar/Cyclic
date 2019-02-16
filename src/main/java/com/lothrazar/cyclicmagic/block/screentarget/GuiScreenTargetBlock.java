@@ -25,15 +25,10 @@ package com.lothrazar.cyclicmagic.block.screentarget;
 
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen.Fields;
-import com.lothrazar.cyclicmagic.data.ITileTextbox;
+import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.GuiTextFieldMulti;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.net.PacketTileSetField;
-import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -42,7 +37,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiScreenTargetBlock extends GuiBaseContainer {
 
-  private GuiTextFieldMulti txtInput;
   TileEntityScreenTarget screen;
   private ButtonTileEntityField btnToggle;
   private GuiSliderInteger sliderR;
@@ -65,16 +59,10 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     //    int xCenter = (xSize / 2 - width / 2);
     int x = 26;
     int y = Const.PAD / 2;
-    txtInput = new GuiTextFieldMulti(id, this.fontRenderer, x, y, ScreenTargetTESR.SCREEN_WIDTH, 60);
-    txtInput.setMaxStringLength(1230);
-    txtInput.setText(screen.getText());
-    txtInput.setFocused(true);
-    txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
-    // hmm multi lines are better? 
     int h = 12;
     id++;
     x = guiLeft + 26;
-    y = this.guiTop + txtInput.height + Const.PAD;
+    y = this.guiTop + 23 + Const.PAD;
     sliderR = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderR.setTooltip("screen.red");
     this.addButton(sliderR);
@@ -106,34 +94,23 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
-    if (txtInput != null) {
-      tile.setField(Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition());
-      ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
-    }
   }
 
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (txtInput != null) {
-      txtInput.drawTextBox();
-      txtInput.setTextColor(screen.getColor());
-    }
-    btnToggle.setTextureIndex(8 + tile.getField(Fields.JUSTIFICATION.ordinal()));
+    if (btnToggle != null)
+      btnToggle.setTextureIndex(8 + tile.getField(Fields.JUSTIFICATION.ordinal()));
   }
 
-  // http://www.minecraftforge.net/forum/index.php?topic=22378.0
-  // below is all the stuff that makes the text box NOT broken
   @Override
   public void updateScreen() {
     super.updateScreen();
-    if (txtInput != null) {
-      txtInput.updateCursorCounter();
-    }
     sliderR.updateScreen();
     sliderG.updateScreen();
     sliderB.updateScreen();
+    if (sliderPadding != null)
     sliderPadding.updateScreen();
   }
 
@@ -143,23 +120,9 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderG.keyTyped(typedChar, keyCode);
     sliderB.keyTyped(typedChar, keyCode);
     sliderPadding.keyTyped(typedChar, keyCode);
-    if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
+    //  if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
       super.keyTyped(typedChar, keyCode);
-    }
-    if (txtInput != null && txtInput.isFocused()) {
-      txtInput.textboxKeyTyped(typedChar, keyCode);
-      ((ITileTextbox) tile).setText(txtInput.getText());
-      ModCyclic.network.sendToServer(new PacketTileTextbox(txtInput.getText(), tile.getPos()));
-    }
-  }
-
-  @Override
-  protected void mouseClicked(int x, int y, int btn) throws IOException {
-    super.mouseClicked(x, y, btn);// x/y pos is 33/30
-    if (txtInput != null) {
-      txtInput.mouseClicked(x, y, btn);
-      txtInput.setFocused(true);
-    }
+    //   }
   }
   // ok end of textbox fixing stuff
 }
