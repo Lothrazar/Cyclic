@@ -56,7 +56,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCrystalSword extends ItemSword implements IHasRecipe, IHasConfig {
+public class ItemPoweredSword extends ItemSword implements IHasRecipe, IHasConfig {
 
   private static final int COOLDOWN = Const.TICKS_PER_SEC;
 
@@ -67,7 +67,7 @@ public class ItemCrystalSword extends ItemSword implements IHasRecipe, IHasConfi
   private SwordType type;
   private boolean enableShooting;
 
-  public ItemCrystalSword(SwordType t) {
+  public ItemPoweredSword(SwordType t) {
     super(MaterialRegistry.crystalToolMaterial);
     this.type = t;
     this.setMaxDamage(1);

@@ -95,6 +95,7 @@ import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalHoe;
 import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalPickaxe;
 import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalSpade;
 import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemCrystalSword;
+import com.lothrazar.cyclicmagic.item.equipment.crystal.ItemPoweredSword;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.equipment.emerald.ItemEmeraldHoe;
@@ -283,7 +284,7 @@ public class MultiContent implements IContent {
       ItemRegistry.register(crystal_spade, "crystal_spade", null);
       Item crystal_hoe = new ItemCrystalHoe();
       ItemRegistry.register(crystal_hoe, "crystal_hoe", null);
-      ItemCrystalSword crystal_sword = new ItemCrystalSword(ItemCrystalSword.SwordType.ENDER);
+      ItemCrystalSword crystal_sword = new ItemCrystalSword();
       ItemRegistry.register(crystal_sword, "crystal_sword", GuideCategory.GEAR);
     }
     if (glowingHelmet) {
@@ -292,11 +293,11 @@ public class MultiContent implements IContent {
       ModCyclic.instance.events.register(glowing_helmet);
     }
     if (enablePurpleSwords) {
-      ItemCrystalSword sword_weakness = new ItemCrystalSword(ItemCrystalSword.SwordType.WEAK);
+      ItemPoweredSword sword_weakness = new ItemPoweredSword(ItemPoweredSword.SwordType.WEAK);
       ItemRegistry.register(sword_weakness, "sword_weakness", GuideCategory.GEAR);
-      ItemCrystalSword sword_slowness = new ItemCrystalSword(ItemCrystalSword.SwordType.SLOW);
+      ItemPoweredSword sword_slowness = new ItemPoweredSword(ItemPoweredSword.SwordType.SLOW);
       ItemRegistry.register(sword_slowness, "sword_slowness", GuideCategory.GEAR);
-      ItemCrystalSword sword_ender = new ItemCrystalSword(ItemCrystalSword.SwordType.ENDER);
+      ItemPoweredSword sword_ender = new ItemPoweredSword(ItemPoweredSword.SwordType.ENDER);
       ItemRegistry.register(sword_ender, "sword_ender", GuideCategory.GEAR);
     }
     if (enableNetherbrickTools) {
