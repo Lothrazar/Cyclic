@@ -98,9 +98,10 @@ public class ItemPoweredSword extends ItemSword implements IHasRecipe, IHasConfi
     }
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "dsd",
-        "dsd",
+        "xsx",
         "wsw",
         'w', item,
+        'x', "blockDiamond",
         'd', Items.DRAGON_BREATH,
         's', "gemObsidian");
   }

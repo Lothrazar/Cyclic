@@ -101,9 +101,9 @@ public class MaterialRegistry { // thanks for help:
     //regular stuff
     MaterialRegistry.powerToolMaterial = EnumHelper.addToolMaterial(POWER,
         ToolMaterial.DIAMOND.getHarvestLevel(),
-        ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
+        ToolMaterial.DIAMOND.getMaxUses() * 3, //was  - 261
         ToolMaterial.DIAMOND.getEfficiency(),
-        ToolMaterial.DIAMOND.getAttackDamage() * 7, //best draconic evolution sword is 35 base, so this is not that crazy
+        ToolMaterial.DIAMOND.getAttackDamage() * 7.8F, //best draconic evolution sword is 35 base, so this is not that crazy
         ToolMaterial.GOLD.getEnchantability() * 2);
     MaterialRegistry.powerToolMaterial.setRepairItem(new ItemStack(Items.DRAGON_BREATH));
   }
