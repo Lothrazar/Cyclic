@@ -27,7 +27,6 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -39,11 +38,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiScreenTargetBlock extends GuiBaseContainer {
 
   TileEntityScreenTarget screen;
-  private ButtonTileEntityField btnToggle;
   private GuiSliderInteger sliderR;
   private GuiSliderInteger sliderG;
   private GuiSliderInteger sliderB;
   private GuiSliderInteger sliderPadding;
+  private GuiSliderInteger sliderPaddingY;
 
   public GuiScreenTargetBlock(InventoryPlayer inventoryPlayer, TileEntityScreenTarget tileEntity) {
     super(new ContainerScreenTarget(inventoryPlayer, tileEntity), tileEntity);
@@ -79,17 +78,14 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     this.addButton(sliderB);
     id++;
     y += h + 1;
-    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDING.ordinal());
+    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDINGX.ordinal());
     sliderPadding.setTooltip("screen.padding");
     this.addButton(sliderPadding);
-    //text box of course
     id++;
-    btnToggle = new ButtonTileEntityField(id++,
-        this.guiLeft + 4,
-        this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.JUSTIFICATION.ordinal(), 1);
-    btnToggle.setTooltip("screen.justification");
-    btnToggle.width = 20;
-    this.addButton(btnToggle);
+    y += h + 1;
+    sliderPaddingY = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDINGY.ordinal());
+    sliderPaddingY.setTooltip("screen.paddingy");
+    this.addButton(sliderPaddingY);
   }
 
   @Override
@@ -101,8 +97,6 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (btnToggle != null)
-      btnToggle.setTextureIndex(8 + tile.getField(Fields.JUSTIFICATION.ordinal()));
   }
 
   @Override

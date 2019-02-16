@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.screentarget;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
@@ -35,6 +34,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements ITileTextbox, ITickable {
 
@@ -43,15 +47,15 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int red = 100;
   private int green = 100;
   private int blue = 100;
-  private int padding = 0;
-  private Justification justif = Justification.LEFT;
+  private int paddingX = 0;
+  private int paddingY = 0;
 
   public static enum Justification {
     LEFT, CENTER, RIGHT;
   }
 
   public static enum Fields {
-    RED, GREEN, BLUE, JUSTIFICATION, PADDING;
+    RED, GREEN, BLUE, PADDINGX, PADDINGY;
   }
 
   public TileEntityScreenTarget() {
@@ -69,16 +73,12 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
 
   @Override
   public String getText() {
-    return text + "TEST";
+    return text;
   }
 
   @Override
   public void setText(String s) {
     text = s;
-  }
-
-  public int getPadding() {
-    return padding;
   }
 
   public int getColor() {
@@ -106,11 +106,10 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     red = tags.getInteger("red");
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
-    padding = tags.getInteger("padding");
+    paddingX = tags.getInteger("paddingx");
+    paddingY = tags.getInteger("paddingy");
     int just = tags.getInteger("justif");
-    if (just < Justification.values().length) {
-      this.justif = Justification.values()[just];
-    }
+
   }
 
   @Override
@@ -119,8 +118,8 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
-    tags.setInteger("padding", padding);
-    tags.setInteger("justif", justif.ordinal());
+    tags.setInteger("paddingx", paddingX);
+    tags.setInteger("paddingy", paddingY);
     return super.writeToNBT(tags);
   }
 
@@ -133,10 +132,10 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         return green;
       case RED:
         return red;
-      case JUSTIFICATION:
-        return this.justif.ordinal();
-      case PADDING:
-        return this.padding;
+      case PADDINGX:
+        return this.paddingX;
+      case PADDINGY:
+        return this.paddingY;
     }
     return 0;
   }
@@ -153,19 +152,15 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       case RED:
         red = value;
       break;
-      case JUSTIFICATION:
-        int val = value % Justification.values().length;
-        justif = Justification.values()[val];
+      case PADDINGX:
+        paddingX = value;
       break;
-      case PADDING:
-        padding = value;
+      case PADDINGY:
+        paddingY = value;
       break;
     }
   }
 
-  public Justification getJustification() {
-    return this.justif;
-  }
 
   @Override
   public void update() {
@@ -178,13 +173,37 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     }
     // 
     TileEntity te = world.getTileEntity(target.toBlockPos());
-
-    if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
+    if (te == null) {
+      return;
+    }
+    if (te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
       IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
       //therefore  
-      String label = energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
-      ModCyclic.logger.log(label);
-      //todo: send server to client? 
+      this.text = energy.getEnergyStored() + "/" + energy.getMaxEnergyStored()
+          + System.lineSeparator();
+    }
+
+    if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
+      IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+      //therefore  
+      int max = itemHandler.getSlots();
+      int empty = 0;
+      for (int i = 0; i < max; i++) {
+        if (itemHandler.getStackInSlot(i).isEmpty()) {
+          empty++;
+        }
+      }
+      this.text += empty + "/" + max
+          + System.lineSeparator();
+
+    }
+    if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
+      IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+      //therefore   
+      for (IFluidTankProperties f : energy.getTankProperties()) {
+        this.text += f.getContents().getLocalizedName() + " " + f.getContents().amount + "/" + f.getCapacity()
+            + System.lineSeparator();
+      }
     }
   }
 }
