@@ -54,7 +54,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasRecipe, IContent {
 
   public BlockScreen() {
-    super(Material.WOOD);
+    super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SCREEN);
     this.setLightOpacity(0);
   }

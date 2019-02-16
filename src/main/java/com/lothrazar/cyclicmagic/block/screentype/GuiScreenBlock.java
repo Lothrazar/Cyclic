@@ -62,7 +62,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     Keyboard.enableRepeatEvents(true);
     int id = 1;
     int width = 144;
-    int xCenter = (xSize / 2 - width / 2);
+    //    int xCenter = (xSize / 2 - width / 2);
     int x = 26;
     int y = Const.PAD / 2;
     txtInput = new GuiTextFieldMulti(id, this.fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, 60);
