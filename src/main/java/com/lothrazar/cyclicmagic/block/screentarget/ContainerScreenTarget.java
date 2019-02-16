@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.screentarget;
 
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,6 +34,9 @@ public class ContainerScreenTarget extends ContainerBaseMachine {
 
   public ContainerScreenTarget(InventoryPlayer inventoryPlayer, TileEntityScreenTarget te) {
     super(te);
+    int x = 8;
+    int y = 86;
+    addSlotToContainer(new SlotCheckTileValid(te, 0, x, y));
     bindPlayerHotbar(inventoryPlayer);
   }
 

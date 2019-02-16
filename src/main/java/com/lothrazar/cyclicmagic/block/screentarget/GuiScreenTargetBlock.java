@@ -31,6 +31,7 @@ import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -105,13 +106,24 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   }
 
   @Override
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
+    int x = this.guiLeft + 8;
+    int y = this.guiTop + 86;
+    Gui.drawModalRectWithCustomSizedTexture(
+        x, y,
+        0, 0, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+  }
+
+  @Override
   public void updateScreen() {
     super.updateScreen();
     sliderR.updateScreen();
     sliderG.updateScreen();
     sliderB.updateScreen();
     if (sliderPadding != null)
-    sliderPadding.updateScreen();
+      sliderPadding.updateScreen();
   }
 
   @Override
@@ -121,7 +133,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderB.keyTyped(typedChar, keyCode);
     sliderPadding.keyTyped(typedChar, keyCode);
     //  if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
-      super.keyTyped(typedChar, keyCode);
+    super.keyTyped(typedChar, keyCode);
     //   }
   }
   // ok end of textbox fixing stuff
