@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -39,7 +38,8 @@ public class MaterialRegistry { // thanks for help:
   private static final int ironDurability = 15;
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   private static final String emeraldName = "emerald";
-  private static final String MATERIALNAME = "power";
+  private static final String POWER = "power";
+  private static final String CRYSTAL = "crystal";
   private static final String GLOWING = "glowing";
   // thanks for help: http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   public static ToolMaterial netherToolMaterial;
@@ -48,6 +48,7 @@ public class MaterialRegistry { // thanks for help:
   public static ArmorMaterial emeraldArmorMaterial;
   public static ArmorMaterial crystalArmorMaterial;
   public static ToolMaterial crystalToolMaterial;
+  public static ToolMaterial powerToolMaterial;
   public static ArmorMaterial glowingArmorMaterial;
 
   public static void register() {
@@ -76,7 +77,7 @@ public class MaterialRegistry { // thanks for help:
 
   private static void registerPurpleMaterial() {
     ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
-    MaterialRegistry.crystalArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
+    MaterialRegistry.crystalArmorMaterial = EnumHelper.addArmorMaterial(CRYSTAL, Const.MODRES + CRYSTAL,
         diamondDurability * 2, // affects DURABILITY . 15 is the same as iron
         new int[] {
             mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET) + 1,
@@ -90,29 +91,25 @@ public class MaterialRegistry { // thanks for help:
     // gemObsidian
     MaterialRegistry.crystalArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
     //now the tool material
-    MaterialRegistry.crystalToolMaterial = EnumHelper.addToolMaterial(MATERIALNAME,
+    MaterialRegistry.crystalToolMaterial = EnumHelper.addToolMaterial(CRYSTAL,
+        ToolMaterial.DIAMOND.getHarvestLevel(),
+        ToolMaterial.DIAMOND.getMaxUses() * 2,
+        ToolMaterial.DIAMOND.getEfficiency() * 2,
+        ToolMaterial.DIAMOND.getAttackDamage() * 2,
+        ToolMaterial.GOLD.getEnchantability() * 2);
+    MaterialRegistry.crystalToolMaterial.setRepairItem(MaterialRegistry.crystalArmorMaterial.repairMaterial);
+    //regular stuff
+    MaterialRegistry.powerToolMaterial = EnumHelper.addToolMaterial(POWER,
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
         ToolMaterial.DIAMOND.getEfficiency(),
-        ToolMaterial.DIAMOND.getAttackDamage() * 8, //best draconic evolution sword is 35 base, so this is not that crazy
+        ToolMaterial.DIAMOND.getAttackDamage() * 7, //best draconic evolution sword is 35 base, so this is not that crazy
         ToolMaterial.GOLD.getEnchantability() * 2);
-    MaterialRegistry.crystalToolMaterial.setRepairItem(MaterialRegistry.crystalArmorMaterial.repairMaterial);
-    ModCyclic.logger.log("crystalArmorMaterial" + MaterialRegistry.crystalArmorMaterial);
-    ModCyclic.logger.log("crystalToolMaterial" + MaterialRegistry.crystalToolMaterial);
+    MaterialRegistry.powerToolMaterial.setRepairItem(new ItemStack(Items.DRAGON_BREATH));
   }
 
   private static void registerEmeraldMaterial() {
-    ModCyclic.logger.error("emerald armor", emeraldName, Const.MODRES + emeraldName,
-        diamondDurability + 30, //was -2 affects DURABILITY 
-        new int[] {
-            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET),
-            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS),
-            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST),
-            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
-        },
-        ArmorMaterial.GOLD.getEnchantability(),
-        ArmorMaterial.DIAMOND.getSoundEvent(),
-        ArmorMaterial.DIAMOND.getToughness() + 1);
+
     MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
         diamondDurability + 30, //was -2 affects DURABILITY 
         new int[] {
@@ -131,11 +128,10 @@ public class MaterialRegistry { // thanks for help:
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses(), //was  - 261
         ToolMaterial.DIAMOND.getEfficiency(),
-        ToolMaterial.DIAMOND.getAttackDamage(), //was  - 0.25F
+        ToolMaterial.DIAMOND.getAttackDamage() * 1.5F, //was  - 0.25F
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
-    ModCyclic.logger.log("emeraldArmorMaterial" + MaterialRegistry.emeraldArmorMaterial);
-    ModCyclic.logger.log("emeraldToolMaterial" + MaterialRegistry.emeraldToolMaterial);
+
   }
 
   /**
@@ -149,7 +145,6 @@ public class MaterialRegistry { // thanks for help:
         (ToolMaterial.STONE.getAttackDamage() + ToolMaterial.WOOD.getAttackDamage()) / 2.0F,
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.sandstoneToolMaterial.setRepairItem(new ItemStack(Blocks.SANDSTONE));
-    ModCyclic.logger.log("sandstoneToolMaterial" + MaterialRegistry.sandstoneToolMaterial);
   }
 
   /**
@@ -164,6 +159,5 @@ public class MaterialRegistry { // thanks for help:
         ToolMaterial.IRON.getAttackDamage(),
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.netherToolMaterial.setRepairItem(new ItemStack(Items.NETHERBRICK));
-    ModCyclic.logger.log("netherToolMaterial" + MaterialRegistry.netherToolMaterial);
   }
 }
