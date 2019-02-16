@@ -47,15 +47,9 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int red = 100;
   private int green = 100;
   private int blue = 100;
-  private int paddingX = 0;
-  private int paddingY = 0;
-
-  public static enum Justification {
-    LEFT, CENTER, RIGHT;
-  }
 
   public static enum Fields {
-    RED, GREEN, BLUE, PADDINGX, PADDINGY;
+    RED, GREEN, BLUE;
   }
 
   public TileEntityScreenTarget() {
@@ -106,10 +100,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     red = tags.getInteger("red");
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
-    paddingX = tags.getInteger("paddingx");
-    paddingY = tags.getInteger("paddingy");
-    int just = tags.getInteger("justif");
-
   }
 
   @Override
@@ -118,8 +108,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
-    tags.setInteger("paddingx", paddingX);
-    tags.setInteger("paddingy", paddingY);
     return super.writeToNBT(tags);
   }
 
@@ -132,10 +120,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         return green;
       case RED:
         return red;
-      case PADDINGX:
-        return this.paddingX;
-      case PADDINGY:
-        return this.paddingY;
     }
     return 0;
   }
@@ -152,15 +136,8 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       case RED:
         red = value;
       break;
-      case PADDINGX:
-        paddingX = value;
-      break;
-      case PADDINGY:
-        paddingY = value;
-      break;
     }
   }
-
 
   @Override
   public void update() {
@@ -175,39 +152,64 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     if (target == null || target.getDimension() != world.provider.getDimension()) {
       return;
     }
+    this.text = "";
+    //    this.text += world.getBlockState(target.toBlockPos()).getBlock().getRegistryName().toString()
+    //        + System.lineSeparator();
     // 
     TileEntity te = world.getTileEntity(target.toBlockPos());
     if (te == null) {
       return;
     }
-    if (te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
-      IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-      //therefore  
-      this.text = energy.getEnergyStored() + "/" + energy.getMaxEnergyStored()
-          + System.lineSeparator();
+    boolean showPercent = false;
+    boolean showLabels = true;
+    boolean showMaximum = true;
+    boolean fluid = true;
+    boolean energyshow = false;
+    boolean items = false;
+    if (energyshow) {
+      String energyStr = "";
+      if (te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
+        IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+        //therefore  
+        energyStr = "FE " + energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
+      }
+      else {
+        energyStr = "--";
+      }
+      this.text += energyStr + System.lineSeparator();
     }
-
-    if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
-      IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-      //therefore  
-      int max = itemHandler.getSlots();
-      int empty = 0;
-      for (int i = 0; i < max; i++) {
-        if (itemHandler.getStackInSlot(i).isEmpty()) {
-          empty++;
+    if (items) {
+      String itemStr = "";
+      if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
+        IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+        //therefore  
+        int max = itemHandler.getSlots();
+        int empty = 0;
+        for (int i = 0; i < max; i++) {
+          if (itemHandler.getStackInSlot(i).isEmpty()) {
+            empty++;
+          }
+        }
+        itemStr = "Slots " + empty + "/" + max;
+      }
+      else {
+        itemStr = "--";
+      }
+      this.text += itemStr + System.lineSeparator();
+    }
+    if (fluid) {
+      String fluidStr = "";
+      if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
+        IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+        //therefore   
+        for (IFluidTankProperties f : energy.getTankProperties()) {
+          fluidStr = f.getContents().getLocalizedName() + " " + f.getContents().amount + "/" + f.getCapacity();
         }
       }
-      this.text += empty + "/" + max
-          + System.lineSeparator();
-
-    }
-    if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
-      IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-      //therefore   
-      for (IFluidTankProperties f : energy.getTankProperties()) {
-        this.text += f.getContents().getLocalizedName() + " " + f.getContents().amount + "/" + f.getCapacity()
-            + System.lineSeparator();
+      else {
+        fluidStr = "--";
       }
+      this.text += fluidStr + System.lineSeparator();
     }
   }
 }

@@ -41,8 +41,6 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   private GuiSliderInteger sliderR;
   private GuiSliderInteger sliderG;
   private GuiSliderInteger sliderB;
-  private GuiSliderInteger sliderPadding;
-  private GuiSliderInteger sliderPaddingY;
 
   public GuiScreenTargetBlock(InventoryPlayer inventoryPlayer, TileEntityScreenTarget tileEntity) {
     super(new ContainerScreenTarget(inventoryPlayer, tileEntity), tileEntity);
@@ -76,16 +74,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
-    id++;
-    y += h + 1;
-    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDINGX.ordinal());
-    sliderPadding.setTooltip("screen.padding");
-    this.addButton(sliderPadding);
-    id++;
-    y += h + 1;
-    sliderPaddingY = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDINGY.ordinal());
-    sliderPaddingY.setTooltip("screen.paddingy");
-    this.addButton(sliderPaddingY);
+
   }
 
   @Override
@@ -116,8 +105,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderR.updateScreen();
     sliderG.updateScreen();
     sliderB.updateScreen();
-    if (sliderPadding != null)
-      sliderPadding.updateScreen();
+
   }
 
   @Override
@@ -125,7 +113,6 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderR.keyTyped(typedChar, keyCode);
     sliderG.keyTyped(typedChar, keyCode);
     sliderB.keyTyped(typedChar, keyCode);
-    sliderPadding.keyTyped(typedChar, keyCode);
     //  if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
     super.keyTyped(typedChar, keyCode);
     //   }
