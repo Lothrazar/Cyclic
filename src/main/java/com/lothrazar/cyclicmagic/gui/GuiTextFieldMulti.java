@@ -23,11 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.gui;
 
-import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.lothrazar.cyclicmagic.block.screentype.ScreenTESR;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -333,7 +330,13 @@ public class GuiTextFieldMulti extends Gui {
       return true;
     }
     else {
+      System.out.println("keycoe up down? " + keyCode + "; cursorPosition=" + this.cursorPosition);
       switch (keyCode) {
+        case 28:
+          System.out.println("*linesep ");
+          this.writeText("@");
+          //          this.cursorPosition--;
+          return true;
         case 14:
           if (GuiScreen.isCtrlKeyDown()) {
             if (this.isEnabled) {
@@ -453,7 +456,7 @@ public class GuiTextFieldMulti extends Gui {
     int yPos = this.y - 4;//: this.y;
     int hPosCurr = hPos;
     String textCopy = new String(this.text);
-    List<String> lines = UtilChat.splitIntoEqualLengths(this.fontRenderer, textCopy, ScreenTESR.SCREEN_WIDTH);
+    //    List<String> lines = UtilChat.splitIntoEqualLengths(this.fontRenderer, textCopy, ScreenTESR.SCREEN_WIDTH);
     int hPosCursor = 0;
     int vPosCursor = -1;
     int charsWritten = 0;
@@ -462,9 +465,10 @@ public class GuiTextFieldMulti extends Gui {
         vPosCursor = yPos + LINE_HEIGHT;
         hPosCursor = hPos;
       }
+      String lines[] = textCopy.split("@");
       for (String line : lines) {
         yPos += LINE_HEIGHT;// TODO: font size?
-        this.fontRenderer.drawStringWithShadow(line, (float) hPosCurr, (float) yPos, colorCurrent);
+        this.fontRenderer.drawStringWithShadow(line, hPosCurr, yPos, colorCurrent);
         // so if cursorPosition
         int cursorPosRelative = cursorPosition - charsWritten;
         //so charsWritten steps up line by line, 16, 32, 48 etc

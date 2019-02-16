@@ -23,9 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.screentype;
 
-import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.BaseTESR;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
@@ -54,33 +52,34 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
     //    String[] lines = UtilChat.splitIntoLine(te.getText(), MAX_WIDTH);
-    List<String> lines = UtilChat.splitIntoEqualLengths(this.getFontRenderer(), te.getText(), SCREEN_WIDTH - tePadding);
+    //   List<String> lines = UtilChat.splitIntoEqualLengths(this.getFontRenderer(), te.getText(), SCREEN_WIDTH - tePadding);
     //ModCyclic.logger.log("RENDER TEXT" +te.getText()+" line count "+lines.size());
     //now render
     float lnWidth;
     int ln = 0;
-    TileEntityScreen.Justification justif = te.getJustification();
+    // TileEntityScreen.Justification justif = te.getJustification();
+    String lines[] = te.getText().split("@");
     for (String line : lines) {
       //  ModCyclic.logger.log("line  has width "+this.getFontRenderer().getStringWidth(line));
       //line = line.trim();//trim whitespaces on right side hey.. wait if line ends in space, and its right just, put space on next line?
       lnWidth = ((float) this.getFontRenderer().getStringWidth(line)) / ((float) SCREEN_WIDTH);
-      switch (justif) {
-        // LEFT has no changes
-        case CENTER:
-          float spRemainder = width - lnWidth;
-          xt = leftEdge + spRemainder / 2;
-        break;
-        case RIGHT:
-          float spRemainders = width - lnWidth;
-          xt = leftEdge + spRemainders - 0.05F;//padding. why left doesnt need i dont know
-        break;
-      }
+      //      switch (justif) {
+      //        // LEFT has no changes
+      //        case CENTER:
+      //          float spRemainder = width - lnWidth;
+      //          xt = leftEdge + spRemainder / 2;
+      //        break;
+      //        case RIGHT:
+      //          float spRemainders = width - lnWidth;
+      //          xt = leftEdge + spRemainders - 0.05F;//padding. why left doesnt need i dont know
+      //        break;
+      //      }
       float fontSize = 0.010416667F;
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor(), fontSize);
       ln++;
-      if (ln >= MAX_LINES) {
-        break;
-      }
+      //      if (ln >= MAX_LINES) {
+      //        break;
+      //      }
       y += rowHeight;
     }
   }
