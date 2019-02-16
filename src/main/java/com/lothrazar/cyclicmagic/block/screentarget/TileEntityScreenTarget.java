@@ -167,6 +167,10 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     if (isRunning() == false) {
       return;
     }
+    if (this.world.getTotalWorldTime() % 20 != 0) {
+      return;
+    }
+    // ModCyclic.logger.error("run at " + this.world.getTotalWorldTime());
     BlockPosDim target = this.getTarget(SLOT_TRANSFER);
     if (target == null || target.getDimension() != world.provider.getDimension()) {
       return;
