@@ -134,6 +134,9 @@ import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.block.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
+import com.lothrazar.cyclicmagic.block.screentarget.ContainerScreenTarget;
+import com.lothrazar.cyclicmagic.block.screentarget.GuiScreenTargetBlock;
+import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget;
 import com.lothrazar.cyclicmagic.block.screentype.ContainerScreen;
 import com.lothrazar.cyclicmagic.block.screentype.GuiScreenBlock;
 import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen;
@@ -247,6 +250,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_LASER = 48;
   public static final int GUI_INDEX_TOOLSWAPPER = 49;
   public static final int GUI_INDEX_W_FLUID = 50;
+  public static final int GUI_INDEX_SCREENTARGET = 51;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -496,6 +500,11 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_W_FLUID:
         if (te instanceof TileCableFluidWireless) {
           return new ContainerCableFluidWireless(player.inventory, (TileCableFluidWireless) te);
+        }
+      break;
+      case GUI_INDEX_SCREENTARGET:
+        if (te instanceof TileEntityScreenTarget) {
+          return new ContainerScreenTarget(player.inventory, (TileEntityScreenTarget) te);
         }
       break;
     }
@@ -750,6 +759,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_W_FLUID:
           if (te instanceof TileCableFluidWireless) {
             return new GuiCableFluidWireless(player.inventory, (TileCableFluidWireless) te);
+          }
+        break;
+        case GUI_INDEX_SCREENTARGET:
+          if (te instanceof TileEntityScreenTarget) {
+            return new GuiScreenTargetBlock(player.inventory, (TileEntityScreenTarget) te);
           }
         break;
       }
