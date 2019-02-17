@@ -90,6 +90,7 @@ public class PacketTileSetField implements IMessage, IMessageHandler<PacketTileS
       if (tile != null && tile instanceof IInventory) {
         IInventory tileInvo = ((IInventory) tile);
         tileInvo.setField(message.field, message.value);
+        tileInvo.markDirty();
       }
     }
     catch (Exception e) {//since we dont know which class exactly this might get run on
