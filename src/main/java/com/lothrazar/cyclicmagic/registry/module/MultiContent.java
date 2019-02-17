@@ -154,6 +154,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class MultiContent implements IContent {
 
+
   public static ArrayList<BaseItemProjectile> projectiles = new ArrayList<BaseItemProjectile>();
   public static ItemStorageBag storage_bag = null;//ref by ContainerStorage
   private boolean goldMinecart;
@@ -265,8 +266,6 @@ public class MultiContent implements IContent {
       GuideRegistry.register(GuideCategory.GEAR, emerald_head, "item.emeraldgear.title", "item.emeraldgear.guide");
     }
     if (enablePurpleGear) {
-      Item crystallized_obsidian = new ItemDictIngot();
-      ItemRegistry.register(crystallized_obsidian, "crystallized_obsidian", GuideCategory.GEAR);
       Item purple_boots = new ItemCrystalArmor(EntityEquipmentSlot.FEET);
       ItemRegistry.register(purple_boots, "purple_boots", GuideCategory.GEAR);
       Item purple_leggings = new ItemCrystalArmor(EntityEquipmentSlot.LEGS);

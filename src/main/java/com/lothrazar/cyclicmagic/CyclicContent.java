@@ -131,6 +131,7 @@ import com.lothrazar.cyclicmagic.playerupgrade.ItemNoclipGhost;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.content.DynamiteContent;
 import com.lothrazar.cyclicmagic.registry.content.ItemPotionContent;
+import com.lothrazar.cyclicmagic.registry.module.ItemGemObsidian;
 import com.lothrazar.cyclicmagic.registry.module.MultiContent;
 import net.minecraft.init.Blocks;
 
@@ -143,6 +144,7 @@ public class CyclicContent {
 
   public static void init() {
     content = new ArrayList<IContent>();
+    content.add(new ItemGemObsidian());
     content.add(new ItemPotionContent());
     content.add(new MultiContent());
     content.add(new ItemLocation());

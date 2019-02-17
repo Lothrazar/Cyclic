@@ -117,17 +117,7 @@ public class UtilPlayerInventoryFilestorage {
         }
         if (file1 == null || !file1.exists() || data == null || data.isEmpty()) {
           ModCyclic.logger.error("Data not found for " + player.getDisplayNameString());//+ ". Trying to load backup data."
-          //          if (file2 != null && file2.exists()) {
-          //            try {
-          //              FileInputStream fileinputstream = new FileInputStream(file2);
-          //              data = CompressedStreamTools.readCompressed(fileinputstream);
-          //              fileinputstream.close();
-          //              save = true;
-          //            }
-          //            catch (Exception e) {
-          //              e.printStackTrace();
-          //            }
-          //          }
+
         }
         if (data != null) {
           InventoryPlayerExtended inventory = new InventoryPlayerExtended(player);
