@@ -54,7 +54,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
     screen = tileEntity;
-    setScreenSize(ScreenSize.STANDARDPLAIN);
+    setScreenSize(ScreenSize.LARGEPLAIN);
   }
 
   @Override

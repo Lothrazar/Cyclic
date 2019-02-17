@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.screentype;
 
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,6 +34,7 @@ public class ContainerScreen extends ContainerBaseMachine {
 
   public ContainerScreen(InventoryPlayer inventoryPlayer, TileEntityScreen te) {
     super(te);
+    setScreenSize(ScreenSize.LARGEPLAIN);
     bindPlayerHotbar(inventoryPlayer);
   }
 
