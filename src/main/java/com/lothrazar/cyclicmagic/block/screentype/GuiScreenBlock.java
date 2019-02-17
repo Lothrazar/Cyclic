@@ -50,6 +50,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   private GuiSliderInteger sliderG;
   private GuiSliderInteger sliderB;
   private GuiSliderInteger sliderPadding;
+  private GuiSliderInteger sliderFont;
 
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
@@ -97,9 +98,14 @@ public class GuiScreenBlock extends GuiBaseContainer {
     this.addButton(sliderB);
     id++;
     y += h + 1;
-    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, -100, 100, Fields.PADDING.ordinal());
+    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, -200, 200, Fields.PADDING.ordinal());
     sliderPadding.setTooltip("screen.padding");
     this.addButton(sliderPadding);
+    id++;
+    y += h + 1;
+    sliderFont = new GuiSliderInteger(tile, id, x, y, width, h, 1, 16, Fields.FONT.ordinal());
+    sliderFont.setTooltip("screen.font");
+    this.addButton(sliderFont);
 
   }
 
@@ -134,6 +140,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     sliderG.updateScreen();
     sliderB.updateScreen();
     sliderPadding.updateScreen();
+    sliderFont.updateScreen();
   }
 
   @Override
@@ -141,6 +148,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     sliderR.keyTyped(typedChar, keyCode);
     sliderG.keyTyped(typedChar, keyCode);
     sliderB.keyTyped(typedChar, keyCode);
+    sliderFont.keyTyped(typedChar, keyCode);
     sliderPadding.keyTyped(typedChar, keyCode);
     if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
       super.keyTyped(typedChar, keyCode);

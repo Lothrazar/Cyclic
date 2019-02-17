@@ -35,25 +35,27 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   public static final int MAX_TOTAL = MAX_WIDTH * MAX_LINES;
   public static final float rowHeight = -0.11F;// TODO: font size?
 
-  float fontSize = 0.010416667F;
+  static final float fontSize = 0.010416667F / 2;
+
   public ScreenTESR(Block block) {
     super(block);
   }
 
   @Override
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    
+
     //default translations  
     float xt = 0, yt = te.getPadding() / 100F, zt = 0;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
-
+    float fontFact = te.getField(TileEntityScreen.Fields.FONT.ordinal());
     for (int i = 0; i < 4; i++) {
-      String line = te.getText(i);  
+      String line = te.getText(i);
+      renderTextAt(line, x, y, z, destroyStage,
+          xt, yt, zt, angle,
+          te.getColor(), fontSize * fontFact);
 
-      renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor(), fontSize);
-
-      y += rowHeight;
+      y += rowHeight * fontFact / 2;
     }
   }
 }

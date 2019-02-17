@@ -34,10 +34,11 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int green = 100;
   private int blue = 100;
   private int padding = 0;
+  private int font = 0;
 
 
   public static enum Fields {
-    RED, GREEN, BLUE, PADDING;
+    RED, GREEN, BLUE, PADDING, FONT;
   }
 
   public TileEntityScreen() {
@@ -97,6 +98,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
     padding = tags.getInteger("padding");
+    font = tags.getInteger("font");
   }
 
   @Override
@@ -110,6 +112,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
     tags.setInteger("padding", padding);
+    tags.setInteger("font", font);
     return super.writeToNBT(tags);
   }
 
@@ -124,6 +127,8 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
         return red;
       case PADDING:
         return this.padding;
+      case FONT:
+        return this.font;
     }
     return 0;
   }
@@ -142,6 +147,9 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
       break;
       case PADDING:
         padding = value;
+      break;
+      case FONT:
+        font = value;
       break;
     }
   }
