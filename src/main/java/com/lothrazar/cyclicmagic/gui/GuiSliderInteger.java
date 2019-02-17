@@ -90,7 +90,7 @@ public class GuiSliderInteger extends GuiButtonExt implements ITooltipButton {
   private void notifyResponder() {
     int val = (int) this.getSliderValue();
     this.responder.setField(this.responderField, val);
-    //    ModCyclic.logger.log("guiSlidInt setfield " + this.responderField + ", " + sliderPosition);
+    ModCyclic.logger.log("guiSlidInt setfield " + this.responderField + ", " + sliderPosition);
     ModCyclic.network.sendToServer(new PacketTileSetField(this.responder.getPos(), this.responderField, (int) this.getSliderValue()));
   }
 

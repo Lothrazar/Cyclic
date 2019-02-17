@@ -40,6 +40,7 @@ import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
@@ -84,9 +85,12 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
   @Override
   public IRecipe addRecipe() {
     if (heartChangeOnEat > 0)
-      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.RABBIT, Items.PUMPKIN_PIE, "gemDiamond", Items.CAKE, "blockEmerald", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
+      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.RABBIT_STEW, Blocks.WATERLILY, Items.PUMPKIN_PIE,
+          "gemDiamond", Items.COOKIE, "blockEmerald",
+          new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), new ItemStack(Items.GOLDEN_APPLE, 1, 0), Items.POISONOUS_POTATO);
     else
-      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.STICK, Items.SUGAR, "dirt", Items.CAKE, "cobblestone",
+      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.STICK, Items.SUGAR,
+          "dirt", Items.CAKE, "cobblestone",
           new ItemStack(Items.SPIDER_EYE), Items.APPLE, Items.SPIDER_EYE);
   }
 
