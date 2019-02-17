@@ -31,7 +31,6 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen.Fields;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -45,7 +44,6 @@ public class GuiScreenBlock extends GuiBaseContainer {
 
   private List<GuiTextField> lines = new ArrayList<>();
   TileEntityScreen screen;
-  private ButtonTileEntityField btnToggle;
   private GuiSliderInteger sliderR;
   private GuiSliderInteger sliderG;
   private GuiSliderInteger sliderB;

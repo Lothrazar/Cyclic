@@ -121,9 +121,9 @@ public class Const {
       switch (this) {
         case LARGE:
         case STANDARD:
+        case LARGEPLAIN:
         case STANDARDPLAIN:
           return Const.PAD;
-        case LARGEPLAIN:
         case LARGEWIDE:
           return 48;//currently just merchant
         case PLAINWIDE:
