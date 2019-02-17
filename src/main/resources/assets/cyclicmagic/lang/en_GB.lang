@@ -693,6 +693,7 @@ button.offsetz.tooltip=Z Offset
 button.offsetblock.name0=Top
 button.offsetblock.name1=Center
 button.offsetblock.name2=Bottom
+screen.font=Font
 screen.blue=Blue
 screen.red=Red
 screen.green=Green
