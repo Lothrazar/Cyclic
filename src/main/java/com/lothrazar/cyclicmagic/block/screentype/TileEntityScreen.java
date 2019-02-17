@@ -29,7 +29,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITileTextbox {
 
-  private String text = "";
+  private String[] text = new String[4];
   private int red = 100;
   private int green = 100;
   private int blue = 100;
@@ -51,12 +51,22 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
 
   @Override
   public String getText() {
-    return text;
+    return text[0];
   }
 
   @Override
   public void setText(String s) {
-    text = s;
+    text[0] = s;
+  }
+
+  @Override
+  public String getText(int i) {
+    return text[i];
+  }
+
+  @Override
+  public void setText(int i, String s) {
+    text[i] = s;
   }
 
   public int getPadding() {
@@ -84,7 +94,9 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
-    text = tags.getString("text");
+    for (int i = 0; i < 4; i++) {
+      text[i] = tags.getString("text" + i);
+    }
     red = tags.getInteger("red");
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
@@ -98,7 +110,9 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-    tags.setString("text", text);
+    for (int i = 0; i < 4; i++) {
+      tags.setString("text" + i, text[i]);
+    }
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);

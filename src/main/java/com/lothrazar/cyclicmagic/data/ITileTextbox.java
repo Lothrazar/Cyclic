@@ -33,4 +33,12 @@ public interface ITileTextbox {
   public void setText(String s);
 
   public String getText();
+
+  default String getText(int i) {
+    return getText();
+  }
+
+  default void setText(int i, String s) {
+    setText(s);
+  }
 }

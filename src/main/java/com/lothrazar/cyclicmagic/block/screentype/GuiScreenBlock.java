@@ -24,25 +24,26 @@
 package com.lothrazar.cyclicmagic.block.screentype;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen.Fields;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.GuiTextFieldMulti;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiScreenBlock extends GuiBaseContainer {
 
-  private GuiTextFieldMulti txtInput;
+  private List<GuiTextField> lines = new ArrayList<>();
   TileEntityScreen screen;
   private ButtonTileEntityField btnToggle;
   private GuiSliderInteger sliderR;
@@ -60,21 +61,26 @@ public class GuiScreenBlock extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     Keyboard.enableRepeatEvents(true);
-    int id = 1;
+    int id = 0;
+    int h = 20;
     int width = 144;
     //    int xCenter = (xSize / 2 - width / 2);
     int x = 26;
     int y = Const.PAD / 2;
-    txtInput = new GuiTextFieldMulti(id, this.fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, 60);
-    txtInput.setMaxStringLength(1230);
-    txtInput.setText(screen.getText());
-    txtInput.setFocused(true);
-    txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
+    for (int i = 0; i < 4; i++) {
+      GuiTextField txtInput = new GuiTextField(id, fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, h);// new GuiTextField(id, this.fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, 60);
+      //    txtInput.setMaxStringLength(1230);
+      txtInput.setText(screen.getText(i));
+      txtInput.setFocused(true);
+      lines.add(txtInput);
+      y += h + Const.PAD / 2;
+      id++;
+    }
+    //    txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
     // hmm multi lines are better? 
-    int h = 12;
-    id++;
+    h = 12;
     x = guiLeft + 26;
-    y = this.guiTop + txtInput.height + Const.PAD;
+    y = this.guiTop + y;
     sliderR = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderR.setTooltip("screen.red");
     this.addButton(sliderR);
@@ -106,9 +112,9 @@ public class GuiScreenBlock extends GuiBaseContainer {
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
-    if (txtInput != null) {
-      tile.setField(Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition());
-      ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
+    for (GuiTextField txtInput : lines) {
+      //      tile.setField(Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition());
+      //      ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
     }
   }
 
@@ -116,7 +122,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (txtInput != null) {
+    for (GuiTextField txtInput : lines) {
       txtInput.drawTextBox();
       txtInput.setTextColor(screen.getColor());
     }
@@ -128,7 +134,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   @Override
   public void updateScreen() {
     super.updateScreen();
-    if (txtInput != null) {
+    for (GuiTextField txtInput : lines) {
       txtInput.updateCursorCounter();
     }
     sliderR.updateScreen();
@@ -146,19 +152,24 @@ public class GuiScreenBlock extends GuiBaseContainer {
     if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
       super.keyTyped(typedChar, keyCode);
     }
-    if (txtInput != null && txtInput.isFocused()) {
-      txtInput.textboxKeyTyped(typedChar, keyCode);
-      ((ITileTextbox) tile).setText(txtInput.getText());
-      ModCyclic.network.sendToServer(new PacketTileTextbox(txtInput.getText(), tile.getPos()));
-    }
+    for (GuiTextField txtInput : lines)
+      if (txtInput.isFocused()) {
+        txtInput.textboxKeyTyped(typedChar, keyCode);
+        ((ITileTextbox) tile).setText(txtInput.getId(), txtInput.getText());
+        ModCyclic.network.sendToServer(new PacketTileTextbox(txtInput.getText(), tile.getPos(), txtInput.getId()));
+      }
   }
 
   @Override
-  protected void mouseClicked(int x, int y, int btn) throws IOException {
-    super.mouseClicked(x, y, btn);// x/y pos is 33/30
-    if (txtInput != null) {
-      txtInput.mouseClicked(x, y, btn);
-      txtInput.setFocused(true);
+  protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
+    super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
+    for (GuiTextField txtInput : lines) {
+
+      txtInput.mouseClicked(mouseX, mouseY, btn);
+
+      boolean isMouseover = mouseX >= txtInput.x + guiLeft && mouseX < txtInput.x + guiLeft + txtInput.width
+          && mouseY >= txtInput.y + guiTop && mouseY < txtInput.y + txtInput.height + guiTop;
+      txtInput.setFocused(isMouseover);
     }
   }
   // ok end of textbox fixing stuff
