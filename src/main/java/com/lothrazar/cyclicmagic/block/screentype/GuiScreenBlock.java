@@ -63,14 +63,15 @@ public class GuiScreenBlock extends GuiBaseContainer {
     Keyboard.enableRepeatEvents(true);
     int id = 0;
     int h = 18;
-    int width = 144;
+    int width = ScreenTESR.SCREEN_WIDTH;
     //    int xCenter = (xSize / 2 - width / 2);
-    int x = 26;
+    int x = Const.PAD;
     int y = Const.PAD / 2;
     for (int i = 0; i < 4; i++) {
       GuiTextField txtInput = new GuiTextField(id, fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, h);// new GuiTextField(id, this.fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, 60);
       //    txtInput.setMaxStringLength(1230);
-      txtInput.setText(screen.getText(i));
+      if (screen.getText(i) != null)
+        txtInput.setText(screen.getText(i));
       txtInput.setFocused(i == 0);
       lines.add(txtInput);
       y += h + Const.PAD / 4;
@@ -79,8 +80,8 @@ public class GuiScreenBlock extends GuiBaseContainer {
     //    txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
     // hmm multi lines are better? 
     h = 12;
-    x = guiLeft + 26;
-    y = this.guiTop + y;
+    x = guiLeft + Const.PAD;
+    y = guiTop + y;
     sliderR = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderR.setTooltip("screen.red");
     this.addButton(sliderR);
@@ -96,17 +97,10 @@ public class GuiScreenBlock extends GuiBaseContainer {
     this.addButton(sliderB);
     id++;
     y += h + 1;
-    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, 0, 60, Fields.PADDING.ordinal());
+    sliderPadding = new GuiSliderInteger(tile, id, x, y, width, h, -100, 100, Fields.PADDING.ordinal());
     sliderPadding.setTooltip("screen.padding");
     this.addButton(sliderPadding);
-    //text box of course
-    id++;
-    btnToggle = new ButtonTileEntityField(id++,
-        this.guiLeft + 4,
-        this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.JUSTIFICATION.ordinal(), 1);
-    btnToggle.setTooltip("screen.justification");
-    btnToggle.width = 20;
-    this.addButton(btnToggle);
+
   }
 
   @Override
@@ -126,7 +120,6 @@ public class GuiScreenBlock extends GuiBaseContainer {
       txtInput.drawTextBox();
       txtInput.setTextColor(screen.getColor());
     }
-    btnToggle.setTextureIndex(8 + tile.getField(Fields.JUSTIFICATION.ordinal()));
   }
 
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
@@ -175,9 +168,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
     super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
     for (GuiTextField txtInput : lines) {
-
       txtInput.mouseClicked(mouseX, mouseY, btn);
-
       boolean isMouseover = mouseX >= txtInput.x + guiLeft && mouseX < txtInput.x + guiLeft + txtInput.width
           && mouseY >= txtInput.y + guiTop && mouseY < txtInput.y + txtInput.height + guiTop;
       txtInput.setFocused(isMouseover);

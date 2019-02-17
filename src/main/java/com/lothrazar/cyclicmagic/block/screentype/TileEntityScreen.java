@@ -33,16 +33,11 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int red = 100;
   private int green = 100;
   private int blue = 100;
-  private int cursorPos = 0;
   private int padding = 0;
-  private Justification justif = Justification.LEFT;
 
-  public static enum Justification {
-    LEFT, CENTER, RIGHT;
-  }
 
   public static enum Fields {
-    RED, GREEN, BLUE, CURSORPOS, JUSTIFICATION, PADDING;
+    RED, GREEN, BLUE, PADDING;
   }
 
   public TileEntityScreen() {
@@ -94,31 +89,27 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
+    text = new String[4];
     for (int i = 0; i < 4; i++) {
       text[i] = tags.getString("text" + i);
     }
     red = tags.getInteger("red");
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
-    cursorPos = tags.getInteger("cursorPos");
     padding = tags.getInteger("padding");
-    int just = tags.getInteger("justif");
-    if (just < Justification.values().length) {
-      this.justif = Justification.values()[just];
-    }
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     for (int i = 0; i < 4; i++) {
-      tags.setString("text" + i, text[i]);
+      if (text[i] != null) {
+        tags.setString("text" + i, text[i]);
+      }
     }
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
-    tags.setInteger("cursorPos", cursorPos);
     tags.setInteger("padding", padding);
-    tags.setInteger("justif", justif.ordinal());
     return super.writeToNBT(tags);
   }
 
@@ -131,10 +122,6 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
         return green;
       case RED:
         return red;
-      case CURSORPOS:
-        return cursorPos;
-      case JUSTIFICATION:
-        return this.justif.ordinal();
       case PADDING:
         return this.padding;
     }
@@ -153,20 +140,10 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
       case RED:
         red = value;
       break;
-      case CURSORPOS:
-        cursorPos = value;
-      break;
-      case JUSTIFICATION:
-        int val = value % Justification.values().length;
-        justif = Justification.values()[val];
-      break;
       case PADDING:
         padding = value;
       break;
     }
   }
 
-  public Justification getJustification() {
-    return this.justif;
-  }
 }

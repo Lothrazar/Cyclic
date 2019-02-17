@@ -97,6 +97,7 @@ public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTe
         TileEntity tile = world.getTileEntity(message.pos);
         if (tile != null && tile instanceof ITileTextbox) {
           //TODO: PacketTilePassword reusing this?
+          ModCyclic.logger.log("set text indexed " + message.index + message.text);
           ((ITileTextbox) tile).setText(message.index, message.text);
           tile.markDirty();
         }

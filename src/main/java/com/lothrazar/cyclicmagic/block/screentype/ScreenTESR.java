@@ -28,7 +28,7 @@ import net.minecraft.block.Block;
 
 public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
 
-  public static final int SCREEN_WIDTH = 148;
+  public static final int SCREEN_WIDTH = 160;
   // TODO: GUI selects how much padding to use? side padding and top padding? 
   private static final int MAX_WIDTH = 16;
   private static final int MAX_LINES = 8;
@@ -40,20 +40,16 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
     super(block);
   }
 
-  @SuppressWarnings("incomplete-switch")
   @Override
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    int tePadding = te.getPadding();
-    float leftPadding = ((float) tePadding / 2) / 100F;
-    final float leftEdge = 0.0F + leftPadding;
-
-    //default translations
-    float xt = leftEdge, yt = 0, zt = 0;
+    
+    //default translations  
+    float xt = 0, yt = te.getPadding() / 100F, zt = 0;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
 
     for (int i = 0; i < 4; i++) {
-      String line = te.getText(i);
+      String line = te.getText(i);  
 
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor(), fontSize);
 
