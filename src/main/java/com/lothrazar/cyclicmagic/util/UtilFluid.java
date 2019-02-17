@@ -71,12 +71,9 @@ public class UtilFluid {
    * RETURN new item stack that has been drained after placing in world if it works null otherwise
    */
   public static ItemStack dumpContainer(World world, BlockPos pos, ItemStack stackIn) {
-    //    BlockSourceImpl blocksourceimpl = new BlockSourceImpl(world, pos);
     ItemStack dispensedStack = stackIn.copy();
-    //    dispensedStack.setCount(1);
     IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(dispensedStack);
     if (fluidHandler == null) {
-      ModCyclic.logger.log("CONTAINER ret null");
       return ItemStack.EMPTY;
     }
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
@@ -86,8 +83,7 @@ public class UtilFluid {
         //http://www.minecraftforge.net/forum/topic/56265-1112-fluidhandler-capability-on-buckets/
         fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
         ItemStack returnMe = fluidHandler.getContainer();
-        //        stackIn.deserializeNBT(returnMe.serializeNBT());
-        ModCyclic.logger.log("CONTAINER returNMe" + returnMe);
+        //        stackIn.deserializeNBT(returnMe.serializeNBT()); 
         return returnMe;
       }
     }
@@ -156,8 +152,7 @@ public class UtilFluid {
         int filled = tankTo.fill(wasDrained, false);
         if (wasDrained != null && wasDrained.amount > 0
             && filled > 0) {
-          //       ModCyclic.logger.log(" wasDrained  "+wasDrained.amount);
-          //       ModCyclic.logger.log(" filled  "+  filled);
+
           int realAmt = Math.min(filled, wasDrained.amount);
           wasDrained = fluidFrom.drain(realAmt, true);
           if (wasDrained == null) {
@@ -169,8 +164,7 @@ public class UtilFluid {
       return false;
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Somebody elses fluid tank had an issue when we tried to drain");
-      ModCyclic.logger.error(e.getMessage());
+      ModCyclic.logger.error("External fluid block had an issue when we tried to drain", e);
       //charset crashes here i guess
       //https://github.com/PrinceOfAmber/Cyclic/issues/605
       // https://github.com/PrinceOfAmber/Cyclic/issues/605https://pastebin.com/YVtMYsF6
@@ -202,8 +196,7 @@ public class UtilFluid {
       return false;
     }
     catch (Exception e) {
-      ModCyclic.logger.error("A fluid tank had an issue when we tried to fill");
-      ModCyclic.logger.error(e.getMessage());
+      ModCyclic.logger.error("A fluid tank had an issue when we tried to fill", e);
       //charset crashes here i guess
       //https://github.com/PrinceOfAmber/Cyclic/issues/605
       // https://github.com/PrinceOfAmber/Cyclic/issues/605https://pastebin.com/YVtMYsF6

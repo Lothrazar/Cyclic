@@ -290,7 +290,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public String getName() {
     if (this.getBlockType() == null) {
-      ModCyclic.logger.error(" null blockType:" + this.getClass().getName());
+      ModCyclic.logger.error("null blockType:" + this.getClass().getName());
       return "";
     }
     return this.getBlockType().getTranslationKey() + ".name";

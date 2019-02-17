@@ -241,8 +241,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     catch (Exception e) {
       // errors from other mods as well as this.
       //example:  mcjty.rftools.blocks.powercell.PowerCellTileEntity.getNetwork(PowerCellTileEntity.java:155)
-      ModCyclic.logger.error("Error outputing from cable");
-      e.printStackTrace();
+      ModCyclic.logger.error("Error outputing from cable", e);
     }
   }
 

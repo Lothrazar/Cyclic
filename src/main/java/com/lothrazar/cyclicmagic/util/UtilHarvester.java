@@ -354,9 +354,7 @@ public class UtilHarvester {
           }
         }
         catch (Exception e) {
-          ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId);
-          ModCyclic.logger.error(e.getMessage());
-          e.printStackTrace();
+          ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId, e);
         }
       } //else dont remove seed
     }

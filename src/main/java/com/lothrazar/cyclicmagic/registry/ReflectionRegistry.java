@@ -45,8 +45,7 @@ public class ReflectionRegistry {
         }
       }
       catch (Exception e) {
-        ModCyclic.logger.error("Severe error, please report this to the mod author [ JUMP_STRENGTH ]:");
-        ModCyclic.logger.error(e.getStackTrace().toString());
+        ModCyclic.logger.error("Error, please report this to the mod author [ JUMP_STRENGTH ]:", e);
       }
     }
     if (horseJumpStrength == null) {

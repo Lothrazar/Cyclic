@@ -171,8 +171,7 @@ public class UtilPlaceBlocks {
       // PR for context https://github.com/PrinceOfAmber/Cyclic/pull/577/files
       // and  https://github.com/PrinceOfAmber/Cyclic/pull/579/files
       // show exception from above, possibly failed placement
-      ModCyclic.logger.error("Error attempting to place block ");
-      e.printStackTrace();
+      ModCyclic.logger.error("Error attempting to place block ", e);
     }
     // play sound to area when placement is a success
     if (success && playSound) {
@@ -259,8 +258,7 @@ public class UtilPlaceBlocks {
       }
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Error thrown by a tile entity when removing the block: " + e.getMessage());
-      e.printStackTrace();
+      ModCyclic.logger.error("Error thrown by a tile entity when removing the block: ", e);
       return false;
     }
     world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync

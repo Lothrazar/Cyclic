@@ -116,8 +116,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         this.markDirty();
       }
       catch (Exception e) {
-        ModCyclic.logger.error("Unhandled exception in uncrafting ");
-        ModCyclic.logger.error(e.getMessage());
+        ModCyclic.logger.error("Unhandled exception in uncrafting ", e);
         e.printStackTrace();
       }
     } //end of timer go

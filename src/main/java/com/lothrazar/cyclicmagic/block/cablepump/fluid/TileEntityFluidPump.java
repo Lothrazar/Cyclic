@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -133,10 +132,6 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         this.needsRedstone = value % 2;
       break;
       case TRANSFER_RATE:
-        ModCyclic.logger.log(world.isRemote + "=client [cablepump]" + value);
-        if (value == 999) {
-          ModCyclic.logger.log(world.isRemote + "=WARNING  " + value);
-        }
         if (value > 0)
           transferRate = value;
       break;

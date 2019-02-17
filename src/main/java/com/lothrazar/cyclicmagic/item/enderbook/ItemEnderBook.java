@@ -128,7 +128,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   public static void startBackTimer(ItemStack stack, BlockPosDim loc) {
     UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, BACK_TICKS);
-    ModCyclic.logger.log("START bak" + loc.toCSV());
     stack.getTagCompound().setString(KEY_BACK, loc.toCSV());
   }
 

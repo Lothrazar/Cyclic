@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.item.boomerang;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
@@ -85,7 +84,6 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, 
     if (percentageCharged < 0.1) {
       return;//not enough force to go with any realistic path 
     }
-    ModCyclic.logger.log("BOOM" + percentageCharged);
     float amountCharged = percentageCharged * MAX_CHARGE;
     float velocityFactor = percentageCharged * 1.5F;//flat upscale
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5

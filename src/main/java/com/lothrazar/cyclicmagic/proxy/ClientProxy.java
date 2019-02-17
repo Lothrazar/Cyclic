@@ -289,8 +289,7 @@ public class ClientProxy extends CommonProxy {
       Minecraft.getMinecraft().ingameGUI.getSpectatorGui().onSpectatorMenuClosed(null);
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Error trying to lock out Spectator GUI: ");
-      ModCyclic.logger.error(e.getMessage());
+      ModCyclic.logger.error("Error trying to lock out Spectator GUI: ", e);
     }
   }
 
@@ -325,7 +324,7 @@ public class ClientProxy extends CommonProxy {
     catch (Exception e) {
       //sometimes it crashes just AS the world is loading, but then it works after everythings set up
       //does not affect functionality, its working before the player can ever make use of this.
-      ModCyclic.logger.error("Error setting reach : " + e.getMessage());
+      ModCyclic.logger.error("Error setting reach : ", e);
     }
   }
 

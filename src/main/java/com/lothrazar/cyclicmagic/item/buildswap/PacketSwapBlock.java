@@ -205,9 +205,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     }
     catch (ConcurrentModificationException e) {
       //possible reason why i cant do a trycatch // http://stackoverflow.com/questions/18752320/trycatch-concurrentmodificationexception-catching-30-of-the-time
-      ModCyclic.logger.error("ConcurrentModificationException");
-      ModCyclic.logger.error(e.getMessage());// message is null??
-      ModCyclic.logger.error(e.getStackTrace().toString());
+      ModCyclic.logger.error("PacketSwapBlock exception " + message.pos, e);
     }
   }
 

@@ -221,14 +221,12 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       onGround.add(stackOnGround);
       BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
       if (ret.stacks.get(0).isEmpty()) {
-        /// we got everything
-        ModCyclic.logger.log("bag return  cancelled ");
+        /// we got everything 
         event.getItem().setDead();
         event.setCanceled(true);
       }
       else {
-        //we got part of it
-        ModCyclic.logger.log("bag return " + ret.stacks.get(0));
+        //we got part of it 
         event.getItem().setItem(ret.stacks.get(0));
       }
       break;

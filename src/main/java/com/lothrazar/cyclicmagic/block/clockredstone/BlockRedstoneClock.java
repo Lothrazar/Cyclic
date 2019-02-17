@@ -154,7 +154,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
         state = state.withProperty(W, clock.getSideHasPower(EnumFacing.WEST) && powered);
       }
       catch (Exception e) {
-        ModCyclic.logger.error("fail", e);
+        ModCyclic.logger.error("fail clock getActualState", e);
       }
       // 
     }

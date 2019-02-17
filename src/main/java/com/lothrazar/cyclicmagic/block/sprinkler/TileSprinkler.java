@@ -97,9 +97,7 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
             }
           }
           catch (Exception e) {
-            ModCyclic.logger.error("Sprinkler by Cyclic has encountered an error while growing a plant, contact both mod authors    " + block);
-            ModCyclic.logger.error(e.getMessage());
-            e.printStackTrace();
+            ModCyclic.logger.error("Sprinkler by Cyclic has encountered an error while growing a plant, contact both mod authors    " + block, e);
           }
         }
       }
