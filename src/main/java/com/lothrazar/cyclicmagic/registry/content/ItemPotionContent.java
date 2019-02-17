@@ -155,13 +155,15 @@ public class ItemPotionContent implements IContent {
     if (ItemPotionContent.enableSaturation) {
       potionTypeSat = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.SATURATION, NORMAL), "saturation", Items.CAKE);
       potionTypeSat.setBase(PotionTypes.HEALING);
+      PotionTypeCyclic potionTypeHunger = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.HUNGER, NORMAL), "hunger", Items.FERMENTED_SPIDER_EYE);
+      potionTypeHunger.setBase(potionTypeSat);
     }
+
     // wither
     // blindness
     // glowing
     // ! nausea nah
-    // ! absorp ! skipping bc golden apples fill this role
-    // ! hunger, pointless
+    // ! absorp ! skipping bc golden apples fill this role 
     // ! unluck?? waste of time, skip this.
   }
 

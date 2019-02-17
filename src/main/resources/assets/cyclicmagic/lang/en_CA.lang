@@ -1086,6 +1086,11 @@ splash_potion.effect.saturation=Splash Potion of Saturation
 lingering_potion.effect.saturation=Lingering Potion of Saturation
 tipped_arrow.effect.saturation=Arrow of Saturation
 
+potion.effect.hunger=Potion of Hunger
+splash_potion.effect.hunger=Splash Potion of Hunger
+lingering_potion.effect.hunger=Lingering Potion of Hunger
+tipped_arrow.effect.hunger=Arrow of Hunger
+
 potion.frostwalker=Frost Walker
 potion.effect.frostwalker=Potion of Frostwalking
 splash_potion.effect.frostwalker=Splash Potion of Frostwalking
