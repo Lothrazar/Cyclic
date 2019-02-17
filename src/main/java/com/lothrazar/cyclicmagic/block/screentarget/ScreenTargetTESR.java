@@ -44,14 +44,17 @@ public class ScreenTargetTESR<T extends TileEntityScreenTarget> extends BaseTESR
     int tePadding = 0;// te.getPaddingX();
     float leftPadding = ((float) tePadding / 2) / 100F;
     final float leftEdge = leftPadding, rightEdge = 1.05F;
-    //    final float width = rightEdge - leftEdge;
+    final float width = rightEdge - leftEdge;
     //default translations
     float xt = leftEdge, yt = 0, zt = 0;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
-
-    for (int i = 0; i < 4; i++) {
-      String line = te.getText(i);
+    //te.itemtext
+    //te.fluid text lines
+    //te.energy text lines  
+    String lines[] = te.getText().split(System.lineSeparator());
+    int color;
+    for (String line : lines) {
       // lnWidth = ((float) this.getFontRenderer().getStringWidth(line)) / ((float) SCREEN_WIDTH);
 
       renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor(), fontSize);

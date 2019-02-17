@@ -62,7 +62,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     super.initGui();
     Keyboard.enableRepeatEvents(true);
     int id = 0;
-    int h = 20;
+    int h = 18;
     int width = 144;
     //    int xCenter = (xSize / 2 - width / 2);
     int x = 26;
@@ -71,9 +71,9 @@ public class GuiScreenBlock extends GuiBaseContainer {
       GuiTextField txtInput = new GuiTextField(id, fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, h);// new GuiTextField(id, this.fontRenderer, x, y, ScreenTESR.SCREEN_WIDTH, 60);
       //    txtInput.setMaxStringLength(1230);
       txtInput.setText(screen.getText(i));
-      txtInput.setFocused(true);
+      txtInput.setFocused(i == 0);
       lines.add(txtInput);
-      y += h + Const.PAD / 2;
+      y += h + Const.PAD / 4;
       id++;
     }
     //    txtInput.setCursorPosition(tile.getField(Fields.CURSORPOS.ordinal()));
@@ -151,6 +151,17 @@ public class GuiScreenBlock extends GuiBaseContainer {
     sliderPadding.keyTyped(typedChar, keyCode);
     if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
       super.keyTyped(typedChar, keyCode);
+    }
+    if (keyCode == 15) {// TAB  
+      int lastFocus = 0;
+      for (GuiTextField txtInput : lines) {
+        if (txtInput.isFocused()) {
+          lastFocus = txtInput.getId();
+          txtInput.setFocused(false);
+        }
+      }
+      lastFocus = (lastFocus > 2) ? 0 : lastFocus + 1;
+      lines.get(lastFocus).setFocused(true);
     }
     for (GuiTextField txtInput : lines)
       if (txtInput.isFocused()) {
