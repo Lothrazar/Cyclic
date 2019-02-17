@@ -46,7 +46,6 @@ import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.scaffolding.BlockSolidGlass;
-import com.lothrazar.cyclicmagic.block.screentarget.BlockScreenTarget;
 import com.lothrazar.cyclicmagic.block.screentype.BlockScreen;
 import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
@@ -261,7 +260,7 @@ public class CyclicContent {
     content.add(new BlockTrash());
     content.add(new BlockWorkbench());
     content.add(new BlockScreen());
-    content.add(new BlockScreenTarget());
+    //    content.add(new BlockScreenTarget()); 
     content.add(new BlockSolidGlass());
     content.add(new BlockSoundSuppress());
     content.add(new BlockCrafter());
