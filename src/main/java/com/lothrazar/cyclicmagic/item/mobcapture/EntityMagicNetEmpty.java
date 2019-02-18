@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.mobcapture;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -81,15 +82,18 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
         && mop.entityHit instanceof EntityLivingBase
         && (mop.entityHit instanceof EntityPlayer) == false
         && isInBlacklist(mop.entityHit) == false) {
-      ItemStack captured = new ItemStack(renderSnowball);
-      NBTTagCompound entity = new NBTTagCompound();
-      mop.entityHit.writeToNBT(entity);
-      //id is the special magic tag thats used by EntityList to respawn it. see EntityList.createEntityFromNBT
-      entity.setString(ItemProjectileMagicNet.NBT_ENTITYID, EntityList.getKey(mop.entityHit.getClass()).toString()); // was getEntityStringFromClass
-      entity.setString("tooltip", mop.entityHit.getName());
-      captured.setTagCompound(entity);
-      mop.entityHit.setDead();
-      UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), captured);
+      if (this.world.isRemote == false) {
+        ModCyclic.logger.log("CAP mob in remote ; client = " + this.world.isRemote);
+        ItemStack captured = new ItemStack(renderSnowball);
+        NBTTagCompound entityNBT = new NBTTagCompound();
+        mop.entityHit.writeToNBT(entityNBT);
+        //id is the special magic tag thats used by EntityList to respawn it. see EntityList.createEntityFromNBT
+        entityNBT.setString(ItemProjectileMagicNet.NBT_ENTITYID, EntityList.getKey(mop.entityHit.getClass()).toString()); // was getEntityStringFromClass
+        entityNBT.setString("tooltip", mop.entityHit.getName());
+        captured.setTagCompound(entityNBT);
+        mop.entityHit.setDead();
+        UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), captured);
+      }
       UtilSound.playSound((EntityLivingBase) mop.entityHit, SoundRegistry.monster_ball_capture);
     }
     else {
