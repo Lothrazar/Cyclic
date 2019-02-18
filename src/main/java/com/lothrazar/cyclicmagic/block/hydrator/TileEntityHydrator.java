@@ -75,6 +75,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   @Override
   public void update() {
+    currentRecipe = null;
     if (this.currentRecipe == null) {
       this.findMatchingRecipe();
       this.updateLockSlots();
