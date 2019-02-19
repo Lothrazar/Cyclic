@@ -45,7 +45,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasRecipe {
 
-  public static int FUEL_COST = 0;
 
   public BlockFluidDrain() {
     super(Material.IRON);
@@ -98,6 +97,5 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("fluid_drain", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("fluid_drain", Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

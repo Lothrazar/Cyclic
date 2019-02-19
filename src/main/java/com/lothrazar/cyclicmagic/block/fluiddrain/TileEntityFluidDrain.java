@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fluiddrain;
 
+import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
@@ -30,8 +31,10 @@ import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
-import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -43,7 +46,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable, ITilePreviewToggle {
 
-  public static final int TANK_FULL = 16000;
+  public static final int TANK_FULL = 64000;
   public final static int TIMER_FULL = 6;
   private int radius = 7;
   private int depth = 4;
@@ -56,11 +59,9 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
 
   public TileEntityFluidDrain() {
     super(8);
-    tank = new FluidTankFixDesync(TANK_FULL, this);
-    timer = TIMER_FULL;
-    tank.setTileEntity(this);
     this.setSlotsForInsert(0, 7);
-    this.initEnergy(BlockFluidDrain.FUEL_COST);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
+    tank.setTileEntity(this);
   }
 
   @Override
@@ -79,10 +80,12 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       return;
     }
     this.shiftAllUp();
-    if (this.tank.isFull()) {
+    //i need a block to place down eh 
+    if (this.tank.isFull() || this.getStackInSlot(0).getItem() instanceof ItemBlock == false) {
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!
+      this.timer = TIMER_FULL;
       if (shape == null) {
         shape = this.getShape();
       }
@@ -93,27 +96,26 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       }
       BlockPos current = shape.get(shapePtr);
       shapePtr++;
-      if (world.getBlockState(current).getMaterial().isLiquid()) {
+      IBlockState currentState = world.getBlockState(current);
+      if (currentState.getMaterial().isLiquid()) {
         ModCyclic.logger.log("__fluid found " + current);
         UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
-        if (world.getBlockState(current).getBlock() instanceof BlockLiquid) {
-          //
-          IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
-          BlockLiquid lq = (BlockLiquid) world.getBlockState(current).getBlock();
-          FluidStack fs = handle.getTankProperties()[0].getContents();
-          if (fs == null) {
-            return;
-          }
-          FluidStack fsafterr = handle.drain(fs, true);
-          this.tank.fill(fs, true);
-          ModCyclic.logger.log(tank.getFluidAmount() + "/" + tank.getCapacity());
+        //if (currentState.getBlock() instanceof BlockLiquid) { 
+        //
+        IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
+        //          BlockLiquid lq = (BlockLiquid) world.getBlockState(current).getBlock();
+        FluidStack fs = handle.getTankProperties()[0].getContents();
+        if (fs == null || tank.canFillFluidType(fs) == false) {
+          return;
         }
-        //        world.setBlockState(current, Blocks.BEDROCK.getDefaultState());
+        FluidStack fsafterr = handle.drain(fs, true);
+        this.tank.fill(fs, true);
+        ModCyclic.logger.log(tank.getFluidAmount() + "/" + tank.getCapacity());
+        UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null);
       }
       else {
         UtilParticle.spawnParticle(world, EnumParticleTypes.DRAGON_BREATH, current);
       }
-      this.timer = TIMER_FULL;
     }
   }
 
@@ -187,11 +189,8 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
 
   @Override
   public List<BlockPos> getShape() {
-    //cubeFilled(final BlockPos posCenter, final int radius, final int height) 
     List<BlockPos> circle = UtilShape.cubeFilled(pos.down(depth), radius, depth);
-    //    for (int i = 1; i <= depth; i++) {
-    //      circle.addAll(UtilShape.circleHorizontal(pos.down(i), radius));
-    //    }
+    Collections.reverse(circle);
     return circle;
   }
 }
