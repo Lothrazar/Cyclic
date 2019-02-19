@@ -31,10 +31,15 @@ import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable, ITilePreviewToggle {
 
@@ -88,6 +93,18 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       if (world.getBlockState(current).getMaterial().isLiquid()) {
         ModCyclic.logger.log("fluid found " + current);
         UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
+        if (world.getBlockState(current).getBlock() instanceof BlockLiquid) {
+          //
+IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
+          BlockLiquid lq = (BlockLiquid) world.getBlockState(current).getBlock();
+          FluidStack fs = handle.getTankProperties()[0].getContents();
+          if (fs == null) {
+            return;
+          }
+          ModCyclic.logger.log(lq + " fluid found " + fs.amount);
+          FluidStack fsafterr = handle.drain(fs, true);
+        }
+        //        world.setBlockState(current, Blocks.BEDROCK.getDefaultState());
       }
       else {
         UtilParticle.spawnParticle(world, EnumParticleTypes.DRAGON_BREATH, current);
