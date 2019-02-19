@@ -1,0 +1,175 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
+package com.lothrazar.cyclicmagic.block.fluiddrain;
+
+import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+
+public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable, ITilePreviewToggle {
+
+  public static final int TANK_FULL = 16000;
+  public final static int TIMER_FULL = 6;
+  private int radius = 10;
+  private int depth = 4;
+  private int shapePtr = 0;
+  private List<BlockPos> shape = null;
+
+  public static enum Fields {
+    REDSTONE, TIMER, FUEL, RENDERPARTICLES;
+  }
+
+  public TileEntityFluidDrain() {
+    super(8);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
+    timer = TIMER_FULL;
+    tank.setTileEntity(this);
+    this.setSlotsForInsert(0, 7);
+    this.initEnergy(BlockFluidDrain.FUEL_COST);
+  }
+
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+
+  @Override
+  public int getFieldCount() {
+    return getFieldOrdinals().length;
+  }
+
+  @Override
+  public void update() {
+    if (!this.isRunning()) {
+      return;
+    }
+    this.shiftAllUp();
+    if (this.updateTimerIsZero()) { // time to burn!
+      if (shape == null) {
+        shape = this.getShape();
+      }
+      //look for fluid 
+      if (this.shapePtr >= shape.size()) {
+        shapePtr = 0;
+        return;
+      }
+      BlockPos current = shape.get(shapePtr);
+      shapePtr++;
+      if (world.getBlockState(current).getMaterial().isLiquid()) {
+        ModCyclic.logger.log("fluid found " + current);
+        UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
+      }
+      else {
+        UtilParticle.spawnParticle(world, EnumParticleTypes.DRAGON_BREATH, current);
+      }
+      this.timer = TIMER_FULL;
+    }
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger(NBT_REDST, this.needsRedstone);
+    return super.writeToNBT(compound);
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    this.needsRedstone = compound.getInteger(NBT_REDST);
+  }
+
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case FUEL:
+        return this.getEnergyCurrent();
+      case REDSTONE:
+        return this.needsRedstone;
+      case TIMER:
+        return this.timer;
+      case RENDERPARTICLES:
+        return this.renderParticles;
+      default:
+      break;
+    }
+    return -1;
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case FUEL:
+        this.setEnergyCurrent(value);
+      break;
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+      case TIMER:
+        this.timer = value;
+      break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
+      break;
+      default:
+      break;
+    }
+  }
+
+  @Override
+  public void toggleNeedsRedstone() {
+    this.setField(Fields.REDSTONE.ordinal(), (this.needsRedstone + 1) % 2);
+  }
+
+  @Override
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
+  }
+
+  public float getFillRatio() {
+    return tank.getFluidAmount() / tank.getCapacity();
+  }
+
+  @Override
+  public boolean isPreviewVisible() {
+    return renderParticles == 1;
+  }
+
+  @Override
+  public List<BlockPos> getShape() {
+    List<BlockPos> circle = UtilShape.circleHorizontal(pos, radius);
+    for (int i = 1; i <= depth; i++) {
+      circle.addAll(UtilShape.circleHorizontal(pos.down(i), radius));
+    }
+    return circle;
+  }
+}
