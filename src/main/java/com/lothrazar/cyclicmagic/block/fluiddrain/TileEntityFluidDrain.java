@@ -45,7 +45,7 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
 
   public static final int TANK_FULL = 16000;
   public final static int TIMER_FULL = 6;
-  private int radius = 10;
+  private int radius = 7;
   private int depth = 4;
   private int shapePtr = 0;
   private List<BlockPos> shape = null;
@@ -75,10 +75,13 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
 
   @Override
   public void update() {
-    if (!this.isRunning()) {
+    if (this.isRunning() == false) {
       return;
     }
     this.shiftAllUp();
+    if (this.tank.isFull()) {
+      return;
+    }
     if (this.updateTimerIsZero()) { // time to burn!
       if (shape == null) {
         shape = this.getShape();
@@ -91,18 +94,19 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       BlockPos current = shape.get(shapePtr);
       shapePtr++;
       if (world.getBlockState(current).getMaterial().isLiquid()) {
-        ModCyclic.logger.log("fluid found " + current);
+        ModCyclic.logger.log("__fluid found " + current);
         UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
         if (world.getBlockState(current).getBlock() instanceof BlockLiquid) {
           //
-IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
+          IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
           BlockLiquid lq = (BlockLiquid) world.getBlockState(current).getBlock();
           FluidStack fs = handle.getTankProperties()[0].getContents();
           if (fs == null) {
             return;
           }
-          ModCyclic.logger.log(lq + " fluid found " + fs.amount);
           FluidStack fsafterr = handle.drain(fs, true);
+          this.tank.fill(fs, true);
+          ModCyclic.logger.log(tank.getFluidAmount() + "/" + tank.getCapacity());
         }
         //        world.setBlockState(current, Blocks.BEDROCK.getDefaultState());
       }
@@ -183,10 +187,11 @@ IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
 
   @Override
   public List<BlockPos> getShape() {
-    List<BlockPos> circle = UtilShape.circleHorizontal(pos, radius);
-    for (int i = 1; i <= depth; i++) {
-      circle.addAll(UtilShape.circleHorizontal(pos.down(i), radius));
-    }
+    //cubeFilled(final BlockPos posCenter, final int radius, final int height) 
+    List<BlockPos> circle = UtilShape.cubeFilled(pos.down(depth), radius, depth);
+    //    for (int i = 1; i <= depth; i++) {
+    //      circle.addAll(UtilShape.circleHorizontal(pos.down(i), radius));
+    //    }
     return circle;
   }
 }

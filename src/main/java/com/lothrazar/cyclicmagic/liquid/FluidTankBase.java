@@ -52,4 +52,8 @@ public class FluidTankBase extends FluidTank {
     if (this.fluid != null)
       this.fluid.amount = amt;
   }
+
+  public boolean isFull() {
+    return getFluidAmount() >= getCapacity();
+  }
 }
