@@ -47,14 +47,13 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable, ITilePreviewToggle {
 
   public static final int TANK_FULL = 64000;
-  public final static int TIMER_FULL = 6;
   private int radius = 7;
   private int depth = 4;
   private int shapePtr = 0;
   private List<BlockPos> shape = null;
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL, RENDERPARTICLES;
+    REDSTONE, FUEL, RENDERPARTICLES;
   }
 
   public TileEntityFluidDrain() {
@@ -84,8 +83,7 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
     if (this.tank.isFull() || this.getStackInSlot(0).getItem() instanceof ItemBlock == false) {
       return;
     }
-    if (this.updateTimerIsZero()) { // time to burn!
-      this.timer = TIMER_FULL;
+
       if (shape == null) {
         shape = this.getShape();
       }
@@ -96,6 +94,7 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       }
       BlockPos current = shape.get(shapePtr);
       shapePtr++;
+      ModCyclic.logger.log(shapePtr + "current " + current);
       IBlockState currentState = world.getBlockState(current);
       if (currentState.getMaterial().isLiquid()) {
         ModCyclic.logger.log("__fluid found " + current);
@@ -116,7 +115,7 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       else {
         UtilParticle.spawnParticle(world, EnumParticleTypes.DRAGON_BREATH, current);
       }
-    }
+
   }
 
   @Override
@@ -138,8 +137,6 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
         return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
-      case TIMER:
-        return this.timer;
       case RENDERPARTICLES:
         return this.renderParticles;
       default:
@@ -156,9 +153,6 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       break;
       case REDSTONE:
         this.needsRedstone = value;
-      break;
-      case TIMER:
-        this.timer = value;
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
