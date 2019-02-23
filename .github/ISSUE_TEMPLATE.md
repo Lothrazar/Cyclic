@@ -1,16 +1,19 @@
-Minecraft version & Mod Version:
+Minecraft Version: 
 
+Mod Version: 
 
-Single player or Server:
-
+Single Player or Server:
 
 Describe problem (what you were doing / what happened):
 
 
-Crash log (if any):
+Log file (text block or link):
 
 
-(If this is a suggestion and not a bug report, delete all this and just write your suggestion!)
+Video/images: (links are great; github also allows up to 10MB with direct drag and drop; gifs using https://www.screentogif.com/)
+
+
+
 
 
 
