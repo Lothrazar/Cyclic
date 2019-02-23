@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.scaffolding;
+package com.lothrazar.cyclicmagic.block;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBase;
@@ -46,16 +46,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author Lothrazar
  *
  */
-public class BlockSolidGlass extends BlockBase implements IHasRecipe, IContent {
+public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IContent {
 
-  public BlockSolidGlass() {
+  public BlockDarknessGlass() {
     super(Material.ROCK);
-    this.setHardness(3F);
+    this.setHardness(0.25F);
     this.setResistance(5F);
+    this.setHarvestLevel("pickaxe", 0);
     this.setSoundType(SoundType.GLASS);
-    //    this.lightOpacity = 15;
-    setLightOpacity(255);//water gets 3, leaves get 1
-    //        this.lightOpacity = this.fullBlock ? 255 : 0;
+    setLightOpacity(255);//water gets 3, leaves get 1 
   }
 
   @Override
@@ -83,7 +82,6 @@ public class BlockSolidGlass extends BlockBase implements IHasRecipe, IContent {
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, "glass_strong", GuideCategory.BLOCK);
-    // GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
   }
 
   private boolean enabled;
@@ -95,6 +93,6 @@ public class BlockSolidGlass extends BlockBase implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("block_screen", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("glass_strong", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

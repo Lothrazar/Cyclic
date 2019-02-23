@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.block.BlockShears;
+import com.lothrazar.cyclicmagic.block.BlockDarknessGlass;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;
@@ -46,7 +47,6 @@ import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
 import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
 import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
-import com.lothrazar.cyclicmagic.block.scaffolding.BlockSolidGlass;
 import com.lothrazar.cyclicmagic.block.screentype.BlockScreen;
 import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
@@ -265,7 +265,7 @@ public class CyclicContent {
     content.add(new BlockWorkbench());
     content.add(new BlockScreen());
     //    content.add(new BlockScreenTarget()); 
-    content.add(new BlockSolidGlass());
+    content.add(new BlockDarknessGlass());
     content.add(new BlockSoundSuppress());
     content.add(new BlockCrafter());
     content.add(new BlockDetector());
