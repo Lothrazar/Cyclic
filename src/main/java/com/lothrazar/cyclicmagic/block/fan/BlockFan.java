@@ -52,6 +52,7 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public static final PropertyBool IS_LIT = PropertyBool.create("lit");
+
   public BlockFan() {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_FAN);
@@ -86,6 +87,7 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
     return super.getActualState(state, world, origin);
   }
+
   private boolean enabled;
 
   @Override

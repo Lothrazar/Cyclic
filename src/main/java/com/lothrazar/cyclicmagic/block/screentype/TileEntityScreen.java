@@ -36,7 +36,6 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int padding = 0;
   private int font = 0;
 
-
   public static enum Fields {
     RED, GREEN, BLUE, PADDING, FONT;
   }
@@ -153,5 +152,4 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
       break;
     }
   }
-
 }

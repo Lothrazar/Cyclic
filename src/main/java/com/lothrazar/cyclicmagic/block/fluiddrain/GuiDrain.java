@@ -55,7 +55,6 @@ public class GuiDrain extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
   }
 
   @Override
@@ -63,7 +62,6 @@ public class GuiDrain extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int u = 0, v = 0, x, y, rows = 3, cols = 6;
-
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         x = this.guiLeft + 7 + j * Const.SQ;

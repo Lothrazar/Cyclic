@@ -154,7 +154,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class MultiContent implements IContent {
 
-
   public static ArrayList<BaseItemProjectile> projectiles = new ArrayList<BaseItemProjectile>();
   public static ItemStorageBag storage_bag = null;//ref by ContainerStorage
   private boolean goldMinecart;

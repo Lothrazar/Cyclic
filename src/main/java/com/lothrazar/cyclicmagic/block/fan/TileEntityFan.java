@@ -58,6 +58,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private int timer;
   private int pushIfZero = 0;//else pull. 0 as default 
   private int range = 16;
+
   public TileEntityFan() {
     super(0);
     this.needsRedstone = 1;

@@ -105,5 +105,4 @@ public class EventPlayerData {
       UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
     }
   }
-  
 }

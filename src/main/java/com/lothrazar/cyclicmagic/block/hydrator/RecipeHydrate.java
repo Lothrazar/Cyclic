@@ -78,6 +78,7 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
   public int getSize() {
     return size;
   }
+
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     this.sanityCheckInput();

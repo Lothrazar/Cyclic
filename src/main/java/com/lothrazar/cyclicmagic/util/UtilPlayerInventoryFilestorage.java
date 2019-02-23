@@ -117,7 +117,6 @@ public class UtilPlayerInventoryFilestorage {
         }
         if (file1 == null || !file1.exists() || data == null || data.isEmpty()) {
           ModCyclic.logger.error("Data not found for " + player.getDisplayNameString());//+ ". Trying to load backup data."
-
         }
         if (data != null) {
           InventoryPlayerExtended inventory = new InventoryPlayerExtended(player);

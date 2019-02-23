@@ -152,7 +152,6 @@ public class UtilFluid {
         int filled = tankTo.fill(wasDrained, false);
         if (wasDrained != null && wasDrained.amount > 0
             && filled > 0) {
-
           int realAmt = Math.min(filled, wasDrained.amount);
           wasDrained = fluidFrom.drain(realAmt, true);
           if (wasDrained == null) {

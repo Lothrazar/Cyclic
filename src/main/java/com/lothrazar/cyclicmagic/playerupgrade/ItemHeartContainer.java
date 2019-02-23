@@ -102,7 +102,6 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
     }
   }
 
-
   @Override
   public void syncConfig(Configuration config) {
     maxHearts = config.getInt("HeartContainerMax", Const.ConfigCategory.modpackMisc,

@@ -158,7 +158,6 @@ public class ItemPotionContent implements IContent {
       PotionTypeCyclic potionTypeHunger = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.HUNGER, NORMAL), "hunger", Items.FERMENTED_SPIDER_EYE);
       potionTypeHunger.setBase(potionTypeSat);
     }
-
     // wither
     // blindness
     // glowing

@@ -74,7 +74,6 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
-
   }
 
   @Override
@@ -105,7 +104,6 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderR.updateScreen();
     sliderG.updateScreen();
     sliderB.updateScreen();
-
   }
 
   @Override

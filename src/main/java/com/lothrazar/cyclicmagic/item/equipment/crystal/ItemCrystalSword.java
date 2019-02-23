@@ -46,5 +46,4 @@ public class ItemCrystalSword extends ItemSword implements IHasRecipe {
         'd', "gemDiamond",
         's', "gemObsidian");
   }
-
 }

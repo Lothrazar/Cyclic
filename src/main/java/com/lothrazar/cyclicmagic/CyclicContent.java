@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockDarknessGlass;
+import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvilmagma.BlockAnvilMagma;

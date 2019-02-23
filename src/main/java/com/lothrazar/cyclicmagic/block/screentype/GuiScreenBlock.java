@@ -104,7 +104,6 @@ public class GuiScreenBlock extends GuiBaseContainer {
     sliderFont = new GuiSliderInteger(tile, id, x, y, width, h, 1, 16, Fields.FONT.ordinal());
     sliderFont.setTooltip("screen.font");
     this.addButton(sliderFont);
-
   }
 
   @Override

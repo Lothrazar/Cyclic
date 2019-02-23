@@ -109,8 +109,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
     //  if (transferRate != 0) {
-      compound.setInteger("transferSaved", this.transferRate);
-
+    compound.setInteger("transferSaved", this.transferRate);
     return super.writeToNBT(compound);
   }
 

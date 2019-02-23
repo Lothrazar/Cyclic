@@ -109,7 +109,6 @@ public class MaterialRegistry { // thanks for help:
   }
 
   private static void registerEmeraldMaterial() {
-
     MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
         diamondDurability + 30, //was -2 affects DURABILITY 
         new int[] {
@@ -131,7 +130,6 @@ public class MaterialRegistry { // thanks for help:
         ToolMaterial.DIAMOND.getAttackDamage() * 1.5F, //was  - 0.25F
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
-
   }
 
   /**
