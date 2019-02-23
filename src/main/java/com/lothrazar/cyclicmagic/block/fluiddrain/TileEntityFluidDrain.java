@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.fluiddrain;
 
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -52,18 +51,16 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
   private int shapePtr = 0;
   private List<BlockPos> shape = null;
 
-  static final int FUEL_COST = 100;
-  static final int CAPACITY = 64 * 1000;
   public static enum Fields {
     REDSTONE, FUEL, RENDERPARTICLES;
   }
 
   public TileEntityFluidDrain() {
-    super(3 * 8);
-    this.setSlotsForInsert(0, 3 * 8);
+    super(18);
+    this.setSlotsForInsert(0, 18);
     tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setTileEntity(this);
-    this.initEnergy(FUEL_COST, CAPACITY);
+    this.initEnergy(BlockFluidDrain.FUEL_COST, TANK_FULL);
   }
 
   @Override
@@ -78,47 +75,38 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
 
   @Override
   public void update() {
-    if (this.isRunning() == false) {
-      return;
-    }
     this.shiftAllUp();
-    //i need a block to place down eh 
-    if (this.tank.isFull() || this.getStackInSlot(0).getItem() instanceof ItemBlock == false) {
+    if (this.isRunning() == false
+        || this.tank.isFull()
+        || this.getStackInSlot(0).getItem() instanceof ItemBlock == false) {
       return;
     }
-
-      if (shape == null) {
-        shape = this.getShape();
-      }
-      //look for fluid 
-      if (this.shapePtr >= shape.size()) {
-        shapePtr = 0;
+    if (shape == null) {
+      shape = this.getShape();
+    }
+    //look for fluid 
+    if (this.shapePtr >= shape.size()) {
+      shapePtr = 0;
+      return;
+    }
+    BlockPos current = shape.get(shapePtr);
+    shapePtr++;
+    IBlockState currentState = world.getBlockState(current);
+    if (currentState.getMaterial().isLiquid()
+        && this.updateEnergyIsBurning()) {
+      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
+      IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
+      FluidStack fs = handle.getTankProperties()[0].getContents();
+      if (fs == null || tank.canFillFluidType(fs) == false) {
         return;
       }
-      BlockPos current = shape.get(shapePtr);
-      shapePtr++;
-      ModCyclic.logger.log(shapePtr + "current " + current);
-      IBlockState currentState = world.getBlockState(current);
-      if (currentState.getMaterial().isLiquid()) {
-        ModCyclic.logger.log("__fluid found " + current);
-        UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
-        //if (currentState.getBlock() instanceof BlockLiquid) { 
-        //
-        IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
-        //          BlockLiquid lq = (BlockLiquid) world.getBlockState(current).getBlock();
-        FluidStack fs = handle.getTankProperties()[0].getContents();
-        if (fs == null || tank.canFillFluidType(fs) == false) {
-          return;
-        }
-        FluidStack fsafterr = handle.drain(fs, true);
-        this.tank.fill(fs, true);
-        ModCyclic.logger.log(tank.getFluidAmount() + "/" + tank.getCapacity());
-        UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null);
-      }
-      else {
-        UtilParticle.spawnParticle(world, EnumParticleTypes.DRAGON_BREATH, current);
-      }
-
+      FluidStack fsafterr = handle.drain(fs, true);
+      this.tank.fill(fs, true);
+      UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null);
+    }
+    //      else {
+    //        UtilParticle.spawnParticle(world, EnumParticleTypes.DRAGON_BREATH, current);
+    //      }
   }
 
   @Override

@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.fluiddrain;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.block.uncrafter.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.FluidBar;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
@@ -42,8 +41,8 @@ public class GuiDrain extends GuiBaseContainer {
     super(new ContainerDrain(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityFluidDrain.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
-    energyBar.setX(70).setY(16).setWidth(14);
-    this.fluidBar = new FluidBar(this, 98, 16);
+    energyBar.setX(152).setY(18).setWidth(14);
+    this.fluidBar = new FluidBar(this, 126, 18);
     fluidBar.setCapacity(TileEntityFluidDrain.TANK_FULL);
   }
 
@@ -64,13 +63,11 @@ public class GuiDrain extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int u = 0, v = 0, x, y, rows = 3, cols = 6;
-    //first draw the zero slot
-    // Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_INPUT - 1, this.guiTop + ContainerUncrafting.SLOTY_INPUT - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    int xPrefix = 48;
+
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        x = this.guiLeft + xPrefix - 1 + j * Const.SQ;
-        y = this.guiTop + ContainerUncrafting.SLOTY_INPUT + (i - 1) * Const.SQ - 1;
+        x = this.guiLeft + 7 + j * Const.SQ;
+        y = this.guiTop + 27 + i * Const.SQ;
         Gui.drawModalRectWithCustomSizedTexture(
             x,
             y,

@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.fluiddrain;
 
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,12 +45,12 @@ public class ContainerDrain extends ContainerBaseMachine {
   public ContainerDrain(InventoryPlayer inventoryPlayer, TileEntityFluidDrain te) {
     super(te);
     int slot = 0;
-    int xPrefix = 48, rows = 3, cols = 8;
+    int xPrefix = 8, yPrefix = 28, rows = 3, cols = 6;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new SlotOutputOnly(tile, slot,
+        addSlotToContainer(new Slot(tile, slot,
             xPrefix + j * Const.SQ,
-            30 + (i - 1) * Const.SQ));
+            yPrefix + i * Const.SQ));
         slot++;
       }
     }

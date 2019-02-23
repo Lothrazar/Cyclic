@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+    "textures": {
+        "particle": "blocks/stone",
+        "down": "cyclicmagic:blocks/fluid_drain_bottom",
+        "up":   "cyclicmagic:blocks/fluid_drain_top",
+        "north":"cyclicmagic:blocks/fluid_drain_side",
+        "east": "cyclicmagic:blocks/fluid_drain_side",
+        "south":"cyclicmagic:blocks/fluid_drain_side",
+        "west": "cyclicmagic:blocks/fluid_drain_side"
+    }
+}

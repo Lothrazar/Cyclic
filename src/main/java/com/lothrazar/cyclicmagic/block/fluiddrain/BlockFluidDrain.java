@@ -35,6 +35,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasRecipe {
 
+  public static int FUEL_COST = 0;
 
   public BlockFluidDrain() {
     super(Material.IRON);
@@ -62,12 +64,12 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "rsr",
         "lgl",
-        "o o",
-        'l', Blocks.CLAY,
+        "ooo",
+        'l', Items.GUNPOWDER,
         'o', Blocks.HARDENED_CLAY,
         'g', Blocks.IRON_BLOCK,
         's', Blocks.DROPPER,
-        'r', Items.WATER_BUCKET);
+        'r', Blocks.PISTON);
   }
 
   @Override
@@ -96,6 +98,7 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
 
   @Override
   public void syncConfig(Configuration config) {
+    FUEL_COST = config.getInt("fluid_drain", Const.ConfigCategory.fuelCost, 500, 0, 500000, Const.ConfigText.fuelCost);
     enabled = config.getBoolean("fluid_drain", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }
