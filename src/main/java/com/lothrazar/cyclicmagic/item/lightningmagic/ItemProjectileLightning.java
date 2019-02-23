@@ -73,10 +73,11 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         " qg",
         "leq",
-        "el ",
+        "il ",
         'e', "enderpearl",
-        'l', "dyeLime",
+        'l', "blockRedstone",
         'q', "glowstone",
+        'i', "blockIron",
         'g', new ItemStack(Items.GHAST_TEAR));
   }
 

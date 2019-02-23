@@ -45,6 +45,8 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
         return this.needsRedstone;
       case TRANSFER_RATE:
         return this.transferRate;
+      default:
+      break;
     }
     return 0;
   }
@@ -57,6 +59,8 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
       break;
       case TRANSFER_RATE:
         transferRate = value;
+      break;
+      default:
       break;
     }
   }

@@ -69,13 +69,13 @@ public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasReci
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        " sc",
-        " rs",
-        "i  ",
+        "cdc",
+        "csc",
+        " i ",
         'c', Blocks.ICE,
-        's', Blocks.SNOW,
-        'r', "dustRedstone",
-        'i', "ingotIron");
+        'd', "dustRedstone",
+        's', "blockCoal",
+        'i', "blockIron");
   }
 
   @Override
