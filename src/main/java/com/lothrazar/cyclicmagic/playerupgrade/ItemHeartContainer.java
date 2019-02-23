@@ -50,7 +50,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -103,18 +102,6 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
     }
   }
 
-  @SubscribeEvent
-  public void onPlayerClone(PlayerEvent.Clone event) {
-    IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
-    IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
-    dest.setDataFromNBT(src.getDataAsNBT());
-    if (src.getMaxHealth() > 0) {
-      UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
-    } //event.isWasDeath() && 
-      //event if it wasnt death, we still want to do this. otherwise on going thru portla, the extra hearts
-      //are hidden because mojang
-      //if health var never used (never eaten a heart) then skip
-  }
 
   @Override
   public void syncConfig(Configuration config) {
