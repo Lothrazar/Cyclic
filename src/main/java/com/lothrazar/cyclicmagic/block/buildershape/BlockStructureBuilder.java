@@ -57,6 +57,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   public BlockStructureBuilder() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_BUILDER);
     this.setHardness(3.0F).setResistance(5.0F);
+
     this.setSoundType(SoundType.METAL);
   }
 
@@ -98,8 +99,6 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityStructureBuilder.TIMER_FULL = config.getInt("builder_block", Const.ConfigCategory.machineTimer,
-        25, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt("builder_block", Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

@@ -4,7 +4,7 @@ buildertype.cup.name=Cup
 buildertype.dome.name=Dome
 buildertype.diagonal.name=Diagonal
 buildertype.facing.name=Facing
-buildertype.solid.name=Solid_
+buildertype.solid.name=Solid
 buildertype.pyramid.name=Pyramid
 buildertype.sphere.name=Sphere
 buildertype.square.name=Square
@@ -1426,8 +1426,8 @@ tile.water_candle.guide=Light with flint and steel.  Greatly increases natural m
 extended.toolbelt= key to open in tool-belt mode
 
 tile.glass_strong.name=Tempered Glass
-tile.glass_strong.tooltip=Light resistance
-tile.glass_strong.guide=Tempered with void properties to resist light
+tile.glass_strong.tooltip=Immune to light and explosions
+tile.glass_strong.guide=Tempered with void properties to resist light.  Explosion resistant including wither
 
 item.crystallized_obsidian.name=Crystallized Obsidian
 item.crystallized_obsidian.tooltip=Crafting material

@@ -51,10 +51,10 @@ public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IConten
   public BlockDarknessGlass() {
     super(Material.ROCK);
     this.setHardness(0.25F);
-    this.setResistance(5F);
+    this.setResistance(6000001.0F);
     this.setHarvestLevel("pickaxe", 0);
     this.setSoundType(SoundType.GLASS);
-    setLightOpacity(255);//water gets 3, leaves get 1 
+    this.setLightOpacity(255);//water gets 3, leaves get 1 
   }
 
   @Override

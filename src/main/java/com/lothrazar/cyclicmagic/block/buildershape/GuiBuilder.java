@@ -28,7 +28,6 @@ import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
@@ -60,7 +59,6 @@ public class GuiBuilder extends GuiBaseContainer {
     tile = tileEntity;
     setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, ContainerBuilder.SLOTY + 22, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
     this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(10).setY(4).setX(160).setHeight(42);
