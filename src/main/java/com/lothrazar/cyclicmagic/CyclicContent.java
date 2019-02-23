@@ -32,6 +32,7 @@ import com.lothrazar.cyclicmagic.block.entitydetector.BlockDetector;
 import com.lothrazar.cyclicmagic.block.exppylon.BlockXpPylon;
 import com.lothrazar.cyclicmagic.block.fan.BlockFan;
 import com.lothrazar.cyclicmagic.block.fishing.BlockFishing;
+import com.lothrazar.cyclicmagic.block.fluiddrain.BlockFluidDrain;
 import com.lothrazar.cyclicmagic.block.fluidplacer.BlockFluidPlacer;
 import com.lothrazar.cyclicmagic.block.forester.BlockForester;
 import com.lothrazar.cyclicmagic.block.harvester.BlockHarvester;
@@ -144,6 +145,7 @@ public class CyclicContent {
 
   public static void init() {
     content = new ArrayList<IContent>();
+    content.add(new BlockFluidDrain());
     content.add(new ItemGemObsidian());
     content.add(new ItemPotionContent());
     content.add(new MultiContent());

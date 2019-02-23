@@ -1448,3 +1448,7 @@ item.crystal_pickaxe.tooltip=Crystal Hoe
 item.crystal_spade.tooltip=Crystal Shovel
 item.crystal_axe.tooltip=Crystal Axe
 item.crystal_hoe.tooltip=Crystal Hoe
+
+tile.fluid_drain.name=Fluid Collector
+tile.fluid_drain.guide=Drain fluid that is nearby and below, filling it with blocks
+tile.fluid_drain.tooltip=Drain fluid that is nearby and below, filling it with blocks

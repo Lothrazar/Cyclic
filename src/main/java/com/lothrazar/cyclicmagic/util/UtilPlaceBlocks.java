@@ -101,7 +101,8 @@ public class UtilPlaceBlocks {
         }
         else {
           //it might not have metadata, and it might have some crazy own way of doing this (chisels&bits/NBT data)
-          state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(),
+          EnumFacing facing = (fake == null) ? EnumFacing.UP : fake.getHorizontalFacing();
+          state = block.getStateForPlacement(world, placePos, facing,
               placePos.getX() + .5f,
               placePos.getY() + .5f,
               placePos.getZ() + .5f,

@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.mobcapture;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -83,7 +82,6 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
         && (mop.entityHit instanceof EntityPlayer) == false
         && isInBlacklist(mop.entityHit) == false) {
       if (this.world.isRemote == false) {
-        ModCyclic.logger.log("CAP mob in remote ; client = " + this.world.isRemote);
         ItemStack captured = new ItemStack(renderSnowball);
         NBTTagCompound entityNBT = new NBTTagCompound();
         mop.entityHit.writeToNBT(entityNBT);
