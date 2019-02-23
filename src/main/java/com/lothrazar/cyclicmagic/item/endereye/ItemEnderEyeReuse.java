@@ -30,6 +30,8 @@ import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -38,7 +40,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -49,7 +50,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe, IContent {
 
   private static final int durability = 100;
-  private static final int cooldown = 30;
+  private static final int COOLDOWN = 30;
 
   public ItemEnderEyeReuse() {
     super(durability);
@@ -74,23 +75,23 @@ public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe, IContent 
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    ItemStack itemStackIn = playerIn.getHeldItem(hand);
-    worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-    playerIn.getCooldownTracker().setCooldown(this, cooldown);
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    ItemStack itemStackIn = player.getHeldItem(hand);
+    UtilSound.playSound(player, SoundEvents.ENTITY_ENDERPEARL_THROW);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     boolean success = false;
-    if (worldIn.isRemote == false) {
-      BlockPos blockpos = ((WorldServer) worldIn).getChunkProvider().getNearestStructurePos(worldIn, "Stronghold", new BlockPos(playerIn), false);
+    if (world.isRemote == false) {
+      BlockPos blockpos = ((WorldServer) world).getChunkProvider().getNearestStructurePos(world, "Stronghold", new BlockPos(player), false);
       if (blockpos != null) {
-        EntityEnderEyeUnbreakable entity = new EntityEnderEyeUnbreakable(worldIn, playerIn.posX, playerIn.posY + playerIn.height / 2.0F, playerIn.posZ);
+        EntityEnderEyeUnbreakable entity = new EntityEnderEyeUnbreakable(world, player.posX, player.posY + player.height / 2.0F, player.posZ);
         //      entityenderpearl.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
         entity.moveTowards(blockpos);
-        worldIn.spawnEntity(entity);
+        world.spawnEntity(entity);
         success = true;
       }
     }
     if (success) {
-      super.onUse(itemStackIn, playerIn, worldIn, hand);
+      super.onUse(itemStackIn, player, world, hand);
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }

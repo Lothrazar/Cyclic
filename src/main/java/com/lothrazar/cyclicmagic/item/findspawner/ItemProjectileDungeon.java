@@ -35,6 +35,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
@@ -98,7 +99,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-    player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
+    UtilEntity.setCooldownItem(player, held.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, held);
     EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
     doThrow(world, player, hand, entityendereye, 0.5F);

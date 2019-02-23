@@ -35,6 +35,7 @@ import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -192,7 +193,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
           this.getWandType(), hand));
     }
     player.swingArm(hand);
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     return EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
 

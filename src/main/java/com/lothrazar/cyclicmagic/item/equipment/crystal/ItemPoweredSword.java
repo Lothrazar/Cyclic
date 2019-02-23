@@ -31,6 +31,7 @@ import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -126,7 +127,7 @@ public class ItemPoweredSword extends ItemSword implements IHasRecipe, IHasConfi
           }
       }
       UtilSound.playSound(player, SoundEvents.ENTITY_ENDERPEARL_THROW);
-      player.getCooldownTracker().setCooldown(this, COOLDOWN);
+      UtilEntity.setCooldownItem(player, this, COOLDOWN);
     }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
   }

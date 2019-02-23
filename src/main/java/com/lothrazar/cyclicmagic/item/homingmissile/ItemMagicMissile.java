@@ -113,7 +113,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
       projectile.setTarget(target);
       world.spawnEntity(projectile);
     }
-    player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
+    UtilEntity.setCooldownItem(player, held.getItem(), COOLDOWN);
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }
