@@ -52,15 +52,18 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
   private int shapePtr = 0;
   private List<BlockPos> shape = null;
 
+  static final int FUEL_COST = 100;
+  static final int CAPACITY = 64 * 1000;
   public static enum Fields {
     REDSTONE, FUEL, RENDERPARTICLES;
   }
 
   public TileEntityFluidDrain() {
-    super(8);
-    this.setSlotsForInsert(0, 7);
+    super(3 * 8);
+    this.setSlotsForInsert(0, 3 * 8);
     tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setTileEntity(this);
+    this.initEnergy(FUEL_COST, CAPACITY);
   }
 
   @Override

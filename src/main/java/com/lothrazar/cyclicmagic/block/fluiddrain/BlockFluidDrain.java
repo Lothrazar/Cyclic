@@ -49,7 +49,7 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
   public BlockFluidDrain() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setGuiId(ForgeGuiHandler.GUI_INDEX_HYDRATOR); 
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_DRAIN);
   }
 
   @Override
@@ -62,7 +62,7 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "rsr",
         "lgl",
-        "ooo",
+        "o o",
         'l', Blocks.CLAY,
         'o', Blocks.HARDENED_CLAY,
         'g', Blocks.IRON_BLOCK,

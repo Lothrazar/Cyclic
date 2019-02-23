@@ -104,6 +104,9 @@ import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclicmagic.block.fishing.GuiFisher;
 import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
+import com.lothrazar.cyclicmagic.block.fluiddrain.ContainerDrain;
+import com.lothrazar.cyclicmagic.block.fluiddrain.GuiDrain;
+import com.lothrazar.cyclicmagic.block.fluiddrain.TileEntityFluidDrain;
 import com.lothrazar.cyclicmagic.block.forester.ContainerForester;
 import com.lothrazar.cyclicmagic.block.forester.GuiForester;
 import com.lothrazar.cyclicmagic.block.forester.TileEntityForester;
@@ -251,6 +254,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_TOOLSWAPPER = 49;
   public static final int GUI_INDEX_W_FLUID = 50;
   public static final int GUI_INDEX_SCREENTARGET = 51;
+  public static final int GUI_INDEX_DRAIN = 52;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -505,6 +509,11 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_SCREENTARGET:
         if (te instanceof TileEntityScreenTarget) {
           return new ContainerScreenTarget(player.inventory, (TileEntityScreenTarget) te);
+        }
+      break;
+      case GUI_INDEX_DRAIN:
+        if (te instanceof TileEntityFluidDrain) {
+          return new ContainerDrain(player.inventory, (TileEntityFluidDrain) te);
         }
       break;
     }
@@ -764,6 +773,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_SCREENTARGET:
           if (te instanceof TileEntityScreenTarget) {
             return new GuiScreenTargetBlock(player.inventory, (TileEntityScreenTarget) te);
+          }
+        break;
+        case GUI_INDEX_DRAIN:
+          if (te instanceof TileEntityFluidDrain) {
+            return new GuiDrain(player.inventory, (TileEntityFluidDrain) te);
           }
         break;
       }
