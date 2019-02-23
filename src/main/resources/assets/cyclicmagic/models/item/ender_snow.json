@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"all": "cyclicmagic:items/ender_snow"
+		"all": "cyclicmagic:items/ender_snow_model"
 	},
 
 	"elements": [

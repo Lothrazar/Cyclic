@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"all": "cyclicmagic:items/ender_blaze"
+		"all": "cyclicmagic:items/ender_blaze_model"
 	},
 
 	"elements": [
