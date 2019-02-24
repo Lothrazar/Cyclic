@@ -4,7 +4,7 @@
         "facing=east":  { "model": "cyclicmagic:fluid_placer","y":270},
         "facing=south": { "model": "cyclicmagic:fluid_placer"},
         "facing=west":  { "model": "cyclicmagic:fluid_placer" ,"y":90},
-        "facing=up":    { "model": "cyclicmagic:fluid_placer","x":90},
-        "facing=down":  { "model": "cyclicmagic:fluid_placer","x":270}
+        "facing=up":    { "model": "cyclicmagic:fluid_placer","x":270},
+        "facing=down":  { "model": "cyclicmagic:fluid_placer","x":90}
     }
 }
