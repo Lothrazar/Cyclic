@@ -704,6 +704,7 @@ screen.blue=Blue
 screen.red=Red
 screen.style0=Normal
 screen.style1=%
+screen.style2=Max
 screen.green=Green
 screen.alpha=Alpha Transparency
 screen.padding=Padding

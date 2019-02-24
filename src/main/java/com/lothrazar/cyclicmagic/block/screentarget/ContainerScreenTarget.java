@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.screentarget;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -36,6 +37,7 @@ public class ContainerScreenTarget extends ContainerBaseMachine {
     super(te);
     int x = 151;
     int y = 17;
+    ModCyclic.logger.log("TODO stack size 1");
     addSlotToContainer(new SlotCheckTileValid(te, 0, x, y));
     bindPlayerHotbar(inventoryPlayer);
   }

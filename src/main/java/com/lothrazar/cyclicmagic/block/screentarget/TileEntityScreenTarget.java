@@ -48,9 +48,9 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int red = 100;
   private int green = 100;
   private int blue = 100;
-  private boolean showPercent = false;
+  private int style;
   private int showType, xp, yp;
-  private int fontSize = 2;
+  private int fontSize = 30;
 
 
   public static enum Fields {
@@ -105,7 +105,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     red = tags.getInteger("red");
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
-    showPercent = tags.getBoolean("percent");
+    style = tags.getInteger("style");
     showType = tags.getInteger("showtype");
     fontSize = tags.getInteger("font");
     xp = tags.getInteger("xp");
@@ -118,7 +118,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
-    tags.setBoolean("percent", showPercent);
+    tags.setInteger("style", style);
     tags.setInteger("showtype", showType);
     tags.setInteger("font", this.fontSize);
     tags.setInteger("xp", xp);
@@ -136,7 +136,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       case RED:
         return red;
       case STYLE:
-        return this.showPercent ? 1 : 0;
+        return this.style;
       case SHOWTYPE:
         return this.showType;
       case FONT:
@@ -164,7 +164,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         red = value;
       break;
       case STYLE:
-        this.showPercent = (value == 1);
+        this.style = value % EnumDisplayStyle.values().length;
       break;
       case SHOWTYPE:
         this.showType = value % EnumShowType.values().length;
@@ -233,7 +233,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
           empty++;
         }
       }
-      itemStr = this.formatQuantity(empty, max);
+      itemStr = this.formatQuantity(max - empty, max);
     }
     else {
       itemStr = "--";
@@ -278,13 +278,21 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     return EnumShowType.values()[this.showType];
   }
 
+  public EnumDisplayStyle displayStyle() {
+    return EnumDisplayStyle.values()[this.style];
+  }
+
   private String formatQuantity(final float current, final float max) {
-    if (this.showPercent) {
+    if (this.style == EnumDisplayStyle.PERCENT.ordinal()) {
       float pct = current / max * 100.0F;
       return String.format("%.2f", pct) + "%";
     }
     else {
-      return ((int) current) + "";
+      String qty = ((int) current) + "";
+      if (this.style == EnumDisplayStyle.MAX.ordinal()) {
+        qty += "/" + ((int) max);
+      }
+      return qty;
     }
   }
 

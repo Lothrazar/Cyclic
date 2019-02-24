@@ -144,6 +144,9 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderR.updateScreen();
     sliderG.updateScreen();
     sliderB.updateScreen();
+    sliderFont.updateScreen();
+    sliderX.updateScreen();
+    sliderY.updateScreen();
   }
 
   @Override
@@ -151,6 +154,9 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderR.keyTyped(typedChar, keyCode);
     sliderG.keyTyped(typedChar, keyCode);
     sliderB.keyTyped(typedChar, keyCode);
+    sliderFont.keyTyped(typedChar, keyCode);
+    sliderX.keyTyped(typedChar, keyCode);
+    sliderY.keyTyped(typedChar, keyCode);
     //  if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
     super.keyTyped(typedChar, keyCode);
     //   }
