@@ -681,9 +681,9 @@ enchantment_stack.empty=Empty; use an enchanted book to store
 tile.block_screen.name=Text Projector
 tile.block_screen.tooltip=Projects text with control of font size, padding, and colour
 tile.block_screen.guide=Like a slightly advanced computerized sign
-tile.block_screentarget.name=Sensor Display
-tile.block_screentarget.tooltip=Display properties of a distant block
-tile.block_screentarget.guide=Target a block with a GPS marker, and you can display its fluid, energy, or item content
+tile.screen_target.name=Sensor Display
+tile.screen_target.tooltip=Display properties of a distant block
+tile.screen_target.guide=Target a block with a GPS marker, and you can display its fluid, energy, or item content
 
 button.pulsing.tooltip=Movement
 button.pulsing.name0=Stationary
