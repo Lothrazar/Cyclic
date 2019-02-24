@@ -40,7 +40,7 @@ public class ScreenTargetTESR<T extends TileEntityScreenTarget> extends BaseTESR
 
   @Override
   public void render(TileEntityScreenTarget te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    float xt = 0, yt = 0, zt = 0;
+    float zt = 0;
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
     String lines[] = te.getText().split(System.lineSeparator());

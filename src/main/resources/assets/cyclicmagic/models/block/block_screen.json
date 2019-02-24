@@ -1,9 +1,9 @@
 {
 	"parent": "block/cube",
     "textures": {
-		"0":"cyclicmagic:blocks/block_screen_front",
-		"1":"cyclicmagic:blocks/block_screen_side",
-		"particle":"cyclicmagic:blocks/block_screen_side"
+		"0":"cyclicmagic:blocks/screen_front",
+		"1":"cyclicmagic:blocks/screen_side",
+		"particle":"cyclicmagic:blocks/screen_side"
     },
     "elements": [
         {

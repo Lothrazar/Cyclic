@@ -1,9 +1,0 @@
-{
-    "variants": {
-		"normal": { "model": "cyclicmagic:block_screentarget" },
-        "facing=north": { "model": "cyclicmagic:block_screentarget" ,"y":180},
-        "facing=east":  { "model": "cyclicmagic:block_screentarget" ,"y":270},
-        "facing=south": { "model": "cyclicmagic:block_screentarget" },
-        "facing=west":  { "model": "cyclicmagic:block_screentarget" ,"y":90}
-    }
-}
