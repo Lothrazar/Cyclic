@@ -304,4 +304,9 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   public float getYOffset() {
     return yp / -100F;
   }
+
+  @Override
+  public int getInventoryStackLimit() {
+    return 1;
+  }
 }
