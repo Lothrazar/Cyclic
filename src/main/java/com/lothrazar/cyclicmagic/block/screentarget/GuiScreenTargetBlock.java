@@ -27,10 +27,11 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.button.ButtonCheckboxTileField;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -42,7 +43,11 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   private GuiSliderInteger sliderR;
   private GuiSliderInteger sliderG;
   private GuiSliderInteger sliderB;
-  private ButtonCheckboxTileField checkPercent;
+  private ButtonTileEntityField btnStyle;
+  private ButtonTileEntityField btnToggle;
+  private GuiSliderInteger sliderFont;
+  private GuiSliderInteger sliderX;
+  private GuiSliderInteger sliderY;
 
   public GuiScreenTargetBlock(InventoryPlayer inventoryPlayer, TileEntityScreenTarget tileEntity) {
     super(new ContainerScreenTarget(inventoryPlayer, tileEntity), tileEntity);
@@ -55,36 +60,57 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     super.initGui();
     Keyboard.enableRepeatEvents(true);
     int id = 1;
-    int width = 144;
-    //    int xCenter = (xSize / 2 - width / 2);
-    int x = 26;
-    int y = Const.PAD / 2;
+    int x = guiLeft + Const.PAD;
+    int y = guiTop + 16;
     int h = 12;
-    id++;
-    x = guiLeft + 26;
-    y = this.guiTop + 23 + Const.PAD;
-    sliderR = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.RED.ordinal());
+    btnToggle = new ButtonTileEntityField(id++,
+        x, y,
+        this.tile.getPos(), Fields.SHOWTYPE.ordinal());
+    btnToggle.width = 50;
+    btnToggle.setTooltip("button.screen.type");
+    this.addButton(btnToggle);
+
+    x += btnToggle.width + 2;
+    btnStyle = new ButtonTileEntityField(id++,
+        x, y, tile.getPos(), Fields.STYLE.ordinal());
+    btnStyle.setTooltip("screen." + Fields.STYLE.toString().toLowerCase());
+    this.addButton(btnStyle);
+
+    x = guiLeft + Const.PAD;
+    int width = 160;
+
+    h = 12;
+    y += btnToggle.height + 4;
+    sliderR = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderR.setTooltip("screen.red");
     this.addButton(sliderR);
-    id++;
-    y += h + 1;
-    sliderG = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
+
+    y += h + 2;
+    sliderG = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
     sliderG.setTooltip("screen.green");
     this.addButton(sliderG);
-    id++;
-    y += h + 1;
-    sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
+
+    y += h + 2;
+    sliderB = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
-    //checkboxes  
-    int size = 10;
-    int field = Fields.PERCENT.ordinal();
-    checkPercent = new ButtonCheckboxTileField(id++,
-        getGuiLeft() + x,
-        getGuiTop() + y, tile.getPos(), field, size, size);
-    checkPercent.setIsChecked(tile.getField(field) == 1);
-    checkPercent.setTooltip("tile.screen." + Fields.PERCENT.toString().toLowerCase());
-    this.addButton(checkPercent);
+
+    y += h + 2;
+    sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, Fields.XPADDING.ordinal());
+    sliderX.setTooltip("screen.x");
+    this.addButton(sliderX);
+
+    y += h + 2;
+    sliderY = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, Fields.YPADDING.ordinal());
+    sliderY.setTooltip("screen.y");
+    this.addButton(sliderY);
+    //configs 
+
+    y += h + 1;
+    sliderFont = new GuiSliderInteger(tile, id++, x, y, width, h, 10, 110, Fields.FONT.ordinal());
+    sliderFont.setTooltip("screen.fontsize");
+    this.addButton(sliderFont);
+
   }
 
   @Override
@@ -96,14 +122,17 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    btnToggle.displayString = UtilChat.lang("button.screen." + screen.showType().toString().toLowerCase());
+  
+    btnStyle.displayString = UtilChat.lang("screen.style" + screen.getField(Fields.STYLE.ordinal()));
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
-    int x = this.guiLeft + 8;
-    int y = this.guiTop + 86;
+    int x = this.guiLeft + 150;
+    int y = this.guiTop + 16;
     Gui.drawModalRectWithCustomSizedTexture(
         x, y,
         0, 0, Const.SQ, Const.SQ, Const.SQ, Const.SQ);

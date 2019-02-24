@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -48,11 +49,12 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int green = 100;
   private int blue = 100;
   private boolean showPercent = false;
-  private boolean showFluid = true;
-  private boolean showEnergy = true;
+  private int showType, xp, yp;
+  private int fontSize = 2;
+
 
   public static enum Fields {
-    RED, GREEN, BLUE, SFLUID, SENERGY, PERCENT;
+    RED, GREEN, BLUE, SHOWTYPE, STYLE, FONT, XPADDING, YPADDING;
   }
 
   public TileEntityScreenTarget() {
@@ -103,6 +105,11 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     red = tags.getInteger("red");
     green = tags.getInteger("green");
     blue = tags.getInteger("blue");
+    showPercent = tags.getBoolean("percent");
+    showType = tags.getInteger("showtype");
+    fontSize = tags.getInteger("font");
+    xp = tags.getInteger("xp");
+    yp = tags.getInteger("yp");
   }
 
   @Override
@@ -111,6 +118,11 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     tags.setInteger("red", red);
     tags.setInteger("green", green);
     tags.setInteger("blue", blue);
+    tags.setBoolean("percent", showPercent);
+    tags.setInteger("showtype", showType);
+    tags.setInteger("font", this.fontSize);
+    tags.setInteger("xp", xp);
+    tags.setInteger("yp", yp);
     return super.writeToNBT(tags);
   }
 
@@ -123,13 +135,18 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         return green;
       case RED:
         return red;
-      case PERCENT:
+      case STYLE:
         return this.showPercent ? 1 : 0;
-      case SENERGY:
-        return this.showEnergy ? 1 : 0;
-      case SFLUID:
-        return this.showFluid ? 1 : 0;
-
+      case SHOWTYPE:
+        return this.showType;
+      case FONT:
+        return fontSize;
+      case XPADDING:
+        return xp;
+      case YPADDING:
+        return yp;
+      default:
+      break;
     }
     return 0;
   }
@@ -146,14 +163,20 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       case RED:
         red = value;
       break;
-      case PERCENT:
+      case STYLE:
         this.showPercent = (value == 1);
       break;
-      case SENERGY:
-        this.showEnergy = (value == 1);
+      case SHOWTYPE:
+        this.showType = value % EnumShowType.values().length;
       break;
-      case SFLUID:
-        this.showFluid = (value == 1);
+      case FONT:
+        this.fontSize = value;
+      break;
+      case XPADDING:
+        xp = value;
+      break;
+      case YPADDING:
+        yp = value;
       break;
     }
   }
@@ -163,69 +186,96 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     if (isRunning() == false) {
       return;
     }
-    if (this.world.getTotalWorldTime() % 20 != 0) {
+    if (this.world.getTotalWorldTime() % Const.TICKS_PER_SEC != 0) {
       return;
     }
-    // ModCyclic.logger.error("run at " + this.world.getTotalWorldTime());
+
+    TileEntity te = getTargetTile();
+    if (te == null) {
+      this.text = "";
+      return;
+    }
+    updateText(te);
+  }
+
+  private void updateText(TileEntity te) {
+    switch (showType()) {
+      case ENERGY:
+        this.text = getEnergyString(te);
+      break;
+      case FLUID:
+        this.text = getFluidStr(te);
+      break;
+      case ITEM:
+        this.text = getItemStr(te);
+      break;
+    }
+  }
+
+  private TileEntity getTargetTile() {
     BlockPosDim target = this.getTarget(SLOT_TRANSFER);
     if (target == null || target.getDimension() != world.provider.getDimension()) {
-      return;
+      return null;
     }
-    this.text = "";
-    //    this.text += world.getBlockState(target.toBlockPos()).getBlock().getRegistryName().toString()
-    //        + System.lineSeparator();
-    // 
-    TileEntity te = world.getTileEntity(target.toBlockPos());
-    if (te == null) {
-      return;
-    }
-    boolean items = false;
-    if (showEnergy) {
-      String energyStr = "";
-      if (te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
-        IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-        //therefore   
-        energyStr = this.formatQuantity(energy.getEnergyStored(), energy.getMaxEnergyStored());
-      }
-      else {
-        energyStr = "--";
-      }
-      this.text += energyStr + System.lineSeparator();
-    }
-    if (items) {
-      String itemStr = "";
-      if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
-        IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-        //therefore  
-        int max = itemHandler.getSlots();
-        int empty = 0;
-        for (int i = 0; i < max; i++) {
-          if (itemHandler.getStackInSlot(i).isEmpty()) {
-            empty++;
-          }
-        }
-        itemStr = this.formatQuantity(empty, max);
-      }
-      else {
-        itemStr = "--";
-      }
-      this.text += itemStr + System.lineSeparator();
-    }
-    if (showFluid) {
-      String fluidStr = "";
-      if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
-        IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-        //therefore   
-        for (IFluidTankProperties f : energy.getTankProperties()) {
-          //          fluidStr = f.getContents().getLocalizedName() + System.lineSeparator();
-          fluidStr += this.formatQuantity(f.getContents().amount, f.getCapacity());
+
+    return world.getTileEntity(target.toBlockPos());
+  }
+
+  private String getItemStr(TileEntity te) {
+    String itemStr;
+    if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
+      IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+      //therefore  
+      int max = itemHandler.getSlots();
+      int empty = 0;
+      for (int i = 0; i < max; i++) {
+        if (itemHandler.getStackInSlot(i).isEmpty()) {
+          empty++;
         }
       }
-      else {
-        fluidStr = "--";
-      }
-      this.text += fluidStr + System.lineSeparator();
+      itemStr = this.formatQuantity(empty, max);
     }
+    else {
+      itemStr = "--";
+    }
+    return itemStr;
+  }
+
+  private String getFluidStr(TileEntity te) {
+    String fluidStr = "";
+    if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
+      IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+      //therefore   
+      for (IFluidTankProperties f : energy.getTankProperties()) {
+        if (f == null || f.getContents() == null) {
+          continue;
+        }
+        //          fluidStr = f.getContents().getLocalizedName() + System.lineSeparator();
+        fluidStr += this.formatQuantity(f.getContents().amount, f.getCapacity());
+        break;
+      }
+    }
+    else {
+      fluidStr = "--";
+    }
+    return fluidStr;
+  }
+
+  private String getEnergyString(TileEntity te) {
+    String energyStr;
+    if (te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
+      IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+      //therefore   
+      energyStr = this.formatQuantity(energy.getEnergyStored(), energy.getMaxEnergyStored());
+    }
+    else {
+      energyStr = "--";
+    }
+    return energyStr;
+  }
+
+  public EnumShowType showType() {
+    return EnumShowType.values()[this.showType];
   }
 
   private String formatQuantity(final float current, final float max) {
@@ -236,5 +286,17 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     else {
       return ((int) current) + "";
     }
+  }
+
+  public float getFontSize() {
+    return fontSize / 1000.0F;
+  }
+
+  public float getXOffset() {
+    return xp / 100F;
+  }
+
+  public float getYOffset() {
+    return yp / -100F;
   }
 }

@@ -34,8 +34,8 @@ public class ContainerScreenTarget extends ContainerBaseMachine {
 
   public ContainerScreenTarget(InventoryPlayer inventoryPlayer, TileEntityScreenTarget te) {
     super(te);
-    int x = 8;
-    int y = 86;
+    int x = 151;
+    int y = 17;
     addSlotToContainer(new SlotCheckTileValid(te, 0, x, y));
     bindPlayerHotbar(inventoryPlayer);
   }

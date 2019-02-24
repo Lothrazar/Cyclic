@@ -47,6 +47,7 @@ import net.minecraftforge.common.model.TRSRTransformation;
 
 public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRenderer<T> {
 
+  boolean lightsOn = true;
   protected IModel model;
   protected IBakedModel bakedModel;
   protected String resource = null;
@@ -143,7 +144,6 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
    */
   public void renderTextAt(String s, double x, double y, double z, int destroyStage, float xt, float yt, float zt,
       float angle, int textColor, float fontSize) {
-    boolean lightsOn = true;//TODO: toggle?
     GlStateManager.pushMatrix();
     GlStateManager.translate((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
     if (angle != 0) {
@@ -167,7 +167,6 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
     GlStateManager.depthMask(false);
     fontrenderer.drawString(s, 0, 0, textColor);
     GlStateManager.depthMask(true);
-    // GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     GlStateManager.popMatrix();
     if (destroyStage >= 0) {
       GlStateManager.matrixMode(5890);

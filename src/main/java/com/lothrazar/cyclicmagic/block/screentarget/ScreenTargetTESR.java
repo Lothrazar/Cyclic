@@ -33,7 +33,6 @@ public class ScreenTargetTESR<T extends TileEntityScreenTarget> extends BaseTESR
   private static final int MAX_WIDTH = 16;
   public static final int MAX_TOTAL = MAX_WIDTH * 8;
   public static final float rowHeight = -0.11F;
-  static final float fontSize = 0.010416667F * 2;
 
   public ScreenTargetTESR(Block block) {
     super(block);
@@ -47,7 +46,7 @@ public class ScreenTargetTESR<T extends TileEntityScreenTarget> extends BaseTESR
     String lines[] = te.getText().split(System.lineSeparator());
     for (String line : lines) {
       // lnWidth = ((float) this.getFontRenderer().getStringWidth(line)) / ((float) SCREEN_WIDTH);
-      renderTextAt(line, x, y, z, destroyStage, xt, yt, zt, angle, te.getColor(), fontSize);
+      renderTextAt(line, x, y, z, destroyStage, te.getXOffset(), te.getYOffset(), zt, angle, te.getColor(), te.getFontSize());
       y += rowHeight;
     }
   }
