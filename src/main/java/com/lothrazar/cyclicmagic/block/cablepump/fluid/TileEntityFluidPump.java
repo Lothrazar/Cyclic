@@ -38,7 +38,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
-  private int transferRate = 150;
+  private int transferRate = 1000;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
