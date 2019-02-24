@@ -69,48 +69,39 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     btnToggle.width = 50;
     btnToggle.setTooltip("button.screen.type");
     this.addButton(btnToggle);
-
     x += btnToggle.width + 2;
     btnStyle = new ButtonTileEntityField(id++,
         x, y, tile.getPos(), Fields.STYLE.ordinal());
     btnStyle.setTooltip("screen." + Fields.STYLE.toString().toLowerCase());
     this.addButton(btnStyle);
-
     x = guiLeft + Const.PAD;
     int width = 160;
-
     h = 12;
     y += btnToggle.height + 4;
     sliderR = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, Fields.RED.ordinal());
     sliderR.setTooltip("screen.red");
     this.addButton(sliderR);
-
     y += h + 2;
     sliderG = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, Fields.GREEN.ordinal());
     sliderG.setTooltip("screen.green");
     this.addButton(sliderG);
-
     y += h + 2;
     sliderB = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
-
     y += h + 2;
     sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, Fields.XPADDING.ordinal());
     sliderX.setTooltip("screen.x");
     this.addButton(sliderX);
-
     y += h + 2;
     sliderY = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, Fields.YPADDING.ordinal());
     sliderY.setTooltip("screen.y");
     this.addButton(sliderY);
     //configs 
-
     y += h + 1;
     sliderFont = new GuiSliderInteger(tile, id++, x, y, width, h, 10, 110, Fields.FONT.ordinal());
     sliderFont.setTooltip("screen.fontsize");
     this.addButton(sliderFont);
-
   }
 
   @Override
@@ -123,7 +114,6 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btnToggle.displayString = UtilChat.lang("button.screen." + screen.showType().toString().toLowerCase());
-  
     btnStyle.displayString = UtilChat.lang("screen.style" + screen.getField(Fields.STYLE.ordinal()));
   }
 

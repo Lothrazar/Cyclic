@@ -52,7 +52,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int showType, xp, yp;
   private int fontSize = 30;
 
-
   public static enum Fields {
     RED, GREEN, BLUE, SHOWTYPE, STYLE, FONT, XPADDING, YPADDING;
   }
@@ -189,7 +188,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     if (this.world.getTotalWorldTime() % Const.TICKS_PER_SEC != 0) {
       return;
     }
-
     TileEntity te = getTargetTile();
     if (te == null) {
       this.text = "";
@@ -217,7 +215,6 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     if (target == null || target.getDimension() != world.provider.getDimension()) {
       return null;
     }
-
     return world.getTileEntity(target.toBlockPos());
   }
 

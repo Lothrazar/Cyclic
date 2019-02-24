@@ -57,7 +57,6 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   public BlockStructureBuilder() {
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_BUILDER);
     this.setHardness(3.0F).setResistance(5.0F);
-
     this.setSoundType(SoundType.METAL);
   }
 
