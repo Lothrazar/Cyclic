@@ -27,6 +27,7 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.button.ButtonCheckboxTileField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -41,6 +42,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   private GuiSliderInteger sliderR;
   private GuiSliderInteger sliderG;
   private GuiSliderInteger sliderB;
+  private ButtonCheckboxTileField checkPercent;
 
   public GuiScreenTargetBlock(InventoryPlayer inventoryPlayer, TileEntityScreenTarget tileEntity) {
     super(new ContainerScreenTarget(inventoryPlayer, tileEntity), tileEntity);
@@ -74,6 +76,15 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderB = new GuiSliderInteger(tile, id, x, y, width, h, 0, 255, Fields.BLUE.ordinal());
     sliderB.setTooltip("screen.blue");
     this.addButton(sliderB);
+    //checkboxes  
+    int size = 10;
+    int field = Fields.PERCENT.ordinal();
+    checkPercent = new ButtonCheckboxTileField(id++,
+        getGuiLeft() + x,
+        getGuiTop() + y, tile.getPos(), field, size, size);
+    checkPercent.setIsChecked(tile.getField(field) == 1);
+    checkPercent.setTooltip("tile.screen." + Fields.PERCENT.toString().toLowerCase());
+    this.addButton(checkPercent);
   }
 
   @Override

@@ -47,9 +47,12 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int red = 100;
   private int green = 100;
   private int blue = 100;
+  private boolean showPercent = false;
+  private boolean showFluid = true;
+  private boolean showEnergy = true;
 
   public static enum Fields {
-    RED, GREEN, BLUE;
+    RED, GREEN, BLUE, SFLUID, SENERGY, PERCENT;
   }
 
   public TileEntityScreenTarget() {
@@ -120,6 +123,13 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         return green;
       case RED:
         return red;
+      case PERCENT:
+        return this.showPercent ? 1 : 0;
+      case SENERGY:
+        return this.showEnergy ? 1 : 0;
+      case SFLUID:
+        return this.showFluid ? 1 : 0;
+
     }
     return 0;
   }
@@ -135,6 +145,15 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       break;
       case RED:
         red = value;
+      break;
+      case PERCENT:
+        this.showPercent = (value == 1);
+      break;
+      case SENERGY:
+        this.showEnergy = (value == 1);
+      break;
+      case SFLUID:
+        this.showFluid = (value == 1);
       break;
     }
   }
@@ -160,18 +179,13 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     if (te == null) {
       return;
     }
-    boolean showPercent = false;
-    boolean showLabels = true;
-    boolean showMaximum = true;
-    boolean fluid = true;
-    boolean energyshow = false;
     boolean items = false;
-    if (energyshow) {
+    if (showEnergy) {
       String energyStr = "";
       if (te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
         IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
-        //therefore  
-        energyStr = "FE " + energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
+        //therefore   
+        energyStr = this.formatQuantity(energy.getEnergyStored(), energy.getMaxEnergyStored());
       }
       else {
         energyStr = "--";
@@ -190,26 +204,37 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
             empty++;
           }
         }
-        itemStr = "Slots " + empty + "/" + max;
+        itemStr = this.formatQuantity(empty, max);
       }
       else {
         itemStr = "--";
       }
       this.text += itemStr + System.lineSeparator();
     }
-    if (fluid) {
+    if (showFluid) {
       String fluidStr = "";
       if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
         IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
         //therefore   
         for (IFluidTankProperties f : energy.getTankProperties()) {
-          fluidStr = f.getContents().getLocalizedName() + " " + f.getContents().amount + "/" + f.getCapacity();
+          //          fluidStr = f.getContents().getLocalizedName() + System.lineSeparator();
+          fluidStr += this.formatQuantity(f.getContents().amount, f.getCapacity());
         }
       }
       else {
         fluidStr = "--";
       }
       this.text += fluidStr + System.lineSeparator();
+    }
+  }
+
+  private String formatQuantity(final float current, final float max) {
+    if (this.showPercent) {
+      float pct = current / max * 100.0F;
+      return String.format("%.2f", pct) + "%";
+    }
+    else {
+      return ((int) current) + "";
     }
   }
 }
