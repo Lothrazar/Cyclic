@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.cablewireless.content;
+package com.lothrazar.cyclicmagic.block.cablewireless.item;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +30,7 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
 
   public TileCableContentWireless() {
     super(SLOT_COUNT);
-    this.setSlotsForInsert(SLOT_COUNT);
+    this.setSlotsForInsert(0);
   }
 
   @Override
