@@ -2,7 +2,7 @@
 	"parent": "cyclicmagic:parent/pump",
     "textures": {
 		"0": "cyclicmagic:blocks/cable_item",
-		"1": "cyclicmagic:blocks/block_screen_side",
+		"1": "cyclicmagic:blocks/cable_extractor_base",
 		"particle": "cyclicmagic:blocks/cable_item"
     }
 }
