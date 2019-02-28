@@ -35,6 +35,7 @@ import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -141,6 +142,12 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
     if (!held.isEmpty() && held.getItem() == this) {
+      //      if (event.getFace() != null && player.isSneaking()) {
+      //        //hita block
+      //        IBlockState hit = player.world.getBlockState(event.getPos());
+      //        ModCyclic.logger.log("HIT" + hit.getBlock());
+      //        return;
+      //      }
       if (ActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
         return;
@@ -186,7 +193,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
           this.getWandType(), hand));
     }
     player.swingArm(hand);
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     return EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
 

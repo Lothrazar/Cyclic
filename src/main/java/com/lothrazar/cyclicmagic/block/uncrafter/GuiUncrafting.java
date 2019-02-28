@@ -77,16 +77,17 @@ public class GuiUncrafting extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0;
+    int u = 0, v = 0, x, y;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //first draw the zero slot
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_INPUT - 1, this.guiTop + ContainerUncrafting.SLOTY_INPUT - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     int xPrefix = 48;
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
+        x = this.guiLeft + xPrefix - 1 + j * Const.SQ;
+        y = this.guiTop + ContainerUncrafting.SLOTY_INPUT + (i - 1) * Const.SQ - 1;
         Gui.drawModalRectWithCustomSizedTexture(
-            this.guiLeft + xPrefix - 1 + j * Const.SQ,
-            this.guiTop + ContainerUncrafting.SLOTY_INPUT + (i - 1) * Const.SQ - 1,
+            x, y,
             u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }

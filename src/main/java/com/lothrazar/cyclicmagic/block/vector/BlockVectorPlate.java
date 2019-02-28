@@ -76,9 +76,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
   private static final int TICKS_MOMENTUM = 15;
   private static final double VERTICAL_MOMENTUM_FACTOR = 0.917;
   private static final String NBT_MOMENTUM = "momentum";
-  private static final double BHEIGHT = 0.03125D;
-  private static final double COLLISION_HEIGHT = 2 * BHEIGHT;
-  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
+  private static final double COLLISION_HEIGHT = 2 * 0.03125D;
   protected static final AxisAlignedBB COLLISION_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, COLLISION_HEIGHT, 1D);
 
   public BlockVectorPlate() {
@@ -112,6 +110,11 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("AerialFaithPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return COLLISION_AABB;
   }
 
   @Nullable

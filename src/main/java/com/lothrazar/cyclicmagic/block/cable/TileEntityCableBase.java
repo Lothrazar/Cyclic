@@ -241,32 +241,29 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     catch (Exception e) {
       // errors from other mods as well as this.
       //example:  mcjty.rftools.blocks.powercell.PowerCellTileEntity.getNetwork(PowerCellTileEntity.java:155)
-      ModCyclic.logger.error("Error outputing from cable");
-      e.printStackTrace();
+      ModCyclic.logger.error("Error outputing from cable", e);
     }
   }
 
   private void tickCableFlow() {
-    ArrayList<Integer> shuffledFaces = new ArrayList<>();
+    ArrayList<EnumFacing> shuffledFaces = new ArrayList<>();
     for (int i = 0; i < EnumFacing.values().length; i++) {
-      shuffledFaces.add(i);
+      shuffledFaces.add(EnumFacing.values()[i]);
     }
     Collections.shuffle(shuffledFaces);
-    EnumFacing f;
-    for (int i : shuffledFaces) {
-      f = EnumFacing.values()[i];
-      if (this.isItemPipe() && this.isItemIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
-        moveItems(f);
+    for (EnumFacing exportToSide : shuffledFaces) {
+      if (this.isItemPipe() && this.isItemIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
+        moveItems(exportToSide);
       }
-      if (this.isFluidPipe() && this.isFluidIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
+      if (this.isFluidPipe() && this.isFluidIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
         //ok, fluid is not incoming from here. so lets output some
-        moveFluid(f);
+        moveFluid(exportToSide);
       }
-      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
-        moveEnergy(f);
+      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
+        moveEnergy(exportToSide);
       }
     }
   }
@@ -275,7 +272,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (this.getStackInSlot(SLOT).isEmpty()) {
       return;
     }
-    EnumFacing themFacingMe = myFacingDir.getOpposite();
     ItemStack stackToExport = this.getStackInSlot(SLOT).copy();
     //ok,  not incoming from here. so lets output some
     BlockPos posTarget = pos.offset(myFacingDir);
@@ -284,10 +280,12 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       return;
     }
     boolean outputSuccess = false;
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
     if (leftAfterDeposit.isEmpty() || leftAfterDeposit.getCount() != stackToExport.getCount()) {
       //   if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
       //then save result
+      //tood capability for sided
       this.setInventorySlotContents(SLOT, leftAfterDeposit);
       outputSuccess = true;
     }

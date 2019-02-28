@@ -38,14 +38,16 @@ public class MaterialRegistry { // thanks for help:
   private static final int ironDurability = 15;
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   private static final String emeraldName = "emerald";
-  private static final String MATERIALNAME = "power";
+  private static final String POWER = "power";
+  private static final String CRYSTAL = "crystal";
   private static final String GLOWING = "glowing";
   // thanks for help: http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   public static ToolMaterial netherToolMaterial;
   public static ToolMaterial sandstoneToolMaterial;
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
-  public static ArmorMaterial powerArmorMaterial;
+  public static ArmorMaterial crystalArmorMaterial;
+  public static ToolMaterial crystalToolMaterial;
   public static ToolMaterial powerToolMaterial;
   public static ArmorMaterial glowingArmorMaterial;
 
@@ -75,7 +77,7 @@ public class MaterialRegistry { // thanks for help:
 
   private static void registerPurpleMaterial() {
     ArmorMaterial mimicArmor = ArmorMaterial.DIAMOND;
-    MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
+    MaterialRegistry.crystalArmorMaterial = EnumHelper.addArmorMaterial(CRYSTAL, Const.MODRES + CRYSTAL,
         diamondDurability * 2, // affects DURABILITY . 15 is the same as iron
         new int[] {
             mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET) + 1,
@@ -86,15 +88,24 @@ public class MaterialRegistry { // thanks for help:
         mimicArmor.getEnchantability() / 4,
         mimicArmor.getSoundEvent(),
         mimicArmor.getToughness() + 2);
-    MaterialRegistry.powerArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
+    // gemObsidian
+    MaterialRegistry.crystalArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
     //now the tool material
-    MaterialRegistry.powerToolMaterial = EnumHelper.addToolMaterial(MATERIALNAME,
+    MaterialRegistry.crystalToolMaterial = EnumHelper.addToolMaterial(CRYSTAL,
         ToolMaterial.DIAMOND.getHarvestLevel(),
-        ToolMaterial.DIAMOND.getMaxUses() * 4, //was  - 261
-        ToolMaterial.DIAMOND.getEfficiency(),
-        ToolMaterial.DIAMOND.getAttackDamage() * 8, //best draconic evolution sword is 35 base, so this is not that crazy
+        ToolMaterial.DIAMOND.getMaxUses() * 2,
+        ToolMaterial.DIAMOND.getEfficiency() * 2,
+        ToolMaterial.DIAMOND.getAttackDamage() * 2,
         ToolMaterial.GOLD.getEnchantability() * 2);
-    MaterialRegistry.powerToolMaterial.setRepairItem(MaterialRegistry.powerArmorMaterial.repairMaterial);
+    MaterialRegistry.crystalToolMaterial.setRepairItem(MaterialRegistry.crystalArmorMaterial.repairMaterial);
+    //regular stuff
+    MaterialRegistry.powerToolMaterial = EnumHelper.addToolMaterial(POWER,
+        ToolMaterial.DIAMOND.getHarvestLevel(),
+        ToolMaterial.DIAMOND.getMaxUses() * 3, //was  - 261
+        ToolMaterial.DIAMOND.getEfficiency(),
+        ToolMaterial.DIAMOND.getAttackDamage() * 7.8F, //best draconic evolution sword is 35 base, so this is not that crazy
+        ToolMaterial.GOLD.getEnchantability() * 2);
+    MaterialRegistry.powerToolMaterial.setRepairItem(new ItemStack(Items.DRAGON_BREATH));
   }
 
   private static void registerEmeraldMaterial() {
@@ -116,7 +127,7 @@ public class MaterialRegistry { // thanks for help:
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses(), //was  - 261
         ToolMaterial.DIAMOND.getEfficiency(),
-        ToolMaterial.DIAMOND.getAttackDamage(), //was  - 0.25F
+        ToolMaterial.DIAMOND.getAttackDamage() * 1.5F, //was  - 0.25F
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
   }

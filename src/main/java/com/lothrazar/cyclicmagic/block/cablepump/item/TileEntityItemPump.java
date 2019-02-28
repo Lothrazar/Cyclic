@@ -58,7 +58,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
   }
 
   private int itemTransferCooldown = 0;
-  private int needsRedstone = 0;
   private int filterType = 0;
 
   public TileEntityItemPump() {

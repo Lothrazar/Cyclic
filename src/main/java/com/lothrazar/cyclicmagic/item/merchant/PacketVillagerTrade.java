@@ -76,8 +76,7 @@ public class PacketVillagerTrade implements IMessage, IMessageHandler<PacketVill
         }
       }
       catch (Exception e) {
-        ModCyclic.logger.error("Error trying to perform villager trade from Almanac: " + e.getMessage());
-        e.printStackTrace();
+        ModCyclic.logger.error("Error trying to perform villager trade from Almanac: ", e);
       }
       finally {
         UtilNBT.setEntityBoolean(player, NBT_DUPE_BLOCKER, false);

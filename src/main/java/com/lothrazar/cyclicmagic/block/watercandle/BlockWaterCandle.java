@@ -152,11 +152,10 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     //null means not from a spawner 
     Event.Result canSpawn = ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null);
     if (canSpawn == Event.Result.DENY || monster.getCanSpawnHere() == false) {
-      ModCyclic.logger.log("[CANDLE] spawneing " + monster.getName() + "?" + world.isAirBlock(posTarget) + posTarget);
       afterSpawnFailure(world, posTarget);
     }
     else if (world.spawnEntity(monster)) {
-      ModCyclic.logger.log("[CANDLE] FAILED TO spawn  " + monster.getName());
+      ModCyclic.logger.info("[CANDLE] spawn " + monster.getName() + " - " + world.isAirBlock(posTarget) + posTarget);
       afterSpawnSuccess(monster, world, posTarget, rand);
     }
   }

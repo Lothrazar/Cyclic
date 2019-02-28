@@ -1,4 +1,4 @@
-#ru_RU.lang | Actual for Cyclic-1.12.2-(R1.17.5)
+#ru_RU.lang | Actual for Cyclic-1.12.2-(R1.17.15)
 builder.toggle.name=Переключатель
 buildertype.circle.name=Круг
 buildertype.cup.name=Чаша
@@ -85,6 +85,7 @@ command.gethome.overworld=Нет дома за пределами мира
 command.gethome.yours=Ваша домашняя кровать находится в
 command.home.overworld=Может только телепортироваться в ваш дом в мире
 command.nbtprint.null=NBT данные пустые
+command.nbtprint.oredict=Словарь руды: 
 command.recipes.empty=Рецепт пустой
 command.recipes.found=Рецепт найден
 command.recipes.notfound=Рецепт не найден
@@ -148,10 +149,12 @@ entity.cyclicmagic.goldminecart.name=Золотая вагонетка
 entity.cyclicmagic.stoneminecart.name=Каменная вагонетка
 entity.cyclicmagic.turretminecart.name=Вагонетка с башней
 fluid.milk=Молоко
-fluid.poison=Отрава
+fluid.poison=Яд
 fluid.xpjuice=Опыт
 gui.chatexp=Недостаточно опыта
-gui.enderbook.go=Идти
+gui.enderbook.go=Вперед
+gui.enderbook.back=Назад
+gui.enderbook.back.tooltip=К предыдущему месту, сохраняет для 
 gui.enderbook.new=Новый
 gui.enderbook.title=Эндер книга с метками
 guide.category.block=Блоки
@@ -529,9 +532,9 @@ key.columnbardown=Сдвиг строки вниз
 key.columnbarup=Сдвиг строки вверх
 key.columnshiftdown=Сдвиг предмета вниз
 key.columnshiftup=Сдвиг предмета вверх
-key.keyExtraCraftin=Создание инвентаря (если разблокировано)
-key.keyExtraInvo=Расширенный инвентарь (если разблокирован)
-key.keyWheel=Расширенный инвентарный ремень (если разблокирован)
+key.keyExtraCraftin=Инвентаря создания (если разблокировано)
+key.keyExtraInvo=Расширенный инвентарь (если разблокировано)
+key.keyWheel=Расширенный пояс инвентаря для инструмента (если разблокировано)
 minecart.fuel=Топливо: 
 potion.bounce=Упругость
 potion.ender=Эндер аура
@@ -887,7 +890,7 @@ tile.plate_vector.tooltip.yaw=Рывок:
 tile.poison.name=Отрава
 tile.preview.button.off=Предпросмотр скрыт
 tile.preview.button.on=Предпросмотр отражен
-tile.redstone.button0=Всегад вкл.
+tile.redstone.button0=Всегда вкл.
 tile.redstone.button1=Требуется редстоун
 tile.spikes_diamond.guide=Эти шипы наносят ущерб любой сущности, касающейся ее, если они включены с красным камнем. Алмазные шипы убивают, как если бы они были повреждены игроком, поэтому это включает в себя так называемые дропы игрока, такие как глаза паука, а также высадку на землю. Урон за тик находится в файле конфигурации.
 tile.spikes_diamond.name=Алмазные шипы
@@ -935,6 +938,8 @@ tool.action.x3=3x3
 tool.action.x5=5x5
 tool.action.x7=7x7
 tool.action.x9=9x9
+tool.action.x19=1x9
+tool.action.x91=9x1
 tool_prospector.found=Найдено: 
 tool_prospector.none=Ничего интересного до
 tool_spelunker.cave=Пустота на расстоянии
@@ -979,89 +984,94 @@ lingering_potion.effect.slowfall=Затяжное зелье медленног�
 tipped_arrow.effect.slowfall=Стрела медленного падения
 
 potion.butter=Растяпа
-potion.effect.butter=Зелье Растяпа
+potion.effect.butter=Зелье растяпа
 splash_potion.effect.butter=Всплеск зелья растяпы
 lingering_potion.effect.butter=Затяжное зелье растяпы
 tipped_arrow.effect.butter=Стрела растяпы
 
-potion.effect.butter2=Зелье Растяпа II
+potion.effect.butter2=Зелье растяпа II
 splash_potion.effect.butter2=Всплеск зелья II
 lingering_potion.effect.butter2=Затяжное зелье растяпы II
 tipped_arrow.effect.butter2=Стрела растяпы II
 
 potion.effect.waterwalk=Зелье хождения по воде
 splash_potion.effect.waterwalk=Всплеск зелья хождения по воде
-lingering_potion.effect.waterwalk=Затяжное зелье хождение по воде
+lingering_potion.effect.waterwalk=Затяжное зелье хождения по воде
 tipped_arrow.effect.waterwalk=Стрела хождения по воде
 
-potion.effect.snow=Зелье Снег
-splash_potion.effect.snow=Всплеск зелья Снег
-lingering_potion.effect.snow=Затяжное зелье Снег
-tipped_arrow.effect.snow=Стрела Снег
+potion.effect.snow=Зелье снег
+splash_potion.effect.snow=Всплеск зелья снег
+lingering_potion.effect.snow=Затяжное зелье снег
+tipped_arrow.effect.snow=Стрела снег
 
-potion.effect.swim=Зелье Скорость плавания
-splash_potion.effect.swim=Всплеск зелья Скорость плавания
-lingering_potion.effect.swim=Затяжное зелье Скорость плавания
-tipped_arrow.effect.swim=Стрела Скорость плавания
+potion.effect.swim=Зелье скорость плавания
+splash_potion.effect.swim=Всплеск зелья скорость плавания
+lingering_potion.effect.swim=Затяжное зелье скорость плавания
+tipped_arrow.effect.swim=Стрела скорость плавания
 
-potion.effect.bounce=Зелье Подпрыгивание
-splash_potion.effect.bounce=Всплеск зелья Подпрыгивание
-lingering_potion.effect.bounce=Затяжное зелье Подпрыгивание
-tipped_arrow.effect.bounce=Стрела Подпрыгивание
+potion.effect.swim2=Зелье скорость плавания II
+splash_potion.effect.swim2=Всплеск зелья скорость плавания II
+lingering_potion.effect.swim2=Затяжное зелье скорость плавания II
+tipped_arrow.effect.swim2=Стрела скорость плавания II
 
-potion.effect.magnet=Зелье Магнит
-splash_potion.effect.magnet=Всплеск зелья Магнит
-lingering_potion.effect.magnet=Затяжное зелье Магнит
-tipped_arrow.effect.magnet=Стрела Магнит
+potion.effect.bounce=Зелье подпрыгивание
+splash_potion.effect.bounce=Всплеск зелья подпрыгивание
+lingering_potion.effect.bounce=Затяжное зелье подпрыгивание
+tipped_arrow.effect.bounce=Стрела подпрыгивание
 
-potion.effect.haste=Зелье Спешка
-splash_potion.effect.haste=Всплеск зелья Спешка
-lingering_potion.effect.haste=Затяжное зелье Спешка
-tipped_arrow.effect.haste=Стрела Спешка
-potion.effect.haste2=Зелье Спешка
-splash_potion.effect.haste2=Всплеск зелья Спешка
-lingering_potion.effect.haste2=Затяжное зелье Спешка
-tipped_arrow.effect.haste2=Стрела Спешка
+potion.effect.magnet=Зелье магнит
+splash_potion.effect.magnet=Всплеск зелья магнит
+lingering_potion.effect.magnet=Затяжное зелье магнит
+tipped_arrow.effect.magnet=Стрела магнит
 
-potion.effect.resistance=Зелье Сопротивление
-splash_potion.effect.resistance=Всплеск зелья Сопротивление
-lingering_potion.effect.resistance=Затяжное зелье Сопротивление
-tipped_arrow.effect.resistance=Стрела Сопротивление
-potion.effect.resistance2=Зелье Сопротивление
-splash_potion.effect.resistance2=Всплеск зелья Сопротивление
-lingering_potion.effect.resistance2=Затяжное зелье Сопротивление
-tipped_arrow.effect.resistance2=Стрела Сопротивление
+potion.effect.haste=Зелье спешка
+splash_potion.effect.haste=Всплеск зелья спешка
+lingering_potion.effect.haste=Затяжное зелье спешка
+tipped_arrow.effect.haste=Стрела спешка
+potion.effect.haste2=Зелье спешка
+splash_potion.effect.haste2=Всплеск зелья спешка
+lingering_potion.effect.haste2=Затяжное зелье спешка
+tipped_arrow.effect.haste2=Стрела спешка
 
-potion.effect.healthboost=Зелье Усиленное здоровье
-splash_potion.effect.healthboost=Всплеск зелья Усиленное здоровье
-lingering_potion.effect.healthboost=Затяжное зелье Усиленное здоровье
-tipped_arrow.effect.healthboost=Стрела Усиленное здоровье
+potion.effect.resistance=Зелье сопротивление
+splash_potion.effect.resistance=Всплеск зелья сопротивление
+lingering_potion.effect.resistance=Затяжное зелье сопротивление
+tipped_arrow.effect.resistance=Стрела сопротивление
+potion.effect.resistance2=Зелье сопротивление
+splash_potion.effect.resistance2=Всплеск зелья сопротивление
+lingering_potion.effect.resistance2=Затяжное зелье сопротивление
+tipped_arrow.effect.resistance2=Стрела сопротивление
+
+potion.effect.healthboost=Зелье усиленное здоровье
+splash_potion.effect.healthboost=Всплеск зелья усиленное здоровье
+lingering_potion.effect.healthboost=Затяжное зелье усиленное здоровье
+tipped_arrow.effect.healthboost=Стрела усиленное здоровье
 
 potion.effect.ender=Зелье Эндер
 splash_potion.effect.ender=Всплеск зелья Эндер
 lingering_potion.effect.ender=Затяжное зелье Эндер
 tipped_arrow.effect.ender=Стрела Эндер
 
-potion.effect.wither=Зелье Иссушитель
-splash_potion.effect.wither=Всплеск зелья Иссушитель
-lingering_potion.effect.wither=Затяжное зелье Иссушитель
-tipped_arrow.effect.wither=Стрела Иссушитель
+potion.effect.wither=Зелье иссушитель
+splash_potion.effect.wither=Всплеск зелья иссушитель
+lingering_potion.effect.wither=Затяжное зелье иссушитель
+tipped_arrow.effect.wither=Стрела иссушитель
 
-potion.effect.blindness=Зелье Слепота
-splash_potion.effect.blindness=Всплеск зелья Слепота
-lingering_potion.effect.blindness=Затяжное зелье Слепота
-tipped_arrow.effect.blindness=Стрела Слепота
+potion.effect.blindness=Зелье слепота
+splash_potion.effect.blindness=Всплеск зелья слепота
+lingering_potion.effect.blindness=Затяжное зелье слепота
+tipped_arrow.effect.blindness=Стрела слепота
 
-potion.effect.saturation=Зелье Насыщение
-splash_potion.effect.saturation=Всплеск зелья Насыщение
-lingering_potion.effect.saturation=Затяжное зелье Насыщение
-tipped_arrow.effect.saturation=Стрела Насыщение
+potion.effect.saturation=Зелье насыщение
+splash_potion.effect.saturation=Всплеск зелья насыщение
+lingering_potion.effect.saturation=Затяжное зелье насыщение
+tipped_arrow.effect.saturation=Стрела насыщение
 
 potion.frostwalker=Морозная прогулка
-potion.effect.frostwalker=Зелье Морозная прогулка
-splash_potion.effect.frostwalker=Всплеск зелья Морозная прогулка
-lingering_potion.effect.frostwalker=Затяжное зелье Морозная прогулка
-tipped_arrow.effect.frostwalker=Стрела Морозная прогулка
+potion.effect.frostwalker=Зелье морозная прогулка
+splash_potion.effect.frostwalker=Всплеск зелья морозная прогулка
+lingering_potion.effect.frostwalker=Затяжное зелье морозная прогулка
+tipped_arrow.effect.frostwalker=Стрела морозная прогулка
 
 tile.fluid_pump.name=Жидкостная помпа
 tile.fluid_pump.tooltip=Слив и работа помпы при использовании редстоун энергии
@@ -1091,7 +1101,7 @@ cyclic.redstone.on=Редстоун: Вкл.
 cyclic.redstone.off=Редстоун: Выкл.
 
 tile.item_pump.name=Предметная помпа
-tile.item_pump.tooltip=Быстрый воронка с постоянным направлением
+tile.item_pump.tooltip=Быстрая воронка с постоянным направлением
 tile.item_pump.guide=Перенос предметов из чего-либо в другой инвентарь или предметную трубу
 
 
@@ -1224,9 +1234,9 @@ tile.moon_sensor.name=Датчик фазы луны
 tile.moon_sensor.tooltip=Излучает сигнал на основе текущей фазы луны
 tile.moon_sensor.guide=Излучает сигнал на основе текущей фазы луны. Мощность колеблется вдоль 1,3,5,7,9,11,13,15 и обратно вниз. Остается питание в течение дня, и меняется каждую ночь, когда луна смещает фазы.
 
-item.robot_spawner.name=Спавнер целевой манекен
-item.robot_spawner.tooltip=Спавнит спавнер целевого манекена, который измеряет урон, нанесенный игроком
-item.robot_spawner.guide=Спавнит спавнер целевого манекена, который измеряет урон, нанесенный игроком. Может быть предоставлена броня, которая повлияет на урон, и падение на смерть. Не имеет движения или атак. Может быть убит или удален мгновенно, с помощью использования спавнера на нем снова.
+item.robot_spawner.name=Спавнер целевого манекена
+item.robot_spawner.tooltip=Спавнер спавнит целевого манекена, который измеряет урон, нанесенный игроком
+item.robot_spawner.guide=Спавнер спавнит целевого манекена, который измеряет урон, нанесенный игроком. Может быть предоставлена броня, которая повлияет на урон, и падение на смерть. Не имеет движения или атак. Может быть убит или удален мгновенно, с помощью использования спавнера на нем снова.
 entity.robot.name=Целевой манекен
 
 tile.button_large.name=Большая кнопка
@@ -1309,14 +1319,14 @@ colour.green.name=Зеленый
 colour.brown.name=Коричневый
 colour.blue.name=Синий
 colour.purple.name=Фиолетовый
-colour.cyan.name=Голубой
+colour.cyan.name=Бирюзовый
 colour.silver.name=Светло-серый
 colour.gray.name=Серый
 colour.pink.name=Розовый
 colour.lime.name=Лайсовый
 colour.yellow.name=Желтый
 colour.lightBlue.name=Светло-синий
-colour.magenta.name=Пурпурный
+colour.magenta.name=Сиреневый
 colour.orange.name=Оранжевый
 colour.white.name=Белый
 colour.black.name=Черный
@@ -1385,3 +1395,6 @@ tile.laser.guide=Используйте GPS-маркеры для лазерны
 tile.water_candle.name=Водяная свеча
 tile.water_candle.tooltip=Увеличение близлежащих спавнов при освещении
 tile.water_candle.guide=Свет с кремнем и сталью. Значительно увеличивает спавн существ. Следуйте нормальным правилам спавна мобов и биома. Имеет шанс быть уничтоженным на каждом спавне. Много настроек в файле конфигурации.
+
+extended.toolbelt= клавиша, чтобы открыть режим пояса-инструмента
+

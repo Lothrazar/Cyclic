@@ -46,6 +46,9 @@
 	"step_height_up"  			: {"category" : "player", "sounds" : [{"name":"cyclicmagic:step_height_up"}]}              ,
 	"tool_mode"  				: {"category" : "player", "sounds" : [{"name":"cyclicmagic:tool_mode"}]}                   ,
 	"warp_echo"  				: {"category" : "player", "sounds" : [{"name":"cyclicmagic:warp_echo"}]}                   ,
+	"fan_loop"       			: {"category" : "block",  "sounds" : [{"name":"cyclicmagic:fan_loop"}]}         ,
+	"fan_off"       			: {"category" : "block",  "sounds" : [{"name":"cyclicmagic:fan_off"}]}         ,
+	"fan_on"			        : {"category" : "block",  "sounds" : [{"name":"cyclicmagic:fan_on"}]}         ,
 	"doorbell_mikekoenig"       : {"category" : "block",  "sounds" : [{"name":"cyclicmagic:doorbell_mikekoenig"}]}         ,
 	"dice_mike_koenig"          : {"category" : "block",  "sounds" : [{"name":"cyclicmagic:dice_mike_koenig"}]}     
 }

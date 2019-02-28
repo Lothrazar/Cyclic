@@ -55,8 +55,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
   }
 
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
 
   public TileEntityHarvester() {

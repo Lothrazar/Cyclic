@@ -61,6 +61,9 @@ public class SoundRegistry {
   public static SoundEvent dcoin;
   public static SoundEvent doorbell_mikekoenig;
   public static SoundEvent dice_mikekoenig;
+  public static SoundEvent fan_off;
+  public static SoundEvent fan_on;
+  public static SoundEvent fan_loop;
 
   public static void register() {
     //old sounds kept - lothrazar originals
@@ -90,6 +93,9 @@ public class SoundRegistry {
     tool_mode = registerSound("tool_mode");
     warp = registerSound("warp_echo");
     dcoin = registerSound("dcoin");
+    fan_off = registerSound("fan_off");
+    fan_on = registerSound("fan_on");
+    fan_loop = registerSound("fan_loop");
     //ohter sounds NOT BY ME 
     // http://soundbible.com/1599-Store-Door-Chime.html
     //    License: Attribution 3.0 

@@ -63,8 +63,7 @@ public class FluidsRegistry {
     }
     catch (Exception e) {
       //if another mod adds poison fluid (such as biomes o plenty), then our fluid gets rejected
-      ModCyclic.logger.error("Error: Cyclic failed to add recipe for Poison Bucket");
-      e.printStackTrace();
+      ModCyclic.logger.error("Error: Cyclic failed to add recipe for Poison Bucket", e);
     }
   }
 }

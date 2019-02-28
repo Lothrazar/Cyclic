@@ -94,7 +94,7 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
     }
     //starts at 1 for current one
     if (isAnySingleOk) {
-      this.harvestSurrounding(world, player, pos, block, 1, level);
+      this.harvestSurrounding(world, player, pos, block, 1, level, player.swingingHand);
     }
   }
 
@@ -104,8 +104,10 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
 
   /**
    * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
+   * 
+   * @param swingingHand
    */
-  private int harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level) {
+  private int harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level, EnumHand swingingHand) {
     if (totalBroken >= this.getHarvestMax(level)
         || player.getHeldItem(player.swingingHand).isEmpty()) {
       return totalBroken;
@@ -122,7 +124,7 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
           || player.getHeldItem(player.swingingHand).isEmpty()) {
         continue;
       }
-      block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(EnumHand.MAIN_HAND));
+      block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(swingingHand));
       block.dropXpOnBlockBreak(world, targetPos, block.getExpDrop(targetState, world, targetPos, fortuneXp));
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
@@ -137,7 +139,7 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
           || player.getHeldItem(player.swingingHand).isEmpty()) {
         break;
       }
-      totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level);
+      totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level, swingingHand);
     }
     return totalBroken;
   }

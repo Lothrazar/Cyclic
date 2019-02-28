@@ -32,6 +32,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -98,7 +99,6 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return EnumActionResult.PASS;
     }
-
     summonFangRay(player, pos.getX() + hitX, pos.getY() + hitY + 1, pos.getZ() + hitZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return EnumActionResult.SUCCESS;
@@ -147,7 +147,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
 
   private void onCastSuccess(EntityPlayer caster) {
     UtilSound.playSound(caster, SoundEvents.EVOCATION_ILLAGER_PREPARE_ATTACK);
-    caster.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(caster, this, COOLDOWN);
   }
 
   @Override

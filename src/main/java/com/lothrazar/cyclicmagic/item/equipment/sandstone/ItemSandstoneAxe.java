@@ -34,7 +34,6 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemSandstoneAxe extends ItemAxe implements IHasRecipe {
 
   public ItemSandstoneAxe() {
-    // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
     super(MaterialRegistry.sandstoneToolMaterial, 6, -3.2F);
   }
 

@@ -68,15 +68,6 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
     player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
   }
 
-  public static void checkIfHelmOff(EntityPlayer player) {
-    Item itemInSlot = UtilPlayer.getItemArmorSlot(player, EntityEquipmentSlot.HEAD);
-    if (player.getEntityData().getBoolean(ItemGlowingHelmet.NBT_GLOW) &&
-        (itemInSlot == null || !(itemInSlot instanceof ItemGlowingHelmet))) {
-      //turn it off once, from the message
-      setGlowing(player, false);
-    }
-  }
-
   public static void setGlowing(EntityPlayer player, boolean hidden) {
     player.setGlowing(hidden);//hidden means dont render
     //flag it so we know the purple glow was from this item, not something else
@@ -119,17 +110,22 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
     return tags.getInteger(NBT_STATUS) == 1;
   }
 
-  /**
-   * TODO: maybe should be static inside powerarmor class?
-   * 
-   * @param event
-   */
+  private void checkIfHelmOff(EntityPlayer player) {
+    Item itemInSlot = UtilPlayer.getItemArmorSlot(player, EntityEquipmentSlot.HEAD);
+    if (player.getEntityData().getBoolean(ItemGlowingHelmet.NBT_GLOW) &&
+        itemInSlot == this) {
+      //turn it off once, from the message
+      setGlowing(player, false);
+    }
+  }
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
-    if (event.getEntityLiving() instanceof EntityPlayer) {//some of the items need an off switch
+    //reduce check to only once per second instead  of per tick
+    if (event.getEntity().world.getTotalWorldTime() % 20 == 0 &&
+        event.getEntityLiving() instanceof EntityPlayer) {//some of the items need an off switch
       EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-      ItemGlowingHelmet.checkIfHelmOff(player);
-      //      ItemPowerArmor.checkIfLegsOff(player);
+      checkIfHelmOff(player);
     }
   }
 }

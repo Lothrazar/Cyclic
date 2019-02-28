@@ -49,6 +49,7 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileEntityHydrator.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = FLUID_DEFAULT;
+  private int size = 0;
 
   public RecipeHydrate(ItemStack in, ItemStack out) {
     this(new ItemStack[] { in }, out, FLUID_DEFAULT);
@@ -62,23 +63,44 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     if (in.length > TileEntityHydrator.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    for (int i = 0; i < in.length; i++) {
-      if (in[i] != null && in[i].isEmpty() == false)
-        recipeInput.set(i, in[i]);
+    //how many do we have 
+    for (ItemStack itemStack : in) {
+      if (itemStack != null && itemStack.isEmpty() == false) {
+        recipeInput.set(size, itemStack);
+        size++;
+      }
     }
     this.fluidCost = w;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
+  public int getSize() {
+    return size;
+  }
+
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     this.sanityCheckInput();
+    int countFull = 0;
+    for (int i = 0; i < inv.getSizeInventory(); i++) {
+      if (inv.getStackInSlot(i).isEmpty() == false) {
+        countFull++;
+      }
+    }
+    if (countFull != this.size) {
+      //      ModCyclic.logger.info("hydrate recipe shortcut " + countNonEmpty + "_" + size);
+      return false;
+    }
     boolean match0 = recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0));
     boolean match1 = recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1));
     boolean match2 = recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2));
     boolean match3 = recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
-    return match0 && match1 && match2 && match3;
+    boolean all = match0 && match1 && match2 && match3;
+    //    if (all) {
+    //      ModCyclic.logger.info("MATCH" + this.getRecipeOutput() + this.size + "___" + countFull);
+    //    }
+    return all;
   }
 
   /**

@@ -28,7 +28,6 @@ import com.lothrazar.cyclicmagic.item.core.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
@@ -48,18 +47,13 @@ public class ItemProjectileBlaze extends BaseItemChargeScepter implements IHasRe
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedOreRecipe(new ItemStack(getRepairItem().getItem(), 4),
-        "cb",
-        "bc",
-        'c', new ItemStack(Items.FIRE_CHARGE),
-        'b', "dyeLightBlue");
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        " cc",
-        "fbc",
-        "ff ",
-        'c', getRepairItem(),
-        'b', new ItemStack(Items.BLAZE_POWDER),
-        'f', new ItemStack(Items.FLINT));
+        "ngn",
+        "non",
+        " o ",
+        'g', "gemObsidian",
+        'o', "obsidian",
+        'n', "nuggetGold");
   }
 
   @Override

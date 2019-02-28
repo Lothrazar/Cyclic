@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.block.firestarter;
 
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
@@ -14,6 +16,7 @@ public class GuiFireStarter extends GuiBaseContainer {
 
   private ButtonTileEntityField fireTypeButton;
   private ButtonTileEntityField yOffset;
+  private GuiSliderInteger slider;
 
   public GuiFireStarter(InventoryPlayer inventoryPlayer, TileEntityFireStarter tile) {
     super(new ContainerFireStarter(inventoryPlayer, tile), tile);
@@ -25,6 +28,7 @@ public class GuiFireStarter extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 1;
     fireTypeButton = new ButtonTileEntityField(id++,
         guiLeft + Const.PAD / 2,
@@ -39,12 +43,29 @@ public class GuiFireStarter extends GuiBaseContainer {
     yOffset.width = yOffset.height = Const.SQ;
     yOffset.setTooltip("fire_starter.yoffset.tooltip");
     this.addButton(yOffset);
-    GuiSliderInteger sliderOffset = new GuiSliderInteger(tile, id++,
+    slider = new GuiSliderInteger(tile, id++,
         this.guiLeft + Const.PAD * 3 + 4,
         this.guiTop + Const.PAD * 4 - 2, 112, 12, 0, 16,
         TileEntityFireStarter.Fields.OFFSET.ordinal());
-    sliderOffset.setTooltip("fire_starter.offset.tooltip");
-    this.addButton(sliderOffset);
+    slider.setTooltip("fire_starter.offset.tooltip");
+    this.addButton(slider);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 
   @SideOnly(Side.CLIENT)

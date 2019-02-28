@@ -46,7 +46,7 @@ public class TileEntityFluidPlacer extends TileEntityBaseMachineFluid implements
         tank.getFluid().getFluid() == null) {
       return;
     }
-    EnumFacing facingTo = this.getCurrentFacing().getOpposite();
+    EnumFacing facingTo = this.getCurrentFacing();
     BlockPos posTarget = pos.offset(facingTo);
     if (world.isAirBlock(posTarget) == false) {
       return;

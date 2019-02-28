@@ -89,7 +89,7 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new LaserTESR());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new LaserAnimatedTESR());
   }
 
   @Override

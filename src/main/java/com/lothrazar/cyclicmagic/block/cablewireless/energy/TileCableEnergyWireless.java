@@ -19,24 +19,21 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
+  //ITilePreviewToggle
   public static final int ENERGY_FULL = 1000 * 64;
   public static final int MAX_TRANSFER = 1000;
   public static final int SLOT_COUNT = 9;
-  //it transfers this to each location if possible
+  List<Integer> slotList = IntStream.rangeClosed(
+      0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
   private int transferRate = MAX_TRANSFER / 2;
 
   public static enum Fields {
-    REDSTONE, TRANSFER_RATE;
+    REDSTONE, TRANSFER_RATE, FUEL;
   }
-
-  List<Integer> slotList;
-  private int needsRedstone = 0;
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
     this.initEnergy(new EnergyStore(ENERGY_FULL, ENERGY_FULL, ENERGY_FULL));
-    slotList = IntStream.rangeClosed(
-        0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
   }
 
   @Override
@@ -51,6 +48,8 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
         return this.needsRedstone;
       case TRANSFER_RATE:
         return this.transferRate;
+      case FUEL:
+        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -63,6 +62,9 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
       break;
       case TRANSFER_RATE:
         transferRate = value;
+      break;
+      case FUEL:
+        this.setEnergyCurrent(value);
       break;
     }
   }
@@ -102,7 +104,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
 
   private boolean isTargetValid(BlockPosDim target) {
     return target != null &&
-        target.dimension == this.getDimension() &&
+        target.getDimension() == this.getDimension() &&
         world.isAreaLoaded(target.toBlockPos(), target.toBlockPos().up());
   }
 

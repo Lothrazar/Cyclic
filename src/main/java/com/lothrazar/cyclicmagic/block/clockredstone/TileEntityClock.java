@@ -43,7 +43,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   private int timeOff;//dont let these times be zero !!!
   private int timeOn;
   private int power;
-  private int needsRedstone = 0;
   private Map<EnumFacing, Boolean> poweredSides = new HashMap<EnumFacing, Boolean>();
 
   public TileEntityClock() {
@@ -52,6 +51,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     timeOff = 60;
     timeOn = 60;
     power = 15;
+    needsRedstone = 0;
     this.facingResetAllOn();
   }
 
@@ -85,7 +85,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
 
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-    //oldState.getBlock() instanceof BlockRedstoneClock &&
     return !(newSate.getBlock() instanceof BlockRedstoneClock);// : oldState != newSate;
   }
 
@@ -198,7 +197,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     compound.setInteger("off", timeOff);
     compound.setInteger("on", timeOn);
     compound.setInteger("power", power);
-    compound.setInteger(NBT_REDST, needsRedstone);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setBoolean(f.getName(), poweredSides.get(f));
     }
@@ -211,7 +209,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     timeOff = compound.getInteger("off");
     timeOn = compound.getInteger("on");
     power = compound.getInteger("power");
-    needsRedstone = compound.getInteger(NBT_REDST);
     for (EnumFacing f : EnumFacing.values()) {
       poweredSides.put(f, compound.getBoolean(f.getName()));
     }

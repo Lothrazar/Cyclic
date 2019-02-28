@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -58,6 +59,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int y = 106;
     int size = Const.SQ;
     GuiButtonTooltip btnSize;
@@ -71,7 +73,8 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
     int x = this.guiLeft + 6;
     y = this.guiTop + 38;
     slider = new GuiSliderInteger(tile, 77,
-        x, y, 140, 20, 1, TileCableEnergyWireless.MAX_TRANSFER,
+        x, y, 140, 20,
+        1, TileCableEnergyWireless.MAX_TRANSFER * 16,
         TileCableEnergyWireless.Fields.TRANSFER_RATE.ordinal());
     slider.setTooltip("pump.rate");
     this.addButton(slider);
@@ -85,7 +88,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       if (dim == null) {
         UtilChat.addChatMessage(player, "wireless.empty");
       }
-      else if (dim.dimension != player.dimension) {
+      else if (dim.getDimension() != player.dimension) {
         UtilChat.addChatMessage(player, "wireless.dimension");
       }
       else {
@@ -104,6 +107,23 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
         }
       }
     }
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 
   @Override

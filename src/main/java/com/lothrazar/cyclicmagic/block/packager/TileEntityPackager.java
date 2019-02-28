@@ -40,7 +40,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   public static final int INPUT_SIZE = 2 * 3;
   public static final int OUTPUT_SIZE = INPUT_SIZE;
   private static int TIMER_FULL = 1;
-  private int needsRedstone = 1;
 
   public static enum Fields {
     REDSTONE, TIMER, FUEL;
@@ -71,6 +70,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     if (this.isRunning() == false) {
       return;
     }
+    this.shiftAllUp(INPUT_SIZE);
     //ignore timer when filling up water
     if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
       if (this.lastRecipe != null

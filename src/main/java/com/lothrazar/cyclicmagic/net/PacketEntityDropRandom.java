@@ -106,7 +106,7 @@ public class PacketEntityDropRandom implements IMessage, IMessageHandler<PacketE
       }
     }
     else {
-      ModCyclic.logger.log("NOT FOUND packet entityid" + message.entityId);
+      ModCyclic.logger.error("NOT FOUND packet entityid" + message.entityId);
     }
   }
 }

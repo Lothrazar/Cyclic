@@ -95,8 +95,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private int size;
   private int vRange = 2;
   public int yOffset = 0;
@@ -441,9 +439,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     compound.setInteger(NBT_REDST, needsRedstone);
     compound.setInteger(NBT_LR, rightClickIfZero);
     compound.setInteger(NBT_SIZE, size);
-    compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger("yoff", yOffset);
-    compound.setInteger("tickDelay", tickDelay);
+    if (tickDelay != 0)
+      compound.setInteger("tickDelay", tickDelay);
     return super.writeToNBT(compound);
   }
 
@@ -459,9 +457,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     renderParticles = compound.getInteger(NBT_RENDER);
     yOffset = compound.getInteger("yoff");
     tickDelay = compound.getInteger("tickDelay");
-    if (tickDelay < 1) {
-      tickDelay = 1;
-    }
   }
 
   @Override
@@ -500,12 +495,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.yOffset = value;
       break;
       case SPEED:
-        if (value < 1) {
-          value = 1;
-        }
-        tickDelay = Math.min(value, MAX_SPEED);
-        if (timer > tickDelay) {
-          timer = tickDelay;//progress bar prevent overflow 
+        if (value <= MAX_SPEED && value != 0) {
+          tickDelay = value;//progress bar prevent overflow 
+          if (timer > tickDelay) {
+            timer = tickDelay;
+          }
         }
       break;
       case TIMER:
@@ -524,7 +518,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.rightClickIfZero = value;
       break;
       case SIZE:
-        if (value > MAX_SIZE) {
+        if (value > MAX_SIZE || value < 0) {
           value = 1;
         }
         size = value;

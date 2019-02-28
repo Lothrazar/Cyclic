@@ -62,6 +62,9 @@ import com.lothrazar.cyclicmagic.block.cablewireless.content.TileCableContentWir
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.ContainerCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.GuiCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.ContainerCableFluidWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.GuiCableFluidWireless;
+import com.lothrazar.cyclicmagic.block.cablewireless.fluid.TileCableFluidWireless;
 import com.lothrazar.cyclicmagic.block.clockredstone.ContainerClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.GuiClock;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock;
@@ -101,6 +104,9 @@ import com.lothrazar.cyclicmagic.block.firestarter.TileEntityFireStarter;
 import com.lothrazar.cyclicmagic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclicmagic.block.fishing.GuiFisher;
 import com.lothrazar.cyclicmagic.block.fishing.TileEntityFishing;
+import com.lothrazar.cyclicmagic.block.fluiddrain.ContainerDrain;
+import com.lothrazar.cyclicmagic.block.fluiddrain.GuiDrain;
+import com.lothrazar.cyclicmagic.block.fluiddrain.TileEntityFluidDrain;
 import com.lothrazar.cyclicmagic.block.forester.ContainerForester;
 import com.lothrazar.cyclicmagic.block.forester.GuiForester;
 import com.lothrazar.cyclicmagic.block.forester.TileEntityForester;
@@ -131,9 +137,12 @@ import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
 import com.lothrazar.cyclicmagic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.block.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
-import com.lothrazar.cyclicmagic.block.screen.ContainerScreen;
-import com.lothrazar.cyclicmagic.block.screen.GuiScreenBlock;
-import com.lothrazar.cyclicmagic.block.screen.TileEntityScreen;
+import com.lothrazar.cyclicmagic.block.screentarget.ContainerScreenTarget;
+import com.lothrazar.cyclicmagic.block.screentarget.GuiScreenTargetBlock;
+import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget;
+import com.lothrazar.cyclicmagic.block.screentype.ContainerScreen;
+import com.lothrazar.cyclicmagic.block.screentype.GuiScreenBlock;
+import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen;
 import com.lothrazar.cyclicmagic.block.sorting.ContainerItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.GuiItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
@@ -243,6 +252,9 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DEHYDRATOR = 47;
   public static final int GUI_INDEX_LASER = 48;
   public static final int GUI_INDEX_TOOLSWAPPER = 49;
+  public static final int GUI_INDEX_W_FLUID = 50;
+  public static final int GUI_INDEX_SCREENTARGET = 51;
+  public static final int GUI_INDEX_DRAIN = 52;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -487,6 +499,21 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_LASER:
         if (te instanceof TileEntityLaser) {
           return new ContainerLaser(player.inventory, (TileEntityLaser) te);
+        }
+      break;
+      case GUI_INDEX_W_FLUID:
+        if (te instanceof TileCableFluidWireless) {
+          return new ContainerCableFluidWireless(player.inventory, (TileCableFluidWireless) te);
+        }
+      break;
+      case GUI_INDEX_SCREENTARGET:
+        if (te instanceof TileEntityScreenTarget) {
+          return new ContainerScreenTarget(player.inventory, (TileEntityScreenTarget) te);
+        }
+      break;
+      case GUI_INDEX_DRAIN:
+        if (te instanceof TileEntityFluidDrain) {
+          return new ContainerDrain(player.inventory, (TileEntityFluidDrain) te);
         }
       break;
     }
@@ -736,6 +763,21 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_LASER:
           if (te instanceof TileEntityLaser) {
             return new GuiLaser(player.inventory, (TileEntityLaser) te);
+          }
+        break;
+        case GUI_INDEX_W_FLUID:
+          if (te instanceof TileCableFluidWireless) {
+            return new GuiCableFluidWireless(player.inventory, (TileCableFluidWireless) te);
+          }
+        break;
+        case GUI_INDEX_SCREENTARGET:
+          if (te instanceof TileEntityScreenTarget) {
+            return new GuiScreenTargetBlock(player.inventory, (TileEntityScreenTarget) te);
+          }
+        break;
+        case GUI_INDEX_DRAIN:
+          if (te instanceof TileEntityFluidDrain) {
+            return new GuiDrain(player.inventory, (TileEntityFluidDrain) te);
           }
         break;
       }

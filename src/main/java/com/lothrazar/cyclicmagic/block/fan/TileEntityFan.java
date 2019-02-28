@@ -27,14 +27,17 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
@@ -53,13 +56,12 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
 
   private int timer;
-  private int needsRedstone = 1;
-  private int pushIfZero = 0;//else pull. 0 as default
-  private int showParticles = 0;// 0 as default
+  private int pushIfZero = 0;//else pull. 0 as default 
   private int range = 16;
 
   public TileEntityFan() {
     super(0);
+    this.needsRedstone = 1;
     this.speed = 5;
   }
 
@@ -71,20 +73,49 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   @Override
   public void update() {
     if (this.isRunning() == false) {
-      this.timer = 0;
+      setAnimation(false);
+      if (this.timer != 0 && timer > 30) {
+        UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_off, SoundCategory.BLOCKS, 1.0F);
+      }
+      timer = 0;
       return;
     }
-    if (this.timer == 0) {
-      this.timer = TIMER_FULL;
+    sounds();
+    setAnimation(true);
+    tick();
+    particles();
+    pushEntities();
+  }
+
+  private void sounds() {
+    int lengthOn = 31;
+    int lengthLoop = 40;
+    if (timer == 0) {
+      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_on, SoundCategory.BLOCKS, 0.8F);
+    }
+    else if (timer == lengthOn || (timer - lengthOn) % lengthLoop == 0) {
+      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS, 0.4F);
+    }
+  }
+
+  private void tick() {
+    this.timer++;
+    if (timer >= Integer.MAX_VALUE - 1) {
+      timer = 0;
+    }
+  }
+
+  private void particles() {
+    if (timer % 30 == 0) {
       //rm this its ugly, keep in case i add a custom particle
       if (isPreviewVisible()) {
         doParticles();
       }
     }
-    else {
-      this.timer--;
-    }
-    pushEntities();
+  }
+
+  private void setAnimation(boolean lit) {
+    this.world.setBlockState(pos, this.world.getBlockState(pos).withProperty(BlockFan.IS_LIT, lit));
   }
 
   @Override
@@ -229,7 +260,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_REDST, this.needsRedstone);
-    tags.setInteger(NBT_PART, this.showParticles);
     tags.setInteger(NBT_PUSH, this.pushIfZero);
     tags.setInteger(NBT_RANGE, this.range);
     return super.writeToNBT(tags);
@@ -240,7 +270,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
     needsRedstone = tags.getInteger(NBT_REDST);
-    this.showParticles = tags.getInteger(NBT_PART);
     this.pushIfZero = tags.getInteger(NBT_PUSH);
     this.range = tags.getInteger(NBT_RANGE);
   }
@@ -249,10 +278,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
     this.setField(Fields.REDSTONE.ordinal(), val % 2);
-  }
-
-  private void setShowParticles(int value) {
-    this.showParticles = value % 2;
   }
 
   private void setPushPull(int value) {
@@ -280,7 +305,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         case REDSTONE:
           return this.needsRedstone;
         case PARTICLES:
-          return this.showParticles;
+          return this.renderParticles;
         case PUSHPULL:
           return this.pushIfZero;
         case RANGE:
@@ -303,7 +328,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
           this.needsRedstone = value;
         break;
         case PARTICLES:
-          this.setShowParticles(value);
+          this.renderParticles = value % 2;
         break;
         case PUSHPULL:
           this.setPushPull(value);
@@ -328,6 +353,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
 
   @Override
   public boolean isPreviewVisible() {
-    return this.showParticles == 1;
+    return this.renderParticles == 1;
   }
 }

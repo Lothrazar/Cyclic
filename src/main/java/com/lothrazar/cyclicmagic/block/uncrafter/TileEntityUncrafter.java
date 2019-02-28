@@ -48,7 +48,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_ROWS = 4;
   public static final int SLOT_COLS = 5;
   public static int TIMER_FULL = 200;
-  private int needsRedstone = 1;
 
   public static enum Fields {
     TIMER, REDSTONE, FUEL;
@@ -117,8 +116,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         this.markDirty();
       }
       catch (Exception e) {
-        ModCyclic.logger.error("Unhandled exception in uncrafting ");
-        ModCyclic.logger.error(e.getMessage());
+        ModCyclic.logger.error("Unhandled exception in uncrafting ", e);
         e.printStackTrace();
       }
     } //end of timer go

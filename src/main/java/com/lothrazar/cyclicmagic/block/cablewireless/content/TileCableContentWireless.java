@@ -1,34 +1,36 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.content;
 
-import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
-import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileCableContentWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
+public class TileCableContentWireless extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
-  public static final int TRANSFER_FLUID_PER_TICK = 500;
-  public static final int TANK_FULL = 10000;
-  public static final int SLOT_CARD_ITEM = 0;
-  public static final int SLOT_CARD_FLUID = 1;
-  public static final int SLOT_TRANSFER = 2;
+  public static final int SLOT_TRANSFER = 0;
+  public static final int MAX_TRANSFER = 2;
+  public static final int SLOT_COUNT = 9 + 1;
+  List<Integer> slotList = IntStream.rangeClosed(
+      0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
+  private int transferRate = MAX_TRANSFER / 2;
 
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, TRANSFER_RATE;
   }
 
-  private int needsRedstone = 0;
-
   public TileCableContentWireless() {
-    super(3);
-    tank = new FluidTankBase(TANK_FULL);
-    this.setSlotsForInsert(SLOT_TRANSFER);
+    super(SLOT_COUNT);
+    this.setSlotsForInsert(SLOT_COUNT);
   }
 
   @Override
@@ -41,6 +43,10 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TRANSFER_RATE:
+        return this.transferRate;
+      default:
+      break;
     }
     return 0;
   }
@@ -51,15 +57,17 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
+      case TRANSFER_RATE:
+        transferRate = value;
+      break;
+      default:
+      break;
     }
   }
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    if (index == SLOT_TRANSFER) {
-      return true;
-    }
-    return stack.getItem() instanceof ItemLocation;
+    return index == SLOT_TRANSFER ? true : stack.getItem() instanceof ItemLocation;
   }
 
   private BlockPosDim getTarget(int slot) {
@@ -71,8 +79,11 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
     if (isRunning() == false) {
       return;
     }
-    outputItems();
-    outputFluid();
+    //shuffle into random order
+    Collections.shuffle(slotList);
+    for (int slot : slotList) {
+      outputItems(slot);
+    }
   }
 
   @Override
@@ -88,12 +99,12 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
 
   private boolean isTargetValid(BlockPosDim target) {
     return target != null &&
-        target.dimension == this.getDimension() &&
+        target.getDimension() == this.getDimension() &&
         world.isAreaLoaded(target.toBlockPos(), target.toBlockPos().up());
   }
 
-  private void outputItems() {
-    BlockPosDim dim = this.getTarget(SLOT_CARD_ITEM);
+  private void outputItems(int slot) {
+    BlockPosDim dim = this.getTarget(slot);
     if (!this.isTargetValid(dim)) {
       return;
     }
@@ -110,12 +121,17 @@ public class TileCableContentWireless extends TileEntityBaseMachineFluid impleme
     }
   }
 
-  private void outputFluid() {
-    BlockPosDim dim = this.getTarget(SLOT_CARD_FLUID);
-    if (!this.isTargetValid(dim)) {
-      return;
-    }
-    BlockPos target = dim.toBlockPos();
-    UtilFluid.tryFillPositionFromTank(world, target, null, this.tank, TRANSFER_FLUID_PER_TICK);
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    this.transferRate = compound.getInteger("transferRate");
+    this.needsRedstone = compound.getInteger(NBT_REDST);
+  }
+
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger("transferRate", transferRate);
+    compound.setInteger(NBT_REDST, this.needsRedstone);
+    return super.writeToNBT(compound);
   }
 }

@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
+import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
@@ -37,13 +38,11 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
-  private int transferRate = 150;
+  private int transferRate = 1000;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
   }
-
-  private int needsRedstone = 0;
 
   public TileEntityFluidPump() {
     super(0);
@@ -72,29 +71,28 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     if (this.isPowered() == false && this.onlyRunIfPowered()) {
       return;//i am not powered, and i require it
     }
-    //    BlockPos posSide;
-    EnumFacing importFromSide = this.getCurrentFacing();
-    //EnumFacing exportToSide = importFromSide.getOpposite();
-    // IMPORT
-    //ModCyclic.logger.log("I am pulling liquid out from "+side.name()+" I currently hold "+this.tank.getFluidAmount());
-    //      posSide = pos.offset(importFromSide);
-    UtilFluid.tryFillTankFromPosition(world, pos.offset(importFromSide), importFromSide.getOpposite(), tank, transferRate);
+    //incoming target side
+    UtilFluid.tryFillTankFromPosition(world, pos.offset(this.getCurrentFacing()), this.getCurrentFacing().getOpposite(), tank, transferRate);
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();
+    Collections.shuffle(sidesOut);
     for (EnumFacing exportToSide : sidesOut) {
-      if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, exportToSide) == false) {
-        continue;
-      }
-      boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, transferRate);
-      //  boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(exportToSide), exportToSide.getOpposite(), tank, TRANSFER_PER_TICK);
-      if (outputSuccess && world.getTileEntity(pos.offset(exportToSide)) instanceof TileEntityCableBase) {
-        //TODO: not so compatible with other fluid systems. itl do i guess
-        TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(exportToSide));
-        if (cable.isFluidPipe())
-          cable.updateIncomingFluidFace(importFromSide);
-      }
-      if (outputSuccess) {
-        break;
+      moveItems(exportToSide);
+    }
+  }
+
+  private void moveItems(EnumFacing myFacingDir) {
+    if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, myFacingDir) == false) {
+      return;
+    }
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(myFacingDir), themFacingMe, tank, transferRate);
+    if (outputSuccess && world.getTileEntity(pos.offset(myFacingDir)) instanceof TileEntityCableBase) {
+      //TODO: not so compatible with other fluid systems. itl do i guess
+      //tood capability for sided
+      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(myFacingDir));
+      if (cable.isFluidPipe()) {
+        cable.updateIncomingFluidFace(themFacingMe);
       }
     }
   }
@@ -103,16 +101,15 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
-    transferRate = compound.getInteger("transferRate");
+    transferRate = compound.getInteger("transferSaved");
+    //    ModCyclic.logger.log("readFromNBT xferrate " + transferRate);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
-    compound.setInteger("transferRate", this.transferRate);
-    if (transferRate == 0) {
-      transferRate = 150;//legacy support
-    }
+    //  if (transferRate != 0) {
+    compound.setInteger("transferSaved", this.transferRate);
     return super.writeToNBT(compound);
   }
 
@@ -134,7 +131,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         this.needsRedstone = value % 2;
       break;
       case TRANSFER_RATE:
-        transferRate = value;
+        if (value > 0)
+          transferRate = value;
       break;
     }
   }

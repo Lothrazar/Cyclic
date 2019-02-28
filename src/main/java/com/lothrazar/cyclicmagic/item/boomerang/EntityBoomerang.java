@@ -40,6 +40,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -165,9 +166,24 @@ public class EntityBoomerang extends EntityThrowableDispensable {
       }
     }
     else {
+      if (mop.getBlockPos() != null) {
+        // something to break?
+        IBlockState block = world.getBlockState(mop.getBlockPos());
+        if (this.isBreakable(block)) {
+          world.destroyBlock(mop.getBlockPos(), true);
+        }
+      }
       // hit a block or something, go back
       setIsReturning();
     }
+  }
+
+  private boolean isBreakable(IBlockState block) {
+    // TODO: config or upgrade? 
+    Block bk = block.getBlock();
+    return bk == Blocks.CHORUS_FLOWER
+        || bk == Blocks.TRIPWIRE
+        || bk == Blocks.VINE;
   }
 
   private void dropAsItem() {

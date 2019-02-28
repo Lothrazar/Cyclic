@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -107,7 +108,7 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe, IContent
     }
     boolean success = count > 0;
     if (success) {//particles are on each location, sound is just once
-      player.getCooldownTracker().setCooldown(this, COOLDOWN);
+      UtilEntity.setCooldownItem(player, this, COOLDOWN);
       UtilSound.playSound(player, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
     return success;
