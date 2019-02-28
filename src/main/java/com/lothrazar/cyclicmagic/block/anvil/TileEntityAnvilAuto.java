@@ -33,13 +33,12 @@ import net.minecraft.util.NonNullList;
 public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
-  public static final int TIMER_FULL = 1;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   public static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL;
+    REDSTONE, FUEL;
   }
 
   public TileEntityAnvilAuto() {
@@ -65,9 +64,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     }
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
     //validate item
-    if (inputStack.isItemDamaged() == false ||
-        isBlockAllowed(inputStack) == false) {
-      //all done
+    if (canRepair(inputStack)) {
+      //all done 
       if (this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
         //delete bug fix
         this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
@@ -81,14 +79,22 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-    this.timer--;
-    if (this.timer <= 0) {
-      this.timer = TIMER_FULL;
-      if (inputStack.isItemDamaged()) {
-        inputStack.setItemDamage(inputStack.getItemDamage() - 1);
-        //pay fluid each repair update 
-      }
+    if (inputStack.isItemDamaged()) {
+      inputStack.setItemDamage(inputStack.getItemDamage() - 1);
+      //pay fluid each repair update 
     }
+  }
+
+  /**
+   * if damaged, and repairable, then return true
+   * 
+   * @param inputStack
+   * @return
+   */
+  private boolean canRepair(ItemStack inputStack) {
+    return inputStack.isItemDamaged() == false ||
+        inputStack.getItem().isRepairable() == false ||
+        isBlockAllowed(inputStack) == false;
   }
 
   @Override
@@ -99,8 +105,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        return timer;
       case REDSTONE:
         return needsRedstone;
       case FUEL:
@@ -112,9 +116,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        this.timer = value;
-      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
