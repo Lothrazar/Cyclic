@@ -1101,10 +1101,10 @@ splash_potion.effect.saturation=喷溅型饱和药水
 lingering_potion.effect.saturation=滞留型饱和药水
 tipped_arrow.effect.saturation=饱和之箭
 
-potion.effect.hunger=Potion of Hunger
-splash_potion.effect.hunger=Splash Potion of Hunger
-lingering_potion.effect.hunger=Lingering Potion of Hunger
-tipped_arrow.effect.hunger=Arrow of Hunger
+potion.effect.hunger=饥饿药水
+splash_potion.effect.hunger=喷溅型饥饿药水
+lingering_potion.effect.hunger=滞留型饥饿药水
+tipped_arrow.effect.hunger=饥饿之箭
 
 potion.frostwalker=冰霜行者
 potion.effect.frostwalker=冰霜行者药水
