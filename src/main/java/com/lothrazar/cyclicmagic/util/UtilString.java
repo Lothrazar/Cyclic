@@ -48,12 +48,20 @@ public class UtilString {
     }
     String id = toMatch.getNamespace();
     for (String strFromList : list) {
+      if (strFromList == null || strFromList.isEmpty()) {
+        continue;//just ignore me
+      }
       if (strFromList.equals(id)) {
         return true;
       }
       if (matchWildcard) {
-        String modIdFromList = strFromList.split(":")[0];
-        String blockIdFromList = strFromList.split(":")[1];//has the *
+        String[] blockIdArray = strFromList.split(":");
+        if (blockIdArray.length <= 1) {
+          ModCyclic.logger.error("Invalid config value for block : " + strFromList);
+          return false;
+        }
+        String modIdFromList = blockIdArray[0];
+        String blockIdFromList = blockIdArray[1];//has the *
         String modIdToMatch = toMatch.getNamespace();
         String blockIdToMatch = toMatch.getPath();
         if (modIdFromList.equals(modIdToMatch) == false) {
