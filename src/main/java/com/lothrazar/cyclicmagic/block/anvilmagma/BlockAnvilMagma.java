@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.anvilmagma;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvil.UtilRepairItem;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -94,6 +95,7 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("block_anvil_magma", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityAnvilMagma.FLUID_COST = config.getInt("block_anvil_magma_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
+    UtilRepairItem.syncConfig(config);
   }
 
   @Override

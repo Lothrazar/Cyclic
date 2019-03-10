@@ -25,17 +25,14 @@ package com.lothrazar.cyclicmagic.block.anvil;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
 
 public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
-  public static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
     REDSTONE, FUEL;
@@ -48,9 +45,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     this.setSlotsForInsert(SLOT_INPUT);
   }
 
-  private boolean isBlockAllowed(ItemStack thing) {
-    return UtilString.isInList(blacklistBlockIds, thing.getItem().getRegistryName()) == false;
-  }
 
   @Override
   public int[] getFieldOrdinals() {
@@ -63,9 +57,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       return;
     }
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
-    //validate item
-    if (canRepair(inputStack)) {
-      //all done 
+    if (UtilRepairItem.canRepair(inputStack) == false) {
+      //move the non repairable deelio outta here 
       if (this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
         //delete bug fix
         this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
@@ -76,25 +69,9 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       return;//no paying cost on empty work
     }
     //pay energy each tick
-    if (this.updateEnergyIsBurning() == false) {
-      return;
+    if (this.updateEnergyIsBurning()) {
+      UtilRepairItem.doRepair(inputStack);
     }
-    if (inputStack.isItemDamaged()) {
-      inputStack.setItemDamage(inputStack.getItemDamage() - 1);
-      //pay fluid each repair update 
-    }
-  }
-
-  /**
-   * if damaged, and repairable, then return true
-   * 
-   * @param inputStack
-   * @return
-   */
-  private boolean canRepair(ItemStack inputStack) {
-    return inputStack.isItemDamaged() == false ||
-        inputStack.getItem().isRepairable() == false ||
-        isBlockAllowed(inputStack) == false;
   }
 
   @Override
