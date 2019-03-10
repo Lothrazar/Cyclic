@@ -1409,7 +1409,7 @@ tile.cable_wireless_energy.guide=无线传输能量
 
 chest_sack.error.pickup=在存储时遇到了一个错误——动作已被撤销（查看日志以获知更多信息）
 chest_sack.error.place=在放置时遇到了一个错误——动作已被撤销（查看日志以获知更多信息）
-chest_sack.error.null=在存储时遇到了一个错误——方块状态或方块实体不存在
+chest_sack.error.null=未找到方块实体
 chest_sack.error.blacklist=在存储时遇到了一个错误——该方块已被加入配置文件的黑名单中
 
 
