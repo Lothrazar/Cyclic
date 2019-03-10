@@ -1449,20 +1449,15 @@ item.crystallized_obsidian.tooltip=Crafting material
 item.crystallized_obsidian.guide=Crystal made from an obsidian alloy.  Crafting material
 
 item.crystal_sword.name=Crystal Sword
-item.crystal_pickaxe.name=Crystal Hoe
+item.crystal_pickaxe.name=Crystal Pickaxe
 item.crystal_spade.name=Crystal Shovel
 item.crystal_axe.name=Crystal Axe
 item.crystal_hoe.name=Crystal Hoe
 item.crystal_sword.guide=Crystal Sword
-item.crystal_pickaxe.guide=Crystal Hoe
+item.crystal_pickaxe.guide=Crystal Pickaxe
 item.crystal_spade.guide=Crystal Shovel
 item.crystal_axe.guide=Crystal Axe
 item.crystal_hoe.guide=Crystal Hoe
-item.crystal_sword.tooltip=Crystal Sword
-item.crystal_pickaxe.tooltip=Crystal Hoe
-item.crystal_spade.tooltip=Crystal Shovel
-item.crystal_axe.tooltip=Crystal Axe
-item.crystal_hoe.tooltip=Crystal Hoe
 
 tile.fluid_drain.name=Fluid Collector
 tile.fluid_drain.guide=Drain fluid that is nearby and below, filling it with blocks
