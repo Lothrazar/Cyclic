@@ -36,7 +36,6 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
     }
   }
 
-
   public boolean getSideHasPower(EnumFacing side) {
     return this.poweredSides.get(side);
   }

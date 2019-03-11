@@ -164,6 +164,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
       }
     }
   }
+
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;

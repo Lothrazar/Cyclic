@@ -84,9 +84,7 @@ public class PacketChestSack implements IMessage, IMessageHandler<PacketChestSac
           TileEntity tile = world.getTileEntity(position);
           ItemChestSackEmpty.gatherTileEntity(position, player, world, tile);
         }
-
       });
     }
   }
-
 }

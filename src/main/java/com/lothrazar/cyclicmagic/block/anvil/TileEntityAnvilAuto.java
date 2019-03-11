@@ -45,7 +45,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     this.setSlotsForInsert(SLOT_INPUT);
   }
 
-
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
