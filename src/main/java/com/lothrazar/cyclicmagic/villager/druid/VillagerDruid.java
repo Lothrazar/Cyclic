@@ -1,6 +1,7 @@
-package com.lothrazar.cyclicmagic.villager;
+package com.lothrazar.cyclicmagic.villager.druid;
 
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.villager.ListItemForEmeraldsFixed;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.passive.EntityVillager;
