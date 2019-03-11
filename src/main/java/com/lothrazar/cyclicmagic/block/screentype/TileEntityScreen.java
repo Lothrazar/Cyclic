@@ -34,7 +34,7 @@ public class TileEntityScreen extends TileEntityBaseMachineInvo implements ITile
   private int green = 100;
   private int blue = 100;
   private int padding = 0;
-  private int font = 0;
+  private int font = 10;
 
   public static enum Fields {
     RED, GREEN, BLUE, PADDING, FONT;
