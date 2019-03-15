@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.18.2",
-    "1.12.2-recommended": "1.18.2"
+    "1.12.2-latest": "1.18.3",
+    "1.12.2-recommended": "1.18.3"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -311,5 +311,6 @@
 	,"1.18.0":"New Blocks: Tempered Glass, Fluid Collector, Sensor Display.  Fluid Tank show fills indicator on item stack.  Fluid Tanks also have itemstack fluid capability support (improved compatibility with most machines and inventories).   Ender Library Controller can now be automated, piping enchanted books into it will distribute enchantments to nearby shelves (you must pump out the empty books so it wont get stuck).  Added Sandstone Sword.  New assets by Ithronyar: Biomass, Scaffolding model and sounds, Crystallized Obsidian equipment, Crystal gear, Sandstone gear, new 3D models for some of the scepters.  Transfer Node has been tweaked to be an Item Transfer node; Fluid Transfer Node created as a new item.   Updated item model for wireless nodes.  Fixed a bug where export cables messed up the flow for next door blocks.  Extraction cables now default to Always On redstone setting.  Dehydrator no longer accepts lava, produces water during the recipe, water must be drained to coninue, default recipe timings changed, water generated is part of zenscript recipe call as well.   Potion Recipes:  Ender and Snow potions are now base types for some of the advanced potions.  Fixed an issue when Boomerang super slowly.  Added JEI info tab for custom potions.  Packager merges similar stacks to avoid getting stuck crafting.  Sword models reverted to earlier version.  Keyboard control on all/most numeric sliders on machines.  Digital Typewriter redesigned and remade as Text Projector.  Hydrator recipe matching checks the size to avoid overlap.  Fixed heart container config causing player to loose certain unlocks on death.  Fixed fluid placer using reversed logic when vertical. "
 	,"1.18.1":"Fixed some minor texture issues.  Fixed Energy extractor cable slider.  Fixed item transfer node not accepting input.  "
 	,"1.18.2":"Fixed an error where empty or invalid entries in some blacklist configs could crash the game. Uncrafting Grinder is now compatible with mods that register unique blocks use non-standard way that try really hard to not be compatible (such as Mekanism NBT based blocks).  New config added 'ForceNonRepairable' to allow anvils to repair non-repairable items.  Soulstone fixed to now work correctly when player has absorption.  Default font size of Text Projector is now 10 instead of zero.  New configs SageCount and DruidCount to control how many villagers will attempt to spawn when a new village is generated in new chunks.   "
+	,"1.18.3":"Fixed uncrafting grinder only working when input stack size was the precise recipe count.  "
   }
 }

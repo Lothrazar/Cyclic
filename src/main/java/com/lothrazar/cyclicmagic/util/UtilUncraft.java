@@ -194,7 +194,7 @@ public class UtilUncraft {
     }
 
     private boolean doesRecipeInputMatch(ItemStack recipeOutput) {
-      return ItemStack.areItemStacksEqual(recipeOutput, toUncraft);
+      return UtilItemStack.isItemStackEqualIgnoreCount(recipeOutput, toUncraft);
     }
 
     public UncraftResultType process(ItemStack stuff) {
