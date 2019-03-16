@@ -12,7 +12,7 @@ import net.minecraft.util.ITickable;
 public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL;
+    REDSTONE, TIMER;
   }
 
   public static final int SLOT_INPUT = 0;
@@ -48,8 +48,6 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
         return timer;
       case REDSTONE:
         return this.needsRedstone;
-      case FUEL:
-        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -62,9 +60,6 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
       break;
       case REDSTONE:
         this.needsRedstone = value;
-      break;
-      case FUEL:
-        this.setEnergyCurrent(value);
       break;
     }
   }

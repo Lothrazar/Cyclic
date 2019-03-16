@@ -35,7 +35,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_OUTPUT = 1;
 
   public static enum Fields {
-    REDSTONE, FUEL;
+    REDSTONE;
   }
 
   public TileEntityAnvilAuto() {
@@ -83,8 +83,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     switch (Fields.values()[id]) {
       case REDSTONE:
         return needsRedstone;
-      case FUEL:
-        return this.getEnergyCurrent();
+      //      case FUEL:
+      //        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -95,9 +95,9 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
+      //      case FUEL:
+      //        this.setEnergyCurrent(value);
+      //      break;
     }
   }
 

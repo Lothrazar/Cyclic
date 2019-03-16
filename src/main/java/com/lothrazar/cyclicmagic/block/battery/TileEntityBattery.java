@@ -16,7 +16,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITickable {
 
   public static enum Fields {
-    FUEL, RATEOUT, N, E, S, W, U, D;
+    RATEOUT, N, E, S, W, U, D;
   }
 
   private static final double PCT_UPDATE_ON_TICK = 0.01;
@@ -51,9 +51,6 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case RATEOUT:
         transferRate = value;
       break;
@@ -81,8 +78,6 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case RATEOUT:
         return transferRate;
       case D:

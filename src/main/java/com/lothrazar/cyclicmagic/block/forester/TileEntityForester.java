@@ -76,7 +76,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
   private UUID uuid;
 
   public static enum Fields {
-    REDSTONE, RENDERPARTICLES, TIMER, FUEL, SIZE, HEIGHT;
+    REDSTONE, RENDERPARTICLES, TIMER, SIZE, HEIGHT;
   }
 
   public TileEntityForester() {
@@ -303,8 +303,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         return this.renderParticles;
       case TIMER:
         return this.timer;
-      case FUEL:
-        return this.getEnergyCurrent();
       case SIZE:
         return size;
       case HEIGHT:
@@ -324,9 +322,6 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       break;
       case TIMER:
         this.timer = value;
-      break;
-      case FUEL:
-        this.setEnergyCurrent(value);
       break;
       case SIZE:
         if (value > MAX_SIZE) {

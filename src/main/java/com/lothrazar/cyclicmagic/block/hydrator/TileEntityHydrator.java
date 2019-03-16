@@ -45,7 +45,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   public final static int TIMER_FULL = 40;
 
   public static enum Fields {
-    REDSTONE, TIMER, RECIPELOCKED, FUEL;
+    REDSTONE, TIMER, RECIPELOCKED;
   }
 
   private int recipeIsLocked = 0;
@@ -177,8 +177,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -192,9 +190,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

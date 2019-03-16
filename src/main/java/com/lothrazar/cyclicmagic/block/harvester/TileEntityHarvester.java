@@ -52,7 +52,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public static int TIMER_FULL = 200;
 
   public static enum Fields {
-    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
+    TIMER, REDSTONE, SIZE, RENDERPARTICLES, HARVESTMODE;
   }
 
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
@@ -179,10 +179,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         return this.size;
       case RENDERPARTICLES:
         return this.renderParticles;
-      case FUEL:
-        return this.getEnergyCurrent();
-      case FUELMAX:
-        return this.getEnergyMax();
       case HARVESTMODE:
         return this.normalModeIfZero;
     }
@@ -206,11 +202,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
-      break;
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
-      case FUELMAX:
       break;
       case HARVESTMODE:
         this.normalModeIfZero = value % 2;
