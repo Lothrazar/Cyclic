@@ -56,7 +56,6 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     super(2 * RECIPE_SIZE);// in, out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
-    tank.setTileEntity(this);
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));

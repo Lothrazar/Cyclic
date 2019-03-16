@@ -312,6 +312,6 @@
 	,"1.18.1":"Fixed some minor texture issues.  Fixed Energy extractor cable slider.  Fixed item transfer node not accepting input.  "
 	,"1.18.2":"Fixed an error where empty or invalid entries in some blacklist configs could crash the game. Uncrafting Grinder is now compatible with mods that register unique blocks use non-standard way that try really hard to not be compatible (such as Mekanism NBT based blocks).  New config added 'ForceNonRepairable' to allow anvils to repair non-repairable items.  Soulstone fixed to now work correctly when player has absorption.  Default font size of Text Projector is now 10 instead of zero.  New configs SageCount and DruidCount to control how many villagers will attempt to spawn when a new village is generated in new chunks.   "
 	,"1.18.3":"Fixed uncrafting grinder only working when input stack size was the precise recipe count.  "
-	"1.18.4":"Item Collector now has a minimum size of 1x1.  "
+	"1.18.4":"Item Collector now has a minimum size of 1x1.  Fixed clientside fluid-desync of several blocks.  Fixed Magma Anvil not accepting fluid from some pipes.  "
   }
 }

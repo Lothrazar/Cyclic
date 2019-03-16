@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.anvilmagma;
 import com.lothrazar.cyclicmagic.block.anvil.UtilRepairItem;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -45,7 +45,7 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
 
   public TileEntityAnvilMagma() {
     super(2);
-    tank = new FluidTankBase(TANK_FULL);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setFluidAllowed(FluidRegistry.LAVA);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
