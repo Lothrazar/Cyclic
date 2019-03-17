@@ -360,7 +360,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-
       case HEIGHT:
         if (value > maxHeight) {
           value = maxHeight;

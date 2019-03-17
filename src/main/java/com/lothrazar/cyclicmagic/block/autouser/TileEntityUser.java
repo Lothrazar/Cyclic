@@ -484,7 +484,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-
       case Y_OFFSET:
         if (value > 1) {
           value = -1;
