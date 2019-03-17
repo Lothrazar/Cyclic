@@ -152,6 +152,7 @@ public class UtilHarvester {
     
     useBooleanProperty.put("rustic:grape_leaves", "grapes");
     modsThatDontUseAge.put("rustic:leaves_apple", "apple_age"); 
+    modsThatDontUseAge.put("extrautils2:enderlilly", "growth"); 
     harvestCustomMaxAge = new HashMap<String, Integer>();
     //max metadata is 11, but 9 is the lowest level when full grown
     //its a 3high multiblock
