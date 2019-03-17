@@ -38,7 +38,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumFacing;
@@ -152,11 +151,6 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-  }
-
-  @Override
-  public NBTTagCompound getUpdateTag() {
-    return this.writeToNBT(new NBTTagCompound());
   }
 
   @Nullable

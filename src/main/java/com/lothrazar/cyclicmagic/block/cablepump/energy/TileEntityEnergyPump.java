@@ -48,7 +48,7 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
 
   public TileEntityEnergyPump() {
     super(0);
-    this.initEnergy(0, 8 * 1000);
+    this.initEnergy(0, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK);
   }
 
   @Override

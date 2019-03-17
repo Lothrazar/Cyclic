@@ -52,7 +52,7 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
   private List<BlockPos> shape = null;
 
   public static enum Fields {
-    REDSTONE, FUEL, RENDERPARTICLES;
+    REDSTONE, RENDERPARTICLES;
   }
 
   public TileEntityFluidDrain() {
@@ -124,8 +124,6 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case RENDERPARTICLES:
@@ -139,9 +137,6 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

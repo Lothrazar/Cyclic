@@ -1,6 +1,7 @@
-package com.lothrazar.cyclicmagic.villager;
+package com.lothrazar.cyclicmagic.villager.sage;
 
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.villager.ListItemForEmeraldsFixed;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.EmeraldForItems;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;

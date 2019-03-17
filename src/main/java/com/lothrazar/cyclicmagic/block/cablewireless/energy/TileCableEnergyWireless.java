@@ -28,7 +28,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
   private int transferRate = MAX_TRANSFER / 2;
 
   public static enum Fields {
-    REDSTONE, TRANSFER_RATE, FUEL;
+    REDSTONE, TRANSFER_RATE;
   }
 
   public TileCableEnergyWireless() {
@@ -48,8 +48,6 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
         return this.needsRedstone;
       case TRANSFER_RATE:
         return this.transferRate;
-      case FUEL:
-        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -62,9 +60,6 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
       break;
       case TRANSFER_RATE:
         transferRate = value;
-      break;
-      case FUEL:
-        this.setEnergyCurrent(value);
       break;
     }
   }

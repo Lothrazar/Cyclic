@@ -50,7 +50,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static int TIMER_FULL = 200;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL;
+    TIMER, REDSTONE;
   }
 
   public TileEntityUncrafter() {
@@ -134,8 +134,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -150,9 +148,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case TIMER:
         this.timer = value;
       break;

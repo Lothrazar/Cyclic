@@ -25,19 +25,23 @@ package com.lothrazar.cyclicmagic.villager;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
-import com.lothrazar.cyclicmagic.registry.module.BaseModule;
+import com.lothrazar.cyclicmagic.registry.module.BaseEventModule;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.villager.druid.VillagerDruid;
+import com.lothrazar.cyclicmagic.villager.sage.VillagerSage;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
-public class VillagerCreateModule extends BaseModule implements IHasConfig {
+public class VillagerCreateModule extends BaseEventModule implements IHasConfig {
 
   private boolean sageEnabled;
   private boolean druidEnabled;
+  public static int sageCount;
+  public static int druidCount;
 
-  private void addVillager(String name, EntityVillager.ITradeList[][] trades) {
+  private VillagerProfession addVillager(String name, EntityVillager.ITradeList[][] trades) {
     VillagerProfession prof = new VillagerProfession(Const.MODRES + name,
         Const.MODRES + "textures/entity/villager/" + name + ".png",
         "minecraft:textures/entity/zombie_villager/zombie_villager.png");
@@ -46,16 +50,18 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
     for (int i = 0; i < trades.length; i++) {
       villager.addTrade(i + 1, trades[i]);
     }
+    return prof;
   }
 
   @Override
   public void onPreInit() {
+    super.onPreInit();
     //TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
     if (sageEnabled) {
-      addVillager(VillagerSage.NAME, VillagerSage.buildTrades());
+      VillagerProfRegistry.SAGE = addVillager(VillagerSage.NAME, VillagerSage.buildTrades());
     }
     if (druidEnabled) {
-      addVillager(VillagerDruid.NAME, VillagerDruid.buildTrades());
+      VillagerProfRegistry.DRUID = addVillager(VillagerDruid.NAME, VillagerDruid.buildTrades());
     }
   }
 
@@ -65,5 +71,8 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
     c.addCustomCategoryComment(category, "Two new villagers with more trades");
     sageEnabled = c.getBoolean("SageVillagers", category, true, "Adds new villager type Sage.  Spawns naturally and from mob eggs. ");
     druidEnabled = c.getBoolean("DruidVillagers", category, true, "Adds new villager type Druid.  Spawns naturally and from mob eggs. ");
+    String desc = "Number of villager entities that will attempt to spawn when a new village generates in the world terrain (no buildings)";
+    sageCount = c.getInt("SageCount", category, 2, 0, 9, desc);
+    druidCount = c.getInt("DruidCount", category, 2, 0, 9, desc);
   }
 }

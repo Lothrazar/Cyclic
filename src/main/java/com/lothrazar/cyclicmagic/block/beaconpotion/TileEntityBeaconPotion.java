@@ -287,11 +287,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
   }
 
-  @Override
-  public NBTTagCompound getUpdateTag() {
-    return this.writeToNBT(new NBTTagCompound());
-  }
-
   @Nullable
   private static Potion isBeaconEffect(int i) {
     return Potion.getPotionById(i);

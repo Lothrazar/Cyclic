@@ -25,21 +25,17 @@ package com.lothrazar.cyclicmagic.block.anvil;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
 
 public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
-  public static final int TIMER_FULL = 1;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
-  public static NonNullList<String> blacklistBlockIds;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL;
+    REDSTONE;
   }
 
   public TileEntityAnvilAuto() {
@@ -47,10 +43,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     this.initEnergy(BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
-  }
-
-  private boolean isBlockAllowed(ItemStack thing) {
-    return UtilString.isInList(blacklistBlockIds, thing.getItem().getRegistryName()) == false;
   }
 
   @Override
@@ -64,10 +56,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       return;
     }
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
-    //validate item
-    if (inputStack.isItemDamaged() == false ||
-        isBlockAllowed(inputStack) == false) {
-      //all done
+    if (UtilRepairItem.canRepair(inputStack) == false) {
+      //move the non repairable deelio outta here 
       if (this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
         //delete bug fix
         this.setInventorySlotContents(SLOT_OUTPUT, this.removeStackFromSlot(SLOT_INPUT));
@@ -78,16 +68,8 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       return;//no paying cost on empty work
     }
     //pay energy each tick
-    if (this.updateEnergyIsBurning() == false) {
-      return;
-    }
-    this.timer--;
-    if (this.timer <= 0) {
-      this.timer = TIMER_FULL;
-      if (inputStack.isItemDamaged()) {
-        inputStack.setItemDamage(inputStack.getItemDamage() - 1);
-        //pay fluid each repair update 
-      }
+    if (this.updateEnergyIsBurning()) {
+      UtilRepairItem.doRepair(inputStack);
     }
   }
 
@@ -99,12 +81,10 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        return timer;
       case REDSTONE:
         return needsRedstone;
-      case FUEL:
-        return this.getEnergyCurrent();
+      //      case FUEL:
+      //        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -112,15 +92,12 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        this.timer = value;
-      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
+      //      case FUEL:
+      //        this.setEnergyCurrent(value);
+      //      break;
     }
   }
 

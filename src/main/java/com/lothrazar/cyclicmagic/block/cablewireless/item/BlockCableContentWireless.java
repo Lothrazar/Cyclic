@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.cablewireless.content;
+package com.lothrazar.cyclicmagic.block.cablewireless.item;
 
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;

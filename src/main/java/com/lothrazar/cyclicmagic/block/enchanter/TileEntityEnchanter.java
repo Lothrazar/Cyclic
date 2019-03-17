@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.enchanter;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   public static int FLUID_COST = 300;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL;
+    TIMER, REDSTONE;
   }
 
   public TileEntityEnchanter() {
@@ -53,7 +53,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
     this.initEnergy(BlockEnchanter.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
-    tank = new FluidTankBase(TANK_FULL);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
   }
 
@@ -120,8 +120,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -133,9 +131,6 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case TIMER:
         this.timer = value;
       break;

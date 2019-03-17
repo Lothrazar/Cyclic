@@ -23,11 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.anvilmagma;
 
-import com.lothrazar.cyclicmagic.block.anvil.TileEntityAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvil.UtilRepairItem;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
-import com.lothrazar.cyclicmagic.util.UtilString;
+import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -36,25 +35,20 @@ import net.minecraftforge.fluids.FluidStack;
 public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
 
   public static final int TANK_FULL = 10000;
-  public static final int TIMER_FULL = 5;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   public static int FLUID_COST = 75;
 
   public static enum Fields {
-    TIMER, REDSTONE;
+    REDSTONE;
   }
 
   public TileEntityAnvilMagma() {
     super(2);
-    tank = new FluidTankBase(TANK_FULL);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setFluidAllowed(FluidRegistry.LAVA);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
-  }
-
-  private boolean isBlockAllowed(ItemStack thing) {
-    return UtilString.isInList(TileEntityAnvilAuto.blacklistBlockIds, thing.getItem().getRegistryName()) == false;
   }
 
   @Override
@@ -67,10 +61,12 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     if (this.isRunning() == false) {
       return;
     }
+    if (this.getCurrentFluidStackAmount() < 0) {
+      this.setCurrentFluid(0);
+    }
     ItemStack inputStack = this.getStackInSlot(SLOT_INPUT);
     //validate item
-    if (inputStack.isItemDamaged() == false ||
-        isBlockAllowed(inputStack) == false) {
+    if (UtilRepairItem.canRepair(inputStack) == false) {
       //all done
       if (this.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
         //delete bug fix
@@ -81,17 +77,8 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
     if (inputStack.isEmpty() || this.hasEnoughFluid() == false) {
       return;//no paying cost on empty work
     }
-    if (this.getCurrentFluidStackAmount() < 0) {
-      this.setCurrentFluid(0);
-    }
-    this.timer--;
-    if (this.timer <= 0) {
-      this.timer = TIMER_FULL;
-      if (inputStack.isItemDamaged() && this.hasEnoughFluid()) {
-        inputStack.setItemDamage(inputStack.getItemDamage() - 1);
-        //pay fluid each repair update
-        this.drain(FLUID_COST, true);
-      }
+    if (UtilRepairItem.doRepair(inputStack)) {
+      this.drain(FLUID_COST, true);
     }
   }
 
@@ -108,8 +95,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        return timer;
       case REDSTONE:
         return needsRedstone;
     }
@@ -119,9 +104,6 @@ public class TileEntityAnvilMagma extends TileEntityBaseMachineFluid implements 
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        this.timer = value;
-      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;

@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.InvWrapperRestricted;
@@ -203,10 +202,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   public void consumeEnergy() {
-    if (!world.isRemote && this.getEnergyCost() > 0) {//only drain on server //not anymore bitches && world.isRemote == false
-      if (this.getEnergyCurrent() >= this.getEnergyCost()) {
-        this.energyStorage.extractEnergy(this.getEnergyCost(), false);
-      }
+    //only drain on server, if we have enough and if not free
+    if (!world.isRemote && this.getEnergyCost() > 0 &&
+        this.getEnergyCurrent() >= this.getEnergyCost()) {
+      this.energyStorage.extractEnergy(this.getEnergyCost(), false);
+      //it drained, notify client 
+      this.markDirty();
     }
   }
 
@@ -290,7 +291,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public String getName() {
     if (this.getBlockType() == null) {
-      ModCyclic.logger.error("null blockType:" + this.getClass().getName());
       return "";
     }
     return this.getBlockType().getTranslationKey() + ".name";

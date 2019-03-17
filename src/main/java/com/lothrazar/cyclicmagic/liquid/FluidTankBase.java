@@ -31,6 +31,13 @@ public class FluidTankBase extends FluidTank {
 
   Fluid fluidAllowed;
 
+  /**
+   * ONLY use this if your tank has NO client GUI/ display. For example, cables, trash, etc.
+   * 
+   * If you want to display your fluid client side you must use FluidTankFixDesync.java
+   * 
+   * @param capacity
+   */
   public FluidTankBase(int capacity) {
     super(capacity);
   }

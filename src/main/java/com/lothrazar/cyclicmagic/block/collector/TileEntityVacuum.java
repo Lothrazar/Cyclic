@@ -202,7 +202,7 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
       break;
       case SIZE:
         if (value > MAX_SIZE) {
-          value = 1;
+          value = 0;//zero means 1x1
         }
         size = value;
       break;
