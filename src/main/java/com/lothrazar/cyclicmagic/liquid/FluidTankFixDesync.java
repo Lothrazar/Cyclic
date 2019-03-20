@@ -41,6 +41,7 @@ public class FluidTankFixDesync extends FluidTankBase {
 
   public FluidTankFixDesync(int capacity, TileEntityBaseMachineInvo parent) {
     super(capacity);
+    this.setTileEntity(parent);
     this.parent = parent;
   }
 

@@ -42,11 +42,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSoulstone extends BaseItem implements IHasRecipe, IContent {
+
+  private static final float HEALTH_AFTER_TRIGGER = 6;//3 hearts 
 
   public ItemSoulstone() {
     super();
@@ -77,31 +80,37 @@ public class ItemSoulstone extends BaseItem implements IHasRecipe, IContent {
     return true;
   }
 
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onPlayerHurt(LivingHurtEvent event) {
-    if (event.getEntityLiving().getHealth() - event.getAmount() <= 0 && event.getEntityLiving() instanceof EntityPlayer) {
-      EntityPlayer p = (EntityPlayer) event.getEntityLiving();
-      for (int i = 0; i < p.inventory.getSizeInventory(); ++i) {
-        ItemStack s = p.inventory.getStackInSlot(i);
+    float currentHealth = event.getEntityLiving().getAbsorptionAmount()
+        + event.getEntityLiving().getHealth();
+    if (currentHealth - event.getAmount() <= 0 && event.getEntityLiving() instanceof EntityPlayer) {
+      EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+      for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
+        ItemStack s = player.inventory.getStackInSlot(i);
         if (s.getItem() instanceof ItemSoulstone) {
-          UtilChat.addChatMessage(p, event.getEntityLiving().getName() + UtilChat.lang("item.soulstone.used"));
-          p.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
-          UtilSound.playSound(p, SoundEvents.BLOCK_GLASS_BREAK);
-          p.setHealth(6);// 3 hearts
-          int time = Const.TICKS_PER_SEC * 30;
-          p.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, time));
-          time = Const.TICKS_PER_SEC * 60;//a full minute
-          p.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, time));
-          p.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, time, 4));
-          //and bad luck lasts much longer
-          time = Const.TICKS_PER_SEC * 60 * 10;
-          p.addPotionEffect(new PotionEffect(MobEffects.UNLUCK, time));
-          p.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, time, 1));
+          player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+          player.setHealth(HEALTH_AFTER_TRIGGER);
+          applyPotions(player);
           event.setCanceled(true);
+          UtilSound.playSound(player, SoundEvents.BLOCK_GLASS_BREAK);
+          UtilChat.addChatMessage(player, event.getEntityLiving().getName() + UtilChat.lang("item.soulstone.used"));
           break;
         }
       }
     }
+  }
+
+  private void applyPotions(EntityPlayer p) {
+    int time = Const.TICKS_PER_SEC * 30;
+    p.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, time));
+    time = Const.TICKS_PER_SEC * 60;//a full minute
+    p.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, time));
+    p.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, time, 4));
+    //and bad luck lasts much longer
+    time = Const.TICKS_PER_SEC * 60 * 10;
+    p.addPotionEffect(new PotionEffect(MobEffects.UNLUCK, time));
+    p.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, time, 1));
   }
 
   @Override

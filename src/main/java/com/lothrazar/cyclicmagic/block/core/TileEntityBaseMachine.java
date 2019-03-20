@@ -47,6 +47,20 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return world != null && !this.isInvalid() && this.getWorld().isBlockLoaded(this.getPos());
   }
 
+  public IBlockState getState() {
+    if (world == null || pos == null) {
+      return null;
+    }
+    return world.getBlockState(pos);
+  }
+
+  @Override
+  public void markDirty() {
+    IBlockState st = this.getState();
+    world.notifyBlockUpdate(pos, st, st, 3);
+    super.markDirty();
+  }
+
   public boolean isRunning() {
     return this.isValid() && !this.onlyRunIfPowered() || this.isPowered();
   }
@@ -96,6 +110,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
     // sent to the client. Called on server only.
     NBTTagCompound syncData = getUpdateTag();
+    // ModCyclic.logger.error(this.getBlockType() + " NBT " + syncData);
     return new SPacketUpdateTileEntity(this.pos, 1, syncData);
   }
 

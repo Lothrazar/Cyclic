@@ -20,8 +20,7 @@ public class PlayerStorage implements IStorage<IPlayerExtendedProperties> {
       instance.setDataFromNBT((NBTTagCompound) nbt);
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Invalid NBT compound: " + e.getMessage());
-      ModCyclic.logger.error(e.getStackTrace().toString());
+      ModCyclic.logger.error("Invalid NBT compound: ", e);
     }
   }
 }

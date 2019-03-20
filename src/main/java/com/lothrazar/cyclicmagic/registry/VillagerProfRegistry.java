@@ -24,22 +24,41 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.villager.druid.VillageCreationHandlerDruid;
+import com.lothrazar.cyclicmagic.villager.druid.VillageStructureDruid;
+import com.lothrazar.cyclicmagic.villager.druid.VillagerDruid;
+import com.lothrazar.cyclicmagic.villager.sage.VillageCreationHandlerSage;
+import com.lothrazar.cyclicmagic.villager.sage.VillageStructureSage;
+import com.lothrazar.cyclicmagic.villager.sage.VillagerSage;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 public class VillagerProfRegistry {
 
+  public static VillagerProfession DRUID;
+  public static VillagerProfession SAGE;
   public static ArrayList<VillagerProfession> villagers = new ArrayList<VillagerProfession>();
 
-  public static void register(VillagerProfession quickdraw) {
-    villagers.add(quickdraw);
+  public static void register(VillagerProfession prof) {
+    villagers.add(prof);
   }
 
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<VillagerProfession> event) {
     for (VillagerProfession b : villagers) {
       event.getRegistry().register(b);
+    }
+    if (VillagerProfRegistry.DRUID != null) {
+      VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandlerDruid());
+      MapGenStructureIO.registerStructureComponent(VillageStructureDruid.class, Const.MODRES + VillagerDruid.NAME);
+    }
+    if (VillagerProfRegistry.SAGE != null) {
+      VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandlerSage());
+      MapGenStructureIO.registerStructureComponent(VillageStructureSage.class, Const.MODRES + VillagerSage.NAME);
     }
   }
 }

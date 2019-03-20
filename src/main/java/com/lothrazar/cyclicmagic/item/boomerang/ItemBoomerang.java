@@ -81,6 +81,9 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, 
     EntityPlayer player = (EntityPlayer) entity;
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
     float percentageCharged = ItemBow.getArrowVelocity(charge);//never zero, its from [0.03,1];
+    if (percentageCharged < 0.1) {
+      return;//not enough force to go with any realistic path 
+    }
     float amountCharged = percentageCharged * MAX_CHARGE;
     float velocityFactor = percentageCharged * 1.5F;//flat upscale
     float damage = MathHelper.floor(amountCharged) / 2;//so its an even 3 or 2.5

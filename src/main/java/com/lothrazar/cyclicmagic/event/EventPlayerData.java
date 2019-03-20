@@ -23,21 +23,17 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.capability.PlayerCapInstance;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
@@ -100,32 +96,13 @@ public class EventPlayerData {
     }
   }
 
-  class PlayerCapInstance implements ICapabilitySerializable<NBTTagCompound> {
-
-    IPlayerExtendedProperties inst = ModCyclic.CAPABILITYSTORAGE.getDefaultInstance();
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-      return capability == ModCyclic.CAPABILITYSTORAGE;
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-      return capability == ModCyclic.CAPABILITYSTORAGE ? ModCyclic.CAPABILITYSTORAGE.<T> cast(inst) : null;
-    }
-
-    @Override
-    public NBTTagCompound serializeNBT() {
-      NBTBase ret = ModCyclic.CAPABILITYSTORAGE.getStorage().writeNBT(ModCyclic.CAPABILITYSTORAGE, inst, null);
-      if (ret instanceof NBTTagCompound) {
-        return (NBTTagCompound) ret;
-      }
-      return null;
-    }
-
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-      ModCyclic.CAPABILITYSTORAGE.getStorage().readNBT(ModCyclic.CAPABILITYSTORAGE, inst, null, nbt);
+  @SubscribeEvent
+  public void onPlayerClone(PlayerEvent.Clone event) {
+    IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
+    IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
+    dest.setDataFromNBT(src.getDataAsNBT());
+    if (src.getMaxHealth() > 0) {
+      UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
     }
   }
 }

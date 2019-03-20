@@ -47,7 +47,7 @@ public class ItemCrystalHoe extends ItemHoe implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', "sandstone", 's', "stickWood");
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', "sandstone", 's', "stickWood");
+    RecipeRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', "gemObsidian", 's', "gemDiamond");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', "gemObsidian", 's', "gemDiamond");
   }
 }

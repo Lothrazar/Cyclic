@@ -42,7 +42,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   private static int TIMER_FULL = 1;
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL;
+    REDSTONE, TIMER;
   }
 
   public InventoryCrafting crafter = new InventoryCrafting(new ContainerDummyPackager(), 3, 2);
@@ -187,8 +187,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case FUEL:
-        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -196,9 +194,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

@@ -40,6 +40,7 @@ import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
@@ -49,7 +50,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -84,9 +84,12 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
   @Override
   public IRecipe addRecipe() {
     if (heartChangeOnEat > 0)
-      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.RABBIT, Items.PUMPKIN_PIE, "gemDiamond", Items.CAKE, "blockEmerald", new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
+      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.RABBIT_STEW, Blocks.WATERLILY, Items.PUMPKIN_PIE,
+          "gemDiamond", Items.COOKIE, "blockEmerald",
+          new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), new ItemStack(Items.GOLDEN_APPLE, 1, 0), Items.POISONOUS_POTATO);
     else
-      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.STICK, Items.SUGAR, "dirt", Items.CAKE, "cobblestone",
+      return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.STICK, Items.SUGAR,
+          "dirt", Items.CAKE, "cobblestone",
           new ItemStack(Items.SPIDER_EYE), Items.APPLE, Items.SPIDER_EYE);
   }
 
@@ -97,19 +100,6 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
       //force clientside hearts to visually update
       ModCyclic.network.sendTo(new PacketSyncPlayerHealth(props.getMaxHealth()), (EntityPlayerMP) event.player);
     }
-  }
-
-  @SubscribeEvent
-  public void onPlayerClone(PlayerEvent.Clone event) {
-    IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
-    IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
-    dest.setDataFromNBT(src.getDataAsNBT());
-    if (src.getMaxHealth() > 0) {
-      UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
-    } //event.isWasDeath() && 
-      //event if it wasnt death, we still want to do this. otherwise on going thru portla, the extra hearts
-      //are hidden because mojang
-      //if health var never used (never eaten a heart) then skip
   }
 
   @Override

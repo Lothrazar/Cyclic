@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.peat.farm;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -47,7 +47,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   private static final int CAPACITY = 64 * Fluid.BUCKET_VOLUME;
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL;
+    REDSTONE, TIMER;
   }
 
   private int needsRedstone = 1;
@@ -55,8 +55,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
 
   public TileEntityPeatFarm() {
     super(12);
-    tank = new FluidTankBase(TANK_FULL);
-    tank.setTileEntity(this);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.initEnergy(0, CAPACITY);
     timer = TIMER_FULL;
@@ -203,8 +202,6 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -216,9 +213,6 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

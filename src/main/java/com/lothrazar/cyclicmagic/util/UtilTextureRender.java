@@ -44,15 +44,10 @@ public class UtilTextureRender {
       Gui.drawModalRectWithCustomSizedTexture(x, y, 0F, 0F, w, h, w, h);
     }
     catch (NullPointerException e) {
-      ModCyclic.logger.error("Null pointer drawTexture;Simple " + res.getPath());
-      ModCyclic.logger.error(e.getMessage());
-      e.printStackTrace();
+      ModCyclic.logger.error("Null pointer drawTexture;Simple " + res.getPath(), e);
     }
     catch (net.minecraft.util.ReportedException e) {
-      ModCyclic.logger.error("net.minecraft.util.ReportedException ");
-      ModCyclic.logger.error(res.getNamespace() + ":" + res.getPath());
-      ModCyclic.logger.error(e.getMessage());
-      e.printStackTrace();
+      ModCyclic.logger.error("net.minecraft.util.ReportedException " + res.getNamespace() + ":" + res.getPath(), e);
     }
   }
 

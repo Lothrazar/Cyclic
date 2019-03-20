@@ -153,7 +153,7 @@ public class EnchantLaunch extends BaseEnchant {
       if (uses >= level) { // level is maxuses
         //now block useage for a while
         if (!feet.isEmpty()) {
-          player.getCooldownTracker().setCooldown(feet.getItem(), COOLDOWN);
+          UtilEntity.setCooldownItem(player, feet.getItem(), COOLDOWN);
         }
         uses = 0;
       }

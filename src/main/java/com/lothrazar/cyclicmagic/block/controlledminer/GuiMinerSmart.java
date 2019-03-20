@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.controlledminer;
 
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
@@ -43,6 +45,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonTileEntityField btnSize;
   private ButtonTileEntityField btnWhitelist;
   ITileStackWrapper te;
+  private GuiSliderInteger slider;
 
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
@@ -57,6 +60,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     //first the main top left type button
     int id = 2, x, y;
     btnWhitelist = new ButtonTileEntityField(id++,
@@ -73,10 +77,27 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.addButton(btnSize);
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,
+    slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,
         TileEntityControlledMiner.Fields.HEIGHT.ordinal());
-    sliderDelay.setTooltip("button.miner.height");
-    this.addButton(sliderDelay);
+    slider.setTooltip("button.miner.height");
+    this.addButton(slider);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 
   @Override

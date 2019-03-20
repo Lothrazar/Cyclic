@@ -23,12 +23,19 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFluidPump extends GuiBaseContainer {
+
+  private GuiSliderInteger slider;
 
   public GuiFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
     super(new ContainerFluidPump(inventoryPlayer, tileEntity), tileEntity);
@@ -36,18 +43,48 @@ public class GuiFluidPump extends GuiBaseContainer {
   }
 
   @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+    super.actionPerformed(button);
+  }
+
+  @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 1;
     int width = 164;
     int h = 20;
     int x = this.guiLeft + 6;
     int y = this.guiTop + 28;
     //not more than the cable can handle
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, width, h, 1,
-        TileEntityCableBase.TRANSFER_FLUID_PER_TICK,
-        TileEntityFluidPump.Fields.TRANSFER_RATE.ordinal());
-    sliderDelay.setTooltip("pump.rate");
-    this.addButton(sliderDelay);
+    int fld = TileEntityFluidPump.Fields.TRANSFER_RATE.ordinal();
+    slider = new GuiSliderInteger(tile, id++, x, y,
+        width, h,
+        1, TileEntityCableBase.TRANSFER_FLUID_PER_TICK, //min max
+        fld, "pump.rate");
+    this.addButton(slider);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

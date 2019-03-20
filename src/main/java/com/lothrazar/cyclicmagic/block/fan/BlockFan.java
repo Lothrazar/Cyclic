@@ -33,6 +33,9 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -48,6 +51,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
+  public static final PropertyBool IS_LIT = PropertyBool.create("lit");
+
   public BlockFan() {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_FAN);
@@ -71,6 +76,16 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
   public void register() {
     BlockRegistry.registerBlock(this, "fan", GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
+  }
+
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, new IProperty[] { PROPERTYFACING, IS_LIT });
+  }
+
+  @Override
+  public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
+    return super.getActualState(state, world, origin);
   }
 
   private boolean enabled;

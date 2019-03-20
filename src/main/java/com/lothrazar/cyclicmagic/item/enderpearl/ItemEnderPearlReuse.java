@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.item.enderpearl;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -43,7 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
 
   private static final int durability = 2000;
-  private static final int cooldown = 10;
+  private static final int COOLDOWN = 10;
 
   public static enum OrbType {
     NORMAL, MOUNTED;
@@ -57,20 +58,20 @@ public class ItemEnderPearlReuse extends BaseTool implements IHasRecipe {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    ItemStack itemStackIn = playerIn.getHeldItem(hand);
-    worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-    playerIn.getCooldownTracker().setCooldown(this, cooldown);
-    if (!worldIn.isRemote) {
-      EntityEnderPearl entityenderpearl = new EntityEnderPearl(worldIn, playerIn); //func_184538_a
-      entityenderpearl.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-      worldIn.spawnEntity(entityenderpearl);
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    ItemStack itemStackIn = player.getHeldItem(hand);
+    world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
+    if (!world.isRemote) {
+      EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, player); //func_184538_a
+      entityenderpearl.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+      world.spawnEntity(entityenderpearl);
       if (orbType == OrbType.MOUNTED) {
-        playerIn.dismountRidingEntity();
-        playerIn.startRiding(entityenderpearl);
+        player.dismountRidingEntity();
+        player.startRiding(entityenderpearl);
       }
     }
-    super.onUse(itemStackIn, playerIn, worldIn, hand);
+    super.onUse(itemStackIn, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
 

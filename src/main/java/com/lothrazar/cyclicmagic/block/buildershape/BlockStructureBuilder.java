@@ -98,8 +98,6 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityStructureBuilder.TIMER_FULL = config.getInt("builder_block", Const.ConfigCategory.machineTimer,
-        25, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt("builder_block", Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

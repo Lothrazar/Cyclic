@@ -36,6 +36,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -60,7 +61,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasRecipe, IContent {
 
   private static final int durability = 5000;
-  private static final int cooldown = 15;
+  private static final int COOLDOWN = 15;
 
   public ItemRandomizer() {
     super(durability);
@@ -156,19 +157,19 @@ public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasReci
   }
 
   @Override
-  public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
     if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
-      return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
+      return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
     }
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
-    if (worldObj.isRemote) {
+    if (world.isRemote) {
       ModCyclic.network.sendToServer(new PacketRandomize(pos, side, ActionType.values()[ActionType.get(stack)]));
     }
-    player.getCooldownTracker().setCooldown(this, cooldown);
-    this.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
+    this.onUse(stack, player, world, hand);
+    return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
   }
 
   @Override

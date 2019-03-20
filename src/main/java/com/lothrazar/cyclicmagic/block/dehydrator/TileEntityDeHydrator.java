@@ -42,12 +42,11 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   static final int SLOT_RECIPE = 0;
   public static final int STASH_SIZE = 4;
   public static final int TANK_FULL = 16 * Fluid.BUCKET_VOLUME;
-
   private int timerMax = 1;
   private RecipeDeHydrate lastRecipe = null;
 
   public static enum Fields {
-    REDSTONE, TIMER, TIMERMAX, FUEL;
+    REDSTONE, TIMER, TIMERMAX;
   }
 
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), 1, 1);
@@ -120,7 +119,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     if (tank.getCapacity() == tank.getFluidAmount()) {
       return false;//full water
     }
-
     if (lastRecipe.tryPayCost(this)) {
       tank.fill(new FluidStack(FluidRegistry.WATER, lastRecipe.getFluid()), true);
       //only create the output if cost was successfully paid
@@ -177,8 +175,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -194,9 +190,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

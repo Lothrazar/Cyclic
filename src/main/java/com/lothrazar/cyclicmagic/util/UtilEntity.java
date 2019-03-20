@@ -39,7 +39,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -49,6 +51,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -519,6 +522,39 @@ public class UtilEntity {
     }
     catch (Exception e) {
       return null;
+    }
+  }
+
+  private static void setCooldownItemInternal(EntityPlayer player, Item item, int cooldown) {
+    player.getCooldownTracker().setCooldown(item, cooldown);
+  }
+
+  /**
+   * Threadsafe
+   * 
+   * https://github.com/SpongePowered/SpongeForge/issues/2301
+   * 
+   * https://github.com/Lothrazar/Cyclic/issues/1065
+   * 
+   * @param player
+   * @param item
+   * @param cooldown
+   */
+  public static void setCooldownItem(EntityPlayer player, Item item, int cooldown) {
+    if (player.world.isRemote) {
+      //client  
+      setCooldownItemInternal(player, item, cooldown);
+    }
+    else {
+      //server 
+      final MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
+      s.addScheduledTask(new Runnable() {
+
+        @Override
+        public void run() {
+          setCooldownItemInternal(player, item, cooldown);
+        }
+      });
     }
   }
 }

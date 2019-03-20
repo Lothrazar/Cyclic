@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.item.core;
 import java.util.List;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -212,7 +213,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
       break;
     }
     UtilItemStack.damageItem(player, stack, shots);
-    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
+    UtilEntity.setCooldownItem(player, stack.getItem(), COOLDOWN);
     super.onPlayerStoppedUsing(stack, world, entity, chargeTimer);
     player.swingArm(EnumHand.MAIN_HAND);
   }

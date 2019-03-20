@@ -60,10 +60,12 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
     this.setDisplayTile(getDefaultDisplayTile());
   }
 
+  @Override
   public int getSizeInventory() {
     return 9;
   }
 
+  @Override
   public IBlockState getDefaultDisplayTile() {
     return Blocks.DISPENSER.getDefaultState();//.withProperty(BlockChest.FACING, EnumFacing.NORTH);
   }
@@ -88,6 +90,7 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
     super.readEntityFromNBT(compound);
   }
 
+  @Override
   public String getGuiID() {
     return "minecraft:dispenser";
   }
@@ -135,7 +138,7 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
         this.timeSinceDropped = TIME_BTW_DROPS;
       }
       catch (Exception e) {
-        ModCyclic.logger.error(e.getMessage());
+        ModCyclic.logger.error("Minecart dispenser error ", e);
       }
     }
   }
@@ -162,7 +165,7 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
     int i = -1;
     int j = 1;
     for (int k = 0; k < this.getSizeInventory(); ++k) {
-      if (!((ItemStack) this.getStackInSlot(k)).isEmpty() && rand.nextInt(j++) == 0) {
+      if (!this.getStackInSlot(k).isEmpty() && rand.nextInt(j++) == 0) {
         i = k;
       }
     }

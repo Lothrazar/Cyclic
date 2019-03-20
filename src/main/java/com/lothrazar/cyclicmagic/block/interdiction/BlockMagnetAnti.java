@@ -62,6 +62,11 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe, ICo
   }
 
   @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;//true and player suffocates inside hitbox 
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityMagnetAnti();
   }

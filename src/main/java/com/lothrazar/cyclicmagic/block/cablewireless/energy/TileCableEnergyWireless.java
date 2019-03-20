@@ -25,7 +25,6 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
   public static final int SLOT_COUNT = 9;
   List<Integer> slotList = IntStream.rangeClosed(
       0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
-
   private int transferRate = MAX_TRANSFER / 2;
 
   public static enum Fields {

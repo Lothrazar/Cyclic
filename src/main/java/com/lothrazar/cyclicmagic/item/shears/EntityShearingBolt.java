@@ -82,7 +82,7 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
       }
       catch (Exception e) { //keep because a modded entity could be shearable and have issues
         // https://github.com/PrinceOfAmber/Cyclic/issues/120
-        ModCyclic.logger.error(e.getMessage());
+        ModCyclic.logger.error("Error shearing entity from projectile ", e);
       }
     }
     if (this.isDead || mop.getBlockPos() == null) {
@@ -98,10 +98,10 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
         java.util.List<ItemStack> drops = target.onSheared(null, world, pos, FORTUNE);
         for (ItemStack stack : drops) {
           float f = 0.7F;
-          double d = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          double d1 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          double d2 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-          net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(world, (double) pos.getX() + d, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
+          double d = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          double d1 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          double d2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+          net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(world, pos.getX() + d, pos.getY() + d1, pos.getZ() + d2, stack);
           // entityitem.setDefaultPickupDelay();
           if (world.isRemote == false) {
             world.spawnEntity(entityitem);

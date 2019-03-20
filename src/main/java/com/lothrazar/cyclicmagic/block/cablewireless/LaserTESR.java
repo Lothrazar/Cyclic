@@ -55,7 +55,6 @@ public class LaserTESR extends TileEntitySpecialRenderer<TileEntity> {
     //
     //        RenderUtil.renderLaser(laserCnf);
     //      }
-
   }
 
   @Override

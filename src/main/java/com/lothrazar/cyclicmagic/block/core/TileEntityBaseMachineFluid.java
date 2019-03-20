@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.core;
 
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -84,7 +83,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     if (resource.amount + tank.getFluidAmount() > tank.getCapacity()) {//enForce limit
       resource.amount = tank.getCapacity() - tank.getFluidAmount();
     }
-
     int result = tank.fill(resource, doFill);
     tank.setFluid(resource);
     return result;
@@ -103,7 +101,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
-    // tank.setFluid(result);
     return result;
   }
 
@@ -111,7 +108,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     if (tank != null) {
       NBTTagCompound newTag = tank.writeToNBT(new NBTTagCompound());
-      ModCyclic.logger.info("basefluid save " + newTag);
+      //      ModCyclic.logger.info("basefluid save " + newTag);
       tagCompound.setTag(NBT_TANK, newTag);
     }
     return super.writeToNBT(tagCompound);
@@ -120,8 +117,8 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    if (tank != null) {
-      ModCyclic.logger.info("basefluid save " + tagCompound.getCompoundTag(NBT_TANK));
+    if (tank != null && tagCompound.hasKey(NBT_TANK)) {
+      //      ModCyclic.logger.info("basefluid save " + tagCompound.getCompoundTag(NBT_TANK));
       tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
     }
   }

@@ -47,6 +47,6 @@ public class ItemCrystalSpade extends ItemSpade implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', "sandstone", 's', "stickWood");
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', "gemObsidian", 's', "gemDiamond");
   }
 }

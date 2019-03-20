@@ -31,6 +31,7 @@ public class Const {
 
     public static final String folder = "textures/gui/";
     public static final ResourceLocation SLOT_LARGE = new ResourceLocation(Const.MODID, folder + "slot_large.png");//26x
+    public static final ResourceLocation SLOT_LARGE_PLAIN = new ResourceLocation(Const.MODID, folder + "slot_large_plain.png");//26x
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
     public static final ResourceLocation SLOT_GPS = new ResourceLocation(Const.MODID, folder + "slot_gps.png");
     public static final ResourceLocation SLOT_SAPLING = new ResourceLocation(Const.MODID, folder + "slot_sapling.png");
@@ -62,12 +63,13 @@ public class Const {
   }
 
   public static enum ScreenSize {
-    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE, SACK, PLAINWIDE;
+    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE, LARGEPLAIN, SACK, PLAINWIDE;
 
     public int width() {
       switch (this) {
         case STANDARD:
         case STANDARDPLAIN:
+        case LARGEPLAIN:
         case LARGE:
           return 176;
         case LARGEWIDE:
@@ -88,6 +90,7 @@ public class Const {
           return 166;
         case LARGE:
         case LARGEWIDE:
+        case LARGEPLAIN:
           return 212;
         case SACK:
         case PLAINWIDE:
@@ -105,6 +108,7 @@ public class Const {
           return 84;
         case LARGE:
         case LARGEWIDE:
+        case LARGEPLAIN:
           return 130;
         case PLAINWIDE:
         case SACK:
@@ -117,6 +121,7 @@ public class Const {
       switch (this) {
         case LARGE:
         case STANDARD:
+        case LARGEPLAIN:
         case STANDARDPLAIN:
           return Const.PAD;
         case LARGEWIDE:
@@ -144,6 +149,8 @@ public class Const {
           return Res.VILLAGER;
         case SACK:
           return Res.BACKGROUND_SACK;
+        case LARGEPLAIN:
+          return Res.SLOT_LARGE_PLAIN;
         default:
         break;
       }

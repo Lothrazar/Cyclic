@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -58,6 +59,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
+
+  private static final int COOLDOWN = 20;
 
   public ItemLeverRemote() {
     this.setMaxStackSize(1);
@@ -154,7 +157,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
       UtilWorld.toggleLeverPowerState(world, blockPos, blockState);
       UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".powered." + hasPowerHere);
       UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
-      player.getCooldownTracker().setCooldown(this, 20);
+      UtilEntity.setCooldownItem(player, this, COOLDOWN);
       return true;
     }
     else if (player instanceof EntityPlayerMP && world.isRemote == false) {
@@ -179,7 +182,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
         UtilWorld.toggleLeverPowerState(dw, blockPos, blockState);
         ModCyclic.network.sendTo(new PacketChat(this.getTranslationKey() + ".powered." + hasPowerHere, true), mp);
         UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
-        player.getCooldownTracker().setCooldown(this, 20);
+        UtilEntity.setCooldownItem(player, this, COOLDOWN);
         return true;
       }
       catch (Throwable e) {

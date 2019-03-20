@@ -16,13 +16,13 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITickable {
 
   public static enum Fields {
-    FUEL, POWER, N, E, S, W, U, D;
+    RATEOUT, N, E, S, W, U, D;
   }
 
   private static final double PCT_UPDATE_ON_TICK = 0.01;
-  private int power = 1000;
-  //for reference RFT powercells: 250k, 1M, 4M, ; gadgetry 480k
-  public static final int PER_TICK = 1000 * 64;
+  private int transferRate = 1000;
+  //for reference RFT powercells: 250k, 1M, 4M, ; gadgetry 480k 
+  public static final int ITEM_CHARGE_RATE = 1000 * 64;
   public static final int CAPACITY = 1000000;
   private Map<EnumFacing, Boolean> poweredSides;
 
@@ -34,13 +34,6 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
     for (EnumFacing f : EnumFacing.values()) {
       poweredSides.put(f, false);
     }
-  }
-
-  public int getPowerForSide(EnumFacing side) {
-    if (this.getSideHasPower(side))
-      return this.power;
-    else
-      return 0;
   }
 
   public boolean getSideHasPower(EnumFacing side) {
@@ -58,11 +51,8 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
-      case POWER:
-        power = value;
+      case RATEOUT:
+        transferRate = value;
       break;
       case D:
         this.setSideField(EnumFacing.DOWN, value % 2);
@@ -88,10 +78,8 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
-      case POWER:
-        return power;
+      case RATEOUT:
+        return transferRate;
       case D:
         return this.getSideField(EnumFacing.DOWN);
       case E:
@@ -143,7 +131,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
         if (handlerHere != null && handlerOutput != null
             && handlerHere.canExtract() && handlerOutput.canReceive()) {
           //first simulate
-          int drain = handlerHere.extractEnergy(this.power, true);
+          int drain = handlerHere.extractEnergy(transferRate, true);
           if (drain > 0) {
             //now push it into output, but find out what was ACTUALLY taken
             int filled = handlerOutput.receiveEnergy(drain, false);
@@ -167,8 +155,8 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
     if (toCharge.hasCapability(CapabilityEnergy.ENERGY, null)) {
       IEnergyStorage energyItemStack = toCharge.getCapability(CapabilityEnergy.ENERGY, null);
       if (energyItemStack.canReceive() && this.energyStorage.canExtract()) {
-        int canRecieve = energyItemStack.receiveEnergy(PER_TICK, true);
-        int canExtract = this.energyStorage.extractEnergy(PER_TICK, true);
+        int canRecieve = energyItemStack.receiveEnergy(ITEM_CHARGE_RATE, true);
+        int canExtract = this.energyStorage.extractEnergy(ITEM_CHARGE_RATE, true);
         int actual = Math.min(canRecieve, canExtract);
         int toExtract = energyItemStack.receiveEnergy(actual, false);
         this.energyStorage.extractEnergy(toExtract, false);
@@ -178,7 +166,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setInteger("power", power);
+    compound.setInteger("power", transferRate);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setBoolean(f.getName(), poweredSides.get(f));
     }
@@ -188,9 +176,9 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
-    power = compound.getInteger("power");
-    if (power <= 0) {
-      power = 1000;
+    transferRate = compound.getInteger("power");
+    if (transferRate <= 0) {
+      transferRate = 1000;
     }
     poweredSides = new HashMap<EnumFacing, Boolean>();
     for (EnumFacing f : EnumFacing.values()) {

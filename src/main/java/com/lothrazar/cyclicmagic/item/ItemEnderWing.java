@@ -125,7 +125,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
     if (success) {
       UtilItemStack.damageItem(player, held);
       UtilSound.playSound(player, SoundRegistry.warp);
-      player.getCooldownTracker().setCooldown(this, cooldown);
+      UtilEntity.setCooldownItem(player, this, cooldown);
     }
     return success;
   }

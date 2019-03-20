@@ -50,7 +50,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static int TIMER_FULL = 200;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL;
+    TIMER, REDSTONE;
   }
 
   public TileEntityUncrafter() {
@@ -116,8 +116,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         this.markDirty();
       }
       catch (Exception e) {
-        ModCyclic.logger.error("Unhandled exception in uncrafting ");
-        ModCyclic.logger.error(e.getMessage());
+        ModCyclic.logger.error("Unhandled exception in uncrafting ", e);
         e.printStackTrace();
       }
     } //end of timer go
@@ -135,8 +134,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -151,9 +148,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case TIMER:
         this.timer = value;
       break;
