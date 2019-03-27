@@ -42,6 +42,7 @@ public class GuiFan extends GuiBaseContainer {
   private ButtonTileEntityField btnTogglePush;
   private GuiSliderInteger sliderDelay;
   private GuiSliderInteger sliderOffset;
+  private ButtonTileEntityField btnSound;
 
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
@@ -54,10 +55,17 @@ public class GuiFan extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     Keyboard.enableRepeatEvents(true);
-    int id = 2;
-    int w = 18, h = 10;
-    int x = this.guiLeft + 30;
-    int y = this.guiTop + 22;
+    int id = 1;
+    int w = 18, h = 18;
+    int x = this.guiLeft + 4;
+    int y = this.guiTop + 48;
+    btnSound = new ButtonTileEntityField(id++, x, y, tile.getPos(),
+        TileEntityFan.Fields.SILENT.ordinal(), +1, w, h);
+    this.addButton(btnSound);
+    btnSound.setTooltip("button.fan.sound.tooltip");
+    h = 10;
+    x = this.guiLeft + 30;
+    y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();
     sliderDelay = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
         field);
@@ -79,6 +87,7 @@ public class GuiFan extends GuiBaseContainer {
     btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.addButton(btnTogglePush);
+
   }
 
   @Override
@@ -113,7 +122,11 @@ public class GuiFan extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(TileEntityFan.Fields.PUSHPULL.ordinal()));
+    int fld = TileEntityFan.Fields.SILENT.ordinal();
+    btnSound.setTextureIndex(14 + this.tile.getField(fld));
+    fld = TileEntityFan.Fields.PUSHPULL.ordinal();
+    btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(fld));
+
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }
