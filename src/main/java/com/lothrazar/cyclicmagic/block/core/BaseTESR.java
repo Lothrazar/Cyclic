@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.core;
 
+import java.util.function.Function;
 import javax.annotation.Nullable;
-import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
