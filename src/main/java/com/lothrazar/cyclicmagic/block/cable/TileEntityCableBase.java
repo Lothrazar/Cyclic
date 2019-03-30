@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -246,12 +247,15 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   private void tickCableFlow() {
-    ArrayList<EnumFacing> shuffledFaces = new ArrayList<>();
-    for (int i = 0; i < EnumFacing.values().length; i++) {
-      shuffledFaces.add(EnumFacing.values()[i]);
-    }
-    Collections.shuffle(shuffledFaces);
-    for (EnumFacing exportToSide : shuffledFaces) {
+    int[] data = {0, 1,  2, 3, 4, 5};
+    Collections.shuffle(Arrays.asList(data));
+   // ArrayList<EnumFacing> shuffledFaces = new ArrayList<>();
+   // for (int i = 0; i < EnumFacing.values().length; i++) {
+  //    shuffledFaces.add(EnumFacing.values()[i]);
+    //}
+   // Collections.shuffle(shuffledFaces);
+    for(int i : data){
+      EnumFacing exportToSide = EnumFacing.values()[i];
       if (this.isItemPipe() && this.isItemIncomingFromFace(exportToSide) == false
           && this.getBlacklist(exportToSide) == false) {
         moveItems(exportToSide);

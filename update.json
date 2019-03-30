@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.18.5",
-    "1.12.2-recommended": "1.18.5"
+    "1.12.2-latest": "1.18.6",
+    "1.12.2-recommended": "1.18.6"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -314,5 +314,6 @@
 	,"1.18.3":"Fixed uncrafting grinder only working when input stack size was the precise recipe count.  "
 	,"1.18.4":"Fixed some machines having energy (RF) having server-client desync on dedicated servers (could appear as energy appearing empty when its not, or energy bars vibrating up and down).  Item Collector now has a minimum size of 1x1.  Fixed clientside fluid-desync of several blocks.  Fixed Magma Anvil not accepting fluid from some pipes.  Harvester can now gather ender pearls from Ender Lilly from EXU2.  "
 	,"1.18.5":"You can now stack Tanks on top of each other without sneaking.  Added a button in the Fan to silence its sounds.  "
+	,"1.18.6":"Optimize many things to reduce lag. "
   }
 }

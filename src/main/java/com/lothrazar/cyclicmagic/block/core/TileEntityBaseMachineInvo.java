@@ -188,15 +188,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.energyStorage.setEnergyStored(f);
   }
 
-  public double getPercentFormatted() {
-    if (this.getEnergyMax() == 0) {
-      return 0;
-    }
-    double percent = ((float) this.getEnergyCurrent() / (float) this.getEnergyMax());
-    double pctOneDecimal = Math.floor(percent * 1000) / 10;
-    return pctOneDecimal;
-  }
-
   public int getEnergyCost() {
     return this.energyCost;
   }
@@ -213,15 +204,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   public int[] getFieldArray(int length) {
     return IntStream.rangeClosed(0, length - 1).toArray();
-  }
-
-  @Override
-  public boolean isRunning() {
-    if (this.getEnergyCost() > 0) {
-      // update from power cables/batteries next door
-      this.updateIncomingEnergy();
-    }
-    return super.isRunning();
   }
 
   public boolean isDoingWork() {
@@ -574,7 +556,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return (T) invHandler;
     }
     if (this.hasEnergy && capability == CapabilityEnergy.ENERGY) {
-      //      this.initEnergyStorage();
+  
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);
