@@ -556,7 +556,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return (T) invHandler;
     }
     if (this.hasEnergy && capability == CapabilityEnergy.ENERGY) {
-  
+
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);
