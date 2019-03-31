@@ -23,7 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
 
+import com.lothrazar.cyclicmagic.IContent;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.config.Configuration;
 
 public class Const {
 
@@ -162,7 +164,14 @@ public class Const {
   public static final String MODRES = Const.MODID + ":";
   public static final String MODCONF = Const.MODID + ".";
 
-  public class ConfigCategory {
+  public static class ConfigCategory {
+
+    public static boolean getEnabledConfig(IContent content, Configuration config) {
+      return getEnabledConfig(content, content.getName(), config);
+    }
+    public static boolean getEnabledConfig(IContent content, String key, Configuration config) {
+      return config.getBoolean(key, Const.ConfigCategory.content, true, content.getName() + Const.ConfigCategory.contentDefaultText);
+    }
 
     //to store categories. basically an enum/lookup table
     public static final String global = MODCONF + "global";
@@ -181,7 +190,7 @@ public class Const {
     public static final String recipes = MODCONF + "recipes";
     public static final String villagers = MODCONF + "villagers";
     public static final String content = MODCONF + "content";
-    public static final String contentDefaultText = "Set false to delete - requires restart";
+    public static final String contentDefaultText = " Set false to delete - requires restart";
     public static final String modpackMisc = "modpacks";
     public static final String uncrafter = modpackMisc + ".uncrafter";
     public static final String InventoryButtonsModpack = modpackMisc + ".TerrariaButtons";

@@ -66,8 +66,13 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_vacuum", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityVacuum.class, "vacuum_block_te");
+  }
+
+  @Override
+  public String getName() {
+    return "block_vacuum";
   }
 
   private boolean enabled;
@@ -79,7 +84,7 @@ public class BlockVacuum extends BlockBaseFacingInventory implements IHasRecipe,
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("ItemCollector", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

@@ -52,6 +52,10 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
     BlockRegistry.registerBlock(this, "button_large", GuideCategory.BLOCK);
   }
 
+  @Override
+  public String getName() {
+    return "button_large";
+  }
   private boolean enabled;
 
   @Override
@@ -61,7 +65,7 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

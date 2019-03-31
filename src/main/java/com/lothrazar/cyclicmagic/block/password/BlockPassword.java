@@ -72,9 +72,14 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, ICont
   }
 
   @Override
+  public String getName() {
+    return "password_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "password_block", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityPassword.class, getName() + "_te");
     ModCyclic.instance.events.register(this);
   }
 
@@ -87,7 +92,7 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, ICont
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

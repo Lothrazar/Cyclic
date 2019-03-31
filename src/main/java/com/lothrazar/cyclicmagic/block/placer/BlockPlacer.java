@@ -57,9 +57,14 @@ public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe, ICon
   }
 
   @Override
+  public String getName() {
+    return "placer_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "placer_block", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPlacer.class, "placer_block_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityPlacer.class, getName() + "_te");
   }
 
   private boolean enabled;
@@ -71,7 +76,7 @@ public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe, ICon
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

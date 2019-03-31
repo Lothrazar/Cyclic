@@ -73,9 +73,14 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
   }
 
   @Override
+  public String getName() {
+    return "fon";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "fan", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + getName() + "_te");
   }
 
   @Override

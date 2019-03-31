@@ -33,9 +33,14 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe, IC
   }
 
   @Override
+  public String getName() {
+    return "target";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "target", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityArrowTarget.class, getName() + "_te");
   }
 
   private boolean enabled;
@@ -47,7 +52,7 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe, IC
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

@@ -91,8 +91,13 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
 
   @Override
+  public String getName() {
+    return "block_miner_smart";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_miner_smart", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityControlledMiner.class, Const.MODID + "miner_smart_te");
   }
 
@@ -105,8 +110,8 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityControlledMiner.TIMER_FULL = config.getInt("block_miner_smart", Const.ConfigCategory.machineTimer,
+    enabled = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    TileEntityControlledMiner.TIMER_FULL = config.getInt(getName(), Const.ConfigCategory.machineTimer,
         100, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt("block_miner_smart", Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
   }

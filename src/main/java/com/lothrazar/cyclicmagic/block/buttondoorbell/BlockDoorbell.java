@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -51,7 +52,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe, IContent {
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "doorbell_simple", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
   }
 
   private boolean enabled;
@@ -61,6 +62,10 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe, IContent {
     return enabled;
   }
 
+  @Override
+  public String getName() {
+    return "doorbell_simple";
+  }
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -83,7 +88,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe, IContent {
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+  public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(this.getTranslationKey() + ".tooltip"));
   }
 

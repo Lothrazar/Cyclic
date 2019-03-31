@@ -44,6 +44,7 @@ public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
   public static Map<Block, GuideCategory> map = new HashMap<Block, GuideCategory>();
 
+
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
     registerBlock(b, new ItemBlock(b), name, cat);
   }

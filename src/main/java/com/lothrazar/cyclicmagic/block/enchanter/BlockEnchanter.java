@@ -120,10 +120,15 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
   }
 
   @Override
+  public String getName() {
+    return "block_enchanter";
+  }
+
+  @Override
   public void register() {
     FluidsRegistry.registerExp();
     BlockRegistry.registerBlock(this, "block_enchanter", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + "block_enchanter_te");
+    GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + getName() + "_te");
   }
 
   private boolean enabled;
@@ -135,8 +140,8 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("block_enchanter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("block_enchanter", Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-    TileEntityEnchanter.FLUID_COST = config.getInt("block_enchanter_xpjuice", Const.ConfigCategory.fuelCost, 100, 1, 1000, "Experience fluid cost per damage unit");
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    TileEntityEnchanter.FLUID_COST = config.getInt(getName() + "_xpjuice", Const.ConfigCategory.fuelCost, 100, 1, 1000, "Experience fluid cost per damage unit");
   }
 }

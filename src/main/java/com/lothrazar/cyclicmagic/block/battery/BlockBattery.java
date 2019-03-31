@@ -67,9 +67,14 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
   }
 
   @Override
+  public String getName() {
+    return "battery";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, new ItemBlockBattery(this), "battery", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + "battery_te");
+    BlockRegistry.registerBlock(this, new ItemBlockBattery(this), getName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + getName() + "_te");
   }
 
   private boolean enabled;
@@ -81,7 +86,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("battery", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

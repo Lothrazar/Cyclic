@@ -63,8 +63,13 @@ public class BlockShears extends BlockBase implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "block_shears";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_shears", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
   }
 
   private boolean enabled;
@@ -77,7 +82,7 @@ public class BlockShears extends BlockBase implements IHasRecipe, IContent {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    enabled = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("ShearingBlock", category, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

@@ -95,10 +95,15 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   }
 
   @Override
+  public String getName() {
+    return "exp_pylon";
+  }
+
+  @Override
   public void register() {
     FluidsRegistry.registerExp();//it needs EXP fluid to work
-    BlockRegistry.registerBlock(this, new ItemBlockPylon(this), "exp_pylon", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
+    BlockRegistry.registerBlock(this, new ItemBlockPylon(this), getName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityXpPylon.class, getName() + "_te");
   }
 
   private boolean enabled;
@@ -110,7 +115,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

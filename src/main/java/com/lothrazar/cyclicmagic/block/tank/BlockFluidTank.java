@@ -96,8 +96,14 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   }
 
   @Override
+  public String getName() {
+    return "block_storeempty";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, getName() + ", the Fluid Tank. "
+        + Const.ConfigCategory.contentDefaultText);
   }
 
   @SuppressWarnings("deprecation")

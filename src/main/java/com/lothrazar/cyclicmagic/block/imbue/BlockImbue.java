@@ -275,15 +275,20 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   }
 
   @Override
+  public String getName() {
+    return "imbuer";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public void register() {
     ModCyclic.instance.events.register(this);
     BlockRegistry.registerBlock(this, "imbuer", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityImbue.class, "imbuer_te");
+    GameRegistry.registerTileEntity(TileEntityImbue.class, getName() + "_te");
   }
 
   private boolean enabled;

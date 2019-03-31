@@ -103,10 +103,14 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IConte
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(new BlockDice(), "dice", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityDice.class, "dice_te");
+    BlockRegistry.registerBlock(new BlockDice(), getName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityDice.class, getName() + "_te");
   }
 
+  @Override
+  public String getName() {
+    return "dice";
+  }
   private boolean enabled;
 
   @Override

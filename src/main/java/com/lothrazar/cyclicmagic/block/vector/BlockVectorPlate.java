@@ -92,11 +92,15 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
   }
 
   @Override
+  public String getName() {
+    return "plate_vector";
+  }
+
+  @Override
   public void register() {
-    //    BlockVectorPlate plate_vector = new BlockVectorPlate();
-    BlockRegistry.registerBlock(this, new ItemBlockVectorPlate(this), "plate_vector");
+    BlockRegistry.registerBlock(this, new ItemBlockVectorPlate(this), getName());
     GuideRegistry.register(GuideCategory.BLOCKPLATE, this);
-    GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
+    GameRegistry.registerTileEntity(TileEntityVector.class, getName() + "_te");
     ModCyclic.instance.events.register(this);
   }
 
@@ -109,7 +113,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("AerialFaithPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("AerialFaithPlate", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

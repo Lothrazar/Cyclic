@@ -69,7 +69,7 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_library", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
     GameRegistry.registerTileEntity(TileEntityLibraryCtrl.class, Const.MODID + "library_ctrl_te");
     BlockLibraryController lc = new BlockLibraryController();
@@ -85,9 +85,14 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
   }
 
   @Override
+  public String getName() {
+    return "block_library";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    enabled = config.getBoolean("block_library", category, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getName(), category, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

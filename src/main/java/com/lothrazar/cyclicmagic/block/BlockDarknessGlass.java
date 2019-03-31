@@ -74,6 +74,11 @@ public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IConten
   }
 
   @Override
+  public String getName() {
+    return "glass_strong";
+  }
+
+  @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ggg", "gog", "ggg",
         'o', "endstone", 'g', "blockGlassColorless");
@@ -81,7 +86,7 @@ public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IConten
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "glass_strong", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
   }
 
   private boolean enabled;
@@ -93,6 +98,6 @@ public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("glass_strong", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

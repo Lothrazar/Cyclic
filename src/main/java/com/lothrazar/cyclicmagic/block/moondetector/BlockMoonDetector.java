@@ -35,9 +35,14 @@ public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe, I
   }
 
   @Override
+  public String getName() {
+    return "moon_sensor";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "moon_sensor", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityMoon.class, "moon_sensor_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityMoon.class, getName() + "_te");
   }
 
   private boolean enabled;
@@ -49,7 +54,7 @@ public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe, I
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("moon_sensor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

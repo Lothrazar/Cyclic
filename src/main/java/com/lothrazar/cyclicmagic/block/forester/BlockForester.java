@@ -89,9 +89,14 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
   }
 
   @Override
+  public String getName() {
+    return "block_forester";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_forester", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityForester.class, "block_forester_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityForester.class, getName() + "_te");
   }
 
   private boolean enabled;
@@ -103,7 +108,7 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("block_forester", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("block_forester", Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

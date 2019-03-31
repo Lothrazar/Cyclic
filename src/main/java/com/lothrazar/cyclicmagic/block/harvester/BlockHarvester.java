@@ -84,8 +84,13 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
   }
 
   @Override
+  public String getName() {
+    return "harvester_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "harvester_block", GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
   }
 
@@ -98,9 +103,9 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityHarvester.TIMER_FULL = config.getInt("harvester_block", Const.ConfigCategory.machineTimer,
+    enabled = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    TileEntityHarvester.TIMER_FULL = config.getInt(getName(), Const.ConfigCategory.machineTimer,
         150, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt("harvester_block", Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

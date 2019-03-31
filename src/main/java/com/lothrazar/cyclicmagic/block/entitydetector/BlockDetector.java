@@ -92,9 +92,14 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
   }
 
   @Override
+  public String getName() {
+    return "entity_detector";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "entity_detector", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + getName() + "_te");
   }
 
   private boolean enabled;
@@ -106,7 +111,7 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EntityDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EntityDetector", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

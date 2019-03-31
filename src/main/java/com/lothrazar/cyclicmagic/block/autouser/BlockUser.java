@@ -65,6 +65,11 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   }
 
   @Override
+  public String getName() {
+    return "block_user";
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityUser();
   }
@@ -88,8 +93,8 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_user", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
+    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + getName() + "_te");
   }
 
   private boolean enabled;
@@ -101,8 +106,9 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
 
   @Override
   public void syncConfig(Configuration config) {
+
     enabled = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("block_user", Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
     maxAttackPer = config.getInt("AutoUserMaxAttackPerAction", Const.ConfigCategory.modpackMisc, 0, 0, 100, "How many entities can be attacked with one swipe from the block_user when in attack mode.  Zero means no limit.  ");
   }
 }
