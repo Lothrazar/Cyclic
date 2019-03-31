@@ -249,11 +249,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private void tickCableFlow() {
     int[] data = {0, 1,  2, 3, 4, 5};
     Collections.shuffle(Arrays.asList(data));
-   // ArrayList<EnumFacing> shuffledFaces = new ArrayList<>();
-   // for (int i = 0; i < EnumFacing.values().length; i++) {
-  //    shuffledFaces.add(EnumFacing.values()[i]);
-    //}
-   // Collections.shuffle(shuffledFaces);
+
     for(int i : data){
       EnumFacing exportToSide = EnumFacing.values()[i];
       if (this.isItemPipe() && this.isItemIncomingFromFace(exportToSide) == false
