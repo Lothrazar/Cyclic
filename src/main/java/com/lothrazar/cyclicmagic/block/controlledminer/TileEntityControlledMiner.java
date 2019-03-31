@@ -80,7 +80,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(4, new StackWrapper());
 
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES;
   }
 
   public TileEntityControlledMiner() {
@@ -123,10 +123,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         if (this.updateEnergyIsBurning() == false) {
           return;
         }
-        if (this.updateTimerIsZero()) {
-          if (updateMiningProgress()) {
-            this.timer = TIMER_FULL;
-          }
+        if (updateMiningProgress()) {
+          this.timer = TIMER_FULL;
         }
       }
       else { // we do not have power
@@ -351,8 +349,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return blacklistIfZero;
       case RENDERPARTICLES:
         return this.renderParticles;
-      case TIMER:
-        return this.timer;
     }
     return 0;
   }
@@ -380,9 +376,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
-      break;
-      case TIMER:
-        this.timer = value;
       break;
     }
   }

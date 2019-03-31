@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
@@ -52,7 +51,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     te = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
-    this.progressBar = new ProgressBar(this, 10, 72, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
     energyBar.setHeight(50).setY(12);
   }
