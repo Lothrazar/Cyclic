@@ -247,13 +247,18 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "cyclic_wand_build";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "cyclic_wand_build");
+    ItemRegistry.register(this, getName());
     SpellRegistry.register(this);
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this, ChestType.ENDCITY, 15);
     LootTableRegistry.registerLoot(this, ChestType.GENERIC, 1);
-    //      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
+
     ModCyclic.TAB.setTabItemIfNull(this);
   }
 

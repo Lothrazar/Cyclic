@@ -68,8 +68,13 @@ public class ItemVillagerMagic extends BaseItem implements IHasRecipe, IContent 
   }
 
   @Override
+  public String getName() {
+    return "apple_emerald";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "apple_emerald");
+    ItemRegistry.register(this, getName());
     LootTableRegistry.registerLoot(this);
     ModCyclic.instance.events.register(this);
   }

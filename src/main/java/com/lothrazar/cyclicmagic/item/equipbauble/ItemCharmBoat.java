@@ -48,8 +48,13 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipeAndRepair, ICo
   }
 
   @Override
+  public String getName() {
+    return "charm_boat";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_boat", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getName(), GuideCategory.ITEMBAUBLES);
   }
 
   private boolean enabled;
@@ -61,7 +66,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipeAndRepair, ICo
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   /**

@@ -50,8 +50,13 @@ public class ItemGloveClimb extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "glove_climb";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "glove_climb", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getName(), GuideCategory.ITEMBAUBLES);
     LootTableRegistry.registerLoot(this);
   }
 

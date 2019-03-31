@@ -48,8 +48,13 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipeAndRepair, IC
   }
 
   @Override
+  public String getName() {
+    return "charm_speed";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_speed", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getName(), GuideCategory.ITEMBAUBLES);
   }
 
   private boolean enabled;

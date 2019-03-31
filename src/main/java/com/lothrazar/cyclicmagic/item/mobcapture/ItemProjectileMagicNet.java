@@ -126,8 +126,13 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IConte
   }
 
   @Override
+  public String getName() {
+    return "magic_net";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "magic_net", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getName(), GuideCategory.ITEMTHROW);
     EntityMagicNetEmpty.renderSnowball = this;
     EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
     EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
@@ -143,8 +148,8 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IConte
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    String category = Const.ConfigCategory.modpackMisc + ".magic_net";
+    enabled = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    String category = Const.ConfigCategory.modpackMisc + "." + getName();
     // @formatter:off
     String[] deflist = new String[] {
         "minecraft:wither"

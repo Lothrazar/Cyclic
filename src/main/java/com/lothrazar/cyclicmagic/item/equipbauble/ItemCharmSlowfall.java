@@ -56,8 +56,13 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipeAndRepair,
   }
 
   @Override
+  public String getName() {
+    return "charm_wing";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_wing", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getName(), GuideCategory.ITEMBAUBLES);
     LootTableRegistry.registerLoot(this);
   }
 

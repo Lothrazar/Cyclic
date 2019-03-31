@@ -246,11 +246,16 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public void register() {
-    ItemRegistry.register(this, "book_ender", GuideCategory.TRANSPORT);
+    ItemRegistry.register(this, getName(), GuideCategory.TRANSPORT);
     LootTableRegistry.registerLoot(this);
   }
 
   private boolean enabled;
+
+  @Override
+  public String getName() {
+    return "book_ender";
+  }
 
   @Override
   public boolean enabled() {
@@ -259,7 +264,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
     maximumSaved = config.getInt("EnderBookMaxSaved", Const.ConfigCategory.modpackMisc,
         16, 1, 64, "Maximum number of saved waypoints in the ender book.  It still uses " + BTNS_PER_COLUMN +
             " per column, and putting too many may send it offscreen");

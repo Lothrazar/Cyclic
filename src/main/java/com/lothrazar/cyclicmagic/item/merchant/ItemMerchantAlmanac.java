@@ -61,6 +61,11 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe, IConten
     ModCyclic.instance.events.register(this);
   }
 
+  @Override
+  public String getName() {
+    return "tool_trade";
+  }
+
   private boolean enabled;
 
   @Override
@@ -70,7 +75,7 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @SubscribeEvent

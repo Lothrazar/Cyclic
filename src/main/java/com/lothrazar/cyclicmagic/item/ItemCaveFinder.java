@@ -106,8 +106,13 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "tool_spelunker";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_spelunker");
+    ItemRegistry.register(this, getName());
   }
 
   private boolean enabled;
@@ -119,7 +124,7 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
     range = config.getInt("CavefinderRange", Const.ConfigCategory.modpackMisc, 32, 2, 256, "Block Range it will search onclick");
   }
 }

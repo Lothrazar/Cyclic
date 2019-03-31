@@ -66,8 +66,13 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "evoker_fang";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "evoker_fang", GuideCategory.ITEM);
+    ItemRegistry.register(this, getName(), GuideCategory.ITEM);
     LootTableRegistry.registerLoot(this);
     ModCyclic.instance.events.register(this);
   }
