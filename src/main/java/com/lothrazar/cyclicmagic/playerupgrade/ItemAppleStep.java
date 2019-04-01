@@ -117,8 +117,13 @@ public class ItemAppleStep extends ItemFoodCreative implements IHasRecipe, ICont
   }
 
   @Override
+  public String getName() {
+    return "food_step";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "food_step");
+    ItemRegistry.register(this, getName());
     ModCyclic.instance.events.register(this);
   }
 

@@ -45,8 +45,13 @@ public class ItemStirrupsReverse extends BaseTool implements IHasRecipe, IConten
   }
 
   @Override
+  public String getName() {
+    return "tool_mount_inverse";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_mount_inverse");
+    ItemRegistry.register(this, getName());
   }
 
   private boolean enabled;
@@ -58,7 +63,7 @@ public class ItemStirrupsReverse extends BaseTool implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("StirrupInverse", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("StirrupInverse", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

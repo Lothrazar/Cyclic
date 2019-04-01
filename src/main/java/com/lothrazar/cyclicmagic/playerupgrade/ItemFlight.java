@@ -58,8 +58,13 @@ public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent
   }
 
   @Override
+  public String getName() {
+    return "glowing_chorus";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "glowing_chorus");
+    ItemRegistry.register(this, getName());
     ModCyclic.instance.events.register(this);
   }
 
@@ -72,7 +77,7 @@ public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("GlowingChorus(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("GlowingChorus(Food)", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

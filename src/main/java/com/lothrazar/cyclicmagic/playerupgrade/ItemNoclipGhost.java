@@ -86,13 +86,16 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
 
   @Override
   public void register() {
-    //    ItemNoclipGhost corrupted_chorus = new ItemNoclipGhost();
-    ItemRegistry.register(this, "corrupted_chorus");
+    ItemRegistry.register(this, getName());
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this);
     LootTableRegistry.registerLoot(this, ChestType.ENDCITY);
   }
 
+  @Override
+  public String getName() {
+    return "corrupted_chorus";
+  }
   private boolean enabled;
 
   @Override

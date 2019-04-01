@@ -55,8 +55,13 @@ public class ItemWarpSurface extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "tool_elevate";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_elevate", GuideCategory.TRANSPORT);
+    ItemRegistry.register(this, getName(), GuideCategory.TRANSPORT);
     LootTableRegistry.registerLoot(this);
   }
 
@@ -69,7 +74,7 @@ public class ItemWarpSurface extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("RodElevation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("RodElevation", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

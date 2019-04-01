@@ -59,8 +59,13 @@ public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe,
   }
 
   @Override
+  public String getName() {
+    return "inventory_food";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "inventory_food");
+    ItemRegistry.register(this, getName());
     LootTableRegistry.registerLoot(this);
   }
 

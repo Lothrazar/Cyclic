@@ -45,8 +45,13 @@ public class ItemStirrups extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "tool_mount";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_mount");
+    ItemRegistry.register(this, getName());
   }
 
   private boolean enabled;
@@ -58,7 +63,7 @@ public class ItemStirrups extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Stirrups", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Stirrups", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
