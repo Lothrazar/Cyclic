@@ -81,7 +81,10 @@ public class ItemPotionContent implements IContent {
   private final int NORMAL = 3600;
   private PotionTypeCyclic potionTypeSwimII;
 
-  //  private static final int LONG = 9600;
+  @Override
+  public String getName() {
+    return "POTIONMODULE";
+  }
   @Override
   public void register() {
     if (ItemPotionContent.enableEnder) {

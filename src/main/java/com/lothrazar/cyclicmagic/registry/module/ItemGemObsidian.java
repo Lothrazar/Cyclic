@@ -41,13 +41,19 @@ public class ItemGemObsidian extends Item implements IHasOreDict, IHasRecipe, IC
   }
 
   @Override
+  public String getName() {
+    return "crystallized_obsidian";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("crystallized_obsidian", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText
-        + "  Warning, removing this crafting item may cause some recipes to not work correctly or be too inexpensive. so be prepared to customize recipes if you disable this.  It has ore dictionary 'gemObsidian' ");
+    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText
+        + "  Warning, removing this crafting item may cause some recipes to not work correctly or be too inexpensive. "
+        + " So be prepared to customize recipes if you disable this.  It has ore dictionary 'gemObsidian' ");
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, "crystallized_obsidian", GuideCategory.GEAR);
+    ItemRegistry.register(this, getName(), GuideCategory.GEAR);
   }
 }

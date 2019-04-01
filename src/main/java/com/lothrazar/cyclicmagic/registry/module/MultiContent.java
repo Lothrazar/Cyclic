@@ -195,6 +195,11 @@ public class MultiContent implements IContent {
   private boolean cableWireless;
 
   @Override
+  public String getName() {
+    return "TODOFIXME";
+  }
+
+  @Override
   public void register() {
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();

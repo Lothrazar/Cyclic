@@ -21,6 +21,11 @@ import net.minecraftforge.common.config.Configuration;
 public class DynamiteContent implements IContent {
 
   @Override
+  public String getName() {
+    return "ender_tnt";
+  }
+
+  @Override
   public void register() {
     ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1, ExplosionType.NORMAL);
     ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2, ExplosionType.NORMAL);
@@ -28,12 +33,12 @@ public class DynamiteContent implements IContent {
     ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4, ExplosionType.NORMAL);
     ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5, ExplosionType.NORMAL);
     ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6, ExplosionType.NORMAL);
-    ItemRegistry.register(ender_tnt_1, "ender_tnt_1", null);
-    ItemRegistry.register(ender_tnt_2, "ender_tnt_2", null);
-    ItemRegistry.register(ender_tnt_3, "ender_tnt_3", null);
-    ItemRegistry.register(ender_tnt_4, "ender_tnt_4", null);
-    ItemRegistry.register(ender_tnt_5, "ender_tnt_5", null);
-    ItemRegistry.register(ender_tnt_6, "ender_tnt_6", null);
+    ItemRegistry.register(ender_tnt_1, getName() + "_1", null);
+    ItemRegistry.register(ender_tnt_2, getName() + "_2", null);
+    ItemRegistry.register(ender_tnt_3, getName() + "_3", null);
+    ItemRegistry.register(ender_tnt_4, getName() + "_4", null);
+    ItemRegistry.register(ender_tnt_5, getName() + "_5", null);
+    ItemRegistry.register(ender_tnt_6, getName() + "_6", null);
     GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, ender_tnt_1);
     EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
     MultiContent.projectiles.add(ender_tnt_1);
@@ -43,7 +48,11 @@ public class DynamiteContent implements IContent {
     MultiContent.projectiles.add(ender_tnt_5);
     MultiContent.projectiles.add(ender_tnt_6);
     //first the basic recipes
-    page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12), new ItemStack(Blocks.TNT), "paper", new ItemStack(Items.CLAY_BALL), "enderpearl"));
+    page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12),
+        new ItemStack(Blocks.TNT),
+        "paper",
+        new ItemStack(Items.CLAY_BALL),
+        "enderpearl"));
     page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL)));
     page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(Items.CLAY_BALL)));
     page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL)));
@@ -68,6 +77,6 @@ public class DynamiteContent implements IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderBombs", "Dynamite I-IV" + Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderBombs", "Dynamite I-IV" + Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 }
