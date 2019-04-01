@@ -136,7 +136,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
     }
-    //    this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
 
