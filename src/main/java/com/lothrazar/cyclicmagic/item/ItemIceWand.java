@@ -59,8 +59,13 @@ public class ItemIceWand extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "water_freezer";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "water_freezer");
+    ItemRegistry.register(this, getName());
   }
 
   private boolean enabled;
@@ -72,7 +77,7 @@ public class ItemIceWand extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("WaterFroster", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("WaterFroster", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

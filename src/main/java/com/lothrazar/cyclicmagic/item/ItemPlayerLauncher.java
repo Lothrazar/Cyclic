@@ -126,8 +126,13 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe, IContent
   }
 
   @Override
+  public String getName() {
+    return "tool_launcher";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_launcher", GuideCategory.TRANSPORT);
+    ItemRegistry.register(this, getName(), GuideCategory.TRANSPORT);
     ModCyclic.instance.events.register(this);
   }
 
@@ -140,7 +145,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe, IContent
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

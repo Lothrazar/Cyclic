@@ -67,8 +67,13 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "password_remote";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "password_remote");
+    ItemRegistry.register(this, getName());
   }
 
   private boolean enabled;
@@ -80,7 +85,7 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

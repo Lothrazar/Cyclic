@@ -63,8 +63,13 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "tool_prospector";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_prospector");
+    ItemRegistry.register(this, getName());
     LootTableRegistry.registerLoot(this);
   }
 

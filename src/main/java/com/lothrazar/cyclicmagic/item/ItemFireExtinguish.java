@@ -59,8 +59,13 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe, IContent
   }
 
   @Override
+  public String getName() {
+    return "fire_killer";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "fire_killer");
+    ItemRegistry.register(this, getName());
   }
 
   private boolean enabled;
@@ -72,7 +77,7 @@ public class ItemFireExtinguish extends BaseTool implements IHasRecipe, IContent
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("WaterSplasher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("WaterSplasher", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

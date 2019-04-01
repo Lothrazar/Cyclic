@@ -132,8 +132,13 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getName() {
+    return "carbon_paper";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "carbon_paper");
+    ItemRegistry.register(this, getName());
   }
 
   private boolean enabled;
