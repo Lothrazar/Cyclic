@@ -74,7 +74,7 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
 
   @Override
   public String getName() {
-    return "fon";
+    return "fan";
   }
 
   @Override
@@ -102,7 +102,7 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Fan", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Fan", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
