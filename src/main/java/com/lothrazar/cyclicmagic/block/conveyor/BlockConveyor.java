@@ -74,12 +74,12 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   protected boolean keepEntityGrounded = true;
   private BlockConveyor corner;
   private BlockConveyor angled;
-  protected BlockConveyor dropFlat;
+  protected BlockConveyor flatType;
   public static boolean sneakPlayerAvoid;
 
   public BlockConveyor(SpeedType t) {
     super(Material.ROCK);
-    dropFlat = this;
+    flatType = this;
     type = t;
     switch (type) {
       case LARGE:
@@ -126,7 +126,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
           world.setBlockState(pos, state.withProperty(BlockConveyorAngle.FLIPPED, false).withProperty(PROPERTYFACING, EnumFacing.EAST));
         }
         else {
-          world.setBlockState(pos, dropFlat.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+          world.setBlockState(pos, flatType.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
         }
         return true;
       }
