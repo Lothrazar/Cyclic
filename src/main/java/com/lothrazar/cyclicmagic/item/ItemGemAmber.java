@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.module;
+package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasOreDict;
@@ -7,30 +7,28 @@ import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemGemObsidian extends Item implements IHasOreDict, IHasRecipe, IContent {
+public class ItemGemAmber extends Item implements IHasOreDict, IHasRecipe, IContent {
 
   @Override
   public String[] getOreDict() {
-    return new String[] { "gemObsidian" };
+    return new String[] { "gemAmber" };
   }
 
   @Override
   public IRecipe addRecipe() {
     return RecipeRegistry.addShapedOreRecipe(new ItemStack(this, 2),
         "ofo",
-        "beb",
+        "bob",
         "ofo",
-        'e', "gemEmerald",
-        'b', Items.BLAZE_ROD,
-        'o', "obsidian",
-        'f', Blocks.CHORUS_FLOWER);
+        'b', Items.SNOWBALL,
+        'o', "logWood",
+        'f', Items.NETHERBRICK);
   }
 
   private boolean enabled;
@@ -42,7 +40,7 @@ public class ItemGemObsidian extends Item implements IHasOreDict, IHasRecipe, IC
 
   @Override
   public String getName() {
-    return "crystallized_obsidian";
+    return "crystallized_amber";
   }
 
   @Override

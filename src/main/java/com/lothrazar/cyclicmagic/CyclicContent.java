@@ -78,6 +78,8 @@ import com.lothrazar.cyclicmagic.item.ItemEnderWing;
 import com.lothrazar.cyclicmagic.item.ItemFangs;
 import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
 import com.lothrazar.cyclicmagic.item.ItemFlight;
+import com.lothrazar.cyclicmagic.item.ItemGemAmber;
+import com.lothrazar.cyclicmagic.item.ItemGemObsidian;
 import com.lothrazar.cyclicmagic.item.ItemIceWand;
 import com.lothrazar.cyclicmagic.item.ItemInventoryUnlock;
 import com.lothrazar.cyclicmagic.item.ItemLeverRemote;
@@ -132,7 +134,6 @@ import com.lothrazar.cyclicmagic.item.torchmagic.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.torchmagic.ItemTorchThrower;
 import com.lothrazar.cyclicmagic.liquid.milk.FluidMilk;
 import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
-import com.lothrazar.cyclicmagic.module.ItemGemObsidian;
 import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import net.minecraft.init.Blocks;
@@ -147,6 +148,7 @@ public class CyclicContent {
   public static void init() {
     content = new ArrayList<IContent>();
     content.add(new BlockFluidDrain());
+    content.add(new ItemGemAmber());
     content.add(new ItemGemObsidian());
     content.add(new ItemPotionContent());
     content.add(new MultiContent());
