@@ -18,7 +18,6 @@ public class TileEntityFireStarter extends TileEntityBaseMachineInvo implements 
     NORMAL, DARK, FROST;
   }
 
-
   private int yOffset = 0;
   private int fireType = 0;
   private int hOffset = 0;

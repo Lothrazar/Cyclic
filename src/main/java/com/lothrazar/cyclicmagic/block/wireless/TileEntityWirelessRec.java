@@ -42,8 +42,7 @@ public class TileEntityWirelessRec extends TileEntityBaseMachineInvo implements 
   }
 
   @Override
-  public void update() {
-  }
+  public void update() {}
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {

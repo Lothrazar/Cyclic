@@ -67,6 +67,7 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   public String getName() {
     return "block_anvil_magma";
   }
+
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return BlockAnvilAuto.Z_AXIS_AABB;

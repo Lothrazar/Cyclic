@@ -80,6 +80,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
   public String getName() {
     return "clock";
   }
+
   private boolean enabled;
 
   @Override

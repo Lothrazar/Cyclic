@@ -258,7 +258,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this, ChestType.ENDCITY, 15);
     LootTableRegistry.registerLoot(this, ChestType.GENERIC, 1);
-
     ModCyclic.TAB.setTabItemIfNull(this);
   }
 

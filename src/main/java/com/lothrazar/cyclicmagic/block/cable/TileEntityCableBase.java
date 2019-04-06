@@ -192,7 +192,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
 
   private String getIncomingStringsEnergy() {
     String quantity = this.getEnergyCurrent() + "";
-
     String incomingFace = getIncomingStringsFromMap(this.mapIncomingEnergy);
     if (incomingFace.isEmpty() == false) {
       quantity += " " + UtilChat.lang("cyclic.fluid.flowing") + incomingFace;

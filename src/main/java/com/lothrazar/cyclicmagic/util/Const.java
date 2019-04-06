@@ -169,6 +169,7 @@ public class Const {
     public static boolean getEnabledConfig(IContent content, Configuration config) {
       return getEnabledConfig(content, content.getName(), config);
     }
+
     public static boolean getEnabledConfig(IContent content, String key, Configuration config) {
       return config.getBoolean(key, Const.ConfigCategory.content, true, content.getName() + Const.ConfigCategory.contentDefaultText);
     }

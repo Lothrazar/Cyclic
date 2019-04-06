@@ -56,6 +56,7 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
   public String getName() {
     return "button_large";
   }
+
   private boolean enabled;
 
   @Override

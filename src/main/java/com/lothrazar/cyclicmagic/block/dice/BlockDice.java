@@ -111,6 +111,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IConte
   public String getName() {
     return "dice";
   }
+
   private boolean enabled;
 
   @Override

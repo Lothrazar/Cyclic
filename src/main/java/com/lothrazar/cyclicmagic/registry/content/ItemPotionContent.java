@@ -85,6 +85,7 @@ public class ItemPotionContent implements IContent {
   public String getName() {
     return "POTIONMODULE";
   }
+
   @Override
   public void register() {
     if (ItemPotionContent.enableEnder) {

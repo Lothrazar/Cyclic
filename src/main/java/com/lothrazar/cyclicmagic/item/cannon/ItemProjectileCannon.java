@@ -79,6 +79,7 @@ public class ItemProjectileCannon extends BaseItem implements IHasRecipe, IConte
   public String getName() {
     return "laser_cannon";
   }
+
   private boolean enabled;
 
   @Override

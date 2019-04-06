@@ -84,6 +84,7 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
   public String getName() {
     return "fluid_placer";
   }
+
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getName(), null);

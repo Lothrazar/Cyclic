@@ -66,6 +66,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe, IContent {
   public String getName() {
     return "doorbell_simple";
   }
+
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("doorbell", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

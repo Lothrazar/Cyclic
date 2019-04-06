@@ -96,6 +96,7 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
   public String getName() {
     return "corrupted_chorus";
   }
+
   private boolean enabled;
 
   @Override

@@ -79,7 +79,6 @@ public class ItemHorseTame extends BaseItem implements IHasRecipe, IContent {
       return;
     }
     EntityPlayer player = (EntityPlayer) event.getEntity();
-
     ItemStack itemstack = event.getItemStack();
     if (itemstack != null && itemstack.getItem() instanceof ItemHorseTame && itemstack.getCount() > 0) {
       if (event.getTarget() instanceof EntityZombieHorse || event.getTarget() instanceof EntitySkeletonHorse) {

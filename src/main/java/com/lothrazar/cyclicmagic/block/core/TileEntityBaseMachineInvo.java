@@ -147,12 +147,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         this.invHandler.canExtract(index);
   }
 
-
   protected void initEnergy(EnergyStore store, int energyCost) {
     this.energyStorage = store;
     this.hasEnergy = true;
     this.setEnergyCost(energyCost);
   }
+
   public int getEnergyMax() {
     if (energyStorage == null) {
       return 0;
@@ -513,7 +513,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return (T) invHandler;
     }
     if (this.hasEnergy && capability == CapabilityEnergy.ENERGY) {
-
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);

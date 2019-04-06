@@ -87,7 +87,6 @@ public class GuiFan extends GuiBaseContainer {
     btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.addButton(btnTogglePush);
-
   }
 
   @Override
@@ -126,7 +125,6 @@ public class GuiFan extends GuiBaseContainer {
     btnSound.setTextureIndex(14 + this.tile.getField(fld));
     fld = TileEntityFan.Fields.PUSHPULL.ordinal();
     btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(fld));
-
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

@@ -57,7 +57,6 @@ public class BlockDeHydrator extends BlockBaseFacing implements IContent, IHasRe
   public BlockDeHydrator() {
     super(Material.IRON);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_DEHYDRATOR);
-
     this.setTranslucent();
     RecipeDeHydrate.initAllRecipes();
   }

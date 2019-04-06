@@ -69,6 +69,7 @@ public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasR
   public String getName() {
     return "block_screen";
   }
+
   private boolean enabled;
 
   @Override

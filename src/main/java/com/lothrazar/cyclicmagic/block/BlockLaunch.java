@@ -57,7 +57,6 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
 
   public static boolean sneakPlayerAvoid;
   private LaunchType type;
-
   private SoundEvent sound;
 
   private float getPower() {
@@ -139,7 +138,6 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
             's', Blocks.NETHER_BRICK,
             'g', "slimeball",
             'i', "nuggetIron");
-                
       break;
       default:
       break;

@@ -74,6 +74,7 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, ICont
   public String getName() {
     return "block_miner";
   }
+
   private boolean enabled;
 
   @Override

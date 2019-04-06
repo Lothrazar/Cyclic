@@ -67,6 +67,7 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe, 
   public String getName() {
     return "ender_wool";
   }
+
   private boolean enabled;
 
   @Override
