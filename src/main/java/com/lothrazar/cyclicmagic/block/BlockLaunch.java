@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFlat;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -37,6 +38,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -94,6 +96,9 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
       return;
     }
     UtilEntity.launch(entity, ANGLE, getPower());
+    if (entity instanceof EntityPlayer) {
+      ((EntityPlayer) entity).addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, 300, 0));
+    }
     this.playClickOnSound(worldIn, pos);
   }
 

@@ -143,20 +143,19 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
           // if the player changed dimension while a ghost, thats not
           // allowed. dont tp them back
           player.setGameType(GameType.SURVIVAL);
-          player.attackEntityFrom(DamageSource.MAGIC, 50);
+          player.attackEntityFrom(DamageSource.MAGIC, 500);
         }
         else {
           BlockPos currentPos = player.getPosition();
-          BlockPos sourcePos = props.getChorusStart();//new BlockPos(Double.parseDouble(p[0]), Double.parseDouble(p[1]), Double.parseDouble(p[2]));
+          BlockPos sourcePos = props.getChorusStart();
           if (world.isAirBlock(currentPos) && world.isAirBlock(currentPos.up())) {
             //then we can stay, but add nausea
-            player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, Const.TICKS_PER_SEC * POTION_SECONDS));
+            player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, Const.TICKS_PER_SEC * POTION_SECONDS));
             player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, Const.TICKS_PER_SEC * POTION_SECONDS));
           }
           else {
             //teleport back home	
             UtilEntity.teleportWallSafe(player, world, sourcePos);
-            //player.setPositionAndUpdate(Double.parseDouble(p[0]), Double.parseDouble(p[1]), Double.parseDouble(p[2]));
           }
           player.fallDistance = 0.0F;
           player.setGameType(GameType.SURVIVAL);

@@ -57,7 +57,6 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private static final int SLOT = 0;
   private static final int TIMER_SIDE_INPUT = 15;
   public static final int TRANSFER_FLUID_PER_TICK = 1000;
-  public static final int MAX_CAPACITY = Integer.MAX_VALUE / 2;
   //config
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
   private int labelTimer = 0;
@@ -73,10 +72,10 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   public TileEntityCableBase(boolean hasItems, boolean hasFluid, boolean hasEnergy) {
     super((hasItems) ? 1 : 0);
     if (hasFluid) {
-      tank = new FluidTankBase(MAX_CAPACITY);
+      tank = new FluidTankBase(MENERGY);
     }
     if (hasEnergy) {
-      initEnergy(new EnergyStore(MAX_CAPACITY), 0);
+      initEnergy(new EnergyStore(MENERGY), 0);
       this.setEnergyCost(0);
     }
     itemTransport = hasItems;
@@ -342,7 +341,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (handlerHere != null && handlerOutput != null
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
       //first simulate
-      int drain = handlerHere.extractEnergy(MAX_CAPACITY, true);
+      int drain = handlerHere.extractEnergy(MENERGY, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
         int filled = handlerOutput.receiveEnergy(drain, false);

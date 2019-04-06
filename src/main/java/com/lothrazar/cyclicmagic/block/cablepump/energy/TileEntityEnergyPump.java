@@ -49,8 +49,7 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
 
   public TileEntityEnergyPump() {
     super(0);
-    this.initEnergy(new EnergyStore(TileEntityCableBase.MAX_CAPACITY,
-        TileEntityCableBase.MAX_CAPACITY, TileEntityCableBase.MAX_CAPACITY), 0);
+    this.initEnergy(new EnergyStore(MENERGY), 0);
   }
 
   @Override
