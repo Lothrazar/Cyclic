@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.skill;
+package com.lothrazar.cyclicmagic.playerupgrade.skill;
 
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;

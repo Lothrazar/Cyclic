@@ -6,7 +6,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.SkillRegistry;
-import com.lothrazar.cyclicmagic.skill.ISkill;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

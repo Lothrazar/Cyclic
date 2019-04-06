@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.skill;
+package com.lothrazar.cyclicmagic.playerupgrade.skill;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

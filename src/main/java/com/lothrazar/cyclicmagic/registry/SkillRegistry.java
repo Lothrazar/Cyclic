@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.skill.ISkill;
+import com.lothrazar.cyclicmagic.playerupgrade.skill.ISkill;
 
 public class SkillRegistry {
 
