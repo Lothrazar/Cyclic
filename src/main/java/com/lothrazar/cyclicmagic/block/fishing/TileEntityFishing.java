@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -69,7 +70,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
 
   public TileEntityFishing() {
     super(1 + FISHSLOTS);
-    this.initEnergy(BlockFishing.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY),
+        BlockFishing.FUEL_COST);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
     this.setSlotsForInsert(SLOT_TOOL);

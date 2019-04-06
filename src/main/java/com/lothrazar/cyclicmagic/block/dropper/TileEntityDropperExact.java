@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.dropper;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -44,7 +45,7 @@ public class TileEntityDropperExact extends TileEntityBaseMachineInvo implements
 
   public TileEntityDropperExact() {
     super(9);
-    this.initEnergy(BlockDropperExact.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockDropperExact.FUEL_COST);
     this.setSlotsForExtract(0, 8);
     this.setSlotsForInsert(0, 8);
     timer = delay;

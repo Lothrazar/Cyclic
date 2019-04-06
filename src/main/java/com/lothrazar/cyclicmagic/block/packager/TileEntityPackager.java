@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.packager;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,7 +53,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
     this.setSlotsForInsert(0, INPUT_SIZE - 1);
     this.setSlotsForExtract(INPUT_SIZE, INPUT_SIZE + OUTPUT_SIZE - 1);
-    this.initEnergy(BlockPackager.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockPackager.FUEL_COST);
   }
 
   @Override

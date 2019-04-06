@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.enchanter;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -50,7 +51,7 @@ public class TileEntityEnchanter extends TileEntityBaseMachineFluid implements I
 
   public TileEntityEnchanter() {
     super(2);
-    this.initEnergy(BlockEnchanter.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockEnchanter.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
     tank = new FluidTankFixDesync(TANK_FULL, this);

@@ -485,6 +485,10 @@ public class MultiContent implements IContent {
       //large
       BlockLaunch plate_launch_large = new BlockLaunch(BlockLaunch.LaunchType.LARGE, SoundEvents.BLOCK_SLIME_BREAK);
       BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large", null);
+      //
+      BlockLaunch plate_launch_largea = new BlockLaunch(BlockLaunch.LaunchType.EXTRA, SoundEvents.BLOCK_SLIME_BREAK);
+      BlockRegistry.registerBlock(plate_launch_largea, "plate_launch_extra", null);
+      //
     }
     if (enableConveyor) {
       //corner

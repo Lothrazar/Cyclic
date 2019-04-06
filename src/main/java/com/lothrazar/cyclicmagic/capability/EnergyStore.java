@@ -27,23 +27,12 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class EnergyStore extends EnergyStorage {
 
-  public static final int DEFAULT_CAPACITY = 1000 * 64;
-  public static final int MAX_TRANSFER = 6400;
-
-  public EnergyStore(int cap) {
-    this(cap, true);
+  public EnergyStore(int capAndIO) {
+    this(capAndIO, capAndIO, capAndIO);
   }
 
-  public EnergyStore(int cap, boolean canImportPower) {
-    super(cap);
-    this.maxReceive = (canImportPower) ? MAX_TRANSFER : 0;
-    this.maxExtract = MAX_TRANSFER;
-  }
-
-  public EnergyStore(int cap, int maxRec, int maxExt) {
-    super(cap);
-    this.maxReceive = maxRec;
-    this.maxExtract = maxExt;
+  public EnergyStore(int capacity, int maxReceive, int maxExtract) {
+    super(capacity, maxReceive, maxExtract, 0);//current empty
   }
 
   public void setEnergyStored(int en) {

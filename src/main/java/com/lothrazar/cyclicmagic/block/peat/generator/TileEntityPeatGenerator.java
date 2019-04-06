@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.peat.generator;
 
-import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.peat.ItemPeatFuel;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -38,7 +38,6 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   //Thermal magmatic dynamo makes 40 per tick from lava
   //forestry engine 20/tick
   private int perTick = 128;
-  private static final int CAPACITY = TileEntityBattery.CAPACITY / 2;
   //output slower than we generate
   private static final int TRANSFER_ENERGY_PER_TICK = 128 * 8;
 
@@ -49,7 +48,7 @@ public class TileEntityPeatGenerator extends TileEntityBaseMachineInvo implement
   public TileEntityPeatGenerator() {
     super(1);
     this.setSlotsForInsert(SLOT_INPUT);
-    this.initEnergy(0, CAPACITY, false);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), 0);
     timer = 0;
   }
 

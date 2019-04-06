@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.peat.farm;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -44,7 +45,6 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 20;
   public static final int TIMER_FULL = 5;
   private static final int PER_TICK = 64;
-  private static final int CAPACITY = 64 * Fluid.BUCKET_VOLUME;
 
   public static enum Fields {
     REDSTONE, TIMER;
@@ -57,7 +57,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
     super(12);
     tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setFluidAllowed(FluidRegistry.WATER);
-    this.initEnergy(0, CAPACITY);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), 0);
     timer = TIMER_FULL;
     this.setSlotsForInsert(0, this.getSizeInventory());
   }

@@ -847,9 +847,7 @@ tile.password_block.usersallowed.tooltip=Who can active this block with the pass
 tile.placer_block.guide=Place single blocks in the world.
 tile.placer_block.name=Block Placer
 tile.placer_block.tooltip=Places blocks in front on a timer or redstone
-tile.plate_launch.tooltip13=Jump Strength: 8 blocks
-tile.plate_launch.tooltip18=Jump Strength: 14 blocks
-tile.plate_launch.tooltip8=Jump Strength: 3 blocks
+tile.plate_launch.tooltip=Jump Strength: 
 tile.plate_launch_large.guide=Launch entites up into the air.  Works on both living and non-living entities such as item stacks and experience orbs.
 tile.plate_launch_large.name=Hardened Slime Plate
 tile.plate_launch_med.guide=Launch entites up into the air.  Works on both living and non-living entities such as item stacks and experience orbs.
@@ -857,6 +855,9 @@ tile.plate_launch_med.name=Slime Plate
 tile.plate_launch_small.guide=Jump pad will launch up any entity.  There are three plates each with different jump strength.
 tile.plate_launch_small.guide=Launch entites up into the air.  Works on both living and non-living entities such as item stacks and experience orbs.
 tile.plate_launch_small.name=Soft Slime Plate
+
+tile.plate_launch_extra.guide=Launch entites up into the air.  Works on both living and non-living entities such as item stacks and experience orbs.
+tile.plate_launch_extra.name=Extreme Slime Plate
 
 tile.plate_push.guide=A simple conveyor belt that pushes entities around.  Works on both living and non-living entities such as item stacks and experience orbs.  Rotate with Wrench.
 tile.plate_push.name=Conveyor Belt

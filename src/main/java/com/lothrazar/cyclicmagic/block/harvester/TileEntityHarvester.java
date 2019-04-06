@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.harvester;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
@@ -59,7 +60,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityHarvester() {
     super(3 * 9);
-    this.initEnergy(BlockHarvester.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
     this.setSlotsForExtract(0, this.getSizeInventory());
   }

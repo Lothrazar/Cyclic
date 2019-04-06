@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -56,7 +57,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 1);
     timer = TIMER_FULL;
-    this.initEnergy(BlockUncrafting.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockUncrafting.FUEL_COST);
     this.setSlotsForInsert(SLOT_UNCRAFTME);
     this.setSlotsForExtract(1, this.getSizeInventory() - 1);
   }

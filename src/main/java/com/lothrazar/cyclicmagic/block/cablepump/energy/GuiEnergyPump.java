@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -34,6 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiEnergyPump extends GuiBaseContainer {
 
+  private static final int MAX_ENERGY_SLIDER = 64 * 1000;
   private GuiSliderInteger slider;
 
   public GuiEnergyPump(InventoryPlayer inventoryPlayer, TileEntityEnergyPump tileEntity) {
@@ -51,7 +51,7 @@ public class GuiEnergyPump extends GuiBaseContainer {
     int x = this.guiLeft + 6;
     int y = this.guiTop + 28;
     //not more than the cable can handle
-    slider = new GuiSliderInteger(tile, id++, x, y, width, h, 1, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK,
+    slider = new GuiSliderInteger(tile, id++, x, y, width, h, 1, MAX_ENERGY_SLIDER,
         TileEntityEnergyPump.Fields.TRANSFER_RATE.ordinal());
     slider.setTooltip("pump.rate");
     this.addButton(slider);

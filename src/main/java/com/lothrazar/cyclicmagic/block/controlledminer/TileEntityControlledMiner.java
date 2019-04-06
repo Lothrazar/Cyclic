@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
@@ -85,7 +86,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
 
   public TileEntityControlledMiner() {
     super(1);
-    this.initEnergy(BlockMinerSmart.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
 

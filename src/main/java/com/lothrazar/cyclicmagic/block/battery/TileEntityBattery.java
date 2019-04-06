@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -28,7 +29,7 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
 
   public TileEntityBattery() {
     super(1);
-    this.initEnergy(0, CAPACITY);
+    this.initEnergy(new EnergyStore(CAPACITY, CAPACITY, CAPACITY), 0);
     this.setSlotsForBoth();
     poweredSides = new HashMap<EnumFacing, Boolean>();
     for (EnumFacing f : EnumFacing.values()) {

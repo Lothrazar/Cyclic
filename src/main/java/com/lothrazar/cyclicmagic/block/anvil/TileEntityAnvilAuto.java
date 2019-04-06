@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.anvil;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
@@ -40,7 +41,7 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityAnvilAuto() {
     super(2);
-    this.initEnergy(BlockAnvilAuto.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockAnvilAuto.FUEL_COST);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
   }

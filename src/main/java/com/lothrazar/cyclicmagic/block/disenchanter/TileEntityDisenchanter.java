@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.disenchanter;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
@@ -55,7 +56,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
 
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
-    this.initEnergy(BlockDisenchanter.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockDisenchanter.FUEL_COST);
     this.setSlotsForInsert(0, 4);
     this.setSlotsForExtract(5, 13);
   }

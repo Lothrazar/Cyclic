@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -108,7 +109,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public TileEntityUser() {
     super(INV_SIZE);
     timer = tickDelay;
-    this.initEnergy(BlockUser.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockUser.FUEL_COST);
     this.setSlotsForInsert(0, SLOT_OUTPUT_START - 1);
     this.setSlotsForExtract(SLOT_OUTPUT_START, INV_SIZE - 1);
   }

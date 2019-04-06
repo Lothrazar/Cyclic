@@ -19,7 +19,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
-  public static final int ENERGY_FULL = 1000 * 64;
   public static final int MAX_TRANSFER = 1000;
   public static final int SLOT_COUNT = 9;
   List<Integer> slotList = IntStream.rangeClosed(
@@ -32,7 +31,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
-    this.initEnergy(new EnergyStore(ENERGY_FULL, ENERGY_FULL, ENERGY_FULL));
+    this.initEnergy(new EnergyStore(MENERGY), 0);
   }
 
   @Override

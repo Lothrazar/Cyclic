@@ -50,32 +50,38 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
   private final static int RECIPE_OUT = 6;
 
   public static enum LaunchType {
-    SMALL, MEDIUM, LARGE;
+    SMALL, MEDIUM, LARGE, EXTRA;
   }
 
   public static boolean sneakPlayerAvoid;
   private LaunchType type;
-  private float power;
+
   private SoundEvent sound;
+
+  private float getPower() {
+    float power = 0.0F;
+    switch (type) {
+      case SMALL:
+        power = 0.8F;
+      break;
+      case MEDIUM:
+        power = 1.3F;
+      break;
+      case LARGE:
+        power = 1.8F;
+      break;
+      case EXTRA:
+        power = 5.1F;
+      break;
+    }
+    return power;
+  }
 
   public BlockLaunch(LaunchType t, SoundEvent s) {
     super(Material.IRON);
     this.setSoundType(SoundType.SLIME);
     sound = s;
     type = t;
-    switch (type) {
-      case LARGE:
-        this.power = 1.8F;
-      break;
-      case MEDIUM:
-        this.power = 1.3F;
-      break;
-      case SMALL:
-        this.power = 0.8F;
-      break;
-      default:
-      break;
-    }
   }
 
   protected void playClickOnSound(World worldIn, BlockPos pos) {
@@ -87,15 +93,15 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
     if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
       return;
     }
-    UtilEntity.launch(entity, ANGLE, power);
+    UtilEntity.launch(entity, ANGLE, getPower());
     this.playClickOnSound(worldIn, pos);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    int fakePower = Math.round(this.power * 10); //  String.format("%.1f", this.power))
-    tooltip.add(UtilChat.lang("tile.plate_launch.tooltip" + fakePower));
+    int fakePower = Math.round(this.getPower() * 10); //  String.format("%.1f", this.power)) 
+    tooltip.add(UtilChat.lang("tile.plate_launch.tooltip") + fakePower);
   }
 
   @Override
@@ -116,11 +122,21 @@ public class BlockLaunch extends BlockBaseFlat implements IHasRecipe {
             'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
       break;
       case SMALL:
-        RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUT),
+        RecipeRegistry.addShapedRecipe(new ItemStack(this, RECIPE_OUT * 2),
             "sss", "ggg", "iii",
             's', "slimeball",
             'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
             'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+      break;
+      case EXTRA:
+        RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
+            "sss", "ggg", "iii",
+            's', Blocks.NETHER_BRICK,
+            'g', "slimeball",
+            'i', "nuggetIron");
+                
+      break;
+      default:
       break;
     }
     return null;
