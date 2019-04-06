@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.cannon.ParticleEventManager;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.log.ModLogger;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.module.dispenser.BehaviorProjectileThrowable;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.log;
+package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
