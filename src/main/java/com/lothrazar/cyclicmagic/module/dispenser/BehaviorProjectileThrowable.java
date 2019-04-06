@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.tweak.dispenser;
+package com.lothrazar.cyclicmagic.module.dispenser;
 
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;

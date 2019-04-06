@@ -21,18 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.spell;
+package com.lothrazar.cyclicmagic.playerupgrade.spell;
 
-import com.lothrazar.cyclicmagic.util.UtilParticle;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BaseSpellThrown extends BaseSpell {
+public interface ISpell {
 
-  @Override
-  public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-    UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
-  }
+  public int getID();
+
+  public String getName();
+
+  public String getUnlocalizedName();
+
+  public String getInfo();
+
+  public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side);
+
+  public void spawnParticle(World world, EntityPlayer player, BlockPos pos);
+
+  public void playSound(World world, EntityPlayer player, Block block, BlockPos pos);
+
+  public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
+
+  public ResourceLocation getIconDisplay();
+
+  public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos);
 }

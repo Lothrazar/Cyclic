@@ -21,70 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.spell;
+package com.lothrazar.cyclicmagic.playerupgrade.spell;
 
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BaseSpell implements ISpell {
+public class SpellInventory extends BaseSpell {
 
-  private ResourceLocation icon;
-  private int ID;
-  private String name;
-
-  protected void init(int id, String n) {
-    ID = id;
-    name = n;
-    icon = new ResourceLocation(Const.MODID, "textures/spells/" + name + ".png");
+  public SpellInventory(int id, String n) {
+    super.init(id, n);
   }
 
   @Override
-  public String getName() {
-    return UtilChat.lang("spell." + name + ".name");
-  }
-
-  @Override
-  public String getUnlocalizedName() {
-    return name;
-  }
-
-  @Override
-  public String getInfo() {
-    return UtilChat.lang("spell." + name + ".info");
-  }
-
-  @Override
-  public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
-    UtilSound.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
-  }
-
-  @Override
-  public int getID() {
-    return ID;
-  }
-
-  @Override
-  public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
-    if (player.capabilities.isCreativeMode) {
-      return true;
-    }
-    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand == null) {
-      return false;
+  public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
+    if (!world.isRemote) { // does the isRemote check actually matter
+      player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAND, world, 0, 0, 0);
     }
     return true;
   }
 
   @Override
-  public ResourceLocation getIconDisplay() {
-    return icon;
+  public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+    UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
+  }
+
+  @Override
+  public void playSound(World world, EntityPlayer player, Block block, BlockPos pos) {
+    UtilSound.playSound(player, pos, SoundEvents.ENTITY_GENERIC_DRINK);
   }
 }

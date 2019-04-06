@@ -21,37 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.tweak.dispenser;
+package com.lothrazar.cyclicmagic.playerupgrade.spell;
 
-import com.lothrazar.cyclicmagic.config.IHasConfig;
-import com.lothrazar.cyclicmagic.module.BaseModule;
-import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class DispenserBehaviorModule extends BaseModule implements IHasConfig {
-
-  private boolean seedsEnabled;
+public abstract class BaseSpellThrown extends BaseSpell {
 
   @Override
-  public void onPostInit() {
-    if (seedsEnabled) {
-      for (Item item : Item.REGISTRY) { // GameData.getBlockItemMap().entrySet()){
-        if (item != null && item instanceof IPlantable) {
-          BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorPlantSeed());
-        }
-      }
-    }
-  }
-
-  @Override
-  public void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.blocks;
-    Property prop = config.get(category, "Dispense Plants", true, "Dispensers can plant growable seeds");
-    prop.setRequiresWorldRestart(true);
-    seedsEnabled = prop.getBoolean();
+  public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+    UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
   }
 }

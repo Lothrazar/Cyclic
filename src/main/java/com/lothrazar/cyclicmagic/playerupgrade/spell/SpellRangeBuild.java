@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.spell;
+package com.lothrazar.cyclicmagic.playerupgrade.spell;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;

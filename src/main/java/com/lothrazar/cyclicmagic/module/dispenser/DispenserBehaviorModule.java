@@ -21,31 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.tweak.dispenser;
+package com.lothrazar.cyclicmagic.module.dispenser;
 
-import com.lothrazar.cyclicmagic.util.UtilPlantable;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseModule;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
-public class BehaviorPlantSeed extends BehaviorDefaultDispenseItem {
+public class DispenserBehaviorModule extends BaseModule implements IHasConfig {
+
+  private boolean seedsEnabled;
 
   @Override
-  public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-    World world = source.getWorld();
-    // we want to place in front of the dispenser 
-    //which is based on where its facing
-    //changed in 1.10
-    BlockPos posForPlant = UtilWorld.convertIposToBlockpos(BlockDispenser.getDispensePosition(source));
-    //source.getBlockPos().offset(BlockDispenser.getFacing(source.getBlockMetadata()));
-    ItemStack returning = UtilPlantable.tryPlantSeed(world, posForPlant, stack);
-    if (returning == null)
-      return super.dispenseStack(source, stack);
-    else
-      return returning;
+  public void onPostInit() {
+    if (seedsEnabled) {
+      for (Item item : Item.REGISTRY) { // GameData.getBlockItemMap().entrySet()){
+        if (item != null && item instanceof IPlantable) {
+          BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorPlantSeed());
+        }
+      }
+    }
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.blocks;
+    Property prop = config.get(category, "Dispense Plants", true, "Dispensers can plant growable seeds");
+    prop.setRequiresWorldRestart(true);
+    seedsEnabled = prop.getBoolean();
   }
 }
