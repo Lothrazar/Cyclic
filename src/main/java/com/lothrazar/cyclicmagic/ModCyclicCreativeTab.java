@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.creativetab;
+package com.lothrazar.cyclicmagic;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,7 +42,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CreativeTabCyclic extends CreativeTabs {
+public class ModCyclicCreativeTab extends CreativeTabs {
 
   Item tabItem = null;
   Comparator<ItemStack> comparator = new Comparator<ItemStack>() {
@@ -53,7 +53,7 @@ public class CreativeTabCyclic extends CreativeTabs {
     }
   };
 
-  public CreativeTabCyclic() {
+  public ModCyclicCreativeTab() {
     super(Const.MODID);
   }
 

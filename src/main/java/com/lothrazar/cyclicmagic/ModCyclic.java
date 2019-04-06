@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic;
 
 import java.io.File;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.cannon.ParticleEventManager;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
@@ -81,7 +80,7 @@ public class ModCyclic {
   public static ModLogger logger;
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
-  public final static CreativeTabCyclic TAB = new CreativeTabCyclic();
+  public final static ModCyclicCreativeTab TAB = new ModCyclicCreativeTab();
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   static {
