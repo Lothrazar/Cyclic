@@ -58,13 +58,13 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "tool_torch_launcher";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName());
+    ItemRegistry.register(this, getContentName());
     EntityTorchBolt.register();
   }
 

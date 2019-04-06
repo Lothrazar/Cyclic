@@ -96,13 +96,13 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "block_storeempty";
   }
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, getName() + ", the Fluid Tank. "
+    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, getContentName() + ", the Fluid Tank. "
         + Const.ConfigCategory.contentDefaultText);
   }
 

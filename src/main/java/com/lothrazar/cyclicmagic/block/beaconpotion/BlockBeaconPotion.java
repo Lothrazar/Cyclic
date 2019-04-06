@@ -60,7 +60,7 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "beacon_potion";
   }
 
@@ -110,8 +110,8 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityBeaconPotion.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityBeaconPotion.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -123,7 +123,7 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     TileEntityBeaconPotion.doesConsumePotions = config.getBoolean("PharosBeaconDoesConsumePotions", Const.ConfigCategory.modpackMisc, true, "Set to make Pharos Beacon free and perpetual, so it will not consume potions.  However if this set false, once it reads an effect from a potion, you must break and replace the beacon to wipe out its current effect. ");
     String[] defList = new String[] {
         "minecraft:instant_health",

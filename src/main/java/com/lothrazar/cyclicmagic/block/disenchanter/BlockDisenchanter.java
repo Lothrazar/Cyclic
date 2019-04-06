@@ -89,14 +89,14 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements ICont
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "block_disenchanter";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -108,9 +108,9 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements ICont
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("UnchantPylon", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
-    TileEntityDisenchanter.TIMER_FULL = config.getInt(getName(), Const.ConfigCategory.machineTimer,
+    enabled = config.getBoolean("UnchantPylon", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+    TileEntityDisenchanter.TIMER_FULL = config.getInt(getContentName(), Const.ConfigCategory.machineTimer,
         80, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

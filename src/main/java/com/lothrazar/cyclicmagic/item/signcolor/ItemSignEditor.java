@@ -53,13 +53,13 @@ public class ItemSignEditor extends BaseItem implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "sign_editor";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEM);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEM);
   }
 
   private boolean enabled;
@@ -71,7 +71,7 @@ public class ItemSignEditor extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

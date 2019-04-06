@@ -43,7 +43,7 @@ public class FluidPoison extends Fluid implements IContent {
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
     this.setLuminosity(6);
-    setUnlocalizedName("poison");
+    setUnlocalizedName(getContentName());
   }
 
   @Override
@@ -52,7 +52,7 @@ public class FluidPoison extends Fluid implements IContent {
     FluidRegistry.registerFluid(fluid_poison);
     BlockFluidPoison block_poison = new BlockFluidPoison(fluid_poison);
     fluid_poison.setBlock(block_poison);
-    BlockRegistry.registerBlock(block_poison, "poison", null);
+    BlockRegistry.registerBlock(block_poison, getContentName(), null);
     FluidRegistry.addBucketForFluid(fluid_poison);
   }
 
@@ -66,5 +66,10 @@ public class FluidPoison extends Fluid implements IContent {
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public String getContentName() {
+    return "poison";
   }
 }

@@ -44,7 +44,7 @@ public class FluidMilk extends Fluid implements IContent {
     super("milk", new ResourceLocation(Const.MODID, "blocks/fluid_milk_base"), new ResourceLocation(Const.MODID, "blocks/fluid_milk_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
-    setUnlocalizedName("milk");
+    setUnlocalizedName(getContentName());
   }
 
   @Override
@@ -52,7 +52,7 @@ public class FluidMilk extends Fluid implements IContent {
     FluidRegistry.registerFluid(this);
     Block block_milk = new BlockFluidMilk(this);
     this.setBlock(block_milk);
-    BlockRegistry.registerBlock(block_milk, "milk", null);
+    BlockRegistry.registerBlock(block_milk, getContentName(), null);
     FluidRegistry.addBucketForFluid(this);
   }
 
@@ -66,5 +66,10 @@ public class FluidMilk extends Fluid implements IContent {
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public String getContentName() {
+    return "milk";
   }
 }

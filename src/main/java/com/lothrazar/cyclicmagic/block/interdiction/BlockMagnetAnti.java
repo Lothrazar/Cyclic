@@ -77,14 +77,14 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe, ICo
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "magnet_anti_block";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKPLATE);
-    GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKPLATE);
+    GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -96,7 +96,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe, ICo
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

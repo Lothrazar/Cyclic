@@ -54,7 +54,7 @@ public class BlockBeaconPowered extends BlockBaseHasTile implements IBlockHasTES
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "beacon_redstone";
   }
 
@@ -81,8 +81,8 @@ public class BlockBeaconPowered extends BlockBaseHasTile implements IBlockHasTES
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), null);
-    GameRegistry.registerTileEntity(TileEntityBeaconPowered.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), null);
+    GameRegistry.registerTileEntity(TileEntityBeaconPowered.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -94,7 +94,7 @@ public class BlockBeaconPowered extends BlockBaseHasTile implements IBlockHasTES
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EmptyBeacon", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EmptyBeacon", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

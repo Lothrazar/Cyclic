@@ -72,12 +72,12 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityClock.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityClock.class, getContentName() + "_te");
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "clock";
   }
 

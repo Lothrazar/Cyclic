@@ -101,14 +101,14 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "builder_pattern";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -120,7 +120,7 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     FUEL_COST = config.getInt("builder_pattern", Const.ConfigCategory.fuelCost, 1, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

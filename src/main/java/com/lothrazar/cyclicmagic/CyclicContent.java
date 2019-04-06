@@ -132,6 +132,7 @@ import com.lothrazar.cyclicmagic.item.slingshot.ItemProjectileSlingshot;
 import com.lothrazar.cyclicmagic.item.snowmagic.ItemProjectileSnow;
 import com.lothrazar.cyclicmagic.item.torchmagic.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.torchmagic.ItemTorchThrower;
+import com.lothrazar.cyclicmagic.liquid.amber.FluidAmber;
 import com.lothrazar.cyclicmagic.liquid.milk.FluidMilk;
 import com.lothrazar.cyclicmagic.liquid.poison.FluidPoison;
 import com.lothrazar.cyclicmagic.module.MultiContent;
@@ -155,6 +156,7 @@ public class CyclicContent {
     content.add(new ItemLocation());
     content.add(new BlockLibrary());
     content.add(new FluidPoison());
+    content.add(new FluidAmber());
     content.add(new FluidMilk());
     content.add(new EnchantAutoSmelt());
     content.add(new EnchantBeheading());

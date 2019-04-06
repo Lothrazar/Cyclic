@@ -82,7 +82,7 @@ public class ItemPotionContent implements IContent {
   private PotionTypeCyclic potionTypeSwimII;
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "POTIONMODULE";
   }
 

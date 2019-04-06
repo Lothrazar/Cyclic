@@ -47,13 +47,13 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "sack_ender";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName());
+    ItemRegistry.register(this, getContentName());
     LootTableRegistry.registerLoot(this);
   }
 

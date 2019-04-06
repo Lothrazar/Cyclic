@@ -21,6 +21,12 @@
                     "fluid": "poison"
                 }
             }
+        ],
+        "amber": [{
+                "custom": {
+                    "fluid": "amber"
+                }
+            }
         ]
     }
 }

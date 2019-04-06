@@ -199,7 +199,7 @@ public class BlockCropMagicBean extends BlockCrops implements IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "sprout_seed";
   }
 
@@ -208,7 +208,7 @@ public class BlockCropMagicBean extends BlockCrops implements IContent {
     BlockCropMagicBean sprout = new BlockCropMagicBean();
     BlockRegistry.registerBlock(sprout, "sprout", null);
     ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
-    ItemRegistry.register(sprout_seed, getName());
+    ItemRegistry.register(sprout_seed, getContentName());
     LootTableRegistry.registerLoot(sprout_seed);
     sprout.setSeed(sprout_seed);
   }
@@ -222,7 +222,7 @@ public class BlockCropMagicBean extends BlockCrops implements IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.blocks + ".magicbean";
     allowBonemeal = config.getBoolean("MagicBeanBonemeal", category, true, "Allow bonemeal on magic bean");
     dropSeedOnHarvest = config.getBoolean("MagicBeanGrownDropSeed", category, false, "Allow dropping the seed item if fully grown.  (if its not grown it will still drop when broken)");

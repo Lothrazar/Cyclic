@@ -50,13 +50,13 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "ender_torch";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityTorchBolt.register();
     EntityTorchBolt.item = this;
   }

@@ -195,7 +195,7 @@ public class MultiContent implements IContent {
   private boolean cableWireless;
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "TODOFIXME";
   }
 

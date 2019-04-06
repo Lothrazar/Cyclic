@@ -77,14 +77,14 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "auto_packager";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPackager.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityPackager.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -96,7 +96,7 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 950, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 950, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

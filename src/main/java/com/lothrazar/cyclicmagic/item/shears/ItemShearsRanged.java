@@ -59,12 +59,12 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe, 
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "ender_wool";
   }
 
@@ -77,7 +77,7 @@ public class ItemShearsRanged extends BaseItemProjectile implements IHasRecipe, 
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderWool", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderWool", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

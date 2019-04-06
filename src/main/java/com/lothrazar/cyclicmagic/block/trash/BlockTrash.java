@@ -72,14 +72,14 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "trash";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -91,7 +91,7 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

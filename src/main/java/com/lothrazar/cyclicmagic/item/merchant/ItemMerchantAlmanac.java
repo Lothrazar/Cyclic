@@ -62,7 +62,7 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe, IConten
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "tool_trade";
   }
 
@@ -75,7 +75,7 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @SubscribeEvent

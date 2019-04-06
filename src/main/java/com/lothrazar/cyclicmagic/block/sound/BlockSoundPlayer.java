@@ -38,14 +38,14 @@ public class BlockSoundPlayer extends BlockBaseHasTile implements IHasRecipe, IC
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "sound_player";
   }
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    BlockSoundPlayer.playToEverybody = config.getBoolean(getName() + "_everybody", Const.ConfigCategory.modpackMisc, true,
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    BlockSoundPlayer.playToEverybody = config.getBoolean(getContentName() + "_everybody", Const.ConfigCategory.modpackMisc, true,
         "If true, then this block plays sound to everybody just like a record player.  "
             + "If false, it only plays for the player who most recently opened the block.  "
             + "This is useful for servers if players are using this block to grief others, "
@@ -63,8 +63,8 @@ public class BlockSoundPlayer extends BlockBaseHasTile implements IHasRecipe, IC
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, getContentName() + "_te");
   }
 
   private boolean enabled;

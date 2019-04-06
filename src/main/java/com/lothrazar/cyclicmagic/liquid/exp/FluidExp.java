@@ -43,7 +43,7 @@ public class FluidExp extends Fluid implements IContent {
     super("xpjuice", new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_base"), new ResourceLocation(Const.MODID, "blocks/fluid_xpjuice_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
-    setUnlocalizedName("xpjuice");
+    setUnlocalizedName(getContentName());
   }
 
   @Override
@@ -51,7 +51,7 @@ public class FluidExp extends Fluid implements IContent {
     FluidRegistry.registerFluid(this);
     BlockFluidExp block_exp = new BlockFluidExp();
     this.setBlock(block_exp);
-    BlockRegistry.registerBlock(block_exp, "xpjuice", null);
+    BlockRegistry.registerBlock(block_exp, getContentName(), null);
     FluidRegistry.addBucketForFluid(this);
   }
 
@@ -62,4 +62,9 @@ public class FluidExp extends Fluid implements IContent {
 
   @Override
   public void syncConfig(Configuration config) {}
+
+  @Override
+  public String getContentName() {
+    return "xpjuice";
+  }
 }

@@ -193,13 +193,13 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IContent, I
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "sleeping_mat";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName());
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this, ChestType.BONUS);
   }

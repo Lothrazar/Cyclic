@@ -64,7 +64,7 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "block_anvil_magma";
   }
 
@@ -85,8 +85,8 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -98,8 +98,8 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityAnvilMagma.FLUID_COST = config.getInt(getName() + "_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    TileEntityAnvilMagma.FLUID_COST = config.getInt(getContentName() + "_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
     UtilRepairItem.syncConfig(config);
   }
 

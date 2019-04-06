@@ -52,7 +52,7 @@ public class ItemHorseTame extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName());
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
   }
 
@@ -64,7 +64,7 @@ public class ItemHorseTame extends BaseItem implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "apple_lapis";
   }
 

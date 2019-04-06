@@ -167,11 +167,11 @@ public class Const {
   public static class ConfigCategory {
 
     public static boolean getEnabledConfig(IContent content, Configuration config) {
-      return getEnabledConfig(content, content.getName(), config);
+      return getEnabledConfig(content, content.getContentName(), config);
     }
 
     public static boolean getEnabledConfig(IContent content, String key, Configuration config) {
-      return config.getBoolean(key, Const.ConfigCategory.content, true, content.getName() + Const.ConfigCategory.contentDefaultText);
+      return config.getBoolean(key, Const.ConfigCategory.content, true, content.getContentName() + Const.ConfigCategory.contentDefaultText);
     }
 
     //to store categories. basically an enum/lookup table
