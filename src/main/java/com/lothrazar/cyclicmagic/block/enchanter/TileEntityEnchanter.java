@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.enchanter;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;

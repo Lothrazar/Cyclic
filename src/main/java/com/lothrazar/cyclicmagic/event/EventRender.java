@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.event;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.item.IRenderOutline;
+import com.lothrazar.cyclicmagic.data.IRenderOutline;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;

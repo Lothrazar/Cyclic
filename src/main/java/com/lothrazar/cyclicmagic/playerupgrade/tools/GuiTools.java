@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.net.PacketSwapPlayerStack;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.util.UtilChat;

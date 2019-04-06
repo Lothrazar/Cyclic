@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.entitydetector;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

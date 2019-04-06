@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.villager;
 
 import com.lothrazar.cyclicmagic.config.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseEventModule;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
-import com.lothrazar.cyclicmagic.registry.module.BaseEventModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.villager.druid.VillagerDruid;
 import com.lothrazar.cyclicmagic.villager.sage.VillagerSage;

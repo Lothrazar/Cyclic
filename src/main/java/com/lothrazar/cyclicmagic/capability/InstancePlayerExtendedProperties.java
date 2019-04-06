@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.capability;
 
-import com.lothrazar.cyclicmagic.playerupgrade.ItemAppleStep;
-import com.lothrazar.cyclicmagic.playerupgrade.ItemHeartContainer;
+import com.lothrazar.cyclicmagic.item.ItemAppleStep;
+import com.lothrazar.cyclicmagic.item.ItemHeartContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.nbt.NBTTagCompound;

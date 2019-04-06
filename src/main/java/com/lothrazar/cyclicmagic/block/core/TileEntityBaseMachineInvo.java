@@ -32,8 +32,7 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.InvWrapperRestricted;
-import com.lothrazar.cyclicmagic.gui.ITileFuel;
-import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,7 +54,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
+public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
 
   protected static final int SPEED_FUELED = 8;
   private static final int MAX_SPEED = 10;
@@ -160,7 +159,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return this.energyStorage.getMaxEnergyStored();
   }
 
-  @Override
   public int getEnergyCurrent() {
     if (this.energyStorage == null) {
       return 0;
@@ -211,7 +209,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    * much energy code helped out and referenced and inspired by @Ellpeck and then I tweaked it to fit my needs
    * https://github.com/Ellpeck/ActuallyAdditions/blob/9bed6f7ea59e8aa23fa3ba540d92cd61a04dfb2f/src/main/java/de/ellpeck/actuallyadditions/mod/util/WorldUtil.java#L151
    */
-  @Override
   public boolean hasEnoughEnergy() {
     if (this.getEnergyCost() == 0) {
       return true;
@@ -471,7 +468,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return new int[0];
   }
 
-  @Override
   public int getSpeed() {
     if (this.getEnergyCost() == 0) {
       return this.speed;// does not use fuel. use NBT saved speed value

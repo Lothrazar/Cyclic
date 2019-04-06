@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.block.anvil;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 

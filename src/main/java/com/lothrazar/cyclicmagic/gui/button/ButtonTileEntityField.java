@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.gui.button;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.core.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import net.minecraft.client.Minecraft;

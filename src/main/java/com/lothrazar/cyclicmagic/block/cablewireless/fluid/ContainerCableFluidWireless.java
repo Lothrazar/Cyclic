@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
-import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.util.Const;

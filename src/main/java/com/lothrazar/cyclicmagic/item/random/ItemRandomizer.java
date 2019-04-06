@@ -29,7 +29,7 @@ import java.util.Set;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.IRenderOutline;
+import com.lothrazar.cyclicmagic.data.IRenderOutline;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
