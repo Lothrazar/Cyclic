@@ -87,7 +87,11 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), Blocks.WOODEN_BUTTON, Blocks.STONE_PRESSURE_PLATE, "nuggetIron");
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "bn",
+        "un",
+        'b', Blocks.WOODEN_BUTTON, 'u', Blocks.STONE_PRESSURE_PLATE,
+        'n', "nuggetIron");
   }
 
   @Override

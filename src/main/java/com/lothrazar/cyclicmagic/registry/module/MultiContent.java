@@ -491,54 +491,65 @@ public class MultiContent implements IContent {
       //
     }
     if (enableConveyor) {
+      BlockConveyor plate_push_med = new BlockConveyor(SpeedType.MEDIUM);
+      BlockRegistry.registerBlock(plate_push_med, "plate_push", GuideCategory.BLOCKPLATE);
       //corner
       BlockConveyorCorner plate_push__med_corner = new BlockConveyorCorner(SpeedType.MEDIUM);
-      BlockRegistry.registerBlock(plate_push__med_corner, null, "plate_push_corner", GuideCategory.BLOCKPLATE, false);
+      BlockRegistry.registerBlock(plate_push__med_corner, "plate_push_corner", GuideCategory.BLOCKPLATE);
       //angle
       BlockConveyorAngle plate_push_med_angle = new BlockConveyorAngle(SpeedType.MEDIUM);
-      BlockRegistry.registerBlock(plate_push_med_angle, null, "plate_push_med_angle", GuideCategory.BLOCKPLATE, false);
+      BlockRegistry.registerBlock(plate_push_med_angle, "plate_push_med_angle", GuideCategory.BLOCKPLATE);
       //main
-      BlockConveyor plate_push_med = new BlockConveyor(plate_push__med_corner, plate_push_med_angle);
-      BlockRegistry.registerBlock(plate_push_med, "plate_push", GuideCategory.BLOCKPLATE);
+      plate_push_med.setCorner(plate_push__med_corner);
+      plate_push_med.setAngled(plate_push_med_angle);
       plate_push__med_corner.setDrop(plate_push_med);
       plate_push_med_angle.setDrop(plate_push_med);
       plate_push_med_angle.setCorner(plate_push__med_corner);
       plate_push__med_corner.setAngled(plate_push_med_angle);
+      //main
+      BlockConveyor plate_push_fast = new BlockConveyor(SpeedType.LARGE);
+      BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
       //corner
       BlockConveyorCorner plate_push_fast_corner = new BlockConveyorCorner(SpeedType.LARGE);
-      BlockRegistry.registerBlock(plate_push_fast_corner, null, "plate_push_fast_corner", GuideCategory.BLOCKPLATE, false);
+      BlockRegistry.registerBlock(plate_push_fast_corner, "plate_push_fast_corner", GuideCategory.BLOCKPLATE);
       //angle
       BlockConveyorAngle plate_push_fast_angle = new BlockConveyorAngle(SpeedType.LARGE);
-      BlockRegistry.registerBlock(plate_push_fast_angle, null, "plate_push_fast_angle", GuideCategory.BLOCKPLATE, false);
-      //main
-      BlockConveyor plate_push_fast = new BlockConveyor(plate_push_fast_corner, plate_push_fast_angle);
-      BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
+      BlockRegistry.registerBlock(plate_push_fast_angle, "plate_push_fast_angle", GuideCategory.BLOCKPLATE);
+      plate_push_fast.setCorner(plate_push_fast_corner);
+      plate_push_fast.setAngled(plate_push_fast_angle);
       plate_push_fast_corner.setDrop(plate_push_fast);
       plate_push_fast_angle.setDrop(plate_push_fast);
       plate_push_fast_angle.setCorner(plate_push_fast_corner);
       plate_push_fast_corner.setAngled(plate_push_fast_angle);
+      //SMALL
+      BlockConveyor plate_push_slow = new BlockConveyor(SpeedType.SMALL);
+
+      BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
       //corner
       BlockConveyorCorner plate_push_slow_corner = new BlockConveyorCorner(SpeedType.SMALL);
-      BlockRegistry.registerBlock(plate_push_slow_corner, null, "plate_push_slow_corner", GuideCategory.BLOCKPLATE, false);
+      BlockRegistry.registerBlock(plate_push_slow_corner, "plate_push_slow_corner", GuideCategory.BLOCKPLATE);
       // angle
       BlockConveyorAngle plate_push_slow_angle = new BlockConveyorAngle(SpeedType.SMALL);
-      BlockRegistry.registerBlock(plate_push_slow_angle, null, "plate_push_slow_angle", GuideCategory.BLOCKPLATE, false);
+      BlockRegistry.registerBlock(plate_push_slow_angle, "plate_push_slow_angle", GuideCategory.BLOCKPLATE);
       //main
-      BlockConveyor plate_push_slow = new BlockConveyor(plate_push_slow_corner, plate_push_slow_angle);
-      BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
+      plate_push_slow.setCorner(plate_push_slow_corner);
+      plate_push_slow.setAngled(plate_push_slow_angle);
       plate_push_slow_corner.setDrop(plate_push_slow);
       plate_push_slow_angle.setDrop(plate_push_slow);
       plate_push_slow_angle.setCorner(plate_push_slow_corner);
       plate_push_slow_corner.setAngled(plate_push_slow_corner);
+      //
+      BlockConveyor plate_push_slowest = new BlockConveyor(SpeedType.TINY);
+      BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
       //corner
       BlockConveyorCorner plate_push_slowest_corner = new BlockConveyorCorner(SpeedType.TINY);
-      BlockRegistry.registerBlock(plate_push_slowest_corner, null, "plate_push_slowest_corner", GuideCategory.BLOCKPLATE, false);
+      BlockRegistry.registerBlock(plate_push_slowest_corner, "plate_push_slowest_corner", GuideCategory.BLOCKPLATE);
       //angle
       BlockConveyorAngle plate_push_slowest_angle = new BlockConveyorAngle(SpeedType.TINY);
-      BlockRegistry.registerBlock(plate_push_slowest_angle, null, "plate_push_slowest_angle", GuideCategory.BLOCKPLATE, false);
+      BlockRegistry.registerBlock(plate_push_slowest_angle, "plate_push_slowest_angle", GuideCategory.BLOCKPLATE);
       //main
-      BlockConveyor plate_push_slowest = new BlockConveyor(plate_push_slowest_corner, plate_push_slowest_angle);
-      BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
+      plate_push_slowest.setCorner(plate_push_slowest_corner);
+      plate_push_slowest.setAngled(plate_push_slowest_angle);
       plate_push_slowest_corner.setDrop(plate_push_slowest);
       plate_push_slowest_angle.setDrop(plate_push_slowest);
       plate_push_slowest_angle.setCorner(plate_push_slowest_corner);

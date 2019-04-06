@@ -48,8 +48,10 @@ public class BlockBatteryInfinite extends BlockBaseHasTile implements IHasRecipe
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this),
-        new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.BARRIER));
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "uc",
+        "cu",
+        'c', new ItemStack(Blocks.COMMAND_BLOCK), 'u', new ItemStack(Blocks.BARRIER));
   }
 
   @Override

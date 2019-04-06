@@ -31,7 +31,11 @@ public class BlockConveyorCorner extends BlockConveyor {
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(flatType), new ItemStack(Blocks.GOLD_BLOCK));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
+        "cc",
+        "uu",
+        'c', flatType,
+        'u', new ItemStack(Blocks.COBBLESTONE));
   }
   @Override
   public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {

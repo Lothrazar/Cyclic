@@ -199,7 +199,11 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(flatType), new ItemStack(Blocks.REDSTONE_BLOCK));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
+        "cc",
+        "uu",
+        'c', flatType,
+        'u', new ItemStack(Blocks.STONE));
   }
 
 }
