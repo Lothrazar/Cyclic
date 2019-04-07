@@ -5,11 +5,8 @@ import com.lothrazar.cyclicmagic.data.IHasOreDict;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 
@@ -22,13 +19,14 @@ public class ItemGemAmber extends Item implements IHasOreDict, IHasRecipe, ICont
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this, 2),
-        "ofo",
-        "bob",
-        "ofo",
-        'b', Items.SNOWBALL,
-        'o', "logWood",
-        'f', Items.NETHERBRICK);
+    return null;
+    //    RecipeRegistry.addShapedOreRecipe(new ItemStack(this, 2),
+    //        "ofo",
+    //        "bob",
+    //        "ofo",
+    //        'b', Items.SNOWBALL,
+    //        'o', "logWood",
+    //        'f', Items.NETHERBRICK);
   }
 
   private boolean enabled;
