@@ -42,7 +42,7 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
 
   public static final int RECIPE_SIZE = 4;
   public static final int SLOT_OUTPUT = RECIPE_SIZE;
-  public static final int TANK_FULL = 10000;
+  public static final int TANK_FULL = 64 * 1000;
   public final static int TIMER_FULL = 40;
 
   public static enum Fields {
@@ -82,11 +82,11 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
     if (this.isRunning() == false || this.isInventoryFull(RECIPE_SIZE)) {
       return;//dont drain power when full  
     }
-    if (currentRecipe == null || this.updateEnergyIsBurning() == false) {
+    //no fluid? stop now 
+    if (this.getCurrentFluidStackAmount() == 0) {
       return;
     }
-    //ignore timer when filling up water
-    if (this.getCurrentFluidStackAmount() == 0) {
+    if (currentRecipe == null || this.updateEnergyIsBurning() == false) {
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!

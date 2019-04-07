@@ -39,7 +39,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -126,10 +125,7 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
             || OreDictionary.itemMatches(sInvo, sRecipe, false));
   }
 
-  public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
-    if (tank.getFluidAmount() < this.getFluidSize()) {
-      return false;//not enough fluid, so stop now
-    }
+  public boolean tryPayCost(IInventory invoSource, boolean keepOneMinimum) {
     //if minimum is 2, then the recipe slots always stay locked with at least 1 in each spot
     //otherwise its allowed to drain empty
     int minimum = (keepOneMinimum) ? 2 : 1;
@@ -151,9 +147,6 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
       }
       invoSource.decrStackSize(i, recipeInput.get(i).getCount());
     }
-    //    }
-    //pay fluid last. same for shaped and shapeless
-    tank.drain(this.getFluidSize(), true);
     return true;
   }
 

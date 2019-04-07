@@ -44,7 +44,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   public static final int RECIPE_SIZE = 4;
-  public static final int TANK_FULL = 8 * 1000;
+  public static final int TANK_FULL = 64 * 1000;
   public final static int TIMER_FULL = 32;
 
   public static enum Fields {
@@ -119,16 +119,19 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
       Fluid holding = this.getFluidContainedOrNull();
       boolean fluidAllowed = holding == null || holding == currentRecipe.getFluidResult();
 
-      ModCyclic.logger.error(current + "/" + this.getCapacity());
       if (fluidAllowed
           && current + incoming <= this.getCapacity()
-          && currentRecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+          && currentRecipe.tryPayCost(this,   this.recipeIsLocked == 1)) {
+        ModCyclic.logger.error(current + "/" + this.getCapacity());
+        ModCyclic.logger.error(fluidAllowed + " fluidAllowed");
         //only create the output if cost was successfully paid 
         FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(),
-            current + incoming);
+            //  current +
+            incoming);
         ModCyclic.logger.error(fluidStack.amount + "/" + this.getCapacity());
         this.fill(fluidStack, true);
-        this.setCurrentFluid(fluidStack.amount);
+        this.setCurrentFluid(current +
+            incoming);
         return true;
       }
     }

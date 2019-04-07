@@ -44,8 +44,8 @@ public class GuiSolidifier extends GuiBaseContainer {
     super(new ContainerSolidifier(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileSolidifier.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
-    energyBar.setX(70).setY(16).setWidth(14);
-    this.fluidBar = new FluidBar(this, 98, 16);
+    energyBar.setX(150).setY(16).setWidth(14);
+    this.fluidBar = new FluidBar(this, 66, 16);
     fluidBar.setCapacity(TileSolidifier.TANK_FULL);
   }
 

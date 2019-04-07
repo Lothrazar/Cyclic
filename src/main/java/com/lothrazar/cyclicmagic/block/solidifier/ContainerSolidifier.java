@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerSolidifier extends ContainerBaseMachine {
 
-  static final int MID_SPACING = 133;
+  static final int MID_SPACING = 93;
   static final int SLOTX_START = 8;
   public static final int SLOTY = 30;
   static final int SQ = 18;
@@ -53,8 +53,8 @@ public class ContainerSolidifier extends ContainerBaseMachine {
     }
     //output slot
     addSlotToContainer(new Slot(tile, slotNum,
-        MID_SPACING + 11,
-        SLOTY + 8));
+        MID_SPACING + 13,
+        SLOTY + 10));
     bindPlayerInventory(inventoryPlayer);
   }
 

@@ -44,8 +44,8 @@ public class GuiMelter extends GuiBaseContainer {
     super(new ContainerMelter(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileMelter.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
-    energyBar.setX(70).setY(16).setWidth(14);
-    this.fluidBar = new FluidBar(this, 98, 16);
+    energyBar.setX(150).setY(16).setWidth(14);
+    this.fluidBar = new FluidBar(this, 126, 16);
     fluidBar.setCapacity(TileMelter.TANK_FULL);
   }
 
@@ -82,10 +82,11 @@ public class GuiMelter extends GuiBaseContainer {
     int x = this.guiLeft + ContainerMelter.SLOTX_START - 1;
     int y = this.guiTop + ContainerMelter.SLOTY - 1;
     int s = TileMelter.RECIPE_SIZE;
+    int spac = (Const.SQ + 6);
     for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
-          x + k % 2 * Const.SQ,
-          y + k / 2 * Const.SQ,
+          x + k % 2 * spac,
+          y + k / 2 * spac,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
 

@@ -38,17 +38,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerMelter extends ContainerBaseMachine {
 
   static final int MID_SPACING = 133;
-  static final int SLOTX_START = 8;
+  static final int SLOTX_START = 28;
   public static final int SLOTY = 30;
   static final int SQ = 18;
 
   public ContainerMelter(InventoryPlayer inventoryPlayer, TileMelter te) {
     super(te);
     int slotNum = 0;
+    int spac = (Const.SQ + 6);
     for (int i = 0; i < TileMelter.RECIPE_SIZE; i++) {
       addSlotToContainer(new Slot(tile, slotNum,
-          SLOTX_START + i / 2 * Const.SQ,
-          SLOTY + i % 2 * Const.SQ));
+          SLOTX_START + i / 2 * spac,
+          SLOTY + i % 2 * spac));
       slotNum++;
     }
 
