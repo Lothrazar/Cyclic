@@ -52,9 +52,11 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   private Fluid fluidResult = null;
   private int fluidSize;
   private int size = 0;
+  private String fluidName;
 
 
   public RecipeMelter(ItemStack[] in, String fluidName, int fluid) {
+    this.fluidName = fluidName;
     this.setFluidResult(FluidRegistry.getFluid(fluidName));
     if (in.length > TileMelter.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
@@ -70,6 +72,9 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     this.setRegistryName(new ResourceLocation(Const.MODID, "melter_" + UUID.randomUUID().toString() + fluidName));
   }
 
+  public String getFluidString() {
+    return fluidName;
+  }
   public int getSize() {
     return size;
   }
@@ -205,4 +210,5 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   public void setFluidResult(Fluid fluidResult) {
     this.fluidResult = fluidResult;
   }
+
 }

@@ -27,4 +27,7 @@ public class MelterWrapper implements IRecipeWrapper {
     ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
   }
 
+  public RecipeMelter getRecipe() {
+    return src;
+  }
 }

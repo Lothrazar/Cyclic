@@ -89,18 +89,8 @@ public class SolidifierRecipeCategory implements IRecipeCategory<SolidifierWrapp
       Fluid f = FluidRegistry.getFluid(recipe.getFluidString());//recipeWrapper.getRecipe().getFluidResult();
       //getname is the same  
       ModCyclic.logger.error("test ?" + recipe.getFluidString() + recipe.getFluidCost());
-      //   recipeLayout.getFluidStacks().set(0, new FluidStack(f, recipeWrapper.getRecipe().getFluidCost()));
-      //    List<List<FluidStack>> liq = ingredients.getInputs(VanillaTypes.FLUID);
-      //      ModCyclic.logger.error(liq.get(0) + " ?");
-      //      FluidStack f = liq.get(0).get(0);
-      //      ResourceLocation still = f.getFluid().getStill();
-      // 
-      //      
-      //      ModCyclic.logger.error(still + "");
-      //      int s = 18;
-      //      IDrawableStatic test = helper.drawableBuilder(f.getFlowing(), 0, 0, s, s).setTextureSize(s, s).build();
-      //      recipeLayout.getFluidStacks().init(0, true, recipeWrapper.getRecipe().getFluidResult(), x, y, w, h, 16, 16);
-      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ, Const.SQ, recipe.getFluidCost(), true,
+
+      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ, Const.SQ, recipe.getFluidCost(), false,
           null);
       recipeLayout.getFluidStacks().set(0, new FluidStack(f, recipe.getFluidCost()));
     }
