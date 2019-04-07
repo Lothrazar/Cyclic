@@ -27,18 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -53,17 +53,11 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileSolidifier.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = FLUID_DEFAULT;
+  Fluid fluidResult;
   private int size = 0;
 
-  public RecipeSolidifier(ItemStack in, ItemStack out) {
-    this(new ItemStack[] { in }, out, FLUID_DEFAULT);
-  }
-
-  public RecipeSolidifier(ItemStack[] in, ItemStack out) {
-    this(in, out, FLUID_DEFAULT);
-  }
-
-  public RecipeSolidifier(ItemStack[] in, ItemStack out, int w) {
+  public RecipeSolidifier(ItemStack[] in, ItemStack out, String fluidName, int fluid) {
+    this.setFluidResult(FluidRegistry.getFluid(fluidName));
     if (in.length > TileSolidifier.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
@@ -74,9 +68,17 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
         size++;
       }
     }
-    this.fluidCost = w;
+    this.fluidCost = fluid;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
+  }
+
+  public Fluid getFluidResult() {
+    return fluidResult;
+  }
+
+  public void setFluidResult(Fluid fluidResult) {
+    this.fluidResult = fluidResult;
   }
 
   public int getSize() {
@@ -194,86 +196,14 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
 
   // static init
   public static void initAllRecipes() {
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
-    addRecipe(new RecipeSolidifier(
-        new ItemStack[] { new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT) },
-        new ItemStack(Blocks.GRASS, 2)));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
-    addRecipe(new RecipeSolidifier(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.COBBLESTONE, 1, 0), new ItemStack(Blocks.MOSSY_COBBLESTONE, 1, 0)));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
-    //GRAVEL JUST FOR FUN EH
-    addRecipe(new RecipeSolidifier(
-        new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
-        new ItemStack(Blocks.GRAVEL)));
-    addRecipe(new RecipeSolidifier(
-        new ItemStack[] { new ItemStack(Blocks.DIRT, 1, 1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), new ItemStack(Blocks.GRASS_PATH) },
-        new ItemStack(Blocks.MYCELIUM)));
-    addRecipe(new RecipeSolidifier(
-        new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
-        new ItemStack(Blocks.ICE)));
-    addRecipe(new RecipeSolidifier(
-        new ItemStack[] { new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE) },
-        new ItemStack(Blocks.PACKED_ICE)));
-    for (EnumDyeColor col : EnumDyeColor.values()) {
-      addRecipe(new RecipeSolidifier(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE, 1, col.getMetadata())));
-    }
-    for (EnumDyeColor col : EnumDyeColor.values()) {
-      if (col.getMetadata() != EnumDyeColor.WHITE.getMetadata())
-        addRecipe(new RecipeSolidifier(new ItemStack(Blocks.WOOL, 1, col.getMetadata()), new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.getMetadata())));
-    }
-    //they didnt use metadata for glazed because of facing direction i guess
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.BLACK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLACK.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLUE.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.BROWN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BROWN.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.CYAN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.CYAN.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.GREEN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.GREEN.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIGHT_BLUE.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.LIME_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIME.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.MAGENTA_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.MAGENTA.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.ORANGE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.ORANGE.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.PINK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PINK.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.PURPLE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PURPLE.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.RED_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.RED.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
-    addRecipe(new RecipeSolidifier(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), new ItemStack(Items.SLIME_BALL), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Blocks.SOUL_SAND)
-    }, new ItemStack(Blocks.SPONGE)));
+        new ItemStack(Blocks.SAND)
+    }, new ItemStack(Blocks.ICE),
+        "water", 1000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
-    }, new ItemStack(Blocks.WEB, 4)));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.CLAY_BALL)
-    }, new ItemStack(Items.PRISMARINE_SHARD)));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
-    }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
-    //amber
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.LOG), new ItemStack(Items.PRISMARINE_SHARD),
-        new ItemStack(Blocks.LOG2), new ItemStack(Items.BLAZE_POWDER)
-    }, new ItemStack(amber)));
-    // lava fabricator
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
-    }, new ItemStack(Items.LAVA_BUCKET)));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
-    }, new ItemStack(Blocks.WATERLILY, 2)));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM)
-    }, new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK)));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM)
-    }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
-    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
+        new ItemStack(Items.MAGMA_CREAM)
+    }, new ItemStack(Blocks.OBSIDIAN),
+        "lava", 1000));
   }
 
   public static void addRecipe(RecipeSolidifier rec) {

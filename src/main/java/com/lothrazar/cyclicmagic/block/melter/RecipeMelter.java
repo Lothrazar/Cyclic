@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -54,7 +55,7 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   private int size = 0;
 
 
-  public RecipeMelter(ItemStack[] in, String fluidName, int w) {
+  public RecipeMelter(ItemStack[] in, String fluidName, int fluid) {
     this.setFluidResult(FluidRegistry.getFluid(fluidName));
     if (in.length > TileMelter.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
@@ -66,7 +67,7 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
         size++;
       }
     }
-    this.fluidSize = w;
+    this.fluidSize = fluid;
     this.setRegistryName(new ResourceLocation(Const.MODID, "melter_" + UUID.randomUUID().toString() + fluidName));
   }
 
@@ -185,12 +186,19 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
 
   // static init
   public static void initAllRecipes() {
+
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.ICE), ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY },
-        "water", 1000));
+        new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
+        "water", 500));
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE) },
         "water", 4000));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.MAGMA), new ItemStack(Blocks.MAGMA), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.OBSIDIAN) },
+        "lava", 2000));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
+        "xpjuice", 250));
   }
 
   public static void addRecipe(RecipeMelter rec) {

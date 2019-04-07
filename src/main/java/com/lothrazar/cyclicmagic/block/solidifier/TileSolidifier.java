@@ -37,7 +37,6 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
@@ -58,10 +57,9 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
     super(RECIPE_SIZE + 1);// 4in, 1out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
-    tank.setFluidAllowed(FluidRegistry.WATER);
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
-    this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
-    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockSolidifier.FUEL_COST);
+    this.setSlotsForInsert(0, 3);
+    this.setSlotsForExtract(4);
+    this.initEnergy(new EnergyStore(MENERGY), BlockSolidifier.FUEL_COST);
   }
 
   @Override

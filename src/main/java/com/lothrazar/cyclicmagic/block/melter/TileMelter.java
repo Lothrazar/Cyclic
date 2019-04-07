@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.melter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
@@ -37,12 +38,13 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   public static final int RECIPE_SIZE = 4;
-  public static final int TANK_FULL = 10000;
+  public static final int TANK_FULL = 8 * 1000;
   public final static int TIMER_FULL = 32;
 
   public static enum Fields {
@@ -78,14 +80,10 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
       this.findMatchingRecipe();
       this.updateLockSlots();
     }
-    if (this.isRunning() == false || this.isInventoryFull(RECIPE_SIZE)) {
+    if (this.isRunning() == false) {
       return;//dont drain power when full  
     }
     if (currentRecipe == null || this.updateEnergyIsBurning() == false) {
-      return;
-    }
-    //ignore timer when filling up water
-    if (this.getCurrentFluidStackAmount() == 0) {
       return;
     }
     if (this.updateTimerIsZero()) { // time to burn!
@@ -114,10 +112,23 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
 
   public boolean tryProcessRecipe() {
     if (currentRecipe != null) {
-      int testFill = this.fill(new FluidStack(currentRecipe.getFluidResult(), currentRecipe.getFluidSize()), false);
-      if (testFill == 0 && currentRecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+      // FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(), currentRecipe.getFluidSize());
+      //   int testFill = this.fill(fluidStack, false);
+      int current = this.getCurrentFluidStackAmount();
+      int incoming = currentRecipe.getFluidSize();
+      Fluid holding = this.getFluidContainedOrNull();
+      boolean fluidAllowed = holding == null || holding == currentRecipe.getFluidResult();
+
+      ModCyclic.logger.error(current + "/" + this.getCapacity());
+      if (fluidAllowed
+          && current + incoming <= this.getCapacity()
+          && currentRecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
         //only create the output if cost was successfully paid 
-        this.fill(new FluidStack(currentRecipe.getFluidResult(), currentRecipe.getFluidSize()), true);
+        FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(),
+            current + incoming);
+        ModCyclic.logger.error(fluidStack.amount + "/" + this.getCapacity());
+        this.fill(fluidStack, true);
+        this.setCurrentFluid(fluidStack.amount);
         return true;
       }
     }
