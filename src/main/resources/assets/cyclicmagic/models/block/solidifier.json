@@ -1,9 +1,9 @@
 {
 	"textures": {
-		"top": "cyclicmagic:blocks/hydrator_top",
-		"side": "cyclicmagic:blocks/hydrator",
-		"bottom": "cyclicmagic:blocks/hydrator_bottom",
-		"particle": "cyclicmagic:blocks/hydrator"
+		"top": "cyclicmagic:blocks/solidifier_top",
+		"side": "cyclicmagic:blocks/solidifier",
+		"bottom": "cyclicmagic:blocks/solidifier_bottom",
+		"particle": "cyclicmagic:blocks/solidifier"
 	},
 
 	"elements": [
