@@ -211,6 +211,10 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
         new ItemStack(Items.BUCKET)
     }, new ItemStack(Items.MILK_BUCKET),
         "milk", 1000));
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Items.EMERALD)
+    }, new ItemStack(Items.MILK_BUCKET),
+        "amber", 1000));
   }
 
   public static void addRecipe(RecipeSolidifier rec) {

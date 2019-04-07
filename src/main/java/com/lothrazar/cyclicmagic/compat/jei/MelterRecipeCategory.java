@@ -2,13 +2,11 @@ package com.lothrazar.cyclicmagic.compat.jei;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.CyclicContent;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.melter.RecipeMelter;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
@@ -24,12 +22,10 @@ public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
 
   private IDrawable gui;
   private IDrawable icon;
-  private IDrawableStatic fluid;
 
   public MelterRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/gui/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/blocks/melter.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
-    fluid = helper.drawableBuilder(new ResourceLocation(Const.MODID, "textures/gui/fluid.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
   }
 
   @Override
@@ -79,9 +75,8 @@ public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
     try {
       RecipeMelter recipe = recipeWrapper.getRecipe();
       Fluid f = FluidRegistry.getFluid(recipe.getFluidString());//recipeWrapper.getRecipe().getFluidResult();
-      //getname is the same  
-      ModCyclic.logger.error("test ?" + recipe.getFluidString() + recipe.getFluidSize());
-      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ, Const.SQ, recipe.getFluidSize(), false,
+      //getname is the same   
+      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
           null);
       recipeLayout.getFluidStacks().set(0, new FluidStack(f, recipe.getFluidSize()));
     }

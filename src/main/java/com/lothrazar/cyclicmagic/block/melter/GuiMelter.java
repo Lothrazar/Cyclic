@@ -82,7 +82,7 @@ public class GuiMelter extends GuiBaseContainer {
     int x = this.guiLeft + ContainerMelter.SLOTX_START - 1;
     int y = this.guiTop + ContainerMelter.SLOTY - 1;
     int s = TileMelter.RECIPE_SIZE;
-    int spac = (Const.SQ + 6);
+    int spac = Const.SQ;
     for (int k = 0; k < s; k++) {
       Gui.drawModalRectWithCustomSizedTexture(
           x + k % 2 * spac,

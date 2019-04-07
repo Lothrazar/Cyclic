@@ -197,6 +197,9 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
         "xpjuice", 250));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Items.EMERALD), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
+        "amber", 250));
   }
 
   public static void addRecipe(RecipeMelter rec) {
