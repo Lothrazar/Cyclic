@@ -20,6 +20,9 @@ public class SolidifierWrapper implements IRecipeWrapper {
     return src.getRecipeOutput();
   }
 
+  public RecipeSolidifier getRecipe() {
+    return src;
+  }
   @Override
   public void getIngredients(IIngredients ingredients) {
     List<ItemStack> ing = new ArrayList<ItemStack>();

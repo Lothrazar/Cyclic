@@ -53,11 +53,14 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileSolidifier.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = FLUID_DEFAULT;
+  private String fluidString;
   Fluid fluidResult;
   private int size = 0;
 
   public RecipeSolidifier(ItemStack[] in, ItemStack out, String fluidName, int fluid) {
+    fluidString = fluidName;
     this.setFluidResult(FluidRegistry.getFluid(fluidName));
+
     if (in.length > TileSolidifier.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
@@ -204,9 +207,21 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
         new ItemStack(Items.MAGMA_CREAM)
     }, new ItemStack(Blocks.OBSIDIAN),
         "lava", 1000));
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Items.BUCKET)
+    }, new ItemStack(Items.MILK_BUCKET),
+        "milk", 1000));
   }
 
   public static void addRecipe(RecipeSolidifier rec) {
     recipes.add(rec);
+  }
+
+  public String getFluidString() {
+    return fluidString;
+  }
+
+  public void setFluidString(String fluidString) {
+    this.fluidString = fluidString;
   }
 }
