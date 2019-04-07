@@ -39,14 +39,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-  @GameRegistry.ObjectHolder(Const.MODRES + "crystallized_amber")
-  public static final Item amber = null;
   public static ArrayList<RecipeMelter> recipes = new ArrayList<RecipeMelter>();
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileMelter.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private Fluid fluidResult = null;
@@ -197,9 +194,22 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
         "xpjuice", 250));
+    Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
+    Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.EMERALD), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
-        "amber", 250));
+        new ItemStack[] { new ItemStack(amber), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
+        "amber", 1000));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.POISONOUS_POTATO),
+            new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
+        "poison", 1000));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE),
+            new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
+        "poison", 200));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(crystal) },
+        "crystal", 1000));
   }
 
   public static void addRecipe(RecipeMelter rec) {

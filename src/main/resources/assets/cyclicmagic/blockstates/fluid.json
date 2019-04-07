@@ -27,6 +27,12 @@
                     "fluid": "amber"
                 }
             }
+        ],
+        "crystal": [{
+                "custom": {
+                    "fluid": "crystal"
+                }
+            }
         ]
     }
 }

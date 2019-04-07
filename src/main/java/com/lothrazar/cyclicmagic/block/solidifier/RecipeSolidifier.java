@@ -29,25 +29,24 @@ import java.util.UUID;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-  @GameRegistry.ObjectHolder(Const.MODRES + "crystallized_amber")
-  public static final Item amber = null;
   private static final int FLUID_DEFAULT = 25;
   public static ArrayList<RecipeSolidifier> recipes = new ArrayList<RecipeSolidifier>();
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileSolidifier.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
@@ -212,9 +211,20 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     }, new ItemStack(Items.MILK_BUCKET),
         "milk", 1000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.EMERALD)
-    }, new ItemStack(Items.MILK_BUCKET),
+        new ItemStack(Items.ARROW)
+    }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionTypes.LONG_POISON),
+        "poison", 100));
+    Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
+    Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Blocks.LOG)
+    }, new ItemStack(amber),
         "amber", 1000));
+
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Items.IRON_INGOT)
+    }, new ItemStack(crystal),
+        "crystal", 1000));
   }
 
   public static void addRecipe(RecipeSolidifier rec) {

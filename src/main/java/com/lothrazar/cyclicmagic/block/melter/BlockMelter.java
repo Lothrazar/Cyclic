@@ -51,7 +51,6 @@ public class BlockMelter extends BlockBaseHasTile implements IContent, IHasRecip
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_MELTER);
-    RecipeMelter.initAllRecipes();
   }
 
   @Override
@@ -61,6 +60,7 @@ public class BlockMelter extends BlockBaseHasTile implements IContent, IHasRecip
 
   @Override
   public IRecipe addRecipe() {
+    RecipeMelter.initAllRecipes();
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "rsr",
         "lgl",

@@ -56,8 +56,8 @@ public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, MelterWrapper recipeWrapper, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    int x = 0, y = 18;
-    int s = Const.SQ + 3;
+    int x = 3, y = 18;
+    int s = Const.SQ;
     guiItemStacks.init(0, true, x, y);
     guiItemStacks.init(1, true, x + s, y);
     //next row
@@ -70,7 +70,7 @@ public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
       if (input != null && input.isEmpty() == false)
         guiItemStacks.set(i, input.get(0));
     }
-    x = 60;
+    x = 80;
     y = 28;
     try {
       RecipeMelter recipe = recipeWrapper.getRecipe();

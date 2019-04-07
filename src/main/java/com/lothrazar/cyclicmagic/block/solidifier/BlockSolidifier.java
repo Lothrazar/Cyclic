@@ -50,7 +50,6 @@ public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasR
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_SOLIDIFIER);
-    RecipeSolidifier.initAllRecipes();
   }
 
   @Override
@@ -60,6 +59,7 @@ public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasR
 
   @Override
   public IRecipe addRecipe() {
+    RecipeSolidifier.initAllRecipes();
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "rsr",
         "lgl",

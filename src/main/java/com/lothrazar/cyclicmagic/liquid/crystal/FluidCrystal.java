@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.liquid.amber;
+package com.lothrazar.cyclicmagic.liquid.crystal;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -36,11 +36,11 @@ import net.minecraftforge.fluids.FluidRegistry;
  * 
  * @author Sam
  */
-public class FluidAmber extends Fluid implements IContent {
+public class FluidCrystal extends Fluid implements IContent {
 
-  private static final String NAME = "amber";
+  private static final String NAME = "crystal";
 
-  public FluidAmber() {
+  public FluidCrystal() {
     super(NAME, new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_base"),
         new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000
@@ -52,7 +52,7 @@ public class FluidAmber extends Fluid implements IContent {
   @Override
   public void register() {
     FluidRegistry.registerFluid(this);
-    BlockFluidAmber blk = new BlockFluidAmber(this);
+    BlockFluidCrystal blk = new BlockFluidCrystal(this);
     this.setBlock(blk);
     BlockRegistry.registerBlock(blk, getContentName(), null);
     FluidRegistry.addBucketForFluid(this);
