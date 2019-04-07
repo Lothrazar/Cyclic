@@ -70,7 +70,7 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     }
     this.fluidCost = fluid;
     this.resultItem = out;
-    this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
+    this.setRegistryName(new ResourceLocation(Const.MODID, "solidifier_" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
   public Fluid getFluidResult() {
