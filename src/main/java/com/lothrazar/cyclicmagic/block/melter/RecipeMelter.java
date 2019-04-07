@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.hydrator;
+package com.lothrazar.cyclicmagic.block.melter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,27 +44,27 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
   @GameRegistry.ObjectHolder(Const.MODRES + "crystallized_amber")
   public static final Item amber = null;
   private static final int FLUID_DEFAULT = 25;
-  public static ArrayList<RecipeHydrate> recipes = new ArrayList<RecipeHydrate>();
-  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileEntityHydrator.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
+  public static ArrayList<RecipeMelter> recipes = new ArrayList<RecipeMelter>();
+  private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileMelter.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = FLUID_DEFAULT;
   private int size = 0;
 
-  public RecipeHydrate(ItemStack in, ItemStack out) {
+  public RecipeMelter(ItemStack in, ItemStack out) {
     this(new ItemStack[] { in }, out, FLUID_DEFAULT);
   }
 
-  public RecipeHydrate(ItemStack[] in, ItemStack out) {
+  public RecipeMelter(ItemStack[] in, ItemStack out) {
     this(in, out, FLUID_DEFAULT);
   }
 
-  public RecipeHydrate(ItemStack[] in, ItemStack out, int w) {
-    if (in.length > TileEntityHydrator.RECIPE_SIZE || in.length == 0) {
+  public RecipeMelter(ItemStack[] in, ItemStack out, int w) {
+    if (in.length > TileMelter.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
     //how many do we have 
@@ -194,89 +194,89 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
   // static init
   public static void initAllRecipes() {
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
-    addRecipe(new RecipeHydrate(
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
+    addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.DIRT) },
         new ItemStack(Blocks.GRASS, 2)));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
-    addRecipe(new RecipeHydrate(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE, 1, 0), new ItemStack(Blocks.MOSSY_COBBLESTONE, 1, 0)));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
+    addRecipe(new RecipeMelter(new ItemStack(Items.BRICK), new ItemStack(Items.CLAY_BALL)));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.STONE, 1, 0), new ItemStack(Blocks.COBBLESTONE, 1, 0)));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.COBBLESTONE, 1, 0), new ItemStack(Blocks.MOSSY_COBBLESTONE, 1, 0)));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.STONEBRICK, 1, 0), new ItemStack(Blocks.STONEBRICK, 1, 1)));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.HARDENED_CLAY), new ItemStack(Blocks.CLAY)));
     //GRAVEL JUST FOR FUN EH
-    addRecipe(new RecipeHydrate(
+    addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Items.FLINT) },
         new ItemStack(Blocks.GRAVEL)));
-    addRecipe(new RecipeHydrate(
+    addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.DIRT, 1, 1), new ItemStack(Blocks.RED_MUSHROOM_BLOCK), new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), new ItemStack(Blocks.GRASS_PATH) },
         new ItemStack(Blocks.MYCELIUM)));
-    addRecipe(new RecipeHydrate(
+    addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
         new ItemStack(Blocks.ICE)));
-    addRecipe(new RecipeHydrate(
+    addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE) },
         new ItemStack(Blocks.PACKED_ICE)));
     for (EnumDyeColor col : EnumDyeColor.values()) {
-      addRecipe(new RecipeHydrate(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE, 1, col.getMetadata())));
+      addRecipe(new RecipeMelter(new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE, 1, col.getMetadata())));
     }
     for (EnumDyeColor col : EnumDyeColor.values()) {
       if (col.getMetadata() != EnumDyeColor.WHITE.getMetadata())
-        addRecipe(new RecipeHydrate(new ItemStack(Blocks.WOOL, 1, col.getMetadata()), new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.getMetadata())));
+        addRecipe(new RecipeMelter(new ItemStack(Blocks.WOOL, 1, col.getMetadata()), new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.getMetadata())));
     }
     //they didnt use metadata for glazed because of facing direction i guess
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.BLACK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLACK.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLUE.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.BROWN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BROWN.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.CYAN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.CYAN.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.GREEN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.GREEN.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIGHT_BLUE.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.LIME_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIME.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.MAGENTA_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.MAGENTA.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.ORANGE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.ORANGE.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.PINK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PINK.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.PURPLE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PURPLE.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.RED_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.RED.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.BLACK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLACK.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BLUE.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.BROWN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.BROWN.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.CYAN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.CYAN.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.GREEN_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.GREEN.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIGHT_BLUE.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.LIME_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.LIME.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.MAGENTA_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.MAGENTA.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.ORANGE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.ORANGE.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.PINK_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PINK.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.PURPLE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.PURPLE.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.RED_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.RED.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), new ItemStack(Items.SLIME_BALL), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Blocks.SOUL_SAND)
     }, new ItemStack(Blocks.SPONGE)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
     }, new ItemStack(Blocks.WEB, 4)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.CLAY_BALL)
     }, new ItemStack(Items.PRISMARINE_SHARD)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
     }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
     //amber
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.LOG), new ItemStack(Items.PRISMARINE_SHARD),
         new ItemStack(Blocks.LOG2), new ItemStack(Items.BLAZE_POWDER)
     }, new ItemStack(amber)));
     // lava fabricator
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
     }, new ItemStack(Items.LAVA_BUCKET)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM)
     }, new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM)
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
+    addRecipe(new RecipeMelter(new ItemStack[] {
         new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
     }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
-  public static void addRecipe(RecipeHydrate rec) {
+  public static void addRecipe(RecipeMelter rec) {
     recipes.add(rec);
   }
 }

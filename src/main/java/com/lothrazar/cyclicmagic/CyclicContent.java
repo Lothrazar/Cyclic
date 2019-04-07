@@ -42,6 +42,7 @@ import com.lothrazar.cyclicmagic.block.imbue.BlockImbue;
 import com.lothrazar.cyclicmagic.block.interdiction.BlockMagnetAnti;
 import com.lothrazar.cyclicmagic.block.laser.BlockLaser;
 import com.lothrazar.cyclicmagic.block.magnetitem.BlockMagnet;
+import com.lothrazar.cyclicmagic.block.melter.BlockMelter;
 import com.lothrazar.cyclicmagic.block.miner.BlockMiner;
 import com.lothrazar.cyclicmagic.block.moondetector.BlockMoonDetector;
 import com.lothrazar.cyclicmagic.block.packager.BlockPackager;
@@ -49,6 +50,7 @@ import com.lothrazar.cyclicmagic.block.password.BlockPassword;
 import com.lothrazar.cyclicmagic.block.placer.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.screentarget.BlockScreenTarget;
 import com.lothrazar.cyclicmagic.block.screentype.BlockScreen;
+import com.lothrazar.cyclicmagic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclicmagic.block.sound.BlockSoundPlayer;
 import com.lothrazar.cyclicmagic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclicmagic.block.tank.BlockFluidTank;
@@ -145,6 +147,8 @@ public class CyclicContent {
   public static BlockHydrator hydrator;
   public static BlockPackager packager;
   public static BlockDeHydrator dehydrator;
+  public static BlockSolidifier solidifier;
+  public static BlockMelter melter;
 
   public static void init() {
     content = new ArrayList<IContent>();
@@ -254,6 +258,10 @@ public class CyclicContent {
     hydrator = new BlockHydrator();
     content.add(hydrator);
     content.add(new BlockAnvilMagma());
+    melter = new BlockMelter();
+    content.add(melter);
+    solidifier = new BlockSolidifier();
+    content.add(solidifier);
     content.add(new BlockAnvilAuto(Blocks.ENCHANTING_TABLE));
     content.add(new BlockHarvester());
     content.add(new BlockEnchanter());

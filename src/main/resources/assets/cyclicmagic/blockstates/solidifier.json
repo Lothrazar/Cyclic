@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:solidifier" },
+        "facing=north": { "model": "cyclicmagic:solidifier"},
+        "facing=east": { "model":  "cyclicmagic:solidifier"},
+        "facing=south": { "model": "cyclicmagic:solidifier"},
+        "facing=west": { "model":  "cyclicmagic:solidifier" }
+    }
+}
