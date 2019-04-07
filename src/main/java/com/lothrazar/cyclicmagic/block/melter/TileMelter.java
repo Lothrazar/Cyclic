@@ -37,6 +37,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.FluidStack;
 
 public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
@@ -113,12 +114,10 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
 
   public boolean tryProcessRecipe() {
     if (currentRecipe != null) {
-      if (this.getCurrentFluidStackAmount() >= currentRecipe.getFluidCost()
-          && this.inventoryHasRoom(4, currentRecipe.getRecipeOutput().copy())) {
-        if (currentRecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
-          //only create the output if cost was successfully paid
-          this.sendOutputItem(currentRecipe.getRecipeOutput().copy());
-        }
+      int testFill = this.fill(new FluidStack(currentRecipe.getFluidResult(), currentRecipe.getFluidSize()), false);
+      if (testFill == 0 && currentRecipe.tryPayCost(this, this.tank, this.recipeIsLocked == 1)) {
+        //only create the output if cost was successfully paid 
+        this.fill(new FluidStack(currentRecipe.getFluidResult(), currentRecipe.getFluidSize()), true);
         return true;
       }
     }
