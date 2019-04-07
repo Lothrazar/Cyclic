@@ -35,12 +35,12 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiMetler extends GuiBaseContainer {
+public class GuiMelter extends GuiBaseContainer {
 
   boolean debugLabels = true;
   private ButtonTileEntityField btnToggle;
 
-  public GuiMetler(InventoryPlayer inventoryPlayer, TileMelter tileEntity) {
+  public GuiMelter(InventoryPlayer inventoryPlayer, TileMelter tileEntity) {
     super(new ContainerMelter(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileMelter.Fields.REDSTONE.ordinal();
     this.energyBar = new EnergyBar(this);
@@ -88,14 +88,7 @@ public class GuiMetler extends GuiBaseContainer {
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    x = this.guiLeft + ContainerMelter.MID_SPACING;
-    y = this.guiTop + ContainerMelter.SLOTY - 1;
-    for (int k = 0; k < s; k++) {
-      Gui.drawModalRectWithCustomSizedTexture(
-          x + k % 2 * Const.SQ,
-          y + k / 2 * Const.SQ,
-          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }
+
     fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
   }
 }

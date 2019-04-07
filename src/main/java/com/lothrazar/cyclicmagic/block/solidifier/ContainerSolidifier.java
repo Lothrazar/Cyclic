@@ -51,12 +51,10 @@ public class ContainerSolidifier extends ContainerBaseMachine {
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    for (int i = 0; i < TileSolidifier.RECIPE_SIZE; i++) {
-      addSlotToContainer(new Slot(tile, slotNum,
-          MID_SPACING + 1 + i / 2 * Const.SQ,
-          SLOTY + i % 2 * Const.SQ));
-      slotNum++;
-    }
+    //output slot
+    addSlotToContainer(new Slot(tile, slotNum,
+        MID_SPACING + 11,
+        SLOTY + 8));
     bindPlayerInventory(inventoryPlayer);
   }
 

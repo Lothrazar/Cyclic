@@ -88,14 +88,16 @@ public class GuiSolidifier extends GuiBaseContainer {
           y + k / 2 * Const.SQ,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    x = this.guiLeft + ContainerSolidifier.MID_SPACING;
-    y = this.guiTop + ContainerSolidifier.SLOTY - 1;
-    for (int k = 0; k < s; k++) {
+    //SLOT OUTPUT
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_LARGE);
+    x = this.guiLeft + ContainerSolidifier.MID_SPACING + 10;
+    y = this.guiTop + ContainerSolidifier.SLOTY + 8 - 1;
+    s = Const.SQ + 4;
       Gui.drawModalRectWithCustomSizedTexture(
-          x + k % 2 * Const.SQ,
-          y + k / 2 * Const.SQ,
-          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }
+        x,
+        y,
+        u, v, s, s, s, s);
+
     fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
   }
 }

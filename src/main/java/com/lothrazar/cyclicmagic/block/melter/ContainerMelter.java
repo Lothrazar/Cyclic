@@ -51,12 +51,7 @@ public class ContainerMelter extends ContainerBaseMachine {
           SLOTY + i % 2 * Const.SQ));
       slotNum++;
     }
-    for (int i = 0; i < TileMelter.RECIPE_SIZE; i++) {
-      addSlotToContainer(new Slot(tile, slotNum,
-          MID_SPACING + 1 + i / 2 * Const.SQ,
-          SLOTY + i % 2 * Const.SQ));
-      slotNum++;
-    }
+
     bindPlayerInventory(inventoryPlayer);
   }
 

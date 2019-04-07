@@ -119,6 +119,9 @@ import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator;
 import com.lothrazar.cyclicmagic.block.laser.ContainerLaser;
 import com.lothrazar.cyclicmagic.block.laser.GuiLaser;
 import com.lothrazar.cyclicmagic.block.laser.TileEntityLaser;
+import com.lothrazar.cyclicmagic.block.melter.ContainerMelter;
+import com.lothrazar.cyclicmagic.block.melter.GuiMelter;
+import com.lothrazar.cyclicmagic.block.melter.TileMelter;
 import com.lothrazar.cyclicmagic.block.miner.ContainerBlockMiner;
 import com.lothrazar.cyclicmagic.block.miner.GuiBlockMiner;
 import com.lothrazar.cyclicmagic.block.miner.TileEntityBlockMiner;
@@ -143,6 +146,9 @@ import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget;
 import com.lothrazar.cyclicmagic.block.screentype.ContainerScreen;
 import com.lothrazar.cyclicmagic.block.screentype.GuiScreenBlock;
 import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen;
+import com.lothrazar.cyclicmagic.block.solidifier.ContainerSolidifier;
+import com.lothrazar.cyclicmagic.block.solidifier.GuiSolidifier;
+import com.lothrazar.cyclicmagic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclicmagic.block.sorting.ContainerItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.GuiItemSort;
 import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
@@ -255,6 +261,8 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_W_FLUID = 50;
   public static final int GUI_INDEX_SCREENTARGET = 51;
   public static final int GUI_INDEX_DRAIN = 52;
+  public static final int GUI_INDEX_MELTER = 53;
+  public static final int GUI_INDEX_SOLIDIFIER = 54;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -514,6 +522,16 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_DRAIN:
         if (te instanceof TileEntityFluidDrain) {
           return new ContainerDrain(player.inventory, (TileEntityFluidDrain) te);
+        }
+      break;
+      case GUI_INDEX_MELTER:
+        if (te instanceof TileMelter) {
+          return new ContainerMelter(player.inventory, (TileMelter) te);
+        }
+      break;
+      case GUI_INDEX_SOLIDIFIER:
+        if (te instanceof TileSolidifier) {
+          return new ContainerSolidifier(player.inventory, (TileSolidifier) te);
         }
       break;
     }
@@ -778,6 +796,16 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_DRAIN:
           if (te instanceof TileEntityFluidDrain) {
             return new GuiDrain(player.inventory, (TileEntityFluidDrain) te);
+          }
+        break;
+        case GUI_INDEX_MELTER:
+          if (te instanceof TileMelter) {
+            return new GuiMelter(player.inventory, (TileMelter) te);
+          }
+        break;
+        case GUI_INDEX_SOLIDIFIER:
+          if (te instanceof TileSolidifier) {
+            return new GuiSolidifier(player.inventory, (TileSolidifier) te);
           }
         break;
       }

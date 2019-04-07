@@ -49,7 +49,7 @@ public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasR
   public BlockSolidifier() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setGuiId(ForgeGuiHandler.GUI_INDEX_HYDRATOR);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_SOLIDIFIER);
     RecipeSolidifier.initAllRecipes();
   }
 

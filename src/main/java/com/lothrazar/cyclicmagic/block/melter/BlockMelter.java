@@ -50,7 +50,7 @@ public class BlockMelter extends BlockBaseHasTile implements IContent, IHasRecip
   public BlockMelter() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setGuiId(ForgeGuiHandler.GUI_INDEX_HYDRATOR);
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_MELTER);
     RecipeMelter.initAllRecipes();
   }
 

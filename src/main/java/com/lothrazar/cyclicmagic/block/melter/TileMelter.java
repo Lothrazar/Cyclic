@@ -37,13 +37,12 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
-  public final static int TIMER_FULL = 40;
+  public final static int TIMER_FULL = 32;
 
   public static enum Fields {
     REDSTONE, TIMER, RECIPELOCKED;
@@ -54,13 +53,11 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
   private RecipeMelter currentRecipe;
 
   public TileMelter() {
-    super(2 * RECIPE_SIZE);// in, out 
+    super(RECIPE_SIZE);// 4in, 0out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
-    tank.setFluidAllowed(FluidRegistry.WATER);
-    this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
-    this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
-    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockMelter.FUEL_COST);
+    this.setSlotsForInsert(0, 3);
+    this.initEnergy(new EnergyStore(MENERGY), BlockMelter.FUEL_COST);
   }
 
   @Override

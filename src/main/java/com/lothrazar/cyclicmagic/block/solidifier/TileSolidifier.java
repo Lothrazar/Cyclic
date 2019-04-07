@@ -42,6 +42,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   public static final int RECIPE_SIZE = 4;
+  public static final int SLOT_OUTPUT = RECIPE_SIZE;
   public static final int TANK_FULL = 10000;
   public final static int TIMER_FULL = 40;
 
@@ -54,7 +55,7 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
   private RecipeSolidifier currentRecipe;
 
   public TileSolidifier() {
-    super(2 * RECIPE_SIZE);// in, out 
+    super(RECIPE_SIZE + 1);// 4in, 1out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
     tank.setFluidAllowed(FluidRegistry.WATER);
@@ -151,12 +152,10 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
   }
 
   public void sendOutputItem(ItemStack itemstack) {
-    for (int i = RECIPE_SIZE; i < RECIPE_SIZE * 2; i++) {
-      if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
-        itemstack = tryMergeStackIntoSlot(itemstack, i);
-      }
+    if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) {
+      itemstack = tryMergeStackIntoSlot(itemstack, SLOT_OUTPUT);
     }
-    if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) { //FULL
+    if (!itemstack.isEmpty() && itemstack.getMaxStackSize() != 0) { //FULL 
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.up(), itemstack);
     }
   }
