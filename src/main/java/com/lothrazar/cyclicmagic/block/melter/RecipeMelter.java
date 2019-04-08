@@ -194,10 +194,13 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
         "xpjuice", 250));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.LOG), new ItemStack(Blocks.LOG, 1, 1), new ItemStack(Blocks.LOG, 1, 2), new ItemStack(Blocks.LOG, 1, 3) },
+        "amber", 500));
     Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
     Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(amber), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
+        new ItemStack[] { new ItemStack(amber) },
         "amber", 1000));
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.POISONOUS_POTATO),

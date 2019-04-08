@@ -199,11 +199,11 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
   // static init
   public static void initAllRecipes() {
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.SAND)
-    }, new ItemStack(Blocks.ICE),
-        "water", 1000));
+        new ItemStack(Blocks.DIRT)
+    }, new ItemStack(Blocks.ICE, 4),
+        "water", 4000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.MAGMA_CREAM)
+        new ItemStack(Items.STICK), new ItemStack(Items.STICK), new ItemStack(Items.STICK), new ItemStack(Items.STICK)
     }, new ItemStack(Blocks.OBSIDIAN),
         "lava", 1000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
@@ -215,14 +215,16 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionTypes.LONG_POISON),
         "poison", 100));
     Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Items.IRON_NUGGET)
+    }, new ItemStack(amber), "amber", 1000));
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Items.GOLD_NUGGET)
+    }, new ItemStack(amber), "amber", 1000));
+
     Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.LOG)
-    }, new ItemStack(amber),
-        "amber", 1000));
-
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.IRON_INGOT)
+        new ItemStack(Items.IRON_NUGGET)
     }, new ItemStack(crystal),
         "crystal", 1000));
   }

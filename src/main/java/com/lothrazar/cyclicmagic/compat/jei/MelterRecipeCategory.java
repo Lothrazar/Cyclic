@@ -75,8 +75,14 @@ public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
     try {
       RecipeMelter recipe = recipeWrapper.getRecipe();
       Fluid f = FluidRegistry.getFluid(recipe.getFluidString());//recipeWrapper.getRecipe().getFluidResult();
+      //test fluids 
+      if (f.getBlock() != null) {
+        System.out.println("f.getBlock()" + f.getBlock());
+        ingredients.setOutput(VanillaTypes.ITEM, new ItemStack(f.getBlock()));
+      }
+      ingredients.setOutput(VanillaTypes.FLUID, new FluidStack(f, recipe.getFluidSize()));
       //getname is the same   
-      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
+      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ - 2, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
           null);
       recipeLayout.getFluidStacks().set(0, new FluidStack(f, recipe.getFluidSize()));
     }
