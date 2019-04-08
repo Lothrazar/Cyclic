@@ -58,7 +58,9 @@ public class FluidMelterTESR extends TileEntitySpecialRenderer<TileMelter> {
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFlowing().toString());
       //so we get range smaller THAN [0,1] -> avoids texture layer fighting
-      double posY = 0.01 + (.985 * ((float) fluidStack.amount / (float) te.getCapacity()));
+      double start = 0.01;
+      double scale = .89;
+      double posY = start + (scale * ((float) fluidStack.amount / (float) te.getCapacity()));
       int icolor = fluidStack.getFluid().getColor(fluidStack);
       //RGB encoded in hexval integer
       float red = (icolor >> 16 & 0xFF) / 255.0F;
@@ -69,7 +71,7 @@ public class FluidMelterTESR extends TileEntitySpecialRenderer<TileMelter> {
       // T/B for top and bottom
       float T = 15.9F / 16F;
       float B = 0.1F / 16F;
-      int S = 1, E = 15;//for start and end. vertex ranges from [0,16];
+      int S = 0, E = 16;//for start and end. vertex ranges from [0,16];
       //TOP SIDE
       buffer.setTranslation(x, y, z);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);

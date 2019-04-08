@@ -58,7 +58,9 @@ public class FluidSolidifierTESR extends TileEntitySpecialRenderer<TileSolidifie
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFlowing().toString());
       //so we get range smaller THAN [0,1] -> avoids texture layer fighting
-      double posY = 0.01 + (.985 * ((float) fluidStack.amount / (float) te.getCapacity()));
+      double start = 0.01;
+      double scale = .89;
+      double posY = start + (scale * ((float) fluidStack.amount / (float) te.getCapacity()));
       int icolor = fluidStack.getFluid().getColor(fluidStack);
       //RGB encoded in hexval integer
       float red = (icolor >> 16 & 0xFF) / 255.0F;
