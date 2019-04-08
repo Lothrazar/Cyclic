@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -43,7 +43,7 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
   public static final int RECIPE_SIZE = 4;
   public static final int SLOT_OUTPUT = RECIPE_SIZE;
   public static final int TANK_FULL = 64 * 1000;
-  public final static int TIMER_FULL = 40;
+  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 5;
 
   public static enum Fields {
     REDSTONE, TIMER, RECIPELOCKED;
@@ -59,7 +59,6 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
     timer = TIMER_FULL;
     this.setSlotsForInsert(0, 3);
     this.setSlotsForExtract(4);
-    this.initEnergy(new EnergyStore(MENERGY), BlockSolidifier.FUEL_COST);
   }
 
   @Override

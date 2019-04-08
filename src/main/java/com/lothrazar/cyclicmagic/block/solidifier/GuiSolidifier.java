@@ -26,8 +26,8 @@ package com.lothrazar.cyclicmagic.block.solidifier;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.component.FluidBar;
+import com.lothrazar.cyclicmagic.gui.component.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
@@ -43,10 +43,11 @@ public class GuiSolidifier extends GuiBaseContainer {
   public GuiSolidifier(InventoryPlayer inventoryPlayer, TileSolidifier tileEntity) {
     super(new ContainerSolidifier(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileSolidifier.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
-    energyBar.setX(150).setY(16).setWidth(14);
-    this.fluidBar = new FluidBar(this, 66, 16);
+
+    this.fluidBar = new FluidBar(this, 150, 16);
     fluidBar.setCapacity(TileSolidifier.TANK_FULL);
+    this.progressBar = new ProgressBar(this, 8, 70, TileSolidifier.Fields.TIMER.ordinal(), TileSolidifier.TIMER_FULL);
+    this.progressBar.setWidth(136);
   }
 
   @Override

@@ -51,7 +51,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasRecipe, IBlockHasTESR {
 
-  public static int FUEL_COST = 0;
 
   public BlockSolidifier() {
     super(Material.IRON);
@@ -115,6 +114,5 @@ public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasR
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
