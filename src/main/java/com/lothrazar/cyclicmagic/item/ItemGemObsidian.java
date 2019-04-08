@@ -22,7 +22,7 @@ public class ItemGemObsidian extends Item implements IHasOreDict, IHasRecipe, IC
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this, 2),
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
         "ofo",
         "beb",
         "ofo",
