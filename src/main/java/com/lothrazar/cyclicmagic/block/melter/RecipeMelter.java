@@ -215,6 +215,9 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
         new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE),
             new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
         "poison", 500));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.EMERALD), new ItemStack(amber) },
+        "crystal", 1000));
     Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(crystal) },
@@ -223,6 +226,27 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(biomass) },
         "biomass", 1000));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.WATERLILY) },
+        "biomass", 100));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Items.CARROT) },
+        "biomass", 100));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.VINE) },
+        "biomass", 50));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.CACTUS) },
+        "biomass", 50));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.TALLGRASS) },
+        "biomass", 25));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Items.WHEAT_SEEDS) },
+        "biomass", 25));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Items.APPLE) },
+        "biomass", 100));
   }
 
   public static void addRecipe(RecipeMelter rec) {
