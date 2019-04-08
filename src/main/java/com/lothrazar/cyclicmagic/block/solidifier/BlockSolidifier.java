@@ -61,14 +61,13 @@ public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasR
   public IRecipe addRecipe() {
     RecipeSolidifier.initAllRecipes();
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "rsr",
+        " s ",
         "lgl",
         "ooo",
         'l', Blocks.WATERLILY,
         'o', "dustGlowstone",
         'g', "blockIron",
-        's', Blocks.OBSERVER,
-        'r', "gemAmber");
+        's', Blocks.OBSERVER);
   }
 
   @Override

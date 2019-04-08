@@ -62,14 +62,13 @@ public class BlockMelter extends BlockBaseHasTile implements IContent, IHasRecip
   public IRecipe addRecipe() {
     RecipeMelter.initAllRecipes();
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-        "rsr",
+        " s ",
         "lgl",
         "ooo",
         'l', Items.BLAZE_POWDER,
         'o', "obsidian",
         'g', "blockIron",
-        's', Blocks.DROPPER,
-        'r', "gemAmber");
+        's', Blocks.DROPPER);
   }
 
   @Override

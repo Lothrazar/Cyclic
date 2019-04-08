@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.equipmentcrystal;
+package com.lothrazar.cyclicmagic.item.equipmentmagic;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
@@ -100,11 +100,12 @@ public class ItemPoweredSword extends ItemSword implements IHasRecipe, IHasConfi
     return RecipeRegistry.addShapedRecipe(new ItemStack(this),
         "dsd",
         "xsx",
-        "wsw",
+        "waw",
         'w', item,
         'x', "blockDiamond",
         'd', Items.DRAGON_BREATH,
-        's', "gemObsidian");
+        's', "gemObsidian",
+        'a', "gemAmber");
   }
 
   @Override

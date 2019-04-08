@@ -212,8 +212,16 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
         "milk", 1000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Items.ARROW)
-    }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionTypes.LONG_POISON),
+    }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionTypes.STRONG_POISON),
         "poison", 100));
+    //    addRecipe(new RecipeSolidifier(new ItemStack[] {
+    //        new ItemStack(Items.ARROW)
+    //    }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), ItemPotionContent.potionTypeButterII),
+    //        "poison", 100));
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Items.ARROW), new ItemStack(Items.ARROW), new ItemStack(Items.ARROW), new ItemStack(Items.FLINT)
+    }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW, 3), PotionTypes.STRONG_HARMING),
+        "lava", 500));
     Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Items.IRON_NUGGET)

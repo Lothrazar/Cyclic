@@ -82,7 +82,7 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
         'e', "enderpearl",
         'l', "blockRedstone",
         'q', "glowstone",
-        'i', "blockIron",
+        'i', "gemAmber",
         'g', new ItemStack(Items.GHAST_TEAR));
   }
 
