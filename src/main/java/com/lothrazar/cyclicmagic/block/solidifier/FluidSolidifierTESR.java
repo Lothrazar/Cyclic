@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.tank;
+package com.lothrazar.cyclicmagic.block.solidifier;
 
 import org.lwjgl.opengl.GL11;
+import com.lothrazar.cyclicmagic.block.tank.UtilRenderMekanismFluid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -35,10 +36,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
+public class FluidSolidifierTESR extends TileEntitySpecialRenderer<TileSolidifier> {
 
   @Override
-  public void render(TileEntityFluidTank te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+  public void render(TileSolidifier te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     FluidStack fluidStack = te.getCurrentFluidStack();
     if (fluidStack == null) {
       return;
@@ -52,7 +53,7 @@ public class FluidTESR extends TileEntitySpecialRenderer<TileEntityFluidTank> {
       Tessellator tess = Tessellator.getInstance();
       BufferBuilder buffer = tess.getBuffer();
       bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-      //TODO: fluid liumin
+      //TODO: fluid liumin 
       UtilRenderMekanismFluid.glowOn(fluid.getLuminosity());
       TextureAtlasSprite still = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
       TextureAtlasSprite flow = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFlowing().toString());
