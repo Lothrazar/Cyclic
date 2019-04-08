@@ -24,12 +24,12 @@
 package com.lothrazar.cyclicmagic.block.melter;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.block.hydrator.TileEntityHydrator.Fields;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.component.FluidBar;
+import com.lothrazar.cyclicmagic.gui.component.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,16 +37,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiMelter extends GuiBaseContainer {
 
-  boolean debugLabels = true;
   private ButtonTileEntityField btnToggle;
 
   public GuiMelter(InventoryPlayer inventoryPlayer, TileMelter tileEntity) {
     super(new ContainerMelter(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileMelter.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
-    energyBar.setX(150).setY(16).setWidth(14);
-    this.fluidBar = new FluidBar(this, 126, 16);
-    fluidBar.setCapacity(TileMelter.TANK_FULL);
+    this.fluidBar = new FluidBar(this, 150, 16);
+    this.fluidBar.setCapacity(TileMelter.TANK_FULL);
+    this.progressBar = new ProgressBar(this, 8, 70, TileMelter.Fields.TIMER.ordinal(), TileMelter.TIMER_FULL);
+    this.progressBar.setWidth(136);
   }
 
   @Override
@@ -55,7 +54,7 @@ public class GuiMelter extends GuiBaseContainer {
     int btnId = 3;
     btnToggle = new ButtonTileEntityField(btnId++,
         this.guiLeft + 26,
-        this.guiTop + Const.PAD / 2, this.tile.getPos(), Fields.RECIPELOCKED.ordinal());
+        this.guiTop + Const.PAD / 2, this.tile.getPos(), TileMelter.Fields.RECIPELOCKED.ordinal());
     btnToggle.width = btnToggle.height = 20;
     this.addButton(btnToggle);
   }
@@ -64,7 +63,7 @@ public class GuiMelter extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (tile.getField(Fields.RECIPELOCKED.ordinal()) == 1) {
+    if (tile.getField(TileMelter.Fields.RECIPELOCKED.ordinal()) == 1) {
       btnToggle.setTextureIndex(5);
       btnToggle.setTooltip("tile.hydrator.locked.tooltip");
     }
@@ -72,6 +71,8 @@ public class GuiMelter extends GuiBaseContainer {
       btnToggle.setTextureIndex(6);
       btnToggle.setTooltip("tile.hydrator.unlocked.tooltip");
     }
+    int heat = tile.getField(TileMelter.Fields.HEATLEVEL.ordinal());
+    this.drawString(UtilChat.lang("tile.heat.level") + heat, 66, 30);
   }
 
   @Override

@@ -30,8 +30,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ProgressBar {
 
-  private static final int WIDTH = 156;
-  private static final int HEIGHT = 7;
+  private int width = 156;
+  private int height = 7;
   private int xOffset;
   private int yOffset;
   private int fieldId;
@@ -66,8 +66,8 @@ public class ProgressBar {
     Gui.drawModalRectWithCustomSizedTexture(
         parent.getGuiLeft() + xOffset,
         parent.getGuiTop() + yOffset, u, v,
-        ProgressBar.WIDTH, ProgressBar.HEIGHT,
-        ProgressBar.WIDTH, ProgressBar.HEIGHT);
+        getWidth(), getHeight(),
+        getWidth(), getHeight());
     if (getProgressCurrent() > 0) {
       parent.mc.getTextureManager().bindTexture(getProgressAsset());
       float percent = ((float) getProgressCurrent()) / ((float) getMaxValue());
@@ -75,8 +75,8 @@ public class ProgressBar {
           parent.getGuiLeft() + xOffset,
           parent.getGuiTop() + yOffset,
           u, v,
-          (int) (ProgressBar.WIDTH * percent),
-          ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
+          (int) (getWidth() * percent),
+          getHeight(), getWidth(), getHeight());
     }
   }
 
@@ -86,5 +86,21 @@ public class ProgressBar {
 
   public void setMaxValue(int maxValue) {
     this.maxValue = maxValue;
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public void setWidth(int width) {
+    this.width = width;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
   }
 }

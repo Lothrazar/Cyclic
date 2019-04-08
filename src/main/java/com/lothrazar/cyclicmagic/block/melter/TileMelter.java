@@ -28,15 +28,18 @@ import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -45,13 +48,15 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
 
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 64 * 1000;
-  public final static int TIMER_FULL = 32;
+  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 8;
 
   public static enum Fields {
-    REDSTONE, TIMER, RECIPELOCKED;
+    REDSTONE, TIMER, RECIPELOCKED, HEATLEVEL, HEATREFRESH;
   }
 
   private int recipeIsLocked = 0;
+  private int heatLevel;
+  private int heatRefresh;
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), RECIPE_SIZE / 2, RECIPE_SIZE / 2);
   private RecipeMelter currentRecipe;
 
@@ -60,7 +65,6 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
     tank = new FluidTankFixDesync(TANK_FULL, this);
     timer = TIMER_FULL;
     this.setSlotsForInsert(0, 3);
-    this.initEnergy(new EnergyStore(MENERGY), BlockMelter.FUEL_COST);
   }
 
   @Override
@@ -83,12 +87,31 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
     if (this.isRunning() == false) {
       return;//dont drain power when full  
     }
-    if (currentRecipe == null || this.updateEnergyIsBurning() == false) {
+    if (currentRecipe == null) {
       return;
     }
-    if (this.updateTimerIsZero()) { // time to burn!
-      if (tryProcessRecipe()) {
-        this.timer = TIMER_FULL;
+    refreshHeat();
+    if (this.heatLevel > 0) {
+      //  speed based on quantity of lava
+      this.timer -= this.heatLevel;
+      if (this.timer <= 0) {
+        if (tryProcessRecipe()) {
+          this.timer = TIMER_FULL;
+        }
+      }
+    }
+  }
+
+  private void refreshHeat() {
+    this.heatRefresh--;
+    if (this.heatRefresh <= 0) {
+      this.heatRefresh = 20;
+      this.heatLevel = 0;
+      for (EnumFacing f : EnumFacing.values()) {
+        IBlockState down = this.world.getBlockState(getPos().offset(f));
+        if (down.getBlock() == Blocks.LAVA || down.getBlock() == Blocks.FLOWING_LAVA) {
+          this.heatLevel++;
+        }
       }
     }
   }
@@ -118,10 +141,9 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
       int incoming = currentRecipe.getFluidSize();
       Fluid holding = this.getFluidContainedOrNull();
       boolean fluidAllowed = holding == null || holding == currentRecipe.getFluidResult();
-
       if (fluidAllowed
           && current + incoming <= this.getCapacity()
-          && currentRecipe.tryPayCost(this,   this.recipeIsLocked == 1)) {
+          && currentRecipe.tryPayCost(this, this.recipeIsLocked == 1)) {
         ModCyclic.logger.error(current + "/" + this.getCapacity());
         ModCyclic.logger.error(fluidAllowed + " fluidAllowed");
         //only create the output if cost was successfully paid 
@@ -175,6 +197,8 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
     compound.setInteger("rlock", recipeIsLocked);
+    compound.setInteger("heatLevel", this.heatLevel);
+    compound.setInteger("heatRefresh", this.heatRefresh);
     return super.writeToNBT(compound);
   }
 
@@ -183,6 +207,8 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
     super.readFromNBT(compound);
     this.needsRedstone = compound.getInteger(NBT_REDST);
     this.recipeIsLocked = compound.getInteger("rlock");
+    this.heatRefresh = compound.getInteger("heatRefresh");
+    this.heatRefresh = compound.getInteger("heatRefresh");
   }
 
   @Override
@@ -194,6 +220,10 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
         return this.timer;
       case RECIPELOCKED:
         return this.recipeIsLocked;
+      case HEATLEVEL:
+        return this.heatLevel;
+      case HEATREFRESH:
+        return this.heatRefresh;
     }
     return -1;
   }
@@ -210,6 +240,12 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
       case RECIPELOCKED:
         this.recipeIsLocked = value % 2;
         this.updateLockSlots();
+      break;
+      case HEATLEVEL:
+        this.heatLevel = value;
+      break;
+      case HEATREFRESH:
+        this.heatRefresh = value;
       break;
     }
   }

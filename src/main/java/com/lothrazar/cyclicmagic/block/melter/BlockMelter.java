@@ -52,8 +52,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMelter extends BlockBaseHasTile implements IContent, IHasRecipe, IBlockHasTESR {
 
-  public static int FUEL_COST = 0;
-
   public BlockMelter() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -116,6 +114,5 @@ public class BlockMelter extends BlockBaseHasTile implements IContent, IHasRecip
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }
