@@ -196,7 +196,6 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     this.fluidCost = fluidCost;
   }
 
-  // static init
   public static void initAllRecipes() {
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Blocks.DIRT)
@@ -223,9 +222,7 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW, 3), PotionTypes.STRONG_HARMING),
         "lava", 500));
     Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.IRON_NUGGET)
-    }, new ItemStack(amber), "amber", 1000));
+
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Items.GOLD_NUGGET)
     }, new ItemStack(amber), "amber", 1000));

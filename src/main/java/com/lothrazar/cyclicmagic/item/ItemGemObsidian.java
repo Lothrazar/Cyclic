@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,7 +27,7 @@ public class ItemGemObsidian extends Item implements IHasOreDict, IHasRecipe, IC
         "beb",
         "ofo",
         'e', "gemEmerald",
-        'b', Items.BLAZE_ROD,
+        'b', "gemAmber",
         'o', "obsidian",
         'f', Blocks.CHORUS_FLOWER);
   }

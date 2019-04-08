@@ -33,21 +33,17 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-  @GameRegistry.ObjectHolder(Const.MODRES + "crystallized_amber")
-  public static final Item amber = null;
   private static final int FLUID_DEFAULT = 25;
   public static ArrayList<RecipeHydrate> recipes = new ArrayList<RecipeHydrate>();
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileEntityHydrator.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
@@ -241,27 +237,11 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), new ItemStack(Items.SLIME_BALL), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Blocks.SOUL_SAND)
-    }, new ItemStack(Blocks.SPONGE)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
-    }, new ItemStack(Blocks.WEB, 4)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.CLAY_BALL)
-    }, new ItemStack(Items.PRISMARINE_SHARD)));
+
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
-    }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
-    //amber
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.LOG), new ItemStack(Items.PRISMARINE_SHARD),
-        new ItemStack(Blocks.LOG2), new ItemStack(Items.BLAZE_POWDER)
-    }, new ItemStack(amber)));
-    // lava fabricator
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
-    }, new ItemStack(Items.LAVA_BUCKET)));
+    }, new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
+
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));

@@ -77,7 +77,6 @@ public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
       Fluid f = FluidRegistry.getFluid(recipe.getFluidString());//recipeWrapper.getRecipe().getFluidResult();
       //test fluids 
       if (f.getBlock() != null) {
-        System.out.println("f.getBlock()" + f.getBlock());
         ingredients.setOutput(VanillaTypes.ITEM, new ItemStack(f.getBlock()));
       }
       ingredients.setOutput(VanillaTypes.FLUID, new FluidStack(f, recipe.getFluidSize()));
