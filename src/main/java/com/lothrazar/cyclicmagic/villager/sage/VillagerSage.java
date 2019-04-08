@@ -5,9 +5,7 @@ import com.lothrazar.cyclicmagic.villager.ListItemForEmeraldsFixed;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.EmeraldForItems;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 
 public class VillagerSage {
@@ -30,21 +28,16 @@ public class VillagerSage {
             new EmeraldForItems(Items.REDSTONE, new PriceInfo(4, 6))
         }, {
             new EmeraldForItems(Items.GLOWSTONE_DUST, new PriceInfo(6, 8)), //GROUP 5
-            new EmeraldForItems(Items.DIAMOND, new PriceInfo(8, 12)),
-            new EmeraldForItems(Items.ENDER_PEARL, new PriceInfo(12, 16))
+            new EmeraldForItems(Items.ENDER_PEARL, new PriceInfo(16, 16))
         }, {
-            new ListItemForEmeraldsFixed(new ItemStack(Items.EXPERIENCE_BOTTLE, 8), new PriceInfo(1, 4)), //GROUP 6
-            new ListItemForEmeraldsFixed(new ItemStack(Blocks.CLAY, 16), new PriceInfo(1, 1)),
-        }, {
-            new ListItemForEmeraldsFixed(new ItemStack(Blocks.QUARTZ_BLOCK, 16), new PriceInfo(2, 4)), //GROUP 7
-            new ListItemForEmeraldsFixed(new ItemStack(Blocks.OBSIDIAN, 16), new PriceInfo(2, 4)),
-            new ListItemForEmeraldsFixed(new ItemStack(Items.FISH, 4, ItemFishFood.FishType.PUFFERFISH.getMetadata()), new PriceInfo(1, 2))
-        }, {
+            new EmeraldForItems(Items.NAME_TAG, new PriceInfo(1, 1)) //GROUP 6 
+        }, { //GROUP 7
             // hardcoded in ItemSkull i found
             //  private static final String[] SKULL_TYPES = new String[] {"skeleton", "wither", "zombie", "char", "creeper", "dragon"};
             new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_skeleton), new PriceInfo(28, 32)),
             new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_creeper), new PriceInfo(28, 32)),
-            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_zombie), new PriceInfo(28, 32))
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_zombie), new PriceInfo(28, 32)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.SKULL, 1, Const.skull_player), new PriceInfo(28, 32))
         }
     };
   }

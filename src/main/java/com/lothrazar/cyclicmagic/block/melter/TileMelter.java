@@ -47,7 +47,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   public static final int RECIPE_SIZE = 4;
-  public static final int TANK_FULL = 64 * 1000;
+  public static final int TANK_FULL = 16 * 1000;
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 8;
 
   public static enum Fields {

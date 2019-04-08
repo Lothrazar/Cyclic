@@ -42,7 +42,7 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
 
   public static final int RECIPE_SIZE = 4;
   public static final int SLOT_OUTPUT = RECIPE_SIZE;
-  public static final int TANK_FULL = 64 * 1000;
+  public static final int TANK_FULL = 16 * 1000;
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 5;
 
   public static enum Fields {

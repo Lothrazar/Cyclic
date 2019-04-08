@@ -183,29 +183,28 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   public static void initAllRecipes() {
 
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW), new ItemStack(Blocks.SNOW) },
-        "water", 500));
+        new ItemStack[] { new ItemStack(Blocks.SNOW) },
+        "water", 100));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE) },
-        "water", 4000));
+        new ItemStack[] { new ItemStack(Blocks.ICE) },
+        "water", 1000));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.MAGMA), new ItemStack(Blocks.MAGMA), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.OBSIDIAN) },
-        "lava", 2000));
+        new ItemStack[] { new ItemStack(Blocks.OBSIDIAN) },
+        "lava", 1000));
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Items.GHAST_TEAR) },
         "xpjuice", 10));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.BONE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.SPIDER_EYE) },
+        new ItemStack[] { new ItemStack(Items.BONE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.GUNPOWDER) },
         "xpjuice", 10));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.LOG, 1, 1), new ItemStack(Blocks.LOG, 1, 3), new ItemStack(Blocks.LOG2), new ItemStack(Blocks.LOG2, 1, 1) },
+        new ItemStack[] { new ItemStack(Blocks.LOG2) },
         "amber", 100));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.LOG, 1, 3), new ItemStack(Blocks.LOG, 1, 3),
-            new ItemStack(Blocks.VINE), new ItemStack(Items.MAGMA_CREAM) },
-        "amber", 500));
+        new ItemStack[] { new ItemStack(Blocks.LOG2), new ItemStack(Blocks.LOG2),
+            new ItemStack(Blocks.VINE), new ItemStack(Blocks.NETHERRACK) },
+        "amber", 1000));
     Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
-    Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(amber) },
         "amber", 1000));
@@ -216,6 +215,7 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
         new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE),
             new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
         "poison", 500));
+    Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(crystal) },
         "crystal", 1000));
