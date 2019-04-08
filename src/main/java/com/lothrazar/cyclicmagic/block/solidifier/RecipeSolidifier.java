@@ -238,9 +238,9 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     }, new ItemStack(biomass),
         "biomass", 1000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.LEAVES)
+        new ItemStack(Items.APPLE)
     }, new ItemStack(biomass),
-        "biomass", 900));
+        "biomass", 800));
     Item peat = Item.getByNameOrId(Const.MODRES + "peat_unbaked");
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT)

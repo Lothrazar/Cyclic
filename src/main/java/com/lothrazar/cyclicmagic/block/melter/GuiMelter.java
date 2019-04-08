@@ -72,7 +72,7 @@ public class GuiMelter extends GuiBaseContainer {
       btnToggle.setTooltip("tile.hydrator.unlocked.tooltip");
     }
     int heat = tile.getField(TileMelter.Fields.HEATLEVEL.ordinal());
-    this.drawString(UtilChat.lang("tile.heat.level") + heat, 66, 30);
+    this.drawString(UtilChat.lang("tile.heat.level") + heat, 86, 30);
   }
 
   @Override

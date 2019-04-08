@@ -192,13 +192,17 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
         new ItemStack[] { new ItemStack(Blocks.MAGMA), new ItemStack(Blocks.MAGMA), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.OBSIDIAN) },
         "lava", 2000));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
-        "xpjuice", 250));
+        new ItemStack[] { new ItemStack(Items.GHAST_TEAR) },
+        "xpjuice", 10));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.BONE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
-        "xpjuice", 50));
+        new ItemStack[] { new ItemStack(Items.BONE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.SPIDER_EYE) },
+        "xpjuice", 10));
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.LOG, 1, 1), new ItemStack(Blocks.LOG, 1, 3), new ItemStack(Blocks.LOG2), new ItemStack(Blocks.LOG2, 1, 1) },
+        "amber", 100));
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(Blocks.LOG, 1, 3), new ItemStack(Blocks.LOG, 1, 3),
+            new ItemStack(Blocks.VINE), new ItemStack(Items.MAGMA_CREAM) },
         "amber", 500));
     Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
     Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
@@ -206,13 +210,12 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
         new ItemStack[] { new ItemStack(amber) },
         "amber", 1000));
     addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.POISONOUS_POTATO),
-            new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
-        "poison", 1000));
+        new ItemStack[] { new ItemStack(Items.POISONOUS_POTATO) },
+        "poison", 2000));
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE),
             new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
-        "poison", 200));
+        "poison", 500));
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(crystal) },
         "crystal", 1000));
