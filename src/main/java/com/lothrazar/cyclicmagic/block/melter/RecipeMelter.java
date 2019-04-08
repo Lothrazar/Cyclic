@@ -216,6 +216,10 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(crystal) },
         "crystal", 1000));
+    Item biomass = Item.getByNameOrId(Const.MODRES + "peat_biomass");
+    addRecipe(new RecipeMelter(
+        new ItemStack[] { new ItemStack(biomass) },
+        "biomass", 1000));
   }
 
   public static void addRecipe(RecipeMelter rec) {

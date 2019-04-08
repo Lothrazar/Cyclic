@@ -33,6 +33,12 @@
                     "fluid": "crystal"
                 }
             }
+        ],
+        "biomass": [{
+                "custom": {
+                    "fluid": "biomass"
+                }
+            }
         ]
     }
 }

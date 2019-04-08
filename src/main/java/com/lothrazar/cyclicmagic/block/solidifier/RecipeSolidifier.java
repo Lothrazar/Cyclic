@@ -198,9 +198,9 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
 
   public static void initAllRecipes() {
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.DIRT)
-    }, new ItemStack(Blocks.ICE, 4),
-        "water", 4000));
+        new ItemStack(Items.STICK)
+    }, new ItemStack(Blocks.ICE),
+        "water", 1000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Items.STICK), new ItemStack(Items.STICK), new ItemStack(Items.STICK), new ItemStack(Items.STICK)
     }, new ItemStack(Blocks.OBSIDIAN),
@@ -232,6 +232,20 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
         new ItemStack(Items.IRON_NUGGET)
     }, new ItemStack(crystal),
         "crystal", 1000));
+    Item biomass = Item.getByNameOrId(Const.MODRES + "peat_biomass");
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Items.WHEAT_SEEDS)
+    }, new ItemStack(biomass),
+        "biomass", 1000));
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Blocks.LEAVES)
+    }, new ItemStack(biomass),
+        "biomass", 900));
+    Item peat = Item.getByNameOrId(Const.MODRES + "peat_unbaked");
+    addRecipe(new RecipeSolidifier(new ItemStack[] {
+        new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT)
+    }, new ItemStack(peat, 2),
+        "biomass", 100));
   }
 
   public static void addRecipe(RecipeSolidifier rec) {
