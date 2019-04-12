@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -23,12 +22,12 @@ public class ItemGemObsidian extends Item implements IHasOreDict, IHasRecipe, IC
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this, 2),
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
         "ofo",
         "beb",
         "ofo",
         'e', "gemEmerald",
-        'b', Items.BLAZE_ROD,
+        'b', "gemAmber",
         'o', "obsidian",
         'f', Blocks.CHORUS_FLOWER);
   }
@@ -41,19 +40,19 @@ public class ItemGemObsidian extends Item implements IHasOreDict, IHasRecipe, IC
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "crystallized_obsidian";
   }
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText
         + "  Warning, removing this crafting item may cause some recipes to not work correctly or be too inexpensive. "
         + " So be prepared to customize recipes if you disable this.  It has ore dictionary 'gemObsidian' ");
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.GEAR);
+    ItemRegistry.register(this, getContentName(), GuideCategory.GEAR);
   }
 }

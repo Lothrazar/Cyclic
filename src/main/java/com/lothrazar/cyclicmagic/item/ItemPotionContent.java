@@ -58,31 +58,31 @@ public class ItemPotionContent implements IContent {
   public static boolean enableSaturation;
   public static boolean enableFrostw;
   public static boolean enableButter;
-  private PotionTypeCyclic potionTypeSlowfall;
-  private PotionTypeCyclic potionTypeBounce;
-  private PotionTypeCyclic potionTypeWaterwalk;
-  private PotionTypeCyclic potionTypeSnow;
-  private PotionTypeCyclic potionTypeSwim;
-  private PotionTypeCyclic potionTypeMagnet;
-  private PotionTypeCyclic potionTypeLevitation;
-  private PotionTypeCyclic potionTypeHaste;
-  private PotionTypeCyclic potionTypeResistance;
-  private PotionTypeCyclic potionTypeResistanceII;
-  private PotionTypeCyclic potionHealth;
-  private PotionTypeCyclic potionEnder;
-  private PotionTypeCyclic potionTypeLuck;
-  private PotionTypeCyclic potionTypeWither;
-  private PotionTypeCyclic potionTypeBlindness;
-  private PotionTypeCyclic potionTypeSat;
-  private PotionTypeCyclic potionTypeIce;
-  private PotionTypeCyclic potionTypeButter;
-  private PotionTypeCyclic potionTypeButterII;
-  private final int SHORT = 1800;
-  private final int NORMAL = 3600;
-  private PotionTypeCyclic potionTypeSwimII;
+  public static PotionTypeCyclic potionTypeSlowfall;
+  public static PotionTypeCyclic potionTypeBounce;
+  public static PotionTypeCyclic potionTypeWaterwalk;
+  public static PotionTypeCyclic potionTypeSnow;
+  public static PotionTypeCyclic potionTypeSwim;
+  public static PotionTypeCyclic potionTypeMagnet;
+  public static PotionTypeCyclic potionTypeLevitation;
+  public static PotionTypeCyclic potionTypeHaste;
+  public static PotionTypeCyclic potionTypeResistance;
+  public static PotionTypeCyclic potionTypeResistanceII;
+  public static PotionTypeCyclic potionHealth;
+  public static PotionTypeCyclic potionEnder;
+  public static PotionTypeCyclic potionTypeLuck;
+  public static PotionTypeCyclic potionTypeWither;
+  public static PotionTypeCyclic potionTypeBlindness;
+  public static PotionTypeCyclic potionTypeSat;
+  public static PotionTypeCyclic potionTypeIce;
+  public static PotionTypeCyclic potionTypeButter;
+  public static PotionTypeCyclic potionTypeButterII;
+  public static final int SHORT = 1800;
+  public static final int NORMAL = 3600;
+  public static PotionTypeCyclic potionTypeSwimII;
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "POTIONMODULE";
   }
 

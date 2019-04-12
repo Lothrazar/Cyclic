@@ -21,7 +21,7 @@ import net.minecraftforge.common.config.Configuration;
 public class DynamiteContent implements IContent {
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "ender_tnt";
   }
 
@@ -33,12 +33,12 @@ public class DynamiteContent implements IContent {
     ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4, ExplosionType.NORMAL);
     ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5, ExplosionType.NORMAL);
     ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6, ExplosionType.NORMAL);
-    ItemRegistry.register(ender_tnt_1, getName() + "_1", null);
-    ItemRegistry.register(ender_tnt_2, getName() + "_2", null);
-    ItemRegistry.register(ender_tnt_3, getName() + "_3", null);
-    ItemRegistry.register(ender_tnt_4, getName() + "_4", null);
-    ItemRegistry.register(ender_tnt_5, getName() + "_5", null);
-    ItemRegistry.register(ender_tnt_6, getName() + "_6", null);
+    ItemRegistry.register(ender_tnt_1, getContentName() + "_1", null);
+    ItemRegistry.register(ender_tnt_2, getContentName() + "_2", null);
+    ItemRegistry.register(ender_tnt_3, getContentName() + "_3", null);
+    ItemRegistry.register(ender_tnt_4, getContentName() + "_4", null);
+    ItemRegistry.register(ender_tnt_5, getContentName() + "_5", null);
+    ItemRegistry.register(ender_tnt_6, getContentName() + "_6", null);
     GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, ender_tnt_1);
     EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
     MultiContent.projectiles.add(ender_tnt_1);
@@ -77,6 +77,6 @@ public class DynamiteContent implements IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderBombs", "Dynamite I-IV" + Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderBombs", "Dynamite I-IV" + Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 }

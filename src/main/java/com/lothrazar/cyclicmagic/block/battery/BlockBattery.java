@@ -27,7 +27,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -46,35 +45,20 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
   private static final PropertyBool S = PropertyBool.create("s");
   private static final PropertyBool W = PropertyBool.create("w");
 
-  enum EnergyFlatMap implements IStringSerializable {
-    AMOUNT_G0("g0"), AMOUNT_G1("g1"), AMOUNT_G2("g2"), AMOUNT_G3("g3"), AMOUNT_G4("g4"), AMOUNT_G5("g5"), AMOUNT_G6("g6"), AMOUNT_G7("g7"), AMOUNT_G8("g8"), AMOUNT_G9("g9"), AMOUNT_G10("g10"), AMOUNT_G11("g11"), AMOUNT_G12("g12"), AMOUNT_G13("g13"), AMOUNT_G14("g14"), AMOUNT_G15("g15"), AMOUNT_G16("g16");
-
-    private final String name;
-
-    EnergyFlatMap(String name) {
-      this.name = name;
-    }
-
-    @Override
-    public String getName() {
-      return name;
-    }
-  }
-
   public BlockBattery() {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "battery";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, new ItemBlockBattery(this), getName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + getName() + "_te");
+    BlockRegistry.registerBlock(this, new ItemBlockBattery(this), getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -86,7 +70,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

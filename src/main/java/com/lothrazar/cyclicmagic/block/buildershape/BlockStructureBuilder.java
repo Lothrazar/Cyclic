@@ -83,13 +83,13 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "builder_block";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityStructureBuilder.class, "builder_te");
   }
 
@@ -102,7 +102,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

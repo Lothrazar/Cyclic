@@ -206,13 +206,13 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "water_candle";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
   }
 
   private boolean enabled;
@@ -224,8 +224,8 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    String category = Const.ConfigCategory.blocks + "." + getName();
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    String category = Const.ConfigCategory.blocks + "." + getContentName();
     TICK_RATE = config.getInt("tick_speed", category, 50, 1, 9999, "Spawning tick speed");
     RADIUS = config.getInt("radius", category, 8, 1, 128, "Spawning radius");
     CHANCE_OFF = config.getFloat("chance_off", category, 0.01F, 0.001F, 0.99F, "Chance this will turn itself off after each spawn; 0.01 means 1%.  ");

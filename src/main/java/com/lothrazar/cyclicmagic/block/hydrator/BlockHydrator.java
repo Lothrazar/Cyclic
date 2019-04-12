@@ -171,14 +171,14 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "block_hydrator";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, new ItemBlockHydrator(this), getName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityHydrator.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, new ItemBlockHydrator(this), getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityHydrator.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -191,6 +191,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

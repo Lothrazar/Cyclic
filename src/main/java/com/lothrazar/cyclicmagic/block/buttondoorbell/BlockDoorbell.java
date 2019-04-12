@@ -52,7 +52,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe, IContent {
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
   }
 
   private boolean enabled;
@@ -63,7 +63,7 @@ public class BlockDoorbell extends BlockButton implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "doorbell_simple";
   }
 

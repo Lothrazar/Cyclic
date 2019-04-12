@@ -55,13 +55,13 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipeAndRepair, IC
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "charm_water";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
   }
 
   private boolean enabled;

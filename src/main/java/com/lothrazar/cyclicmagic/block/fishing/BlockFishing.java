@@ -96,14 +96,14 @@ public class BlockFishing extends BlockBaseHasTile implements IContent, IHasReci
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "block_fishing";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -116,6 +116,6 @@ public class BlockFishing extends BlockBaseHasTile implements IContent, IHasReci
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 25, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 25, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

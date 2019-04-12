@@ -71,13 +71,13 @@ public class ItemMattock extends ItemTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "mattock";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName());
+    ItemRegistry.register(this, getContentName());
   }
 
   private boolean enabled;
@@ -89,7 +89,7 @@ public class ItemMattock extends ItemTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Mattock", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Mattock", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

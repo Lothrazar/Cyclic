@@ -4,7 +4,7 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 
 public interface IContent extends IHasConfig {
 
-  public String getName();
+  public String getContentName();
 
   public void register();
 

@@ -49,13 +49,13 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "ender_lightning";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
     LootTableRegistry.registerLoot(this);
     ModCyclic.instance.events.register(this);
@@ -70,7 +70,7 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderLightning", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderLightning", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -82,7 +82,7 @@ public class ItemProjectileLightning extends BaseItemChargeScepter implements IH
         'e', "enderpearl",
         'l', "blockRedstone",
         'q', "glowstone",
-        'i', "blockIron",
+        'i', "gemAmber",
         'g', new ItemStack(Items.GHAST_TEAR));
   }
 

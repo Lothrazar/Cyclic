@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -237,22 +236,11 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), new ItemStack(Items.SLIME_BALL), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Blocks.SOUL_SAND)
-    }, new ItemStack(Blocks.SPONGE)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
-    }, new ItemStack(Blocks.WEB, 4)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.CLAY_BALL)
-    }, new ItemStack(Items.PRISMARINE_SHARD)));
+
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
-    }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
-    // lava fabricator
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
-    }, new ItemStack(Items.LAVA_BUCKET)));
+    }, new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
+
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));
@@ -262,9 +250,9 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM)
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
-    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
+    //    addRecipe(new RecipeHydrate(new ItemStack[] {
+    //        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
+    //    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
   public static void addRecipe(RecipeHydrate rec) {

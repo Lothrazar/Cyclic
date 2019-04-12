@@ -58,14 +58,14 @@ public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe, IContent 
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName());
-    EntityProjectileRegistry.registerModEntity(EntityEnderEyeUnbreakable.class, getName(), 1029);
+    ItemRegistry.register(this, getContentName());
+    EntityProjectileRegistry.registerModEntity(EntityEnderEyeUnbreakable.class, getContentName(), 1029);
   }
 
   private boolean enabled;
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "ender_eye_orb";
   }
 
@@ -76,7 +76,7 @@ public class ItemEnderEyeReuse extends BaseTool implements IHasRecipe, IContent 
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("item." + getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("item." + getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

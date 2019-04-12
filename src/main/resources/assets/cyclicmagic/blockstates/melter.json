@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:melter" },
+        "facing=north": { "model": "cyclicmagic:melter"},
+        "facing=east": { "model":  "cyclicmagic:melter"},
+        "facing=south": { "model": "cyclicmagic:melter"},
+        "facing=west": { "model":  "cyclicmagic:melter" }
+    }
+}

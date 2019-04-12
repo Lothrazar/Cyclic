@@ -118,13 +118,13 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "ender_water";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     ModCyclic.instance.events.register(this);
   }
 

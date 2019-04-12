@@ -95,7 +95,6 @@ import com.lothrazar.cyclicmagic.item.equipmentcrystal.ItemCrystalHoe;
 import com.lothrazar.cyclicmagic.item.equipmentcrystal.ItemCrystalPickaxe;
 import com.lothrazar.cyclicmagic.item.equipmentcrystal.ItemCrystalSpade;
 import com.lothrazar.cyclicmagic.item.equipmentcrystal.ItemCrystalSword;
-import com.lothrazar.cyclicmagic.item.equipmentcrystal.ItemPoweredSword;
 import com.lothrazar.cyclicmagic.item.equipmentemerald.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.equipmentemerald.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.equipmentemerald.ItemEmeraldHoe;
@@ -103,6 +102,7 @@ import com.lothrazar.cyclicmagic.item.equipmentemerald.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.equipmentemerald.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.equipmentemerald.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.equipmentmagic.ItemGlowingHelmet;
+import com.lothrazar.cyclicmagic.item.equipmentmagic.ItemPoweredSword;
 import com.lothrazar.cyclicmagic.item.equipmentnether.ItemNetherbrickAxe;
 import com.lothrazar.cyclicmagic.item.equipmentnether.ItemNetherbrickHoe;
 import com.lothrazar.cyclicmagic.item.equipmentnether.ItemNetherbrickPickaxe;
@@ -195,7 +195,7 @@ public class MultiContent implements IContent {
   private boolean cableWireless;
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "TODOFIXME";
   }
 

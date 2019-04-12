@@ -66,12 +66,12 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, ICont
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
     GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "block_miner";
   }
 
@@ -84,7 +84,7 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, ICont
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

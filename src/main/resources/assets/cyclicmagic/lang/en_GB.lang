@@ -152,6 +152,12 @@ entity.cyclicmagic.turretminecart.name=Turret Minecart
 fluid.milk=Milk
 fluid.poison=Poison
 fluid.xpjuice=Experience
+fluid.amber=Amber
+tile.amber.name=Amber
+fluid.biomass=Biomass
+tile.biomass.name=Biomass
+tile.crystal.name=Crystallized Obsidian
+fluid.crystal=Crystallized Obsidian
 gui.chatexp=Not enough experience
 gui.enderbook.go=Go
 gui.enderbook.back=Back
@@ -1468,3 +1474,14 @@ item.crystal_hoe.guide=Crystal Hoe
 tile.fluid_drain.name=Fluid Collector
 tile.fluid_drain.guide=Drain fluid that is nearby and below, filling it with blocks
 tile.fluid_drain.tooltip=Drain fluid that is nearby and below, filling it with blocks
+
+tile.melter.name=Melter
+tile.melter.guide=Melt items into liquid, with JEI support and Crafttweaker zenscript support.
+tile.melter.tooltip=Place over lava to melt items
+
+button.fan.sound.tooltip=Enable or disable sound
+tile.heat.level=Heat  
+
+tile.solidifier.name=Solidifier
+tile.solidifier.guide=Cool fluid into solid items, with JEI support and Crafttweaker zenscript support.
+tile.solidifier.tooltip=Convert fluid into items

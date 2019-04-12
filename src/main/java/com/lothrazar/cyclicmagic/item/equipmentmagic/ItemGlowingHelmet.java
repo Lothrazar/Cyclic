@@ -90,7 +90,7 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
         "ioi",
         "o o",
         "   ",
-        'i', "dyeOrange",
+        'i', "gemAmber",
         'o', "glowstone");
   }
 

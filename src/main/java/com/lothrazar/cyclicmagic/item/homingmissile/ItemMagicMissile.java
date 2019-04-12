@@ -69,13 +69,13 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "wand_missile";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
   }
 
@@ -88,7 +88,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

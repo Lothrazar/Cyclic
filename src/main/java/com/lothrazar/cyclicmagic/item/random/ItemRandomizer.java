@@ -120,13 +120,13 @@ public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasReci
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "tool_randomize";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName());
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
   }
 
@@ -139,7 +139,7 @@ public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasReci
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @SubscribeEvent

@@ -37,7 +37,7 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe, IContent {
     EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
     EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME),
         UtilNBT.intColor(159, 255, 222), UtilNBT.intColor(222, 111, 51));
-    ItemRegistry.register(this, getName(), GuideCategory.TRANSPORT);
+    ItemRegistry.register(this, getContentName(), GuideCategory.TRANSPORT);
     ModCyclic.instance.events.register(this);
   }
 
@@ -49,13 +49,13 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "robot_spawner";
   }
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

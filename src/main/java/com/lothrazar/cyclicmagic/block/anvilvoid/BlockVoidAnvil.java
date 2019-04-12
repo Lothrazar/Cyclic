@@ -36,7 +36,7 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "void_anvil";
   }
 
@@ -57,14 +57,14 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityVoidAnvil.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityVoidAnvil.class, getContentName() + "_te");
   }
 
   private boolean enabled;

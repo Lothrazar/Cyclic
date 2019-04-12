@@ -53,7 +53,7 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "button_large";
   }
 
@@ -66,7 +66,7 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

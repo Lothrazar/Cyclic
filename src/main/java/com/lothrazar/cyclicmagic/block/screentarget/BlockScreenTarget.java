@@ -61,7 +61,7 @@ public class BlockScreenTarget extends BlockBaseFacing implements IBlockHasTESR,
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityScreenTarget.class, Const.MODID + "screentarget_te");
   }
 
@@ -73,13 +73,13 @@ public class BlockScreenTarget extends BlockBaseFacing implements IBlockHasTESR,
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "screen_target";
   }
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

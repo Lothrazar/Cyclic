@@ -63,13 +63,13 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
   private WarpType warpType;
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return warpType == WarpType.SPAWN ? "tool_warp_spawn" : "tool_warp_home";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.TRANSPORT);
+    ItemRegistry.register(this, getContentName(), GuideCategory.TRANSPORT);
     LootTableRegistry.registerLoot(this);
   }
 
@@ -83,7 +83,7 @@ public class ItemEnderWing extends BaseTool implements IHasRecipe, IHasClickTogg
   @Override
   public void syncConfig(Configuration config) {
     String name = warpType == WarpType.SPAWN ? "EnderWingPrime" : "EnderWing";
-    enabled = config.getBoolean(name, Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(name, Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   public ItemEnderWing(WarpType type) {

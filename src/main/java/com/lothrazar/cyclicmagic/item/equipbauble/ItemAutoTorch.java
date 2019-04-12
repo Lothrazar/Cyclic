@@ -88,13 +88,13 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "tool_auto_torch";
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, getName(), GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this);
   }
@@ -108,7 +108,7 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("AutomaticTorch", Const.ConfigCategory.content, true, getName() + Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("AutomaticTorch", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     lightLimit = config.getInt("AutoTorchLightLevel", Const.ConfigCategory.modpackMisc, 7, 1, 14, "At which light level will auto torch place.  Set to 7 means it will place a torch 7 or darker.  (15 is full light, 0 is full dark)");
   }
 }

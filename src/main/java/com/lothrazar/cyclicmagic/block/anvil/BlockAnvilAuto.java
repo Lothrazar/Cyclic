@@ -94,8 +94,8 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -107,8 +107,8 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
     UtilRepairItem.syncConfig(config);
   }
 
@@ -125,7 +125,7 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "block_anvil";
   }
 }

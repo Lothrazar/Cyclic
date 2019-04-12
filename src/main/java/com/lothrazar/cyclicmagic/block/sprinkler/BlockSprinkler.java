@@ -102,14 +102,14 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "sprinkler";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileSprinkler.class, getName() + "_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileSprinkler.class, getContentName() + "_te");
   }
 
   private boolean enabled;

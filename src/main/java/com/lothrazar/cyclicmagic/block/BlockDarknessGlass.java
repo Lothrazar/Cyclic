@@ -74,7 +74,7 @@ public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IConten
   }
 
   @Override
-  public String getName() {
+  public String getContentName() {
     return "glass_strong";
   }
 
@@ -86,7 +86,7 @@ public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IConten
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getName(), GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
   }
 
   private boolean enabled;
@@ -98,6 +98,6 @@ public class BlockDarknessGlass extends BlockBase implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean(getName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

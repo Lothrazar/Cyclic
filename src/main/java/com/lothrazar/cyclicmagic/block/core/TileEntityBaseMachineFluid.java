@@ -30,6 +30,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -86,6 +87,13 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     int result = tank.fill(resource, doFill);
     tank.setFluid(resource);
     return result;
+  }
+
+  public Fluid getFluidContainedOrNull() {
+    if (tank == null || tank.getFluid() == null) {
+      return null;
+    }
+    return tank.getFluid().getFluid();
   }
 
   @Override
