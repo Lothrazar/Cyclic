@@ -328,6 +328,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
         if (value > MAX_SIZE) {
           value = 1;
         }
+        if (value < 1) {
+          value = MAX_SIZE;
+        }
         size = value;
       break;
       case HEIGHT:

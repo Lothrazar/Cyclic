@@ -90,4 +90,8 @@ public class ButtonTileEntityField extends GuiButtonTexture {
   public int getValue() {
     return value;
   }
+
+  public void setValue(int i) {
+    value = i;
+  }
 }

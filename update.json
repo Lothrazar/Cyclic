@@ -317,6 +317,6 @@
 	,"1.18.6":"Optimize many things to reduce lag.  Fixed Wireless Transmitter block state not updating.  Sped up and removed progress bar from Controlled Miner.  Wireless energy transfer node no longer claims to have fluid capability (mod compat fix).  Added block id to some config descriptions.  "
 	,"1.19.0":"Energy cables to fix restricted flow issues; many internal improvements to how fluid and energy is used in general.  Added Extreme Slime plate goes about 90 blocks.  Corrupted chorus changes: added Weakness and removed Nausea.  Conveyors can be crafted into corner and angled variants now, placement logic is unchanged and you can still auto-form corners and angles while building.  Added Melter and Solidifier blocks, crafting using liquids and supported by zenscript.  "
 	,"1.19.1":"Fixed removeRecipe not working in zenscript crafttweaker support."
-	,"1.19.2":"Handle client errors when redstone Clock is updating while block is broken.  Fix Fluid Storage Tank losing its fluid-stack data when mined/placed.  "
+	,"1.19.2":"Handle client errors when redstone Clock is updating while block is broken.  Fix Fluid Storage Tank losing its fluid-stack data when mined/placed.  GUI feature: You can now right-click on some buttons to reduce values in User, Collector, Forester, Miner, Harvester.  "
   }
 }

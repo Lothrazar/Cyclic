@@ -515,8 +515,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.rightClickIfZero = value;
       break;
       case SIZE:
-        if (value > MAX_SIZE || value < 0) {
+        if (value > MAX_SIZE) {
           value = 1;
+        }
+        if (value < 1) {
+          value = MAX_SIZE;
         }
         size = value;
       break;

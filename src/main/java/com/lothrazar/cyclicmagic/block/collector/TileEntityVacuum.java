@@ -204,6 +204,9 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
         if (value > MAX_SIZE) {
           value = 0;//zero means 1x1
         }
+        if (value < 0) {
+          value = MAX_SIZE;
+        }
         size = value;
       break;
     }

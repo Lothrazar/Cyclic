@@ -199,6 +199,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         if (value > MAX_SIZE) {
           value = 0;
         }
+        if (value < 0) {
+          value = MAX_SIZE;
+        }
         size = value;
       break;
       case RENDERPARTICLES:

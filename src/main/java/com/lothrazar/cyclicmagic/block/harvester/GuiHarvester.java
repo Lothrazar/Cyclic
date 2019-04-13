@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.harvester;
 
+import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
@@ -39,6 +40,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GuiHarvester extends GuiBaseContainer {
 
   boolean debugLabels = false;
@@ -67,6 +69,7 @@ public class GuiHarvester extends GuiBaseContainer {
         x, y, this.tile.getPos(), TileEntityHarvester.Fields.SIZE.ordinal());
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
+    this.leftClickers.add(btnSize);
     this.addButton(btnSize);
     int w = 58, h = 20;
     x += 40 + Const.PAD;
@@ -80,6 +83,7 @@ public class GuiHarvester extends GuiBaseContainer {
   @Override
   protected void actionPerformed(GuiButton button) {
     if (button.id == btnSpray.id) {
+      ModCyclic.logger.error("harvester " + Mouse.isButtonDown(1));
       ModCyclic.network.sendToServer(new PacketTileIncrementField(tile.getPos(), TileEntityHarvester.Fields.HARVESTMODE.ordinal()));
     }
   }

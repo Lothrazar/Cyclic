@@ -370,6 +370,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         if (value > MAX_SIZE) {
           value = 0;
         }
+        if (value < 0) {
+          value = MAX_SIZE;
+        }
         size = value;
       break;
       case LISTTYPE:

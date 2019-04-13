@@ -67,6 +67,7 @@ public class GuiUser extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
     actionBtn = new ButtonTileEntityField(btnId++,
         this.guiLeft + 24 + Const.PAD,
         btnSize.y + 22, this.tile.getPos(), Fields.LEFTRIGHT.ordinal());

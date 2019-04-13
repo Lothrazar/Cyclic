@@ -59,6 +59,7 @@ public class GuiVacuum extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
   }
 
   @SideOnly(Side.CLIENT)

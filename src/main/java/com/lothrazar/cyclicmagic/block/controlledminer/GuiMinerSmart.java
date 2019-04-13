@@ -73,6 +73,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
     slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,

@@ -63,6 +63,7 @@ public class GuiForester extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
     x = this.guiLeft + xSize / 4 - 2;
     y = this.guiTop + 18;
     slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityForester.MAX_HEIGHT,

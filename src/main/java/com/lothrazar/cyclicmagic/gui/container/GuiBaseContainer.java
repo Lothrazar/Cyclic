@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.gui.container;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
@@ -43,12 +44,15 @@ import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -340,9 +344,19 @@ public abstract class GuiBaseContainer extends GuiContainer {
     }
   }
 
+  public List<ButtonTileEntityField> leftClickers = new ArrayList<>();
+
   @Override
   protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
     super.mouseClicked(mouseX, mouseY, btn);// x/y pos is 33/30
+    for (ButtonTileEntityField bf : leftClickers) {
+      if (bf.isMouseOver() && btn == 1) {
+        bf.setValue(-1);
+        bf.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY);
+        bf.setValue(1);
+        UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK, 0.05F);
+      }
+    }
     if (tile instanceof ITileStackWrapper) {
       mouseClickedWrapper((ITileStackWrapper) tile, mouseX, mouseY);
     }
