@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.compat.crafttweaker;
 
+import java.util.Iterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.block.solidifier.RecipeSolidifier;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
@@ -41,10 +41,12 @@ public class RecipeSolidifierZen {
   @ZenMethod
   public static void removeShapedRecipe(IItemStack output) {
     ItemStack out = toStack(output);
-    for (RecipeHydrate rec : RecipeHydrate.recipes) {
+    Iterator<RecipeSolidifier> it = RecipeSolidifier.recipes.iterator();
+    while (it.hasNext()) {
+      RecipeSolidifier rec = it.next();
       if (rec.getRecipeOutput().isItemEqual(out)) {
-        boolean success = RecipeHydrate.recipes.remove(rec);
-        ModCyclic.logger.info("ZenScript: removed recipe " + success + output.getDisplayName());
+        it.remove();
+        ModCyclic.logger.info("ZenScript: removed recipe " + output.getDisplayName());
       }
     }
   }
