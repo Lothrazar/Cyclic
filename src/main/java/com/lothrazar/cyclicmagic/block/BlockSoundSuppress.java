@@ -61,12 +61,17 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe, IConten
   //filter by range? b power? different block types?
   public BlockSoundSuppress() {
     super(Material.CLAY);
-    this.myTooltip = UtilChat.lang("tile.block_soundproofing.tooltip") + RADIUS;
+    this.myTooltip = UtilChat.lang("tile." + getContentName() + ".tooltip") + RADIUS;
+  }
+
+  @Override
+  public String getContentName() {
+    return "block_soundproofing";
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_soundproofing", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
     ModCyclic.instance.events.register(this);
   }
 

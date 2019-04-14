@@ -6,7 +6,7 @@ import java.util.List;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.sound.TileEntitySoundPlayer.Fields;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.Minecraft;

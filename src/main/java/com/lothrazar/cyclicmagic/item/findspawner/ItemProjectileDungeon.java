@@ -66,8 +66,13 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   }
 
   @Override
+  public String getContentName() {
+    return "ender_dungeon";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "ender_dungeon", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
     LootTableRegistry.registerLoot(this);
   }
@@ -81,7 +86,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 64, 8, 128, "Search radius of Spawner Seeker");
     USE_THREADING = config.getBoolean("Ender Threading", Const.ConfigCategory.items, true, "If true, this item will do the searching on a new thread, and then come back to the projectile when found and end the thread.  Set to false to completely disable threading if you have any weird issues or false results, but be aware that setting to false will cause clientside lag on every use");
   }

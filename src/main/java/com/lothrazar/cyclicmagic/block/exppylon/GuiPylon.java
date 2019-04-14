@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.exppylon;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon.Fields;
-import com.lothrazar.cyclicmagic.gui.FluidBar;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.FluidBar;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;

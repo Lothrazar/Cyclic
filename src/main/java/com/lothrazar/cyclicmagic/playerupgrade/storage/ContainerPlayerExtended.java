@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade.storage;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;

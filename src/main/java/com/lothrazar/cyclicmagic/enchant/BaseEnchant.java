@@ -38,6 +38,11 @@ public abstract class BaseEnchant extends Enchantment implements IContent {
     this.setName(name);
   }
 
+  @Override
+  public String getContentName() {
+    return this.name;
+  }
+
   protected int getCurrentLevelTool(ItemStack stack) {
     if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this))
       return EnchantmentHelper.getEnchantments(stack).get(this);

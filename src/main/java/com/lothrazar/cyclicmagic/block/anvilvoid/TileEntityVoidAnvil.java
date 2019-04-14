@@ -3,7 +3,8 @@ package com.lothrazar.cyclicmagic.block.anvilvoid;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityVoidAnvil() {
     super(2);
-    this.initEnergy(BlockVoidAnvil.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockVoidAnvil.FUEL_COST);
     this.setSlotsForInsert(SLOT_INPUT);
     this.setSlotsForExtract(SLOT_OUT);
   }

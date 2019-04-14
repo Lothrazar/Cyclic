@@ -24,8 +24,13 @@ public class ItemObsShears extends ItemShears implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "shears_obsidian";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "shears_obsidian", GuideCategory.ITEM);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEM);
   }
 
   private boolean enabled;
@@ -37,7 +42,7 @@ public class ItemObsShears extends ItemShears implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("shears_obsidian", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

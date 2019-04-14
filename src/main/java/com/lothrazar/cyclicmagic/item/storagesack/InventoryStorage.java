@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.gui.core.InventoryBase;
+import com.lothrazar.cyclicmagic.gui.container.InventoryBase;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

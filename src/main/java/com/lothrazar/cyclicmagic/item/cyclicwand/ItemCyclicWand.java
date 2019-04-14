@@ -30,13 +30,13 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
+import com.lothrazar.cyclicmagic.playerupgrade.spell.BaseSpellRange;
+import com.lothrazar.cyclicmagic.playerupgrade.spell.ISpell;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
-import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -247,13 +247,17 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "cyclic_wand_build";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "cyclic_wand_build");
+    ItemRegistry.register(this, getContentName());
     SpellRegistry.register(this);
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this, ChestType.ENDCITY, 15);
     LootTableRegistry.registerLoot(this, ChestType.GENERIC, 1);
-    //      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
     ModCyclic.TAB.setTabItemIfNull(this);
   }
 

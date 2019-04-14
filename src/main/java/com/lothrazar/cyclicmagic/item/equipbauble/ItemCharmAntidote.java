@@ -47,8 +47,13 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipeAndRepair,
   }
 
   @Override
+  public String getContentName() {
+    return "charm_antidote";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_antidote", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
     LootTableRegistry.registerLoot(this);
   }
 

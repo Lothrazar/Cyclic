@@ -32,8 +32,7 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.InvWrapperRestricted;
-import com.lothrazar.cyclicmagic.gui.ITileFuel;
-import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,10 +54,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
+public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
 
   protected static final int SPEED_FUELED = 8;
   private static final int MAX_SPEED = 10;
+  public static final int MENERGY = 64 * 1000;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
@@ -146,27 +146,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         this.invHandler.canExtract(index);
   }
 
-  protected void initEnergy() {
-    initEnergy(0);
-  }
-
-  protected void initEnergy(int fcost) {
-    initEnergy(fcost, EnergyStore.DEFAULT_CAPACITY);
-  }
-
-  protected void initEnergy(int fcost, int maxStored) {
-    initEnergy(fcost, maxStored, true);
-  }
-
-  protected void initEnergy(EnergyStore store) {
+  protected void initEnergy(EnergyStore store, int energyCost) {
     this.energyStorage = store;
     this.hasEnergy = true;
-  }
-
-  protected void initEnergy(int fcost, int maxStored, boolean canImportPower) {
-    this.energyCost = fcost;
-    this.hasEnergy = true;
-    this.energyStorage = new EnergyStore(maxStored, canImportPower);
+    this.setEnergyCost(energyCost);
   }
 
   public int getEnergyMax() {
@@ -176,7 +159,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return this.energyStorage.getMaxEnergyStored();
   }
 
-  @Override
   public int getEnergyCurrent() {
     if (this.energyStorage == null) {
       return 0;
@@ -186,15 +168,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   public void setEnergyCurrent(int f) {
     this.energyStorage.setEnergyStored(f);
-  }
-
-  public double getPercentFormatted() {
-    if (this.getEnergyMax() == 0) {
-      return 0;
-    }
-    double percent = ((float) this.getEnergyCurrent() / (float) this.getEnergyMax());
-    double pctOneDecimal = Math.floor(percent * 1000) / 10;
-    return pctOneDecimal;
   }
 
   public int getEnergyCost() {
@@ -215,15 +188,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return IntStream.rangeClosed(0, length - 1).toArray();
   }
 
-  @Override
-  public boolean isRunning() {
-    if (this.getEnergyCost() > 0) {
-      // update from power cables/batteries next door
-      this.updateIncomingEnergy();
-    }
-    return super.isRunning();
-  }
-
   public boolean isDoingWork() {
     return super.isRunning() && this.hasEnoughEnergy();
   }
@@ -242,37 +206,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   /**
-   * look for connected energy-compatble blocks and try to drain
-   * 
-   * Basically all of this function was written by @Ellpeck and then I tweaked it to fit my needs
+   * much energy code helped out and referenced and inspired by @Ellpeck and then I tweaked it to fit my needs
    * https://github.com/Ellpeck/ActuallyAdditions/blob/9bed6f7ea59e8aa23fa3ba540d92cd61a04dfb2f/src/main/java/de/ellpeck/actuallyadditions/mod/util/WorldUtil.java#L151
    */
-  private void updateIncomingEnergy() {
-    TileEntity teConnected;
-    //check every side to see if I'm connected
-    for (EnumFacing side : EnumFacing.values()) {
-      //it would output energy on the opposite side 
-      EnumFacing sideOpp = side.getOpposite();
-      teConnected = world.getTileEntity(pos.offset(side));
-      if (teConnected != null &&
-          teConnected.hasCapability(CapabilityEnergy.ENERGY, sideOpp)) {
-        //pull energy to myself, from the next one over if it has energy
-        IEnergyStorage handlerTo = this.getCapability(CapabilityEnergy.ENERGY, side);
-        IEnergyStorage handlerFrom = teConnected.getCapability(CapabilityEnergy.ENERGY, sideOpp);
-        if (handlerFrom != null && handlerTo != null) {
-          //true means simulate the extract. then if it worked go for real
-          int drain = handlerFrom.extractEnergy(EnergyStore.MAX_TRANSFER, true);
-          if (drain > 0) {
-            int filled = handlerTo.receiveEnergy(drain, false);
-            handlerFrom.extractEnergy(filled, false);
-            return;// stop now because only pull from one side at a time
-          }
-        }
-      }
-    }
-  }
-
-  @Override
   public boolean hasEnoughEnergy() {
     if (this.getEnergyCost() == 0) {
       return true;
@@ -532,7 +468,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return new int[0];
   }
 
-  @Override
   public int getSpeed() {
     if (this.getEnergyCost() == 0) {
       return this.speed;// does not use fuel. use NBT saved speed value
@@ -574,7 +509,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return (T) invHandler;
     }
     if (this.hasEnergy && capability == CapabilityEnergy.ENERGY) {
-      //      this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);
@@ -725,5 +659,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         sidesOut.add(s);
     Collections.shuffle(sidesOut);
     return sidesOut;
+  }
+
+  public void setEnergyCost(int energyCost) {
+    this.energyCost = energyCost;
   }
 }

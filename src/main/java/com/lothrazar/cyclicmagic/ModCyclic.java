@@ -25,11 +25,12 @@ package com.lothrazar.cyclicmagic;
 
 import java.io.File;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.creativetab.CreativeTabCyclic;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.cannon.ParticleEventManager;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
-import com.lothrazar.cyclicmagic.log.ModLogger;
+import com.lothrazar.cyclicmagic.module.ICyclicModule;
+import com.lothrazar.cyclicmagic.module.MultiContent;
+import com.lothrazar.cyclicmagic.module.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.potion.PotionTypeRegistry;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
@@ -49,9 +50,6 @@ import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.registry.SkillRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
-import com.lothrazar.cyclicmagic.registry.module.ICyclicModule;
-import com.lothrazar.cyclicmagic.registry.module.MultiContent;
-import com.lothrazar.cyclicmagic.tweak.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.block.BlockDispenser;
@@ -82,7 +80,7 @@ public class ModCyclic {
   public static ModLogger logger;
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
-  public final static CreativeTabCyclic TAB = new CreativeTabCyclic();
+  public final static ModCyclicCreativeTab TAB = new ModCyclicCreativeTab();
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   static {

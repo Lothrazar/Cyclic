@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.block.beaconempty.BeamSegment;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStainedGlassPane;

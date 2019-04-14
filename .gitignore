@@ -10,6 +10,7 @@ libs/
 saves/
 .gradle/
 .settings/
+.idea/
 server.properties 
 run/screenshots/
 .metadata/
@@ -22,6 +23,7 @@ crash-reports/
 *.fdx
 *.fnm
 *.tis
+*.iml
 .recommenders/
 .gitattributes
 *.launch

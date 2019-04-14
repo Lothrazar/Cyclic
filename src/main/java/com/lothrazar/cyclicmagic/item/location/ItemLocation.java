@@ -72,13 +72,18 @@ public class ItemLocation extends BaseItem implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "card_location";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("card_location", Const.ConfigCategory.items, true, Const.ConfigCategory.contentDefaultText + "  WARNING disabling this may cause other blocks to not function (wireless nodes)");
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.items, true, Const.ConfigCategory.contentDefaultText + "  WARNING disabling this may cause other blocks to not function (wireless nodes)");
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, "card_location", GuideCategory.ITEM);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEM);
   }
 
   @Override

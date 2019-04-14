@@ -8,7 +8,7 @@ import com.lothrazar.cyclicmagic.block.cablewireless.ILaserTarget;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;

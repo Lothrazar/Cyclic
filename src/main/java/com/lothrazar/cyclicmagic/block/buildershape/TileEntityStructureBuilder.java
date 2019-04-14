@@ -27,8 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -111,7 +112,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
 
   public TileEntityStructureBuilder() {
     super(9);
-    this.initEnergy(BlockStructureBuilder.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
   }
 

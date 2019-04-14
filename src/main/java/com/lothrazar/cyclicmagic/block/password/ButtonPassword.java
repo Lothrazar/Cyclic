@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.password;
 
 import com.lothrazar.cyclicmagic.block.password.PacketTilePassword.PacketType;
-import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
 
 public class ButtonPassword extends GuiButtonTooltip {
 

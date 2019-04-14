@@ -104,14 +104,19 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
   }
 
   @Override
+  public String getContentName() {
+    return "laser";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("laser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "laser", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityLaser.class, "laser_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityLaser.class, getContentName() + "_te");
   }
 
   private boolean enabled;

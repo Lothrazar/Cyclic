@@ -64,8 +64,13 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_spawn_inspect";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_spawn_inspect");
+    ItemRegistry.register(this, getContentName());
   }
 
   private boolean enabled;
@@ -77,7 +82,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

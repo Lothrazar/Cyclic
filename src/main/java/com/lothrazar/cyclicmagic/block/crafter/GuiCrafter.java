@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.crafter;
 
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;

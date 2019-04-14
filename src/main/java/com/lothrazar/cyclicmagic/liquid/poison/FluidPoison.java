@@ -38,22 +38,24 @@ import net.minecraftforge.fluids.FluidRegistry;
  */
 public class FluidPoison extends Fluid implements IContent {
 
+  private static final String NAME = "poison";
+
   public FluidPoison() {
-    super("poison", new ResourceLocation(Const.MODID, "blocks/fluid_poison_base"), new ResourceLocation(Const.MODID, "blocks/fluid_poison_flowing"));
+    super(NAME, new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_base"),
+        new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
     this.setLuminosity(6);
-    setUnlocalizedName("poison");
+    setUnlocalizedName(getContentName());
   }
 
   @Override
   public void register() {
-    FluidPoison fluid_poison = new FluidPoison();
-    FluidRegistry.registerFluid(fluid_poison);
-    BlockFluidPoison block_poison = new BlockFluidPoison(fluid_poison);
-    fluid_poison.setBlock(block_poison);
-    BlockRegistry.registerBlock(block_poison, "poison", null);
-    FluidRegistry.addBucketForFluid(fluid_poison);
+    FluidRegistry.registerFluid(this);
+    BlockFluidPoison block = new BlockFluidPoison(this);
+    this.setBlock(block);
+    BlockRegistry.registerBlock(block, getContentName(), null);
+    FluidRegistry.addBucketForFluid(this);
   }
 
   private boolean enabled;
@@ -66,5 +68,10 @@ public class FluidPoison extends Fluid implements IContent {
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("FluidPoison", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public String getContentName() {
+    return NAME;
   }
 }

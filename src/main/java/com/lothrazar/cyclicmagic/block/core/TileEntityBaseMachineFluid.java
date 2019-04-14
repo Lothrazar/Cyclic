@@ -30,6 +30,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -88,6 +89,13 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     return result;
   }
 
+  public Fluid getFluidContainedOrNull() {
+    if (tank == null || tank.getFluid() == null) {
+      return null;
+    }
+    return tank.getFluid().getFluid();
+  }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     if (doesFluidMatchTank(resource) == false) {
@@ -136,7 +144,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
     }
-    //    this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
 

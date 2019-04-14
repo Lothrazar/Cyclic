@@ -28,8 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -84,7 +85,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
 
   public TileEntityPatternBuilder() {
     super(9 + 9);
-    this.initEnergy(BlockPatternBuilder.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
     syncBlockItemMap();
   }

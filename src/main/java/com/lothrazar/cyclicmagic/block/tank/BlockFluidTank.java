@@ -96,8 +96,14 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   }
 
   @Override
+  public String getContentName() {
+    return "block_storeempty";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, getContentName() + ", the Fluid Tank. "
+        + Const.ConfigCategory.contentDefaultText);
   }
 
   @SuppressWarnings("deprecation")
@@ -194,6 +200,9 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(this)) {
+      return false;
+    }
     // check the TE
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     int heightCheck = 0;

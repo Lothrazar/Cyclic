@@ -55,8 +55,13 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipeAndRepair, ICo
   }
 
   @Override
+  public String getContentName() {
+    return "charm_void";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_void", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
     LootTableRegistry.registerLoot(this);
   }
 

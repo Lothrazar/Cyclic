@@ -54,8 +54,13 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipeAndRepair, ICo
   }
 
   @Override
+  public String getContentName() {
+    return "charm_fire";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_fire", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
     LootTableRegistry.registerLoot(this);
   }
 

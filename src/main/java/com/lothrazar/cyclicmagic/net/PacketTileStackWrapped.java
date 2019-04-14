@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;

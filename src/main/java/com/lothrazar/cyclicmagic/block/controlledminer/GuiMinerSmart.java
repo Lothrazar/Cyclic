@@ -27,12 +27,11 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -52,7 +51,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     te = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
-    this.progressBar = new ProgressBar(this, 10, 72, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
     energyBar.setHeight(50).setY(12);
   }
@@ -75,6 +73,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
     x = this.guiLeft + 38;
     y = this.guiTop + 15;
     slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityControlledMiner.maxHeight,

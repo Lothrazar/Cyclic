@@ -40,19 +40,22 @@ import net.minecraftforge.fluids.FluidRegistry;
  */
 public class FluidMilk extends Fluid implements IContent {
 
+  private static final String NAME = "milk";
+
   public FluidMilk() {
-    super("milk", new ResourceLocation(Const.MODID, "blocks/fluid_milk_base"), new ResourceLocation(Const.MODID, "blocks/fluid_milk_flowing"));
+    super(NAME, new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_base"),
+        new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000
     setDensity(1200);//water is 1000, lava is 3000
-    setUnlocalizedName("milk");
+    setUnlocalizedName(getContentName());
   }
 
   @Override
   public void register() {
     FluidRegistry.registerFluid(this);
-    Block block_milk = new BlockFluidMilk(this);
-    this.setBlock(block_milk);
-    BlockRegistry.registerBlock(block_milk, "milk", null);
+    Block block = new BlockFluidMilk(this);
+    this.setBlock(block);
+    BlockRegistry.registerBlock(block, getContentName(), null);
     FluidRegistry.addBucketForFluid(this);
   }
 
@@ -66,5 +69,10 @@ public class FluidMilk extends Fluid implements IContent {
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("FluidMilk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public String getContentName() {
+    return NAME;
   }
 }

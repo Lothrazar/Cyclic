@@ -53,8 +53,13 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipeAndRepair, ICon
   }
 
   @Override
+  public String getContentName() {
+    return "charm_air";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_air", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this);
   }
@@ -68,7 +73,7 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipeAndRepair, ICon
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("AirCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("AirCharm", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

@@ -120,7 +120,7 @@ public class RecipeRegistry {
 
   ResourceLocation group = new ResourceLocation(Const.MODID, "recipes");
 
-  public static IRecipe addShapelessOreRecipe(ItemStack stack, Object... recipeComponents) {
+  private static IRecipe addShapelessOreRecipe(ItemStack stack, Object... recipeComponents) {
     ResourceLocation location = Util1pt12.buildName(stack);
     IRecipe recipe = new ShapelessOreRecipe(location, stack, recipeComponents);
     add(recipe, location);

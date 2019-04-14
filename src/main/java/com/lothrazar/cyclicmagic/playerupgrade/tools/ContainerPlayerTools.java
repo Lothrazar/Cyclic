@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.playerupgrade.tools;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import com.lothrazar.cyclicmagic.net.PacketSyncToolslot;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.util.Const;

@@ -71,8 +71,13 @@ public class ItemProjectileCannon extends BaseItem implements IHasRecipe, IConte
 
   @Override
   public void register() {
-    ItemRegistry.register(this, "laser_cannon", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityGolemLaser.NAME), EntityGolemLaser.class, EntityGolemLaser.NAME, 1031, ModCyclic.instance, 64, 1, true);
+  }
+
+  @Override
+  public String getContentName() {
+    return "laser_cannon";
   }
 
   private boolean enabled;
@@ -84,7 +89,7 @@ public class ItemProjectileCannon extends BaseItem implements IHasRecipe, IConte
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("laser_cannon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   public void createBullet(World world, EntityPlayer player) {

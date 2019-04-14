@@ -36,7 +36,6 @@ import net.minecraft.world.World;
 public class BlockPowerCable extends BlockCableBase implements IHasRecipe {
 
   public BlockPowerCable() {
-    //    super(Material.CLAY);
     this.setPowerTransport();
   }
 

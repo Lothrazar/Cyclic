@@ -29,7 +29,7 @@ import java.util.Set;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
-import com.lothrazar.cyclicmagic.item.IRenderOutline;
+import com.lothrazar.cyclicmagic.data.IRenderOutline;
 import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -120,8 +120,13 @@ public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasReci
   }
 
   @Override
+  public String getContentName() {
+    return "tool_randomize";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_randomize");
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
   }
 
@@ -134,7 +139,7 @@ public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasReci
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @SubscribeEvent

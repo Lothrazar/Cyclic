@@ -1,19 +1,17 @@
 package com.lothrazar.cyclicmagic.block.conveyor;
 
-import java.util.Random;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class BlockConveyorCorner extends BlockConveyor {
@@ -25,10 +23,6 @@ public class BlockConveyorCorner extends BlockConveyor {
     setCorner(this);
   }
 
-  @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return Item.getItemFromBlock(dropFlat);
-  }
 
   @Override
   public boolean isCorner() {
@@ -37,9 +31,12 @@ public class BlockConveyorCorner extends BlockConveyor {
 
   @Override
   public IRecipe addRecipe() {
-    return null;
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 2),
+        "cc",
+        "uu",
+        'c', flatType,
+        'u', new ItemStack(Blocks.COBBLESTONE));
   }
-
   @Override
   public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
@@ -89,12 +86,8 @@ public class BlockConveyorCorner extends BlockConveyor {
         .withProperty(FLIPPED, placer.isSneaking());
   }
 
-  @Override
-  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-    return new ItemStack(dropFlat);
-  }
 
   public void setDrop(BlockConveyor drop) {
-    this.dropFlat = drop;
+    this.flatType = drop;
   }
 }

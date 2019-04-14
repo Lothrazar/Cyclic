@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.conveyor;
 
 import java.util.List;
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFlat;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -74,13 +73,15 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   protected boolean keepEntityGrounded = true;
   private BlockConveyor corner;
   private BlockConveyor angled;
-  protected BlockConveyor dropFlat;
+  protected BlockConveyor flatType;
   public static boolean sneakPlayerAvoid;
 
   public BlockConveyor(SpeedType t) {
     super(Material.ROCK);
-    dropFlat = this;
+    flatType = this;
     type = t;
+    this.setSoundType(SoundType.METAL);
+    sound = SoundEvents.BLOCK_ANVIL_BREAK;
     switch (type) {
       case LARGE:
         this.power = 0.32F;
@@ -97,15 +98,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
       default:
       break;
     }
-  }
-
-  public BlockConveyor(@Nonnull BlockConveyor corner, @Nonnull BlockConveyor angled) {
-    this(corner.type);
-    this.setCorner(corner);
-    this.setAngled(angled);
-    this.setSoundType(SoundType.METAL);
-    sound = SoundEvents.BLOCK_ANVIL_BREAK;
-    //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
 
   public boolean isAngle() {
@@ -126,7 +118,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
           world.setBlockState(pos, state.withProperty(BlockConveyorAngle.FLIPPED, false).withProperty(PROPERTYFACING, EnumFacing.EAST));
         }
         else {
-          world.setBlockState(pos, dropFlat.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
+          world.setBlockState(pos, flatType.getDefaultState().withProperty(PROPERTYFACING, EnumFacing.EAST));
         }
         return true;
       }
@@ -314,10 +306,7 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
   }
 
-  @Override
-  public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-    return false;
-  }
+
 
   /**
    * Called by ItemBlocks after a block is set in the world, to allow post-place logic
@@ -330,6 +319,10 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     if (placer.isSneaking()) {
       //skip and place as normal 
+      return;
+    }
+    if (this.isCorner() || this.isAngle()) {
+      super.onBlockPlacedBy(world, pos, state, placer, stack);
       return;
     }
     IBlockState north = world.getBlockState(pos.offset(EnumFacing.NORTH));

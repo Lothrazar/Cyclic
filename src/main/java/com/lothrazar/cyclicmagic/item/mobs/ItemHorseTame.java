@@ -52,7 +52,7 @@ public class ItemHorseTame extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public void register() {
-    ItemRegistry.register(this, "apple_lapis");
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
   }
 
@@ -61,6 +61,11 @@ public class ItemHorseTame extends BaseItem implements IHasRecipe, IContent {
   @Override
   public boolean enabled() {
     return enabled;
+  }
+
+  @Override
+  public String getContentName() {
+    return "apple_lapis";
   }
 
   @Override
@@ -74,7 +79,6 @@ public class ItemHorseTame extends BaseItem implements IHasRecipe, IContent {
       return;
     }
     EntityPlayer player = (EntityPlayer) event.getEntity();
-    //    ItemStack held = player.getHeldItemMainhand();
     ItemStack itemstack = event.getItemStack();
     if (itemstack != null && itemstack.getItem() instanceof ItemHorseTame && itemstack.getCount() > 0) {
       if (event.getTarget() instanceof EntityZombieHorse || event.getTarget() instanceof EntitySkeletonHorse) {

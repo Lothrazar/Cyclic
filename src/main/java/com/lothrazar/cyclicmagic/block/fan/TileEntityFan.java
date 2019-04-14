@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.fan;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -44,20 +44,19 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle, ITilePreviewToggle {
 
   private static final int MIN_RANGE = 1;
-  private static final int TIMER_FULL = 30;
   public static final int MAX_SPEED = 10;
   public static final int MAX_RANGE = 32;
-  private static final String NBT_PART = "particles";
   private static final String NBT_PUSH = "pushpull";
   private static final String NBT_RANGE = "range";
 
   public static enum Fields {
-    TIMER, REDSTONE, PARTICLES, PUSHPULL, RANGE, SPEED;
+    TIMER, REDSTONE, PARTICLES, PUSHPULL, RANGE, SPEED, SILENT;
   }
 
   private int timer;
   private int pushIfZero = 0;//else pull. 0 as default 
   private int range = 16;
+  private int isSilent;
 
   public TileEntityFan() {
     super(0);
@@ -74,27 +73,34 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public void update() {
     if (this.isRunning() == false) {
       setAnimation(false);
-      if (this.timer != 0 && timer > 30) {
-        UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_off, SoundCategory.BLOCKS, 1.0F);
-      }
+      soundsOff();
       timer = 0;
       return;
     }
-    sounds();
+    particles();
+    soundsOnAndLoop();
     setAnimation(true);
     tick();
-    particles();
     pushEntities();
   }
 
-  private void sounds() {
-    int lengthOn = 31;
-    int lengthLoop = 40;
-    if (timer == 0) {
-      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_on, SoundCategory.BLOCKS, 0.8F);
+  private void soundsOff() {
+    if (this.isSilent == 0 &&
+        this.timer != 0 && timer > 30) {
+      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_off, SoundCategory.BLOCKS, 1.0F);
     }
-    else if (timer == lengthOn || (timer - lengthOn) % lengthLoop == 0) {
-      UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS, 0.4F);
+  }
+
+  private void soundsOnAndLoop() {
+    if (this.isSilent == 0) {
+      int lengthOn = 31;
+      int lengthLoop = 40;
+      if (timer == 0) {
+        UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_on, SoundCategory.BLOCKS, 0.8F);
+      }
+      else if (timer == lengthOn || (timer - lengthOn) % lengthLoop == 0) {
+        UtilSound.playSound(getWorld(), getPos(), SoundRegistry.fan_loop, SoundCategory.BLOCKS, 0.4F);
+      }
     }
   }
 
@@ -106,11 +112,18 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
 
   private void particles() {
-    if (timer % 30 == 0) {
+    if (timer % 10 == 0) {
       //rm this its ugly, keep in case i add a custom particle
       if (isPreviewVisible()) {
         doParticles();
       }
+    }
+  }
+
+  private void doParticles() {
+    List<BlockPos> shape = getShape();
+    for (BlockPos pos : shape) {
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1);
     }
   }
 
@@ -221,13 +234,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     return (this.speed) / 35F;
   }
 
-  private void doParticles() {
-    List<BlockPos> shape = getShape();
-    for (BlockPos pos : shape) {
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1);
-    }
-  }
-
   private int getCurrentRange() {
     EnumFacing facing = getCurrentFacing();
     BlockPos tester;
@@ -262,6 +268,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_PUSH, this.pushIfZero);
     tags.setInteger(NBT_RANGE, this.range);
+    tags.setInteger("silent", this.isSilent);
     return super.writeToNBT(tags);
   }
 
@@ -272,6 +279,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     needsRedstone = tags.getInteger(NBT_REDST);
     this.pushIfZero = tags.getInteger(NBT_PUSH);
     this.range = tags.getInteger(NBT_RANGE);
+    this.isSilent = tags.getInteger("silent");
   }
 
   @Override
@@ -312,6 +320,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
           return this.range;
         case SPEED:
           return this.speed;
+        case SILENT:
+          return this.isSilent;
       }
     }
     return -1;
@@ -338,6 +348,9 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
         break;
         case SPEED:
           this.setSpeed(value);
+        break;
+        case SILENT:
+          this.isSilent = value % 2;
         break;
       }
     }

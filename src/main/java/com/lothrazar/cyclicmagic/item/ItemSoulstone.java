@@ -57,8 +57,13 @@ public class ItemSoulstone extends BaseItem implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "soulstone";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "soulstone");
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
   }
 

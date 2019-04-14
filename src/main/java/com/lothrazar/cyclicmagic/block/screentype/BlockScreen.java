@@ -61,8 +61,13 @@ public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasR
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_screen", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
+  }
+
+  @Override
+  public String getContentName() {
+    return "block_screen";
   }
 
   private boolean enabled;
@@ -74,7 +79,7 @@ public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasR
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("block_screen", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

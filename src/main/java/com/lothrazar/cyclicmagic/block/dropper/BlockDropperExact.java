@@ -66,9 +66,14 @@ public class BlockDropperExact extends BlockBaseFacingOmni implements IContent, 
   }
 
   @Override
+  public String getContentName() {
+    return "dropper_exact";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "dropper_exact", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityDropperExact.class, "dropper_exact_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    GameRegistry.registerTileEntity(TileEntityDropperExact.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -80,7 +85,7 @@ public class BlockDropperExact extends BlockBaseFacingOmni implements IContent, 
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("dropper_exact", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("dropper_exact", Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

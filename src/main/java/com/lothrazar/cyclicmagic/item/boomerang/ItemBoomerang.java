@@ -58,7 +58,7 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, 
   @Override
   public void register() {
     ItemRegistry.register(this, "boomerang");
-    EntityProjectileRegistry.registerModEntity(EntityBoomerang.class, "boomerang", 1729);
+    EntityProjectileRegistry.registerModEntity(EntityBoomerang.class, getContentName(), 1729);
   }
 
   private boolean enabled;
@@ -69,8 +69,13 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, 
   }
 
   @Override
+  public String getContentName() {
+    return "boomerang";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("boomerang", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

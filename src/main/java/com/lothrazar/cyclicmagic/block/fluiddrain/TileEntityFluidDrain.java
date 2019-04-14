@@ -26,8 +26,9 @@ package com.lothrazar.cyclicmagic.block.fluiddrain;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -45,7 +46,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable, ITilePreviewToggle {
 
-  public static final int TANK_FULL = 64000;
+  public static final int TANK_FULL = MENERGY;
   private int radius = 7;
   private int depth = 4;
   private int shapePtr = 0;
@@ -60,7 +61,8 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
     this.setSlotsForInsert(0, 18);
     tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setTileEntity(this);
-    this.initEnergy(BlockFluidDrain.FUEL_COST, TANK_FULL);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY),
+        BlockFluidDrain.FUEL_COST);
   }
 
   @Override

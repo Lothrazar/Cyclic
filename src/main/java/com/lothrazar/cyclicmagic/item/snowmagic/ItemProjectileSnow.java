@@ -48,8 +48,13 @@ public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasReci
   }
 
   @Override
+  public String getContentName() {
+    return "ender_snow";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "ender_snow", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
     ModCyclic.instance.events.register(this);
   }
@@ -63,7 +68,7 @@ public class ItemProjectileSnow extends BaseItemRapidScepter implements IHasReci
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderSnow", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderSnow", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

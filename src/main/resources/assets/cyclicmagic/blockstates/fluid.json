@@ -21,6 +21,24 @@
                     "fluid": "poison"
                 }
             }
+        ],
+        "amber": [{
+                "custom": {
+                    "fluid": "amber"
+                }
+            }
+        ],
+        "crystal": [{
+                "custom": {
+                    "fluid": "crystal"
+                }
+            }
+        ],
+        "biomass": [{
+                "custom": {
+                    "fluid": "biomass"
+                }
+            }
         ]
     }
 }

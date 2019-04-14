@@ -26,11 +26,11 @@ package com.lothrazar.cyclicmagic.block.autouser;
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser.Fields;
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.component.ProgressBar;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -67,6 +67,7 @@ public class GuiUser extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
     actionBtn = new ButtonTileEntityField(btnId++,
         this.guiLeft + 24 + Const.PAD,
         btnSize.y + 22, this.tile.getPos(), Fields.LEFTRIGHT.ordinal());

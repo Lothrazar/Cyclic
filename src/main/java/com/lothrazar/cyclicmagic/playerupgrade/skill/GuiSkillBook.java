@@ -3,7 +3,7 @@ package com.lothrazar.cyclicmagic.playerupgrade.skill;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
