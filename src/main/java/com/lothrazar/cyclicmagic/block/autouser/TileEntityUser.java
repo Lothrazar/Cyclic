@@ -516,9 +516,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case SIZE:
         if (value > MAX_SIZE) {
-          value = 1;
+          value = 0;
         }
-        if (value < 1) {
+        if (value < 0) {
           value = MAX_SIZE;
         }
         size = value;

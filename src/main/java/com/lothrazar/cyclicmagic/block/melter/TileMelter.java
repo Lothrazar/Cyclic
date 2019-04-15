@@ -46,6 +46,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
+  private static final int HEAT_REFR_EVERY = 20;
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 16 * 1000;
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 8;
@@ -87,10 +88,10 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
     if (this.isRunning() == false) {
       return;//dont drain power when full  
     }
+    refreshHeat();
     if (currentRecipe == null) {
       return;
     }
-    refreshHeat();
     if (this.heatLevel > 0) {
       //  speed based on quantity of lava
       this.timer -= this.heatLevel;
@@ -105,11 +106,14 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
   private void refreshHeat() {
     this.heatRefresh--;
     if (this.heatRefresh <= 0) {
-      this.heatRefresh = 20;
+      this.heatRefresh = HEAT_REFR_EVERY;
       this.heatLevel = 0;
       for (EnumFacing f : EnumFacing.values()) {
         IBlockState down = this.world.getBlockState(getPos().offset(f));
-        if (down.getBlock() == Blocks.LAVA || down.getBlock() == Blocks.FLOWING_LAVA) {
+        if (down.getBlock() == Blocks.LAVA) {// source
+          this.heatLevel += 2;
+        }
+        if (down.getBlock() == Blocks.FLOWING_LAVA) { // flowing 
           this.heatLevel++;
         }
       }
@@ -197,8 +201,8 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, this.needsRedstone);
     compound.setInteger("rlock", recipeIsLocked);
-    compound.setInteger("heatLevel", this.heatLevel);
     compound.setInteger("heatRefresh", this.heatRefresh);
+    compound.setInteger("heatLevel", this.heatLevel);
     return super.writeToNBT(compound);
   }
 
@@ -208,7 +212,7 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
     this.needsRedstone = compound.getInteger(NBT_REDST);
     this.recipeIsLocked = compound.getInteger("rlock");
     this.heatRefresh = compound.getInteger("heatRefresh");
-    this.heatRefresh = compound.getInteger("heatRefresh");
+    this.heatLevel = compound.getInteger("heatLevel");
   }
 
   @Override
