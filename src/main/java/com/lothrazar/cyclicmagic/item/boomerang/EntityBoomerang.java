@@ -170,6 +170,10 @@ public class EntityBoomerang extends EntityThrowableDispensable {
         // something to break?
         IBlockState block = world.getBlockState(mop.getBlockPos());
         if (this.isBreakable(block)) {
+          if (this.thrower instanceof EntityPlayer) {
+            EntityPlayer p = (EntityPlayer) thrower;
+            block.getBlock().harvestBlock(world, p, mop.getBlockPos(), block, null, boomerangThrown);
+          }
           world.destroyBlock(mop.getBlockPos(), true);
         }
       }
