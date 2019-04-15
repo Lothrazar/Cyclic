@@ -94,7 +94,7 @@ import com.lothrazar.cyclicmagic.item.ItemPlayerLauncher;
 import com.lothrazar.cyclicmagic.item.ItemPotionContent;
 import com.lothrazar.cyclicmagic.item.ItemProspector;
 import com.lothrazar.cyclicmagic.item.ItemRotateBlock;
-import com.lothrazar.cyclicmagic.item.ItemSoulstone;
+import com.lothrazar.cyclicmagic.item.SoulstoneItem;
 import com.lothrazar.cyclicmagic.item.ItemSpawnInspect;
 import com.lothrazar.cyclicmagic.item.ItemStirrups;
 import com.lothrazar.cyclicmagic.item.ItemStirrupsReverse;
@@ -181,7 +181,7 @@ public class CyclicContent {
     content.add(new ItemCrashSpawner());
     content.add(new ItemProjectileCannon());
     content.add(new ItemMerchantAlmanac());
-    content.add(new ItemSoulstone());
+    content.add(new SoulstoneItem());
     content.add(new ItemPlayerLauncher());
     content.add(new ItemLeverRemote());
     content.add(new ItemWarpSurface());
