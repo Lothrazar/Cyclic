@@ -28,7 +28,6 @@ import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -59,47 +58,28 @@ public class ItemCrystalArmor extends ItemArmor implements IHasRecipe {
     }
   }
 
-  private ItemStack addEnchantment(ItemStack stack) {
-    switch (this.armorType) {
-      case CHEST:
-        stack.addEnchantment(Enchantments.PROTECTION, Enchantments.PROTECTION.getMaxLevel());
-      break;
-      case FEET:
-        stack.addEnchantment(Enchantments.FEATHER_FALLING, Enchantments.FEATHER_FALLING.getMaxLevel());
-        stack.addEnchantment(Enchantments.DEPTH_STRIDER, Enchantments.DEPTH_STRIDER.getMaxLevel());
-      break;
-      case HEAD:
-        stack.addEnchantment(Enchantments.AQUA_AFFINITY, Enchantments.AQUA_AFFINITY.getMaxLevel());
-        stack.addEnchantment(Enchantments.RESPIRATION, Enchantments.RESPIRATION.getMaxLevel());
-      break;
-      case LEGS:
-        stack.addEnchantment(Enchantments.FIRE_PROTECTION, Enchantments.FIRE_PROTECTION.getMaxLevel());
-      break;
-    }
-    return stack;
-  }
 
   @Override
   public IRecipe addRecipe() {
     switch (this.armorType) {
       case CHEST:
-        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "o o",
             "ooo",
             "ooo",
             'o', "gemObsidian");
       case FEET:
-        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "p p",
             "ppp",
             'p', "gemObsidian");
       case HEAD:
-        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "ooo",
             "o o",
             'o', "gemObsidian");
       case LEGS:
-        return RecipeRegistry.addShapedRecipe(this.addEnchantment(new ItemStack(this)),
+        return RecipeRegistry.addShapedRecipe(new ItemStack(this),
             "ooo",
             "o o",
             "o o",
