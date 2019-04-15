@@ -318,6 +318,6 @@
 	,"1.19.0":"Energy cables to fix restricted flow issues; many internal improvements to how fluid and energy is used in general.  Added Extreme Slime plate goes about 90 blocks.  Corrupted chorus changes: added Weakness and removed Nausea.  Conveyors can be crafted into corner and angled variants now, placement logic is unchanged and you can still auto-form corners and angles while building.  Added Melter and Solidifier blocks, crafting using liquids and supported by zenscript.  "
 	,"1.19.1":"Fixed removeRecipe not working in zenscript crafttweaker support."
 	,"1.19.2":"Handle client errors when redstone Clock is updating while block is broken.  Fix Fluid Storage Tank losing its fluid-stack data when mined/placed.  GUI feature: You can now right-click on some buttons to reduce values in User, Collector, Forester, Miner, Harvester.  "
-	,"1.19.3":"Increased Hydrator speed.  Fluid Storage Tank now auto-fills the block directly below it regardless of block type.  Melter now gets boosted heat level from source lava blocks.  "
+	,"1.19.3":"Increased Hydrator speed.  Fluid Storage Tank now auto-fills the block directly below it regardless of block type.  Melter now gets boosted heat level from source lava blocks.  Soulstone updated for improved compatibility.  Transfer Nodes now display the correct custom display name (for example if a chest is named in an anvil and placed). "
   }
 }
