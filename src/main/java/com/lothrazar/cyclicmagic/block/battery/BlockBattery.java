@@ -37,6 +37,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IContent {
 
+  public static final int MAX_SMALL = 1000000;
+  public static final int MAX_MED = 16 * MAX_SMALL;
+  public static final int MAX_LRG = 64 * MAX_SMALL;
   public static final PropertyEnum<EnergyFlatMap> AMOUNT = PropertyEnum.create("amount", EnergyFlatMap.class);
   private static final PropertyBool U = PropertyBool.create("u");
   private static final PropertyBool D = PropertyBool.create("d");
@@ -45,8 +48,11 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
   private static final PropertyBool S = PropertyBool.create("s");
   private static final PropertyBool W = PropertyBool.create("w");
 
-  public BlockBattery() {
+  private int capacity;
+
+  public BlockBattery(int capacity) {
     super(Material.ROCK);
+    this.capacity = capacity;
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_BATTERY);
   }
 
@@ -83,10 +89,9 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
         'b', Blocks.GLASS,
         'a', "blockRedstone");
   }
-
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityBattery();
+    return new TileEntityBattery(capacity);
   }
 
   //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
@@ -210,6 +215,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
 
   @Override
   public int getMetaFromState(IBlockState state) {
+
     return 0;
   }
 
