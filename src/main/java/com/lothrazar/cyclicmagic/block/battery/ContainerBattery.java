@@ -38,7 +38,13 @@ public class ContainerBattery extends ContainerBaseMachine {
   public ContainerBattery(InventoryPlayer inventoryPlayer, TileEntityBattery te) {
     super(te);
     addSlotToContainer(new SlotCheckTileValid(te, 0,
-        this.getScreenSize().width() / 2 - 8, 34));
+        this.getScreenSize().width() / 2 - 8, 34) {
+
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
     bindPlayerInventory(inventoryPlayer);
   }
 
