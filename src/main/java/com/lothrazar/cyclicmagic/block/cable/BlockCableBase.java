@@ -109,7 +109,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
 
   public BlockCableBase() {
     super(Material.CIRCUITS);
-    this.setHarvestLevel("pickaxe", 0);
+    this.setHarvestLevel("axe", 0);
     setSoundType(SoundType.CLOTH);
     setDefaultState(getDefaultState());
     setHardness(0.7F);

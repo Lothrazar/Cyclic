@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.19.3",
-    "1.12.2-recommended": "1.19.3"
+    "1.12.2-latest": "1.19.4",
+    "1.12.2-recommended": "1.19.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -319,5 +319,6 @@
 	,"1.19.1":"Fixed removeRecipe not working in zenscript crafttweaker support."
 	,"1.19.2":"Handle client errors when redstone Clock is updating while block is broken.  Fix Fluid Storage Tank losing its fluid-stack data when mined/placed.  GUI feature: You can now right-click on some buttons to reduce values in User, Collector, Forester, Miner, Harvester.  "
 	,"1.19.3":"Increased Hydrator speed.  Fluid Storage Tank now auto-fills the block directly below it regardless of block type.  Melter now gets boosted heat level from source lava blocks.  Soulstone updated for improved compatibility.  Transfer Nodes now display the correct custom display name (for example if a chest is named in an anvil and placed).  Boomerang now attempts to harvest some blocks if it was breaking them (example Chorus Flower), and also tries to pick up items.  Crystal equipment no longer comes with free enchants.  "
+	,"1.19.4":"Changed cables to material Circuits mined by an axe instead of Leaves.  Fixed an RF bug with battery blocks.  Updated ru_RU by Konstantin and zh_CN by sandtechnology.  "
   }
 }
