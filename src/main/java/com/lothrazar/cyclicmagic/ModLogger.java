@@ -44,9 +44,9 @@ public class ModLogger implements IHasConfig {
    * 
    * @param string
    */
-  public void info(String string) {
+  public void info(String string, Object... params) {
     if (sendInfo)
-      logger.info(string);
+      logger.info(string, params);
   }
 
   /**

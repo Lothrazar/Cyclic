@@ -57,6 +57,7 @@ public class ItemBlockBattery extends ItemBlock {
 
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+    //use getItem to detect max! 
     return new EnergyCapabilityItemStack(stack, BlockBattery.MAX_SMALL);
   }
   //ICapabilityProvider doesnt exist/notprovidded

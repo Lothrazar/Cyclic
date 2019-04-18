@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.battery;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.battery.TileEntityBattery.Fields;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.gui.component.CheckboxFacingComponent;
 import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
@@ -38,7 +39,7 @@ public class GuiBattery extends GuiBaseContainer {
 
   CheckboxFacingComponent checkboxes;
 
-  public GuiBattery(InventoryPlayer inventoryPlayer, TileEntityBattery te) {
+  public GuiBattery(InventoryPlayer inventoryPlayer, TileEntityBaseMachineInvo te) {
     super(new ContainerBattery(inventoryPlayer, te), te);
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setY(8).setX(150);
