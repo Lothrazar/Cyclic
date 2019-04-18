@@ -306,8 +306,6 @@ public class BlockConveyor extends BlockBaseFlat implements IHasRecipe {
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
   }
 
-
-
   /**
    * Called by ItemBlocks after a block is set in the world, to allow post-place logic
    * 

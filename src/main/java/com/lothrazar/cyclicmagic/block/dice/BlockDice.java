@@ -32,6 +32,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IConte
 
   private static final double SIZE = 0.9D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(1 - SIZE, 1 - SIZE, 1 - SIZE, SIZE, SIZE, SIZE);
+
   public BlockDice() {
     super(Material.ROCK);
     this.setTranslucent();

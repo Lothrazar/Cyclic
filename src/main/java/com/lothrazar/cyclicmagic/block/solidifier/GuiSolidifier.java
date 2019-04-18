@@ -43,7 +43,6 @@ public class GuiSolidifier extends GuiBaseContainer {
   public GuiSolidifier(InventoryPlayer inventoryPlayer, TileSolidifier tileEntity) {
     super(new ContainerSolidifier(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileSolidifier.Fields.REDSTONE.ordinal();
-
     this.fluidBar = new FluidBar(this, 150, 16);
     fluidBar.setCapacity(TileSolidifier.TANK_FULL);
     this.progressBar = new ProgressBar(this, 8, 70, TileSolidifier.Fields.TIMER.ordinal(), TileSolidifier.TIMER_FULL);
@@ -94,11 +93,10 @@ public class GuiSolidifier extends GuiBaseContainer {
     x = this.guiLeft + ContainerSolidifier.MID_SPACING + 10;
     y = this.guiTop + ContainerSolidifier.SLOTY + 8 - 1;
     s = Const.SQ + 4;
-      Gui.drawModalRectWithCustomSizedTexture(
+    Gui.drawModalRectWithCustomSizedTexture(
         x,
         y,
         u, v, s, s, s, s);
-
     fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
   }
 }

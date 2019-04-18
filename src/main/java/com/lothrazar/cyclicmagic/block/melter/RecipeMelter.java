@@ -51,7 +51,6 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   private int size = 0;
   private String fluidName;
 
-
   public RecipeMelter(ItemStack[] in, String fluidName, int fluid) {
     this.fluidName = fluidName;
     this.setFluidResult(FluidRegistry.getFluid(fluidName));
@@ -72,6 +71,7 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   public String getFluidString() {
     return fluidName;
   }
+
   public int getSize() {
     return size;
   }
@@ -181,7 +181,6 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
 
   // static init
   public static void initAllRecipes() {
-
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.SNOW) },
         "water", 100));
@@ -260,5 +259,4 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   public void setFluidResult(Fluid fluidResult) {
     this.fluidResult = fluidResult;
   }
-
 }

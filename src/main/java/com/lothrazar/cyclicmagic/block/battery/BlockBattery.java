@@ -47,7 +47,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
   private static final PropertyBool E = PropertyBool.create("e");
   private static final PropertyBool S = PropertyBool.create("s");
   private static final PropertyBool W = PropertyBool.create("w");
-
   private int capacity;
 
   public BlockBattery(int capacity) {
@@ -89,6 +88,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
         'b', Blocks.GLASS,
         'a', "blockRedstone");
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityBattery(capacity);
@@ -215,7 +215,6 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
 
   @Override
   public int getMetaFromState(IBlockState state) {
-
     return 0;
   }
 

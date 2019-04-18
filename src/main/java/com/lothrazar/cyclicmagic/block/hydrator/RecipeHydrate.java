@@ -236,11 +236,9 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
-
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
     }, new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
-
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));

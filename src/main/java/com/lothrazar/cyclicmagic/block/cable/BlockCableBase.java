@@ -117,7 +117,6 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     setLightOpacity(0);
   }
 
-
   @Override
   public abstract TileEntity createTileEntity(World world, IBlockState state);
 

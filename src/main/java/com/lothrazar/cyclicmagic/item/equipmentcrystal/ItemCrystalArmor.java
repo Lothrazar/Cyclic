@@ -58,7 +58,6 @@ public class ItemCrystalArmor extends ItemArmor implements IHasRecipe {
     }
   }
 
-
   @Override
   public IRecipe addRecipe() {
     switch (this.armorType) {

@@ -34,8 +34,6 @@ public class BlockBatteryCell extends BlockBaseHasTile implements IHasRecipe, IC
   public static final int MAX_SMALL = 1000000;
   public static final int MAX_MED = 16 * MAX_SMALL;
   public static final int MAX_LRG = 64 * MAX_SMALL;
-
-
   private int capacity;
 
   public BlockBatteryCell(int capacity) {
@@ -76,6 +74,7 @@ public class BlockBatteryCell extends BlockBaseHasTile implements IHasRecipe, IC
         'b', "obsidian",
         'a', "blockRedstone");
   }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityBatteryCell(capacity);
@@ -115,7 +114,6 @@ public class BlockBatteryCell extends BlockBaseHasTile implements IHasRecipe, IC
     ret.add(stack);
     return ret;
   }
-
 
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {

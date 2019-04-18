@@ -16,7 +16,6 @@ public class MelterWrapper implements IRecipeWrapper {
     this.src = source;
   }
 
-
   @Override
   public void getIngredients(IIngredients ingredients) {
     List<ItemStack> ing = new ArrayList<ItemStack>();

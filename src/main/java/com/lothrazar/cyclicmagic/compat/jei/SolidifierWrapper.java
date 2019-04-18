@@ -23,6 +23,7 @@ public class SolidifierWrapper implements IRecipeWrapper {
   public RecipeSolidifier getRecipe() {
     return src;
   }
+
   @Override
   public void getIngredients(IIngredients ingredients) {
     List<ItemStack> ing = new ArrayList<ItemStack>();
@@ -32,5 +33,4 @@ public class SolidifierWrapper implements IRecipeWrapper {
     ingredients.setInputs(VanillaTypes.ITEM, ing);
     ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
   }
-
 }

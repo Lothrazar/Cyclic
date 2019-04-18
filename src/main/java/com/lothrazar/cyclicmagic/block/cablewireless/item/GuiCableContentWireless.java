@@ -89,7 +89,6 @@ public class GuiCableContentWireless extends GuiBaseContainer {
             Block block = tile.getWorld().getBlockState(target).getBlock();
             UtilChat.addChatMessage(player, block.getLocalizedName());
           }
-
         }
         else {
           UtilChat.addChatMessage(player, "wireless.unloaded");

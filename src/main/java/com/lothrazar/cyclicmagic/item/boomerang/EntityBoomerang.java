@@ -203,7 +203,6 @@ public class EntityBoomerang extends EntityThrowableDispensable {
         && block.getBlockHardness(world, mop.getBlockPos()) < 0.6F;
   }
 
-
   private void dropAsItem() {
     this.dismountRidingEntity();
     if (this.targetEntity != null) {

@@ -90,7 +90,6 @@ public class GuiMelter extends GuiBaseContainer {
           y + k / 2 * spac,
           u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-
     fluidBar.draw(((TileEntityBaseMachineFluid) tile).getCurrentFluidStack());
   }
 }

@@ -59,7 +59,6 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
   public RecipeSolidifier(ItemStack[] in, ItemStack out, String fluidName, int fluid) {
     fluidString = fluidName;
     this.setFluidResult(FluidRegistry.getFluid(fluidName));
-
     if (in.length > TileSolidifier.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
@@ -222,11 +221,9 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW, 3), PotionTypes.STRONG_HARMING),
         "lava", 500));
     Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
-
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Items.GOLD_NUGGET)
     }, new ItemStack(amber), "amber", 1000));
-
     Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
     addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Items.IRON_NUGGET)

@@ -51,7 +51,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasRecipe, IBlockHasTESR {
 
-
   public BlockSolidifier() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -70,6 +69,7 @@ public class BlockSolidifier extends BlockBaseHasTile implements IContent, IHasR
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileSolidifier.class, new FluidSolidifierTESR());
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeSolidifier.initAllRecipes();

@@ -70,6 +70,7 @@ public class BlockMelter extends BlockBaseHasTile implements IContent, IHasRecip
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileMelter.class, new FluidMelterTESR());
   }
+
   @Override
   public IRecipe addRecipe() {
     RecipeMelter.initAllRecipes();

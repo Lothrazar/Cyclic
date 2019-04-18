@@ -50,7 +50,6 @@ public class RecipeMelterZen {
     }
   }
 
-
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void addRecipe(IItemStack[] inputs, String fluid, int water) {

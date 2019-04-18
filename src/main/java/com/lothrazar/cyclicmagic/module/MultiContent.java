@@ -523,7 +523,6 @@ public class MultiContent implements IContent {
       plate_push_fast_corner.setAngled(plate_push_fast_angle);
       //SMALL
       BlockConveyor plate_push_slow = new BlockConveyor(SpeedType.SMALL);
-
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
       //corner
       BlockConveyorCorner plate_push_slow_corner = new BlockConveyorCorner(SpeedType.SMALL);
