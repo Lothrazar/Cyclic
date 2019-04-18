@@ -277,7 +277,7 @@ public class CyclicContent {
     content.add(new BlockPassword());
     content.add(new BlockUser());
     content.add(new BlockBatteryInfinite());
-    content.add(new BlockBattery(BlockBattery.MAX_SMALL));
+    content.add(new BlockBattery());
     //    content.add(new BlockBatteryCell(BlockBattery.MAX_LRG));
     content.add(new BlockTrash());
     content.add(new BlockWorkbench());

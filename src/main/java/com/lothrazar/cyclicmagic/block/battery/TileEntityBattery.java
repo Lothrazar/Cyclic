@@ -27,9 +27,9 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   public int capacity;
   private Map<EnumFacing, Boolean> poweredSides;
 
-  public TileEntityBattery(int capacity) {
+  public TileEntityBattery() {
     super(1);
-    this.capacity = capacity;
+    this.capacity = BlockBattery.MAX_SMALL;
     this.initEnergy(new EnergyStore(capacity), 0);
     this.setSlotsForBoth();
     poweredSides = new HashMap<EnumFacing, Boolean>();
