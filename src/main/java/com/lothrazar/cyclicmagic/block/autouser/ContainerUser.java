@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.autouser;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;

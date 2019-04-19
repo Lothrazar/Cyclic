@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.block.peat.farm;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.FluidBar;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.component.FluidBar;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -24,7 +24,8 @@
 package com.lothrazar.cyclicmagic.block.dehydrator;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,7 +59,7 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(1, 4);
     this.setSlotsForExtract(5, 8);
-    this.initEnergy(BlockDeHydrator.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockDeHydrator.FUEL_COST);
   }
 
   @Override

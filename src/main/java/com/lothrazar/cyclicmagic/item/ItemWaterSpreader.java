@@ -63,8 +63,13 @@ public class ItemWaterSpreader extends BaseTool implements IHasRecipe, IContent 
   }
 
   @Override
+  public String getContentName() {
+    return "water_spreader";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "water_spreader");
+    ItemRegistry.register(this, getContentName());
   }
 
   private boolean enabled;

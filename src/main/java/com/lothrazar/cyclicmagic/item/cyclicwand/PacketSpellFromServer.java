@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.item.cyclicwand;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.playerupgrade.spell.ISpell;
+import com.lothrazar.cyclicmagic.playerupgrade.spell.ISpellFromServer;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.spell.ISpellFromServer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

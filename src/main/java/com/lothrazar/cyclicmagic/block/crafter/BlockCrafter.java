@@ -69,9 +69,14 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
   }
 
   @Override
+  public String getContentName() {
+    return "auto_crafter";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "auto_crafter", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -84,6 +89,6 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("AutoCrafter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("auto_crafter", Const.ConfigCategory.fuelCost, 150, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 150, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

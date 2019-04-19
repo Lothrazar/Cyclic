@@ -31,9 +31,15 @@ import com.lothrazar.cyclicmagic.block.dehydrator.RecipeDeHydrate;
 import com.lothrazar.cyclicmagic.block.hydrator.ContainerHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.GuiHydrator;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
+import com.lothrazar.cyclicmagic.block.melter.ContainerMelter;
+import com.lothrazar.cyclicmagic.block.melter.GuiMelter;
+import com.lothrazar.cyclicmagic.block.melter.RecipeMelter;
 import com.lothrazar.cyclicmagic.block.packager.ContainerPackager;
 import com.lothrazar.cyclicmagic.block.packager.GuiPackager;
 import com.lothrazar.cyclicmagic.block.packager.RecipePackager;
+import com.lothrazar.cyclicmagic.block.solidifier.ContainerSolidifier;
+import com.lothrazar.cyclicmagic.block.solidifier.GuiSolidifier;
+import com.lothrazar.cyclicmagic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclicmagic.block.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastPlayerBench;
 import com.lothrazar.cyclicmagic.compat.fastbench.ClientContainerFastWorkbench;
@@ -50,7 +56,6 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -104,7 +109,7 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
       registry.addRecipeClickArea(GuiHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_HYDRATOR);
       registry.handleRecipes(RecipeHydrate.class, new HydratorFactory(), RECIPE_CATEGORY_HYDRATOR);
       registry.addRecipes(RecipeHydrate.recipes, RECIPE_CATEGORY_HYDRATOR);
-      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:block_hydrator")), RECIPE_CATEGORY_HYDRATOR);
+      registry.addRecipeCatalyst(new ItemStack(CyclicContent.hydrator), RECIPE_CATEGORY_HYDRATOR);
     }
     // End Custom recipe type: Hydrator
     // Packager
@@ -112,14 +117,38 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
       registry.addRecipeClickArea(GuiPackager.class, 75, 0, 40, 26, RECIPE_CATEGORY_PACKAGER);
       registry.handleRecipes(RecipePackager.class, new PackagerFactory(), RECIPE_CATEGORY_PACKAGER);
       registry.addRecipes(RecipePackager.recipes, RECIPE_CATEGORY_PACKAGER);
-      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:auto_packager")), RECIPE_CATEGORY_PACKAGER);
+      registry.addRecipeCatalyst(new ItemStack(CyclicContent.packager), RECIPE_CATEGORY_PACKAGER);
     }
     //DEHydrator
     if (CyclicContent.dehydrator.enabled()) {
       registry.addRecipeClickArea(GuiDeHydrator.class, 75, 0, 40, 26, RECIPE_CATEGORY_DEHYDRATOR);
       registry.handleRecipes(RecipeDeHydrate.class, new DehydratorFactory(), RECIPE_CATEGORY_DEHYDRATOR);
       registry.addRecipes(RecipeDeHydrate.recipes, RECIPE_CATEGORY_DEHYDRATOR);
-      registry.addRecipeCatalyst(new ItemStack(Block.getBlockFromName("cyclicmagic:dehydrator")), RECIPE_CATEGORY_DEHYDRATOR);
+      registry.addRecipeCatalyst(new ItemStack(CyclicContent.dehydrator), RECIPE_CATEGORY_DEHYDRATOR);
+    }
+    if (CyclicContent.solidifier.enabled()) {
+      String name = CyclicContent.solidifier.getContentName();
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerSolidifier.class, name,
+          0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+          4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
+          5, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+          4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.addRecipeClickArea(GuiSolidifier.class, 75, 0, 40, 26, name);
+      registry.handleRecipes(RecipeSolidifier.class, new SolidifierFactory(), name);
+      registry.addRecipes(RecipeSolidifier.recipes, name);
+      registry.addRecipeCatalyst(new ItemStack(CyclicContent.solidifier), name);
+    }
+    if (CyclicContent.melter.enabled()) {
+      String name = CyclicContent.melter.getContentName();
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerMelter.class, name,
+          0, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+          4, // @param recipeSlotCount    the number of slots for recipe inputs //2x2
+          4, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
+          4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+      registry.addRecipeClickArea(GuiMelter.class, 75, 0, 40, 26, name);
+      registry.handleRecipes(RecipeMelter.class, new MelterFactory(), name);
+      registry.addRecipes(RecipeMelter.recipes, name);
+      registry.addRecipeCatalyst(new ItemStack(CyclicContent.melter), name);
     }
     //Start of the Info tab
     for (Item item : ItemRegistry.itemList) {
@@ -167,5 +196,9 @@ public class JEIPlugin implements IModPlugin { // extends mezz.jei.api.BlankModP
       registry.addRecipeCategories(new PackagerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     if (CyclicContent.dehydrator.enabled())
       registry.addRecipeCategories(new DehydratorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    if (CyclicContent.melter.enabled())
+      registry.addRecipeCategories(new MelterRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+    if (CyclicContent.solidifier.enabled())
+      registry.addRecipeCategories(new SolidifierRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
   }
 }

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fishing;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;

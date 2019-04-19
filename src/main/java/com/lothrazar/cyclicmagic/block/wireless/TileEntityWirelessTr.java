@@ -37,13 +37,10 @@ public class TileEntityWirelessTr extends TileEntityBaseMachineInvo implements I
 
   public TileEntityWirelessTr() {
     super(0);
-    //.getServer().worldServers[id].loadedTileEntityList
-    //List<TileEntity> list = this.world.getMinecraftServer().worlds[0].loadedTileEntityList;
   }
 
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-    //oldState.getBlock() instanceof BlockRedstoneClock &&
     return !(newSate.getBlock() instanceof BlockRedstoneWireless);// : oldState != newSate;
   }
 
@@ -60,6 +57,8 @@ public class TileEntityWirelessTr extends TileEntityBaseMachineInvo implements I
       boolean isPowered = world.isBlockPowered(pos);
       if (targetPowered != isPowered) {
         world.setBlockState(targetPos, target.withProperty(BlockRedstoneWireless.POWERED, isPowered));
+        //and update myself too   
+        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneWireless.POWERED, isPowered));
       }
     }
   }

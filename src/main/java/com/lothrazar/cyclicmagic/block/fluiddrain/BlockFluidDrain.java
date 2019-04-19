@@ -82,9 +82,14 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
   }
 
   @Override
+  public String getContentName() {
+    return "fluid_drain";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "fluid_drain", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityFluidDrain.class, "fluid_drain_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityFluidDrain.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -96,7 +101,7 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt("fluid_drain", Const.ConfigCategory.fuelCost, 500, 0, 500000, Const.ConfigText.fuelCost);
-    enabled = config.getBoolean("fluid_drain", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 500, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

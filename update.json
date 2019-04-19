@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.18.5",
-    "1.12.2-recommended": "1.18.5"
+    "1.12.2-latest": "1.19.4",
+    "1.12.2-recommended": "1.19.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -314,5 +314,11 @@
 	,"1.18.3":"Fixed uncrafting grinder only working when input stack size was the precise recipe count.  "
 	,"1.18.4":"Fixed some machines having energy (RF) having server-client desync on dedicated servers (could appear as energy appearing empty when its not, or energy bars vibrating up and down).  Item Collector now has a minimum size of 1x1.  Fixed clientside fluid-desync of several blocks.  Fixed Magma Anvil not accepting fluid from some pipes.  Harvester can now gather ender pearls from Ender Lilly from EXU2.  "
 	,"1.18.5":"You can now stack Tanks on top of each other without sneaking.  Added a button in the Fan to silence its sounds.  "
+	,"1.18.6":"Optimize many things to reduce lag.  Fixed Wireless Transmitter block state not updating.  Sped up and removed progress bar from Controlled Miner.  Wireless energy transfer node no longer claims to have fluid capability (mod compat fix).  Added block id to some config descriptions.  "
+	,"1.19.0":"Energy cables to fix restricted flow issues; many internal improvements to how fluid and energy is used in general.  Added Extreme Slime plate goes about 90 blocks.  Corrupted chorus changes: added Weakness and removed Nausea.  Conveyors can be crafted into corner and angled variants now, placement logic is unchanged and you can still auto-form corners and angles while building.  Added Melter and Solidifier blocks, crafting using liquids and supported by zenscript.  "
+	,"1.19.1":"Fixed removeRecipe not working in zenscript crafttweaker support."
+	,"1.19.2":"Handle client errors when redstone Clock is updating while block is broken.  Fix Fluid Storage Tank losing its fluid-stack data when mined/placed.  GUI feature: You can now right-click on some buttons to reduce values in User, Collector, Forester, Miner, Harvester.  "
+	,"1.19.3":"Increased Hydrator speed.  Fluid Storage Tank now auto-fills the block directly below it regardless of block type.  Melter now gets boosted heat level from source lava blocks.  Soulstone updated for improved compatibility.  Transfer Nodes now display the correct custom display name (for example if a chest is named in an anvil and placed).  Boomerang now attempts to harvest some blocks if it was breaking them (example Chorus Flower), and also tries to pick up items.  Crystal equipment no longer comes with free enchants.  "
+	,"1.19.4":"Changed cables to material Circuits mined by an axe instead of Leaves.  Fixed an RF bug with battery blocks.  Updated ru_RU by Konstantin and zh_CN by sandtechnology.  "
   }
 }

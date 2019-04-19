@@ -29,10 +29,10 @@ import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.registry.module.MultiContent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -126,8 +126,13 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IConte
   }
 
   @Override
+  public String getContentName() {
+    return "magic_net";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "magic_net", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityMagicNetEmpty.renderSnowball = this;
     EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
     EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
@@ -143,8 +148,8 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IConte
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    String category = Const.ConfigCategory.modpackMisc + ".magic_net";
+    enabled = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+    String category = Const.ConfigCategory.modpackMisc + "." + getContentName();
     // @formatter:off
     String[] deflist = new String[] {
         "minecraft:wither"

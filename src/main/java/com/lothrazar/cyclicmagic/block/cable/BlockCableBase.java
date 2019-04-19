@@ -108,11 +108,12 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   }
 
   public BlockCableBase() {
-    super(Material.LEAVES);//leaves so that shears can harvest
+    super(Material.CIRCUITS);
+    this.setHarvestLevel("axe", 0);
     setSoundType(SoundType.CLOTH);
     setDefaultState(getDefaultState());
-    setHardness(0.5F);
-    setResistance(2.5F);
+    setHardness(0.7F);
+    setResistance(4.5F);
     setLightOpacity(0);
   }
 

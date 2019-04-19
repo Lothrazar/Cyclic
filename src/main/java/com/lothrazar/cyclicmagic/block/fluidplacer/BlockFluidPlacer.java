@@ -81,9 +81,14 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
 
   //end of fixing getdrops
   @Override
+  public String getContentName() {
+    return "fluid_placer";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "fluid_placer", null);
-    GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
+    BlockRegistry.registerBlock(this, getContentName(), null);
+    GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -96,7 +101,7 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    enabled = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), category, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.cyclicwand;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;

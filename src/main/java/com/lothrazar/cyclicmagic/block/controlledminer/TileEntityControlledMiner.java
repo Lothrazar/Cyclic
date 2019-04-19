@@ -30,10 +30,11 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -80,12 +81,12 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(4, new StackWrapper());
 
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES;
   }
 
   public TileEntityControlledMiner() {
     super(1);
-    this.initEnergy(BlockMinerSmart.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockMinerSmart.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(TOOLSLOT_INDEX));
   }
 
@@ -123,10 +124,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         if (this.updateEnergyIsBurning() == false) {
           return;
         }
-        if (this.updateTimerIsZero()) {
-          if (updateMiningProgress()) {
-            this.timer = TIMER_FULL;
-          }
+        if (updateMiningProgress()) {
+          this.timer = TIMER_FULL;
         }
       }
       else { // we do not have power
@@ -351,8 +350,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return blacklistIfZero;
       case RENDERPARTICLES:
         return this.renderParticles;
-      case TIMER:
-        return this.timer;
     }
     return 0;
   }
@@ -373,6 +370,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         if (value > MAX_SIZE) {
           value = 0;
         }
+        if (value < 0) {
+          value = MAX_SIZE;
+        }
         size = value;
       break;
       case LISTTYPE:
@@ -380,9 +380,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
-      break;
-      case TIMER:
-        this.timer = value;
       break;
     }
   }

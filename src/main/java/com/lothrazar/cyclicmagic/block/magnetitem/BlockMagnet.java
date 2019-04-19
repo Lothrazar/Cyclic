@@ -106,9 +106,14 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IConten
   }
 
   @Override
+  public String getContentName() {
+    return "magnet_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "magnet_block", GuideCategory.BLOCKPLATE);
-    GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKPLATE);
+    GameRegistry.registerTileEntity(TileEntityMagnet.class, getContentName() + "_te");
   }
 
   private boolean enabled;

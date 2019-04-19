@@ -28,8 +28,9 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -81,7 +82,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
 
   public TileEntityForester() {
     super(18);
-    this.initEnergy(BlockForester.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockForester.FUEL_COST);
     this.setSlotsForInsert(0, 18);
   }
 
@@ -326,6 +327,9 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       case SIZE:
         if (value > MAX_SIZE) {
           value = 1;
+        }
+        if (value < 1) {
+          value = MAX_SIZE;
         }
         size = value;
       break;

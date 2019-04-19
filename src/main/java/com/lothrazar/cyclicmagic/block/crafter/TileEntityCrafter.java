@@ -31,7 +31,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,7 +73,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
-    this.initEnergy(BlockCrafter.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockCrafter.FUEL_COST);
     this.setSlotsForInsert(0, 9);
     this.setSlotsForExtract(19, 28);
   }

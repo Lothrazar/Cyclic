@@ -154,7 +154,10 @@ public class EntityBoomerang extends EntityThrowableDispensable {
         //i hit owner, im done
         dropAsItem();
       }
-      else {
+      else if (mop.entityHit instanceof EntityItem) { // it some other entity
+        this.addPassenger(mop.entityHit);
+      }
+      else if (mop.entityHit instanceof EntityLivingBase) {
         float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
         mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
         if (mop.entityHit instanceof EntityLivingBase) {
@@ -164,13 +167,23 @@ public class EntityBoomerang extends EntityThrowableDispensable {
           }
         }
       }
+      else {
+        //some other non living non-item entity, dont care
+      }
     }
     else {
-      if (mop.getBlockPos() != null) {
+      if (mop.getBlockPos() != null && mop.sideHit != null) {
         // something to break?
         IBlockState block = world.getBlockState(mop.getBlockPos());
-        if (this.isBreakable(block)) {
-          world.destroyBlock(mop.getBlockPos(), true);
+        //crops are 0.0, farmland 0.6, leaves are 0.2  etc
+        if (this.canHarvest(mop)) {
+          if (this.thrower instanceof EntityPlayer) {
+            EntityPlayer p = (EntityPlayer) thrower;
+            //  block.getBlock().harvestBlock(world, p, mop.getBlockPos(), block, null, boomerangThrown);
+            block.getBlock().removedByPlayer(block, world, mop.getBlockPos(), p, true);
+          }
+          //still break regardless of harvest 
+          world.destroyBlock(mop.getBlockPos(), false);
         }
       }
       // hit a block or something, go back
@@ -178,15 +191,20 @@ public class EntityBoomerang extends EntityThrowableDispensable {
     }
   }
 
-  private boolean isBreakable(IBlockState block) {
-    // TODO: config or upgrade? 
-    Block bk = block.getBlock();
-    return bk == Blocks.CHORUS_FLOWER
-        || bk == Blocks.TRIPWIRE
-        || bk == Blocks.VINE;
+  private boolean canHarvest(RayTraceResult mop) {
+    IBlockState block = world.getBlockState(mop.getBlockPos());
+    //is it in whitelist to override 
+    Block b = block.getBlock();
+    if (b == Blocks.MELON_BLOCK || b == Blocks.PUMPKIN || b == Blocks.CHORUS_FLOWER) {
+      return true;
+    }
+    //no ok otherwise just go by soft-ness
+    return world.isSideSolid(mop.getBlockPos(), mop.sideHit) == false
+        && block.getBlockHardness(world, mop.getBlockPos()) < 0.6F;
   }
 
   private void dropAsItem() {
+    this.dismountRidingEntity();
     if (this.targetEntity != null) {
       //try to give it to the player the nicest way possible 
       if (targetEntity.getHeldItemMainhand().isEmpty())

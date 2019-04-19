@@ -55,8 +55,13 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   }
 
   @Override
+  public String getContentName() {
+    return "block_workbench";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_workbench", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
     GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
   }
 

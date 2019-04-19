@@ -58,6 +58,10 @@ public class UtilSound {
     }
   }
 
+  public static void playSound(EntityPlayer player, SoundEvent thunk, float volume) {
+    playSound(player, player.getPosition(), thunk, SoundCategory.PLAYERS, volume);
+  }
+
   public static void playSoundPlaceBlock(World world, BlockPos pos, Block block) {
     if (block == null) {
       return;

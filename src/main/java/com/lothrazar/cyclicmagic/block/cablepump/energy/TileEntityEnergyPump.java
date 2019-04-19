@@ -27,7 +27,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -48,7 +49,7 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
 
   public TileEntityEnergyPump() {
     super(0);
-    this.initEnergy(0, TileEntityCableBase.TRANSFER_ENERGY_PER_TICK);
+    this.initEnergy(new EnergyStore(MENERGY), 0);
   }
 
   @Override
@@ -57,7 +58,7 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
     needsRedstone = compound.getInteger(NBT_REDST);
     transferRate = compound.getInteger("transferRate");
     if (transferRate == 0) {
-      transferRate = 8 * 1000;//legacy support
+      transferRate = 1;
     }
   }
 
@@ -157,6 +158,9 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
         this.needsRedstone = value % 2;
       break;
       case TRANSFER_RATE:
+        if (value == 0) {
+          value = 1;
+        }
         transferRate = value;
       break;
     }

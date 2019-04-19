@@ -25,10 +25,10 @@ package com.lothrazar.cyclicmagic.block.forester;
 
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -63,6 +63,7 @@ public class GuiForester extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
     x = this.guiLeft + xSize / 4 - 2;
     y = this.guiTop + 18;
     slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityForester.MAX_HEIGHT,

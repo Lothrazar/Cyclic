@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +43,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
 
   public static final int RECIPE_SIZE = 4;
   public static final int TANK_FULL = 10000;
-  public final static int TIMER_FULL = 40;
+  public final static int TIMER_FULL = 10;
 
   public static enum Fields {
     REDSTONE, TIMER, RECIPELOCKED;
@@ -59,7 +60,7 @@ public class TileEntityHydrator extends TileEntityBaseMachineFluid implements IT
     tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3));
     this.setSlotsForExtract(Arrays.asList(4, 5, 6, 7));
-    this.initEnergy(BlockHydrator.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockHydrator.FUEL_COST);
   }
 
   @Override

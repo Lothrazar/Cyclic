@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemBlockBattery extends ItemBlock {
 
   public static final String ENERGY = "energy";
+  public static final String MAX = "maxenergy";
 
   public ItemBlockBattery(Block block) {
     super(block);
@@ -40,23 +41,24 @@ public class ItemBlockBattery extends ItemBlock {
    * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
    */
   @Override
-  public double getDurabilityForDisplay(ItemStack item) {
-    IEnergyStorage storage = item.getCapability(CapabilityEnergy.ENERGY, null);
+  public double getDurabilityForDisplay(ItemStack stack) {
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
     double energy = storage.getEnergyStored();
     return 1 - energy / storage.getMaxEnergyStored();
   }
 
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack item, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-    IEnergyStorage storage = item.getCapability(CapabilityEnergy.ENERGY, null);
+  public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
     tooltip.add(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
     tooltip.add(UtilChat.lang("tile.battery.tooltip"));
   }
 
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-    return new EnergyCapabilityItemStack(stack, TileEntityBattery.CAPACITY);
+    //use getItem to detect max! 
+    return new EnergyCapabilityItemStack(stack, BlockBattery.MAX_SMALL);
   }
   //ICapabilityProvider doesnt exist/notprovidded
   //oh well http://www.minecraftforge.net/forum/topic/54711-1102-forge-energy-capability-in-item-class/

@@ -26,10 +26,10 @@ package com.lothrazar.cyclicmagic.block.collector;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.entity.item.EntityItem;
@@ -203,6 +203,9 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
       case SIZE:
         if (value > MAX_SIZE) {
           value = 0;//zero means 1x1
+        }
+        if (value < 0) {
+          value = MAX_SIZE;
         }
         size = value;
       break;

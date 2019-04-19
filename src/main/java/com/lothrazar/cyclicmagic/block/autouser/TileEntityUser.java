@@ -31,8 +31,9 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
@@ -108,7 +109,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public TileEntityUser() {
     super(INV_SIZE);
     timer = tickDelay;
-    this.initEnergy(BlockUser.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockUser.FUEL_COST);
     this.setSlotsForInsert(0, SLOT_OUTPUT_START - 1);
     this.setSlotsForExtract(SLOT_OUTPUT_START, INV_SIZE - 1);
   }
@@ -514,8 +515,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.rightClickIfZero = value;
       break;
       case SIZE:
-        if (value > MAX_SIZE || value < 0) {
-          value = 1;
+        if (value > MAX_SIZE) {
+          value = 0;
+        }
+        if (value < 0) {
+          value = MAX_SIZE;
         }
         size = value;
       break;

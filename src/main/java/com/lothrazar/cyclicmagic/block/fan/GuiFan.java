@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.block.fan;
 
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -87,7 +87,6 @@ public class GuiFan extends GuiBaseContainer {
     btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.addButton(btnTogglePush);
-
   }
 
   @Override
@@ -126,7 +125,6 @@ public class GuiFan extends GuiBaseContainer {
     btnSound.setTextureIndex(14 + this.tile.getField(fld));
     fld = TileEntityFan.Fields.PUSHPULL.ordinal();
     btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(fld));
-
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

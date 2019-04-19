@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,10 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implements ITickable, ITileRedstoneToggle {
+public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
-  //ITilePreviewToggle
-  public static final int ENERGY_FULL = 1000 * 64;
   public static final int MAX_TRANSFER = 1000;
   public static final int SLOT_COUNT = 9;
   List<Integer> slotList = IntStream.rangeClosed(
@@ -33,7 +31,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineFluid implemen
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
-    this.initEnergy(new EnergyStore(ENERGY_FULL, ENERGY_FULL, ENERGY_FULL));
+    this.initEnergy(new EnergyStore(MENERGY), 0);
   }
 
   @Override

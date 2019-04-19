@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.compat.crafttweaker;
 
+import java.util.Iterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.dehydrator.RecipeDeHydrate;
 import crafttweaker.annotations.ZenRegister;
@@ -41,9 +42,11 @@ public class RecipeDeHydrateZen {
   public static void removeShapedRecipe(IItemStack output) {
     ModCyclic.logger.info("ZenScript: attempt remove dehydrator recipe for " + output.getDisplayName());
     ItemStack out = toStack(output);
-    for (RecipeDeHydrate rec : RecipeDeHydrate.recipes) {
+    Iterator<RecipeDeHydrate> it = RecipeDeHydrate.recipes.iterator();
+    while (it.hasNext()) {
+      RecipeDeHydrate rec = it.next();
       if (rec.getRecipeOutput().isItemEqual(out)) {
-        RecipeDeHydrate.recipes.remove(rec);
+        it.remove();
         ModCyclic.logger.info("ZenScript: removed dehydrator recipe for " + output.getDisplayName());
       }
     }

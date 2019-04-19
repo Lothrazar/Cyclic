@@ -119,8 +119,13 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_push";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_push");
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this);
   }
@@ -134,7 +139,7 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @SubscribeEvent

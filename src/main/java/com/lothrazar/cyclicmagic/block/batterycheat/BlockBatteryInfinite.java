@@ -25,8 +25,13 @@ public class BlockBatteryInfinite extends BlockBaseHasTile implements IHasRecipe
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "battery_infinite", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + "battery_infinite_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + getContentName() + "_te");
+  }
+
+  @Override
+  public String getContentName() {
+    return "battery_infinite";
   }
 
   private boolean enabled;
@@ -38,13 +43,15 @@ public class BlockBatteryInfinite extends BlockBaseHasTile implements IHasRecipe
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("battery_infinite", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this),
-        new ItemStack(Blocks.COMMAND_BLOCK), new ItemStack(Blocks.BARRIER));
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "uc",
+        "cu",
+        'c', new ItemStack(Blocks.COMMAND_BLOCK), 'u', new ItemStack(Blocks.BARRIER));
   }
 
   @Override

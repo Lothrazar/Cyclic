@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -23,12 +24,13 @@ public class TileEntityBattery extends TileEntityBaseMachineInvo implements ITic
   private int transferRate = 1000;
   //for reference RFT powercells: 250k, 1M, 4M, ; gadgetry 480k 
   public static final int ITEM_CHARGE_RATE = 1000 * 64;
-  public static final int CAPACITY = 1000000;
+  public int capacity;
   private Map<EnumFacing, Boolean> poweredSides;
 
   public TileEntityBattery() {
     super(1);
-    this.initEnergy(0, CAPACITY);
+    this.capacity = BlockBattery.MAX_SMALL;
+    this.initEnergy(new EnergyStore(capacity), 0);
     this.setSlotsForBoth();
     poweredSides = new HashMap<EnumFacing, Boolean>();
     for (EnumFacing f : EnumFacing.values()) {

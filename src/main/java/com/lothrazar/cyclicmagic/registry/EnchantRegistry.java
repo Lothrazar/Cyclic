@@ -40,7 +40,7 @@ public class EnchantRegistry {
   public static EnchantReach reach;
 
   public static void register(BaseEnchant ench) {
-    ResourceLocation resourceLocation = new ResourceLocation(Const.MODID, ench.getName());
+    ResourceLocation resourceLocation = new ResourceLocation(Const.MODID, "enchantment." + ench.getContentName());
     ench.setRegistryName(resourceLocation);
     ModCyclic.instance.events.register(ench);
     enchants.add(ench);

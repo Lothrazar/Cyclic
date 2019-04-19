@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.item.cyclicwand;
 
 import java.util.ArrayList;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.gui.core.InventoryBase;
+import com.lothrazar.cyclicmagic.gui.container.InventoryBase;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.Block;
