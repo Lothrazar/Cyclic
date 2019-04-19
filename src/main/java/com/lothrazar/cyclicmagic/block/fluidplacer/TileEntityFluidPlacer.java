@@ -43,7 +43,8 @@ public class TileEntityFluidPlacer extends TileEntityBaseMachineFluid implements
   public void update() {
     if (this.isPowered() == false ||
         tank.getFluid() == null ||
-        tank.getFluid().getFluid() == null) {
+        tank.getFluid().getFluid() == null ||
+        tank.getFluid().getFluid().getBlock() == null) {
       return;
     }
     EnumFacing facingTo = this.getCurrentFacing();
@@ -51,12 +52,22 @@ public class TileEntityFluidPlacer extends TileEntityBaseMachineFluid implements
     if (world.isAirBlock(posTarget) == false) {
       return;
     }
+    //the second true version of tank.drain(new ...) had a Null Pointer issue
+    // but we completed all the null checks above
     FluidStack maybeDrain = tank.drain(new FluidStack(tank.getFluid().getFluid(), Fluid.BUCKET_VOLUME), false);
     if (maybeDrain != null && maybeDrain.amount == Fluid.BUCKET_VOLUME) {
+      try {
       Block fluidBlock = tank.getFluid().getFluid().getBlock();
       //if we can drain a full bucket, then do it and place!
-      world.setBlockState(posTarget, fluidBlock.getDefaultState());
+
       tank.drain(new FluidStack(tank.getFluid().getFluid(), Fluid.BUCKET_VOLUME), true);
+        //if above doesnt work or fail, dont place the fluid 
+        world.setBlockState(posTarget, fluidBlock.getDefaultState());
+      }
+      catch (Throwable e) {
+        return;//could not drain
+      }
+      //drain first, then only place after that
     }
   }
 }
