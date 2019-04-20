@@ -23,12 +23,17 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.trash;
 
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
@@ -57,6 +62,9 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
 
   @Override
   public void update() {
+    if (this.isRunning() == false) {
+      return;
+    }
     if (doItems) {
       this.removeStackFromSlot(0);
     }
@@ -76,8 +84,22 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     this.doItems = compound.getBoolean("doItems");
-    this.doFluid = compound.getBoolean("doItems");
+    this.doFluid = compound.getBoolean("doFluid");
   }
+
+  @Override
+  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
+        && this.doFluid == false) {
+      return false;
+    }
+    else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+        && this.doItems == false) {
+      return false;
+    }
+    return super.hasCapability(capability, facing);
+  }
+
 
   @Override
   public int getField(int id) {
@@ -102,10 +124,12 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
       case FLUID:
         value = value % 2;
         this.doFluid = value == 1;
+        this.markDirty();
       break;
       case ITEM:
         value = value % 2;
         this.doItems = value == 1;
+        this.markDirty();
       break;
     }
   }

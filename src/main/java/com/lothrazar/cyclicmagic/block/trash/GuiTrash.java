@@ -58,6 +58,7 @@ public class GuiTrash extends GuiBaseContainer {
         TileEntityTrash.Fields.FLUID.ordinal(), +1, w, h);
     btnFluids.setTooltip("button.trash.fluid.tooltip");
     this.addButton(btnFluids);
+
   }
 
   @Override
@@ -76,9 +77,9 @@ public class GuiTrash extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     int val = tile.getField(TileEntityTrash.Fields.ITEM.ordinal());
-    btnItems.setTextureIndex(16 + val);
+    btnItems.setTextureIndex(17 - val);
     val = tile.getField(TileEntityTrash.Fields.FLUID.ordinal());
-    btnFluids.setTextureIndex(18 + val);
+    btnFluids.setTextureIndex(19 - val);
     String s = UtilChat.lang("tile.trash.warning");
     int x = 30;
     int y = 26;
