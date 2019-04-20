@@ -285,9 +285,10 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     }
     boolean outputSuccess = false;
     EnumFacing themFacingMe = myFacingDir.getOpposite();
+
     ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
+
     if (leftAfterDeposit.isEmpty() || leftAfterDeposit.getCount() != stackToExport.getCount()) {
-      //   if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
       //then save result
       //tood capability for sided
       this.setInventorySlotContents(SLOT, leftAfterDeposit);

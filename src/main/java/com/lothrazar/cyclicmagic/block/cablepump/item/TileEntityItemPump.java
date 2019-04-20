@@ -31,7 +31,6 @@ import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +40,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -51,10 +49,10 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
 
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(9, new StackWrapper());
   private static final int SLOT_TRANSFER = 0;
-  private static int TRANSFER_ITEM_TICK_DELAY = 0;
+  //  private static int TRANSFER_ITEM_TICK_DELAY = 0;
 
   public static enum Fields {
-    REDSTONE, FILTERTYPE;
+    REDSTONE, FILTERTYPE, SPEED;
   }
 
   private int itemTransferCooldown = 0;
@@ -64,6 +62,7 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
     super(1);
     this.setSlotsForExtract(0);
     this.setSlotsForInsert(0);
+    this.speed = 1;
   }
 
   @Override
@@ -78,6 +77,8 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
         return this.filterType;
       case REDSTONE:
         return this.needsRedstone;
+      case SPEED:
+        return speed;
     }
     return 0;
   }
@@ -90,6 +91,9 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;
+      break;
+      case SPEED:
+        this.speed = value;
       break;
     }
   }
@@ -147,22 +151,7 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
     if (this.isRunning() == false) {
       return;
     }
-    boolean skipItemsThisTick = false;
-    if (TRANSFER_ITEM_TICK_DELAY > 1) {
-      //if its 1, just move 1 per tck and no prob
-      if (this.itemTransferCooldown > 0) {
-        this.itemTransferCooldown--;
-        skipItemsThisTick = true;
-      }
-      else {
-        //transfer is fine to go ahead, reset for next time
-        itemTransferCooldown = TRANSFER_ITEM_TICK_DELAY;
-      }
-    }
-    //   ModCyclic.logger.error("itemTransferCooldown " + itemTransferCooldown + "_" + skipItemsThisTick);
-    if (skipItemsThisTick) {
-      return;
-    }
+
     this.tryExport();
     this.tryImport();
   }
@@ -217,7 +206,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
     if (tileTarget == null) {
       return;
     }
-    //   ModCyclic.logger.log("IMPORT FROM " + tileTarget.getClass() + " at side " + importFromSide);
     ItemStack itemTarget;
     if (tileTarget.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite())) {
       IItemHandler itemHandlerFrom = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite());
@@ -232,7 +220,7 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
           continue;
         }
         //passed filter check, so do the transaction
-        ItemStack pulled = itemHandlerFrom.extractItem(i, 1, false);
+        ItemStack pulled = itemHandlerFrom.extractItem(i, this.speed, false);
         if (pulled != null && pulled.isEmpty() == false) {
           this.setInventorySlotContents(SLOT_TRANSFER, pulled.copy());
           return;
@@ -268,10 +256,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
-  }
-
-  public static void syncConfig(Configuration config) {
-    TRANSFER_ITEM_TICK_DELAY = config.getInt("TRANSFER_ITEM_TICK_DELAY", Const.ConfigCategory.cables, 1, 1, 200, "Tick Delay between item transfers (1 means 1 item per tick so no delay).  Only affects Item Extractor.  ");
   }
 
   @Override

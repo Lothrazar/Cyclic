@@ -675,8 +675,7 @@ public class MultiContent implements IContent {
     BlockConveyor.doCorrections = config.getBoolean("SlimeConveyorPullCenter", Const.ConfigCategory.blocks, true, "If true, the Slime Conveyor will auto-correct entities towards the center while they are moving (keeping them away from the edge)");
     BlockConveyor.sneakPlayerAvoid = config.getBoolean("SlimeConveyorSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being pushed");
     BlockLaunch.sneakPlayerAvoid = config.getBoolean("SlimePlateSneakPlayer", Const.ConfigCategory.blocks, true, "Players can sneak to avoid being jumped");
-    // TileEntityCableBase.syncConfig(config);
-    TileEntityItemPump.syncConfig(config);
+
     TileEntityUser.syncConfig(config);
     enableHeartToxic = config.getBoolean("heart_toxic", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
