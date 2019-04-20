@@ -151,7 +151,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
     if (this.isRunning() == false) {
       return;
     }
-
     this.tryExport();
     this.tryImport();
   }

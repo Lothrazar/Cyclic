@@ -40,7 +40,6 @@ public class ContainerItemPump extends ContainerBaseMachine {
 
   public ContainerItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump te) {
     super(te);
-
     bindPlayerInventory(inventoryPlayer);
   }
 

@@ -57,10 +57,9 @@ public class TileEntityFluidPlacer extends TileEntityBaseMachineFluid implements
     FluidStack maybeDrain = tank.drain(new FluidStack(tank.getFluid().getFluid(), Fluid.BUCKET_VOLUME), false);
     if (maybeDrain != null && maybeDrain.amount == Fluid.BUCKET_VOLUME) {
       try {
-      Block fluidBlock = tank.getFluid().getFluid().getBlock();
-      //if we can drain a full bucket, then do it and place!
-
-      tank.drain(new FluidStack(tank.getFluid().getFluid(), Fluid.BUCKET_VOLUME), true);
+        Block fluidBlock = tank.getFluid().getFluid().getBlock();
+        //if we can drain a full bucket, then do it and place!
+        tank.drain(new FluidStack(tank.getFluid().getFluid(), Fluid.BUCKET_VOLUME), true);
         //if above doesnt work or fail, dont place the fluid 
         world.setBlockState(posTarget, fluidBlock.getDefaultState());
       }

@@ -76,7 +76,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       if (this.lastRecipe != null
           && lastRecipe.matches(this.crafter, this.world)
           && tryProcessRecipe(lastRecipe)) {
-
         // are we empty? if empty dont consume
         this.consumeEnergy();
       }

@@ -58,7 +58,6 @@ public class GuiTrash extends GuiBaseContainer {
         TileEntityTrash.Fields.FLUID.ordinal(), +1, w, h);
     btnFluids.setTooltip("button.trash.fluid.tooltip");
     this.addButton(btnFluids);
-
   }
 
   @Override

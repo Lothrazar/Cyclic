@@ -159,7 +159,6 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-
     compound.setInteger("rlock", recipeIsLocked);
     return super.writeToNBT(compound);
   }

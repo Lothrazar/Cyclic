@@ -144,7 +144,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
           continue;
         }
         fromInput = this.getStackInSlot(j);
-
         if (UtilItemStack.isItemStackEqualIgnoreCount(fromRecipe, fromInput)) {
           //now set the key 'j' slot to need one more extra item
           if (!slotsToPay.containsKey(j)) {

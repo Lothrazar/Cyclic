@@ -104,9 +104,7 @@ public class GuiItemPump extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     int filterType = tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal());
-
     filterBtn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + filterType));
     filterBtn.setTextureIndex(11 + filterType);
   }
-
 }

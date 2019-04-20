@@ -44,6 +44,7 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
   static enum Fields {
     FLUID, ITEM, REDSTONE;
   }
+
   public TileEntityTrash() {
     super(1);
     tank = new FluidTankBase(capacity);
@@ -100,7 +101,6 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
     return super.hasCapability(capability, facing);
   }
 
-
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
@@ -110,7 +110,6 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
         return this.doFluid ? 1 : 0;
       case ITEM:
         return this.doItems ? 1 : 0;
-
     }
     return -1;
   }
