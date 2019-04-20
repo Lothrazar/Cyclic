@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.placer;
+package com.lothrazar.cyclicmagic.block.buildplacer;
 
 import java.lang.ref.WeakReference;
 import java.util.UUID;

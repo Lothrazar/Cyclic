@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.placer;
+package com.lothrazar.cyclicmagic.block.buildplacer;
 
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -30,9 +30,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiPlacer extends GuiBaseContainer {
 
-  static final int padding = 8;
   private TileEntityPlacer tile;
-  boolean debugLabels = false;
 
   public GuiPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer tileEntity) {
     super(new ContainerPlacer(inventoryPlayer, tileEntity), tileEntity);
@@ -45,7 +43,7 @@ public class GuiPlacer extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
+    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPlacer.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerPlacer.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }

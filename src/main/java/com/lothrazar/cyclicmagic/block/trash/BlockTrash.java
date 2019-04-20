@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.trash;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -49,6 +50,7 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent
   public BlockTrash() {
     super(Material.IRON);
     this.setTranslucent();
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_TRASH);
   }
 
   @Override

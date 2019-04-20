@@ -159,7 +159,7 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setInteger(NBT_REDST, this.needsRedstone);
+
     compound.setInteger("rlock", recipeIsLocked);
     return super.writeToNBT(compound);
   }
@@ -167,7 +167,6 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
-    this.needsRedstone = compound.getInteger(NBT_REDST);
     this.recipeIsLocked = compound.getInteger("rlock");
   }
 
@@ -202,11 +201,7 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
 
   @Override
   public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
-    this.setField(Fields.REDSTONE.ordinal(), val);
+    this.needsRedstone = (this.needsRedstone + 1) % 2;
   }
 
   @Override

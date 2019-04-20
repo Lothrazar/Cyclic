@@ -47,6 +47,9 @@ import com.lothrazar.cyclicmagic.block.builderpattern.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.ContainerBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.GuiBuilder;
 import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.block.buildplacer.ContainerPlacer;
+import com.lothrazar.cyclicmagic.block.buildplacer.GuiPlacer;
+import com.lothrazar.cyclicmagic.block.buildplacer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.block.cablepump.energy.ContainerEnergyPump;
 import com.lothrazar.cyclicmagic.block.cablepump.energy.GuiEnergyPump;
 import com.lothrazar.cyclicmagic.block.cablepump.energy.TileEntityEnergyPump;
@@ -137,9 +140,6 @@ import com.lothrazar.cyclicmagic.block.peat.farm.TileEntityPeatFarm;
 import com.lothrazar.cyclicmagic.block.peat.generator.ContainerPeatGenerator;
 import com.lothrazar.cyclicmagic.block.peat.generator.GuiPeatGenerator;
 import com.lothrazar.cyclicmagic.block.peat.generator.TileEntityPeatGenerator;
-import com.lothrazar.cyclicmagic.block.placer.ContainerPlacer;
-import com.lothrazar.cyclicmagic.block.placer.GuiPlacer;
-import com.lothrazar.cyclicmagic.block.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.block.screentarget.ContainerScreenTarget;
 import com.lothrazar.cyclicmagic.block.screentarget.GuiScreenTargetBlock;
 import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget;
@@ -155,6 +155,9 @@ import com.lothrazar.cyclicmagic.block.sorting.TileEntityItemCableSort;
 import com.lothrazar.cyclicmagic.block.sound.ContainerSoundPlayer;
 import com.lothrazar.cyclicmagic.block.sound.GuiSoundPlayer;
 import com.lothrazar.cyclicmagic.block.sound.TileEntitySoundPlayer;
+import com.lothrazar.cyclicmagic.block.trash.ContainerTrash;
+import com.lothrazar.cyclicmagic.block.trash.GuiTrash;
+import com.lothrazar.cyclicmagic.block.trash.TileEntityTrash;
 import com.lothrazar.cyclicmagic.block.uncrafter.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.block.uncrafter.GuiUncrafting;
 import com.lothrazar.cyclicmagic.block.uncrafter.TileEntityUncrafter;
@@ -263,6 +266,7 @@ public class ForgeGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DRAIN = 52;
   public static final int GUI_INDEX_MELTER = 53;
   public static final int GUI_INDEX_SOLIDIFIER = 54;
+  public static final int GUI_INDEX_TRASH = 55;
 
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -532,6 +536,11 @@ public class ForgeGuiHandler implements IGuiHandler {
       case GUI_INDEX_SOLIDIFIER:
         if (te instanceof TileSolidifier) {
           return new ContainerSolidifier(player.inventory, (TileSolidifier) te);
+        }
+      break;
+      case GUI_INDEX_TRASH:
+        if (te instanceof TileEntityTrash) {
+          return new ContainerTrash(player.inventory, (TileEntityTrash) te);
         }
       break;
     }
@@ -806,6 +815,11 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_SOLIDIFIER:
           if (te instanceof TileSolidifier) {
             return new GuiSolidifier(player.inventory, (TileSolidifier) te);
+          }
+        break;
+        case GUI_INDEX_TRASH:
+          if (te instanceof TileEntityTrash) {
+            return new GuiTrash(player.inventory, (TileEntityTrash) te);
           }
         break;
       }
