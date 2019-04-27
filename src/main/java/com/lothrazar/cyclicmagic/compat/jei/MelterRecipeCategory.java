@@ -15,8 +15,6 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
 public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
 
@@ -74,16 +72,11 @@ public class MelterRecipeCategory implements IRecipeCategory<MelterWrapper> {
     y = 28;
     try {
       RecipeMelter recipe = recipeWrapper.getRecipe();
-      Fluid f = FluidRegistry.getFluid(recipe.getFluidString());//recipeWrapper.getRecipe().getFluidResult();
-      //test fluids 
-      if (f.getBlock() != null) {
-        ingredients.setOutput(VanillaTypes.ITEM, new ItemStack(f.getBlock()));
-      }
-      ingredients.setOutput(VanillaTypes.FLUID, new FluidStack(f, recipe.getFluidSize()));
+      ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutputFluid());
       //getname is the same   
       recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ - 2, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
           null);
-      recipeLayout.getFluidStacks().set(0, new FluidStack(f, recipe.getFluidSize()));
+      recipeLayout.getFluidStacks().set(0, recipe.getOutputFluid());
     }
     catch (Exception e) {
       //

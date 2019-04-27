@@ -39,6 +39,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -167,6 +168,9 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     return ItemStack.EMPTY;
   }
 
+  public FluidStack getOutputFluid() {
+    return new FluidStack(this.fluidResult, this.fluidSize);
+  }
   public List<ItemStack> getRecipeInput() {
     return recipeInput;
   }

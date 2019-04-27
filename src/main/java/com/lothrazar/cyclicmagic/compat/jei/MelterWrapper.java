@@ -10,23 +10,23 @@ import net.minecraft.item.ItemStack;
 
 public class MelterWrapper implements IRecipeWrapper {
 
-  private RecipeMelter src;
+  private RecipeMelter recipe;
 
   public MelterWrapper(RecipeMelter source) {
-    this.src = source;
+    this.recipe = source;
   }
 
   @Override
   public void getIngredients(IIngredients ingredients) {
     List<ItemStack> ing = new ArrayList<ItemStack>();
-    for (ItemStack wtf : src.getRecipeInput()) {
+    for (ItemStack wtf : recipe.getRecipeInput()) {
       ing.add(wtf.copy());
     }
     ingredients.setInputs(VanillaTypes.ITEM, ing);
-    ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutputFluid());
   }
 
   public RecipeMelter getRecipe() {
-    return src;
+    return recipe;
   }
 }
