@@ -47,8 +47,16 @@ public class FluidTankFixDesync extends FluidTankBase {
 
   @Override
   public int fill(FluidStack resource, boolean doFill) {
-    int amount = super.fill(resource, doFill);
-    return amount;
+    if (resource == null || resource.getFluid() == null) {
+      return 0;
+    }
+    if (this.getFluid() == null) {
+      this.setFluid(resource);
+      return resource.amount;
+    }
+    else {
+    return super.fill(resource, doFill);
+    }
   }
 
   @Override
