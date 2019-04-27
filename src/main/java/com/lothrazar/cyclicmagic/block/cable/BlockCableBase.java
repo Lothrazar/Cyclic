@@ -1,4 +1,5 @@
 /*******************************************************************************
+
  * The MIT License (MIT)
  * 
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
@@ -108,8 +109,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
   }
 
   public BlockCableBase() {
-    super(Material.CIRCUITS);
-    this.setHarvestLevel("axe", 0);
+    super(Material.ROCK);
     setSoundType(SoundType.CLOTH);
     setDefaultState(getDefaultState());
     setHardness(0.7F);

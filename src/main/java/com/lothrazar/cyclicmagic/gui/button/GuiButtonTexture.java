@@ -32,7 +32,7 @@ public class GuiButtonTexture extends GuiButtonTooltip {
 
   private static final ResourceLocation icon = new ResourceLocation(Const.MODID, "textures/gui/buttons.png");
   private int textureIndex = 0;
-  private int textureSize = 16;
+  private final static int sizeBtnTexture = Const.SQ - 2;
 
   public GuiButtonTexture(int buttonId, int x, int y, int w, int h) {
     super(buttonId, x, y, w, h, "");
@@ -57,10 +57,15 @@ public class GuiButtonTexture extends GuiButtonTooltip {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        int texX = textureIndex * sizeBtnTexture;
+        int texY = 0;
+        if (textureIndex > 15) {
+          texY = (textureIndex / 15) * sizeBtnTexture;
+        }
         this.drawTexturedModalRect(this.x + 1, // +1 since button is 18 wide and texture is 16
             this.y,
-            textureIndex * textureSize, 0,
-            textureSize, textureSize);
+            texX, texY,
+            sizeBtnTexture, sizeBtnTexture);
       }
       this.mouseDragged(mc, mouseX, mouseY);
     }

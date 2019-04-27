@@ -21,90 +21,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.cablepump.item;
+package com.lothrazar.cyclicmagic.block.trash;
 
-import java.io.IOException;
-import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiItemPump extends GuiBaseContainer {
+public class GuiTrash extends GuiBaseContainer {
 
-  ITileStackWrapper te;
-  private ButtonTileEntityField filterBtn;
-  private GuiSliderInteger slider;
+  private ButtonTileEntityField btnItems;
+  private ButtonTileEntityField btnFluids;
 
-  public GuiItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump tileEntity) {
-    super(new ContainerItemPump(inventoryPlayer, tileEntity), tileEntity);
-    te = tileEntity;
-    this.fieldRedstoneBtn = TileEntityItemPump.Fields.REDSTONE.ordinal();
+  public GuiTrash(InventoryPlayer inventoryPlayer, TileEntityTrash tileEntity) {
+    super(new ContainerTrash(inventoryPlayer, tileEntity), tileEntity);
+    this.fieldRedstoneBtn = TileEntityTrash.Fields.REDSTONE.ordinal();
   }
 
   @Override
   public void initGui() {
     super.initGui();
-    int id = 2;
-    int x = this.guiLeft + 150;
-    int y = this.guiTop + Const.PAD / 2;
-    filterBtn = new ButtonTileEntityField(
-        id++,
-        x, y,
-        tile.getPos(), TileEntityItemPump.Fields.FILTERTYPE.ordinal(), 1,
-        20, 20);
-    this.addButton(filterBtn);
-    int fld = TileEntityItemPump.Fields.SPEED.ordinal();
-    int w = 164;
-    int h = 12;
-    x = this.guiLeft + 6;
-    y = this.guiTop + 28;
-    slider = new GuiSliderInteger(tile, id++, x, y,
-        w, h,
-        1, 64, //min max
-        fld, "pump.rate");
-    this.addButton(slider);
+    int id = 1;
+    int w = 18, h = 18;
+    int x = this.guiLeft + 4;
+    int y = this.guiTop + 26;
+    btnItems = new ButtonTileEntityField(id++, x, y, tile.getPos(),
+        TileEntityTrash.Fields.ITEM.ordinal(), +1, w, h);
+    btnItems.setTooltip("button.trash.items.tooltip");
+    this.addButton(btnItems);
+    y += 20;
+    btnFluids = new ButtonTileEntityField(id++, x, y, tile.getPos(),
+        TileEntityTrash.Fields.FLUID.ordinal(), +1, w, h);
+    btnFluids.setTooltip("button.trash.fluid.tooltip");
+    this.addButton(btnFluids);
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int x, y, slotNum = 0;
+    int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int j = 1; j < 10; j++) {
-      x = this.guiLeft + ContainerItemPump.SLOTX_START + (j - 1) * Const.SQ - 1;
-      y = this.guiTop + ContainerItemPump.SLOTY - 1;
-      StackWrapper wrap = te.getStackWrapper(slotNum);
-      wrap.setX(x);
-      wrap.setY(y);
-      slotNum++;
-    }
-    this.renderStackWrappers(te);
-  }
-
-  @Override
-  protected void keyTyped(char typedChar, int keyCode) throws IOException {
-    super.keyTyped(typedChar, keyCode);
-    slider.keyTyped(typedChar, keyCode);
-  }
-
-  @Override
-  public void updateScreen() {
-    super.updateScreen();
-    slider.updateScreen();
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + ContainerTrash.SLOTX_START - 1,
+        this.guiTop + ContainerTrash.SLOTY - 1,
+        u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    int filterType = tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal());
-    filterBtn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + filterType));
-    filterBtn.setTextureIndex(11 + filterType);
+    int val = tile.getField(TileEntityTrash.Fields.ITEM.ordinal());
+    btnItems.setTextureIndex(17 - val);
+    val = tile.getField(TileEntityTrash.Fields.FLUID.ordinal());
+    btnFluids.setTextureIndex(19 - val);
+    String s = UtilChat.lang("tile.trash.warning");
+    int x = 30;
+    int y = 26;
+    this.drawString(s, x, y);
   }
 }
