@@ -1,5 +1,5 @@
 /*******************************************************************************
- * The MIT License (MIT)
+  * The MIT License (MIT)
  * 
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
  * 
@@ -42,9 +42,8 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
   public ContainerCableFluidWireless(InventoryPlayer inventoryPlayer, TileCableFluidWireless te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
-    int x = 43;
-    int y = 43;
-    y = 87;
+    int x = Const.PAD + 1;
+    int y = 87;
     for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
       addSlotToContainer(new SlotCheckTileValid(te, i, x, y) {
 
@@ -56,14 +55,7 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
       });
       x += Const.SQ;
     }
-    //    x += 72;
-    //    addSlotToContainer(new SlotCheckTileValid(te, TileCableFluidWireless.SLOT_CARD_ITEM, x, y) {
-    //
-    //      @Override
-    //      public int getSlotStackLimit() {
-    //        return 1;
-    //      }
-    //    });
+
     bindPlayerInventory(inventoryPlayer);
   }
 

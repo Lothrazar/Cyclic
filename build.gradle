@@ -82,9 +82,6 @@ repositories {
     maven {
 		url 'http://maven.blamejared.com'
 	}
-	maven {
-        url = "http://minecraft.curseforge.com/api/maven/"
-    }
     maven {
     	name = "Progwml6 maven"
         url "http://dvs1.progwml6.com/files/maven"
