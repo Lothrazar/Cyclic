@@ -398,7 +398,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     speed = compound.getInteger(NBT_SPEED);
     needsRedstone = compound.getInteger(NBT_REDST);
     timer = compound.getInteger(NBT_TIMER);
-    needsRedstone = compound.getInteger(NBT_REDST);
     if (this.hasEnergy && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     }
