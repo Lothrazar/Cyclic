@@ -143,17 +143,20 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       tryEquipItem();
       if (triggered) {
         timer = tickDelay;
+        BlockPos targetPos = this.getTargetPos();
         try {
-          BlockPos targetPos = this.getTargetPos();
           if (rightClickIfZero == 0) {//right click entities and blocks
             this.rightClickBlock(targetPos);
           }
+        }
+        catch (Throwable e) {//exception could come from external third party block/mod/etc 
+          ModCyclic.logger.error("Automated User [rightClickBlock] Error '" + e.getMessage() + "'" + e.getClass(), e);
+        }
+        try {
           interactEntities(targetPos);
         }
-        catch (Exception e) {//exception could come from external third party block/mod/etc
-          ModCyclic.logger.error("Automated User Error");
-          ModCyclic.logger.error(e.getLocalizedMessage());
-          e.printStackTrace();
+        catch (Throwable e) {//exception could come from external third party block/mod/etc 
+          ModCyclic.logger.error("Automated User [interactEntities] Error '" + e.getMessage() + "'" + e.getClass(), e);
         }
       }
       this.markDirty();
