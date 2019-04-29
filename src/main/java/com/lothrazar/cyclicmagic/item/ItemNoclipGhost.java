@@ -121,6 +121,8 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
     props.setChorusOn(true);
     props.setChorusStart(player.getPosition());
     props.setChorusDim(player.dimension);
+    //and remove flying 
+    ItemFlight.setNonFlying(player);
   }
 
   @SubscribeEvent
