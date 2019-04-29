@@ -40,8 +40,8 @@ public class GuiFan extends GuiBaseContainer {
   private TileEntityFan tile;
   boolean debugLabels = false;
   private ButtonTileEntityField btnTogglePush;
-  private GuiSliderInteger sliderDelay;
-  private GuiSliderInteger sliderOffset;
+  private GuiSliderInteger sliderRange;
+  private GuiSliderInteger sliderSpeed;
   private ButtonTileEntityField btnSound;
 
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
@@ -59,6 +59,7 @@ public class GuiFan extends GuiBaseContainer {
     int w = 18, h = 18;
     int x = this.guiLeft + 4;
     int y = this.guiTop + 48;
+    // silent or sound
     btnSound = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.SILENT.ordinal(), +1, w, h);
     this.addButton(btnSound);
@@ -67,18 +68,18 @@ public class GuiFan extends GuiBaseContainer {
     x = this.guiLeft + 30;
     y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();
-    sliderDelay = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
+    sliderRange = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
         field);
-    sliderDelay.setTooltip("button.fan.range.tooltip");
-    this.addButton(sliderDelay);
+    sliderRange.setTooltip("button.fan.range.tooltip");
+    this.addButton(sliderRange);
     //    
     ///////////////// SPEED BUTTONS
     y += 18;
     field = TileEntityFan.Fields.SPEED.ordinal();
-    sliderOffset = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
+    sliderSpeed = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
         field);
-    sliderOffset.setTooltip("button.fan.speed.tooltip");
-    this.addButton(sliderOffset);
+    sliderSpeed.setTooltip("button.fan.speed.tooltip");
+    this.addButton(sliderSpeed);
     //the big push pull toggle button
     w = 70;
     h = 20;
@@ -97,15 +98,15 @@ public class GuiFan extends GuiBaseContainer {
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     super.keyTyped(typedChar, keyCode);
-    sliderDelay.keyTyped(typedChar, keyCode);
-    sliderOffset.keyTyped(typedChar, keyCode);
+    sliderRange.keyTyped(typedChar, keyCode);
+    sliderSpeed.keyTyped(typedChar, keyCode);
   }
 
   @Override
   public void updateScreen() {
     super.updateScreen();
-    sliderDelay.updateScreen();
-    sliderOffset.updateScreen();
+    sliderRange.updateScreen();
+    sliderSpeed.updateScreen();
   }
 
   @Override

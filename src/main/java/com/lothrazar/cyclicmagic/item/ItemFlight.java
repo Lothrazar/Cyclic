@@ -37,12 +37,12 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -100,14 +100,24 @@ public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent
   private void setFlying(EntityPlayer player) {
     player.fallDistance = 0.0F;
     player.capabilities.allowFlying = true;
-    //    player.capabilities.isFlying = true;
   }
 
-  private void setNonFlying(EntityPlayer player) {
+  public static void setNonFlying(EntityPlayer player) {
     player.capabilities.allowFlying = false;
     player.capabilities.isFlying = false;
     if (player instanceof EntityPlayerMP) { //force clientside  to  update
       ModCyclic.network.sendTo(new PacketSyncPlayerFlying(false), (EntityPlayerMP) player);
+    }
+    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
+    props.setFlyingTimer(0);
+  }
+
+  @SubscribeEvent
+  public void onDrink(LivingEntityUseItemEvent.Finish event) {
+    if (event.getItem().getItem().equals(Items.MILK_BUCKET)
+        && event.getEntityLiving() instanceof EntityPlayer) {
+      EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+      ItemFlight.setNonFlying(player);
     }
   }
 
@@ -119,17 +129,17 @@ public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     int flyingTicks = props.getFlyingTimer();//TICKS NOT SECONDS
-    if (flyingTicks > 1) {//it decays at 1 not zero so that we only set flying False once, not constantly. avoids having boolean flag
+    if (flyingTicks > 1) {
+      //it decays at 1 not zero so that we only set flying False once, not constantly. avoids having boolean flag
       setFlying(player);
-      //if you are flying but not using it (grounded) dont tick.
-      //this pauses the timer
-      //player.onGround == false ||
-      if (!player.onGround || player.world.getBlockState(player.getPosition().down()).getBlock() == Blocks.AIR) {
+      //if you are flying but not using it (grounded) dont tick. this pauses the timer
+      //check if below is air block? 
+      //  || player.world.isAirBlock(player.getPosition().down()).getBlock())
+      if (!player.onGround && player.capabilities.isFlying) {
         props.setFlyingTimer(props.getFlyingTimer() - 1);
       }
     }
     else if (flyingTicks == 1) { //times up! only 1/20 of a second left
-      props.setFlyingTimer(0);//skip ahead to zero
       setNonFlying(player);
     }
     //else it is zero. so this is the same as null/undefined/ so player has never eaten or it wore off.

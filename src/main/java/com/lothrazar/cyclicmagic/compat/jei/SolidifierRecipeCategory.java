@@ -15,8 +15,6 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
 public class SolidifierRecipeCategory implements IRecipeCategory<SolidifierWrapper> {
 
@@ -79,11 +77,11 @@ public class SolidifierRecipeCategory implements IRecipeCategory<SolidifierWrapp
     y = 27;
     try {
       RecipeSolidifier recipe = recipeWrapper.getRecipe();
-      Fluid f = FluidRegistry.getFluid(recipe.getFluidString());//recipeWrapper.getRecipe().getFluidResult();
+      ingredients.setInput(VanillaTypes.FLUID, recipe.getFluidIngredient());
       //getname is the same  
       recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
           null);
-      recipeLayout.getFluidStacks().set(0, new FluidStack(f, recipe.getFluidCost()));
+      recipeLayout.getFluidStacks().set(0, recipe.getFluidIngredient());
     }
     catch (Exception e) {
       //

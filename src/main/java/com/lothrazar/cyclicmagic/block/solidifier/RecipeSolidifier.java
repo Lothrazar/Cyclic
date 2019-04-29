@@ -41,6 +41,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -74,8 +75,8 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     this.setRegistryName(new ResourceLocation(Const.MODID, "solidifier_" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
-  public Fluid getFluidResult() {
-    return fluidResult;
+  public FluidStack getFluidIngredient() {
+    return new FluidStack(this.fluidResult, this.fluidCost);
   }
 
   public void setFluidResult(Fluid fluidResult) {
@@ -138,7 +139,9 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
   }
 
   public boolean tryPayCost(IInventory invoSource, FluidTank tank, boolean keepOneMinimum) {
-    if (tank.getFluidAmount() < this.getFluidCost()) {
+    if (tank.getFluidAmount() < this.getFluidCost()
+        || tank.getFluid() == null
+        || tank.getFluid().getFluid() != this.fluidResult) {
       return false;//not enough fluid, so stop now
     }
     //if minimum is 2, then the recipe slots always stay locked with at least 1 in each spot

@@ -35,6 +35,7 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   public TileCableFluidWireless() {
     super(SLOT_COUNT);
     tank = new FluidTankFixDesync(TANK_FULL, this);
+    this.setSlotsForBoth();
   }
 
   @Override

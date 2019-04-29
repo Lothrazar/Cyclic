@@ -142,7 +142,8 @@ public class TileSolidifier extends TileEntityBaseMachineFluid implements ITileR
       return;
     }
     for (RecipeSolidifier rec : RecipeSolidifier.recipes) {
-      if (rec.matches(this.crafting, world)) {
+      if (rec.matches(this.crafting, world)
+          && rec.getFluidIngredient().getFluid() == this.getFluidContainedOrNull()) {
         currentRecipe = rec;
       }
     }

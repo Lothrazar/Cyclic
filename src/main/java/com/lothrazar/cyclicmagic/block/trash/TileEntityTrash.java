@@ -37,6 +37,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
+  private static final int INVENTORY = 8;
   private int capacity = Fluid.BUCKET_VOLUME * 16;
   private boolean doFluid = true;
   private boolean doItems = true;
@@ -46,7 +47,7 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
   }
 
   public TileEntityTrash() {
-    super(1);
+    super(INVENTORY);
     tank = new FluidTankBase(capacity);
     this.setSlotsForBoth();
   }
@@ -67,7 +68,8 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
       return;
     }
     if (doItems) {
-      this.removeStackFromSlot(0);
+      for (int slot = 0; slot < this.getSizeInventory(); slot++)
+        this.removeStackFromSlot(slot);
     }
     if (doFluid) {
       this.drain(capacity, true);

@@ -62,7 +62,11 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   }
 
   public boolean isRunning() {
-    return this.isValid() && !this.onlyRunIfPowered() || this.isPowered();
+    if (!this.isValid()) {
+      return false;
+    }
+    //if im not powered. , then run if onlyRunIfPowered == false 
+    return this.isPowered() || !this.onlyRunIfPowered();
   }
 
   public boolean onlyRunIfPowered() {

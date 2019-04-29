@@ -54,9 +54,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
     TIMER, RENDERPARTICLES, REDSTONE, SIZE;
   }
 
-  private int timer = 0;
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private int size = 4;//center plus 4 in each direction = 9x9
 
   public TileEntityVacuum() {
@@ -151,9 +148,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     writeStackWrappers(stacksWrapped, tags);
-    tags.setInteger(NBT_TIMER, timer);
-    tags.setInteger(NBT_REDST, this.needsRedstone);
-    tags.setInteger(NBT_RENDER, renderParticles);
     tags.setInteger(NBT_SIZE, size);
     return super.writeToNBT(tags);
   }
@@ -162,9 +156,6 @@ public class TileEntityVacuum extends TileEntityBaseMachineInvo implements ITile
   public void readFromNBT(NBTTagCompound tags) {
     super.readFromNBT(tags);
     readStackWrappers(stacksWrapped, tags);
-    timer = tags.getInteger(NBT_TIMER);
-    this.needsRedstone = tags.getInteger(NBT_REDST);
-    this.renderParticles = tags.getInteger(NBT_RENDER);
     this.size = tags.getInteger(NBT_SIZE);
   }
 
