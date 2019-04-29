@@ -663,4 +663,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void setEnergyCost(int energyCost) {
     this.energyCost = energyCost;
   }
+
+  @Override
+  public boolean isRunning() {
+    this.getEnergyCost();
+    this.hasEnoughEnergy();
+    return super.isRunning();
+  }
 }
