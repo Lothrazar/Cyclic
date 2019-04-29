@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.trash;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -41,11 +42,14 @@ public class ContainerTrash extends ContainerBaseMachine {
   public ContainerTrash(InventoryPlayer inventoryPlayer, TileEntityTrash te) {
     super(te);
     addSlotToContainer(new Slot(tile, 0, SLOTX_START, SLOTY));
+    for (int i = 1; i < 8; i++)
+      addSlotToContainer(new Slot(tile, i, 333, 333));
     bindPlayerInventory(inventoryPlayer);
   }
 
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    ModCyclic.logger.error("" + slot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
@@ -53,7 +57,7 @@ public class ContainerTrash extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tile.getSizeInventory()) {
+      if (slot == 0) {
         if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) {
           return ItemStack.EMPTY;
         }
