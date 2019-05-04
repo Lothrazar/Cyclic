@@ -41,7 +41,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -81,7 +80,7 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

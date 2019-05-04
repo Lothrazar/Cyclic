@@ -47,7 +47,7 @@ import com.lothrazar.cyclicmagic.registry.PacketRegistry;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
-import com.lothrazar.cyclicmagic.registry.SkillRegistry;
+import com.lothrazar.cyclicmagic.registry.SkillModule;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.VillagerProfRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -143,7 +143,7 @@ public class ModCyclic {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
     }
-    SkillRegistry.register();
+    SkillModule.onPostInit();
     /**
      * TODO: unit test module with a post init to do this stuff
      */

@@ -62,7 +62,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -103,7 +102,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   public void register() {
     FluidsRegistry.registerExp();//it needs EXP fluid to work
     BlockRegistry.registerBlock(this, new ItemBlockPylon(this), getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityXpPylon.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityXpPylon.class, getContentName() + "_te");
   }
 
   private boolean enabled;

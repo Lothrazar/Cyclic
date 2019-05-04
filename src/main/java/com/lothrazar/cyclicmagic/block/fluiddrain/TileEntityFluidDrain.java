@@ -102,13 +102,10 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       if (fs == null || tank.canFillFluidType(fs) == false) {
         return;
       }
-      FluidStack fsafterr = handle.drain(fs, true);
+
       this.tank.fill(fs, true);
       UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null);
     }
-    //      else {
-    //        UtilParticle.spawnParticle(world, EnumParticleTypes.DRAGON_BREATH, current);
-    //      }
   }
 
   @Override

@@ -62,7 +62,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -84,7 +83,7 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, new ItemBlockFluidTank(this), "block_storeempty", null);
-    GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
+    BlockRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
     GuideRegistry.register(GuideCategory.BLOCK, this, null, null);
   }
 

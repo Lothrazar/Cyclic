@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -99,7 +98,7 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

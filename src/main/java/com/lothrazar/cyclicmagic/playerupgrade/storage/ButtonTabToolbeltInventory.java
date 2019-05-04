@@ -36,11 +36,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ButtonTabToolbeltInventory extends GuiButtonTooltip {
 
-  private GuiScreen gui;
-
   public ButtonTabToolbeltInventory(GuiScreen g, int x, int y) {
     super(51, x, y, 15, 10, "");
-    gui = g;
     if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.getDisplayName() != null &&
         ClientProxy.keyWheel.getDisplayName().equals("NONE") == false) {
       this.displayString = ClientProxy.keyWheel.getDisplayName();
@@ -54,13 +51,7 @@ public class ButtonTabToolbeltInventory extends GuiButtonTooltip {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      //      if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtWorkbench) {
       ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
-      //      }
-      //      else {
-      //        this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.player));
-      //        ModCyclic.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.player));
-      //      }
     }
     return pressed;
   }

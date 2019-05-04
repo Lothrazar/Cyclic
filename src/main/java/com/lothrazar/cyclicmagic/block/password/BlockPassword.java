@@ -56,7 +56,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -79,7 +78,7 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, ICont
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPassword.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityPassword.class, getContentName() + "_te");
     ModCyclic.instance.events.register(this);
   }
 

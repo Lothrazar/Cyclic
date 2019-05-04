@@ -149,7 +149,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class MultiContent implements IContent {
@@ -454,7 +453,7 @@ public class MultiContent implements IContent {
     }
     if (fire_starter) {
       BlockRegistry.registerBlock(new BlockFireStarter(), "fire_starter", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
+      BlockRegistry.registerTileEntity(TileEntityFireStarter.class, "fire_starter_te");
       fireDarkUsed = true;
       fireFrostUsed = true;
     }
@@ -559,8 +558,8 @@ public class MultiContent implements IContent {
       BlockRedstoneWireless wireless_receiver = new BlockRedstoneWireless(BlockRedstoneWireless.WirelessType.RECEIVER);
       BlockRegistry.registerBlock(wireless_transmitter, new ItemBlockWireless(wireless_transmitter), "wireless_transmitter", GuideCategory.BLOCK);
       BlockRegistry.registerBlock(wireless_receiver, "wireless_receiver", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityWirelessTr.class, "wireless_transmitter_te");
-      GameRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
+      BlockRegistry.registerTileEntity(TileEntityWirelessTr.class, "wireless_transmitter_te");
+      BlockRegistry.registerTileEntity(TileEntityWirelessRec.class, "wireless_receiver_te");
       ModCyclic.instance.events.register(BlockRedstoneWireless.class);
     }
     if (enableSpikes) {
@@ -598,21 +597,21 @@ public class MultiContent implements IContent {
       Block peat_generator = new BlockPeatGenerator(peat_fuel);
       BlockRegistry.registerBlock(peat_generator, "peat_generator", GuideCategory.BLOCKMACHINE);
       BlockRegistry.registerBlock(new BlockPeatFarm(peat_generator), "peat_farm", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
-      GameRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
+      BlockRegistry.registerTileEntity(TileEntityPeatGenerator.class, Const.MODID + "peat_generator_te");
+      BlockRegistry.registerTileEntity(TileEntityPeatFarm.class, Const.MODID + "peat_farm_te");
     }
     if (cableWireless) {
       BlockCableContentWireless batteryw = new BlockCableContentWireless();
       BlockRegistry.registerBlock(batteryw, "cable_wireless", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileCableContentWireless.class, Const.MODID + "cable_wireless_te");
+      BlockRegistry.registerTileEntity(TileCableContentWireless.class, Const.MODID + "cable_wireless_te");
       // energy
       BlockCableEnergyWireless w_energy = new BlockCableEnergyWireless();
       BlockRegistry.registerBlock(w_energy, "cable_wireless_energy", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
+      BlockRegistry.registerTileEntity(TileCableEnergyWireless.class, Const.MODID + "cable_wireless_energy_te");
       // f
       BlockCableFluidWireless cable_wireless_fluid = new BlockCableFluidWireless();
       BlockRegistry.registerBlock(cable_wireless_fluid, "cable_wireless_fluid", GuideCategory.BLOCKMACHINE);
-      GameRegistry.registerTileEntity(TileCableFluidWireless.class, Const.MODID + "cable_wireless_fluid_te");
+      BlockRegistry.registerTileEntity(TileCableFluidWireless.class, Const.MODID + "cable_wireless_fluid_te");
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding(true);
@@ -631,25 +630,25 @@ public class MultiContent implements IContent {
     if (enablePumpAndPipes) {
       //sort
       BlockRegistry.registerBlock(new BlockItemCableSort(), "item_pipe_sort", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
+      BlockRegistry.registerTileEntity(TileEntityItemCableSort.class, "item_pipe_sort_te");
       //Item
       BlockRegistry.registerBlock(new BlockCableItem(), "item_pipe", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
+      BlockRegistry.registerTileEntity(TileEntityItemCable.class, "item_pipe_te");
       BlockRegistry.registerBlock(new BlockItemPump(), "item_pump", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
+      BlockRegistry.registerTileEntity(TileEntityItemPump.class, "item_pump_te");
       //ENERGY
       BlockRegistry.registerBlock(new BlockPowerCable(), "energy_pipe", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
+      BlockRegistry.registerTileEntity(TileEntityCablePower.class, "energy_pipe_te");
       BlockRegistry.registerBlock(new BlockEnergyPump(), "energy_pump", null);
-      GameRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
+      BlockRegistry.registerTileEntity(TileEntityEnergyPump.class, "energy_pump_te");
       // FLUID 
       BlockRegistry.registerBlock(new BlockCableFluid(), "fluid_pipe", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
+      BlockRegistry.registerTileEntity(TileEntityFluidCable.class, "fluid_pipe_te");
       BlockRegistry.registerBlock(new BlockFluidPump(), "fluid_pump", null);
-      GameRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
+      BlockRegistry.registerTileEntity(TileEntityFluidPump.class, "fluid_pump_te");
       //bundled
       BlockRegistry.registerBlock(new BlockCableBundle(), "bundled_pipe", GuideCategory.BLOCK);
-      GameRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
+      BlockRegistry.registerTileEntity(TileEntityCableBundle.class, "bundled_pipe_te");
     }
   }
 

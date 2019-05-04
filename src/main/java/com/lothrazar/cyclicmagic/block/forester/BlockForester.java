@@ -48,7 +48,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -96,7 +95,7 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityForester.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityForester.class, getContentName() + "_te");
   }
 
   private boolean enabled;

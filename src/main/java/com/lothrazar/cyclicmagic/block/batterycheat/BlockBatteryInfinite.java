@@ -15,7 +15,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBatteryInfinite extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -26,7 +25,7 @@ public class BlockBatteryInfinite extends BlockBaseHasTile implements IHasRecipe
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityBatteryInfinite.class, Const.MODID + getContentName() + "_te");
   }
 
   @Override

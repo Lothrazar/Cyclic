@@ -46,7 +46,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
@@ -80,17 +79,12 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + getContentName() + "_te");
   }
 
   @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, new IProperty[] { PROPERTYFACING, IS_LIT });
-  }
-
-  @Override
-  public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos origin) {
-    return super.getActualState(state, world, origin);
   }
 
   private boolean enabled;

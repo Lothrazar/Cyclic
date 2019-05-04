@@ -51,7 +51,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -109,7 +108,7 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileSprinkler.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileSprinkler.class, getContentName() + "_te");
   }
 
   private boolean enabled;

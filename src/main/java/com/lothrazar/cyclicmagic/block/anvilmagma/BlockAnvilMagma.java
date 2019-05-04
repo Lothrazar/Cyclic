@@ -50,7 +50,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasRecipe {
 
@@ -86,7 +85,7 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

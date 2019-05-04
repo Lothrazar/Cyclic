@@ -21,7 +21,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockSoundPlayer extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -64,7 +63,7 @@ public class BlockSoundPlayer extends BlockBaseHasTile implements IHasRecipe, IC
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntitySoundPlayer.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntitySoundPlayer.class, getContentName() + "_te");
   }
 
   private boolean enabled;

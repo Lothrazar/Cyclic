@@ -48,7 +48,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -108,7 +107,7 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityPatternBuilder.class, getContentName() + "_te");
   }
 
   private boolean enabled;

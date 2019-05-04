@@ -21,7 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -42,7 +41,7 @@ public class BlockMoonDetector extends BlockBaseHasTile implements IHasRecipe, I
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityMoon.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityMoon.class, getContentName() + "_te");
   }
 
   private boolean enabled;
