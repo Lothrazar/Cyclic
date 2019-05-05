@@ -108,8 +108,8 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("CorruptedChorus(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.modpackMisc;
-    GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 10, 1, 60, "How long you can noclip after eating corrupted chorus");
-    POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 1, 60, "How long the negative potion effects last after a corrupted chorus teleports you");
+    GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 10, 1, 600, "How long you can noclip after eating corrupted chorus");
+    POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 0, 600, "How long the negative potion effects last after a corrupted chorus teleports you");
   }
 
   private void setPlayerGhostMode(EntityPlayer player, World par2World) {
@@ -151,10 +151,13 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
         else {
           BlockPos currentPos = player.getPosition();
           BlockPos sourcePos = props.getChorusStart();
-          if (world.isAirBlock(currentPos) && world.isAirBlock(currentPos.up())) {
-            //then we can stay, but add nausea
-            player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, Const.TICKS_PER_SEC * POTION_SECONDS));
-            player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, Const.TICKS_PER_SEC * POTION_SECONDS));
+          if (isPosValidTeleport(world, currentPos)) {
+            //then we can stay, but add potions
+            //if config allows
+            if (POTION_SECONDS > 0) {
+              player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, Const.TICKS_PER_SEC * POTION_SECONDS));
+              player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, Const.TICKS_PER_SEC * POTION_SECONDS));
+            }
           }
           else {
             //teleport back home	
@@ -165,5 +168,11 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
         }
       }
     }
+  }
+
+  private boolean isPosValidTeleport(World world, BlockPos pos) {
+    return world.isAirBlock(pos)
+        && world.isAirBlock(pos.up())
+        && pos.getY() > 0;
   }
 }

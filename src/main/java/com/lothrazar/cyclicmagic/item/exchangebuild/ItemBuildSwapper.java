@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.buildswap;
+package com.lothrazar.cyclicmagic.item.exchangebuild;
 
 import java.util.HashSet;
 import java.util.List;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.buildswap;
+package com.lothrazar.cyclicmagic.item.exchangebuild;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -30,8 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.ActionType;
-import com.lothrazar.cyclicmagic.item.buildswap.ItemBuildSwapper.WandType;
+import com.lothrazar.cyclicmagic.item.exchangebuild.ItemBuildSwapper.ActionType;
+import com.lothrazar.cyclicmagic.item.exchangebuild.ItemBuildSwapper.WandType;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
