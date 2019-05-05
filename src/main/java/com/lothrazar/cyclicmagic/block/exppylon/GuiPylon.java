@@ -145,13 +145,11 @@ public class GuiPylon extends GuiBaseContainer {
     if (this.disableCountdown > 0) {
       this.disableCountdown--;
       this.btnDepositAll.enabled = false;
-      this.btnCollect.enabled = false;
       this.btnDeposit.enabled = false;
       this.btnDrain.enabled = false;
     }
     else {
       this.btnDepositAll.enabled = true;
-      this.btnCollect.enabled = true;
       this.btnDeposit.enabled = true;
       this.btnDrain.enabled = true;
     }
