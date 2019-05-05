@@ -13,8 +13,10 @@ import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public class TileCableFluidWireless extends TileEntityBaseMachineFluid implements ITickable, ILaserTarget, ITileRedstoneToggle {
@@ -112,7 +114,8 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   private void outputFluid(int slot) {
     BlockPosDim dim = this.getTarget(slot);
     if (this.isTargetValid(dim)) {
-      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), null, this.tank, TRANSFER_FLUID_PER_TICK);
+      EnumFacing rando = UtilWorld.getRandFacing();
+      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), rando, this.tank, TRANSFER_FLUID_PER_TICK);
     }
   }
 

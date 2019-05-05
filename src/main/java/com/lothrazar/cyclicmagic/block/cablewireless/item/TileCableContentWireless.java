@@ -10,8 +10,10 @@ import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
@@ -113,7 +115,8 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
     stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     stackToExport.setCount(1);
     if (stackToExport.isEmpty() == false) {
-      ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, target, null, stackToExport);
+      EnumFacing rando = UtilWorld.getRandFacing();
+      ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, target, rando, stackToExport);
       if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
         //then save result
         this.decrStackSize(SLOT_TRANSFER);

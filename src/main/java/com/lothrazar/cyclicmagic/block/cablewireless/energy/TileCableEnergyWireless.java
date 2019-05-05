@@ -9,9 +9,11 @@ import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -108,10 +110,11 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
     }
     BlockPos target = dim.toBlockPos();
     TileEntity tileTarget = world.getTileEntity(target);
-    if (tileTarget != null && tileTarget.hasCapability(CapabilityEnergy.ENERGY, null)) {
+    EnumFacing rando = UtilWorld.getRandFacing();
+    if (tileTarget != null && tileTarget.hasCapability(CapabilityEnergy.ENERGY, rando)) {
       //drain from ME to Target 
-      IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, null);
-      IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, null);
+      IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, rando);
+      IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, rando);
       int drain = handlerHere.extractEnergy(transferRate, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
