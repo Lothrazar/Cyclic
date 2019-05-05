@@ -29,7 +29,7 @@ import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWirel
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -71,7 +71,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     if (button.id != redstoneBtn.id) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
-      BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
+      BlockPosDim dim = ItemLocationGps.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {
         UtilChat.addChatMessage(player, "wireless.empty");
       }

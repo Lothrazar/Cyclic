@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.screentarget;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -61,12 +61,12 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   }
 
   BlockPosDim getTarget(int slot) {
-    return ItemLocation.getPosition(this.getStackInSlot(slot));
+    return ItemLocationGps.getPosition(this.getStackInSlot(slot));
   }
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    return stack.getItem() instanceof ItemLocation;
+    return stack.getItem() instanceof ItemLocationGps;
   }
 
   @Override

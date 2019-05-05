@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
@@ -85,7 +85,7 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      if (stackInSlot.getItem() instanceof ItemLocation) {
+      if (stackInSlot.getItem() instanceof ItemLocationGps) {
         if (!this.mergeItemStack(stackInSlot, 1, 3, false)) {
           return ItemStack.EMPTY;
         }

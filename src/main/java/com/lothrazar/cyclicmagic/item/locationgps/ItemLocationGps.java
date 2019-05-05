@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item.location;
+package com.lothrazar.cyclicmagic.item.locationgps;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IContent;
@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -24,13 +25,18 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemLocation extends BaseItem implements IHasRecipe, IContent {
+public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
 
   private boolean enabled;
 
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    savePosition(player, pos, hand);
+    if (world.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
+      deletePosition(player, pos, hand);
+    }
+    else {
+      savePosition(player, pos, hand);
+    }
     return EnumActionResult.SUCCESS;
   }
 
@@ -44,7 +50,14 @@ public class ItemLocation extends BaseItem implements IHasRecipe, IContent {
     super.addInformation(stack, player, tooltip, advanced);
   }
 
-  public static void savePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
+  private void deletePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
+    ItemStack held = player.getHeldItem(hand);
+    held.setTagCompound(null);
+    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
+        + "---");
+  }
+
+  private void savePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
     ItemStack held = player.getHeldItem(hand);
     player.swingArm(hand);
     UtilNBT.setItemStackBlockPos(held, pos);

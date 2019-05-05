@@ -8,7 +8,7 @@ import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -64,11 +64,11 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    return stack.getItem() instanceof ItemLocation;
+    return stack.getItem() instanceof ItemLocationGps;
   }
 
   private BlockPosDim getTarget(int slot) {
-    return ItemLocation.getPosition(this.getStackInSlot(slot));
+    return ItemLocationGps.getPosition(this.getStackInSlot(slot));
   }
 
   @Override

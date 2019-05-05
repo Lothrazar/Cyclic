@@ -9,7 +9,7 @@ import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWirel
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
@@ -73,11 +73,11 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    return stack.getItem() instanceof ItemLocation;
+    return stack.getItem() instanceof ItemLocationGps;
   }
 
   private BlockPosDim getTarget(int slot) {
-    return ItemLocation.getPosition(this.getStackInSlot(slot));
+    return ItemLocationGps.getPosition(this.getStackInSlot(slot));
   }
 
   @Override
