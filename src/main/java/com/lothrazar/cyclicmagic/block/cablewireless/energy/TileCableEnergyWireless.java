@@ -28,7 +28,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
   private int transferRate = MAX_TRANSFER / 2;
 
   public static enum Fields {
-    REDSTONE, TRANSFER_RATE;
+    REDSTONE, TRANSFER_RATE, RENDERPARTICLES;
   }
 
   public TileCableEnergyWireless() {

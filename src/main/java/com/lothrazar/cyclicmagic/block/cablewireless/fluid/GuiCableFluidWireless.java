@@ -51,6 +51,7 @@ public class GuiCableFluidWireless extends GuiBaseContainer {
     super(new ContainerCableFluidWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableFluidWireless.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileCableFluidWireless.Fields.RENDERPARTICLES.ordinal();
     int x = this.guiLeft + 152;
     int y = 6;
     this.fluidBar = new FluidBar(this, x, y);
@@ -101,7 +102,7 @@ public class GuiCableFluidWireless extends GuiBaseContainer {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id != redstoneBtn.id) {
+    if (button.id != this.redstoneBtn.id && button.id != this.previewBtn.id) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocationGps.getPosition(tile.getStackInSlot(button.id));
