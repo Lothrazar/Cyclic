@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.compat.jei;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.dehydrator.RecipeDeHydrate;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
@@ -12,6 +13,7 @@ import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
 
 public class DehydratorRecipeCategory implements IRecipeCategory<DehydratorWrapper> {
 
@@ -68,5 +70,18 @@ public class DehydratorRecipeCategory implements IRecipeCategory<DehydratorWrapp
     }
     guiItemStacks.init(1, false, 129, 18);
     guiItemStacks.set(1, recipeWrapper.getOut());
+    x = 96;
+    y = 28;
+    try {
+      RecipeDeHydrate recipe = recipeWrapper.getRecipe();
+      ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutputFluid());
+      //getname is the same   
+      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ - 2, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
+          null);
+      recipeLayout.getFluidStacks().set(0, recipe.getOutputFluid());
+    }
+    catch (Exception e) {
+      //
+    }
   }
 }

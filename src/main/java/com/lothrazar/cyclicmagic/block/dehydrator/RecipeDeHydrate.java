@@ -35,6 +35,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -54,6 +56,9 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
     this.setRegistryName(new ResourceLocation(Const.MODID, "dehydrate" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
+  public FluidStack getOutputFluid() {
+    return new FluidStack(FluidRegistry.WATER, this.fluid);
+  }
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     return recipeSlotMatches(inv.getStackInSlot(0), recipeInput);
@@ -149,4 +154,5 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public void setFluid(int fluid) {
     this.fluid = fluid;
   }
+
 }
