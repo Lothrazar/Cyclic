@@ -100,13 +100,14 @@ public class GuiPylon extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.COLLECT));
     }
     else if (button.id == btnDepositAll.id) {
+      this.disableCountdown = 10;
       //fake: exp really means deposit
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 0, TileEntityXpPylon.Fields.EXP));
     }
     else if (button instanceof ButtonExpPylon && ((ButtonExpPylon) button).getValue() != 0) {
+      this.disableCountdown = 10;
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), ((ButtonExpPylon) button).getValue(), TileEntityXpPylon.Fields.EXP));
     }
-    this.disableCountdown = 10;
   }
 
   @Override
