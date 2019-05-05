@@ -212,9 +212,9 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
       posLoop = posLoop.up();
       success = FluidUtil.interactWithFluidHandler(player, hand, world, posLoop, side);
     }
-    TileEntityFluidTank te = (TileEntityFluidTank) world.getTileEntity(pos);
-    if (te != null) {
-      if (world.isRemote == false) { //server side
+    if (world.isRemote == false) { //server side
+      TileEntityFluidTank te = (TileEntityFluidTank) world.getTileEntity(pos);
+      if (te != null) {
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
           String amtStr = fs.amount + " / " + te.getCapacity() + " ";
