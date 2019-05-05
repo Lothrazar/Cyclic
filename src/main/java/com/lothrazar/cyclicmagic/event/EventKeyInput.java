@@ -120,40 +120,46 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended()) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_EXTENDED));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_EXTENDED));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
     }
     else if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryCrafting()) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryCrafting()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
+        }
       }
     }
-    else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()
-    //   && thePlayer.get//special case: not in gamemode 3????
-    ) {
+    else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended()) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
     }
     else if (ClientProxy.keySkills != null && ClientProxy.keySkills.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended()) {
-        Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
     }
   }
