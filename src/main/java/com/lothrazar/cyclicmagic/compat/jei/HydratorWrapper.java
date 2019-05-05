@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 public class HydratorWrapper implements IRecipeWrapper {
 
-  private RecipeHydrate src;
+  RecipeHydrate src;
 
   public HydratorWrapper(RecipeHydrate source) {
     this.src = source;
@@ -28,14 +28,7 @@ public class HydratorWrapper implements IRecipeWrapper {
     }
     ingredients.setInputs(VanillaTypes.ITEM, ing);
     ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
+    ingredients.setInput(VanillaTypes.FLUID, src.getFluidIngredient());
   }
-  //  public int size() {
-  //    int size = 0;
-  //    for (ItemStack s : src.getRecipeInput()) {
-  //      if (s.isEmpty() == false) {
-  //        size++;
-  //      }
-  //    }
-  //    return size;
-  //  }
+
 }

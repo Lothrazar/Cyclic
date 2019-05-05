@@ -37,6 +37,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -74,6 +76,9 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
+  public FluidStack getFluidIngredient() {
+    return new FluidStack(FluidRegistry.WATER, this.fluidCost);
+  }
   public int getSize() {
     return size;
   }
@@ -256,4 +261,5 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
   public static void addRecipe(RecipeHydrate rec) {
     recipes.add(rec);
   }
+
 }

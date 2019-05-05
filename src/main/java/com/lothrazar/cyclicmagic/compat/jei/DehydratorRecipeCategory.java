@@ -55,13 +55,9 @@ public class DehydratorRecipeCategory implements IRecipeCategory<DehydratorWrapp
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     int x = 56, y = 26;
     guiItemStacks.init(0, true, x, y);
-    //    guiItemStacks.init(1, true, x + Const.SQ, y); 
-    //    guiItemStacks.init(2, true, x + 2 * Const.SQ, y);
-    //next row
+
     y += Const.SQ;
-    //    guiItemStacks.init(3, true, x, y);
-    //    guiItemStacks.init(4, true, x + Const.SQ, y);
-    //    guiItemStacks.init(5, true, x + 2 * Const.SQ, y);
+
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
