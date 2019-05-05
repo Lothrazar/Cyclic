@@ -235,14 +235,15 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
       boolean success = rightClickFluidTank(targetPos);
       if (success) {
-        // ModCyclic.logger.log("rightClickFluidAttempt : true");
+        // ModCyclic.logger.error("rightClickFluidAttempt : true");
         syncPlayerTool();
         return;
       }
     }
     else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
-        // ModCyclic.logger.log("rightClickFluidAir : true");
+        //bucket on fluid-in-world   
+        //   ModCyclic.logger.error("rightClickFluidAir : true " + fakePlayer.get().getHeldItemMainhand());
         /// missing piece  
         syncPlayerTool();
         return;
@@ -583,6 +584,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
+  }
+
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index <= 2 && stack.getCount() > 1) {
+      return false;
+    }
+    return super.isItemValidForSlot(index, stack);
   }
 
   public static void syncConfig(Configuration config) {
