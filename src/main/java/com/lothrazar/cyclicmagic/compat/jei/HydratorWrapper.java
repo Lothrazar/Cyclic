@@ -30,5 +30,4 @@ public class HydratorWrapper implements IRecipeWrapper {
     ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
     ingredients.setInput(VanillaTypes.FLUID, src.getFluidIngredient());
   }
-
 }

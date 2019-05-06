@@ -34,7 +34,6 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 
-
   public static enum Fields {
     REDSTONE, TIMER, R, G, B, ALPHA, PULSE, EXTENDING, XOFF, YOFF, ZOFF;
   }

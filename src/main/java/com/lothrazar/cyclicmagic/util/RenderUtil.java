@@ -44,7 +44,7 @@ public class RenderUtil {
     public OffsetEnum zOffset = OffsetEnum.CENTER;
 
     @Override
-    public String toString(){
+    public String toString() {
       return second + " : " + first;
     }
   }

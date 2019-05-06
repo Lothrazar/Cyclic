@@ -300,7 +300,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     ItemStack second = getStackInSlot(high);
     if (main.isEmpty() && !second.isEmpty()) {
       this.setInventorySlotContents(high, ItemStack.EMPTY);
-        this.setInventorySlotContents(low, second);
+      this.setInventorySlotContents(low, second);
     }
     else if (!main.isEmpty() && !second.isEmpty()) { // if the one below this is not
       if (ItemStack.areItemsEqual(main, second)

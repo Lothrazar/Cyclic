@@ -172,5 +172,4 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
     compound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(compound);
   }
-
 }

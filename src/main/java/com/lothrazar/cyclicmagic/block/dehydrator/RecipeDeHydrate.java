@@ -59,6 +59,7 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public FluidStack getOutputFluid() {
     return new FluidStack(FluidRegistry.WATER, this.fluid);
   }
+
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     return recipeSlotMatches(inv.getStackInSlot(0), recipeInput);
@@ -154,5 +155,4 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public void setFluid(int fluid) {
     this.fluid = fluid;
   }
-
 }

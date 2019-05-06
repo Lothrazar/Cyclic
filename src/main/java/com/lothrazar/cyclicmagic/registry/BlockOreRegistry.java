@@ -58,7 +58,6 @@ public class BlockOreRegistry {
   }
 
   public static void register() {
-
     final int coalHarvest = 0;
     final int ironHarvest = 1;
     final int lapisHarvest = ironHarvest;

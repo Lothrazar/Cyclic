@@ -54,7 +54,6 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
       });
       x += Const.SQ;
     }
-
     bindPlayerInventory(inventoryPlayer);
   }
 

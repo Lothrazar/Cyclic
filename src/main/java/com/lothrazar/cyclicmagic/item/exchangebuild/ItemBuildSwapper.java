@@ -145,6 +145,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
     }
     return super.canApplyAtEnchantingTable(stack, enchantment);
   }
+
   @Override
   public boolean isEnchantable(ItemStack stack) {
     return true;//     return this.getItemStackLimit(stack) == 1 && this.isDamageable();

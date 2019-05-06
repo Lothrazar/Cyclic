@@ -24,7 +24,6 @@ public class DehydratorWrapper implements IRecipeWrapper {
   public void getIngredients(IIngredients ingredients) {
     List<ItemStack> ing = new ArrayList<ItemStack>();
     ing.add(recipe.getRecipeInput().copy());
-
     ingredients.setInputs(VanillaTypes.ITEM, ing);
     ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
     ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutputFluid());

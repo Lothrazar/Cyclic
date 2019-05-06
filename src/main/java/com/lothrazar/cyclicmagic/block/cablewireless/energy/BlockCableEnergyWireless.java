@@ -28,6 +28,7 @@ public class BlockCableEnergyWireless extends BlockBaseHasTile implements IBlock
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_W_ENERGY);
     this.setTranslucent();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {

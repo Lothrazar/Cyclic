@@ -82,7 +82,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate);
     if (
     //         world.containsAnyLiquid(new AxisAlignedBB(target))        ||
-        world.getBlockState(target).getMaterial().isLiquid()) {
+    world.getBlockState(target).getMaterial().isLiquid()) {
       //here 
       //       IBlockState currentState = world.getBlockState(target);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
@@ -91,7 +91,6 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
       if (fs != null && this.tank.canFillFluidType(fs)) {
         this.tank.fill(fs, true);
       }
-
     }
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();

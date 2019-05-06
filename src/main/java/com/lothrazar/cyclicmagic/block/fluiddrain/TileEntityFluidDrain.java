@@ -102,7 +102,6 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       if (fs == null || tank.canFillFluidType(fs) == false) {
         return;
       }
-
       this.tank.fill(fs, true);
       UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null);
     }

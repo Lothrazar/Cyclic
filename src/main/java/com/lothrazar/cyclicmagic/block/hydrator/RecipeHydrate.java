@@ -79,6 +79,7 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
   public FluidStack getFluidIngredient() {
     return new FluidStack(FluidRegistry.WATER, this.fluidCost);
   }
+
   public int getSize() {
     return size;
   }
@@ -261,5 +262,4 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
   public static void addRecipe(RecipeHydrate rec) {
     recipes.add(rec);
   }
-
 }

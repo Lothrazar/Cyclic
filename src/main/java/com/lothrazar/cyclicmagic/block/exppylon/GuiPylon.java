@@ -138,10 +138,10 @@ public class GuiPylon extends GuiBaseContainer {
     }
     return 500;
   }
+
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
     if (this.disableCountdown > 0) {
       this.disableCountdown--;
       this.btnDepositAll.enabled = false;
@@ -156,7 +156,6 @@ public class GuiPylon extends GuiBaseContainer {
     this.moveQty = amt();
     this.btnDeposit.setValue(this.moveQty);
     this.btnDrain.setValue(-1 * this.moveQty);
-
     //moveQty
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     int fluidHas = this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());

@@ -28,6 +28,7 @@ public class BlockCableContentWireless extends BlockBaseHasTile implements IBloc
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_W_CONTENT);
     this.setTranslucent();
   }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {

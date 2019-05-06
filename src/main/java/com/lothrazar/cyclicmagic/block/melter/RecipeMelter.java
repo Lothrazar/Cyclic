@@ -171,6 +171,7 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
   public FluidStack getOutputFluid() {
     return new FluidStack(this.fluidResult, this.fluidSize);
   }
+
   public List<ItemStack> getRecipeInput() {
     return recipeInput;
   }
