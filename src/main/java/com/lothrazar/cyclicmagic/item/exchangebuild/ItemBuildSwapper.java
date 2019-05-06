@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.item.buildswap;
+package com.lothrazar.cyclicmagic.item.exchangebuild;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +42,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentUntouching;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -135,6 +136,19 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
     }
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment) {
+    if (enchantment instanceof EnchantmentUntouching) {
+      return true;
+    }
+    return super.canApplyAtEnchantingTable(stack, enchantment);
+  }
+
+  @Override
+  public boolean isEnchantable(ItemStack stack) {
+    return true;//     return this.getItemStackLimit(stack) == 1 && this.isDamageable();
   }
 
   @SubscribeEvent

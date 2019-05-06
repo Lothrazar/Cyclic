@@ -75,7 +75,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public EnergyBar energyBar = null;
   public FluidBar fluidBar = null;
   protected GuiButtonToggleRedstone redstoneBtn = null;
-  private GuiButtonTogglePreview btnPreview;
+  protected GuiButtonTogglePreview previewBtn;
 
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
@@ -144,10 +144,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
       y += Const.PAD / 2 + redstoneBtn.width;
     }
     if (this.fieldPreviewBtn > 0) {
-      btnPreview = new GuiButtonTogglePreview(132,
+      previewBtn = new GuiButtonTogglePreview(132,
           x,
           y, this.tile.getPos(), fieldPreviewBtn);
-      this.addButton(btnPreview);
+      this.addButton(previewBtn);
     }
   }
 
@@ -200,12 +200,12 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
     }
-    if (btnPreview != null) {
+    if (previewBtn != null) {
       if (tile.getField(this.fieldPreviewBtn) == 1) {
-        btnPreview.setStateOn();
+        previewBtn.setStateOn();
       }
       else {
-        btnPreview.setStateOff();
+        previewBtn.setStateOff();
       }
     }
     updateDisabledButtonTriggers();

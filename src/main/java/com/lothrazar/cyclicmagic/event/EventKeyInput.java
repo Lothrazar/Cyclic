@@ -39,6 +39,7 @@ import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.skill.GuiSkillWheel;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -48,6 +49,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
@@ -118,34 +120,46 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended()) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_EXTENDED));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_EXTENDED));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
     }
     else if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryCrafting()) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryCrafting()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
+        }
       }
     }
     else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended()) {
-        // TESTING ONLY 
-        //        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
-        //          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
-        //        else
-        //        Minecraft.getMinecraft().displayGuiScreen(new GuiTools(thePlayer));
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+    }
+    else if (ClientProxy.keySkills != null && ClientProxy.keySkills.isPressed()) {
+      final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
     }
   }

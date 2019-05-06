@@ -30,11 +30,17 @@ import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
 
@@ -72,7 +78,20 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
       return;//i am not powered, and i require it
     }
     //incoming target side
-    UtilFluid.tryFillTankFromPosition(world, pos.offset(this.getCurrentFacing()), this.getCurrentFacing().getOpposite(), tank, transferRate);
+    BlockPos target = pos.offset(this.getCurrentFacing());
+    UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate);
+    if (
+    //         world.containsAnyLiquid(new AxisAlignedBB(target))        ||
+    world.getBlockState(target).getMaterial().isLiquid()) {
+      //here 
+      //       IBlockState currentState = world.getBlockState(target);
+      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
+      IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
+      FluidStack fs = handle.getTankProperties()[0].getContents();
+      if (fs != null && this.tank.canFillFluidType(fs)) {
+        this.tank.fill(fs, true);
+      }
+    }
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();
     Collections.shuffle(sidesOut);

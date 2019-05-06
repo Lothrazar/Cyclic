@@ -102,6 +102,7 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraInvo;
   public static KeyBinding keyExtraCraftin;
   public static KeyBinding keyWheel;
+  public static KeyBinding keySkills;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
 
   @Override
@@ -142,6 +143,8 @@ public class ClientProxy extends CommonProxy {
     ClientRegistry.registerKeyBinding(ClientProxy.keyWheel);
     keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_C, keyCategoryInventory);
     ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
+    keySkills = new KeyBinding("key.keySkills", Keyboard.KEY_K, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keySkills);
   }
 
   private void registerEntities() {

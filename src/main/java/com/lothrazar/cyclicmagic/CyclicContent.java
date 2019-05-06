@@ -121,7 +121,7 @@ import com.lothrazar.cyclicmagic.item.equipbauble.ItemGloveClimb;
 import com.lothrazar.cyclicmagic.item.findspawner.ItemProjectileDungeon;
 import com.lothrazar.cyclicmagic.item.homingmissile.ItemMagicMissile;
 import com.lothrazar.cyclicmagic.item.lightningmagic.ItemProjectileLightning;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.mobcapture.ItemProjectileMagicNet;
 import com.lothrazar.cyclicmagic.item.mobs.ItemHorseTame;
@@ -159,7 +159,7 @@ public class CyclicContent {
     content.add(new ItemGemObsidian());
     content.add(new ItemPotionContent());
     content.add(new MultiContent());
-    content.add(new ItemLocation());
+    content.add(new ItemLocationGps());
     content.add(new BlockLibrary());
     content.add(new FluidPoison());
     content.add(new FluidAmber());

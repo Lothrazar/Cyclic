@@ -39,7 +39,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe, IContent {
 
@@ -76,7 +75,7 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

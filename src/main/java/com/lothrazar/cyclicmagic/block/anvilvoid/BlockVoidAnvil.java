@@ -22,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -64,7 +63,7 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityVoidAnvil.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityVoidAnvil.class, getContentName() + "_te");
   }
 
   private boolean enabled;

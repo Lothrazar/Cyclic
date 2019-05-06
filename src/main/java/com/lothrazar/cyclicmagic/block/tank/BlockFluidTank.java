@@ -62,7 +62,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -84,7 +83,7 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, new ItemBlockFluidTank(this), "block_storeempty", null);
-    GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
+    BlockRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
     GuideRegistry.register(GuideCategory.BLOCK, this, null, null);
   }
 
@@ -213,9 +212,9 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
       posLoop = posLoop.up();
       success = FluidUtil.interactWithFluidHandler(player, hand, world, posLoop, side);
     }
-    TileEntityFluidTank te = (TileEntityFluidTank) world.getTileEntity(pos);
-    if (te != null) {
-      if (world.isRemote == false) { //server side
+    if (world.isRemote == false) { //server side
+      TileEntityFluidTank te = (TileEntityFluidTank) world.getTileEntity(pos);
+      if (te != null) {
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
           String amtStr = fs.amount + " / " + te.getCapacity() + " ";

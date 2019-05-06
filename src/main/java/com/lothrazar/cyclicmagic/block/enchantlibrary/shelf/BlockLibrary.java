@@ -57,7 +57,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -70,8 +69,8 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
-    GameRegistry.registerTileEntity(TileEntityLibraryCtrl.class, Const.MODID + "library_ctrl_te");
+    BlockRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
+    BlockRegistry.registerTileEntity(TileEntityLibraryCtrl.class, Const.MODID + "library_ctrl_te");
     BlockLibraryController lc = new BlockLibraryController();
     BlockRegistry.registerBlock(lc, "block_library_ctrl", GuideCategory.BLOCK);
     ModCyclic.instance.events.register(this);

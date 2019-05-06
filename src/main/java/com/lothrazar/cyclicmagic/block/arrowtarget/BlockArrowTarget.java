@@ -22,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -40,7 +39,7 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe, IC
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityArrowTarget.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityArrowTarget.class, getContentName() + "_te");
   }
 
   private boolean enabled;

@@ -10,32 +10,26 @@ import net.minecraft.item.ItemStack;
 
 public class DehydratorWrapper implements IRecipeWrapper {
 
-  private RecipeDeHydrate src;
+  private RecipeDeHydrate recipe;
 
   public DehydratorWrapper(RecipeDeHydrate source) {
-    this.src = source;
+    this.recipe = source;
   }
 
   public ItemStack getOut() {
-    return src.getRecipeOutput();
+    return recipe.getRecipeOutput();
   }
 
   @Override
   public void getIngredients(IIngredients ingredients) {
     List<ItemStack> ing = new ArrayList<ItemStack>();
-    //    for (ItemStack wtf : src.getInput()) {
-    ing.add(src.getRecipeInput().copy());
-    //    } 
+    ing.add(recipe.getRecipeInput().copy());
     ingredients.setInputs(VanillaTypes.ITEM, ing);
-    ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
+    ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutputFluid());
   }
-  //  public int size() {
-  //    int size = 0;
-  //    for (ItemStack s : src.getInput()) {
-  //      if (s.isEmpty() == false) {
-  //        size++;
-  //      }
-  //    }
-  //    return size;
-  //  }
+
+  public RecipeDeHydrate getRecipe() {
+    return recipe;
+  }
 }

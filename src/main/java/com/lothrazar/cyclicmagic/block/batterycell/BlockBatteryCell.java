@@ -27,7 +27,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBatteryCell extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -49,7 +48,7 @@ public class BlockBatteryCell extends BlockBaseHasTile implements IHasRecipe, IC
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, new ItemBlockBattery(this), getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityBatteryCell.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityBatteryCell.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

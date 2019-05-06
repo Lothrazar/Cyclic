@@ -39,7 +39,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHasOreDict, IContent {
 
@@ -62,7 +61,7 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
+    BlockRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
   }
 
   private boolean enabled;

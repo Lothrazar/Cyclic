@@ -503,7 +503,7 @@ item.tool_spelunker.name=Cavefinder
 item.tool_spelunker.tooltip=Search for underground caves
 item.tool_swap.guide=Exchange the blocks selected with ones in your inventory.
 item.tool_swap.name=Standard Exchange Scepter
-item.tool_swap.tooltip=Replaces blocks with your inventory contents. Left click to change size
+item.tool_swap.tooltip=Replaces blocks and air with your inventory contents. Left click to change size
 item.tool_swap_match.guide=Exchange the blocks selected with ones in your inventory.  Only replaces blocks that match with the targeted center block.
 item.tool_swap_match.name=Gentle Exchange Scepter
 item.tool_swap_match.tooltip=Replaces blocks that match the target. Left click to change size
@@ -1398,7 +1398,7 @@ pump.secondline=<- / ->
 
 item.card_location.name=GPS Marker
 item.card_location.tooltip=Saves the location of a block
-item.card_location.guide=Use on a block to save a location and use in a wireless machine
+item.card_location.guide=Use on a block to save a location and use in a wireless machine.  Use on bedrock to clear item data. 
 item.location.saved=Saved 
 
 wireless.target=Detect target block

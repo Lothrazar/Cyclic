@@ -27,7 +27,6 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.fluids.FluidStack;
 
 /**
  * All credit to Tinkers Construct where i learned this strategy source:
@@ -45,32 +44,6 @@ public class FluidTankFixDesync extends FluidTankBase {
     this.parent = parent;
   }
 
-  @Override
-  public int fill(FluidStack resource, boolean doFill) {
-    if (resource == null || resource.getFluid() == null) {
-      return 0;
-    }
-    if (this.getFluid() == null) {
-      this.setFluid(resource);
-      return resource.amount;
-    }
-    else {
-    return super.fill(resource, doFill);
-    }
-  }
-
-  @Override
-  public FluidStack drain(FluidStack resource, boolean doDrain) {
-    FluidStack fluid = super.drain(resource, doDrain);
-    return fluid;
-  }
-
-  @Override
-  public FluidStack drain(int maxDrain, boolean doDrain) {
-    FluidStack fluid = super.drain(maxDrain, doDrain);
-    return fluid;
-  }
-
   private void sendClientUpdate() {
     if (parent.getWorld().isRemote == false) {
       PacketFluidSync packet = new PacketFluidSync(parent.getPos(), this.getFluid());
@@ -82,7 +55,6 @@ public class FluidTankFixDesync extends FluidTankBase {
         }
       }
     }
-    // ModCyclic.network.sendTo(message, player);
   }
 
   @Override

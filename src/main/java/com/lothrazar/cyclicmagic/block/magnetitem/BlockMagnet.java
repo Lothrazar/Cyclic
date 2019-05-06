@@ -46,7 +46,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -113,7 +112,7 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IConten
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKPLATE);
-    GameRegistry.registerTileEntity(TileEntityMagnet.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityMagnet.class, getContentName() + "_te");
   }
 
   private boolean enabled;

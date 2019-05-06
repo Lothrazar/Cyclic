@@ -42,7 +42,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRecipe {
 
@@ -84,7 +83,7 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPackager.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityPackager.class, getContentName() + "_te");
   }
 
   private boolean enabled;

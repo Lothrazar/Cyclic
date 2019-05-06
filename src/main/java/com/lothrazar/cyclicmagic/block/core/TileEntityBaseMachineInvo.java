@@ -288,8 +288,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    * @param endOffset
    */
   protected void shiftAllUp(int endOffset) {
-    for (int i = 0; i < this.getSizeInventory() - endOffset - 1; i++) {
-      shiftPairUp(i, i + 1);
+    if (this.world.isRemote == false) {
+      for (int i = 0; i < this.getSizeInventory() - endOffset - 1; i++) {
+        shiftPairUp(i, i + 1);
+      }
     }
   }
 
@@ -303,8 +305,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     else if (!main.isEmpty() && !second.isEmpty()) { // if the one below this is not
       if (ItemStack.areItemsEqual(main, second)
           && UtilNBT.stacksTagsEqual(main, second)) {
-        //temSt        main.stack
-        if (main.getCount() + second.getCount() < 64) {
+        //temSt        main.stack 
+        //         this.tryMergeStackIntoSlot(held, furnaceSlot)
+        ItemStack test = main.copy();
+        test.setCount(second.getCount() + main.getCount());
+        if (this.isItemValidForSlot(low, test)
+            && main.getCount() + second.getCount() < 64) {
           main.setCount(second.getCount() + main.getCount());
           second.setCount(0);
         }

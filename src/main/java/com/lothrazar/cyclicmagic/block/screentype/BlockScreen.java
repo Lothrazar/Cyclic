@@ -47,7 +47,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -62,7 +61,7 @@ public class BlockScreen extends BlockBaseFacing implements IBlockHasTESR, IHasR
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
+    BlockRegistry.registerTileEntity(TileEntityScreen.class, Const.MODID + "screen_te");
   }
 
   @Override

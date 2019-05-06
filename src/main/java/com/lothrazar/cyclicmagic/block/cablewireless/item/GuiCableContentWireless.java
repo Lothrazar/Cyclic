@@ -29,7 +29,7 @@ import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWirel
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -47,6 +47,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     super(new ContainerCableContentWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileCableContentWireless.Fields.RENDERPARTICLES.ordinal();
   }
 
   @Override
@@ -57,8 +58,9 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     int size = Const.SQ;
     GuiButtonTooltip btnSize;
     for (int i = 1; i < TileCableContentWireless.SLOT_COUNT; i++) {
+      x = (i - 1) * (size) + 8;
       btnSize = new GuiButtonTooltip(i,
-          this.guiLeft + (i - 1) * (size) + 8,
+          this.guiLeft + x,
           this.guiTop + y, size, size, "?");
       btnSize.setTooltip("wireless.target");
       this.addButton(btnSize);
@@ -67,10 +69,11 @@ public class GuiCableContentWireless extends GuiBaseContainer {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id != redstoneBtn.id) {
+    if (button.id != redstoneBtn.id
+        && button.id != this.previewBtn.id) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
-      BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
+      BlockPosDim dim = ItemLocationGps.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {
         UtilChat.addChatMessage(player, "wireless.empty");
       }

@@ -26,7 +26,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
@@ -114,7 +113,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IConte
   @Override
   public void register() {
     BlockRegistry.registerBlock(new BlockDice(), getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityDice.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityDice.class, getContentName() + "_te");
   }
 
   @Override

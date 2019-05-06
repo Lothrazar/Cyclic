@@ -56,7 +56,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRecipe {
 
@@ -178,7 +177,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, new ItemBlockHydrator(this), getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityHydrator.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityHydrator.class, getContentName() + "_te");
   }
 
   private boolean enabled;
