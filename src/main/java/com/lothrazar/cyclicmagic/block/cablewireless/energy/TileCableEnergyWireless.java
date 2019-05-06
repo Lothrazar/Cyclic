@@ -1,14 +1,17 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import com.lothrazar.cyclicmagic.block.cablewireless.ILaserTarget;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
+import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implements ILaserTarget, ITickable, ITileRedstoneToggle {
 
   public static final int MAX_TRANSFER = 1000;
   public static final int SLOT_COUNT = 9;
@@ -48,6 +51,8 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
         return this.needsRedstone;
       case TRANSFER_RATE:
         return this.transferRate;
+      case RENDERPARTICLES:
+        return this.renderParticles;
     }
     return 0;
   }
@@ -61,6 +66,9 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
       case TRANSFER_RATE:
         transferRate = value;
       break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
+      break;
     }
   }
 
@@ -69,7 +77,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
     return stack.getItem() instanceof ItemLocationGps;
   }
 
-  private BlockPosDim getTarget(int slot) {
+  private BlockPosDim getSlotGps(int slot) {
     return ItemLocationGps.getPosition(this.getStackInSlot(slot));
   }
 
@@ -104,7 +112,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
   }
 
   private void outputEnergy(int slot) {
-    BlockPosDim dim = this.getTarget(slot);
+    BlockPosDim dim = this.getSlotGps(slot);
     if (!this.isTargetValid(dim)) {
       return;
     }
@@ -123,6 +131,45 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
         handlerHere.extractEnergy(filled, false);
       }
     }
+  }
+
+  @Override
+  public boolean isPreviewVisible() {
+    return this.renderParticles == 1;
+  }
+
+  static final float[] laserColor = new float[] { 0.99F, 0F, 0F };
+  static final double rotationTime = 0;
+  static final double beamWidth = 0.02;
+  static final float alpha = 0.9F;
+
+  @Override
+  public List<LaserConfig> getTarget() {
+    //find laser endpoints and go
+    BlockPosDim first = new BlockPosDim(this.getPos(), this.getDimension());
+    List<LaserConfig> laser = new ArrayList<>();
+    for (BlockPos second : this.getShape()) {
+      //  && second.getDimension() == first.getDimension()
+      if (second != null && first != null) {
+        laser.add(new LaserConfig(first.toBlockPos(), second,
+            rotationTime, alpha, beamWidth, laserColor));
+      }
+    }
+    return laser;
+  }
+
+  @Override
+  public List<BlockPos> getShape() {
+    List<BlockPos> shape = new ArrayList<>();
+    for (int slot : slotList) {
+      if (this.getStackInSlot(slot).isEmpty() == false) {
+        BlockPosDim target = this.getSlotGps(slot);
+        if (this.isTargetValid(target)) {
+          shape.add(target.toBlockPos());
+        }
+      }
+    }
+    return shape;
   }
 
   @Override

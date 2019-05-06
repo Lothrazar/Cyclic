@@ -52,6 +52,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
     super(new ContainerCableEnergyWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableEnergyWireless.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileCableEnergyWireless.Fields.RENDERPARTICLES.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setY(18).setX(this.getScreenSize().width() - 24);
   }
@@ -82,7 +83,8 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id != redstoneBtn.id && button.id != slider.id) {
+    if (button.id != redstoneBtn.id && button.id != slider.id
+        && button.id != this.previewBtn.id) {
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       BlockPosDim dim = ItemLocationGps.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {

@@ -127,7 +127,7 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
 
   static final float[] laserColor = new float[] { 0.2F, 0.2F, 0.8F };
   static final double rotationTime = 0;
-  static final double beamWidth = 0.09;
+  static final double beamWidth = 0.02;
   static final float alpha = 0.5F;
 
   @Override
@@ -146,6 +146,20 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   }
 
   @Override
+  public List<BlockPos> getShape() {
+    List<BlockPos> shape = new ArrayList<>();
+    for (int slot : slotList) {
+      if (this.getStackInSlot(slot).isEmpty() == false) {
+        BlockPosDim target = this.getSlotGps(slot);
+        if (this.isTargetValid(target)) {
+          shape.add(target.toBlockPos());
+        }
+      }
+    }
+    return shape;
+  }
+
+  @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     this.transferRate = compound.getInteger("transferRate");
@@ -159,17 +173,4 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
     return super.writeToNBT(compound);
   }
 
-  @Override
-  public List<BlockPos> getShape() {
-    List<BlockPos> shape = new ArrayList<>();
-    for (int slot : slotList) {
-      if (this.getStackInSlot(slot).isEmpty() == false) {
-        BlockPosDim target = this.getSlotGps(slot);
-        if (this.isTargetValid(target)) {
-          shape.add(target.toBlockPos());
-        }
-      }
-    }
-    return shape;
-  }
 }

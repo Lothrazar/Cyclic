@@ -33,7 +33,6 @@ public class BlockCableFluidWireless extends BlockBaseHasTile implements IBlockH
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileCableFluidWireless.class, new LaserTESR());
   }
 

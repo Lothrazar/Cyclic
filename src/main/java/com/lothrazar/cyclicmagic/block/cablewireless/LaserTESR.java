@@ -43,7 +43,7 @@ public class LaserTESR extends TileEntitySpecialRenderer<TileEntity> {
       return;
     }
     for (LaserConfig laserCnf : te.getTarget()) {
-
+      //ModCyclic.logger.info(laserCnf.toString()); 
       RenderUtil.renderLaser(laserCnf);
     }
   }
