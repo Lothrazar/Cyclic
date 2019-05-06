@@ -72,9 +72,9 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       this.addButton(btnSize);
     }
     int x = this.guiLeft + 6;
-    y = this.guiTop + 38;
+    y = this.guiTop + 64;
     slider = new GuiSliderInteger(tile, 77,
-        x, y, 140, 20,
+        x, y, 140, 14,
         1, TileCableEnergyWireless.MAX_TRANSFER * 16,
         TileCableEnergyWireless.Fields.TRANSFER_RATE.ordinal());
     slider.setTooltip("pump.rate");
