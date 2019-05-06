@@ -150,7 +150,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           }
           replacedBlockState = world.getBlockState(curPos);
           Block replacedBlock = replacedBlockState.getBlock();
-          if (world.isAirBlock(curPos) || replacedBlockState == null) {
+          boolean isEmptySpot = world.isAirBlock(curPos) || replacedBlockState == null;
+          if (isEmptySpot && message.wandType == WandType.MATCH) {
+            //cannot match anything with air
             continue;
           }
           //TODO: CLEANUP/REFACTOR THIS
@@ -277,7 +279,8 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
     for (BlockPos p : places) {
-      if (world.isAirBlock(p)) {
+      if (world.isAirBlock(p) && wandType == WandType.MATCH) {
+        //cannot match with air
         continue;
       }
       if (wandType == WandType.MATCH && matched != null &&
