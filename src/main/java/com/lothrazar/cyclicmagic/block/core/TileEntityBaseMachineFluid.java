@@ -30,6 +30,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -88,6 +89,13 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     return result;
   }
 
+  public Fluid getFluidContainedOrNull() {
+    if (tank == null || tank.getFluid() == null) {
+      return null;
+    }
+    return tank.getFluid().getFluid();
+  }
+
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     if (doesFluidMatchTank(resource) == false) {
@@ -101,14 +109,15 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
     FluidStack result = tank.drain(maxDrain, doDrain);
-    // tank.setFluid(result);
     return result;
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     if (tank != null) {
-      tagCompound.setTag(NBT_TANK, tank.writeToNBT(new NBTTagCompound()));
+      NBTTagCompound newTag = tank.writeToNBT(new NBTTagCompound());
+      //      ModCyclic.logger.info("basefluid save " + newTag);
+      tagCompound.setTag(NBT_TANK, newTag);
     }
     return super.writeToNBT(tagCompound);
   }
@@ -116,7 +125,8 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    if (tank != null) {
+    if (tank != null && tagCompound.hasKey(NBT_TANK)) {
+      //      ModCyclic.logger.info("basefluid save " + tagCompound.getCompoundTag(NBT_TANK));
       tank.readFromNBT(tagCompound.getCompoundTag(NBT_TANK));
     }
   }
@@ -134,7 +144,6 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
     }
-    //    this.world.markChunkDirty(pos, this);
     return super.getCapability(capability, facing);
   }
 
@@ -154,12 +163,7 @@ public class TileEntityBaseMachineFluid extends TileEntityBaseMachineInvo implem
       return;
     }
     FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-    //    if (fluid == null) {
-    //      //      fluid = this.flu
-    //      fluid = new FluidStack(FluidRegistry.getFluid("xpjuice"), amt);
-    //    }
     fluid.amount = amt;
-    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
     this.tank.setFluid(fluid);
   }
 

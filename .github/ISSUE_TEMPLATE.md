@@ -1,16 +1,22 @@
-Minecraft version & Mod Version:
+Minecraft Version: 
+
+Forge Version: 
+
+Mod Version: 
+
+Single Player or Server:
+
+Describe problem (what you were doing; what happened; what should have happened):
 
 
-Single player or Server:
+
+Log file link:
 
 
-Describe problem (what you were doing / what happened):
+Video/images/gifs (direct upload or link): 
 
 
-Crash log (if any):
 
-
-(If this is a suggestion and not a bug report, delete all this and just write your suggestion!)
 
 
 

@@ -32,6 +32,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -65,8 +66,13 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "evoker_fang";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "evoker_fang", GuideCategory.ITEM);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEM);
     LootTableRegistry.registerLoot(this);
     ModCyclic.instance.events.register(this);
   }
@@ -146,7 +152,7 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
 
   private void onCastSuccess(EntityPlayer caster) {
     UtilSound.playSound(caster, SoundEvents.EVOCATION_ILLAGER_PREPARE_ATTACK);
-    caster.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(caster, this, COOLDOWN);
   }
 
   @Override

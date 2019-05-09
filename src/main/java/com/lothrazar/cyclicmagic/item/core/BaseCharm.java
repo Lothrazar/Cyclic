@@ -31,7 +31,6 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -78,10 +77,6 @@ public abstract class BaseCharm extends BaseItem implements IHasClickToggle, bau
 
   public void damageCharm(EntityPlayer living, ItemStack stack) {
     UtilItemStack.damageItem(living, stack);
-  }
-
-  public IRecipe addRecipeAndRepair(Item craftItem) {
-    return this.addRecipe(new ItemStack(craftItem));
   }
 
   /**

@@ -35,6 +35,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -43,13 +45,19 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   public static ArrayList<RecipeDeHydrate> recipes = new ArrayList<RecipeDeHydrate>();
   private ItemStack recipeInput = ItemStack.EMPTY;
   private ItemStack resultItem = ItemStack.EMPTY;
-  private int time = 70;
+  private int time;
+  private int fluid;
 
-  public RecipeDeHydrate(ItemStack in, ItemStack out, int time) {
+  public RecipeDeHydrate(ItemStack in, ItemStack out, int time, int fluid) {
     recipeInput = in;
     resultItem = out;
+    this.setFluid(fluid);
     this.time = time;
     this.setRegistryName(new ResourceLocation(Const.MODID, "dehydrate" + UUID.randomUUID().toString() + out.getTranslationKey()));
+  }
+
+  public FluidStack getOutputFluid() {
+    return new FluidStack(FluidRegistry.WATER, this.fluid);
   }
 
   @Override
@@ -104,27 +112,47 @@ public class RecipeDeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implement
   }
 
   public static void initAllRecipes() {
-    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE),
-        new ItemStack(Items.STICK), 40));
+    int defaultTime = 10;
+    int defaultFluid = 100;
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CLAY),
-        new ItemStack(Blocks.HARDENED_CLAY), 900));
+        new ItemStack(Blocks.HARDENED_CLAY), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.DIRT),
-        new ItemStack(Blocks.GRAVEL), 500));
+        new ItemStack(Blocks.GRAVEL), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.TALLGRASS, 1, 2),
-        new ItemStack(Blocks.DEADBUSH), 40));
+        new ItemStack(Blocks.DEADBUSH), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.GRASS),
-        new ItemStack(Blocks.GRASS_PATH), 40));
+        new ItemStack(Blocks.GRASS_PATH), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.DIRT, 1, 1),
-        new ItemStack(Blocks.DIRT, 1, 2), 40));
+        new ItemStack(Blocks.DIRT, 1, 2), defaultTime, defaultFluid));
     RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Items.ROTTEN_FLESH, 12),
-        new ItemStack(Items.LEATHER), 500));
+        new ItemStack(Items.LEATHER), defaultTime, defaultFluid));
+    RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING, 1, OreDictionary.WILDCARD_VALUE),
+        new ItemStack(Items.STICK), defaultTime, defaultFluid));
+    for (int i = 0; i < 6; i++) {
+      RecipeDeHydrate.addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.SAPLING, 1, i),
+          new ItemStack(Items.STICK), defaultTime, defaultFluid));
+    }
     //dry out concrete back to powder
     for (EnumDyeColor col : EnumDyeColor.values()) {
-      addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CONCRETE, 1, col.getMetadata()), new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), 100));
+      addRecipe(new RecipeDeHydrate(new ItemStack(Blocks.CONCRETE, 1, col.getMetadata()),
+          new ItemStack(Blocks.CONCRETE_POWDER, 1, col.getMetadata()), defaultTime, defaultFluid));
     }
   }
 
   public static void addRecipe(RecipeDeHydrate rec) {
+    if (rec.recipeInput.getMetadata() == 32767) {
+      ItemStack snew = new ItemStack(rec.recipeInput.getItem(), rec.recipeInput.getCount(), 0);
+      snew.setTagCompound(rec.recipeInput.getTagCompound());
+      rec.recipeInput = snew;
+    }
     recipes.add(rec);
+  }
+
+  public int getFluid() {
+    return fluid;
+  }
+
+  public void setFluid(int fluid) {
+    this.fluid = fluid;
   }
 }

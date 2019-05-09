@@ -23,10 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.forester;
 
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -38,6 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiForester extends GuiBaseContainer {
 
   private ButtonTileEntityField btnSize;
+  private GuiSliderInteger slider;
 
   public GuiForester(InventoryPlayer inventoryPlayer, TileEntityForester tileEntity) {
     super(new ContainerForester(inventoryPlayer, tileEntity), tileEntity);
@@ -51,6 +54,7 @@ public class GuiForester extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 3, x, y;
     x = this.guiLeft + xSize / 4 + 22;
     y = this.guiTop + 34;
@@ -59,12 +63,30 @@ public class GuiForester extends GuiBaseContainer {
     btnSize.width = 44;
     btnSize.setTooltip("button.size.tooltip");
     this.addButton(btnSize);
+    this.leftClickers.add(btnSize);
     x = this.guiLeft + xSize / 4 - 2;
     y = this.guiTop + 18;
-    GuiSliderInteger slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityForester.MAX_HEIGHT,
+    slider = new GuiSliderInteger(tile, id++, x, y, 100, 10, 1, TileEntityForester.MAX_HEIGHT,
         TileEntityForester.Fields.HEIGHT.ordinal());
     slider.setTooltip("button.miner.height");
     this.addButton(slider);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 
   @Override

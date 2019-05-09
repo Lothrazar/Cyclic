@@ -53,8 +53,13 @@ public class ItemRotateBlock extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_rotate";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_rotate");
+    ItemRegistry.register(this, getContentName());
   }
 
   private boolean enabled;
@@ -66,7 +71,7 @@ public class ItemRotateBlock extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

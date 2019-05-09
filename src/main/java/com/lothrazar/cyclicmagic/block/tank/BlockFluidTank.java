@@ -49,7 +49,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -59,12 +58,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -86,7 +83,7 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, new ItemBlockFluidTank(this), "block_storeempty", null);
-    GameRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
+    BlockRegistry.registerTileEntity(TileEntityFluidTank.class, "bucketstorage");
     GuideRegistry.register(GuideCategory.BLOCK, this, null, null);
   }
 
@@ -98,8 +95,14 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
   }
 
   @Override
+  public String getContentName() {
+    return "block_storeempty";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, getContentName() + ", the Fluid Tank. "
+        + Const.ConfigCategory.contentDefaultText);
   }
 
   @SuppressWarnings("deprecation")
@@ -146,14 +149,10 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    if (stack.getTagCompound() != null) {
-      NBTTagCompound tags = stack.getTagCompound();
-      int fluidAmt = tags.getInteger(NBT_FLUIDSIZE);
-      String resourceStr = tags.getString(NBT_FLUIDTYPE);
+    FluidStack fluid = ItemBlockFluidTank.copyFluidFromStack(stack);
+    if (fluid != null) {
       TileEntityFluidTank container = (TileEntityFluidTank) worldIn.getTileEntity(pos);
-      Fluid fluidObj = FluidRegistry.getFluid(resourceStr);//should never be null if fluidAmt > 0 
-      if (fluidObj != null)
-        container.fill(new FluidStack(fluidObj, fluidAmt), true);
+      container.fill(fluid, true);
     }
   }
 
@@ -200,6 +199,9 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(this)) {
+      return false;
+    }
     // check the TE
     boolean success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     int heightCheck = 0;
@@ -210,9 +212,9 @@ public class BlockFluidTank extends BlockBase implements ITileEntityProvider, IH
       posLoop = posLoop.up();
       success = FluidUtil.interactWithFluidHandler(player, hand, world, posLoop, side);
     }
-    TileEntityFluidTank te = (TileEntityFluidTank) world.getTileEntity(pos);
-    if (te != null) {
-      if (world.isRemote == false) { //server side
+    if (world.isRemote == false) { //server side
+      TileEntityFluidTank te = (TileEntityFluidTank) world.getTileEntity(pos);
+      if (te != null) {
         FluidStack fs = te.getCurrentFluidStack();
         if (fs != null) {
           String amtStr = fs.amount + " / " + te.getCapacity() + " ";

@@ -39,7 +39,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe, IContent {
 
@@ -69,9 +68,14 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
   }
 
   @Override
+  public String getContentName() {
+    return "auto_crafter";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "auto_crafter", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -84,8 +88,6 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("AutoCrafter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityCrafter.TIMER_FULL = config.getInt("auto_crafter", Const.ConfigCategory.machineTimer,
-        20, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt("auto_crafter", Const.ConfigCategory.fuelCost, 150, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 150, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

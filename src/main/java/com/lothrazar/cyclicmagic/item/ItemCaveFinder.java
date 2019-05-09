@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -88,7 +89,7 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IContent {
         UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.none") + range);
       }
     }
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }
@@ -105,8 +106,13 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_spelunker";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_spelunker");
+    ItemRegistry.register(this, getContentName());
   }
 
   private boolean enabled;
@@ -118,7 +124,7 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     range = config.getInt("CavefinderRange", Const.ConfigCategory.modpackMisc, 32, 2, 256, "Block Range it will search onclick");
   }
 }

@@ -114,7 +114,7 @@ public class UtilReflection {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
+      ModCyclic.logger.error("Reflection error ", e);
     }
   }
 }

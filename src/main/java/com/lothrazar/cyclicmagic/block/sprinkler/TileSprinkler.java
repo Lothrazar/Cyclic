@@ -92,12 +92,12 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
           }
           try {//no need to literally increase internal growth numbers, just force more  update ticks
             world.scheduleBlockUpdate(current, block, world.rand.nextInt(TICKS) + 20, 1);
-            block.updateTick(world, current, bState, world.rand);
+            if (!world.isRemote) {
+              block.updateTick(world, current, bState, world.rand);
+            }
           }
           catch (Exception e) {
-            ModCyclic.logger.error("Sprinkler by Cyclic has encountered an error while growing a plant, contact both mod authors    " + block);
-            ModCyclic.logger.error(e.getMessage());
-            e.printStackTrace();
+            ModCyclic.logger.error("Sprinkler by Cyclic has encountered an error while growing a plant, contact both mod authors    " + block, e);
           }
         }
       }

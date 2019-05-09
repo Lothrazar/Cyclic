@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.item.core.BaseTool;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -57,8 +58,13 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_torch_launcher";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_torch_launcher");
+    ItemRegistry.register(this, getContentName());
     EntityTorchBolt.register();
   }
 
@@ -83,7 +89,7 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe, IContent {
       world.spawnEntity(thing);
     }
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     super.onUse(stack, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }

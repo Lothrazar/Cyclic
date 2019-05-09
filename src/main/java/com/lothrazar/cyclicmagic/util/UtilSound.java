@@ -58,6 +58,10 @@ public class UtilSound {
     }
   }
 
+  public static void playSound(EntityPlayer player, SoundEvent thunk, float volume) {
+    playSound(player, player.getPosition(), thunk, SoundCategory.PLAYERS, volume);
+  }
+
   public static void playSoundPlaceBlock(World world, BlockPos pos, Block block) {
     if (block == null) {
       return;
@@ -92,9 +96,14 @@ public class UtilSound {
     player.getEntityWorld().playSound(player, pos, soundIn, cat, volume, PITCH);
   }
 
+  public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn, SoundCategory category, float vol) {
+    if (pos != null && soundIn != null && category != null) {// https://github.com/PrinceOfAmber/Cyclic/issues/173
+      worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, category, vol, PITCH, distanceDelay);
+    }
+  }
+
   public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn, SoundCategory category) {
-    if (pos != null && soundIn != null && category != null)// https://github.com/PrinceOfAmber/Cyclic/issues/173
-      worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, category, VOLUME, PITCH, distanceDelay);
+    playSound(worldObj, pos, soundIn, category, VOLUME);
   }
 
   public static void playSound(EntityLivingBase villager, BlockPos position, SoundEvent sound) {

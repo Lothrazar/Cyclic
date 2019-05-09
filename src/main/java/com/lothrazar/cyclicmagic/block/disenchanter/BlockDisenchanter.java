@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -89,9 +88,14 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements ICont
   }
 
   @Override
+  public String getContentName() {
+    return "block_disenchanter";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_disenchanter", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -103,9 +107,9 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements ICont
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("UnchantPylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityDisenchanter.TIMER_FULL = config.getInt("block_disenchanter", Const.ConfigCategory.machineTimer,
+    enabled = config.getBoolean("UnchantPylon", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+    TileEntityDisenchanter.TIMER_FULL = config.getInt(getContentName(), Const.ConfigCategory.machineTimer,
         80, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt("block_disenchanter", Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 99, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

@@ -41,12 +41,19 @@ public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTe
 
   private BlockPos pos;
   private String text;
+  private int index;
 
   public PacketTileTextbox() {}
 
   public PacketTileTextbox(String pword, BlockPos p) {
     pos = p;
     text = pword;
+    index = 0;
+  }
+
+  public PacketTileTextbox(String pword, BlockPos p, int i) {
+    this(pword, p);
+    this.index = i;
   }
 
   @Override
@@ -55,6 +62,7 @@ public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTe
     int x = tags.getInteger("x");
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
+    index = tags.getInteger("index");
     pos = new BlockPos(x, y, z);
     text = tags.getString("txt");
   }
@@ -65,6 +73,7 @@ public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTe
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
+    tags.setInteger("index", index);
     tags.setString("txt", text);
     ByteBufUtils.writeTag(buf, tags);
   }
@@ -81,13 +90,13 @@ public class PacketTileTextbox implements IMessage, IMessageHandler<PacketTileTe
     // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
     thread.addScheduledTask(new Runnable() {
 
+      @Override
       public void run() {
         EntityPlayerMP player = ctx.getServerHandler().player;
         World world = player.getEntityWorld();
         TileEntity tile = world.getTileEntity(message.pos);
         if (tile != null && tile instanceof ITileTextbox) {
-          //TODO: PacketTilePassword reusing this?
-          ((ITileTextbox) tile).setText(message.text);
+          ((ITileTextbox) tile).setText(message.index, message.text);
           tile.markDirty();
         }
       }

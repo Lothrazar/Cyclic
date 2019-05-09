@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.block.firestarter;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -19,7 +20,6 @@ public class TileEntityFireStarter extends TileEntityBaseMachineInvo implements 
 
   private int yOffset = 0;
   private int fireType = 0;
-  private int needsRedstone = 1;
   private int hOffset = 0;
   private int delay = 11;
 
@@ -27,7 +27,8 @@ public class TileEntityFireStarter extends TileEntityBaseMachineInvo implements 
     super(1);
     timer = delay;
     this.setSlotsForInsert(0);
-    this.initEnergy(BlockFireStarter.FUEL_COST, 8000);
+    this.initEnergy(new EnergyStore(MENERGY,
+        MENERGY, MENERGY), BlockFireStarter.FUEL_COST);
   }
 
   public static enum Fields {

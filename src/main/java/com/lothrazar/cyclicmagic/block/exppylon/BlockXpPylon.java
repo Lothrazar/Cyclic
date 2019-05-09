@@ -62,7 +62,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -95,10 +94,15 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   }
 
   @Override
+  public String getContentName() {
+    return "exp_pylon";
+  }
+
+  @Override
   public void register() {
     FluidsRegistry.registerExp();//it needs EXP fluid to work
-    BlockRegistry.registerBlock(this, new ItemBlockPylon(this), "exp_pylon", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
+    BlockRegistry.registerBlock(this, new ItemBlockPylon(this), getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityXpPylon.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -110,7 +114,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

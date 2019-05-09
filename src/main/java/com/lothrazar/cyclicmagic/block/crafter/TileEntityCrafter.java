@@ -26,11 +26,13 @@ package com.lothrazar.cyclicmagic.block.crafter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,10 +44,11 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  public static int TIMER_FULL = 20;
+  private static int TIMER_FULL = 1;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;//10
@@ -53,12 +56,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int SIZE_OUTPUT = SIZE_INPUT;//20 to 30
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL;
+    REDSTONE, TIMER;
   }
 
   private Container fakeContainer;
   private IRecipe recipe;
-  private int needsRedstone = 1;
   private InventoryCrafting crafter;
 
   public TileEntityCrafter() {
@@ -71,7 +73,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
-    this.initEnergy(BlockCrafter.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockCrafter.FUEL_COST);
     this.setSlotsForInsert(0, 9);
     this.setSlotsForExtract(19, 28);
   }
@@ -106,7 +108,23 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
   }
 
+  private void setRecipeInput() {
+    int gridStart = SIZE_INPUT, craftSlot;
+    for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
+      craftSlot = i - gridStart;
+      this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
+    }
+  }
+
   private boolean tryPayCost() {
+    List<Integer> toIgnore = new ArrayList<>();
+    NonNullList<ItemStack> remaining = recipe.getRemainingItems(crafter);
+    for (int i = 0; i < remaining.size(); i++) {
+      ItemStack stackRemain = remaining.get(i);
+      if (!stackRemain.isEmpty()) {
+        toIgnore.add(i);
+      }
+    }
     ItemStack fromRecipe;
     ItemStack fromInput;
     boolean thisPaid = false;
@@ -121,8 +139,12 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
       //try to pay its cost
       for (int j = 0; j < SIZE_INPUT; j++) {
+        if (toIgnore.contains(i)) {
+          thisPaid = true;
+          continue;
+        }
         fromInput = this.getStackInSlot(j);
-        if (fromRecipe.isItemEqual(fromInput)) {
+        if (UtilItemStack.isItemStackEqualIgnoreCount(fromRecipe, fromInput)) {
           //now set the key 'j' slot to need one more extra item
           if (!slotsToPay.containsKey(j)) {
             slotsToPay.put(j, 0);
@@ -135,7 +157,8 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
           }
         }
       }
-      if (thisPaid == false) {//required input not even fond
+      if (thisPaid == false) {//required input not even fond 
+        //               ModCyclic.logger.error("recipe input not found");
         return false;
       }
     }
@@ -159,6 +182,13 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
+    for (int i = 0; i < remaining.size(); i++) {
+      ItemStack stackRemain = remaining.get(i);
+      if (!stackRemain.isEmpty()) {
+        this.crafter.setInventorySlotContents(i, stackRemain);
+        this.setInventorySlotContents(i + SIZE_INPUT, stackRemain);
+      }
+    }
     return true;
   }
 
@@ -181,17 +211,13 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
     recipe = null;//doesnt match
     ModCyclic.logger.log("Auto-crafter Searching all recipes!! " + this.pos);
-    //    final List<IRecipe> recipes = CraftingManager.field_193380_a();//.getInstance().getRecipeList();
-    for (final IRecipe rec : CraftingManager.REGISTRY) {
-      try {
-        if (rec.matches(this.crafter, this.world)) {
-          this.recipe = rec;
-          return;
-        }
-      }
-      catch (Exception err) {
-        throw new RuntimeException("Caught exception while querying recipe ", err);
-      }
+    try {
+      recipe = CraftingManager.findMatchingRecipe(crafter, world);
+    }
+    catch (Exception err) {
+      // if some 3rd party recipe or item has an exception then dont let it crash the game
+      //example: i have seen NPEs. index out of bounds, no such element, 
+      ModCyclic.logger.error("Caught exception while querying recipe ", err);
     }
   }
 
@@ -204,19 +230,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     return true;
   }
 
-  private void setRecipeInput() {
-    int gridStart = SIZE_INPUT, craftSlot;
-    for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
-      craftSlot = i - gridStart;
-      this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
-    }
-  }
-
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -228,9 +244,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;
@@ -273,6 +286,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (this.recipe == null) {
       return ItemStack.EMPTY;
     }
-    return recipe.getCraftingResult(this.crafter);//  recipe.getRecipeOutput().copy();
+    return recipe.getCraftingResult(this.crafter);
   }
 }

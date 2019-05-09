@@ -45,7 +45,7 @@ public class UtilFakePlayer {
       fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Exception thrown trying to create fake player : " + e.getMessage());
+      ModCyclic.logger.error("Exception thrown trying to create fake player : ", e);
       fakePlayer = null;
     }
     if (fakePlayer == null || fakePlayer.get() == null) {

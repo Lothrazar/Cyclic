@@ -3,10 +3,9 @@ package com.lothrazar.cyclicmagic.playerupgrade.skill;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.gui.core.GuiButtonItemstack;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonItemstack;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
-import com.lothrazar.cyclicmagic.registry.SkillRegistry;
-import com.lothrazar.cyclicmagic.skill.ISkill;
+import com.lothrazar.cyclicmagic.registry.SkillModule;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -51,7 +50,7 @@ public class GuiSkillWheel extends GuiScreen {
     arc = (2 * Math.PI) / BTNCOUNT;
     ang = Math.PI;
     int i = 0;
-    for (ISkill skill : SkillRegistry.getSkills()) {
+    for (ISkill skill : SkillModule.getSkills()) {
       this.addStackButton(i, skill);
       i++;
     }
@@ -71,7 +70,7 @@ public class GuiSkillWheel extends GuiScreen {
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof GuiButtonItemstack) {
-      ISkill curr = SkillRegistry.getSkills().get(button.id);
+      ISkill curr = SkillModule.getSkills().get(button.id);
       curr.toggle(player);
       //      ModCyclic.network.sendToServer(new PacketSwapPlayerStack(button.id, player.inventory.currentItem));
       player.closeScreen();

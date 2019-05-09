@@ -25,9 +25,11 @@ package com.lothrazar.cyclicmagic.block.clockredstone;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -43,7 +45,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
   private int timeOff;//dont let these times be zero !!!
   private int timeOn;
   private int power;
-  private int needsRedstone = 0;
   private Map<EnumFacing, Boolean> poweredSides = new HashMap<EnumFacing, Boolean>();
 
   public TileEntityClock() {
@@ -52,6 +53,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     timeOff = 60;
     timeOn = 60;
     power = 15;
+    needsRedstone = 0;
     this.facingResetAllOn();
   }
 
@@ -85,7 +87,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
 
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-    //oldState.getBlock() instanceof BlockRedstoneClock &&
     return !(newSate.getBlock() instanceof BlockRedstoneClock);// : oldState != newSate;
   }
 
@@ -94,13 +95,33 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     if (this.isRunning() == false) {
       return;
     }
+    if (world.isAirBlock(pos) || world.getBlockState(pos).getBlock() == Blocks.AIR) {
+      //i might be air right here so i might get 
+      //  Cannot get property PropertyBool{name=powered, clazz=class java.lang.Boolean, values=[true, false]} 
+      // as it does not exist in BlockStateContainer{block=minecraft:air, properties=[]}
+      return;
+    }
+    try {
+      updateMyState();
+    }
+    catch (Throwable e) {
+      //
+      ModCyclic.logger.error("Clock blockstate update error", e);
+    }
+  }
+
+  private void updateMyState() throws IllegalArgumentException {
+    IBlockState blockState = world.getBlockState(pos);
+    if (blockState.getPropertyKeys().contains(BlockRedstoneClock.POWERED) == false) {
+      return;
+    }
     if (this.power == 0) {
-      world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, false));
+      world.setBlockState(pos, blockState.withProperty(BlockRedstoneClock.POWERED, false));
       return;
     }
     this.timer++;
     boolean powered;
-    boolean prevPowered = world.getBlockState(pos).getValue(BlockRedstoneClock.POWERED);
+    boolean prevPowered = blockState.getValue(BlockRedstoneClock.POWERED);
     if (timer < timeOff) {
       powered = false;
     }
@@ -113,7 +134,7 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
       powered = false;
     }
     if (prevPowered != powered) {
-      world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockRedstoneClock.POWERED, powered));
+      world.setBlockState(pos, blockState.withProperty(BlockRedstoneClock.POWERED, powered));
       //super weird hotfix for down state not updating
       //all other directions read update, but not down apparently!
       world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);
@@ -198,7 +219,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     compound.setInteger("off", timeOff);
     compound.setInteger("on", timeOn);
     compound.setInteger("power", power);
-    compound.setInteger(NBT_REDST, needsRedstone);
     for (EnumFacing f : EnumFacing.values()) {
       compound.setBoolean(f.getName(), poweredSides.get(f));
     }
@@ -211,7 +231,6 @@ public class TileEntityClock extends TileEntityBaseMachineInvo implements ITicka
     timeOff = compound.getInteger("off");
     timeOn = compound.getInteger("on");
     power = compound.getInteger("power");
-    needsRedstone = compound.getInteger(NBT_REDST);
     for (EnumFacing f : EnumFacing.values()) {
       poweredSides.put(f, compound.getBoolean(f.getName()));
     }

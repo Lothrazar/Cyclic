@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -83,9 +82,14 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   }
 
   @Override
+  public String getContentName() {
+    return "builder_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "builder_block", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityStructureBuilder.class, "builder_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityStructureBuilder.class, "builder_te");
   }
 
   private boolean enabled;
@@ -97,9 +101,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityStructureBuilder.TIMER_FULL = config.getInt("builder_block", Const.ConfigCategory.machineTimer,
-        25, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt("builder_block", Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 90, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

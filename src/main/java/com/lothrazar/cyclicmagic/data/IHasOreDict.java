@@ -27,5 +27,5 @@ import javax.annotation.Nonnull;
 
 public interface IHasOreDict {
 
-  public @Nonnull String getOreDict();
+  public @Nonnull String[] getOreDict();
 }

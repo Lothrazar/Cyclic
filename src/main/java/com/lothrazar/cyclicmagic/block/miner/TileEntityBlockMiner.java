@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.state.IBlockState;
@@ -43,58 +43,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-/**
- * 
- * @author Lothrazar (Sam Bassett)
- *
- *         This entire file basically started as a carbon copy from lumien
- *         https://github.com/lumien231/Random-Things/blob/master/src/main/java/lumien/randomthings/tileentity/TileEntityBlockBreaker.java Which was released open source under MIT license
- *         https://github.com/lumien231/Random-Things/blob/master/README.md copy of lumien license
- *
- *
- *         <quote>"
- *
- *         Source Code of the Random Things mod. Feel free to make pull requests for translation and other stuff.
- * 
- *         License
- * 
- *         The MIT License (MIT)
- * 
- *         Copyright (c) <2015> lumien231 (https://github.com/lumien231)
- * 
- *         Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without
- *         restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
- *         Software is furnished to do so, subject to the following conditions:
- * 
- *         The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * 
- *         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- *         NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *         OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. "</quote>
- *
- *         So, i am following the License by including that and the authors name and links
- *
- *         REASONS for using it: i knew how to break a block instantly, but i had no idea how to have the mining slow animation speed that a player yas people on forums said to use a 'fake player' so
- *         i researched that on github and found this
- *
- *         DIFFERENCES FROM ORIGINAL that I added:
- *
- *         - this can only face horizontally, not up and down (defined in block) - different recipe - different texture/model - can be disabled in the config system just like other parts of this mod -
- *         only works when redstone powers it on - Slower mining speed - I will be making multiple versions: for axe/pick/shovel (use axe tool instead of diamond pick) and ill pass those in as enum
- *         flags - possibly also making a 3x3 version
- * 
- */
 public class TileEntityBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
-  //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
-  // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   private static final String NBT_REDST = "redstone";
   private UUID uuid;
   private boolean isCurrentlyMining;
   private WeakReference<FakePlayer> fakePlayer;
   private float curBlockDamage;
-  private int needsRedstone = 1;
   private BlockPos targetPos = null;
 
   public static enum Fields {

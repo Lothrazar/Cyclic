@@ -27,11 +27,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
@@ -51,11 +54,10 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid implements ITickable, IFacingBlacklist {
 
+  private static final int SLOT = 0;
   private static final int TIMER_SIDE_INPUT = 15;
   public static final int TRANSFER_FLUID_PER_TICK = 1000;
   //config
-  //TODO: timer to slow down item rate
-  public static final int TRANSFER_ENERGY_PER_TICK = 16 * 1000;
   private static final int TICKS_TEXT_CACHED = TIMER_SIDE_INPUT * 2;
   private int labelTimer = 0;
   private String labelText = "";
@@ -70,10 +72,11 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   public TileEntityCableBase(boolean hasItems, boolean hasFluid, boolean hasEnergy) {
     super((hasItems) ? 1 : 0);
     if (hasFluid) {
-      tank = new FluidTankBase(TRANSFER_FLUID_PER_TICK);
+      tank = new FluidTankBase(MENERGY);
     }
     if (hasEnergy) {
-      initEnergy(0, TRANSFER_ENERGY_PER_TICK);
+      initEnergy(new EnergyStore(MENERGY), 0);
+      this.setEnergyCost(0);
     }
     itemTransport = hasItems;
     fluidTransport = hasFluid;
@@ -161,37 +164,39 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   private String getIncomingStringsFromMap(Map<EnumFacing, Integer> map) {
     String in = "";
     for (EnumFacing f : EnumFacing.values()) {
-      if (map.get(f) > 0)
+      int value = map.get(f);
+      if (value > 0) {
         in += f.name().toLowerCase() + " ";
+      }
     }
     return in.trim();
   }
 
   private String getIncomingStringsFluid() {
-    String tmpName = this.getCurrentFluidStackAmount() + " " + this.getCurrentFluidStack().getLocalizedName();
-    String incoming = getIncomingStringsFromMap(this.mapIncomingFluid);
-    if (incoming.isEmpty() == false) {
-      tmpName += " " + UtilChat.lang("cyclic.fluid.flowing") + incoming;
+    String quantity = this.getCurrentFluidStackAmount() + " " + this.getCurrentFluidStack().getLocalizedName();
+    String incomingFace = getIncomingStringsFromMap(this.mapIncomingFluid);
+    if (incomingFace.isEmpty() == false) {
+      quantity += " " + UtilChat.lang("cyclic.fluid.flowing") + " " + incomingFace;
     }
-    return tmpName;
+    return quantity;
   }
 
   private String getIncomingStringsItem() {
-    String tmpName = this.getStackInSlot(0).getDisplayName();
-    String incoming = getIncomingStringsFromMap(this.mapIncomingItems);
-    if (incoming.isEmpty() == false) {
-      tmpName += " " + UtilChat.lang("cyclic.item.flowing") + incoming;
+    String quantity = this.getStackInSlot(0).getCount() + " " + this.getStackInSlot(0).getDisplayName();
+    String incomingFace = getIncomingStringsFromMap(this.mapIncomingItems);
+    if (incomingFace.isEmpty() == false) {
+      quantity += " " + UtilChat.lang("cyclic.item.flowing") + incomingFace;
     }
-    return tmpName;
+    return quantity;
   }
 
   private String getIncomingStringsEnergy() {
-    String tmpName = this.energyStorage.getEnergyStored() + "";
-    String incoming = getIncomingStringsFromMap(this.mapIncomingEnergy);
-    if (incoming.isEmpty() == false) {
-      tmpName += " " + UtilChat.lang("cyclic.fluid.flowing") + incoming;
+    String quantity = this.getEnergyCurrent() + "";
+    String incomingFace = getIncomingStringsFromMap(this.mapIncomingEnergy);
+    if (incomingFace.isEmpty() == false) {
+      quantity += " " + UtilChat.lang("cyclic.fluid.flowing") + incomingFace;
     }
-    return tmpName;
+    return quantity;
   }
 
   public void updateIncomingFluidFace(EnumFacing inputFrom) {
@@ -234,47 +239,44 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     //now look over any sides that are NOT incoming, try to export
     //Actually shuffle the positions. if we are at a 3 way juncture, spread out where it goes first
     try {
-      tickCableFlow();
+      if (!world.isRemote)
+        tickCableFlow();
     }
     catch (Exception e) {
       // errors from other mods as well as this.
       //example:  mcjty.rftools.blocks.powercell.PowerCellTileEntity.getNetwork(PowerCellTileEntity.java:155)
-      ModCyclic.logger.error("Error outputing from cable");
-      e.printStackTrace();
+      ModCyclic.logger.error("Error outputing from cable", e);
     }
   }
 
   private void tickCableFlow() {
-    ArrayList<Integer> shuffledFaces = new ArrayList<>();
-    for (int i = 0; i < EnumFacing.values().length; i++) {
-      shuffledFaces.add(i);
-    }
-    Collections.shuffle(shuffledFaces);
-    EnumFacing f;
-    for (int i : shuffledFaces) {
-      f = EnumFacing.values()[i];
-      if (this.isItemPipe() && this.isItemIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
-        moveItems(f);
+    List<Integer> rawList = IntStream.rangeClosed(
+        0,
+        5).boxed().collect(Collectors.toList());
+    Collections.shuffle(rawList);
+    for (Integer i : rawList) {
+      EnumFacing exportToSide = EnumFacing.values()[i];
+      if (this.isItemPipe() && this.isItemIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
+        moveItems(exportToSide);
       }
-      if (this.isFluidPipe() && this.isFluidIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
+      if (this.isFluidPipe() && this.isFluidIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
         //ok, fluid is not incoming from here. so lets output some
-        moveFluid(f);
+        moveFluid(exportToSide);
       }
-      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(f) == false
-          && this.getBlacklist(f) == false) {
-        moveEnergy(f);
+      if (this.isEnergyPipe() && this.isEnergyIncomingFromFace(exportToSide) == false
+          && this.getBlacklist(exportToSide) == false) {
+        moveEnergy(exportToSide);
       }
     }
   }
 
   private void moveItems(EnumFacing myFacingDir) {
-    if (this.getStackInSlot(0).isEmpty()) {
+    if (this.getStackInSlot(SLOT).isEmpty()) {
       return;
     }
-    EnumFacing themFacingMe = myFacingDir.getOpposite();
-    ItemStack stackToExport = this.getStackInSlot(0).copy();
+    ItemStack stackToExport = this.getStackInSlot(SLOT).copy();
     //ok,  not incoming from here. so lets output some
     BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
@@ -282,10 +284,12 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       return;
     }
     boolean outputSuccess = false;
+    EnumFacing themFacingMe = myFacingDir.getOpposite();
     ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, posTarget, themFacingMe, stackToExport);
-    if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
+    if (leftAfterDeposit.isEmpty() || leftAfterDeposit.getCount() != stackToExport.getCount()) {
       //then save result
-      this.setInventorySlotContents(0, leftAfterDeposit);
+      //tood capability for sided
+      this.setInventorySlotContents(SLOT, leftAfterDeposit);
       outputSuccess = true;
     }
     if (outputSuccess && tileTarget instanceof TileEntityCableBase) {
@@ -335,7 +339,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
     if (handlerHere != null && handlerOutput != null
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
       //first simulate
-      int drain = handlerHere.extractEnergy(TRANSFER_ENERGY_PER_TICK, true);
+      int drain = handlerHere.extractEnergy(MENERGY, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
         int filled = handlerOutput.receiveEnergy(drain, false);
@@ -423,10 +427,12 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       return super.getCapability(capability, facing.getOpposite());
   }
 
+  @Override
   public boolean getBlacklist(final EnumFacing side) {
     return mapBlacklist.get(side);
   }
 
+  @Override
   public void toggleBlacklist(final EnumFacing side) {
     mapBlacklist.put(side, !mapBlacklist.get(side));
   }

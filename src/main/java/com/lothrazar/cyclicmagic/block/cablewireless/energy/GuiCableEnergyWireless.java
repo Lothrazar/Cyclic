@@ -24,13 +24,14 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.energy;
 
 import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -51,6 +52,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
     super(new ContainerCableEnergyWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableEnergyWireless.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileCableEnergyWireless.Fields.RENDERPARTICLES.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setY(18).setX(this.getScreenSize().width() - 24);
   }
@@ -58,6 +60,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int y = 106;
     int size = Const.SQ;
     GuiButtonTooltip btnSize;
@@ -69,9 +72,10 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       this.addButton(btnSize);
     }
     int x = this.guiLeft + 6;
-    y = this.guiTop + 38;
+    y = this.guiTop + 64;
     slider = new GuiSliderInteger(tile, 77,
-        x, y, 140, 20, 1, TileCableEnergyWireless.MAX_TRANSFER,
+        x, y, 140, 14,
+        1, TileCableEnergyWireless.MAX_TRANSFER * 16,
         TileCableEnergyWireless.Fields.TRANSFER_RATE.ordinal());
     slider.setTooltip("pump.rate");
     this.addButton(slider);
@@ -79,13 +83,14 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id != redstoneBtn.id && button.id != slider.id) {
+    if (button.id != redstoneBtn.id && button.id != slider.id
+        && button.id != this.previewBtn.id) {
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
-      BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
+      BlockPosDim dim = ItemLocationGps.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {
         UtilChat.addChatMessage(player, "wireless.empty");
       }
-      else if (dim.dimension != player.dimension) {
+      else if (dim.getDimension() != player.dimension) {
         UtilChat.addChatMessage(player, "wireless.dimension");
       }
       else {
@@ -94,19 +99,33 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
           //get target
           IBlockState statehere = tile.getWorld().getBlockState(target);
           Block block = statehere.getBlock();
-          //    if (block.getLocalizedName().equals(block.getUnlocalizedName())) {
-          //example: thermal machiens use crazy item stack NBT + Block metadata 
-          ItemStack dropped = new ItemStack(block.getItemDropped(statehere, player.world.rand, 0), 1, block.damageDropped(statehere));
-          UtilChat.addChatMessage(player, dropped.getDisplayName());
-          //   }
-          // else
-          //   UtilChat.addChatMessage(player, block.getLocalizedName());
+          //example: mek/thermal use crazy item stack NBT + Block metadata 
+          int meta = block.damageDropped(statehere);
+          ItemStack dropped = new ItemStack(block.getItemDropped(statehere, player.world.rand, 0), 1, meta);
+          UtilChat.addChatMessage(player, dropped.getDisplayName() + " <" + block.getRegistryName().toString() + ":" + meta + ">");
         }
         else {
           UtilChat.addChatMessage(player, "wireless.unloaded");
         }
       }
     }
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
   }
 
   @Override

@@ -35,6 +35,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -125,8 +126,13 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe, IContent
   }
 
   @Override
+  public String getContentName() {
+    return "tool_launcher";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_launcher", GuideCategory.TRANSPORT);
+    ItemRegistry.register(this, getContentName(), GuideCategory.TRANSPORT);
     ModCyclic.instance.events.register(this);
   }
 
@@ -139,7 +145,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe, IContent
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -178,7 +184,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe, IContent
         vec.z * power);
     player.addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, POTION_TIME, 0));
     UtilSound.playSound(player, player.getPosition(), SoundRegistry.machine_launch, SoundCategory.PLAYERS);
-    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
+    UtilEntity.setCooldownItem(player, stack.getItem(), COOLDOWN);
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
   }
 

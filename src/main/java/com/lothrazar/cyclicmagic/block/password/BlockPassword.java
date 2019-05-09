@@ -56,7 +56,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -72,9 +71,14 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, ICont
   }
 
   @Override
+  public String getContentName() {
+    return "password_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "password_block", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityPassword.class, getContentName() + "_te");
     ModCyclic.instance.events.register(this);
   }
 
@@ -87,7 +91,7 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, ICont
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

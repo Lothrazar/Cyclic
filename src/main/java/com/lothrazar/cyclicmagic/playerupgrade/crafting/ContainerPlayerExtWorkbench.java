@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.playerupgrade.crafting;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.core.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -140,7 +140,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     catch (Exception e) {
       //if ingredients to not satisfy recipe, it should just silently do nothing and not craft
       //but from another mod there could be an error bubbling up to here
-      ModCyclic.logger.error("A recipe has thrown an error unexpectedly");
+      ModCyclic.logger.error("A recipe has thrown an error ", e);
     }
   }
 

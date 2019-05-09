@@ -27,15 +27,19 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.compat.fastbench.CompatFastBench;
+import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftRight;
+import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.playerupgrade.skill.GuiSkillWheel;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -45,6 +49,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
@@ -54,6 +59,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -95,48 +101,65 @@ public class EventKeyInput {
   public void onKeyInput(InputEvent.KeyInputEvent event) {
     EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     int slot = thePlayer.inventory.currentItem;
-    if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()) {
+    //TODO: refactor some of this out to module?
+    if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
     }
-    else if (ClientProxy.keyBarDown != null && ClientProxy.keyBarDown.isPressed()) {
+    else if (ClientProxy.keyBarDown != null && ClientProxy.keyBarDown.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
     }
-    else if (ClientProxy.keyShiftUp != null && ClientProxy.keyShiftUp.isPressed()) {
+    else if (ClientProxy.keyShiftUp != null && ClientProxy.keyShiftUp.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, false));
     }
-    else if (ClientProxy.keyShiftDown != null && ClientProxy.keyShiftDown.isPressed()) {
+    else if (ClientProxy.keyShiftDown != null && ClientProxy.keyShiftDown.isPressed()
+        && KeyInventoryShiftModule.enableInvoKeys) {
       ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
     }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended()) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_EXTENDED));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_EXTENDED));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
     }
     else if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryCrafting()) {
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
-      }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryCrafting()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_PWORKBENCH));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.crafting");
+        }
       }
     }
     else if (ClientProxy.keyWheel != null && ClientProxy.keyWheel.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (data.hasInventoryExtended()) {
-        // TESTING ONLY 
-        //        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
-        //          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
-        //        else
-        //        Minecraft.getMinecraft().displayGuiScreen(new GuiTools(thePlayer));
-        ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
-      else {
-        UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+    }
+    else if (ClientProxy.keySkills != null && ClientProxy.keySkills.isPressed()) {
+      final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
+      if (!data.getChorusOn()) {//treat it like spectator
+        if (data.hasInventoryExtended()) {
+          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
+        }
+        else {
+          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
+        }
       }
     }
   }
@@ -147,11 +170,13 @@ public class EventKeyInput {
     // only for player survival invo
     EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
     if (event.getGui() instanceof GuiInventory) {
-      if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)) {
+      if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)
+          && KeyInventoryShiftModule.enableInvoKeys) {
         ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
         return;
       }
-      else if (ClientProxy.keyBarDown != null && isGuiKeyDown(ClientProxy.keyBarDown)) {
+      else if (ClientProxy.keyBarDown != null && isGuiKeyDown(ClientProxy.keyBarDown)
+          && KeyInventoryShiftModule.enableInvoKeys) {
         ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
         return;
       }
@@ -159,10 +184,12 @@ public class EventKeyInput {
       if (gui.getSlotUnderMouse() != null) {
         // only becuase it expects actually a column number
         int slot = gui.getSlotUnderMouse().slotNumber % Const.HOTBAR_SIZE;
-        if (ClientProxy.keyShiftUp != null && isGuiKeyDown(ClientProxy.keyShiftUp)) {
+        if (ClientProxy.keyShiftUp != null && isGuiKeyDown(ClientProxy.keyShiftUp)
+            && KeyInventoryShiftModule.enableInvoKeys) {
           ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, false));
         }
-        else if (ClientProxy.keyShiftDown != null && isGuiKeyDown(ClientProxy.keyShiftDown)) {
+        else if (ClientProxy.keyShiftDown != null && isGuiKeyDown(ClientProxy.keyShiftDown)
+            && KeyInventoryShiftModule.enableInvoKeys) {
           ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
         }
       }
@@ -173,6 +200,17 @@ public class EventKeyInput {
     else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiPlayerExtWorkbench) {
       thePlayer.closeScreen();
     }
+    else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin)
+        && CompatFastBench.LOADED) {
+      tryCloseFastbench(event, thePlayer);
+    }
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Optional.Method(modid = "fastbench")
+  private void tryCloseFastbench(GuiScreenEvent.KeyboardInputEvent.Pre event, EntityPlayer thePlayer) {
+    if (event.getGui() instanceof GuiFastPlayerBench)
+      thePlayer.closeScreen();
   }
 
   @SideOnly(Side.CLIENT)

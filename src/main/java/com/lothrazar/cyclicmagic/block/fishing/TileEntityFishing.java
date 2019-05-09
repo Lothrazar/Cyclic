@@ -28,7 +28,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -62,15 +63,15 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   static final int SLOT_TOOL = 0;
 
   public static enum Fields {
-    REDSTONE, FUEL;
+    REDSTONE;
   }
 
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
-  private int needsRedstone = 1;
 
   public TileEntityFishing() {
     super(1 + FISHSLOTS);
-    this.initEnergy(BlockFishing.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY),
+        BlockFishing.FUEL_COST);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
     this.setSlotsForInsert(SLOT_TOOL);
@@ -308,8 +309,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
     }
@@ -319,9 +318,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

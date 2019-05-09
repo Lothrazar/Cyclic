@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
-import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -23,7 +22,7 @@ public class PotionDropItems extends PotionBase {
 
   @Override
   public void tick(EntityLivingBase entity) {
-    PotionEffect pot = entity.getActivePotionEffect(PotionEffectRegistry.DROPS);
+    PotionEffect pot = entity.getActivePotionEffect(this);
     World world = entity.getEntityWorld();
     List<EntityEquipmentSlot> slots = null;
     if (pot != null && this.isMoving(entity)) {

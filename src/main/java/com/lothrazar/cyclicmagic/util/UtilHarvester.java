@@ -77,6 +77,7 @@ public class UtilHarvester {
         "minecraft:pumpkin"
         , "croparia:block_plant_*"
         , "croparia:block_cane_*"
+        ,"extrautils2:redorchid"
         );
     
     breakSilkTouch = NonNullList.from(""
@@ -124,7 +125,6 @@ public class UtilHarvester {
         ,"harvestcraft:pampaperbark" 
         );    
     harvestReflectionRegrow =  NonNullList.from(""
-//        ,"natura:*"
         ,"natura:overworld_berrybush_*"
         ,"natura:overworld_berrybush_blackberry"
         ,"natura:overworld_berrybush_raspberry"
@@ -152,6 +152,7 @@ public class UtilHarvester {
     
     useBooleanProperty.put("rustic:grape_leaves", "grapes");
     modsThatDontUseAge.put("rustic:leaves_apple", "apple_age"); 
+    modsThatDontUseAge.put("extrautils2:enderlilly", "growth"); 
     harvestCustomMaxAge = new HashMap<String, Integer>();
     //max metadata is 11, but 9 is the lowest level when full grown
     //its a 3high multiblock
@@ -293,7 +294,7 @@ public class UtilHarvester {
         return drops;
       }
       if (isHarvestReflectionRegrow(blockId)) {
-        //      if (blockId.getResourceDomain().equals("natura")) {
+        //        ModCyclic.logger.log("[harvest] isHarvestReflectionRegrow " + blockId);
         Object toDrop = UtilReflection.getFirstPrivate(blockCheck, ItemStack.class);
         if (toDrop != null) {
           ItemStack crop = (ItemStack) toDrop;
@@ -307,6 +308,7 @@ public class UtilHarvester {
       }
       //first get the drops
       if (isHarvestingGetDropsOld(blockId)) {
+        //        ModCyclic.logger.log("[harvest] isHarvestingGetDropsOld " + blockId);
         //added for rustic, it uses this version, other one does not work
         //https://github.com/the-realest-stu/Rustic/blob/c9bbdece4a97b159c63c7e3ba9bbf084aa7245bb/src/main/java/rustic/common/blocks/crops/BlockStakeCrop.java#L119
         drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
@@ -316,9 +318,19 @@ public class UtilHarvester {
       }
       world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
       if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
+        //for example: a 3 high block like corn 
         if (doesBlockMatch(world, blockCheck, posCurrent.up())) {
+          //ModCyclic.logger.log("[harvest] up(1) break " + blockId);
           //TODO: corn still drops a few from multiblock on ground. not the worst.
           world.destroyBlock(posCurrent.up(), false);
+        }
+        if (doesBlockMatch(world, blockCheck, posCurrent.up(2))) {
+          //  ModCyclic.logger.log("[harvest] up(2) break " + blockId);
+          //TODO: corn still drops a few from multiblock on ground. not the worst.
+          world.destroyBlock(posCurrent.up(2), false);
+        }
+        if (world.isAirBlock(posCurrent.down()) && world.isAirBlock(posCurrent.down(2))) {
+          world.destroyBlock(posCurrent, false);
         }
       }
       // we have a blackist of crops to skip the remove-seed step
@@ -343,9 +355,7 @@ public class UtilHarvester {
           }
         }
         catch (Exception e) {
-          ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId);
-          ModCyclic.logger.error(e.getMessage());
-          e.printStackTrace();
+          ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors    " + blockId, e);
         }
       } //else dont remove seed
     }

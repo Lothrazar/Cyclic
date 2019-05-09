@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.anvilmagma;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclicmagic.block.anvil.UtilRepairItem;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -49,7 +50,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasRecipe {
 
@@ -63,8 +63,18 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   }
 
   @Override
+  public String getContentName() {
+    return "block_anvil_magma";
+  }
+
+  @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return BlockAnvilAuto.Z_AXIS_AABB;
+  }
+
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
   }
 
   @Override
@@ -74,8 +84,8 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_anvil_magma", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + "block_anvil_magma_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityAnvilMagma.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -87,8 +97,9 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("block_anvil_magma", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityAnvilMagma.FLUID_COST = config.getInt("block_anvil_magma_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    TileEntityAnvilMagma.FLUID_COST = config.getInt(getContentName() + "_lava", Const.ConfigCategory.fuelCost, 100, 1, 10000, "Lava cost per damage unit");
+    UtilRepairItem.syncConfig(config);
   }
 
   @Override

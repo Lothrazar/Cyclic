@@ -69,8 +69,13 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "wand_missile";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "wand_missile", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntityHomingProjectile.class, "magic_missile", 1020);
   }
 
@@ -83,7 +88,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("MagicMissile", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -113,7 +118,7 @@ public class ItemMagicMissile extends BaseTool implements IHasRecipe, IContent {
       projectile.setTarget(target);
       world.spawnEntity(projectile);
     }
-    player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
+    UtilEntity.setCooldownItem(player, held.getItem(), COOLDOWN);
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }

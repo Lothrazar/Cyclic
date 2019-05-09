@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -84,9 +83,14 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
   }
 
   @Override
+  public String getContentName() {
+    return "harvester_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "harvester_block", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
   }
 
   private boolean enabled;
@@ -98,9 +102,9 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityHarvester.TIMER_FULL = config.getInt("harvester_block", Const.ConfigCategory.machineTimer,
+    enabled = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+    TileEntityHarvester.TIMER_FULL = config.getInt(getContentName(), Const.ConfigCategory.machineTimer,
         150, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt("harvester_block", Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

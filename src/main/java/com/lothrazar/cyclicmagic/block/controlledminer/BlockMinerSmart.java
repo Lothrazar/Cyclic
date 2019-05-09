@@ -48,7 +48,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -91,9 +90,14 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
 
   @Override
+  public String getContentName() {
+    return "block_miner_smart";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_miner_smart", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityControlledMiner.class, Const.MODID + "miner_smart_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityControlledMiner.class, Const.MODID + "miner_smart_te");
   }
 
   private boolean enabled;
@@ -105,8 +109,8 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityControlledMiner.TIMER_FULL = config.getInt("block_miner_smart", Const.ConfigCategory.machineTimer,
+    enabled = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+    TileEntityControlledMiner.TIMER_FULL = config.getInt(getContentName(), Const.ConfigCategory.machineTimer,
         100, 1, 9000, Const.ConfigText.machineTimer);
     FUEL_COST = config.getInt("block_miner_smart", Const.ConfigCategory.fuelCost, 75, 0, 500000, Const.ConfigText.fuelCost);
   }

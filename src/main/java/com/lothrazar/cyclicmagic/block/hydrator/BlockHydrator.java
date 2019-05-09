@@ -56,7 +56,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRecipe {
 
@@ -171,9 +170,14 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
   }
 
   @Override
+  public String getContentName() {
+    return "block_hydrator";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, new ItemBlockHydrator(this), "block_hydrator", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityHydrator.class, "block_hydrator_te");
+    BlockRegistry.registerBlock(this, new ItemBlockHydrator(this), getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityHydrator.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -186,6 +190,6 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("Hydrator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("block_hydrator", Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

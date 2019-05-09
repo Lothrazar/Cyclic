@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -38,17 +38,23 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmBoat extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmBoat extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private static final int durability = 4096;
+  private static final ItemStack craftItem = new ItemStack(Items.ARMOR_STAND);
 
   public ItemCharmBoat() {
     super(durability);
   }
 
   @Override
+  public String getContentName() {
+    return "charm_boat";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_boat", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
   }
 
   private boolean enabled;
@@ -60,7 +66,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   /**
@@ -93,7 +99,12 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
   public IRecipe addRecipe() {
-    return super.addRecipeAndRepair(Items.ARMOR_STAND);
+    return super.addRecipe(craftItem);
   }
 }

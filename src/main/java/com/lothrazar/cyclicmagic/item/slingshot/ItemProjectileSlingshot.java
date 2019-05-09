@@ -59,10 +59,14 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
   }
 
   @Override
+  public String getContentName() {
+    return "slingshot_weapon";
+  }
+
+  @Override
   public void register() {
     ItemRegistry.register(new ItemPebble(), "stone_pebble");
-    //  ItemProjectileSlingshot slingshot_weapon = new ItemProjectileSlingshot();
-    ItemRegistry.register(this, "slingshot_weapon", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
     EntityProjectileRegistry.registerModEntity(EntitySlingshot.class, "slingshot_bullet", 1054);
     ModCyclic.instance.events.register(this);
   }
@@ -76,7 +80,7 @@ public class ItemProjectileSlingshot extends BaseItemChargeScepter implements IH
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("slingshot", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("slingshot", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

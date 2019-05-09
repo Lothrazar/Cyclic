@@ -61,10 +61,10 @@ import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
+import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
+import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.particle.ParticleRenderer;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.module.KeyInventoryShiftModule;
-import com.lothrazar.cyclicmagic.registry.module.MultiContent;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -102,6 +102,7 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraInvo;
   public static KeyBinding keyExtraCraftin;
   public static KeyBinding keyWheel;
+  public static KeyBinding keySkills;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
 
   @Override
@@ -142,6 +143,8 @@ public class ClientProxy extends CommonProxy {
     ClientRegistry.registerKeyBinding(ClientProxy.keyWheel);
     keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_C, keyCategoryInventory);
     ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
+    keySkills = new KeyBinding("key.keySkills", Keyboard.KEY_K, keyCategoryInventory);
+    ClientRegistry.registerKeyBinding(ClientProxy.keySkills);
   }
 
   private void registerEntities() {
@@ -289,8 +292,7 @@ public class ClientProxy extends CommonProxy {
       Minecraft.getMinecraft().ingameGUI.getSpectatorGui().onSpectatorMenuClosed(null);
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Error trying to lock out Spectator GUI: ");
-      ModCyclic.logger.error(e.getMessage());
+      ModCyclic.logger.error("Error trying to lock out Spectator GUI: ", e);
     }
   }
 
@@ -325,7 +327,7 @@ public class ClientProxy extends CommonProxy {
     catch (Exception e) {
       //sometimes it crashes just AS the world is loading, but then it works after everythings set up
       //does not affect functionality, its working before the player can ever make use of this.
-      ModCyclic.logger.error("Error setting reach : " + e.getMessage());
+      ModCyclic.logger.error("Error setting reach : ", e);
     }
   }
 

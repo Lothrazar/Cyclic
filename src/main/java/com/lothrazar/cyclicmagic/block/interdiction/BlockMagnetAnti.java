@@ -45,7 +45,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -62,6 +61,11 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe, ICo
   }
 
   @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;//true and player suffocates inside hitbox 
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityMagnetAnti();
   }
@@ -72,9 +76,14 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe, ICo
   }
 
   @Override
+  public String getContentName() {
+    return "magnet_anti_block";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "magnet_anti_block", GuideCategory.BLOCKPLATE);
-    GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, "magnet_anti_block_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKPLATE);
+    BlockRegistry.registerTileEntity(TileEntityMagnetAnti.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -86,7 +95,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe, ICo
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

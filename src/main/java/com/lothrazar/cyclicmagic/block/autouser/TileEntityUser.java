@@ -31,8 +31,9 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
@@ -95,8 +96,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private int size;
   private int vRange = 2;
   public int yOffset = 0;
@@ -104,13 +103,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static List<String> blacklistAll;
 
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET, FUEL;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET;
   }
 
   public TileEntityUser() {
     super(INV_SIZE);
     timer = tickDelay;
-    this.initEnergy(BlockUser.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockUser.FUEL_COST);
     this.setSlotsForInsert(0, SLOT_OUTPUT_START - 1);
     this.setSlotsForExtract(SLOT_OUTPUT_START, INV_SIZE - 1);
   }
@@ -144,19 +143,23 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       tryEquipItem();
       if (triggered) {
         timer = tickDelay;
+        BlockPos targetPos = this.getTargetPos();
         try {
-          BlockPos targetPos = this.getTargetPos();
           if (rightClickIfZero == 0) {//right click entities and blocks
             this.rightClickBlock(targetPos);
           }
+        }
+        catch (Throwable e) {//exception could come from external third party block/mod/etc 
+          ModCyclic.logger.error("Automated User [rightClickBlock] Error '" + e.getMessage() + "'" + e.getClass(), e);
+        }
+        try {
           interactEntities(targetPos);
         }
-        catch (Exception e) {//exception could come from external third party block/mod/etc
-          ModCyclic.logger.error("Automated User Error");
-          ModCyclic.logger.error(e.getLocalizedMessage());
-          e.printStackTrace();
+        catch (Throwable e) {//exception could come from external third party block/mod/etc 
+          ModCyclic.logger.error("Automated User [interactEntities] Error '" + e.getMessage() + "'" + e.getClass(), e);
         }
       }
+      this.markDirty();
     }
   }
 
@@ -232,20 +235,20 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
       boolean success = rightClickFluidTank(targetPos);
       if (success) {
-        // ModCyclic.logger.log("rightClickFluidAttempt : true");
+        // ModCyclic.logger.error("rightClickFluidAttempt : true");
         syncPlayerTool();
         return;
       }
     }
     else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
-        // ModCyclic.logger.log("rightClickFluidAir : true");
+        //bucket on fluid-in-world   
+        //   ModCyclic.logger.error("rightClickFluidAir : true " + fakePlayer.get().getHeldItemMainhand());
         /// missing piece  
         syncPlayerTool();
         return;
       }
     }
-
     if (world.isAirBlock(targetPos)) {
       return;
     }
@@ -258,7 +261,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       boolean eq = ItemStack.areItemStacksEqual(before, fakePlayer.get().getHeldItemMainhand());
       //ModCyclic.logger.log("after block ? equal " + eq);
       if (wasEmpty == false && fakePlayer.get().getHeldItemMainhand().isEmpty()) {
-
         syncPlayerTool();
       }
       else if (!eq) {
@@ -325,12 +327,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     //   ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
     int start = (includeMainHand) ? 0 : 1;//main hand is 1
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-
     for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
-
       if (s.isEmpty() == false) {
-
         toDrop.add(s.copy());
         fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
       }
@@ -373,7 +372,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private boolean rightClickFluidAir(BlockPos targetPos) {
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
-
     //item stack does not hve fluid handler
     //dispense stack so either pickup or place liquid
     if (UtilFluid.isEmptyOfFluid(playerHeld)) {
@@ -386,14 +384,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
     }
     else {
-
       ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
       if (!drainedStackOrNull.isItemEqual(playerHeld)) {
         player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
         this.tryDumpFakePlayerInvo(true);
         return true;
       }
-
     }
     return false;
   }
@@ -449,9 +445,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     compound.setInteger(NBT_REDST, needsRedstone);
     compound.setInteger(NBT_LR, rightClickIfZero);
     compound.setInteger(NBT_SIZE, size);
-    compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger("yoff", yOffset);
-    compound.setInteger("tickDelay", tickDelay);
+    if (tickDelay != 0)
+      compound.setInteger("tickDelay", tickDelay);
     return super.writeToNBT(compound);
   }
 
@@ -467,9 +463,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     renderParticles = compound.getInteger(NBT_RENDER);
     yOffset = compound.getInteger("yoff");
     tickDelay = compound.getInteger("tickDelay");
-    if (tickDelay < 1) {
-      tickDelay = 1;
-    }
   }
 
   @Override
@@ -489,8 +482,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.renderParticles;
       case Y_OFFSET:
         return this.yOffset;
-      case FUEL:
-        return this.getEnergyCurrent();
     }
     return 0;
   }
@@ -498,9 +489,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case Y_OFFSET:
         if (value > 1) {
           value = -1;
@@ -508,12 +496,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.yOffset = value;
       break;
       case SPEED:
-        if (value < 1) {
-          value = 1;
-        }
-        tickDelay = Math.min(value, MAX_SPEED);
-        if (timer > tickDelay) {
-          timer = tickDelay;//progress bar prevent overflow 
+        if (value <= MAX_SPEED && value != 0) {
+          tickDelay = value;//progress bar prevent overflow 
+          if (timer > tickDelay) {
+            timer = tickDelay;
+          }
         }
       break;
       case TIMER:
@@ -533,7 +520,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case SIZE:
         if (value > MAX_SIZE) {
-          value = 1;
+          value = 0;
+        }
+        if (value < 0) {
+          value = MAX_SIZE;
         }
         size = value;
       break;
@@ -594,6 +584,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
+  }
+
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index <= 2 && stack.getCount() > 1) {
+      return false;
+    }
+    return super.isItemValidForSlot(index, stack);
   }
 
   public static void syncConfig(Configuration config) {

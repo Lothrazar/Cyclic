@@ -38,7 +38,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumFacing;
@@ -53,7 +52,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   private long beamRenderCounter;
   @SideOnly(Side.CLIENT)
   private float beamRenderScale;
-  private final List<TileEntityBeaconPowered.BeamSegment> beamSegments = Lists.<TileEntityBeaconPowered.BeamSegment> newArrayList();
+  private final List<BeamSegment> beamSegments = Lists.<BeamSegment> newArrayList();
   private String customName;
 
   public TileEntityBeaconPowered() {
@@ -123,7 +122,7 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   }
 
   @SideOnly(Side.CLIENT)
-  public List<TileEntityBeaconPowered.BeamSegment> getBeamSegments() {
+  public List<BeamSegment> getBeamSegments() {
     return this.beamSegments;
   }
 
@@ -152,11 +151,6 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-  }
-
-  @Override
-  public NBTTagCompound getUpdateTag() {
-    return this.writeToNBT(new NBTTagCompound());
   }
 
   @Nullable
@@ -217,33 +211,5 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   @Override
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return false;
-  }
-
-  public static class BeamSegment {
-
-    /** RGB (0 to 1.0) colors of this beam segment */
-    private final float[] colors;
-    private int height;
-
-    public BeamSegment(float[] colorsIn) {
-      this.colors = colorsIn;
-      this.height = 1;
-    }
-
-    protected void incrementHeight() {
-      ++this.height;
-    }
-
-    /**
-     * Returns RGB (0 to 1.0) colors of this beam segment
-     */
-    public float[] getColors() {
-      return this.colors;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getHeight() {
-      return this.height;
-    }
   }
 }

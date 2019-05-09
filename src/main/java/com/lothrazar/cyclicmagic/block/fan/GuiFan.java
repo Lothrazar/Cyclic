@@ -23,9 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fan;
 
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -38,6 +40,9 @@ public class GuiFan extends GuiBaseContainer {
   private TileEntityFan tile;
   boolean debugLabels = false;
   private ButtonTileEntityField btnTogglePush;
+  private GuiSliderInteger sliderRange;
+  private GuiSliderInteger sliderSpeed;
+  private ButtonTileEntityField btnSound;
 
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
@@ -49,23 +54,32 @@ public class GuiFan extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int id = 2;
-    int w = 18, h = 10;
-    int x = this.guiLeft + 30;
-    int y = this.guiTop + 22;
+    Keyboard.enableRepeatEvents(true);
+    int id = 1;
+    int w = 18, h = 18;
+    int x = this.guiLeft + 4;
+    int y = this.guiTop + 48;
+    // silent or sound
+    btnSound = new ButtonTileEntityField(id++, x, y, tile.getPos(),
+        TileEntityFan.Fields.SILENT.ordinal(), +1, w, h);
+    this.addButton(btnSound);
+    btnSound.setTooltip("button.fan.sound.tooltip");
+    h = 10;
+    x = this.guiLeft + 30;
+    y = this.guiTop + 22;
     int field = TileEntityFan.Fields.RANGE.ordinal();
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
+    sliderRange = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_RANGE,
         field);
-    sliderDelay.setTooltip("button.fan.range.tooltip");
-    this.addButton(sliderDelay);
+    sliderRange.setTooltip("button.fan.range.tooltip");
+    this.addButton(sliderRange);
     //    
     ///////////////// SPEED BUTTONS
     y += 18;
     field = TileEntityFan.Fields.SPEED.ordinal();
-    GuiSliderInteger sliderOffset = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
+    sliderSpeed = new GuiSliderInteger(tile, id++, x, y, 130, h, 1, TileEntityFan.MAX_SPEED,
         field);
-    sliderOffset.setTooltip("button.fan.speed.tooltip");
-    this.addButton(sliderOffset);
+    sliderSpeed.setTooltip("button.fan.speed.tooltip");
+    this.addButton(sliderSpeed);
     //the big push pull toggle button
     w = 70;
     h = 20;
@@ -74,6 +88,25 @@ public class GuiFan extends GuiBaseContainer {
     btnTogglePush = new ButtonTileEntityField(id++, x, y, tile.getPos(),
         TileEntityFan.Fields.PUSHPULL.ordinal(), +1, w, h);
     this.addButton(btnTogglePush);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    sliderRange.keyTyped(typedChar, keyCode);
+    sliderSpeed.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    sliderRange.updateScreen();
+    sliderSpeed.updateScreen();
   }
 
   @Override
@@ -89,16 +122,10 @@ public class GuiFan extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    //    btnTogglePrt.updateDisplayStringWith(tile);
-    //    btnTogglePush.updateDisplayStringWith(tile);
-    btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(TileEntityFan.Fields.PUSHPULL.ordinal()));
-    //    String display = "" + this.tile.getRange();
-    //    int x = (display.length() > 1) ? xRange + 2 : xRange + 3;
-    //    this.drawString(display, x, yHeightTxtbox);
-    //    display = "" + this.tile.getSpeed();
-    //    x -= 20;
-    //    this.drawString(display, x, yHeightTxtbox);
-    //    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
+    int fld = TileEntityFan.Fields.SILENT.ordinal();
+    btnSound.setTextureIndex(14 + this.tile.getField(fld));
+    fld = TileEntityFan.Fields.PUSHPULL.ordinal();
+    btnTogglePush.displayString = UtilChat.lang("button.fan.pushpull" + tile.getField(fld));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

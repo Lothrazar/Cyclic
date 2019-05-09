@@ -40,6 +40,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -56,11 +57,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
+  private static final String KEY_BACKCOUNTER = "backCounter";
   public static String KEY_LOC = "location";
   public static String KEY_LARGEST = "loc_largest";
-  public static int maximumSaved = 16;
+  public static int maximumSaved;
   public static int expDistRatio = 10;
   public static final int BTNS_PER_COLUMN = 8;
+  private static final String KEY_BACK = "location_back";
+  public static final int BACK_TICKS = 600;
 
   public ItemEnderBook() {
     super();
@@ -90,6 +94,41 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     tooltip.add(UtilChat.lang(getTooltip()) + getLocationsCount(stack));
+  }
+
+  @Override
+  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    // count down back timer 
+    this.countdownBackTimer(stack);
+  }
+
+  @Override
+  public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    return false;
+  }
+
+  private void countdownBackTimer(ItemStack stack) {
+    int counter = getBackTimer(stack);
+    if (counter > 0) {
+      UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, counter - 1);
+    }
+    else {
+      UtilNBT.getItemStackNBT(stack).setString(KEY_BACK, "");
+    }
+  }
+
+  public static int getBackTimer(ItemStack stack) {
+    return UtilNBT.getItemStackNBTVal(stack, KEY_BACKCOUNTER);
+  }
+
+  public static void clearBackTimer(ItemStack stack) {
+    UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, 0);
+    stack.getTagCompound().setString(KEY_BACK, "");
+  }
+
+  public static void startBackTimer(ItemStack stack, BlockPosDim loc) {
+    UtilNBT.setItemStackNBTVal(stack, KEY_BACKCOUNTER, BACK_TICKS);
+    stack.getTagCompound().setString(KEY_BACK, loc.toCSV());
   }
 
   public static int getLargestSlot(ItemStack itemStack) {
@@ -126,7 +165,15 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     book.getTagCompound().setString(KEY_LOC + "_" + id, loc.toCSV());
   }
 
-  private static BlockPosDim getLocation(ItemStack stack, int slot) {
+  static BlockPosDim getBackLocation(ItemStack stack) {
+    String csv = stack.getTagCompound().getString(KEY_BACK);
+    if (csv == null || csv.isEmpty()) {
+      return null;
+    }
+    return new BlockPosDim(csv);
+  }
+
+  static BlockPosDim getLocation(ItemStack stack, int slot) {
     String csv = stack.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
     if (csv == null || csv.isEmpty()) {
       return null;
@@ -139,17 +186,16 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     if (loc == null) {
       return null;
     }
-    return new BlockPos(loc.X, loc.Y, loc.Z);
+    return new BlockPos(loc.getX(), loc.getY(), loc.getZ());
   }
 
   public static boolean teleport(EntityPlayer player, int slot) {
     ItemStack book = getPlayersBook(player);
-    String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
-    if (csv == null || csv.isEmpty()) {
-      return false;
-    }
     BlockPosDim loc = getLocation(book, slot);
-    if (player.dimension != loc.dimension) {
+    if (GuiEnderBook.BACK_BTN_ID == slot) {
+      loc = getBackLocation(book);
+    }
+    if (player.dimension != loc.getDimension()) {
       return false;//button was disabled anyway,... but just in case 
     }
     //something in vanilla 
@@ -157,9 +203,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
       // thanks so much to
       // http://www.minecraftforge.net/forum/index.php?topic=18308.0 
       //also moving up so  not stuck in floor
-      boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.X, loc.Y + 0.1, loc.Z);
+      boolean success = UtilEntity.enderTeleportEvent(player, player.world, loc.getX(), loc.getY() + 0.1, loc.getZ());
       if (success) { // try and force chunk loading it it worked 
-        player.getEntityWorld().getChunk(new BlockPos(loc.X, loc.Y, loc.Z)).setModified(true);
+        player.getEntityWorld().getChunk(new BlockPos(loc.getX(), loc.getY(), loc.getZ())).setModified(true);
       }
     }
     return true;
@@ -167,12 +213,13 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public IRecipe addRecipe() {
-    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        "ene",
+        "ebe",
+        "eee",
         'e', "enderpearl",
         'b', Items.BOOK,
         'n', "blockEmerald");
-    // if you want to clean out the book and start over
   }
 
   @Override
@@ -181,7 +228,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     if (stack == null || stack.getItem() == null) {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
-    //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
     entityPlayer.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(world, entityPlayer, hand);
   }
@@ -191,17 +237,25 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
       return 0;
     }
     BlockPos toPos = getLocationPos(book, slot);
+    if (toPos == null) {
+      return 0;
+    }
     int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
     return Math.round(distance / expDistRatio);
   }
 
   @Override
   public void register() {
-    ItemRegistry.register(this, "book_ender", GuideCategory.TRANSPORT);
+    ItemRegistry.register(this, getContentName(), GuideCategory.TRANSPORT);
     LootTableRegistry.registerLoot(this);
   }
 
   private boolean enabled;
+
+  @Override
+  public String getContentName() {
+    return "book_ender";
+  }
 
   @Override
   public boolean enabled() {
@@ -210,9 +264,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     maximumSaved = config.getInt("EnderBookMaxSaved", Const.ConfigCategory.modpackMisc,
-        16, 1, 64, "Maximum number of saved waypoints in the ender book.  It still uses " + BTNS_PER_COLUMN +
+        64, 1, 512, "Maximum number of saved waypoints in the ender book.  It still uses " + BTNS_PER_COLUMN +
             " per column, and putting too many may send it offscreen");
     expDistRatio = config.getInt("EnderBookExpCostRatio", Const.ConfigCategory.modpackMisc,
         10, 0, 100, "The exp cost of teleporting is [the horizontal distance] divided by [this number] rounded to the nearest integer.  For example, if this number is 10, then teleporting 20 blocks costs 2 exp");

@@ -23,9 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.laser;
 
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -39,6 +41,10 @@ public class GuiLaser extends GuiBaseContainer {
   private ButtonTileEntityField btnX;
   private ButtonTileEntityField btnY;
   private ButtonTileEntityField btnZ;
+  private GuiSliderInteger sliderA;
+  private GuiSliderInteger sliderB;
+  private GuiSliderInteger sliderG;
+  private GuiSliderInteger sliderR;
 
   public GuiLaser(InventoryPlayer inventoryPlayer, TileEntityLaser te) {
     super(new ContainerLaser(inventoryPlayer, te), te);
@@ -49,22 +55,23 @@ public class GuiLaser extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    Keyboard.enableRepeatEvents(true);
     int id = 0, x = guiLeft + 36, y = guiTop + 16, width = 120, h = 12;
-    GuiSliderInteger sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.R.ordinal());
-    sliderX.setTooltip("screen.red");
-    this.addButton(sliderX);
+    sliderR = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.R.ordinal());
+    sliderR.setTooltip("screen.red");
+    this.addButton(sliderR);
     y += h + 4;
-    sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.G.ordinal());
-    sliderX.setTooltip("screen.green");
-    this.addButton(sliderX);
+    sliderG = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.G.ordinal());
+    sliderG.setTooltip("screen.green");
+    this.addButton(sliderG);
     y += h + 4;
-    sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.B.ordinal());
-    sliderX.setTooltip("screen.blue");
-    this.addButton(sliderX);
+    sliderB = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 255, TileEntityLaser.Fields.B.ordinal());
+    sliderB.setTooltip("screen.blue");
+    this.addButton(sliderB);
     y += h + 4;
-    sliderX = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, TileEntityLaser.Fields.ALPHA.ordinal());
-    sliderX.setTooltip("screen.alpha");
-    this.addButton(sliderX);
+    sliderA = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, TileEntityLaser.Fields.ALPHA.ordinal());
+    sliderA.setTooltip("screen.alpha");
+    this.addButton(sliderA);
     //
     x -= Const.PAD;
     y += 16;
@@ -95,6 +102,29 @@ public class GuiLaser extends GuiBaseContainer {
     btnZ.width = wid;
     btnZ.setTooltip("button.offsetz.tooltip");
     this.addButton(btnZ);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    sliderR.keyTyped(typedChar, keyCode);
+    sliderG.keyTyped(typedChar, keyCode);
+    sliderB.keyTyped(typedChar, keyCode);
+    sliderA.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    sliderR.updateScreen();
+    sliderG.updateScreen();
+    sliderB.updateScreen();
+    sliderA.updateScreen();
   }
 
   @Override

@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -92,9 +91,14 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
   }
 
   @Override
+  public String getContentName() {
+    return "entity_detector";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "entity_detector", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -106,7 +110,7 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe, IBloc
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EntityDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EntityDetector", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

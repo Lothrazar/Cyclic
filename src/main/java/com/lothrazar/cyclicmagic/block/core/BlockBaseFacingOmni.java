@@ -68,7 +68,7 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
       }
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Could not get EnumFacing " + e.getLocalizedMessage());
+      ModCyclic.logger.error("Could not get EnumFacing ", e);
     }
     return facing;
   }

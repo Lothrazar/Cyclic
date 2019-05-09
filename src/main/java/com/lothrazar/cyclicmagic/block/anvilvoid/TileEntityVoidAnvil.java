@@ -3,19 +3,17 @@ package com.lothrazar.cyclicmagic.block.anvilvoid;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
 
-  private int needsRedstone = 0;
-
   public static enum Fields {
-    REDSTONE, TIMER, FUEL;
+    REDSTONE, TIMER;
   }
 
   public static final int SLOT_INPUT = 0;
@@ -23,7 +21,7 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
 
   public TileEntityVoidAnvil() {
     super(2);
-    this.initEnergy(BlockVoidAnvil.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockVoidAnvil.FUEL_COST);
     this.setSlotsForInsert(SLOT_INPUT);
     this.setSlotsForExtract(SLOT_OUT);
   }
@@ -51,8 +49,6 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
         return timer;
       case REDSTONE:
         return this.needsRedstone;
-      case FUEL:
-        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -65,9 +61,6 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
       break;
       case REDSTONE:
         this.needsRedstone = value;
-      break;
-      case FUEL:
-        this.setEnergyCurrent(value);
       break;
     }
   }
@@ -95,25 +88,15 @@ public class TileEntityVoidAnvil extends TileEntityBaseMachineInvo implements IT
       }
       // non empty 
       EnchantmentHelper.setEnchantments(Maps.<Enchantment, Integer> newLinkedHashMap(), input);
-      //      if (input.getTagCompound().getSize() == 0)
-      input.setTagCompound(null);
+      if (input.getTagCompound().getSize() == 0) {
+        //only delete if its empty 
+        input.setTagCompound(null);
+      }
       if (this.getStackInSlot(SLOT_OUT).isEmpty()) {
         this.setInventorySlotContents(SLOT_OUT, input);
         this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
       }
       //consume resources
     }
-  }
-
-  @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-  }
-
-  @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    return super.writeToNBT(tagCompound);
   }
 }

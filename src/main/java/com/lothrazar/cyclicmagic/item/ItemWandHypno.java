@@ -34,6 +34,7 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
@@ -70,8 +71,13 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "wand_hypno";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "wand_hypno", GuideCategory.ITEMTHROW);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
   }
 
   private boolean enabled;
@@ -83,7 +89,7 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("ChaosSiren", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("ChaosSiren", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -123,7 +129,7 @@ public class ItemWandHypno extends BaseTool implements IHasRecipe, IContent {
         UtilChat.sendStatusMessage(player, "wand.result.notargets");
       }
     }
-    player.getCooldownTracker().setCooldown(held.getItem(), COOLDOWN);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     super.onUse(held, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
   }

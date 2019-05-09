@@ -119,8 +119,13 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_push";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_push");
+    ItemRegistry.register(this, getContentName());
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this);
   }
@@ -134,7 +139,7 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @SubscribeEvent
@@ -162,7 +167,8 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
-      ModCyclic.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
+      ActionType action = ActionType.values()[ActionType.get(stack)];
+      ModCyclic.network.sendToServer(new PacketMoveBlock(pos, action, side));
     }
     //hack the sound back in
     IBlockState placeState = worldObj.getBlockState(pos);

@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.playerupgrade.storage;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.core.InventoryBase;
+import com.lothrazar.cyclicmagic.gui.container.InventoryBase;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketSyncExtendedInventory;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;

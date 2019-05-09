@@ -26,8 +26,9 @@ package com.lothrazar.cyclicmagic.block.harvester;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilHarvester;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -52,16 +53,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public static int TIMER_FULL = 200;
 
   public static enum Fields {
-    TIMER, REDSTONE, SIZE, RENDERPARTICLES, FUEL, FUELMAX, HARVESTMODE;
+    TIMER, REDSTONE, SIZE, RENDERPARTICLES, HARVESTMODE;
   }
 
-  private int needsRedstone = 1;
-  private int renderParticles = 0;
   private int normalModeIfZero = 0;//if this == 1, then do full field at once
 
   public TileEntityHarvester() {
     super(3 * 9);
-    this.initEnergy(BlockHarvester.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockHarvester.FUEL_COST);
     this.timer = TIMER_FULL;
     this.setSlotsForExtract(0, this.getSizeInventory());
   }
@@ -181,10 +180,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         return this.size;
       case RENDERPARTICLES:
         return this.renderParticles;
-      case FUEL:
-        return this.getEnergyCurrent();
-      case FUELMAX:
-        return this.getEnergyMax();
       case HARVESTMODE:
         return this.normalModeIfZero;
     }
@@ -204,15 +199,13 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         if (value > MAX_SIZE) {
           value = 0;
         }
+        if (value < 0) {
+          value = MAX_SIZE;
+        }
         size = value;
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
-      break;
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
-      case FUELMAX:
       break;
       case HARVESTMODE:
         this.normalModeIfZero = value % 2;

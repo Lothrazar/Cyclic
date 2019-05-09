@@ -25,8 +25,8 @@ package com.lothrazar.cyclicmagic.block.exppylon;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.init.Items;
@@ -60,15 +60,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     SPRAY, COLLECT;
   }
 
-  private int timer = 0;
   private int collect = 1;
-  private int needsRedstone = 0;
 
   public TileEntityXpPylon() {
     super(2);
     this.setSlotsForExtract(SLOT_OUTPUT);
     this.setSlotsForInsert(SLOT_INPUT);
-    tank = new FluidTankBase(TANK_FULL);
+    tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setFluidAllowed(FluidRegistry.getFluid("xpjuice"));
   }
 

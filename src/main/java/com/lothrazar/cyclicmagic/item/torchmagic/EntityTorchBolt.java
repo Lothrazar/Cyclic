@@ -71,9 +71,12 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
   private static boolean registered = false;
 
   public static void register() {
-    if (!registered)
+    if (!registered) {
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
+      registered = true;
+    }
   }
+
   @Override
   protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {

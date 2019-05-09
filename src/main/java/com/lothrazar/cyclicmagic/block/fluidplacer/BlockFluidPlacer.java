@@ -47,7 +47,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe, IContent {
 
@@ -81,9 +80,14 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
 
   //end of fixing getdrops
   @Override
+  public String getContentName() {
+    return "fluid_placer";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "fluid_placer", null);
-    GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, "fluid_placer_te");
+    BlockRegistry.registerBlock(this, getContentName(), null);
+    BlockRegistry.registerTileEntity(TileEntityFluidPlacer.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -96,7 +100,7 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    enabled = config.getBoolean("fluid_placer", category, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), category, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

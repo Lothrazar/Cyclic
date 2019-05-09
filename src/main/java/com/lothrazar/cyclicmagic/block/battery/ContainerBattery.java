@@ -23,7 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.battery;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -35,10 +36,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerBattery extends ContainerBaseMachine {
 
-  public ContainerBattery(InventoryPlayer inventoryPlayer, TileEntityBattery te) {
+  public ContainerBattery(InventoryPlayer inventoryPlayer, TileEntityBaseMachineInvo te) {
     super(te);
     addSlotToContainer(new SlotCheckTileValid(te, 0,
-        this.getScreenSize().width() / 2 - 8, 34));
+        this.getScreenSize().width() / 2 - 8, 34) {
+
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
     bindPlayerInventory(inventoryPlayer);
   }
 

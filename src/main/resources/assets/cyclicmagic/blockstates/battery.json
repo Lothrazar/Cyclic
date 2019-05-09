@@ -1,10 +1,67 @@
 {
     "forge_marker": 1,
 	"defaults":{
-		"model": "cyclicmagic:battery"
+        "textures": {
+			"particle": "cyclicmagic:blocks/battery",
+			"down" : "cyclicmagic:blocks/battery",
+			"up"   : "cyclicmagic:blocks/battery",
+			"north": "cyclicmagic:blocks/battery",
+			"south": "cyclicmagic:blocks/battery",
+			"west" : "cyclicmagic:blocks/battery",
+			"east" : "cyclicmagic:blocks/battery"
+        },
+        "model": "cube",
+        "uvlock": true
 	},
 	 "variants": {
-	    "normal": { "model": "cyclicmagic:battery" },
+			"d":{
+				"true":{
+					"textures": {
+						"down"   : "cyclicmagic:blocks/battery_on"
+					}
+				},
+				"false": {}
+			},
+			"u":{
+				"true":{
+					"textures": {
+						"up"   : "cyclicmagic:blocks/battery_on"
+					}
+				},
+				"false": {}
+			},
+			"n":{
+				"true":{
+					"textures": {
+						"north"   : "cyclicmagic:blocks/battery_on"
+					}
+				},
+				"false": {}
+			},
+			"s":{
+				"true":{
+					"textures": {
+						"south"   : "cyclicmagic:blocks/battery_on"
+					}
+				},
+				"false": {}
+			},
+			"w":{
+				"true":{
+					"textures": {
+						"west"   : "cyclicmagic:blocks/battery_on"
+					}
+				},
+				"false": {}
+			},
+			"e":{
+				"true":{
+					"textures": {
+						"east"   : "cyclicmagic:blocks/battery_on"
+					}
+				},
+				"false": {}
+			} ,
 		"amount": {
 		  "empty": { "model": "cyclicmagic:battery"  },
 		  "g0":  { "submodel": { "overlaya": { "model": "cyclicmagic:overlayamountg0",  "textures": { "overlaya": "cyclicmagic:blocks/overlayamount" } } } },
@@ -23,7 +80,7 @@
 		  "g13": { "submodel": { "overlaya": { "model": "cyclicmagic:overlayamountg13", "textures": { "overlaya": "cyclicmagic:blocks/overlayamount" } } } },
 		  "g14": { "submodel": { "overlaya": { "model": "cyclicmagic:overlayamountg14", "textures": { "overlaya": "cyclicmagic:blocks/overlayamount" } } } },
 		  "g15": { "submodel": { "overlaya": { "model": "cyclicmagic:overlayamountg15", "textures": { "overlaya": "cyclicmagic:blocks/overlayamount" } } } },
-		  "g16": { "submodel": { "overlaya": { "model": "cyclicmagic:overlayamountg16", "textures": { "overlaya": "cyclicmagic:blocks/overlayamount" } } } }  
+		  "g16": { "submodel": { "overlaya": { "model": "cyclicmagic:overlayamountg16", "textures": { "overlaya": "cyclicmagic:blocks/overlayamount" } } } }
 		}
 	}
 

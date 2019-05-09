@@ -26,7 +26,8 @@ package com.lothrazar.cyclicmagic.block.packager;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -39,21 +40,19 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
 
   public static final int INPUT_SIZE = 2 * 3;
   public static final int OUTPUT_SIZE = INPUT_SIZE;
-  public static int TIMER_FULL = 40;
-  private int needsRedstone = 1;
 
   public static enum Fields {
-    REDSTONE, TIMER, FUEL;
+    REDSTONE, TIMER;
   }
 
-  public InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyPackager(), 1, 1);
-  private RecipePackage lastRecipe = null;
+  public InventoryCrafting crafter = new InventoryCrafting(new ContainerDummyPackager(), 3, 2);
+  private RecipePackager lastRecipe = null;
 
   public TileEntityPackager() {
     super(OUTPUT_SIZE + INPUT_SIZE);// in, out 
     this.setSlotsForInsert(0, INPUT_SIZE - 1);
     this.setSlotsForExtract(INPUT_SIZE, INPUT_SIZE + OUTPUT_SIZE - 1);
-    this.initEnergy(BlockPackager.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockPackager.FUEL_COST);
   }
 
   @Override
@@ -71,28 +70,48 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     if (this.isRunning() == false) {
       return;
     }
+    this.shiftAllUp(INPUT_SIZE);
     //ignore timer when filling up water
-    if (this.updateTimerIsZero() && this.hasEnoughEnergy()) { // time to burn!
-      if (this.lastRecipe != null && tryProcessRecipe(lastRecipe)) {
-        this.timer = TIMER_FULL;
+    if (this.hasEnoughEnergy()) { // time to burn!
+      if (this.lastRecipe != null
+          && lastRecipe.matches(this.crafter, this.world)
+          && tryProcessRecipe(lastRecipe)) {
         // are we empty? if empty dont consume
         this.consumeEnergy();
       }
       else {
-        //try to look for a new one
-        for (RecipePackage irecipe : RecipePackage.recipes) {
-          if (tryProcessRecipe(irecipe)) {
-            //if we have found a recipe that can be processed. save reference to it for next loop
-            this.consumeEnergy();
-            this.timer = TIMER_FULL;
-            lastRecipe = irecipe;
-          }
-        }
+        //no matching recipe found, OR could not process (ingredients not found)
+        this.lastRecipe = null;
+        findRecipe();
       }
     }
   }
 
-  public boolean tryProcessRecipe(RecipePackage recipe) {
+  private void findRecipe() {
+    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
+    //   ArrayList<RecipePackager> shuffled = RecipePackager.recipes;
+    // so we dont get stuck on the same one
+    //also it does not get called too frequently
+    //Collections.shuffle(shuffled);
+    for (RecipePackager irecipe : RecipePackager.recipes) {
+      if (irecipe.matches(this.crafter, this.world)) {
+        this.lastRecipe = irecipe;
+        break;
+      }
+    }
+  }
+
+  private void setRecipeInput() {
+    for (int slot = 0; slot < INPUT_SIZE; slot++) {
+      ItemStack stack = this.getStackInSlot(slot);
+      if (stack == null) {
+        stack = ItemStack.EMPTY;
+      }
+      this.crafter.setInventorySlotContents(slot, stack.copy());
+    }
+  }
+
+  public boolean tryProcessRecipe(RecipePackager recipe) {
     boolean process = false;
     //check inventory to see if we can pay costs of the recipe
     //loop over recipe ingredients
@@ -105,7 +124,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       //now find this many of them
       int neededRemaining = needed;
       for (int i = 0; i < INPUT_SIZE; i++) {
-        if (input.isItemEqual(this.getStackInSlot(i)) == false) {
+        if (UtilItemStack.isItemStackEqualIgnoreCount(input, this.getStackInSlot(i)) == false) {
           continue;
         }
         //   ModCyclic.logger.info("matched ! " + irecipe.getRecipeOutput());
@@ -127,7 +146,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       }
     }
     // done looping inventory but not recipe
-    if (process) {
+    if (process && inventoryHasRoom(INPUT_SIZE, recipe.getRecipeOutput())) {
       for (Map.Entry<Integer, Integer> entry : mapSlotToCost.entrySet()) {
         //go 
         this.decrStackSize(entry.getKey(), entry.getValue());
@@ -167,8 +186,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      case FUEL:
-        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -176,9 +193,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

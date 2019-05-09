@@ -24,8 +24,9 @@
 package com.lothrazar.cyclicmagic.block.entitydetector;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -118,7 +119,18 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       isPoweredNow = trigger;
       IBlockState state = world.getBlockState(this.getPos());
       world.notifyBlockUpdate(this.getPos(), state, state, 3);
-      world.notifyNeighborsOfStateChange(this.getPos(), this.blockType, true);//bool is new in 1111
+      try {
+        world.notifyNeighborsOfStateChange(this.getPos(), this.blockType, true);//bool is new in 1111 
+      }
+      catch (Throwable e) {
+        //somehow this lead to a  
+        //        java.lang.NullPointerException
+        //        at net.minecraft.block.BlockDoor.neighborChanged(BlockDoor.java:228)
+        // from the notifyNeighborsOfStateChange(...)
+        // door was doing a get state on pos.up() , so its top half..
+        //this catch means no game crash 
+        ModCyclic.logger.info("State change error in adjacent block ", e);
+      }
     }
   }
 

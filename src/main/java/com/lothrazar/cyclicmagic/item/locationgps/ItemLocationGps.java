@@ -1,0 +1,106 @@
+package com.lothrazar.cyclicmagic.item.locationgps;
+
+import java.util.List;
+import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
+import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
+import com.lothrazar.cyclicmagic.item.core.BaseItem;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
+
+  private boolean enabled;
+
+  @Override
+  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    if (world.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
+      deletePosition(player, pos, hand);
+    }
+    else {
+      savePosition(player, pos, hand);
+    }
+    return EnumActionResult.SUCCESS;
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+    BlockPosDim dim = getPosition(stack);
+    if (dim != null) {
+      tooltip.add(dim.toString());
+    }
+    super.addInformation(stack, player, tooltip, advanced);
+  }
+
+  private void deletePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
+    ItemStack held = player.getHeldItem(hand);
+    held.setTagCompound(null);
+    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
+        + "---");
+  }
+
+  private void savePosition(EntityPlayer player, BlockPos pos, EnumHand hand) {
+    ItemStack held = player.getHeldItem(hand);
+    player.swingArm(hand);
+    UtilNBT.setItemStackBlockPos(held, pos);
+    UtilNBT.setItemStackNBTVal(held, "dim", player.dimension);
+    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
+        + UtilChat.blockPosToString(pos));
+  }
+
+  public static BlockPosDim getPosition(ItemStack item) {
+    BlockPos p = UtilNBT.getItemStackBlockPos(item);
+    if (p == null) {
+      return null;
+    }
+    BlockPosDim dim = new BlockPosDim(0, p, UtilNBT.getItemStackNBTVal(item, "dim"), "");
+    return dim;
+  }
+
+  @Override
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
+        " o ", " s ", " r ",
+        'o', "dyeLightBlue",
+        's', Items.PAPER,
+        'r', "stickWood");
+  }
+
+  @Override
+  public String getContentName() {
+    return "card_location";
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.items, true, Const.ConfigCategory.contentDefaultText + "  WARNING disabling this may cause other blocks to not function (wireless nodes)");
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEM);
+  }
+
+  @Override
+  public boolean enabled() {
+    return enabled;
+  }
+}

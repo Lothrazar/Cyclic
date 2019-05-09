@@ -61,6 +61,11 @@ public class BlockAppleCrop extends BlockCrops implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "apple";
+  }
+
+  @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     String myTooltip = this.getTranslationKey() + ".tooltip";
@@ -165,7 +170,7 @@ public class BlockAppleCrop extends BlockCrops implements IHasRecipe, IContent {
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "apple", GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
   }
 
   private boolean enabled;
@@ -178,7 +183,7 @@ public class BlockAppleCrop extends BlockCrops implements IHasRecipe, IContent {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    enabled = config.getBoolean("apple", category, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), category, true, Const.ConfigCategory.contentDefaultText);
     GROWTH_TICKRATE = config.getInt("AppleGrowthTicks", Const.ConfigCategory.blocks, 500, 1, 99999, "Ticks for apple sprout to grow, 1 will grow almost instantly");
   }
 }

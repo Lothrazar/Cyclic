@@ -29,12 +29,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.InvWrapperRestricted;
-import com.lothrazar.cyclicmagic.gui.ITileFuel;
-import com.lothrazar.cyclicmagic.gui.core.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,10 +54,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
+public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
 
   protected static final int SPEED_FUELED = 8;
   private static final int MAX_SPEED = 10;
+  public static final int MENERGY = 64 * 1000;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
@@ -70,10 +69,17 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_RENDER = "render";
   public static final String NBT_TANK = "tankwater";
   private static final String NBT_ENERGY = "ENERGY";
+  public static final String NBT_UHASH = "uhash";
+  public static final String NBT_UNAME = "uname";
   protected NonNullList<ItemStack> inv;
   private int energyCost = 0;
+  /**
+   * speed > 0
+   */
   protected int speed = 1;
   protected int timer;
+  protected int renderParticles = 0;
+  protected int needsRedstone = 0;
   //Vanilla Furnace has this -> makes it works with some modded pipes such as EXU2
   InvWrapperRestricted invHandler;
   protected EnergyStore energyStorage;
@@ -140,27 +146,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         this.invHandler.canExtract(index);
   }
 
-  protected void initEnergy() {
-    initEnergy(0);
-  }
-
-  protected void initEnergy(int fcost) {
-    initEnergy(fcost, EnergyStore.DEFAULT_CAPACITY);
-  }
-
-  protected void initEnergy(int fcost, int maxStored) {
-    initEnergy(fcost, maxStored, true);
-  }
-
-  protected void initEnergy(EnergyStore store) {
+  protected void initEnergy(EnergyStore store, int energyCost) {
     this.energyStorage = store;
     this.hasEnergy = true;
-  }
-
-  protected void initEnergy(int fcost, int maxStored, boolean canImportPower) {
-    this.energyCost = fcost;
-    this.hasEnergy = true;
-    this.energyStorage = new EnergyStore(maxStored, canImportPower);
+    this.setEnergyCost(energyCost);
   }
 
   public int getEnergyMax() {
@@ -170,7 +159,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return this.energyStorage.getMaxEnergyStored();
   }
 
-  @Override
   public int getEnergyCurrent() {
     if (this.energyStorage == null) {
       return 0;
@@ -182,38 +170,22 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.energyStorage.setEnergyStored(f);
   }
 
-  public double getPercentFormatted() {
-    if (this.getEnergyMax() == 0) {
-      return 0;
-    }
-    double percent = ((float) this.getEnergyCurrent() / (float) this.getEnergyMax());
-    double pctOneDecimal = Math.floor(percent * 1000) / 10;
-    return pctOneDecimal;
-  }
-
   public int getEnergyCost() {
     return this.energyCost;
   }
 
   public void consumeEnergy() {
-    if (this.getEnergyCost() > 0) {//only drain on server //not anymore bitches && world.isRemote == false
-      if (this.getEnergyCurrent() >= this.getEnergyCost()) {
-        this.energyStorage.extractEnergy(this.getEnergyCost(), false);
-      }
+    //only drain on server, if we have enough and if not free
+    if (!world.isRemote && this.getEnergyCost() > 0 &&
+        this.getEnergyCurrent() >= this.getEnergyCost()) {
+      this.energyStorage.extractEnergy(this.getEnergyCost(), false);
+      //it drained, notify client 
+      this.markDirty();
     }
   }
 
   public int[] getFieldArray(int length) {
     return IntStream.rangeClosed(0, length - 1).toArray();
-  }
-
-  @Override
-  public boolean isRunning() {
-    if (this.getEnergyCost() > 0) {
-      // update from power cables/batteries next door
-      this.updateIncomingEnergy();
-    }
-    return super.isRunning();
   }
 
   public boolean isDoingWork() {
@@ -234,43 +206,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   /**
-   * look for connected energy-compatble blocks and try to drain
-   * 
-   * Basically all of this function was written by @Ellpeck and then I tweaked it to fit my needs
+   * much energy code helped out and referenced and inspired by @Ellpeck and then I tweaked it to fit my needs
    * https://github.com/Ellpeck/ActuallyAdditions/blob/9bed6f7ea59e8aa23fa3ba540d92cd61a04dfb2f/src/main/java/de/ellpeck/actuallyadditions/mod/util/WorldUtil.java#L151
    */
-  private void updateIncomingEnergy() {
-    TileEntity teConnected;
-    //check every side to see if I'm connected
-    for (EnumFacing side : EnumFacing.values()) {
-      //it would output energy on the opposite side 
-      EnumFacing sideOpp = side.getOpposite();
-      teConnected = world.getTileEntity(pos.offset(side));
-      if (teConnected != null &&
-          teConnected.hasCapability(CapabilityEnergy.ENERGY, sideOpp)) {
-        //pull energy to myself, from the next one over if it has energy
-        IEnergyStorage handlerTo = this.getCapability(CapabilityEnergy.ENERGY, side);
-        IEnergyStorage handlerFrom = teConnected.getCapability(CapabilityEnergy.ENERGY, sideOpp);
-        if (handlerFrom != null && handlerTo != null) {
-          //true means simulate the extract. then if it worked go for real
-          int drain = handlerFrom.extractEnergy(EnergyStore.MAX_TRANSFER, true);
-          if (drain > 0) {
-            int filled = handlerTo.receiveEnergy(drain, false);
-            handlerFrom.extractEnergy(filled, false);
-            return;// stop now because only pull from one side at a time
-          }
-        }
-      }
-    }
-  }
-
-  @Override
   public boolean hasEnoughEnergy() {
     if (this.getEnergyCost() == 0) {
       return true;
     }
-    //    if (this.world.isRemote == false)
-    //      System.out.println("?" + this.getFuelCurrent());
     return this.getEnergyCurrent() >= this.getEnergyCost();
   }
 
@@ -285,7 +227,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public String getName() {
     if (this.getBlockType() == null) {
-      ModCyclic.logger.error(" null blockType:" + this.getClass().getName());
       return "";
     }
     return this.getBlockType().getTranslationKey() + ".name";
@@ -347,18 +288,34 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
    * @param endOffset
    */
   protected void shiftAllUp(int endOffset) {
-    for (int i = 0; i < this.getSizeInventory() - endOffset - 1; i++) {
-      shiftPairUp(i, i + 1);
+    if (this.world.isRemote == false) {
+      for (int i = 0; i < this.getSizeInventory() - endOffset - 1; i++) {
+        shiftPairUp(i, i + 1);
+      }
     }
   }
 
   protected void shiftPairUp(int low, int high) {
     ItemStack main = getStackInSlot(low);
     ItemStack second = getStackInSlot(high);
-    if (main.isEmpty() && !second.isEmpty()) { // if the one below this is not
-      // empty, move it up
+    if (main.isEmpty() && !second.isEmpty()) {
       this.setInventorySlotContents(high, ItemStack.EMPTY);
       this.setInventorySlotContents(low, second);
+    }
+    else if (!main.isEmpty() && !second.isEmpty()) { // if the one below this is not
+      if (ItemStack.areItemsEqual(main, second)
+          && UtilNBT.stacksTagsEqual(main, second)) {
+        //temSt        main.stack 
+        //         this.tryMergeStackIntoSlot(held, furnaceSlot)
+        ItemStack test = main.copy();
+        test.setCount(second.getCount() + main.getCount());
+        if (this.isItemValidForSlot(low, test)
+            && main.getCount() + second.getCount() < 64) {
+          main.setCount(second.getCount() + main.getCount());
+          second.setCount(0);
+        }
+      }
+      // empty, move it up
     }
   }
 
@@ -443,8 +400,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
-    timer = compound.getInteger(NBT_TIMER);
+    renderParticles = compound.getInteger(NBT_RENDER);
     speed = compound.getInteger(NBT_SPEED);
+    needsRedstone = compound.getInteger(NBT_REDST);
+    timer = compound.getInteger(NBT_TIMER);
     if (this.hasEnergy && compound.hasKey(NBT_ENERGY)) {
       CapabilityEnergy.ENERGY.readNBT(energyStorage, null, compound.getTag(NBT_ENERGY));
     }
@@ -454,8 +413,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     this.writeInvoToNBT(compound);
+    compound.setInteger(NBT_RENDER, renderParticles);
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_TIMER, timer);
+    compound.setInteger(NBT_REDST, needsRedstone);
     if (hasEnergy && energyStorage != null) {
       compound.setTag(NBT_ENERGY, CapabilityEnergy.ENERGY.writeNBT(energyStorage, null));
     }
@@ -512,7 +473,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return new int[0];
   }
 
-  @Override
   public int getSpeed() {
     if (this.getEnergyCost() == 0) {
       return this.speed;// does not use fuel. use NBT saved speed value
@@ -554,7 +514,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       return (T) invHandler;
     }
     if (this.hasEnergy && capability == CapabilityEnergy.ENERGY) {
-      //      this.initEnergyStorage();
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);
@@ -576,7 +535,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return true;
   }
 
-  protected boolean inventoryHasRoom(int start, ItemStack wouldInsert) {
+  protected boolean inventoryHasRoom(int start, final ItemStack wouldInsert) {
     int emptySlots = 0;
     for (int i = start; i < this.inv.size(); i++) {
       //if its empty or it is below max count, then it has room -> not full
@@ -705,5 +664,16 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         sidesOut.add(s);
     Collections.shuffle(sidesOut);
     return sidesOut;
+  }
+
+  public void setEnergyCost(int energyCost) {
+    this.energyCost = energyCost;
+  }
+
+  @Override
+  public boolean isRunning() {
+    this.getEnergyCost();
+    this.hasEnoughEnergy();
+    return super.isRunning();
   }
 }

@@ -33,6 +33,9 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -43,11 +46,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
+  public static final PropertyBool IS_LIT = PropertyBool.create("lit");
+
   public BlockFan() {
     super(Material.ROCK);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_FAN);
@@ -68,9 +72,19 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
   }
 
   @Override
+  public String getContentName() {
+    return "fan";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "fan", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + getContentName() + "_te");
+  }
+
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, new IProperty[] { PROPERTYFACING, IS_LIT });
   }
 
   private boolean enabled;
@@ -82,7 +96,7 @@ public class BlockFan extends BlockBaseFacingOmni implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("Fan", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("Fan", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

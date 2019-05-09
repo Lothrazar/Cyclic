@@ -25,10 +25,11 @@ package com.lothrazar.cyclicmagic.potion.effect;
 
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.potion.PotionEffect;
 
 public class PotionSwimSpeed extends PotionBase {
 
-  private static final float speedfactor = 0.08F;
+  private static final float speedfactor = 0.06F;
 
   public PotionSwimSpeed() {
     super("swimspeed", true, 0xB477FF);
@@ -37,7 +38,10 @@ public class PotionSwimSpeed extends PotionBase {
   @Override
   public void tick(EntityLivingBase entity) {
     if (entity.isInWater()) {
-      UtilEntity.speedupEntityIfMoving(entity, speedfactor);
+      PotionEffect pot = entity.getActivePotionEffect(this);
+      int amp = pot.getAmplifier() + 1;
+      //double if potion is II
+      UtilEntity.speedupEntityIfMoving(entity, speedfactor * amp);
     }
   }
 }

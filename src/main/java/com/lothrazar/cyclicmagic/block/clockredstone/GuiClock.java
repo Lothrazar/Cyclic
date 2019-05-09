@@ -28,14 +28,13 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.clockredstone.TileEntityClock.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.ButtonTriggerWrapper.ButtonTriggerType;
-import com.lothrazar.cyclicmagic.gui.core.CheckboxFacingComponent;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.gui.component.CheckboxFacingComponent;
+import com.lothrazar.cyclicmagic.gui.component.GuiTextFieldInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumFacing;
@@ -127,30 +126,6 @@ public class GuiClock extends GuiBaseContainer {
     checkboxes.initGui();
   }
 
-  private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
-    int width = 10 * maxLen, height = 20;
-    GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
-    txt.setMaxStringLength(maxLen);
-    txt.setText(text);
-    txtBoxes.add(txt);
-    return txt;
-  }
-
-  @Override
-  protected void actionPerformed(GuiButton button) throws IOException {
-    super.actionPerformed(button);
-    if (button instanceof ButtonTileEntityField) {
-      ButtonTileEntityField btn = (ButtonTileEntityField) button;
-      for (GuiTextField t : txtBoxes) { //push value to the matching textbox
-        GuiTextFieldInteger txt = (GuiTextFieldInteger) t;
-        if (txt.getTileFieldId() == btn.getFieldId()) {
-          int val = btn.getValue() + txt.getCurrent();
-          txt.setText(val + "");
-        }
-      }
-    }
-  }
-
   private void addButton(int x, int y, int field, int value, String tooltip) {
     ButtonTileEntityField btn = new ButtonTileEntityField(field + 50,
         this.guiLeft + x,
@@ -176,11 +151,6 @@ public class GuiClock extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    for (GuiTextField txt : txtBoxes) {
-      if (txt != null) {
-        txt.drawTextBox();
-      }
-    }
     this.drawString("" + this.tile.getField(Fields.POWER.ordinal()), xColText, yRow3 + rowOffset);
   }
 

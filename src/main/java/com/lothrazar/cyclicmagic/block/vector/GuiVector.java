@@ -27,8 +27,8 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.vector.TileEntityVector.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiTextFieldInteger;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.GuiTextFieldInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
@@ -61,9 +61,6 @@ public class GuiVector extends GuiBaseContainer {
     this.fieldRedstoneBtn = TileEntityVector.Fields.REDSTONE.ordinal();
   }
 
-  //  public String getTitle() {
-  //    return "tile.plate_vector.name";
-  //  }
   @Override
   public void initGui() {
     super.initGui();
@@ -137,7 +134,8 @@ public class GuiVector extends GuiBaseContainer {
     }
   }
 
-  private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
+  @Override
+  protected GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
     int width = 10 * maxLen, height = 20;
     GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRenderer, x, y, width, height);
     txt.setMaxStringLength(maxLen);

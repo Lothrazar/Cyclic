@@ -28,8 +28,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
+import com.lothrazar.cyclicmagic.block.beaconempty.BeamSegment;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStainedGlassPane;
@@ -75,7 +76,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   @SideOnly(Side.CLIENT)
   private float beamRenderScale;
   private EntityType entityType = EntityType.PLAYERS;
-  private final List<TileEntityBeaconPotion.BeamSegment> beamSegments = Lists.<TileEntityBeaconPotion.BeamSegment> newArrayList();
+  private final List<BeamSegment> beamSegments = Lists.<BeamSegment> newArrayList();
   private String customName;
   /** Primary potion effect given by this beacon. */
   @Nullable
@@ -256,7 +257,7 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   }
 
   @SideOnly(Side.CLIENT)
-  public List<TileEntityBeaconPotion.BeamSegment> getBeamSegments() {
+  public List<BeamSegment> getBeamSegments() {
     return this.beamSegments;
   }
 
@@ -284,11 +285,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-  }
-
-  @Override
-  public NBTTagCompound getUpdateTag() {
-    return this.writeToNBT(new NBTTagCompound());
   }
 
   @Nullable
@@ -442,34 +438,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   public EntityType getEntityType() {
     int type = this.getField(Fields.ENTITYTYPE.ordinal());
     return EntityType.values()[type];
-  }
-
-  public static class BeamSegment {
-
-    /** RGB (0 to 1.0) colors of this beam segment */
-    private final float[] colors;
-    private int height;
-
-    public BeamSegment(float[] colorsIn) {
-      this.colors = colorsIn;
-      this.height = 1;
-    }
-
-    protected void incrementHeight() {
-      ++this.height;
-    }
-
-    /**
-     * Returns RGB (0 to 1.0) colors of this beam segment
-     */
-    public float[] getColors() {
-      return this.colors;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getHeight() {
-      return this.height;
-    }
   }
 
   public int getRadiusCalc() {

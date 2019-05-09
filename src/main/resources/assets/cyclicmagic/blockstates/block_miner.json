@@ -1,9 +1,9 @@
 {
     "variants": {
-        "facing=north": { "model": "cyclicmagic:block_miner_south","y":180},
-        "facing=east":  { "model": "cyclicmagic:block_miner_south","y":270},
-        "facing=south": { "model": "cyclicmagic:block_miner_south"},
-        "facing=west":  { "model": "cyclicmagic:block_miner_south","y":90 },
+        "facing=north": { "model": "cyclicmagic:block_miner","y":180},
+        "facing=east":  { "model": "cyclicmagic:block_miner","y":270},
+        "facing=south": { "model": "cyclicmagic:block_miner"},
+        "facing=west":  { "model": "cyclicmagic:block_miner","y":90 },
         "facing=up": { "model": "cyclicmagic:block_miner_up"},
         "facing=down": { "model": "cyclicmagic:block_miner_down"}
     }

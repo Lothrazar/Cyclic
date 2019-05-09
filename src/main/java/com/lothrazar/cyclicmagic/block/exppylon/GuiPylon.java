@@ -23,10 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.exppylon;
 
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.exppylon.TileEntityXpPylon.Fields;
-import com.lothrazar.cyclicmagic.gui.FluidBar;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.FluidBar;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -47,13 +48,17 @@ public class GuiPylon extends GuiBaseContainer {
   boolean debugLabels = false;
   private ButtonExpPylon btnCollect;
   private ButtonExpPylon btnDepositAll;
+  private ButtonExpPylon btnDeposit;
+  private ButtonExpPylon btnDrain;
+  private int moveQty = 10;
+  private int disableCountdown = 0;
 
   public GuiPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon tileEntity) {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.fluidBar = new FluidBar(this, 120, 40);
+    this.fluidBar = new FluidBar(this, 120, 20);
     fluidBar.setCapacity(TileEntityXpPylon.TANK_FULL);
   }
 
@@ -61,58 +66,30 @@ public class GuiPylon extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int btnId = 0;
-    int w = 58, h = 20;
+    int w = 70, h = 20;
     int x = this.guiLeft + Const.PAD;
     int y = this.guiTop + Const.PAD * 3 + Const.PAD / 2;
-    int hSpacing = w / 2 + Const.PAD / 4;
     btnCollect = new ButtonExpPylon(btnId++,
-        x, y, w + 12, h, "");
+        x, y, w, h, "");
     btnCollect.setTooltip("button.exp_pylon.collect.tooltip");
     this.addButton(btnCollect);
-    y += h + Const.PAD / 2;
+    y += h + Const.PAD / 4;
     //collect and bottle are done, now the rest
-    ButtonExpPylon btn = new ButtonExpPylon(btnId++,
-        x, y, w / 2, h, "+" + 10);
-    btn.setTooltip("button.exp_pylon.deposit.tooltip");
-    btn.setValue(10);
-    this.addButton(btn);
-    x += hSpacing;
-    btn = new ButtonExpPylon(btnId++,
-        x, y, w / 2, h, "+" + 50);
-    btn.setTooltip("button.exp_pylon.deposit.tooltip");
-    btn.setValue(50);
-    this.addButton(btn);
-    x += hSpacing;
-    btn = new ButtonExpPylon(btnId++,
-        x, y, w / 2 + 5, h, "+" + 500);
-    btn.setTooltip("button.exp_pylon.deposit.tooltip");
-    btn.setValue(500);
-    this.addButton(btn);
-    x = this.guiLeft + Const.PAD;
-    y += h + Const.PAD / 2;
+    btnDeposit = new ButtonExpPylon(btnId++,
+        x, y, w / 2 - 2, h, "");
+    btnDeposit.setTooltip("button.exp_pylon.deposit.tooltip");
+    this.addButton(btnDeposit);
+    x += w / 2 + 2;
     //START OF - ROW
-    btn = new ButtonExpPylon(btnId++,
-        x, y, w / 2, h, "-" + 10);
-    btn.setTooltip("button.exp_pylon.drain.tooltip");
-    btn.setValue(-10);
-    this.buttonList.add(btn);
-    x += hSpacing;
-    btn = new ButtonExpPylon(btnId++,
-        x, y, w / 2, h, "-" + 50);
-    btn.setTooltip("button.exp_pylon.drain.tooltip");
-    btn.setValue(-50);
-    this.buttonList.add(btn);
-    x += hSpacing;
-    btn = new ButtonExpPylon(btnId++,
-        x, y, w / 2 + 5, h, "-" + 500);
-    btn.setTooltip("button.exp_pylon.drain.tooltip");
-    btn.setValue(-500);
-    this.buttonList.add(btn);
-    x = this.guiLeft + Const.PAD;
+    btnDrain = new ButtonExpPylon(btnId++,
+        x, y, w / 2 - 2, h, "");
+    btnDrain.setTooltip("button.exp_pylon.drain.tooltip");
+    this.addButton(btnDrain);
     //FINALLY THE all button
-    y += h + Const.PAD / 2;
+    x = this.guiLeft + Const.PAD;
+    y += h + Const.PAD / 4;
     btnDepositAll = new ButtonExpPylon(btnId++,
-        x, y, w / 2, h, UtilChat.lang("button.exp_pylon.depositall"));
+        x, y, w, h, UtilChat.lang("button.exp_pylon.depositall"));
     btnDepositAll.setTooltip("button.exp_pylon.depositall.tooltip");
     this.buttonList.add(btnDepositAll);
   }
@@ -123,10 +100,12 @@ public class GuiPylon extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.COLLECT));
     }
     else if (button.id == btnDepositAll.id) {
+      this.disableCountdown = 10;
       //fake: exp really means deposit
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 0, TileEntityXpPylon.Fields.EXP));
     }
     else if (button instanceof ButtonExpPylon && ((ButtonExpPylon) button).getValue() != 0) {
+      this.disableCountdown = 10;
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), ((ButtonExpPylon) button).getValue(), TileEntityXpPylon.Fields.EXP));
     }
   }
@@ -146,9 +125,38 @@ public class GuiPylon extends GuiBaseContainer {
     fluidBar.draw(tile.getCurrentFluidStack());
   }
 
+  //from GuiSliderInteger
+  public int amt() {
+    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+      return 100;
+    }
+    if (Keyboard.isKeyDown(Keyboard.KEY_RMENU) || Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+      return 1000;
+    }
+    if (Keyboard.isKeyDown(Keyboard.KEY_LMETA) || Keyboard.isKeyDown(Keyboard.KEY_RMETA)) {
+      return 1000;
+    }
+    return 500;
+  }
+
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    if (this.disableCountdown > 0) {
+      this.disableCountdown--;
+      this.btnDepositAll.enabled = false;
+      this.btnDeposit.enabled = false;
+      this.btnDrain.enabled = false;
+    }
+    else {
+      this.btnDepositAll.enabled = true;
+      this.btnDeposit.enabled = true;
+      this.btnDrain.enabled = true;
+    }
+    this.moveQty = amt();
+    this.btnDeposit.setValue(this.moveQty);
+    this.btnDrain.setValue(-1 * this.moveQty);
+    //moveQty
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     int fluidHas = this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());
     //    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 - 8, 108);

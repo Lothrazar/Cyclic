@@ -25,7 +25,7 @@ package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
@@ -41,19 +41,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmAir extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmAir extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private static final double DOWNWARD_SPEED_SNEAKING = -0.32;
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final int durability = 4096;
+  private static final ItemStack craftItem = new ItemStack(Blocks.BONE_BLOCK);
 
   public ItemCharmAir() {
     super(durability);
   }
 
   @Override
+  public String getContentName() {
+    return "charm_air";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_air", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
     ModCyclic.instance.events.register(this);
     LootTableRegistry.registerLoot(this);
   }
@@ -67,7 +73,7 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("AirCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("AirCharm", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -96,7 +102,12 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
   public IRecipe addRecipe() {
-    return super.addRecipe(new ItemStack(Blocks.BONE_BLOCK));
+    return super.addRecipe(craftItem);
   }
 }

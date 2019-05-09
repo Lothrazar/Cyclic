@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.block.BlockSand;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -38,6 +37,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -49,6 +50,7 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
   private NonNullList<ItemStack> recipeInput = NonNullList.withSize(TileEntityHydrator.RECIPE_SIZE, ItemStack.EMPTY);// new ItemStack[4];
   private ItemStack resultItem = ItemStack.EMPTY;
   private int fluidCost = FLUID_DEFAULT;
+  private int size = 0;
 
   public RecipeHydrate(ItemStack in, ItemStack out) {
     this(new ItemStack[] { in }, out, FLUID_DEFAULT);
@@ -62,23 +64,48 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     if (in.length > TileEntityHydrator.RECIPE_SIZE || in.length == 0) {
       throw new IllegalArgumentException("Input array must be length 4 or less");
     }
-    for (int i = 0; i < in.length; i++) {
-      if (in[i] != null && in[i].isEmpty() == false)
-        recipeInput.set(i, in[i]);
+    //how many do we have 
+    for (ItemStack itemStack : in) {
+      if (itemStack != null && itemStack.isEmpty() == false) {
+        recipeInput.set(size, itemStack);
+        size++;
+      }
     }
     this.fluidCost = w;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
   }
 
+  public FluidStack getFluidIngredient() {
+    return new FluidStack(FluidRegistry.WATER, this.fluidCost);
+  }
+
+  public int getSize() {
+    return size;
+  }
+
   @Override
   public boolean matches(InventoryCrafting inv, World worldIn) {
     this.sanityCheckInput();
+    int countFull = 0;
+    for (int i = 0; i < inv.getSizeInventory(); i++) {
+      if (inv.getStackInSlot(i).isEmpty() == false) {
+        countFull++;
+      }
+    }
+    if (countFull != this.size) {
+      //      ModCyclic.logger.info("hydrate recipe shortcut " + countNonEmpty + "_" + size);
+      return false;
+    }
     boolean match0 = recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0));
     boolean match1 = recipeSlotMatches(inv.getStackInSlot(1), recipeInput.get(1));
     boolean match2 = recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2));
     boolean match3 = recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
-    return match0 && match1 && match2 && match3;
+    boolean all = match0 && match1 && match2 && match3;
+    //    if (all) {
+    //      ModCyclic.logger.info("MATCH" + this.getRecipeOutput() + this.size + "___" + countFull);
+    //    }
+    return all;
   }
 
   /**
@@ -216,21 +243,8 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), new ItemStack(Items.SLIME_BALL), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Blocks.SOUL_SAND)
-    }, new ItemStack(Blocks.SPONGE)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.WEB), new ItemStack(Items.STRING), new ItemStack(Items.STRING), new ItemStack(Items.BONE)
-    }, new ItemStack(Blocks.WEB, 4)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.IRON_NUGGET), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.CLAY_BALL)
-    }, new ItemStack(Items.PRISMARINE_SHARD)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
-    }, new ItemStack(Items.PRISMARINE_CRYSTALS)));
-    // lava fabricator
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.NETHERRACK), new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.BLAZE_POWDER)
-    }, new ItemStack(Items.LAVA_BUCKET)));
+    }, new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));
@@ -240,9 +254,9 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM)
     }, new ItemStack(Blocks.RED_MUSHROOM_BLOCK)));
-    addRecipe(new RecipeHydrate(new ItemStack[] {
-        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
-    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
+    //    addRecipe(new RecipeHydrate(new ItemStack[] {
+    //        new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage())
+    //    }, new ItemStack(Blocks.SAND, 1, BlockSand.EnumType.RED_SAND.ordinal())));
   }
 
   public static void addRecipe(RecipeHydrate rec) {

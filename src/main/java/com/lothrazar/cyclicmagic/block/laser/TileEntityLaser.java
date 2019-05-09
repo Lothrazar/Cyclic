@@ -25,15 +25,14 @@ package com.lothrazar.cyclicmagic.block.laser;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.data.OffsetEnum;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
+import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
-
-  public static final int MAX_TIMER = 100;
 
   public static enum Fields {
     REDSTONE, TIMER, R, G, B, ALPHA, PULSE, EXTENDING, XOFF, YOFF, ZOFF;
@@ -52,6 +51,7 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
 
   public TileEntityLaser() {
     super(4);
+    this.setSetRenderGlobally(true);
   }
 
   @Override
@@ -60,13 +60,13 @@ public class TileEntityLaser extends TileEntityBaseMachineInvo implements ITicka
       return;
     }
     timer++;
-    if (timer > MAX_TIMER) {
+    if (timer > LaserConfig.MAX_TIMER) {
       timer = 0;
     }
   }
 
   BlockPosDim getTarget(int slot) {
-    return ItemLocation.getPosition(this.getStackInSlot(slot));
+    return ItemLocationGps.getPosition(this.getStackInSlot(slot));
   }
 
   @Override

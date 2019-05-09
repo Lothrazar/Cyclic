@@ -52,6 +52,11 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
     BlockRegistry.registerBlock(this, "button_large", GuideCategory.BLOCK);
   }
 
+  @Override
+  public String getContentName() {
+    return "button_large";
+  }
+
   private boolean enabled;
 
   @Override
@@ -61,7 +66,7 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("button_large", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -82,7 +87,11 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapelessOreRecipe(new ItemStack(this), Blocks.WOODEN_BUTTON, Blocks.STONE_PRESSURE_PLATE, "nuggetIron");
+    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
+        "bn",
+        "un",
+        'b', Blocks.WOODEN_BUTTON, 'u', Blocks.STONE_PRESSURE_PLATE,
+        'n', "nuggetIron");
   }
 
   @Override

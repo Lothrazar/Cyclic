@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -54,8 +53,6 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
 
   public BlockLaser() {
     super(Material.ROCK);
-    //    this.setHardness(3F);
-    //    this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_LASER);
   }
@@ -91,7 +88,7 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new LaserTESR(this));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new LaserAnimatedTESR());
   }
 
   @Override
@@ -106,14 +103,19 @@ public class BlockLaser extends BlockBaseHasTile implements IHasRecipe, IBlockHa
   }
 
   @Override
+  public String getContentName() {
+    return "laser";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("laser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "laser", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityLaser.class, "laser_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerTileEntity(TileEntityLaser.class, getContentName() + "_te");
   }
 
   private boolean enabled;

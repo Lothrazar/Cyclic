@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
@@ -48,16 +49,15 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public static final int SLOT_ROWS = 4;
   public static final int SLOT_COLS = 5;
   public static int TIMER_FULL = 200;
-  private int needsRedstone = 1;
 
   public static enum Fields {
-    TIMER, REDSTONE, FUEL;
+    TIMER, REDSTONE;
   }
 
   public TileEntityUncrafter() {
     super(SLOT_ROWS * SLOT_COLS + 1);
     timer = TIMER_FULL;
-    this.initEnergy(BlockUncrafting.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockUncrafting.FUEL_COST);
     this.setSlotsForInsert(SLOT_UNCRAFTME);
     this.setSlotsForExtract(1, this.getSizeInventory() - 1);
   }
@@ -70,12 +70,10 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tagCompound);
   }
 
@@ -117,8 +115,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         this.markDirty();
       }
       catch (Exception e) {
-        ModCyclic.logger.error("Unhandled exception in uncrafting ");
-        ModCyclic.logger.error(e.getMessage());
+        ModCyclic.logger.error("Unhandled exception in uncrafting ", e);
         e.printStackTrace();
       }
     } //end of timer go
@@ -136,8 +133,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case TIMER:
         return timer;
       case REDSTONE:
@@ -152,9 +147,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case TIMER:
         this.timer = value;
       break;

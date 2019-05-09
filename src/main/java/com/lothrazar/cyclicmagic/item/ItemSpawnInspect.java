@@ -34,6 +34,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -63,8 +64,13 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_spawn_inspect";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_spawn_inspect");
+    ItemRegistry.register(this, getContentName());
   }
 
   private boolean enabled;
@@ -76,7 +82,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
@@ -128,7 +134,7 @@ public class ItemSpawnInspect extends BaseTool implements IHasRecipe, IContent {
         }
       }
     }
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }

@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.item.equipbauble;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IHasRecipeAndRepair;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseCharm;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -36,19 +36,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmSpeed extends BaseCharm implements IHasRecipe, IContent {
+public class ItemCharmSpeed extends BaseCharm implements IHasRecipeAndRepair, IContent {
 
   private static final double CHANCE_DAMAGE = 0.005;
   private static final int durability = 20000;
   private static final float speedfactor = 0.08F;
+  private static final ItemStack craftItem = new ItemStack(Items.EMERALD);
 
   public ItemCharmSpeed() {
     super(durability);
   }
 
   @Override
+  public String getContentName() {
+    return "charm_speed";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "charm_speed", GuideCategory.ITEMBAUBLES);
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMBAUBLES);
   }
 
   private boolean enabled;
@@ -75,7 +81,12 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe, IContent {
   }
 
   @Override
+  public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
+    return par2ItemStack.getItem() == craftItem.getItem();
+  }
+
+  @Override
   public IRecipe addRecipe() {
-    return super.addRecipe(new ItemStack(Items.EMERALD));
+    return this.addRecipe(craftItem);
   }
 }

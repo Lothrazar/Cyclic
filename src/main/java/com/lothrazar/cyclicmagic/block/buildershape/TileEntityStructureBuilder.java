@@ -27,8 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITilePreviewToggle;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -47,7 +48,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   private static final int spotsSkippablePerTrigger = 50;
-  public static int TIMER_FULL = 25;
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int buildType;
@@ -64,7 +64,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int offsetZ = 0;
 
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ, FUEL;
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ;
   }
 
   public enum BuildType {
@@ -112,7 +112,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
 
   public TileEntityStructureBuilder() {
     super(9);
-    this.initEnergy(BlockStructureBuilder.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY), BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
   }
 
@@ -208,8 +208,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.offsetY;
         case OZ:
           return this.offsetZ;
-        case FUEL:
-          return this.getEnergyCurrent();
       }
     }
     return -1;
@@ -219,9 +217,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-        case FUEL:
-          this.setEnergyCurrent(value);
-        break;
         case TIMER:
           this.timer = value;
         break;
@@ -360,48 +355,46 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     if (this.isRunning() == false || this.isInventoryEmpty()) {
       return;
     }
-    this.shiftAllUp(1);
+    this.shiftAllUp();
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
-    if (this.updateTimerIsZero()) {
-      timer = TIMER_FULL;
-      ItemStack stack = getStackInSlot(0);
-      if (stack.isEmpty()) {
-        return;
-      }
-      Block stuff = Block.getBlockFromItem(stack.getItem());
-      if (stuff != null) {
-        List<BlockPos> shape = this.getShape();
-        if (shape.size() == 0) {
-          return;
-        }
-        if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
-          this.shapeIndex = 0;
-        }
-        BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
-        for (int i = 0; i < spotsSkippablePerTrigger; i++) {
-          //true means bounding box is null in the check. entit falling sand uses true
-          //used to be exact air world.isAirBlock(nextPos)
-          if (stuff.canPlaceBlockAt(world, nextPos) && //sutf checks isReplaceable for us, all AIR checks removed
-              world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
-            IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
-            if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-              //rotations if any
-              for (int j = 0; j < this.rotations; j++) {
-                UtilPlaceBlocks.rotateBlockValidState(world, null, nextPos, this.getCurrentFacing());
-              }
-              //decrement and sound
-              this.decrStackSize(0, 1);
-            }
-            break;//ok , target position is valid, we can build only into air
+    ItemStack stack = getStackInSlot(0);
+    if (stack.isEmpty()) {
+      return;
+    }
+    Block stuff = Block.getBlockFromItem(stack.getItem());
+    if (stuff == null) {
+      return;
+    }
+    List<BlockPos> shape = this.getShape();
+    if (shape.size() == 0) {
+      return;
+    }
+    if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
+      this.shapeIndex = 0;
+    }
+    BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
+    for (int i = 0; i < spotsSkippablePerTrigger; i++) {
+      //true means bounding box is null in the check. entit falling sand uses true
+      //used to be exact air world.isAirBlock(nextPos)
+      if (stuff.canPlaceBlockAt(world, nextPos) && //sutf checks isReplaceable for us, all AIR checks removed
+          world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
+        IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
+        if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+          //rotations if any
+          for (int j = 0; j < this.rotations; j++) {
+            UtilPlaceBlocks.rotateBlockValidState(world, null, nextPos, this.getCurrentFacing());
           }
-          else {//cant build here. move up one
-            nextPos = shape.get(this.shapeIndex);
-            this.incrementPosition(shape);
-          } //but after inrementing once, we may not yet be valid so skip at most ten spots per tick
+          //decrement and sound
+          this.decrStackSize(0, 1);
         }
+        break;//ok , target position is valid, we can build only into air
       }
+      else {//cant build here. move up one
+        nextPos = shape.get(this.shapeIndex);
+        this.incrementPosition(shape);
+      } //but after inrementing once, we may not yet be valid so skip at most ten spots per tick
     }
   }
 

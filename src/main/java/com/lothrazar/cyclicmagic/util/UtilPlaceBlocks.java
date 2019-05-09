@@ -85,6 +85,7 @@ public class UtilPlaceBlocks {
    * @param stack
    * @return
    */
+  @SuppressWarnings("deprecation")
   public static boolean placeItemblock(World world, BlockPos placePos, final ItemStack stack, EntityPlayer fake) {
     if (stack.getItem() instanceof ItemBlock == false) {
       return false;
@@ -101,10 +102,14 @@ public class UtilPlaceBlocks {
         }
         else {
           //it might not have metadata, and it might have some crazy own way of doing this (chisels&bits/NBT data)
-          state = block.getStateForPlacement(world, placePos, fake.getHorizontalFacing(), placePos.getX(), placePos.getY(), placePos.getZ(),
+          EnumFacing facing = (fake == null) ? EnumFacing.UP : fake.getHorizontalFacing();
+          state = block.getStateForPlacement(world, placePos, facing,
+              placePos.getX() + .5f,
+              placePos.getY() + .5f,
+              placePos.getZ() + .5f,
               stack.getMetadata(), fake, EnumHand.MAIN_HAND);
         }
-        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.DOWN, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
+        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.UP, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
           world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
           stack.shrink(1);
           return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;
@@ -168,8 +173,7 @@ public class UtilPlaceBlocks {
       // PR for context https://github.com/PrinceOfAmber/Cyclic/pull/577/files
       // and  https://github.com/PrinceOfAmber/Cyclic/pull/579/files
       // show exception from above, possibly failed placement
-      ModCyclic.logger.error("Error attempting to place block ");
-      e.printStackTrace();
+      ModCyclic.logger.error("Error attempting to place block ", e);
     }
     // play sound to area when placement is a success
     if (success && playSound) {
@@ -256,8 +260,7 @@ public class UtilPlaceBlocks {
       }
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Error thrown by a tile entity when removing the block: " + e.getMessage());
-      e.printStackTrace();
+      ModCyclic.logger.error("Error thrown by a tile entity when removing the block: ", e);
       return false;
     }
     world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync

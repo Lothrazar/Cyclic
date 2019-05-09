@@ -39,7 +39,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHasOreDict, IContent {
 
@@ -55,9 +54,14 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   }
 
   @Override
+  public String getContentName() {
+    return "block_workbench";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_workbench", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
   }
 
   private boolean enabled;
@@ -82,7 +86,7 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe, IHas
   }
 
   @Override
-  public String getOreDict() {
-    return "workbench";
+  public String[] getOreDict() {
+    return new String[] { "workbench" };
   }
 }

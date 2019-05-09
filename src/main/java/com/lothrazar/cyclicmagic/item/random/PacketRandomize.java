@@ -96,6 +96,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
     return null;
   }
 
+  @SuppressWarnings("deprecation")
   private static void runAction(final PacketRandomize message, final MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;
     World world = player.getEntityWorld();
@@ -106,6 +107,9 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
     IBlockState stateHere = null;
     for (BlockPos p : places) {
       stateHere = world.getBlockState(p);
+      if (stateHere.getBlock().getBlockHardness(stateHere, world, p) < 0) {
+        continue;//skip unbreakable
+      }
       if (stateHere != null
           && world.getTileEntity(p) == null
           && world.isAirBlock(p) == false

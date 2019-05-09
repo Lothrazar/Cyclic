@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -21,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -29,13 +29,24 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
 
   public BlockVoidAnvil() {
     super(Material.ANVIL);
+    this.setSoundType(SoundType.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_VOID);
     this.setTranslucent();
   }
 
   @Override
+  public String getContentName() {
+    return "void_anvil";
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityVoidAnvil();
+  }
+
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
   }
 
   @Override
@@ -45,14 +56,14 @@ public class BlockVoidAnvil extends BlockBaseHasTile implements IHasRecipe, ICon
 
   @Override
   public void syncConfig(Configuration config) {
-    FUEL_COST = config.getInt("void_anvil", Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
-    enabled = config.getBoolean("void_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 2000, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "void_anvil", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityVoidAnvil.class, "void_anvil_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerTileEntity(TileEntityVoidAnvil.class, getContentName() + "_te");
   }
 
   private boolean enabled;

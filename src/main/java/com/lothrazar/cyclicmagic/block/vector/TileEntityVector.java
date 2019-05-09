@@ -24,7 +24,7 @@
 package com.lothrazar.cyclicmagic.block.vector;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**

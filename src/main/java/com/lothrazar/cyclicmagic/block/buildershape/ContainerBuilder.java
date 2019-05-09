@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.buildershape;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -64,7 +64,7 @@ public class ContainerBuilder extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory() - 1, false)) {
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }
       if (stackInSlot.getCount() == 0) {

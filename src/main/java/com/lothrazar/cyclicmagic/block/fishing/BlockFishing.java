@@ -47,7 +47,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -96,9 +95,14 @@ public class BlockFishing extends BlockBaseHasTile implements IContent, IHasReci
   }
 
   @Override
+  public String getContentName() {
+    return "block_fishing";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_fishing", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -111,6 +115,6 @@ public class BlockFishing extends BlockBaseHasTile implements IContent, IHasReci
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("block_fishing", Const.ConfigCategory.fuelCost, 25, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 25, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

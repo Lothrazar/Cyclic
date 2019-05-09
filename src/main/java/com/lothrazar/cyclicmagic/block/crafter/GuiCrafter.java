@@ -23,9 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.crafter;
 
-import com.lothrazar.cyclicmagic.gui.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
@@ -43,7 +42,6 @@ public class GuiCrafter extends GuiBaseContainer {
     tileCrafter = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
     this.energyBar = new EnergyBar(this);
     energyBar.setHeight(82).setWidth(14).setY(28).setX(150);
   }

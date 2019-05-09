@@ -33,18 +33,19 @@ import net.minecraftforge.fluids.Fluid;
 
 public class TileEntityFluidTank extends TileEntityBaseMachineFluid implements ITickable {
 
+  public static final int CAPACITY = Fluid.BUCKET_VOLUME * 64;
   public static final int TRANSFER_FLUID_PER_TICK = 500;
 
   public TileEntityFluidTank() {
     super(0);
-    tank = new FluidTankFixDesync(Fluid.BUCKET_VOLUME * 64, this);
+    tank = new FluidTankFixDesync(CAPACITY, this);
   }
 
   @Override
   public void update() {
     //drain below but only to one of myself
     TileEntity below = this.world.getTileEntity(this.pos.down());
-    if (below != null && below instanceof TileEntityFluidTank) {
+    if (below != null) {// && below instanceof TileEntityFluidTank
       UtilFluid.tryFillPositionFromTank(world, this.pos.down(), EnumFacing.UP, tank, TRANSFER_FLUID_PER_TICK);
     }
   }

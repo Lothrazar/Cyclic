@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.item;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -36,15 +36,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerItemPump extends ContainerBaseMachine {
 
   public static final int SLOTX_START = Const.PAD;
-  public static final int SLOTY = Const.SQ + Const.PAD * 3;
+  public static final int SLOTY = Const.SQ + Const.PAD * 4;
 
   public ContainerItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump te) {
     super(te);
-    //    for (int col = 1; col < 10; col++) {
-    //      addSlotToContainer(new SlotSingleStack(tile, col,
-    //          SLOTX_START + (col - 1) * Const.SQ,
-    //          SLOTY));
-    //    }
     bindPlayerInventory(inventoryPlayer);
   }
 

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.exppylon;
 
-import com.lothrazar.cyclicmagic.gui.core.GuiButtonTooltip;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
 
 public class ButtonExpPylon extends GuiButtonTooltip {
 
@@ -39,5 +39,12 @@ public class ButtonExpPylon extends GuiButtonTooltip {
 
   public void setValue(int value) {
     this.value = value;
+    String val = value + "";
+    if (value >= 1000 || value <= -1000) {
+      int trunk = value / 1000;
+      val = trunk + "k";
+    }
+    String p = value > 0 ? "+" : "";
+    this.displayString = p + val;
   }
 }

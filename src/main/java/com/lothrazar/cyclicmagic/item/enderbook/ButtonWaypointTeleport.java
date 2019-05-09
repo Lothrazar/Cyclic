@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.item.enderbook;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import com.lothrazar.cyclicmagic.data.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.client.Minecraft;
@@ -55,6 +55,11 @@ public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton 
   @Override
   public List<String> getTooltips() {
     return tooltips;
+  }
+
+  public void setTooltipLine(String s) {
+    tooltips = new ArrayList<String>();
+    tooltips.add(s);
   }
 
   public void addTooltipLine(String s) {

@@ -43,7 +43,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -51,7 +50,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -77,6 +75,11 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
   }
 
   @Override
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityAnvilAuto();
   }
@@ -90,8 +93,8 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_anvil", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + "block_anvil_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityAnvilAuto.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -103,22 +106,9 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("block_anvil", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("block_anvil", Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
-    String category = Const.ConfigCategory.modpackMisc + ".block_anvil";
-    // @formatter:off
-    String[] deflist = new String[] {
-        "galacticraftcore:battery" 
-        , "galacticraftcore:oxygen_tank_heavy_full" 
-        , "galacticraftcore:oxygen_tank_med_full" 
-        , "galacticraftcore:oil_canister_partial" 
-        , "galacticraftcore:oxygen_tank_light_full"
-        ,"pneumaticcraft:*"
-    };
-    // @formatter:on
-    String[] blacklist = config.getStringList("RepairBlacklist",
-        category, deflist, "These cannot be repaired. Use star syntax to lock out an entire mod, otherwise use the standard modid:itemid for singles.  Applies to both diamond and magma anvil");
-    TileEntityAnvilAuto.blacklistBlockIds = NonNullList.from("", blacklist);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 900, 0, 500000, Const.ConfigText.fuelCost);
+    UtilRepairItem.syncConfig(config);
   }
 
   @Override
@@ -131,5 +121,10 @@ public class BlockAnvilAuto extends BlockBaseHasTile implements IContent, IHasRe
         'i', "blockIron",
         'e', center,
         'd', "gemDiamond");
+  }
+
+  @Override
+  public String getContentName() {
+    return "block_anvil";
   }
 }

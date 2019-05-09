@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.trash;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -40,7 +41,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -49,6 +49,7 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent
   public BlockTrash() {
     super(Material.IRON);
     this.setTranslucent();
+    this.setGuiId(ForgeGuiHandler.GUI_INDEX_TRASH);
   }
 
   @Override
@@ -72,9 +73,14 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent
   }
 
   @Override
+  public String getContentName() {
+    return "trash";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "trash", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + "trash_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerTileEntity(TileEntityTrash.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -86,7 +92,7 @@ public class BlockTrash extends BlockBaseHasTile implements IHasRecipe, IContent
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("trash", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

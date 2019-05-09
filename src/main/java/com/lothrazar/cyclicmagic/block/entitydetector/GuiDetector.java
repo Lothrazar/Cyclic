@@ -23,13 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.entitydetector;
 
+import java.io.IOException;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.CompareType;
 import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.block.entitydetector.TileEntityDetector.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
-import com.lothrazar.cyclicmagic.gui.core.ButtonTriggerWrapper.ButtonTriggerType;
-import com.lothrazar.cyclicmagic.gui.core.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTriggerWrapper.ButtonTriggerType;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
+import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,6 +47,9 @@ public class GuiDetector extends GuiBaseContainer {
   //  private int[] yRows = new int[3];
   private ButtonTileEntityField greaterLessBtn;
   private ButtonTileEntityField entityBtn;
+  private GuiSliderInteger sliderX;
+  private GuiSliderInteger sliderY;
+  private GuiSliderInteger sliderZ;
 
   public GuiDetector(InventoryPlayer inventoryPlayer, TileEntityDetector tileEntity) {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
@@ -68,24 +73,45 @@ public class GuiDetector extends GuiBaseContainer {
     this.greaterLessBtn = addPatternButtonAt(id++, x + 8, y, true, Fields.GREATERTHAN, 60, 20);
     this.entityBtn = addPatternButtonAt(id++, 8, y, true, Fields.ENTITYTYPE, 60, 20);
     int MIN = 1, MAX = TileEntityDetector.MAX_RANGE;
-    GuiSliderInteger sliderDelayx = new GuiSliderInteger(tile, id++,
+    sliderX = new GuiSliderInteger(tile, id++,
         this.guiLeft + 28,
         this.guiTop + 20, 122, 10, MIN, MAX,
         Fields.RANGEX.ordinal());
-    sliderDelayx.setTooltip("tile.entity_detector.rangex");
-    this.addButton(sliderDelayx);
-    GuiSliderInteger sliderDelay = new GuiSliderInteger(tile, id++,
+    sliderX.setTooltip("tile.entity_detector.rangex");
+    this.addButton(sliderX);
+    sliderY = new GuiSliderInteger(tile, id++,
         this.guiLeft + 28,
         this.guiTop + 32, 122, 10, MIN, MAX,
         Fields.RANGEY.ordinal());
-    sliderDelay.setTooltip("tile.entity_detector.rangey");
-    this.addButton(sliderDelay);
-    GuiSliderInteger sliderDelayz = new GuiSliderInteger(tile, id++,
+    sliderY.setTooltip("tile.entity_detector.rangey");
+    this.addButton(sliderY);
+    sliderZ = new GuiSliderInteger(tile, id++,
         this.guiLeft + 28,
         this.guiTop + 44, 122, 10, MIN, MAX,
         Fields.RANGEZ.ordinal());
-    sliderDelayz.setTooltip("tile.entity_detector.rangez");
-    this.addButton(sliderDelayz);
+    sliderZ.setTooltip("tile.entity_detector.rangez");
+    this.addButton(sliderZ);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
+  }
+
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    sliderX.keyTyped(typedChar, keyCode);
+    sliderY.keyTyped(typedChar, keyCode);
+    sliderZ.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    sliderX.updateScreen();
+    sliderY.updateScreen();
+    sliderZ.updateScreen();
   }
 
   private ButtonTileEntityField addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {

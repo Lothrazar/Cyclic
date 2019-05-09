@@ -1,0 +1,9 @@
+{
+    "variants": {
+		"normal": { "model": "cyclicmagic:screen_target" },
+        "facing=north": { "model": "cyclicmagic:screen_target" ,"y":180},
+        "facing=east":  { "model": "cyclicmagic:screen_target" ,"y":270},
+        "facing=south": { "model": "cyclicmagic:screen_target" },
+        "facing=west":  { "model": "cyclicmagic:screen_target" ,"y":90}
+    }
+}

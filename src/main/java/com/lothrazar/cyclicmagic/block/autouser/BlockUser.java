@@ -48,7 +48,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -62,6 +61,11 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
     super(Material.IRON, ForgeGuiHandler.GUI_INDEX_USER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
+  }
+
+  @Override
+  public String getContentName() {
+    return "block_user";
   }
 
   @Override
@@ -88,8 +92,8 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "block_user", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -102,7 +106,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt("block_user", Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
     maxAttackPer = config.getInt("AutoUserMaxAttackPerAction", Const.ConfigCategory.modpackMisc, 0, 0, 100, "How many entities can be attacked with one swipe from the block_user when in attack mode.  Zero means no limit.  ");
   }
 }

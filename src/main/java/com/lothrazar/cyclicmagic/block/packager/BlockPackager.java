@@ -42,7 +42,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRecipe {
 
@@ -52,7 +51,7 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PACKAGER);
-    RecipePackage.initAllRecipes();
+    RecipePackager.initAllRecipes();
   }
 
   @Override
@@ -77,9 +76,14 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
   }
 
   @Override
+  public String getContentName() {
+    return "auto_packager";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "auto_packager", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPackager.class, "auto_packager_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
+    BlockRegistry.registerTileEntity(TileEntityPackager.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -91,10 +95,7 @@ public class BlockPackager extends BlockBaseHasTile implements IContent, IHasRec
 
   @Override
   public void syncConfig(Configuration config) {
-
-    enabled = config.getBoolean("auto_packager", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileEntityPackager.TIMER_FULL = config.getInt("auto_packager", Const.ConfigCategory.machineTimer,
-        35, 1, 9000, Const.ConfigText.machineTimer);
-    FUEL_COST = config.getInt("auto_packager", Const.ConfigCategory.fuelCost, 950, 0, 500000, Const.ConfigText.fuelCost);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 950, 0, 500000, Const.ConfigText.fuelCost);
   }
 }

@@ -23,8 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.autouser;
 
-import com.lothrazar.cyclicmagic.gui.core.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
+import com.lothrazar.cyclicmagic.gui.slot.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,7 +46,7 @@ public class ContainerUser extends ContainerBaseMachine {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
     for (int i = 0; i < 3; i++) {//0 1 2 
-      addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
+      addSlotToContainer(new SlotSingleStack(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     for (int i = 3; i < 6; i++) {//345
       addSlotToContainer(new SlotOutputOnly(tile, i, SLOTX_START + (i + 3) * Const.SQ, SLOTY));

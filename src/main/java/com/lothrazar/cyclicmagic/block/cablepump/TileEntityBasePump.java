@@ -15,6 +15,7 @@ public class TileEntityBasePump extends TileEntityBaseMachineFluid implements IF
 
   public TileEntityBasePump(int invoSize) {
     super(invoSize);
+    this.needsRedstone = 0;
     for (EnumFacing f : EnumFacing.values()) {
       mapBlacklist.put(f, false);
     }

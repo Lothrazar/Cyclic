@@ -42,7 +42,6 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -275,15 +274,20 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   }
 
   @Override
+  public String getContentName() {
+    return "imbuer";
+  }
+
+  @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("imbuer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
   public void register() {
     ModCyclic.instance.events.register(this);
     BlockRegistry.registerBlock(this, "imbuer", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityImbue.class, "imbuer_te");
+    BlockRegistry.registerTileEntity(TileEntityImbue.class, getContentName() + "_te");
   }
 
   private boolean enabled;

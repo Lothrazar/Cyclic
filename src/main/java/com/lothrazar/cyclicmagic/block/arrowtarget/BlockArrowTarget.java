@@ -22,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe, IContent {
 
@@ -33,9 +32,14 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe, IC
   }
 
   @Override
+  public String getContentName() {
+    return "target";
+  }
+
+  @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "target", GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityArrowTarget.class, "target_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerTileEntity(TileEntityArrowTarget.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -47,7 +51,7 @@ public class BlockArrowTarget extends BlockBaseHasTile implements IHasRecipe, IC
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("target", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override

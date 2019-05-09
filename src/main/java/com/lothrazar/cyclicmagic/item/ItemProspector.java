@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -62,8 +63,13 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
+  public String getContentName() {
+    return "tool_prospector";
+  }
+
+  @Override
   public void register() {
-    ItemRegistry.register(this, "tool_prospector");
+    ItemRegistry.register(this, getContentName());
     LootTableRegistry.registerLoot(this);
   }
 
@@ -118,7 +124,7 @@ public class ItemProspector extends BaseTool implements IHasRecipe, IContent {
         UtilChat.addChatMessage(player, UtilChat.lang("tool_prospector.found") + entry.getKey() + " " + entry.getValue());
       }
     }
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }

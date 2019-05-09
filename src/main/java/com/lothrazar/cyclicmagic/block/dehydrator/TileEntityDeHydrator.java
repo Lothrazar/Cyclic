@@ -24,7 +24,8 @@
 package com.lothrazar.cyclicmagic.block.dehydrator;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
-import com.lothrazar.cyclicmagic.gui.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,20 +34,20 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements ITileRedstoneToggle, ITickable {
 
   static final int SLOT_RECIPE = 0;
-  public static final int LAVA_DRAIN = 10;
   public static final int STASH_SIZE = 4;
-  public static final int TANK_FULL = 10000;
-  private int needsRedstone = 1;
+  public static final int TANK_FULL = 16 * Fluid.BUCKET_VOLUME;
   private int timerMax = 1;
   private RecipeDeHydrate lastRecipe = null;
 
   public static enum Fields {
-    REDSTONE, TIMER, TIMERMAX, FUEL;
+    REDSTONE, TIMER, TIMERMAX;
   }
 
   private InventoryCrafting crafting = new InventoryCrafting(new ContainerDummyHydrator(), 1, 1);
@@ -55,10 +56,10 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
     super(1 + 2 * STASH_SIZE);// in, out 
     tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setTileEntity(this);
-    tank.setFluidAllowed(FluidRegistry.LAVA);
+    tank.setFluidAllowed(FluidRegistry.WATER);
     this.setSlotsForInsert(1, 4);
     this.setSlotsForExtract(5, 8);
-    this.initEnergy(BlockDeHydrator.FUEL_COST);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockDeHydrator.FUEL_COST);
   }
 
   @Override
@@ -77,18 +78,20 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       return;
     }
     this.tryShiftInput();
-    if (this.updateEnergyIsBurning() == false) {
-      return;
-    }
     if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
       lastRecipe = null;//all gone 
     }
     if (this.lastRecipe == null) {
       lastRecipe = findMatchingRecipe();
     }
-    //if we have lava, reduce timer an extra time
-    this.tryLavaSpeedup();
-    if (this.lastRecipe != null && this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
+    if (lastRecipe == null) {
+      return;
+    }
+    if (this.updateEnergyIsBurning() == false) {
+      return;
+    }
+    //if we have lava, reduce timer an extra time 
+    if (this.updateTimerIsZero() && !this.getStackInSlot(SLOT_RECIPE).isEmpty()) { // time to burn!
       if (tryProcessRecipe()) {
         if (this.getStackInSlot(SLOT_RECIPE).isEmpty()) {
           lastRecipe = null;
@@ -98,18 +101,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
         }
         //else recipe became null
       }
-    }
-  }
-
-  private void tryLavaSpeedup() {
-    // try to burn off some lava
-    if (timer == 0 || lastRecipe == null) {
-      return;
-    }
-    //if it works, hit up a timer-- to speed it up
-    if (tank.getFluidAmount() >= LAVA_DRAIN) {
-      tank.drain(LAVA_DRAIN, true);
-      this.timer--;
     }
   }
 
@@ -126,7 +117,11 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
       lastRecipe = null;
       return false;
     }
+    if (tank.getCapacity() == tank.getFluidAmount()) {
+      return false;//full water
+    }
     if (lastRecipe.tryPayCost(this)) {
+      tank.fill(new FluidStack(FluidRegistry.WATER, lastRecipe.getFluid()), true);
       //only create the output if cost was successfully paid
       this.sendOutputItem(lastRecipe.getRecipeOutput());
       return true;
@@ -181,8 +176,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        return this.getEnergyCurrent();
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
@@ -198,9 +191,6 @@ public class TileEntityDeHydrator extends TileEntityBaseMachineFluid implements 
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case FUEL:
-        this.setEnergyCurrent(value);
-      break;
       case REDSTONE:
         this.needsRedstone = value;
       break;

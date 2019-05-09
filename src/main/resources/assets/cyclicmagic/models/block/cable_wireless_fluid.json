@@ -1,0 +1,9 @@
+{
+	"parent":"cyclicmagic:parent/node",
+	"textures": {
+		"main": "cyclicmagic:blocks/node/main_fluid",
+		"particle": "cyclicmagic:blocks/node/main_fluid",
+		"plate_front": "cyclicmagic:blocks/node/front_fluid",
+		"plate_back": "cyclicmagic:blocks/node/back_fluid"
+	}
+}

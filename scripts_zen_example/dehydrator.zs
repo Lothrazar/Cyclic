@@ -3,3 +3,5 @@ import mods.cyclicmagic.Dehydrator;
 
 // output, input, ticks
 Dehydrator.addRecipe(<minecraft:stone>, <minecraft:dirt>, 300);
+
+Dehydrator.removeShapedRecipe(<minecraft:stick>);

@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -47,7 +48,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -56,6 +56,11 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
   public BlockBeaconPotion() {
     super(Material.IRON);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_BEACON);
+  }
+
+  @Override
+  public String getContentName() {
+    return "beacon_potion";
   }
 
   @Override
@@ -104,8 +109,8 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, "beacon_potion", null);
-    GameRegistry.registerTileEntity(TileEntityBeaconPotion.class, "beacon_potion_te");
+    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerTileEntity(TileEntityBeaconPotion.class, getContentName() + "_te");
   }
 
   private boolean enabled;
@@ -117,7 +122,7 @@ public class BlockBeaconPotion extends BlockBaseHasTile implements IBlockHasTESR
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("PotionBeacon", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
     TileEntityBeaconPotion.doesConsumePotions = config.getBoolean("PharosBeaconDoesConsumePotions", Const.ConfigCategory.modpackMisc, true, "Set to make Pharos Beacon free and perpetual, so it will not consume potions.  However if this set false, once it reads an effect from a potion, you must break and replace the beacon to wipe out its current effect. ");
     String[] defList = new String[] {
         "minecraft:instant_health",
