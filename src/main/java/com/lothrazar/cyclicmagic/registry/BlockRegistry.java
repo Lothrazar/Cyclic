@@ -38,6 +38,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
 
@@ -87,5 +88,10 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onRegistryEvent(RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(blocks.toArray(new Block[0]));
+  }
+
+  @SuppressWarnings({ "deprecation", "rawtypes", "unchecked" })
+  public static void registerTileEntity(Class classIn, String string) {
+    GameRegistry.registerTileEntity(classIn, string);
   }
 }

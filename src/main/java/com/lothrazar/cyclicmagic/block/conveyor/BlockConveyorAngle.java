@@ -205,5 +205,4 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
         'c', flatType,
         'u', new ItemStack(Blocks.STONE));
   }
-
 }

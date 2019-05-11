@@ -23,7 +23,6 @@ public class BlockConveyorCorner extends BlockConveyor {
     setCorner(this);
   }
 
-
   @Override
   public boolean isCorner() {
     return true;
@@ -37,6 +36,7 @@ public class BlockConveyorCorner extends BlockConveyor {
         'c', flatType,
         'u', new ItemStack(Blocks.COBBLESTONE));
   }
+
   @Override
   public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
@@ -85,7 +85,6 @@ public class BlockConveyorCorner extends BlockConveyor {
     return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer)
         .withProperty(FLIPPED, placer.isSneaking());
   }
-
 
   public void setDrop(BlockConveyor drop) {
     this.flatType = drop;

@@ -10,27 +10,28 @@ import net.minecraft.item.ItemStack;
 
 public class SolidifierWrapper implements IRecipeWrapper {
 
-  private RecipeSolidifier src;
+  private RecipeSolidifier recipe;
 
   public SolidifierWrapper(RecipeSolidifier source) {
-    this.src = source;
+    this.recipe = source;
   }
 
   public ItemStack getOut() {
-    return src.getRecipeOutput();
+    return recipe.getRecipeOutput();
   }
 
   public RecipeSolidifier getRecipe() {
-    return src;
+    return recipe;
   }
+
   @Override
   public void getIngredients(IIngredients ingredients) {
     List<ItemStack> ing = new ArrayList<ItemStack>();
-    for (ItemStack wtf : src.getRecipeInput()) {
+    for (ItemStack wtf : recipe.getRecipeInput()) {
       ing.add(wtf.copy());
     }
     ingredients.setInputs(VanillaTypes.ITEM, ing);
-    ingredients.setOutput(VanillaTypes.ITEM, src.getRecipeOutput());
+    ingredients.setInput(VanillaTypes.FLUID, recipe.getFluidIngredient());
+    ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
-
 }

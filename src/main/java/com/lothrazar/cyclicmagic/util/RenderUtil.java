@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.block.laser.TileEntityLaser;
 import com.lothrazar.cyclicmagic.data.OffsetEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -21,6 +20,8 @@ public class RenderUtil {
 
   public static class LaserConfig {
 
+    public static final int MAX_TIMER = 100;
+
     public LaserConfig(BlockPos first, BlockPos second,
         double rotationTime, float alpha, double beamWidth, float[] color) {
       this.first = first;
@@ -37,10 +38,15 @@ public class RenderUtil {
     float alpha;
     double beamWidth;
     float[] color;
-    public int timer;
+    public int timer = LaserConfig.MAX_TIMER;
     public OffsetEnum xOffset = OffsetEnum.CENTER;
     public OffsetEnum yOffset = OffsetEnum.CENTER;
     public OffsetEnum zOffset = OffsetEnum.CENTER;
+
+    @Override
+    public String toString() {
+      return second + " : " + first;
+    }
   }
 
   public static final int MAX_LIGHT_X = 0xF000F0;
@@ -82,7 +88,7 @@ public class RenderUtil {
     double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z));
     double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
     double length = combinedVec.length();
-    length = length * (timer / (TileEntityLaser.MAX_TIMER * 1.0));
+    length = length * (timer / (LaserConfig.MAX_TIMER * 1.0));
     GlStateManager.pushMatrix();
     GlStateManager.translate(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
     GlStateManager.rotate((float) (180 * yaw / Math.PI), 0, 1, 0);

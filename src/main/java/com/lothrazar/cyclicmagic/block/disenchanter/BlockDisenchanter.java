@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -96,7 +95,7 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements ICont
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

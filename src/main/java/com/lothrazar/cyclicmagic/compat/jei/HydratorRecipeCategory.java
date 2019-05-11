@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.compat.jei;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import mezz.jei.api.IGuiHelper;
@@ -12,6 +13,7 @@ import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
 
 public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> {
 
@@ -63,5 +65,18 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorWrapper> 
     }
     guiItemStacks.init(4, false, 129, 18);
     guiItemStacks.set(4, recipeWrapper.getOut());
+    try {
+      int x = 59;
+      int y = 27;
+      RecipeHydrate recipe = recipeWrapper.src;
+      ingredients.setInput(VanillaTypes.FLUID, recipe.getFluidIngredient());
+      //getname is the same  
+      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
+          null);
+      recipeLayout.getFluidStacks().set(0, recipe.getFluidIngredient());
+    }
+    catch (Exception e) {
+      //
+    }
   }
 }

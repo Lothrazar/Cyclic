@@ -25,6 +25,9 @@ package com.lothrazar.cyclicmagic.liquid.milk;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.core.BlockFluidBase;
+import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.item.ItemFlight;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -33,6 +36,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -77,6 +81,13 @@ public class BlockFluidMilk extends BlockFluidBase {
     if (entity instanceof EntityLivingBase) {
       EntityLivingBase living = (EntityLivingBase) entity;
       living.curePotionEffects(new ItemStack(Items.MILK_BUCKET));//item stack does not get used or saved or anything
+      if (living instanceof EntityPlayer) {
+        //remove flying
+        EntityPlayer player = (EntityPlayer) living;
+        IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
+        props.setFlyingTimer(0);
+        ItemFlight.setNonFlying(player);
+      }
     }
     return super.modifyAcceleration(world, pos, entity, vec);
   }

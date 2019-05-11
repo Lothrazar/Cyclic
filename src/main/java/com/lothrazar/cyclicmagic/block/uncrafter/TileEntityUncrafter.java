@@ -70,12 +70,10 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tagCompound);
   }
 

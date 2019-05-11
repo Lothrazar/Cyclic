@@ -42,7 +42,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
@@ -67,7 +66,7 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, ICont
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
+    BlockRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
   }
 
   @Override

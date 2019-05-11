@@ -568,4 +568,14 @@ public class UtilWorld {
     //    worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
     //    worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
   }
+
+  /**
+   * Since some mods dont respect the nullable tag and reject null directions.
+   * 
+   * @return
+   */
+  public static EnumFacing getRandFacing() {
+    int inx = MathHelper.getInt(new Random(), 0, EnumFacing.values().length - 1);
+    return EnumFacing.values()[inx];
+  }
 }

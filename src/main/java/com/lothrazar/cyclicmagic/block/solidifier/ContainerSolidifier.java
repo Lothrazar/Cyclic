@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.solidifier;
 
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,7 +53,7 @@ public class ContainerSolidifier extends ContainerBaseMachine {
       slotNum++;
     }
     //output slot
-    addSlotToContainer(new Slot(tile, slotNum,
+    addSlotToContainer(new SlotOutputOnly(tile, slotNum,
         MID_SPACING + 13,
         SLOTY + 10));
     bindPlayerInventory(inventoryPlayer);

@@ -52,7 +52,6 @@ public class ContainerMelter extends ContainerBaseMachine {
           SLOTY + i % 2 * spac));
       slotNum++;
     }
-
     bindPlayerInventory(inventoryPlayer);
   }
 

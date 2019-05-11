@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.harvester;
 
-import org.lwjgl.input.Mouse;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
@@ -83,7 +82,6 @@ public class GuiHarvester extends GuiBaseContainer {
   @Override
   protected void actionPerformed(GuiButton button) {
     if (button.id == btnSpray.id) {
-      ModCyclic.logger.error("harvester " + Mouse.isButtonDown(1));
       ModCyclic.network.sendToServer(new PacketTileIncrementField(tile.getPos(), TileEntityHarvester.Fields.HARVESTMODE.ordinal()));
     }
   }

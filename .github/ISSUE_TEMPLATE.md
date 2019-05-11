@@ -6,13 +6,14 @@ Mod Version:
 
 Single Player or Server:
 
-Describe problem (what you were doing / what happened):
+Describe problem (what you were doing; what happened; what should have happened):
 
 
-Log file (text block or link):
+
+Log file link:
 
 
-Video/images: (links are great; github also allows up to 10MB with direct drag and drop; gifs using https://www.screentogif.com/)
+Video/images/gifs (direct upload or link): 
 
 
 

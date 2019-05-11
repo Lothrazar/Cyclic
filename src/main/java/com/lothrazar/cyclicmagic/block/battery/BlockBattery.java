@@ -33,10 +33,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IContent {
 
+  public static final int MAX_SMALL = 1000000;
+  //  public static final int MAX_MED = 16 * MAX_SMALL;
+  //  public static final int MAX_LRG = 64 * MAX_SMALL;
   public static final PropertyEnum<EnergyFlatMap> AMOUNT = PropertyEnum.create("amount", EnergyFlatMap.class);
   private static final PropertyBool U = PropertyBool.create("u");
   private static final PropertyBool D = PropertyBool.create("d");
@@ -58,7 +60,7 @@ public class BlockBattery extends BlockBaseHasTile implements IHasRecipe, IConte
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, new ItemBlockBattery(this), getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityBattery.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

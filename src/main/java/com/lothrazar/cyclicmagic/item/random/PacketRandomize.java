@@ -96,6 +96,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
     return null;
   }
 
+  @SuppressWarnings("deprecation")
   private static void runAction(final PacketRandomize message, final MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().player;
     World world = player.getEntityWorld();

@@ -50,7 +50,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -73,7 +72,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityClock.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityClock.class, getContentName() + "_te");
   }
 
   @Override
@@ -144,6 +143,7 @@ public class BlockRedstoneClock extends BlockBaseHasTile implements IHasRecipe, 
     return blockState.getValue(POWERED) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
     TileEntity tile = world.getTileEntity(pos);

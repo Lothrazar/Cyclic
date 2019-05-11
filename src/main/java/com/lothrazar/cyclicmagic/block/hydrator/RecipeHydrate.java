@@ -37,6 +37,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -72,6 +74,10 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     this.fluidCost = w;
     this.resultItem = out;
     this.setRegistryName(new ResourceLocation(Const.MODID, "hydrator_" + UUID.randomUUID().toString() + out.getTranslationKey()));
+  }
+
+  public FluidStack getFluidIngredient() {
+    return new FluidStack(FluidRegistry.WATER, this.fluidCost);
   }
 
   public int getSize() {
@@ -236,11 +242,9 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.SILVER_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.SILVER.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.WHITE_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.WHITE.getMetadata())));
     addRecipe(new RecipeHydrate(new ItemStack(Blocks.YELLOW_GLAZED_TERRACOTTA), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, EnumDyeColor.YELLOW.getMetadata())));
-
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_SHARD)
     }, new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
-
     addRecipe(new RecipeHydrate(new ItemStack[] {
         new ItemStack(Blocks.CACTUS), new ItemStack(Blocks.VINE), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Items.WHEAT_SEEDS)
     }, new ItemStack(Blocks.WATERLILY, 2)));

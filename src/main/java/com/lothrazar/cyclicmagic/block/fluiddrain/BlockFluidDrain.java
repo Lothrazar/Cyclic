@@ -41,7 +41,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasRecipe {
 
@@ -89,7 +88,7 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityFluidDrain.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityFluidDrain.class, getContentName() + "_te");
   }
 
   private boolean enabled;

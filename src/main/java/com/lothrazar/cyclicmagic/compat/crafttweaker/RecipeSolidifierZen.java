@@ -51,7 +51,6 @@ public class RecipeSolidifierZen {
     }
   }
 
-
   @Optional.Method(modid = "crafttweaker")
   @ZenMethod
   public static void addRecipe(IItemStack output, IItemStack[] inputs, String fluidName, int water) {

@@ -34,7 +34,6 @@ public class ItemCrystalSword extends ItemSword implements IHasRecipe {
 
   public ItemCrystalSword() {
     super(MaterialRegistry.crystalToolMaterial);
-    //    this.setMaxDamage(100 );
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * The MIT License (MIT)
+  * The MIT License (MIT)
  * 
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
  * 
@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWireless;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,9 +41,8 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
   public ContainerCableFluidWireless(InventoryPlayer inventoryPlayer, TileCableFluidWireless te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
-    int x = 43;
-    int y = 43;
-    y = 87;
+    int x = Const.PAD + 1;
+    int y = 87;
     for (int i = 0; i < TileCableEnergyWireless.SLOT_COUNT; i++) {
       addSlotToContainer(new SlotCheckTileValid(te, i, x, y) {
 
@@ -56,14 +54,6 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
       });
       x += Const.SQ;
     }
-    //    x += 72;
-    //    addSlotToContainer(new SlotCheckTileValid(te, TileCableFluidWireless.SLOT_CARD_ITEM, x, y) {
-    //
-    //      @Override
-    //      public int getSlotStackLimit() {
-    //        return 1;
-    //      }
-    //    });
     bindPlayerInventory(inventoryPlayer);
   }
 
@@ -93,13 +83,6 @@ public class ContainerCableFluidWireless extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      if (stackInSlot.getItem() instanceof ItemLocation) {
-        if (!this.mergeItemStack(stackInSlot, 1, 3, false)) {
-          return ItemStack.EMPTY;
-        }
-      }
-      // places it into the tileEntity is possible since its in the player
-      // inventory
       else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }

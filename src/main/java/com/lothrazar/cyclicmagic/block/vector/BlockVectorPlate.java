@@ -67,7 +67,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -100,7 +99,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
   public void register() {
     BlockRegistry.registerBlock(this, new ItemBlockVectorPlate(this), getContentName());
     GuideRegistry.register(GuideCategory.BLOCKPLATE, this);
-    GameRegistry.registerTileEntity(TileEntityVector.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityVector.class, getContentName() + "_te");
     ModCyclic.instance.events.register(this);
   }
 

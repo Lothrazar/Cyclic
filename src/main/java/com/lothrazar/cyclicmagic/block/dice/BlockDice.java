@@ -26,12 +26,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
   private static final double SIZE = 0.9D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(1 - SIZE, 1 - SIZE, 1 - SIZE, SIZE, SIZE, SIZE);
+
   public BlockDice() {
     super(Material.ROCK);
     this.setTranslucent();
@@ -113,7 +113,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IConte
   @Override
   public void register() {
     BlockRegistry.registerBlock(new BlockDice(), getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityDice.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityDice.class, getContentName() + "_te");
   }
 
   @Override

@@ -39,7 +39,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockDropperExact extends BlockBaseFacingOmni implements IContent, IHasRecipe {
 
@@ -73,7 +72,7 @@ public class BlockDropperExact extends BlockBaseFacingOmni implements IContent, 
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
-    GameRegistry.registerTileEntity(TileEntityDropperExact.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityDropperExact.class, getContentName() + "_te");
   }
 
   private boolean enabled;

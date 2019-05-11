@@ -23,8 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.item;
 
+import java.io.IOException;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -37,11 +39,36 @@ public class GuiItemPump extends GuiBaseContainer {
 
   ITileStackWrapper te;
   private ButtonTileEntityField filterBtn;
+  private GuiSliderInteger slider;
 
   public GuiItemPump(InventoryPlayer inventoryPlayer, TileEntityItemPump tileEntity) {
     super(new ContainerItemPump(inventoryPlayer, tileEntity), tileEntity);
     te = tileEntity;
     this.fieldRedstoneBtn = TileEntityItemPump.Fields.REDSTONE.ordinal();
+  }
+
+  @Override
+  public void initGui() {
+    super.initGui();
+    int id = 2;
+    int x = this.guiLeft + 150;
+    int y = this.guiTop + Const.PAD / 2;
+    filterBtn = new ButtonTileEntityField(
+        id++,
+        x, y,
+        tile.getPos(), TileEntityItemPump.Fields.FILTERTYPE.ordinal(), 1,
+        20, 20);
+    this.addButton(filterBtn);
+    int fld = TileEntityItemPump.Fields.SPEED.ordinal();
+    int w = 164;
+    int h = 12;
+    x = this.guiLeft + 6;
+    y = this.guiTop + 28;
+    slider = new GuiSliderInteger(tile, id++, x, y,
+        w, h,
+        1, 64, //min max
+        fld, "pump.rate");
+    this.addButton(slider);
   }
 
   @Override
@@ -60,36 +87,24 @@ public class GuiItemPump extends GuiBaseContainer {
     this.renderStackWrappers(te);
   }
 
+  @Override
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    super.keyTyped(typedChar, keyCode);
+    slider.keyTyped(typedChar, keyCode);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    slider.updateScreen();
+  }
+
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     int filterType = tile.getField(TileEntityItemPump.Fields.FILTERTYPE.ordinal());
-    //    filterBtn.displayString = UtilChat.lang("button.itemfilter.type" + filterType);
     filterBtn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + filterType));
     filterBtn.setTextureIndex(11 + filterType);
-  }
-
-  /**
-   * mouseover render for fake slots
-   */
-  @Override
-  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-    super.drawScreen(mouseX, mouseY, partialTicks);
-    //if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
-    //    {}
-  }
-
-  @Override
-  public void initGui() {
-    super.initGui();
-    int id = 2;
-    filterBtn = new ButtonTileEntityField(
-        id++,
-        this.guiLeft + 150,
-        this.guiTop + Const.PAD / 2,
-        tile.getPos(), TileEntityItemPump.Fields.FILTERTYPE.ordinal(), 1,
-        20, 20);
-    this.addButton(filterBtn);
   }
 }

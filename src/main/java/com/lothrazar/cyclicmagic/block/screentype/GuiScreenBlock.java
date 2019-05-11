@@ -109,10 +109,6 @@ public class GuiScreenBlock extends GuiBaseContainer {
   @Override
   public void onGuiClosed() {
     Keyboard.enableRepeatEvents(false);
-    for (GuiTextField txtInput : lines) {
-      //      tile.setField(Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition());
-      //      ModCyclic.network.sendToServer(new PacketTileSetField(tile.getPos(), Fields.CURSORPOS.ordinal(), this.txtInput.getCursorPosition()));
-    }
   }
 
   @SideOnly(Side.CLIENT)

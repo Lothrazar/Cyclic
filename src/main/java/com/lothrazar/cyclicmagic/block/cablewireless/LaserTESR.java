@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.cablewireless;
 
 import com.lothrazar.cyclicmagic.util.RenderUtil;
+import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,23 +39,13 @@ public class LaserTESR extends TileEntitySpecialRenderer<TileEntity> {
       return;
     }
     ILaserTarget te = (ILaserTarget) tile;
-    if (te.isVisible() == false) {
+    if (te.isPreviewVisible() == false) {
       return;
     }
-    RenderUtil.renderLaser(te.getTarget());
-    //    float[] color = te.getColor();
-    //    double rotationTime = 0;
-    //    double beamWidth = 0.09;
-    //    //find laser endpoints and go
-    //    BlockPosDim first = te.getPos();
-    //    BlockPosDim second = te.getTarget();
-    //
-    //    if (second != null && first != null && second.getDimension() == first.getDimension()) {
-    //      LaserConfig laserCnf = new LaserConfig(first.toBlockPos(), second.toBlockPos(),
-    //            rotationTime, te.getAlpha(), beamWidth, color);
-    //
-    //        RenderUtil.renderLaser(laserCnf);
-    //      }
+    for (LaserConfig laserCnf : te.getTarget()) {
+      //ModCyclic.logger.info(laserCnf.toString()); 
+      RenderUtil.renderLaser(laserCnf);
+    }
   }
 
   @Override

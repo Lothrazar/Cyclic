@@ -82,8 +82,6 @@ public class ContainerCableEnergyWireless extends ContainerBaseMachine {
           return ItemStack.EMPTY;
         }
       }
-      // places it into the tileEntity is possible since its in the player
-      // inventory
       else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) {
         return ItemStack.EMPTY;
       }

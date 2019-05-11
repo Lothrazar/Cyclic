@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.placer;
+package com.lothrazar.cyclicmagic.block.buildplacer;
 
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
@@ -40,7 +40,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe, IContent {
 
@@ -64,7 +63,7 @@ public class BlockPlacer extends BlockBaseFacingOmni implements IHasRecipe, ICon
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityPlacer.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityPlacer.class, getContentName() + "_te");
   }
 
   private boolean enabled;

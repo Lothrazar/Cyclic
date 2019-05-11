@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.cablewireless.fluid;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,17 +10,19 @@ import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWirel
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
 import com.lothrazar.cyclicmagic.util.RenderUtil.LaserConfig;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 
 public class TileCableFluidWireless extends TileEntityBaseMachineFluid implements ITickable, ILaserTarget, ITileRedstoneToggle {
 
-  //ITilePreviewToggle
   public static final int TRANSFER_FLUID_PER_TICK = 500;
   public static final int TANK_FULL = 10000;
   public static final int MAX_TRANSFER = 1000;
@@ -35,6 +38,7 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   public TileCableFluidWireless() {
     super(SLOT_COUNT);
     tank = new FluidTankFixDesync(TANK_FULL, this);
+    this.setSlotsForBoth();
   }
 
   @Override
@@ -72,11 +76,11 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    return stack.getItem() instanceof ItemLocation;
+    return stack.getItem() instanceof ItemLocationGps;
   }
 
-  private BlockPosDim getTarget(int slot) {
-    return ItemLocation.getPosition(this.getStackInSlot(slot));
+  private BlockPosDim getSlotGps(int slot) {
+    return ItemLocationGps.getPosition(this.getStackInSlot(slot));
   }
 
   @Override
@@ -109,31 +113,50 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   }
 
   private void outputFluid(int slot) {
-    BlockPosDim dim = this.getTarget(slot);
+    BlockPosDim dim = this.getSlotGps(slot);
     if (this.isTargetValid(dim)) {
-      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), null, this.tank, TRANSFER_FLUID_PER_TICK);
+      EnumFacing rando = UtilWorld.getRandFacing();
+      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), rando, this.tank, TRANSFER_FLUID_PER_TICK);
     }
   }
 
   @Override
-  public boolean isVisible() {
+  public boolean isPreviewVisible() {
     return this.renderParticles == 1;
   }
 
+  static final float[] laserColor = new float[] { 0.2F, 0.2F, 0.8F };
+  static final double rotationTime = 0;
+  static final double beamWidth = 0.02;
+  static final float alpha = 0.5F;
+
   @Override
-  public LaserConfig getTarget() {
+  public List<LaserConfig> getTarget() {
     //find laser endpoints and go
-    //    BlockPosDim first = new BlockPosDim(this.getPos(), this.getDimension());
-    //    BlockPosDim second = this.getTarget(0);
-    //    if (second != null && first != null && second.getDimension() == first.getDimension()) {
-    //      float[] color = new float[] { 0.8F, 0.8F, 0.8F };
-    //      double rotationTime = 0;
-    //      double beamWidth = 0.09;
-    //      float alpha = 0.5F;
-    //      return new LaserConfig(first.toBlockPos(), second.toBlockPos(),
-    //          rotationTime, alpha, beamWidth, color);
-    //    }
-    return null;
+    BlockPosDim first = new BlockPosDim(this.getPos(), this.getDimension());
+    List<LaserConfig> laser = new ArrayList<>();
+    for (BlockPos second : this.getShape()) {
+      //  && second.getDimension() == first.getDimension()
+      if (second != null && first != null) {
+        laser.add(new LaserConfig(first.toBlockPos(), second,
+            rotationTime, alpha, beamWidth, laserColor));
+      }
+    }
+    return laser;
+  }
+
+  @Override
+  public List<BlockPos> getShape() {
+    List<BlockPos> shape = new ArrayList<>();
+    for (int slot : slotList) {
+      if (this.getStackInSlot(slot).isEmpty() == false) {
+        BlockPosDim target = this.getSlotGps(slot);
+        if (this.isTargetValid(target)) {
+          shape.add(target.toBlockPos());
+        }
+      }
+    }
+    return shape;
   }
 
   @Override

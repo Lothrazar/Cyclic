@@ -29,7 +29,7 @@ import com.lothrazar.cyclicmagic.block.cablewireless.energy.TileCableEnergyWirel
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -38,6 +38,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
 public class GuiCableContentWireless extends GuiBaseContainer {
@@ -46,7 +47,7 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     super(new ContainerCableContentWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableContentWireless.Fields.REDSTONE.ordinal();
-    int xCenter = this.getScreenSize().width() / 2;
+    this.fieldPreviewBtn = TileCableContentWireless.Fields.RENDERPARTICLES.ordinal();
   }
 
   @Override
@@ -57,21 +58,22 @@ public class GuiCableContentWireless extends GuiBaseContainer {
     int size = Const.SQ;
     GuiButtonTooltip btnSize;
     for (int i = 1; i < TileCableContentWireless.SLOT_COUNT; i++) {
+      x = (i - 1) * (size) + 8;
       btnSize = new GuiButtonTooltip(i,
-          this.guiLeft + (i - 1) * (size) + 8,
+          this.guiLeft + x,
           this.guiTop + y, size, size, "?");
       btnSize.setTooltip("wireless.target");
-      //      btnSize.height = 14;
       this.addButton(btnSize);
     }
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id != redstoneBtn.id) {
+    if (button.id != redstoneBtn.id
+        && button.id != this.previewBtn.id) {
       //TODO: DIMENSION 
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
-      BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
+      BlockPosDim dim = ItemLocationGps.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {
         UtilChat.addChatMessage(player, "wireless.empty");
       }
@@ -82,8 +84,14 @@ public class GuiCableContentWireless extends GuiBaseContainer {
         BlockPos target = dim.toBlockPos();
         if (tile.getWorld().isAreaLoaded(target, target.up())) {
           //get target
-          Block block = tile.getWorld().getBlockState(target).getBlock();
-          UtilChat.addChatMessage(player, block.getLocalizedName());
+          try {
+            TileEntity chest = tile.getWorld().getTileEntity(target);
+            UtilChat.addChatMessage(player, chest.getDisplayName().getFormattedText());
+          }
+          catch (Throwable e) {
+            Block block = tile.getWorld().getBlockState(target).getBlock();
+            UtilChat.addChatMessage(player, block.getLocalizedName());
+          }
         }
         else {
           UtilChat.addChatMessage(player, "wireless.unloaded");

@@ -48,7 +48,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -94,7 +93,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

@@ -42,7 +42,6 @@ public class FluidExp extends Fluid implements IContent {
   static final String NAME = "xpjuice";
 
   public FluidExp() {
-
     super(NAME, new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_base"),
         new ResourceLocation(Const.MODID, "blocks/fluid/" + NAME + "_flowing"));
     setViscosity(1200);//water is 1000, lava is 6000

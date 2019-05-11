@@ -31,7 +31,7 @@ import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.item.location.ItemLocation;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -52,6 +52,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
     super(new ContainerCableEnergyWireless(inventoryPlayer, te), te);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableEnergyWireless.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileCableEnergyWireless.Fields.RENDERPARTICLES.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setWidth(16).setY(18).setX(this.getScreenSize().width() - 24);
   }
@@ -71,9 +72,9 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
       this.addButton(btnSize);
     }
     int x = this.guiLeft + 6;
-    y = this.guiTop + 38;
+    y = this.guiTop + 64;
     slider = new GuiSliderInteger(tile, 77,
-        x, y, 140, 20,
+        x, y, 140, 14,
         1, TileCableEnergyWireless.MAX_TRANSFER * 16,
         TileCableEnergyWireless.Fields.TRANSFER_RATE.ordinal());
     slider.setTooltip("pump.rate");
@@ -82,9 +83,10 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id != redstoneBtn.id && button.id != slider.id) {
+    if (button.id != redstoneBtn.id && button.id != slider.id
+        && button.id != this.previewBtn.id) {
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
-      BlockPosDim dim = ItemLocation.getPosition(tile.getStackInSlot(button.id));
+      BlockPosDim dim = ItemLocationGps.getPosition(tile.getStackInSlot(button.id));
       if (dim == null) {
         UtilChat.addChatMessage(player, "wireless.empty");
       }

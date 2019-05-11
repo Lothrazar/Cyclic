@@ -45,7 +45,7 @@ public class LaserAnimatedTESR extends TileEntitySpecialRenderer<TileEntityLaser
     //find laser endpoints and go
     BlockPos first = te.getPos();
     BlockPosDim second = null;
-    int timer = TileEntityLaser.MAX_TIMER;
+    int timer = LaserConfig.MAX_TIMER;
     if (te.isExtending()) {
       timer = te.getField(TileEntityLaser.Fields.TIMER.ordinal());
     }

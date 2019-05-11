@@ -54,7 +54,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -128,7 +127,7 @@ public class BlockEnchanter extends BlockBaseHasTile implements IHasRecipe, IBlo
   public void register() {
     FluidsRegistry.registerExp();
     BlockRegistry.registerBlock(this, "block_enchanter", GuideCategory.BLOCKMACHINE);
-    GameRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityEnchanter.class, Const.MODID + getContentName() + "_te");
   }
 
   private boolean enabled;

@@ -143,17 +143,20 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       tryEquipItem();
       if (triggered) {
         timer = tickDelay;
+        BlockPos targetPos = this.getTargetPos();
         try {
-          BlockPos targetPos = this.getTargetPos();
           if (rightClickIfZero == 0) {//right click entities and blocks
             this.rightClickBlock(targetPos);
           }
+        }
+        catch (Throwable e) {//exception could come from external third party block/mod/etc 
+          ModCyclic.logger.error("Automated User [rightClickBlock] Error '" + e.getMessage() + "'" + e.getClass(), e);
+        }
+        try {
           interactEntities(targetPos);
         }
-        catch (Exception e) {//exception could come from external third party block/mod/etc
-          ModCyclic.logger.error("Automated User Error");
-          ModCyclic.logger.error(e.getLocalizedMessage());
-          e.printStackTrace();
+        catch (Throwable e) {//exception could come from external third party block/mod/etc 
+          ModCyclic.logger.error("Automated User [interactEntities] Error '" + e.getMessage() + "'" + e.getClass(), e);
         }
       }
       this.markDirty();
@@ -232,14 +235,15 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
       boolean success = rightClickFluidTank(targetPos);
       if (success) {
-        // ModCyclic.logger.log("rightClickFluidAttempt : true");
+        // ModCyclic.logger.error("rightClickFluidAttempt : true");
         syncPlayerTool();
         return;
       }
     }
     else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
-        // ModCyclic.logger.log("rightClickFluidAir : true");
+        //bucket on fluid-in-world   
+        //   ModCyclic.logger.error("rightClickFluidAir : true " + fakePlayer.get().getHeldItemMainhand());
         /// missing piece  
         syncPlayerTool();
         return;
@@ -516,9 +520,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case SIZE:
         if (value > MAX_SIZE) {
-          value = 1;
+          value = 0;
         }
-        if (value < 1) {
+        if (value < 0) {
           value = MAX_SIZE;
         }
         size = value;
@@ -580,6 +584,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public boolean isPreviewVisible() {
     return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
+  }
+
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index <= 2 && stack.getCount() > 1) {
+      return false;
+    }
+    return super.isItemValidForSlot(index, stack);
   }
 
   public static void syncConfig(Configuration config) {

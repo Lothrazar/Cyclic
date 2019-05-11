@@ -47,7 +47,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntityProvider, IHasRecipe, IContent {
 
@@ -88,7 +87,7 @@ public class BlockFluidPlacer extends BlockBaseFacingOmni implements ITileEntity
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), null);
-    GameRegistry.registerTileEntity(TileEntityFluidPlacer.class, getContentName() + "_te");
+    BlockRegistry.registerTileEntity(TileEntityFluidPlacer.class, getContentName() + "_te");
   }
 
   private boolean enabled;

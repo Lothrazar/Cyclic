@@ -85,6 +85,7 @@ public class UtilPlaceBlocks {
    * @param stack
    * @return
    */
+  @SuppressWarnings("deprecation")
   public static boolean placeItemblock(World world, BlockPos placePos, final ItemStack stack, EntityPlayer fake) {
     if (stack.getItem() instanceof ItemBlock == false) {
       return false;

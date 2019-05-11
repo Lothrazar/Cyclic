@@ -45,7 +45,7 @@ public class TileEntityFluidTank extends TileEntityBaseMachineFluid implements I
   public void update() {
     //drain below but only to one of myself
     TileEntity below = this.world.getTileEntity(this.pos.down());
-    if (below != null && below instanceof TileEntityFluidTank) {
+    if (below != null) {// && below instanceof TileEntityFluidTank
       UtilFluid.tryFillPositionFromTank(world, this.pos.down(), EnumFacing.UP, tank, TRANSFER_FLUID_PER_TICK);
     }
   }
