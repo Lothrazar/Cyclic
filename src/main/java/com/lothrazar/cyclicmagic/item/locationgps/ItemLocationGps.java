@@ -12,7 +12,6 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -31,7 +30,7 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if (world.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
+    if (player.isSneaking()) {
       deletePosition(player, pos, hand);
     }
     else {
