@@ -118,11 +118,14 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
     }
     BlockPos target = dim.toBlockPos();
     TileEntity tileTarget = world.getTileEntity(target);
-    EnumFacing rando = UtilWorld.getRandFacing();
-    if (tileTarget != null && tileTarget.hasCapability(CapabilityEnergy.ENERGY, rando)) {
+    EnumFacing sideTarget = dim.getSide();
+    if (sideTarget == null) {//legacy from null
+      UtilWorld.getRandFacing();
+    }
+    if (tileTarget != null && tileTarget.hasCapability(CapabilityEnergy.ENERGY, sideTarget)) {
       //drain from ME to Target 
-      IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, rando);
-      IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, rando);
+      IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, sideTarget);
+      IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, sideTarget);
       int drain = handlerHere.extractEnergy(transferRate, true);
       if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken

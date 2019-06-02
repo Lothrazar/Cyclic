@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.data;
 
+import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class BlockPosDim {
@@ -11,6 +13,8 @@ public class BlockPosDim {
   public int id;
   private int dimension;
   private String display;
+  @Nullable
+  private EnumFacing side = null;
 
   public BlockPosDim(int idx, BlockPos pos, int dimension, String d) {
     setX(pos.getX());
@@ -64,7 +68,11 @@ public class BlockPosDim {
 
   @Override
   public String toString() {
-    return "[" + getDimension() + "] (" + (int) getX() + ", " + (int) getY() + ", " + (int) getZ() + ")";
+    String s = "[" + getDimension() + "] (" + (int) getX() + ", " + (int) getY() + ", " + (int) getZ() + ")";
+    if (side != null) {
+      s += " " + side.toString().toUpperCase();
+    }
+    return s;
   }
 
   public int getDimension() {
@@ -105,5 +113,13 @@ public class BlockPosDim {
 
   public void setX(double x) {
     this.x = x;
+  }
+
+  public @Nullable EnumFacing getSide() {
+    return side;
+  }
+
+  public void setSide(EnumFacing side) {
+    this.side = side;
   }
 }
