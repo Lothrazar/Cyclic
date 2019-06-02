@@ -48,6 +48,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   private GuiSliderInteger sliderFont;
   private GuiSliderInteger sliderX;
   private GuiSliderInteger sliderY;
+  private GuiSliderInteger sliderOffset;
 
   public GuiScreenTargetBlock(InventoryPlayer inventoryPlayer, TileEntityScreenTarget tileEntity) {
     super(new ContainerScreenTarget(inventoryPlayer, tileEntity), tileEntity);
@@ -101,6 +102,10 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderFont = new GuiSliderInteger(tile, id++, x, y, width, h, 10, 110, Fields.FONT.ordinal());
     sliderFont.setTooltip("screen.fontsize");
     this.addButton(sliderFont);
+    y += h + 1;
+    sliderOffset = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 8, Fields.OFFSET.ordinal());
+    sliderOffset.setTooltip("screen.offset");
+    this.addButton(sliderOffset);
   }
 
   @Override
@@ -136,6 +141,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderFont.updateScreen();
     sliderX.updateScreen();
     sliderY.updateScreen();
+    sliderOffset.updateScreen();
   }
 
   @Override
@@ -146,9 +152,8 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderFont.keyTyped(typedChar, keyCode);
     sliderX.keyTyped(typedChar, keyCode);
     sliderY.keyTyped(typedChar, keyCode);
-    //  if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
+    sliderOffset.keyTyped(typedChar, keyCode);
     super.keyTyped(typedChar, keyCode);
-    //   }
   }
   // ok end of textbox fixing stuff
 }

@@ -51,9 +51,10 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int style;
   private int showType, xp, yp;
   private int fontSize = 30;
+  private int offset = 0;
 
   public static enum Fields {
-    RED, GREEN, BLUE, SHOWTYPE, STYLE, FONT, XPADDING, YPADDING;
+    RED, GREEN, BLUE, SHOWTYPE, STYLE, FONT, XPADDING, YPADDING, OFFSET;
   }
 
   public TileEntityScreenTarget() {
@@ -109,6 +110,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     fontSize = tags.getInteger("font");
     xp = tags.getInteger("xp");
     yp = tags.getInteger("yp");
+    offset = tags.getInteger("offset");
   }
 
   @Override
@@ -119,9 +121,10 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     tags.setInteger("blue", blue);
     tags.setInteger("style", style);
     tags.setInteger("showtype", showType);
-    tags.setInteger("font", this.fontSize);
+    tags.setInteger("font", fontSize);
     tags.setInteger("xp", xp);
     tags.setInteger("yp", yp);
+    tags.setInteger("offset", offset);
     return super.writeToNBT(tags);
   }
 
@@ -144,6 +147,8 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         return xp;
       case YPADDING:
         return yp;
+      case OFFSET:
+        return offset;
       default:
       break;
     }
@@ -176,6 +181,9 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       break;
       case YPADDING:
         yp = value;
+      break;
+      case OFFSET:
+        offset = value;
       break;
     }
   }
