@@ -97,7 +97,6 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderY = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, Fields.YPADDING.ordinal());
     sliderY.setTooltip("screen.y");
     this.addButton(sliderY);
-    //configs 
     y += h + 1;
     sliderFont = new GuiSliderInteger(tile, id++, x, y, width, h, 10, 110, Fields.FONT.ordinal());
     sliderFont.setTooltip("screen.fontsize");

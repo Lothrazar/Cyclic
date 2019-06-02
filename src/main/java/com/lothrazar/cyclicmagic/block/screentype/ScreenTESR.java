@@ -44,6 +44,20 @@ public class ScreenTESR<T extends TileEntityScreen> extends BaseTESR<T> {
   public void render(TileEntityScreen te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     //default translations  
     float xt = 0, yt = te.getPadding() / 100F, zt = 0;
+    int offset = te.getField(TileEntityScreen.Fields.OFFSET.ordinal());
+    switch (te.getCurrentFacing()) {
+      case EAST:
+      case WEST:
+      case NORTH:
+      case SOUTH:
+        //zt is relative z-offset not absolute 
+        zt = offset;
+      break;
+      case DOWN:
+      case UP:
+      default:
+      break;
+    }
     int angle = this.angleOfFace(te.getCurrentFacing());
     fixLighting(te);
     float fontFact = te.getField(TileEntityScreen.Fields.FONT.ordinal());
