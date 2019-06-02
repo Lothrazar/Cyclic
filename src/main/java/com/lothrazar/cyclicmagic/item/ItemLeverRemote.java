@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseItem;
+import com.lothrazar.cyclicmagic.item.core.IHasClickToggle;
 import com.lothrazar.cyclicmagic.net.PacketChat;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -58,7 +59,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
+public class ItemLeverRemote extends BaseItem implements IHasClickToggle, IHasRecipe, IContent {
 
   private static final int COOLDOWN = 20;
 
@@ -206,5 +207,15 @@ public class ItemLeverRemote extends BaseItem implements IHasRecipe, IContent {
         'l', new ItemStack(Blocks.STONE_SLAB, 1, BlockStoneSlab.EnumType.STONE.getMetadata()),
         's', Blocks.STONE_BUTTON,
         't', Blocks.LEVER);
+  }
+
+  @Override
+  public void toggle(EntityPlayer player, ItemStack held) {
+    this.trigger(held, player.world, player);
+  }
+
+  @Override
+  public boolean isOn(ItemStack held) {
+    return false;// unused
   }
 }
