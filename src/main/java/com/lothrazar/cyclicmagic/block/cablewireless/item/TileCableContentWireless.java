@@ -119,8 +119,11 @@ public class TileCableContentWireless extends TileEntityBaseMachineInvo implemen
     stackToExport = this.getStackInSlot(SLOT_TRANSFER).copy();
     stackToExport.setCount(1);
     if (stackToExport.isEmpty() == false) {
-      EnumFacing rando = UtilWorld.getRandFacing();
-      ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, target, rando, stackToExport);
+      EnumFacing sideTarget = dim.getSide();
+      if (sideTarget == null) {//legacy from null
+        UtilWorld.getRandFacing();
+      }
+      ItemStack leftAfterDeposit = UtilItemStack.tryDepositToHandler(world, target, sideTarget, stackToExport);
       if (leftAfterDeposit.getCount() < stackToExport.getCount()) { //something moved!
         //then save result
         this.decrStackSize(SLOT_TRANSFER);

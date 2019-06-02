@@ -241,8 +241,8 @@ public class EventKeyInput {
           if (maybeCharm.getItem() instanceof IHasClickToggle) {
             //example: is a charm or something
             ModCyclic.network.sendToServer(new PacketItemToggle(slot));
-            EntityPlayer thePlayer = ModCyclic.proxy.getClientPlayer();
-            UtilSound.playSound(thePlayer, SoundEvents.UI_BUTTON_CLICK);
+            EntityPlayer player = ModCyclic.proxy.getClientPlayer();
+            UtilSound.playSound(player, SoundEvents.UI_BUTTON_CLICK);
             event.setCanceled(true);
           }
         }
