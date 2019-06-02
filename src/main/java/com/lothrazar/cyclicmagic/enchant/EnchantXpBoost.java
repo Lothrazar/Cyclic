@@ -66,7 +66,7 @@ public class EnchantXpBoost extends BaseEnchant {
 
   @Override
   public void syncConfig(Configuration config) {
-    enabled = config.getBoolean("EnchantWaterwalk", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enabled = config.getBoolean("EnchantExpBoost", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
