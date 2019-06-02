@@ -72,6 +72,7 @@ public class BlockOreRegistry {
     createNetherAndEndOres("boron", ironHarvest, "Boron");
     createNetherAndEndOres("cobalt", ironHarvest, "Cobalt");
     createNetherAndEndOres("copper", ironHarvest, "Copper");
+    //compare dilithium to Matteroverdrive legacy  
     createNetherAndEndOres("dilithium", ironHarvest, "Dilithium");
     createNetherAndEndOres("galena", ironHarvest, "Galena");
     createNetherAndEndOres("iridium", ironHarvest, "Iridium");
@@ -94,8 +95,8 @@ public class BlockOreRegistry {
     createNetherAndEndOres("tin", ironHarvest, "Tin");
     createNetherAndEndOres("uranium", ironHarvest, "Uranium");
     createNetherAndEndOres("yellorite", ironHarvest, "Yellorium");
-    //    createNetherAndEndOres("tritanium", ironHarvest, "Tritanium");
-    //    createNetherAndEndOres("zinc", ironHarvest, "Zinc");
+    createNetherAndEndOres("tritanium", ironHarvest, "Tritanium");
+    createNetherAndEndOres("zinc", ironHarvest, "Zinc");
     //vanilla ores
     createNetherRedstone(ironHarvest);
     createNetherIron(ironHarvest);
