@@ -26,11 +26,9 @@ package com.lothrazar.cyclicmagic.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import javax.annotation.Nonnull;
-import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,6 +47,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  * **/
 public class UtilPlayerInventoryFilestorage {
 
+  private static final String newExtension = "cyclicinvo";
   public static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
   private static HashMap<String, InventoryPlayerExtended> playerItems = new HashMap<String, InventoryPlayerExtended>();
 
@@ -56,18 +55,7 @@ public class UtilPlayerInventoryFilestorage {
     EntityPlayer player = event.getEntityPlayer();
     clearPlayerInventory(player);
     File playerFile = getPlayerFileID(event.getPlayerDirectory(), event.getEntityPlayer());
-    if (!playerFile.exists()) {
-      //file does not exist, create new
-      File fileNew = event.getPlayerFile(legacyExt);
-      //and copy in the basocs
-      if (fileNew.exists()) {
-        try {
-          Files.copy(fileNew, playerFile);
-          fileNew.delete();
-        }
-        catch (IOException e) {}
-      }
-    }
+
     loadPlayerInventory(event.getEntityPlayer(), playerFile);
     playerEntityIds.add(event.getEntityPlayer().getEntityId());
   }
@@ -96,7 +84,7 @@ public class UtilPlayerInventoryFilestorage {
     playerItems.put(player.getDisplayNameString(), inventory);
   }
 
-  public static void loadPlayerInventory(EntityPlayer player, File file1) {
+  private  static void loadPlayerInventory(EntityPlayer player, File file1) {
     if (player != null && !player.getEntityWorld().isRemote) {
       try {
         NBTTagCompound data = null;
@@ -153,12 +141,6 @@ public class UtilPlayerInventoryFilestorage {
       }
     }
   }
-
-  public static final String legacyExt = "invo";
-  public static final String newExtension = "cyclicinvo";
-
-  public static final String regex = "[^a-zA-Z0-9_]";
-
 
   private static File getPlayerFileID(File playerDirectory, EntityPlayer player) {
     return new File(playerDirectory, player.getUniqueID() + "." + newExtension);
