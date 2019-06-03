@@ -87,4 +87,10 @@ public class GuiFluidPump extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
+
+  @Override
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    //  
+  }
 }

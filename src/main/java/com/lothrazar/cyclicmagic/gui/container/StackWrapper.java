@@ -36,14 +36,6 @@ public class StackWrapper {
         + ";x=" + getX() + ";y=" + getY();
   }
 
-  //  @Override
-  //  public boolean equals(Object obj) {
-  //    if (!(obj instanceof StackWrapper)) {
-  //      return false;
-  //    }
-  //    StackWrapper o = (StackWrapper) obj;
-  //    return o.stack.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(o.stack, stack);
-  //  }
   public ItemStack getStack() {
     return stack;
   }
@@ -64,9 +56,6 @@ public class StackWrapper {
     this.stack.setCount(size);
   }
 
-  //  public StackWrapper copy() {
-  //    return new StackWrapper(stack.copy());
-  //  }
   public static StackWrapper loadStackWrapperFromNBT(NBTTagCompound nbt) {
     StackWrapper wrap = new StackWrapper();
     wrap.readFromNBT(nbt);
