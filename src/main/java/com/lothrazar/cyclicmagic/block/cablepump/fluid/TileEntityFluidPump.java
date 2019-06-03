@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
@@ -52,8 +53,9 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   private NonNullList<FluidWrapper> stacksWrapped = NonNullList.withSize(9, new FluidWrapper());
   private int transferRate = Fluid.BUCKET_VOLUME;
 
+  private int filterType = 0;
   public static enum Fields {
-    REDSTONE, TRANSFER_RATE;
+    REDSTONE, TRANSFER_RATE, FILTERTYPE;
   }
 
   public TileEntityFluidPump() {
@@ -85,7 +87,11 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     }
     //incoming target side
     BlockPos target = pos.offset(this.getCurrentFacing());
-    UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate);
+    UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate,
+        this.isWhitelist(), this.getFilterNonempty());
+//    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, themFacingMe); 
+    //    fluidTo.getTankProperties() 
+
     if (
     //         world.containsAnyLiquid(new AxisAlignedBB(target))        ||
     world.getBlockState(target).getMaterial().isLiquid()) {
@@ -102,20 +108,27 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     List<EnumFacing> sidesOut = getSidesNotFacing();
     Collections.shuffle(sidesOut);
     for (EnumFacing exportToSide : sidesOut) {
-      moveItems(exportToSide);
+      moveFluid(exportToSide);
     }
   }
 
-  private void moveItems(EnumFacing myFacingDir) {
+  private void moveFluid(EnumFacing myFacingDir) {
     if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, myFacingDir) == false) {
       return;
     }
+    // 
+    //   this.isStackInvalid(null)
+    //TODO 
+    //    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp);
+    // 
     EnumFacing themFacingMe = myFacingDir.getOpposite();
-    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(myFacingDir), themFacingMe, tank, transferRate);
-    if (outputSuccess && world.getTileEntity(pos.offset(myFacingDir)) instanceof TileEntityCableBase) {
+    BlockPos posSide = pos.offset(myFacingDir);
+
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posSide, themFacingMe, tank, transferRate);
+    if (outputSuccess && world.getTileEntity(posSide) instanceof TileEntityCableBase) {
       //TODO: not so compatible with other fluid systems. itl do i guess
       //tood capability for sided
-      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(myFacingDir));
+      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(posSide);
       if (cable.isFluidPipe()) {
         cable.updateIncomingFluidFace(themFacingMe);
       }
@@ -163,6 +176,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         return this.needsRedstone;
       case TRANSFER_RATE:
         return this.transferRate;
+      case FILTERTYPE:
+        return this.filterType;
     }
     return 0;
   }
@@ -177,9 +192,26 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         if (value > 0)
           transferRate = value;
       break;
+      case FILTERTYPE:
+        this.filterType = value % 2;
+      break;
     }
   }
 
+  private boolean isWhitelist() {
+    //default is zero, and default blacklist makes sense -> it is empty, so everythings allowed
+    return this.filterType == 1;
+  }
+
+  private List<FluidStack> getFilterNonempty() {
+    List<FluidStack> filt = new ArrayList<>();
+    for (FluidWrapper wrap : this.stacksWrapped) {
+      if (wrap.isEmpty() == false) {
+        filt.add(wrap.getStack().copy());
+      }
+    }
+    return filt;
+  }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);

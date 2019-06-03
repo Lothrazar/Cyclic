@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemPump extends GuiBaseContainer {
 
-  ITileStackWrapper te;
+  private ITileStackWrapper te;
   private ButtonTileEntityField filterBtn;
   private GuiSliderInteger slider;
 

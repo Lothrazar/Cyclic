@@ -49,7 +49,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
 
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(9, new StackWrapper());
   private static final int SLOT_TRANSFER = 0;
-  //  private static int TRANSFER_ITEM_TICK_DELAY = 0;
 
   public static enum Fields {
     REDSTONE, FILTERTYPE, SPEED;

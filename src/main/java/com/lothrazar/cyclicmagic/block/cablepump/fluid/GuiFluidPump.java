@@ -29,8 +29,10 @@ import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.data.FluidWrapper;
 import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,8 +40,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFluidPump extends GuiBaseContainer {
 
-  ITileFluidWrapper te;
+  private ITileFluidWrapper te;
   private GuiSliderInteger slider;
+  private ButtonTileEntityField filterBtn;
 
   public GuiFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
     super(new ContainerFluidPump(inventoryPlayer, tileEntity), tileEntity);
@@ -68,6 +71,14 @@ public class GuiFluidPump extends GuiBaseContainer {
         1, TileEntityCableBase.TRANSFER_FLUID_PER_TICK, //min max
         fld, "pump.rate");
     this.addButton(slider);
+    x = this.guiLeft + 150;
+    y = this.guiTop + Const.PAD / 2;
+    filterBtn = new ButtonTileEntityField(
+        id++,
+        x, y,
+        tile.getPos(), TileEntityFluidPump.Fields.FILTERTYPE.ordinal(), 1,
+        20, 20);
+    this.addButton(filterBtn);
   }
 
   @Override
@@ -91,6 +102,9 @@ public class GuiFluidPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    int filterType = tile.getField(TileEntityFluidPump.Fields.FILTERTYPE.ordinal());
+    filterBtn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + filterType));
+    filterBtn.setTextureIndex(11 + filterType);
   }
 
   @Override

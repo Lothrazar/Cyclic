@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -128,18 +129,38 @@ public class UtilFluid {
     return FluidUtil.interactWithFluidHandler(player, EnumHand.MAIN_HAND, world, pos, side);
   }
 
+  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount) {
+    return tryFillTankFromPosition(world, posSide, sideOpp, tankTo, amount, false, null);
+  }
+
+  private static boolean isStackInvalid(FluidStack stackToTest,
+      boolean isWhitelist, List<FluidStack> filterList) {
+    if (filterList == null) {
+      return true;
+    }
+    boolean hasMatch = false;
+    for (FluidStack filt : filterList) {
+      if (stackToTest.getFluid() == filt.getFluid()) {
+        hasMatch = true;
+        break;
+      }
+    }
+    //    ModCyclic.logger.log("hasMatch = " + hasMatch);
+    //    ModCyclic.logger.log("isWhitelist = " + isWhitelist);
+    if (hasMatch) {
+      // fluid matches something in my list . so whitelist means ok
+      return isWhitelist;
+    }
+    //here is the opposite: i did NOT match the list
+    return !isWhitelist;
+  }
+
   /**
    * Look for a fluid handler with gien position and direction try to extract from that pos and fill the tank
    * 
-   * 
-   * @param world
-   * @param posSide
-   * @param sideOpp
-   * @param tankTo
-   * @param amount
-   * @return
    */
-  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount) {
+  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount,
+      boolean isWhitelist, @Nullable List<FluidStack> allowedToMove) {
     try {
       IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
       if (fluidFrom != null) {
@@ -147,6 +168,10 @@ public class UtilFluid {
         // SO: pull fluid from that into myself
         FluidStack wasDrained = fluidFrom.drain(amount, false);
         if (wasDrained == null) {
+          return false;
+        }
+        if (!isStackInvalid(wasDrained, isWhitelist, allowedToMove)) {
+          //          ModCyclic.logger.log(" NOT VALID= ");
           return false;
         }
         int filled = tankTo.fill(wasDrained, false);
