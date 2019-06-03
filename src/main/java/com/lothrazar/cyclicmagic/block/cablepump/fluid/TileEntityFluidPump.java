@@ -27,23 +27,29 @@ import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
+import com.lothrazar.cyclicmagic.data.FluidWrapper;
+import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
+public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle, ITileFluidWrapper {
 
+  private FluidWrapper[] stacksWrapped = new FluidWrapper[9];
   private int transferRate = 1000;
 
   public static enum Fields {
@@ -53,6 +59,10 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   public TileEntityFluidPump() {
     super(0);
     tank = new FluidTankBase(Fluid.BUCKET_VOLUME);
+    for (int i = 0; i < stacksWrapped.length; i++) {
+      stacksWrapped[i] = new FluidWrapper();
+    }
+    stacksWrapped[0] = new FluidWrapper(new FluidStack(FluidRegistry.WATER, 1));
   }
 
   @Override
@@ -121,14 +131,28 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     transferRate = compound.getInteger("transferSaved");
-    //    ModCyclic.logger.log("readFromNBT xferrate " + transferRate);
+    //
+    NBTTagList invList = compound.getTagList("fluidGhostSlots", Constants.NBT.TAG_COMPOUND);
+    for (int i = 0; i < invList.tagCount(); i++) {
+      NBTTagCompound stackTag = invList.getCompoundTagAt(i);
+      int slot = stackTag.getByte("Slot");
+      stacksWrapped[slot] = FluidWrapper.loadStackWrapperFromNBT(stackTag);
+    } 
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
-    //  if (transferRate != 0) {
     compound.setInteger("transferSaved", this.transferRate);
+    NBTTagList invList = new NBTTagList();
+    for (int i = 0; i < this.getWrapperCount(); i++) {
+      NBTTagCompound stackTag = new NBTTagCompound();
+      stackTag.setByte("Slot", (byte) i);
+      if (this.getStackWrapper(i) != null)
+        this.getStackWrapper(i).writeToNBT(stackTag);
+      invList.appendTag(stackTag);
+    }
+    compound.setTag("fluidGhostSlots", invList);
     return super.writeToNBT(compound);
   }
 
@@ -170,5 +194,24 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+
+  @Override
+  public int getWrapperCount() {
+    return stacksWrapped.length;
+  }
+
+  @Override
+  public FluidWrapper getStackWrapper(int i) {
+    FluidWrapper f = this.stacksWrapped[i];
+    if (f == null) {
+      return new FluidWrapper();
+    }
+    return f;
+  }
+
+  @Override
+  public void setStackWrapper(int i, FluidWrapper stack) {
+    stacksWrapped[i] = stack;
   }
 }

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.container;
+package com.lothrazar.cyclicmagic.data;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

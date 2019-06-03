@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.container;
+package com.lothrazar.cyclicmagic.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,8 +30,11 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.data.FluidWrapper;
+import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.data.ITooltipButton;
+import com.lothrazar.cyclicmagic.data.StackWrapper;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTriggerWrapper;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTogglePreview;
@@ -52,12 +55,15 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -295,7 +301,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
       for (int i = 0; i < te.getWrapperCount(); i++) {
         wrap = te.getStackWrapper(i);
         if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
-          //      this.hoveredSlot = slot;
+
           GlStateManager.disableLighting();
           GlStateManager.disableDepth();
           int j1 = wrap.getX() + 1;
@@ -307,6 +313,34 @@ public abstract class GuiBaseContainer extends GuiContainer {
           GlStateManager.enableDepth();
           if (wrap.isEmpty() == false)
             this.renderToolTip(wrap.getStack(), mouseX, mouseY);
+        }
+      }
+    }
+    //TODO: CODESHARE 
+    if (tile instanceof ITileFluidWrapper) {
+      ITileFluidWrapper te = (ITileFluidWrapper) tile;
+      FluidWrapper wrap;
+      for (int i = 0; i < te.getWrapperCount(); i++) {
+        wrap = te.getStackWrapper(i);
+        if (wrap == null) {
+          continue;
+        }
+        if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
+
+          GlStateManager.disableLighting();
+          GlStateManager.disableDepth();
+          int j1 = wrap.getX() + 1;
+          int k1 = wrap.getY() + 1;
+          GlStateManager.colorMask(true, true, true, false);
+          this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, stackWrapperColor, stackWrapperColor);
+          GlStateManager.colorMask(true, true, true, true);
+          GlStateManager.enableLighting();
+          GlStateManager.enableDepth();
+          if (wrap.isEmpty() == false) {
+            drawHoveringText(Arrays.asList(wrap.getStack().getLocalizedName()),
+                mouseX, mouseY, fontRenderer);
+            //            this.renderToolTip(wrap.getStack(), mouseX, mouseY);
+          }
         }
       }
     }
@@ -425,6 +459,62 @@ public abstract class GuiBaseContainer extends GuiContainer {
         //keep this render quantity for later
         //          mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, s, x + 1, y + 1, "1");
         GlStateManager.popMatrix();
+      }
+    }
+  }
+
+  public void renderFluidWrappers(ITileFluidWrapper te, boolean background) {
+    if (background) {
+      this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+      for (int i = 0; i < te.getWrapperCount(); i++) {
+        //set its position for mouseclick later
+        FluidWrapper wrap = te.getStackWrapper(i);
+        if (wrap == null) {
+          continue;
+        }
+        Gui.drawModalRectWithCustomSizedTexture(
+            wrap.getX(), wrap.getY(),
+            0, 0, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      }
+    }
+    int x, y;
+    for (int i = 0; i < te.getWrapperCount(); i++) {
+      //set its position for mouseclick later
+      FluidWrapper wrap = te.getStackWrapper(i);
+      if (wrap == null || wrap.isEmpty() == false) {
+        FluidStack fluid = wrap.getStack();
+        //
+        if (fluid == null || fluid.amount == 0) {
+          return;
+        }
+        int fluidAmount = fluid.amount;
+        x = wrap.getX();
+        y = wrap.getY();
+        this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
+        drawFluid(x + 1, y + fluidAmount + 1, icon, 16, 16);
+        //
+        //        GlStateManager.pushMatrix();
+        //        RenderHelper.enableGUIStandardItemLighting();
+        //        mc.getRenderItem()
+        //            .renderItemAndEffectIntoGUI(wrap.getStack(),
+        //                wrap.getX() + 1, wrap.getY() + 1);
+        //keep this render quantity for later
+        //          mc.getRenderItem().renderItemOverlayIntoGUI(fontRenderer, s, x + 1, y + 1, "1");
+        //        GlStateManager.popMatrix();
+      }
+    }
+  }
+
+  private void drawFluid(int x, int y, TextureAtlasSprite icon, int width, int height) {
+    int size = width;
+    int drawHeight = 0;
+    int drawWidth = 0;
+    for (int i = 0; i < width; i += size) {
+      for (int j = 0; j < height; j += size) {
+        drawWidth = Math.min(width - i, size);
+        drawHeight = Math.min(height - j, size);
+        drawTexturedModalRect(x + i, y + j, icon, drawWidth, drawHeight);
       }
     }
   }

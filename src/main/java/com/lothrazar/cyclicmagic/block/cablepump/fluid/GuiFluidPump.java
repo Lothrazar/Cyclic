@@ -26,8 +26,11 @@ package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.data.FluidWrapper;
+import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,10 +38,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFluidPump extends GuiBaseContainer {
 
+  ITileFluidWrapper te;
   private GuiSliderInteger slider;
 
   public GuiFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
     super(new ContainerFluidPump(inventoryPlayer, tileEntity), tileEntity);
+    te = tileEntity;
     this.fieldRedstoneBtn = TileEntityFluidPump.Fields.REDSTONE.ordinal();
   }
 
@@ -91,6 +96,23 @@ public class GuiFluidPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    //  
+    int u = 0, v = 0, x, y;
+    int slotNum = 0;
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    for (int k = te.getWrapperCount() / 2; k < te.getWrapperCount(); k++) {
+      x = this.guiLeft + Const.PAD + (k - 1) * Const.SQ - 1;
+      y = this.guiTop + 2 * Const.SQ - 2;
+      //      Gui.drawModalRectWithCustomSizedTexture(
+      //          x, y,
+      //          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      FluidWrapper wrap = te.getStackWrapper(slotNum);
+      if (wrap == null) {
+        continue;
+      }
+      wrap.setX(x);
+      wrap.setY(y);
+      slotNum++;
+    }
+    this.renderFluidWrappers(te, true);
   }
 }

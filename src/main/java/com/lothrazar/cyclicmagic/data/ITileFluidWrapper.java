@@ -21,30 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.block.buildplacer;
+package com.lothrazar.cyclicmagic.data;
 
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.entity.player.InventoryPlayer;
+public interface ITileFluidWrapper {
 
-public class GuiPlacer extends GuiBaseContainer {
+  public int getWrapperCount();
 
-  private TileEntityPlacer tile;
+  public FluidWrapper getStackWrapper(int i);
 
-  public GuiPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer tileEntity) {
-    super(new ContainerPlacer(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
-    this.fieldRedstoneBtn = TileEntityPlacer.Fields.REDSTONE.ordinal();
-  }
-
-  @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPlacer.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerPlacer.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    }
-  }
+  public void setStackWrapper(int i, FluidWrapper stack);
 }
