@@ -65,6 +65,7 @@ import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.net.PacketSyncToolslot;
 import com.lothrazar.cyclicmagic.net.PacketTileClientToServer;
+import com.lothrazar.cyclicmagic.net.PacketTileFluidWrapped;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
@@ -138,5 +139,6 @@ public class PacketRegistry {
     network.registerMessage(PacketTileTextbox.class, PacketTileTextbox.class, packetID++, Side.SERVER);
     network.registerMessage(PacketScythe.class, PacketScythe.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileStackWrapped.class, PacketTileStackWrapped.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTileFluidWrapped.class, PacketTileFluidWrapped.class, packetID++, Side.SERVER);
   }
 }

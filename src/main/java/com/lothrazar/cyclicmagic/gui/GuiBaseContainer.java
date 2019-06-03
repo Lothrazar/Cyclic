@@ -43,6 +43,7 @@ import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
 import com.lothrazar.cyclicmagic.gui.component.FluidBar;
 import com.lothrazar.cyclicmagic.gui.component.GuiTextFieldInteger;
 import com.lothrazar.cyclicmagic.gui.component.ProgressBar;
+import com.lothrazar.cyclicmagic.net.PacketTileFluidWrapped;
 import com.lothrazar.cyclicmagic.net.PacketTileStackWrapped;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -64,6 +65,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -394,6 +396,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
     if (tile instanceof ITileStackWrapper) {
       mouseClickedWrapper((ITileStackWrapper) tile, mouseX, mouseY);
     }
+    if (tile instanceof ITileFluidWrapper) {
+      mouseClickedWrapper((ITileFluidWrapper) tile, mouseX, mouseY);
+    }
     if (txtBoxes != null) {
       mouseClickedTextboxes(mouseX, mouseY, btn);
     }
@@ -406,6 +411,30 @@ public abstract class GuiBaseContainer extends GuiContainer {
         boolean flag = mouseX >= this.guiLeft + txt.x && mouseX < this.guiLeft + txt.x + txt.width
             && mouseY >= this.guiTop + txt.y && mouseY < this.guiTop + txt.y + txt.height;
         txt.setFocused(flag);
+      }
+    }
+  }
+
+  protected void mouseClickedWrapper(ITileFluidWrapper te, int mouseX, int mouseY) {
+    ItemStack stackInMouse = mc.player.inventory.getItemStack();
+    FluidWrapper wrap;
+    for (int i = 0; i < te.getWrapperCount(); i++) {
+      wrap = te.getStackWrapper(i);
+      if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
+        if (stackInMouse.isEmpty() && wrap.isEmpty()) {
+          //if both empty, do nothing. dont waste a packet
+          break;
+        }
+        if (stackInMouse.isEmpty()) {
+          wrap.setStack(null);
+        }
+        else {
+          FluidStack flu = FluidUtil.getFluidContained(stackInMouse);
+          wrap.setStack(flu);
+        }
+        //PACKET TIIIIME 
+        ModCyclic.network.sendToServer(new PacketTileFluidWrapped(i, wrap, tile.getPos()));
+        return;
       }
     }
   }

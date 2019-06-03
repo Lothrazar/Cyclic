@@ -137,7 +137,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         wrapper = new FluidWrapper();
       }
       stacksWrapped.set(slot, wrapper);
-    } 
+    }
   }
 
   @Override
@@ -204,12 +204,14 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   @Override
   public FluidWrapper getStackWrapper(int i) {
     FluidWrapper f = this.stacksWrapped.get(i);
-
     return f;
   }
 
   @Override
   public void setStackWrapper(int i, FluidWrapper stack) {
-    stacksWrapped.set(i, stack);
+    if (stack == null)
+      stacksWrapped.set(i, new FluidWrapper());
+    else
+      stacksWrapped.set(i, stack);
   }
 }
