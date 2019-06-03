@@ -24,8 +24,8 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.data.StackWrapper;
+import com.lothrazar.cyclicmagic.data.FluidWrapper;
+import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,15 +38,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketTileStackWrapped implements IMessage, IMessageHandler<PacketTileStackWrapped, IMessage> {
+public class PacketTileFluidWrapped implements IMessage, IMessageHandler<PacketTileFluidWrapped, IMessage> {
 
   private BlockPos pos;
   private int index;
-  private StackWrapper stack;
+  private FluidWrapper stack;
 
-  public PacketTileStackWrapped() {}
+  public PacketTileFluidWrapped() {}
 
-  public PacketTileStackWrapped(int index, StackWrapper stack, BlockPos p) {
+  public PacketTileFluidWrapped(int index, FluidWrapper stack, BlockPos p) {
     pos = p;
     this.stack = stack;
     this.index = index;
@@ -60,7 +60,7 @@ public class PacketTileStackWrapped implements IMessage, IMessageHandler<PacketT
     int z = tags.getInteger("z");
     index = tags.getInteger("index");
     pos = new BlockPos(x, y, z);
-    stack = StackWrapper.loadStackWrapperFromNBT((NBTTagCompound) tags.getTag("ghostSlot"));
+    stack = FluidWrapper.loadStackWrapperFromNBT((NBTTagCompound) tags.getTag("ghostSlot"));
   }
 
   @Override
@@ -77,12 +77,12 @@ public class PacketTileStackWrapped implements IMessage, IMessageHandler<PacketT
   }
 
   @Override
-  public IMessage onMessage(PacketTileStackWrapped message, MessageContext ctx) {
-    PacketTileStackWrapped.checkThreadAndEnqueue(message, ctx);
+  public IMessage onMessage(PacketTileFluidWrapped message, MessageContext ctx) {
+    PacketTileFluidWrapped.checkThreadAndEnqueue(message, ctx);
     return null;
   }
 
-  private static void checkThreadAndEnqueue(final PacketTileStackWrapped message, final MessageContext ctx) {
+  private static void checkThreadAndEnqueue(final PacketTileFluidWrapped message, final MessageContext ctx) {
     IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
     thread.addScheduledTask(new Runnable() {
 
@@ -91,8 +91,8 @@ public class PacketTileStackWrapped implements IMessage, IMessageHandler<PacketT
         EntityPlayerMP player = ctx.getServerHandler().player;
         World world = player.getEntityWorld();
         TileEntity tile = world.getTileEntity(message.pos);
-        if (tile != null && tile instanceof ITileStackWrapper) {
-          ((ITileStackWrapper) tile).setStackWrapper(message.index, message.stack);
+        if (tile != null && tile instanceof ITileFluidWrapper) {
+          ((ITileFluidWrapper) tile).setStackWrapper(message.index, message.stack);
         }
       }
     });

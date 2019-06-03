@@ -25,9 +25,9 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;

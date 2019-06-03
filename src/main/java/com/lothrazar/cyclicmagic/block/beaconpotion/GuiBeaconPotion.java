@@ -24,9 +24,9 @@
 package com.lothrazar.cyclicmagic.block.beaconpotion;
 
 import com.lothrazar.cyclicmagic.block.beaconpotion.TileEntityBeaconPotion.Fields;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.component.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;

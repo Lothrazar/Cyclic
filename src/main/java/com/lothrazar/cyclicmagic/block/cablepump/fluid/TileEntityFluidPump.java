@@ -23,31 +23,39 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
+import com.lothrazar.cyclicmagic.data.FluidWrapper;
+import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle {
+public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle, ITileFluidWrapper {
 
-  private int transferRate = 1000;
+  private NonNullList<FluidWrapper> stacksWrapped = NonNullList.withSize(9, new FluidWrapper());
+  private int transferRate = Fluid.BUCKET_VOLUME;
 
+  private int filterType = 0;
   public static enum Fields {
-    REDSTONE, TRANSFER_RATE;
+    REDSTONE, TRANSFER_RATE, FILTERTYPE;
   }
 
   public TileEntityFluidPump() {
@@ -79,37 +87,52 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     }
     //incoming target side
     BlockPos target = pos.offset(this.getCurrentFacing());
-    UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate);
+    UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate,
+        this.isWhitelist(), this.getFilterNonempty());
+//    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, themFacingMe); 
+    //    fluidTo.getTankProperties() 
+
     if (
     //         world.containsAnyLiquid(new AxisAlignedBB(target))        ||
-    world.getBlockState(target).getMaterial().isLiquid()) {
+    world.getBlockState(target).getMaterial().isLiquid()
+        && this.transferRate == Fluid.BUCKET_VOLUME) {
       //here 
       //       IBlockState currentState = world.getBlockState(target);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
       IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
-      FluidStack fs = handle.getTankProperties()[0].getContents();
-      if (fs != null && this.tank.canFillFluidType(fs)) {
-        this.tank.fill(fs, true);
+      FluidStack fluidFromWorld = handle.getTankProperties()[0].getContents();
+      if (fluidFromWorld != null
+          && UtilFluid.isStackInvalid(fluidFromWorld, isWhitelist(), getFilterNonempty())
+          && this.tank.canFillFluidType(fluidFromWorld)) {
+        this.tank.fill(fluidFromWorld, true);
+        world.setBlockToAir(target);
       }
     }
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();
     Collections.shuffle(sidesOut);
     for (EnumFacing exportToSide : sidesOut) {
-      moveItems(exportToSide);
+      moveFluid(exportToSide);
     }
   }
 
-  private void moveItems(EnumFacing myFacingDir) {
+  private void moveFluid(EnumFacing myFacingDir) {
     if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, myFacingDir) == false) {
       return;
     }
+    // 
+    //   this.isStackInvalid(null)
+    //TODO 
+    //    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp);
+    // 
     EnumFacing themFacingMe = myFacingDir.getOpposite();
-    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, pos.offset(myFacingDir), themFacingMe, tank, transferRate);
-    if (outputSuccess && world.getTileEntity(pos.offset(myFacingDir)) instanceof TileEntityCableBase) {
+    BlockPos posSide = pos.offset(myFacingDir);
+
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posSide, themFacingMe, tank, transferRate);
+    if (outputSuccess && world.getTileEntity(posSide) instanceof TileEntityCableBase) {
       //TODO: not so compatible with other fluid systems. itl do i guess
       //tood capability for sided
-      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(pos.offset(myFacingDir));
+      TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(posSide);
       if (cable.isFluidPipe()) {
         cable.updateIncomingFluidFace(themFacingMe);
       }
@@ -121,14 +144,32 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     transferRate = compound.getInteger("transferSaved");
-    //    ModCyclic.logger.log("readFromNBT xferrate " + transferRate);
+    //
+    NBTTagList invList = compound.getTagList("fluidGhostSlots", Constants.NBT.TAG_COMPOUND);
+    for (int i = 0; i < invList.tagCount(); i++) {
+      NBTTagCompound stackTag = invList.getCompoundTagAt(i);
+      int slot = stackTag.getByte("Slot");
+      FluidWrapper wrapper = FluidWrapper.loadStackWrapperFromNBT(stackTag);
+      if (wrapper == null) {
+        wrapper = new FluidWrapper();
+      }
+      stacksWrapped.set(slot, wrapper);
+    }
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_REDST, needsRedstone);
-    //  if (transferRate != 0) {
     compound.setInteger("transferSaved", this.transferRate);
+    NBTTagList invList = new NBTTagList();
+    for (int i = 0; i < this.getWrapperCount(); i++) {
+      NBTTagCompound stackTag = new NBTTagCompound();
+      stackTag.setByte("Slot", (byte) i);
+      if (this.getStackWrapper(i) != null)
+        this.getStackWrapper(i).writeToNBT(stackTag);
+      invList.appendTag(stackTag);
+    }
+    compound.setTag("fluidGhostSlots", invList);
     return super.writeToNBT(compound);
   }
 
@@ -139,6 +180,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         return this.needsRedstone;
       case TRANSFER_RATE:
         return this.transferRate;
+      case FILTERTYPE:
+        return this.filterType;
     }
     return 0;
   }
@@ -153,9 +196,26 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         if (value > 0)
           transferRate = value;
       break;
+      case FILTERTYPE:
+        this.filterType = value % 2;
+      break;
     }
   }
 
+  private boolean isWhitelist() {
+    //default is zero, and default blacklist makes sense -> it is empty, so everythings allowed
+    return this.filterType == 1;
+  }
+
+  private List<FluidStack> getFilterNonempty() {
+    List<FluidStack> filt = new ArrayList<>();
+    for (FluidWrapper wrap : this.stacksWrapped) {
+      if (wrap.isEmpty() == false) {
+        filt.add(wrap.getStack().copy());
+      }
+    }
+    return filt;
+  }
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
@@ -170,5 +230,24 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   @Override
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+
+  @Override
+  public int getWrapperCount() {
+    return stacksWrapped.size();
+  }
+
+  @Override
+  public FluidWrapper getStackWrapper(int i) {
+    FluidWrapper f = this.stacksWrapped.get(i);
+    return f;
+  }
+
+  @Override
+  public void setStackWrapper(int i, FluidWrapper stack) {
+    if (stack == null)
+      stacksWrapped.set(i, new FluidWrapper());
+    else
+      stacksWrapped.set(i, stack);
   }
 }

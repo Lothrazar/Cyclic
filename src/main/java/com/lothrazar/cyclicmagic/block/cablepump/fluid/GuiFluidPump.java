@@ -26,8 +26,13 @@ package com.lothrazar.cyclicmagic.block.cablepump.fluid;
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
+import com.lothrazar.cyclicmagic.data.FluidWrapper;
+import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,10 +40,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFluidPump extends GuiBaseContainer {
 
+  private ITileFluidWrapper te;
   private GuiSliderInteger slider;
+  private ButtonTileEntityField filterBtn;
 
   public GuiFluidPump(InventoryPlayer inventoryPlayer, TileEntityFluidPump tileEntity) {
     super(new ContainerFluidPump(inventoryPlayer, tileEntity), tileEntity);
+    te = tileEntity;
     this.fieldRedstoneBtn = TileEntityFluidPump.Fields.REDSTONE.ordinal();
   }
 
@@ -63,6 +71,14 @@ public class GuiFluidPump extends GuiBaseContainer {
         1, TileEntityCableBase.TRANSFER_FLUID_PER_TICK, //min max
         fld, "pump.rate");
     this.addButton(slider);
+    x = this.guiLeft + 150;
+    y = this.guiTop + Const.PAD / 2;
+    filterBtn = new ButtonTileEntityField(
+        id++,
+        x, y,
+        tile.getPos(), TileEntityFluidPump.Fields.FILTERTYPE.ordinal(), 1,
+        20, 20);
+    this.addButton(filterBtn);
   }
 
   @Override
@@ -86,5 +102,23 @@ public class GuiFluidPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    int filterType = tile.getField(TileEntityFluidPump.Fields.FILTERTYPE.ordinal());
+    filterBtn.setTooltip(UtilChat.lang("button.itemfilter.tooltip.type" + filterType));
+    filterBtn.setTextureIndex(11 + filterType);
+  }
+
+  @Override
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    int x = this.guiLeft + Const.PAD - 1;
+    int y = this.guiTop + 3 * Const.SQ + 3;
+
+    for (int k = 0; k < te.getWrapperCount(); k++) {
+      FluidWrapper wrap = te.getStackWrapper(k);
+      wrap.setX(x);
+      wrap.setY(y);
+      x += Const.SQ;
+    }
+    this.renderFluidWrappers(te, true);
   }
 }

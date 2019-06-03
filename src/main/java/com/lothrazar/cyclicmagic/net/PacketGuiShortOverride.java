@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.gui.container;
+package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
