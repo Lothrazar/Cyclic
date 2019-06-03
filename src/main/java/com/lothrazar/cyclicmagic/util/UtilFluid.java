@@ -133,7 +133,7 @@ public class UtilFluid {
     return tryFillTankFromPosition(world, posSide, sideOpp, tankTo, amount, false, null);
   }
 
-  private static boolean isStackInvalid(FluidStack stackToTest,
+  public static boolean isStackInvalid(FluidStack stackToTest,
       boolean isWhitelist, List<FluidStack> filterList) {
     if (filterList == null) {
       return true;

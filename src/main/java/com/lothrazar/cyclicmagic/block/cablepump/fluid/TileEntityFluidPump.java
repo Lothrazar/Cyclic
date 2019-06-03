@@ -94,14 +94,18 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
 
     if (
     //         world.containsAnyLiquid(new AxisAlignedBB(target))        ||
-    world.getBlockState(target).getMaterial().isLiquid()) {
+    world.getBlockState(target).getMaterial().isLiquid()
+        && this.transferRate == Fluid.BUCKET_VOLUME) {
       //here 
       //       IBlockState currentState = world.getBlockState(target);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
       IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
-      FluidStack fs = handle.getTankProperties()[0].getContents();
-      if (fs != null && this.tank.canFillFluidType(fs)) {
-        this.tank.fill(fs, true);
+      FluidStack fluidFromWorld = handle.getTankProperties()[0].getContents();
+      if (fluidFromWorld != null
+          && UtilFluid.isStackInvalid(fluidFromWorld, isWhitelist(), getFilterNonempty())
+          && this.tank.canFillFluidType(fluidFromWorld)) {
+        this.tank.fill(fluidFromWorld, true);
+        world.setBlockToAir(target);
       }
     }
     //eXPORT: now try to DEPOSIT fluid next door
