@@ -38,10 +38,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -49,8 +49,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle, ITileFluidWrapper {
 
-  private FluidWrapper[] stacksWrapped = new FluidWrapper[9];
-  private int transferRate = 1000;
+  private NonNullList<FluidWrapper> stacksWrapped = NonNullList.withSize(9, new FluidWrapper());
+  private int transferRate = Fluid.BUCKET_VOLUME;
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE;
@@ -59,10 +59,6 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   public TileEntityFluidPump() {
     super(0);
     tank = new FluidTankBase(Fluid.BUCKET_VOLUME);
-    for (int i = 0; i < stacksWrapped.length; i++) {
-      stacksWrapped[i] = new FluidWrapper();
-    }
-    stacksWrapped[0] = new FluidWrapper(new FluidStack(FluidRegistry.WATER, 1));
   }
 
   @Override
@@ -136,7 +132,11 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     for (int i = 0; i < invList.tagCount(); i++) {
       NBTTagCompound stackTag = invList.getCompoundTagAt(i);
       int slot = stackTag.getByte("Slot");
-      stacksWrapped[slot] = FluidWrapper.loadStackWrapperFromNBT(stackTag);
+      FluidWrapper wrapper = FluidWrapper.loadStackWrapperFromNBT(stackTag);
+      if (wrapper == null) {
+        wrapper = new FluidWrapper();
+      }
+      stacksWrapped.set(slot, wrapper);
     } 
   }
 
@@ -198,20 +198,18 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
 
   @Override
   public int getWrapperCount() {
-    return stacksWrapped.length;
+    return stacksWrapped.size();
   }
 
   @Override
   public FluidWrapper getStackWrapper(int i) {
-    FluidWrapper f = this.stacksWrapped[i];
-    if (f == null) {
-      return new FluidWrapper();
-    }
+    FluidWrapper f = this.stacksWrapped.get(i);
+
     return f;
   }
 
   @Override
   public void setStackWrapper(int i, FluidWrapper stack) {
-    stacksWrapped[i] = stack;
+    stacksWrapped.set(i, stack);
   }
 }

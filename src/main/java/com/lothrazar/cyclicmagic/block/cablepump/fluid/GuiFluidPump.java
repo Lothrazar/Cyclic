@@ -96,22 +96,14 @@ public class GuiFluidPump extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    int u = 0, v = 0, x, y;
-    int slotNum = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = te.getWrapperCount() / 2; k < te.getWrapperCount(); k++) {
-      x = this.guiLeft + Const.PAD + (k - 1) * Const.SQ - 1;
-      y = this.guiTop + 2 * Const.SQ - 2;
-      //      Gui.drawModalRectWithCustomSizedTexture(
-      //          x, y,
-      //          u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-      FluidWrapper wrap = te.getStackWrapper(slotNum);
-      if (wrap == null) {
-        continue;
-      }
+    int x = this.guiLeft + Const.PAD - 1;
+    int y = this.guiTop + 3 * Const.SQ + 3;
+
+    for (int k = 0; k < te.getWrapperCount(); k++) {
+      FluidWrapper wrap = te.getStackWrapper(k);
       wrap.setX(x);
       wrap.setY(y);
-      slotNum++;
+      x += Const.SQ;
     }
     this.renderFluidWrappers(te, true);
   }

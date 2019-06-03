@@ -469,31 +469,30 @@ public abstract class GuiBaseContainer extends GuiContainer {
       for (int i = 0; i < te.getWrapperCount(); i++) {
         //set its position for mouseclick later
         FluidWrapper wrap = te.getStackWrapper(i);
-        if (wrap == null) {
-          continue;
-        }
+
         Gui.drawModalRectWithCustomSizedTexture(
             wrap.getX(), wrap.getY(),
             0, 0, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
       }
     }
-    int x, y;
+    int x, y, size = Const.SQ - 2;
+    TextureAtlasSprite icon;
     for (int i = 0; i < te.getWrapperCount(); i++) {
       //set its position for mouseclick later
       FluidWrapper wrap = te.getStackWrapper(i);
-      if (wrap == null || wrap.isEmpty() == false) {
+      if (wrap.isEmpty() == false) {
         FluidStack fluid = wrap.getStack();
         //
         if (fluid == null || fluid.amount == 0) {
           return;
         }
         int fluidAmount = fluid.amount;
-        x = wrap.getX();
-        y = wrap.getY();
+        x = wrap.getX() + 1;
+        y = wrap.getY() + 1;
         this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
-        drawFluid(x + 1, y + fluidAmount + 1, icon, 16, 16);
-        //
+        icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
+        drawFluid(x, y, icon, size, size);
+        //   
         //        GlStateManager.pushMatrix();
         //        RenderHelper.enableGUIStandardItemLighting();
         //        mc.getRenderItem()
