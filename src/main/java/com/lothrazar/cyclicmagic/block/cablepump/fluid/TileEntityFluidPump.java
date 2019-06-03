@@ -89,15 +89,10 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     BlockPos target = pos.offset(this.getCurrentFacing());
     UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate,
         this.isWhitelist(), this.getFilterNonempty());
-//    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, themFacingMe); 
-    //    fluidTo.getTankProperties() 
 
-    if (
-    //         world.containsAnyLiquid(new AxisAlignedBB(target))        ||
-    world.getBlockState(target).getMaterial().isLiquid()
+    if (world.getBlockState(target).getMaterial().isLiquid()
         && this.transferRate == Fluid.BUCKET_VOLUME) {
-      //here 
-      //       IBlockState currentState = world.getBlockState(target);
+
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
       IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
       FluidStack fluidFromWorld = handle.getTankProperties()[0].getContents();
@@ -120,18 +115,13 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, myFacingDir) == false) {
       return;
     }
-    // 
-    //   this.isStackInvalid(null)
-    //TODO 
-    //    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp);
-    // 
+
     EnumFacing themFacingMe = myFacingDir.getOpposite();
     BlockPos posSide = pos.offset(myFacingDir);
 
     boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posSide, themFacingMe, tank, transferRate);
     if (outputSuccess && world.getTileEntity(posSide) instanceof TileEntityCableBase) {
-      //TODO: not so compatible with other fluid systems. itl do i guess
-      //tood capability for sided
+      //TODO capability for sided
       TileEntityCableBase cable = (TileEntityCableBase) world.getTileEntity(posSide);
       if (cable.isFluidPipe()) {
         cable.updateIncomingFluidFace(themFacingMe);
@@ -144,7 +134,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     transferRate = compound.getInteger("transferSaved");
-    //
+
     NBTTagList invList = compound.getTagList("fluidGhostSlots", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < invList.tagCount(); i++) {
       NBTTagCompound stackTag = invList.getCompoundTagAt(i);

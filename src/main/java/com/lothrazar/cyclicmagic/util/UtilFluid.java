@@ -45,25 +45,12 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 public class UtilFluid {
 
-  //  public static ItemStack dispenseStack(World world, BlockPos pos, ItemStack stack, EnumFacing facing) {
-  //    if (FluidUtil.getFluidContained(stack) != null) {
-  //      return dumpContainer(world, pos, stack);
-  //    }
-  //    else {
-  //      return fillContainer(world, pos, stack, facing);
-  //    }
-  //  }
+
   /**
    * Picks up fluid fills a container with it.
    */
   public static FluidActionResult fillContainer(World world, BlockPos pos, ItemStack stackIn, EnumFacing facing) {
-    //    ItemStack result = stackIn.copy();
     return FluidUtil.tryPickUpFluid(stackIn, null, world, pos, facing);
-    //  if (--stackIn.stackSize == 0) {
-    //    stackIn.deserializeNBT(result.serializeNBT());
-    //  }
-    //    if (res == FluidActionResult.FAILURE) { return stackIn; }
-    //    return res.getResult();
   }
 
   /**
@@ -79,12 +66,10 @@ public class UtilFluid {
     }
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
     if (fluidStack != null && fluidStack.amount >= Fluid.BUCKET_VOLUME) {
-      //      FluidActionResult placeResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack);
       if (FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack).isSuccess()) {
         //http://www.minecraftforge.net/forum/topic/56265-1112-fluidhandler-capability-on-buckets/
         fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
         ItemStack returnMe = fluidHandler.getContainer();
-        //        stackIn.deserializeNBT(returnMe.serializeNBT()); 
         return returnMe;
       }
     }
@@ -145,8 +130,6 @@ public class UtilFluid {
         break;
       }
     }
-    //    ModCyclic.logger.log("hasMatch = " + hasMatch);
-    //    ModCyclic.logger.log("isWhitelist = " + isWhitelist);
     if (hasMatch) {
       // fluid matches something in my list . so whitelist means ok
       return isWhitelist;
@@ -171,7 +154,6 @@ public class UtilFluid {
           return false;
         }
         if (!isStackInvalid(wasDrained, isWhitelist, allowedToMove)) {
-          //          ModCyclic.logger.log(" NOT VALID= ");
           return false;
         }
         int filled = tankTo.fill(wasDrained, false);
