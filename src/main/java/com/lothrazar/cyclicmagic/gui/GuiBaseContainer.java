@@ -303,7 +303,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       for (int i = 0; i < te.getWrapperCount(); i++) {
         wrap = te.getStackWrapper(i);
         if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
-
           GlStateManager.disableLighting();
           GlStateManager.disableDepth();
           int j1 = wrap.getX() + 1;
@@ -328,7 +327,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
           continue;
         }
         if (isPointInRegion(wrap.getX() - guiLeft, wrap.getY() - guiTop, Const.SQ - 2, Const.SQ - 2, mouseX, mouseY)) {
-
           GlStateManager.disableLighting();
           GlStateManager.disableDepth();
           int j1 = wrap.getX() + 1;
@@ -498,7 +496,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       for (int i = 0; i < te.getWrapperCount(); i++) {
         //set its position for mouseclick later
         FluidWrapper wrap = te.getStackWrapper(i);
-
         Gui.drawModalRectWithCustomSizedTexture(
             wrap.getX(), wrap.getY(),
             0, 0, Const.SQ, Const.SQ, Const.SQ, Const.SQ);

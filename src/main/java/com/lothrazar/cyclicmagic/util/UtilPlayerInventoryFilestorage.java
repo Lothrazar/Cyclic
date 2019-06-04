@@ -55,7 +55,6 @@ public class UtilPlayerInventoryFilestorage {
     EntityPlayer player = event.getEntityPlayer();
     clearPlayerInventory(player);
     File playerFile = getPlayerFileID(event.getPlayerDirectory(), event.getEntityPlayer());
-
     loadPlayerInventory(event.getEntityPlayer(), playerFile);
     playerEntityIds.add(event.getEntityPlayer().getEntityId());
   }
@@ -84,7 +83,7 @@ public class UtilPlayerInventoryFilestorage {
     playerItems.put(player.getDisplayNameString(), inventory);
   }
 
-  private  static void loadPlayerInventory(EntityPlayer player, File file1) {
+  private static void loadPlayerInventory(EntityPlayer player, File file1) {
     if (player != null && !player.getEntityWorld().isRemote) {
       try {
         NBTTagCompound data = null;
@@ -120,7 +119,6 @@ public class UtilPlayerInventoryFilestorage {
   public static void savePlayerItems(@Nonnull EntityPlayer player, File playerDirectory) {
     if (!player.getEntityWorld().isRemote) {
       try {
-
         //if original fails to save, ID version will not be overwritten! 
         File fileToSaveID = getPlayerFileID(playerDirectory, player);
         if (fileToSaveID != null) {

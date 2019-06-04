@@ -22,7 +22,6 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.data;
-
 public interface ITileStackWrapper {
 
   public int getWrapperCount();

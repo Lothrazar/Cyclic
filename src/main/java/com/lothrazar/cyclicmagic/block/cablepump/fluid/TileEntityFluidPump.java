@@ -52,8 +52,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
 
   private NonNullList<FluidWrapper> stacksWrapped = NonNullList.withSize(9, new FluidWrapper());
   private int transferRate = Fluid.BUCKET_VOLUME;
-
   private int filterType = 0;
+
   public static enum Fields {
     REDSTONE, TRANSFER_RATE, FILTERTYPE;
   }
@@ -89,10 +89,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     BlockPos target = pos.offset(this.getCurrentFacing());
     UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate,
         this.isWhitelist(), this.getFilterNonempty());
-
     if (world.getBlockState(target).getMaterial().isLiquid()
         && this.transferRate == Fluid.BUCKET_VOLUME) {
-
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
       IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
       FluidStack fluidFromWorld = handle.getTankProperties()[0].getContents();
@@ -115,10 +113,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     if (this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, myFacingDir) == false) {
       return;
     }
-
     EnumFacing themFacingMe = myFacingDir.getOpposite();
     BlockPos posSide = pos.offset(myFacingDir);
-
     boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posSide, themFacingMe, tank, transferRate);
     if (outputSuccess && world.getTileEntity(posSide) instanceof TileEntityCableBase) {
       //TODO capability for sided
@@ -134,7 +130,6 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     super.readFromNBT(compound);
     needsRedstone = compound.getInteger(NBT_REDST);
     transferRate = compound.getInteger("transferSaved");
-
     NBTTagList invList = compound.getTagList("fluidGhostSlots", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < invList.tagCount(); i++) {
       NBTTagCompound stackTag = invList.getCompoundTagAt(i);
@@ -206,6 +201,7 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     }
     return filt;
   }
+
   @Override
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);

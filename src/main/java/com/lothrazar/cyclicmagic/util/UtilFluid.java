@@ -45,7 +45,6 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 public class UtilFluid {
 
-
   /**
    * Picks up fluid fills a container with it.
    */

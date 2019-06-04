@@ -112,7 +112,6 @@ public class GuiFluidPump extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int x = this.guiLeft + Const.PAD - 1;
     int y = this.guiTop + 3 * Const.SQ + 3;
-
     for (int k = 0; k < te.getWrapperCount(); k++) {
       FluidWrapper wrap = te.getStackWrapper(k);
       wrap.setX(x);

@@ -114,7 +114,6 @@ public class BlockOreRegistry {
     createEndDiamond(diamondHarvest);
     createEndGold(goldHarvest);
     createEndIron(ironHarvest);
-
   }
 
   private static void createEndIron(final int ironHarvest) {
