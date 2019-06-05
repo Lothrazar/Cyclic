@@ -191,7 +191,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     BlockPos entityCenter = getTargetCenter();
     AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size, vRange);
     List<EntityLivingBase> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
-
     if (isRightClick()) {//right click entities and blocks
       List<EntityMinecart> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
       List<Entity> all = new ArrayList<Entity>(living);
@@ -270,7 +269,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
         //bucket on fluid-in-world   
-
         syncPlayerTool();
         return true;
       }
@@ -280,7 +278,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   private void rightClickBlock(BlockPos targetPos) {
     //if both block and itemstack are fluid compatible 
-
     ItemStack before = fakePlayer.get().getHeldItemMainhand();
     boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //dont ever place a block. they want to use it on an entity
@@ -409,7 +406,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
       player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
       if (UtilFluid.isEmptyOfFluid(drainedStackOrNull)) {
-
         this.tryDumpFakePlayerInvo(true);
       }
       return true;

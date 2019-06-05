@@ -42,5 +42,4 @@ public class TileCreativeItem extends TileEntityBaseMachineInvo implements ITick
     //copy from 0 to 1
     this.setInventorySlotContents(1, this.getStackInSlot(0).copy());
   }
-
 }

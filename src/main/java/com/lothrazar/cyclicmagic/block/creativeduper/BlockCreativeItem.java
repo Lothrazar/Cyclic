@@ -35,7 +35,6 @@ public class BlockCreativeItem extends BlockBaseHasTile implements IContent, IHa
         getContentName() + Const.ConfigCategory.contentDefaultText);
   }
 
-
   @Override
   public void register() {
     BlockRegistry.registerBlock(this, getContentName(), null);
@@ -48,5 +47,4 @@ public class BlockCreativeItem extends BlockBaseHasTile implements IContent, IHa
   public boolean enabled() {
     return enabled;
   }
-
 }
