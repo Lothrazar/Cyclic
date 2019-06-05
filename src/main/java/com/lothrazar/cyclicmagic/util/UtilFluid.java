@@ -64,15 +64,25 @@ public class UtilFluid {
       return ItemStack.EMPTY;
     }
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
-    if (fluidStack != null && fluidStack.amount >= Fluid.BUCKET_VOLUME) {
-      if (FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack).isSuccess()) {
+    if (fluidStack != null// && fluidStack.amount >= Fluid.BUCKET_VOLUME
+    ) {
+      ModCyclic.logger.info(fluidStack.amount + " amt BEFORE ");
+      FluidActionResult placementResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack,
+          fluidStack.copy());
+      if (placementResult.isSuccess()) {
         //http://www.minecraftforge.net/forum/topic/56265-1112-fluidhandler-capability-on-buckets/
-        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
-        ItemStack returnMe = fluidHandler.getContainer();
-        return returnMe;
+        //        ModCyclic.logger.info("fluid placed so try drain " + stackIn);
+        //        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
+        ModCyclic.logger.info(placementResult.success + " and  returnMe = " + placementResult.result);
+        //stupid hack but otherwise the bucket stays full forever because wtf
+        //        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
+        //        FluidStack test = FluidUtil.getFluidContained(placementResult.result);
+        //        if (test != null)
+        //          ModCyclic.logger.info(test.amount + " amt after");
+        return placementResult.result;
       }
     }
-    return fluidHandler.getContainer();
+    return stackIn;
   }
 
   public static ItemStack drainOneBucket(ItemStack d) {
@@ -85,7 +95,8 @@ public class UtilFluid {
   }
 
   public static boolean isEmptyOfFluid(ItemStack returnMe) {
-    return FluidUtil.getFluidContained(returnMe) == null;
+    FluidStack fs = FluidUtil.getFluidContained(returnMe);
+    return fs == null || fs.amount == 0;
   }
 
   public static FluidStack getFluidContained(ItemStack returnMe) {
