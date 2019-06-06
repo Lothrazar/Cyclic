@@ -1,4 +1,4 @@
-#ru_RU.lang | Actual for Cyclic-1.12.2-(R1.19.3)
+#ru_RU.lang | Actual for Cyclic-1.12.2-(R1.19.11)
 builder.toggle.name=Переключатель
 buildertype.circle.name=Круг
 buildertype.cup.name=Чаша
@@ -597,6 +597,9 @@ teleport.dimension=Нельзя перекрещивать измерения
 tile.trash.name=Корзина пустоты
 tile.trash.tooltip=Утилизируйте любую жидкость или предмет
 tile.trash.guide=Утилизируйте любую жидкость или предмет, перекачивая предметы в это с помощью воронок или труб.
+button.trash.fluid.tooltip=Принимает и удаляет жидкости
+button.trash.items.tooltip=Принимает и удаляет предметы
+tile.trash.warning=Предупреждение! УДАЛЯЕТ все предметы
 tile.auto_crafter.guide=Выберите рецепт, и это будет независимость столько, сколько он может. Имеет слоты для входных материалов и выхода.
 tile.auto_crafter.name=Автокрафтер
 tile.auto_crafter.tooltip=Автоматическое 3x3 создание
@@ -705,6 +708,7 @@ button.offsetz.tooltip=Z смещение
 button.offsetblock.name0=Вверх
 button.offsetblock.name1=Центр
 button.offsetblock.name2=Вниз
+screen.offset=Смещение блока
 screen.font=Шрифт
 screen.style=Стиль
 screen.fontsize=Размер шрифта
@@ -1214,6 +1218,12 @@ tile.battery_infinite.tooltip=Творческий источник энерги
 tile.battery_infinite.guide=Творческий режим бесконечного источника энергии (для читерства и тестирования)
 
 
+
+tile.zinc_nether_ore.name=Цинковая руда нижнего мира
+tile.zinc_end_ore.name=Цинковая руда края
+
+tile.tritanium_nether_ore.name=Тритановая руда нижнего мира
+tile.tritanium_end_ore.name=Тритановая руда края
 
 tile.titanium_nether_ore.name=Титановая руда нижнего мира
 tile.titanium_end_ore.name=Титановая руда края
