@@ -7,6 +7,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -39,6 +40,9 @@ public class BlockConveyorCorner extends BlockConveyor {
 
   @Override
   public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    if (sneakPlayerAvoid && entity instanceof EntityPlayer && ((EntityPlayer) entity).isSneaking()) {
+      return;
+    }
     EnumFacing face = getFacingFromState(state);
     if (state.getValue(FLIPPED)) {
       face = face.getOpposite();

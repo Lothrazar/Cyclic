@@ -51,9 +51,10 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
   private int style;
   private int showType, xp, yp;
   private int fontSize = 30;
+  private int offset = 0;
 
   public static enum Fields {
-    RED, GREEN, BLUE, SHOWTYPE, STYLE, FONT, XPADDING, YPADDING;
+    RED, GREEN, BLUE, SHOWTYPE, STYLE, FONT, XPADDING, YPADDING, OFFSET;
   }
 
   public TileEntityScreenTarget() {
@@ -89,7 +90,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
 
   @Override
   public int[] getFieldOrdinals() {
-    return super.getFieldArray(Fields.values().length);
+    return super.getFieldArray(getFieldCount());
   }
 
   @Override
@@ -109,6 +110,7 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     fontSize = tags.getInteger("font");
     xp = tags.getInteger("xp");
     yp = tags.getInteger("yp");
+    offset = tags.getInteger("offset");
   }
 
   @Override
@@ -119,9 +121,10 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     tags.setInteger("blue", blue);
     tags.setInteger("style", style);
     tags.setInteger("showtype", showType);
-    tags.setInteger("font", this.fontSize);
+    tags.setInteger("font", fontSize);
     tags.setInteger("xp", xp);
     tags.setInteger("yp", yp);
+    tags.setInteger("offset", offset);
     return super.writeToNBT(tags);
   }
 
@@ -144,6 +147,8 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
         return xp;
       case YPADDING:
         return yp;
+      case OFFSET:
+        return offset;
       default:
       break;
     }
@@ -177,6 +182,9 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
       case YPADDING:
         yp = value;
       break;
+      case OFFSET:
+        offset = value;
+      break;
     }
   }
 
@@ -188,40 +196,41 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     if (this.world.getTotalWorldTime() % Const.TICKS_PER_SEC != 0) {
       return;
     }
-    TileEntity te = getTargetTile();
+    BlockPosDim target = this.getTarget(SLOT_TRANSFER);
+    TileEntity te = getTargetTile(target);
     if (te == null) {
       this.text = "";
       return;
     }
-    updateText(te);
+    updateText(te, target);
   }
 
-  private void updateText(TileEntity te) {
+  private void updateText(TileEntity te, BlockPosDim target) {
     switch (showType()) {
       case ENERGY:
-        this.text = getEnergyString(te);
+        this.text = getEnergyString(te, target);
       break;
       case FLUID:
-        this.text = getFluidStr(te);
+        this.text = getFluidStr(te, target);
       break;
       case ITEM:
-        this.text = getItemStr(te);
+        this.text = getItemStr(te, target);
       break;
     }
   }
 
-  private TileEntity getTargetTile() {
-    BlockPosDim target = this.getTarget(SLOT_TRANSFER);
+  private TileEntity getTargetTile(BlockPosDim target) {
     if (target == null || target.getDimension() != world.provider.getDimension()) {
       return null;
     }
     return world.getTileEntity(target.toBlockPos());
   }
 
-  private String getItemStr(TileEntity te) {
+  private String getItemStr(TileEntity te, BlockPosDim target) {
     String itemStr;
-    if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
-      IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+    EnumFacing side = target.getSide() == null ? EnumFacing.UP : target.getSide();
+    if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)) {
+      IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
       //therefore  
       int max = itemHandler.getSlots();
       int empty = 0;
@@ -238,16 +247,16 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     return itemStr;
   }
 
-  private String getFluidStr(TileEntity te) {
+  private String getFluidStr(TileEntity te, BlockPosDim target) {
     String fluidStr = "";
-    if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
-      IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+    EnumFacing side = target.getSide() == null ? EnumFacing.UP : target.getSide();
+    if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) {
+      IFluidHandler energy = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
       //therefore   
       for (IFluidTankProperties f : energy.getTankProperties()) {
         if (f == null || f.getContents() == null) {
           continue;
         }
-        //          fluidStr = f.getContents().getLocalizedName() + System.lineSeparator();
         fluidStr += this.formatQuantity(f.getContents().amount, f.getCapacity());
         break;
       }
@@ -258,10 +267,11 @@ public class TileEntityScreenTarget extends TileEntityBaseMachineInvo implements
     return fluidStr;
   }
 
-  private String getEnergyString(TileEntity te) {
+  private String getEnergyString(TileEntity te, BlockPosDim target) {
     String energyStr;
-    if (te.hasCapability(CapabilityEnergy.ENERGY, EnumFacing.UP)) {
-      IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+    EnumFacing side = target.getSide() == null ? EnumFacing.UP : target.getSide();
+    if (te.hasCapability(CapabilityEnergy.ENERGY, side)) {
+      IEnergyStorage energy = te.getCapability(CapabilityEnergy.ENERGY, side);
       //therefore   
       energyStr = this.formatQuantity(energy.getEnergyStored(), energy.getMaxEnergyStored());
     }

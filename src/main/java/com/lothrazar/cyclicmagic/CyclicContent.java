@@ -24,6 +24,7 @@ import com.lothrazar.cyclicmagic.block.clockredstone.BlockRedstoneClock;
 import com.lothrazar.cyclicmagic.block.collector.BlockVacuum;
 import com.lothrazar.cyclicmagic.block.controlledminer.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.crafter.BlockCrafter;
+import com.lothrazar.cyclicmagic.block.creativeduper.BlockCreativeItem;
 import com.lothrazar.cyclicmagic.block.dehydrator.BlockDeHydrator;
 import com.lothrazar.cyclicmagic.block.dice.BlockDice;
 import com.lothrazar.cyclicmagic.block.disenchanter.BlockDisenchanter;
@@ -300,6 +301,7 @@ public class CyclicContent {
     content.add(new BlockDropperExact());
     content.add(new BlockFluidPlacer());
     content.add(new BlockWaterCandle());
+    content.add(new BlockCreativeItem());
     for (IContent cont : content) {
       ConfigRegistry.register(cont);
     }

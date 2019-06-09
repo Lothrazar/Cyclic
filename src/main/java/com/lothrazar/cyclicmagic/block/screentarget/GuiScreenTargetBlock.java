@@ -26,9 +26,9 @@ package com.lothrazar.cyclicmagic.block.screentarget;
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.block.screentarget.TileEntityScreenTarget.Fields;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -48,6 +48,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
   private GuiSliderInteger sliderFont;
   private GuiSliderInteger sliderX;
   private GuiSliderInteger sliderY;
+  private GuiSliderInteger sliderOffset;
 
   public GuiScreenTargetBlock(InventoryPlayer inventoryPlayer, TileEntityScreenTarget tileEntity) {
     super(new ContainerScreenTarget(inventoryPlayer, tileEntity), tileEntity);
@@ -97,11 +98,14 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderY = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 100, Fields.YPADDING.ordinal());
     sliderY.setTooltip("screen.y");
     this.addButton(sliderY);
-    //configs 
     y += h + 1;
     sliderFont = new GuiSliderInteger(tile, id++, x, y, width, h, 10, 110, Fields.FONT.ordinal());
     sliderFont.setTooltip("screen.fontsize");
     this.addButton(sliderFont);
+    y += h + 1;
+    sliderOffset = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 8, Fields.OFFSET.ordinal());
+    sliderOffset.setTooltip("screen.offset");
+    this.addButton(sliderOffset);
   }
 
   @Override
@@ -137,6 +141,7 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderFont.updateScreen();
     sliderX.updateScreen();
     sliderY.updateScreen();
+    sliderOffset.updateScreen();
   }
 
   @Override
@@ -147,9 +152,8 @@ public class GuiScreenTargetBlock extends GuiBaseContainer {
     sliderFont.keyTyped(typedChar, keyCode);
     sliderX.keyTyped(typedChar, keyCode);
     sliderY.keyTyped(typedChar, keyCode);
-    //  if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
+    sliderOffset.keyTyped(typedChar, keyCode);
     super.keyTyped(typedChar, keyCode);
-    //   }
   }
   // ok end of textbox fixing stuff
 }

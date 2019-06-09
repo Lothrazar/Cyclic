@@ -130,37 +130,53 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     boolean triggered = this.updateTimerIsZero();
     if (world instanceof WorldServer) {
-      verifyUuid(world);
-      if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid, "block_user");
-        if (fakePlayer == null) {
-          ModCyclic.logger.error("Fake player failed to init ");
-          return;
-        }
-      }
-      //fake player facing the same direction as tile. for throwables
-      fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
-      tryEquipItem();
+      setupBeforeTrigger();
       if (triggered) {
         timer = tickDelay;
-        BlockPos targetPos = this.getTargetPos();
-        try {
-          if (rightClickIfZero == 0) {//right click entities and blocks
-            this.rightClickBlock(targetPos);
-          }
-        }
-        catch (Throwable e) {//exception could come from external third party block/mod/etc 
-          ModCyclic.logger.error("Automated User [rightClickBlock] Error '" + e.getMessage() + "'" + e.getClass(), e);
-        }
-        try {
-          interactEntities(targetPos);
-        }
-        catch (Throwable e) {//exception could come from external third party block/mod/etc 
-          ModCyclic.logger.error("Automated User [interactEntities] Error '" + e.getMessage() + "'" + e.getClass(), e);
-        }
+        trigger();
       }
       this.markDirty();
     }
+  }
+
+  private void trigger() {
+    BlockPos targetPos = this.getTargetPos();
+    try {
+      if (isRightClick()) {//right click entities and blocks
+        if (this.isInBlacklist(targetPos) == false) {
+          //todo if fluid
+          boolean fluidSuccess = interactFluid(targetPos);
+          //now the rightclick 
+          if (fluidSuccess == false &&
+              world.isAirBlock(targetPos) == false) {
+            this.rightClickBlock(targetPos);
+          }
+        }
+      }
+    }
+    catch (Throwable e) {//exception could come from external third party block/mod/etc 
+      ModCyclic.logger.error("Automated User [rightClickBlock] Error '" + e.getMessage() + "'" + e.getClass(), e);
+    }
+    try {
+      interactEntities(targetPos);
+    }
+    catch (Throwable e) {//exception could come from external third party block/mod/etc 
+      ModCyclic.logger.error("Automated User [interactEntities] Error '" + e.getMessage() + "'" + e.getClass(), e);
+    }
+  }
+
+  private void setupBeforeTrigger() {
+    verifyUuid(world);
+    if (fakePlayer == null) {
+      fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid, "block_user");
+      if (fakePlayer == null) {
+        ModCyclic.logger.error("Fake player failed to init ");
+        return;
+      }
+    }
+    //fake player facing the same direction as tile. for throwables
+    fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
+    tryEquipItem();
   }
 
   private boolean isInBlacklist(BlockPos targetPos) {
@@ -175,59 +191,70 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     BlockPos entityCenter = getTargetCenter();
     AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size, vRange);
     List<EntityLivingBase> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
-    List<EntityMinecart> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
-    List<Entity> all = new ArrayList<Entity>(living);
-    all.addAll(carts);//works since  they share a base class but no overlap
-    if (rightClickIfZero == 0) {//right click entities and blocks
-      Collections.shuffle(all);
+    if (isRightClick()) {//right click entities and blocks
+      List<EntityMinecart> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
+      List<Entity> all = new ArrayList<Entity>(living);
+      all.addAll(carts);//works since  they share a base class but no overlap
+      // 
+      rightClickEntities(all);
       this.getWorld().markChunkDirty(targetPos, this);
-      for (Entity ent : all) {//both living and minecarts
-        // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
-        if (world.isRemote == false &&
-            ent != null && ent.isDead == false
-            && fakePlayer != null && fakePlayer.get() != null) {
-          validateTool(); //recheck this at every step so we dont go negative
-          if (EnumActionResult.FAIL != fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND)) {
-            this.tryDumpFakePlayerInvo(false);
-            break;//dont do every entity in teh whole batch
-          }
+    }
+    else {
+      leftClickEntities(living);
+    }
+  }
+
+  private void leftClickEntities(List<EntityLivingBase> living) {
+    // left click (attack) entities 
+    ItemStack held = fakePlayer.get().getHeldItemMainhand();
+    fakePlayer.get().onGround = true;
+    int countDamaged = 0;
+    for (EntityLivingBase ent : living) {// only living, not minecarts
+      if (ent == null || ent.isDead) {
+        continue;
+      } //wont happen eh
+      fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
+      //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
+      IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+      if (held.isEmpty() == false) {
+        for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
+          damage.applyModifier(modifier);
         }
       }
-    }
-    else { // left click (attack) entities
-      ItemStack held = fakePlayer.get().getHeldItemMainhand();
-      fakePlayer.get().onGround = true;
-      int countDamaged = 0;
-      for (EntityLivingBase ent : living) {// only living, not minecarts
-        if (ent == null || ent.isDead) {
-          continue;
-        } //wont happen eh
-        fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
-        //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
-        IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        if (held.isEmpty() == false) {
-          for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
-            damage.applyModifier(modifier);
-          }
-        }
-        float dmgVal = (float) damage.getAttributeValue();
-        float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
-        if (ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1)) {
-          // count if attack did not fail
-          countDamaged++;
-          if (BlockUser.maxAttackPer > 0 && countDamaged >= BlockUser.maxAttackPer) {
-            // config is enabled, and it say stop
-            break;
-          }
+      float dmgVal = (float) damage.getAttributeValue();
+      float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
+      if (ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1)) {
+        // count if attack did not fail
+        countDamaged++;
+        if (BlockUser.maxAttackPer > 0 && countDamaged >= BlockUser.maxAttackPer) {
+          // config is enabled, and it say stop
+          break;
         }
       }
     }
   }
 
-  private void rightClickBlock(BlockPos targetPos) {
-    if (this.isInBlacklist(targetPos)) {
-      return;
+  private void rightClickEntities(List<Entity> all) {
+    Collections.shuffle(all);
+    for (Entity ent : all) {//both living and minecarts
+      // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
+      if (world.isRemote == false &&
+          ent != null && ent.isDead == false
+          && fakePlayer != null && fakePlayer.get() != null) {
+        validateTool(); //recheck this at every step so we dont go negative
+        if (EnumActionResult.FAIL != fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND)) {
+          this.tryDumpFakePlayerInvo(false);
+          break;//dont do every entity in teh whole batch
+        }
+      }
     }
+  }
+
+  private boolean isRightClick() {
+    return rightClickIfZero == 0;
+  }
+
+  private boolean interactFluid(BlockPos targetPos) {
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
     //if both block and itemstack are fluid compatible 
@@ -235,31 +262,28 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
       boolean success = rightClickFluidTank(targetPos);
       if (success) {
-        // ModCyclic.logger.error("rightClickFluidAttempt : true");
         syncPlayerTool();
-        return;
+        return true;
       }
     }
     else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
         //bucket on fluid-in-world   
-        //   ModCyclic.logger.error("rightClickFluidAir : true " + fakePlayer.get().getHeldItemMainhand());
-        /// missing piece  
         syncPlayerTool();
-        return;
+        return true;
       }
     }
-    if (world.isAirBlock(targetPos)) {
-      return;
-    }
+    return false;
+  }
+
+  private void rightClickBlock(BlockPos targetPos) {
+    //if both block and itemstack are fluid compatible 
     ItemStack before = fakePlayer.get().getHeldItemMainhand();
     boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //dont ever place a block. they want to use it on an entity
     EnumActionResult result = fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-    //  ModCyclic.logger.log(result + "after block ; HELD= " + fakePlayer.get().getHeldItemMainhand());
     if (result != EnumActionResult.FAIL) {
       boolean eq = ItemStack.areItemStacksEqual(before, fakePlayer.get().getHeldItemMainhand());
-      //ModCyclic.logger.log("after block ? equal " + eq);
       if (wasEmpty == false && fakePlayer.get().getHeldItemMainhand().isEmpty()) {
         syncPlayerTool();
       }
@@ -267,7 +291,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         //       
         this.tryDumpFakePlayerInvo(true);
         syncPlayerTool();
-        //   ModCyclic.logger.log("ELIF sync after " + fakePlayer.get().getHeldItemMainhand());
       }
     }
     else {
@@ -324,7 +347,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   private void tryDumpFakePlayerInvo(boolean includeMainHand) {
-    //   ModCyclic.logger.log("tryDumpFakePlayerInvo(" + includeMainHand + ") ");
     int start = (includeMainHand) ? 0 : 1;//main hand is 1
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
     for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
@@ -347,10 +369,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
     boolean wasFull = UtilFluid.isEmptyOfFluid(playerHeld);
-    // ModCyclic.logger.log("[RCF] start " + player.getHeldItemMainhand() + " " + player.inventory.currentItem);
     boolean success = UtilFluid.interactWithFluidHandler(player, world, targetPos, this.getCurrentFacing().getOpposite());
     playerHeld = player.getHeldItemMainhand();
-    // ModCyclic.logger.log("[RCF] after interact " + player.getHeldItemMainhand());
     if (success) {
       if (UtilFluid.isEmptyOfFluid(playerHeld)) {
         this.tryDumpFakePlayerInvo(!wasFull && playerHeld.getCount() == 1);
@@ -379,17 +399,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       if (res != FluidActionResult.FAILURE) {
         player.setHeldItem(EnumHand.MAIN_HAND, res.getResult());
         this.tryDumpFakePlayerInvo(true);
-        //        UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), res.getResult());
         return true;
       }
     }
-    else {
+    else if (world.isAirBlock(targetPos)) {
       ItemStack drainedStackOrNull = UtilFluid.dumpContainer(world, targetPos, playerHeld);
-      if (!drainedStackOrNull.isItemEqual(playerHeld)) {
-        player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
+      player.setHeldItem(EnumHand.MAIN_HAND, drainedStackOrNull);
+      if (UtilFluid.isEmptyOfFluid(drainedStackOrNull)) {
         this.tryDumpFakePlayerInvo(true);
-        return true;
       }
+      return true;
     }
     return false;
   }

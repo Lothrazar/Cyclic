@@ -78,7 +78,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     else if (index == SLOT_GLOWSTONE) {
       return UtilOreDictionary.doesMatchOreDict(stack, "dustGlowstone");
     }
-    return false;
+    return super.isItemValidForSlot(index, stack);
   }
 
   @Override

@@ -30,8 +30,8 @@ import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.screentype.TileEntityScreen.Fields;
 import com.lothrazar.cyclicmagic.data.ITileTextbox;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketTileTextbox;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -49,6 +49,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
   private GuiSliderInteger sliderB;
   private GuiSliderInteger sliderPadding;
   private GuiSliderInteger sliderFont;
+  private GuiSliderInteger sliderOffset;
 
   public GuiScreenBlock(InventoryPlayer inventoryPlayer, TileEntityScreen tileEntity) {
     super(new ContainerScreen(inventoryPlayer, tileEntity), tileEntity);
@@ -104,6 +105,10 @@ public class GuiScreenBlock extends GuiBaseContainer {
     sliderFont = new GuiSliderInteger(tile, id, x, y, width, h, 1, 16, Fields.FONT.ordinal());
     sliderFont.setTooltip("screen.font");
     this.addButton(sliderFont);
+    y += h + 1;
+    sliderOffset = new GuiSliderInteger(tile, id++, x, y, width, h, 0, 8, Fields.OFFSET.ordinal());
+    sliderOffset.setTooltip("screen.offset");
+    this.addButton(sliderOffset);
   }
 
   @Override
@@ -134,6 +139,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     sliderB.updateScreen();
     sliderPadding.updateScreen();
     sliderFont.updateScreen();
+    sliderOffset.updateScreen();
   }
 
   @Override
@@ -143,6 +149,7 @@ public class GuiScreenBlock extends GuiBaseContainer {
     sliderB.keyTyped(typedChar, keyCode);
     sliderFont.keyTyped(typedChar, keyCode);
     sliderPadding.keyTyped(typedChar, keyCode);
+    sliderOffset.keyTyped(typedChar, keyCode);
     if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
       super.keyTyped(typedChar, keyCode);
     }

@@ -115,8 +115,11 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   private void outputFluid(int slot) {
     BlockPosDim dim = this.getSlotGps(slot);
     if (this.isTargetValid(dim)) {
-      EnumFacing rando = UtilWorld.getRandFacing();
-      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), rando, this.tank, TRANSFER_FLUID_PER_TICK);
+      EnumFacing sideTarget = dim.getSide();
+      if (sideTarget == null) {//legacy from null
+        UtilWorld.getRandFacing();
+      }
+      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), sideTarget, this.tank, TRANSFER_FLUID_PER_TICK);
     }
   }
 

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.component;
 
 import java.util.Map;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonCheckboxTileField;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.util.EnumFacing;
 

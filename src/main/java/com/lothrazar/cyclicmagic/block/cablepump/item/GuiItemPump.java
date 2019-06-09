@@ -25,10 +25,10 @@ package com.lothrazar.cyclicmagic.block.cablepump.item;
 
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
+import com.lothrazar.cyclicmagic.data.StackWrapper;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiItemPump extends GuiBaseContainer {
 
-  ITileStackWrapper te;
+  private ITileStackWrapper te;
   private ButtonTileEntityField filterBtn;
   private GuiSliderInteger slider;
 

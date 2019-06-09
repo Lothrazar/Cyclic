@@ -30,7 +30,7 @@ import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
+import com.lothrazar.cyclicmagic.data.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -49,7 +49,6 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
 
   private NonNullList<StackWrapper> stacksWrapped = NonNullList.withSize(9, new StackWrapper());
   private static final int SLOT_TRANSFER = 0;
-  //  private static int TRANSFER_ITEM_TICK_DELAY = 0;
 
   public static enum Fields {
     REDSTONE, FILTERTYPE, SPEED;

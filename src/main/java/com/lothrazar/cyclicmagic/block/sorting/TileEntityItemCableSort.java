@@ -33,7 +33,7 @@ import com.google.gson.Gson;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
-import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
+import com.lothrazar.cyclicmagic.data.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -94,7 +94,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     // [1,8], [9, 16], [17, 24] [25, 32] [33, 40] , [41, 48]
     //sublist loses the specific type so convert it back
     int start = row * FILTER_SIZE;
-    int end = (row + 1) * FILTER_SIZE - 1;
+    int end = (row + 1) * FILTER_SIZE;
     List<ItemStack> validForSide = new ArrayList<>();
     for (int i = start; i < end; i++) {
       if (this.stacksWrapped.get(i).isEmpty() == false) {

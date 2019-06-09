@@ -24,10 +24,10 @@
 package com.lothrazar.cyclicmagic.block.melter;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.component.FluidBar;
 import com.lothrazar.cyclicmagic.gui.component.ProgressBar;
-import com.lothrazar.cyclicmagic.gui.container.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;

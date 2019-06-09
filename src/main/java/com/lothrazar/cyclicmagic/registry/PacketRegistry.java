@@ -27,7 +27,6 @@ import com.lothrazar.cyclicmagic.block.builderpattern.PacketTilePatternSwap;
 import com.lothrazar.cyclicmagic.block.exppylon.PacketTilePylon;
 import com.lothrazar.cyclicmagic.block.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.block.vector.PacketTileVector;
-import com.lothrazar.cyclicmagic.gui.container.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.item.cannon.MessageGolemLaserFX;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellFromServer;
@@ -51,6 +50,7 @@ import com.lothrazar.cyclicmagic.liquid.PacketFluidSync;
 import com.lothrazar.cyclicmagic.net.PacketChat;
 import com.lothrazar.cyclicmagic.net.PacketEntityDropRandom;
 import com.lothrazar.cyclicmagic.net.PacketEntitySyncToClient;
+import com.lothrazar.cyclicmagic.net.PacketGuiShortOverride;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
@@ -65,6 +65,7 @@ import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.net.PacketSyncToolslot;
 import com.lothrazar.cyclicmagic.net.PacketTileClientToServer;
+import com.lothrazar.cyclicmagic.net.PacketTileFluidWrapped;
 import com.lothrazar.cyclicmagic.net.PacketTileIncrementField;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.net.PacketTileSetField;
@@ -138,5 +139,6 @@ public class PacketRegistry {
     network.registerMessage(PacketTileTextbox.class, PacketTileTextbox.class, packetID++, Side.SERVER);
     network.registerMessage(PacketScythe.class, PacketScythe.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileStackWrapped.class, PacketTileStackWrapped.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTileFluidWrapped.class, PacketTileFluidWrapped.class, packetID++, Side.SERVER);
   }
 }
