@@ -92,15 +92,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       return;//client so halt
     }
     timer = PER_TICK;
-    BlockPos p = this.getPos();
-    double x = p.getX();
-    double y = p.getY();
-    double z = p.getZ();
-    AxisAlignedBB entityRange = new AxisAlignedBB(
-        x - this.rangeX, y - this.rangeY, z - this.rangeZ,
-        x + this.rangeX, y + this.rangeY, z + this.rangeZ);
-    List<Entity> entityList = world.getEntitiesWithinAABB(getEntityClass(), entityRange);
-    int entitiesFound = (entityList == null) ? 0 : entityList.size();
+    int entitiesFound = getCountInRange();
     boolean trigger = false;
     switch (this.compType) {
       case LESS:
@@ -131,6 +123,28 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         //this catch means no game crash 
         ModCyclic.logger.info("State change error in adjacent block ", e);
       }
+    }
+  }
+
+  private int getCountInRange() {
+    BlockPos p = this.getPos();
+    double x = p.getX();
+    double y = p.getY();
+    double z = p.getZ();
+    AxisAlignedBB entityRange = new AxisAlignedBB(
+        x - this.rangeX, y - this.rangeY, z - this.rangeZ,
+        x + this.rangeX, y + this.rangeY, z + this.rangeZ);
+    if (getEntityClass() == EntityItem.class) {
+      List<EntityItem> entityList = world.getEntitiesWithinAABB(EntityItem.class, entityRange);
+      int entitiesFound = 0;
+      for (EntityItem item : entityList) {
+        entitiesFound += item.getItem().getCount();
+      }
+      return entitiesFound;
+    }
+    else {
+      List<Entity> entityList = world.getEntitiesWithinAABB(getEntityClass(), entityRange);
+      return (entityList == null) ? 0 : entityList.size();
     }
   }
 
