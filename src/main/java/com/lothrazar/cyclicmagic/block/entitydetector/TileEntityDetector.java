@@ -67,7 +67,6 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   private boolean isPoweredNow = false;
   private CompareType compType = CompareType.GREATER;
   private EntityType entityType = EntityType.LIVING;
-  private int renderParticles;
 
   public TileEntityDetector() {
     super(0);
