@@ -196,6 +196,10 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) {
       return false;
     }
+    if (world.containsAnyLiquid(new AxisAlignedBB(targetPos))) {
+      return false;
+    }
+    // 
     IBlockState targetState = world.getBlockState(targetPos);
     Block target = targetState.getBlock();
     //else check blacklist
