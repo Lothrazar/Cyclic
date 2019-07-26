@@ -93,6 +93,9 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
         && this.transferRate == Fluid.BUCKET_VOLUME) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
       IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
+      if (handle.getTankProperties() == null || handle.getTankProperties().length == 0) {
+        return;
+      }
       FluidStack fluidFromWorld = handle.getTankProperties()[0].getContents();
       if (fluidFromWorld != null
           && UtilFluid.isStackInvalid(fluidFromWorld, isWhitelist(), getFilterNonempty())
