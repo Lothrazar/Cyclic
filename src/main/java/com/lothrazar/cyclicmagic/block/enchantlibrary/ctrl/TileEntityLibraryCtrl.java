@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStorageTarget;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -61,22 +62,22 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
     if (stackIn.isEmpty()) {
       return;
     }
-    //is it an enchanted book 
+    //is it an enchanted book?
     if (stackIn.getItem().equals(Items.ENCHANTED_BOOK) == false) {
-      //move it to output i dont want it yuky 
+      //move it to output i don't want it yucky
       this.setInventorySlotContents(SLOT_OUT, stackIn);
       this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
       return;
     }
-    //try to apply its action to nearby book hey
+    //try to apply its action to nearby book
     EnchantStorageTarget target = BlockLibraryController.findMatchingTarget(world, pos, stackIn);
-    if (target.isEmpty() == false) {
-      //ModCyclic.logger.error(target.library.getPos() + " ? " + target.quad);
+    if (!target.isEmpty()) {
+      //ModCyclic.logger.error("Target Available @ " + target.library.getPos() + " " + target.quad);
       ItemStack theThing = target.library.addEnchantmentToQuadrant(stackIn, target.quad);
       IBlockState oldState = world.getBlockState(target.library.getPos());
       world.notifyBlockUpdate(target.library.getPos(), oldState, oldState, 3);
       this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
-      if (theThing.isEmpty() == false) {
+      if (!theThing.isEmpty()) {
         UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS);
         //its not empty, but what is it 
         if (theThing.getItem().equals(Items.ENCHANTED_BOOK)) {
@@ -90,6 +91,11 @@ public class TileEntityLibraryCtrl extends TileEntityBaseMachineInvo implements 
       else {
         this.setInventorySlotContents(SLOT_OUT, new ItemStack(Items.BOOK));
       }
+    }
+    else {
+      //ModCyclic.logger.error("No target available, book out");
+      this.setInventorySlotContents(SLOT_OUT, stackIn);
+      this.setInventorySlotContents(SLOT_IN, ItemStack.EMPTY);
     }
   }
 
