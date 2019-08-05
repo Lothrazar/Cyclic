@@ -23,8 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
+import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StorageActionType;
 import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -35,22 +37,24 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerStorage extends ContainerBase {
 
-  final InventoryStorage inventory;
-  private EntityPlayer player;
-  private String stackId;
-  ItemStack bagReference;
+  private final InventoryStorage inventory;
+  private final EntityPlayer player;
+  private final String stackId;
+  private final ItemStack bagReference;
   final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26,
       HOTBAR_START = INV_END + 1,
       HOTBAR_END = HOTBAR_START + 8;
-  final static int pad = Const.PAD;
-  final static int hotbar = 9;
-  final static int rows = 7;
-  final static int cols = 11;
+  static final int pad = Const.PAD;
+  static final int hotbar = 9;
+  static final int rows = 7;
+  static final int cols = 11;
 
   public ContainerStorage(EntityPlayer par1Player, InventoryStorage invoWand) {
     this.setScreenSize(ScreenSize.SACK);
     this.player = par1Player;
     bagReference = player.getHeldItemMainhand();
+    StorageActionType.setIsOpen(bagReference, true);
+    ModCyclic.logger.log(" CONSTRUCT is open TRUE is set ", bagReference);
     this.stackId = ItemStorageBag.getId(bagReference);
     this.inventory = invoWand;
     int x, y = pad, k, l, slot;
@@ -65,6 +69,15 @@ public class ContainerStorage extends ContainerBase {
       }
     }
     this.bindPlayerInventory(player.inventory);
+
+  }
+
+  @Override
+  public void onContainerClosed(EntityPlayer playerIn) {
+    super.onContainerClosed(playerIn);
+    StorageActionType.setIsOpen(bagReference, false);
+
+    ModCyclic.logger.log(" container is open false is set ", bagReference);
   }
 
   @Override
