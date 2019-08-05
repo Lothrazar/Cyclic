@@ -276,7 +276,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     return false;
   }
 
-  private void rightClickBlock(BlockPos targetPos) {
+  private void rightClickBlock(BlockPos targetPos) throws Exception {
     //if both block and itemstack are fluid compatible 
     ItemStack before = fakePlayer.get().getHeldItemMainhand();
     boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
