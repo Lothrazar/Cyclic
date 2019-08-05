@@ -329,6 +329,6 @@
 	,"1.19.11":"Added Nether and End ore for both Zinc and Tritanium (off by default in cyclic_ores.cfg).  Mod no longer double-saves players extended inventory in two files, it now exclusively uses the UUID.cyclicinvo files, and ignores the legacy _playername.invo files (no data loss but backup if you like).  Fluid Extraction Cables now have a fluid filter so you can whitelist or blacklist fluids.  Fixed fluid bugs in Automated User when the itemstack holds multiple buckets worth of fluid.  "
 	,"1.19.12":"Fixed the Redstone toggle button resetting in Structure Builder.  Entity Detector now counts total items in the itemstacks when in Item mode.  zh_CN.lang changes from sandtechnology. ru_RU.lang changes from kellixon.  "
 	,"1.19.13":"In Ender Library, books with no target no longer get stuck, sent to output slot instead (PR from brad18).  Fixed an issue with cables and Hydrogel mod. Controlled Miner now skips over liquid spaces.  "
-	,"1.19.14":"New texture and model for Auto Torch by Ithronyar.  Fixed bugs in Unchant Pylon processing.  Fluid Extraction cable now stops pumping when its full.  "
+	,"1.19.14":"New texture and model for Auto Torch by Ithronyar.  Fixed bugs in Unchant Pylon processing.  Fluid Extraction cable now stops pumping when its full.  Bumped to suggested forge version 14.23.5.2838."
   }
 }
