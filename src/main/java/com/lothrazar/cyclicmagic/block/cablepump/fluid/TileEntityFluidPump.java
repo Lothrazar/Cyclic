@@ -85,11 +85,13 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     if (this.isPowered() == false && this.onlyRunIfPowered()) {
       return;//i am not powered, and i require it
     }
+
     //incoming target side
     BlockPos target = pos.offset(this.getCurrentFacing());
     UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate,
         this.isWhitelist(), this.getFilterNonempty());
-    if (world.getBlockState(target).getMaterial().isLiquid()
+    if (!this.tank.isFull()
+        && world.getBlockState(target).getMaterial().isLiquid()
         && this.transferRate == Fluid.BUCKET_VOLUME) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
       IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
