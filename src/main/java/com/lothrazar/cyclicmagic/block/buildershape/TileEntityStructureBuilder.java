@@ -53,7 +53,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int buildType;
   private int buildSize = 3;
   private int height;
-  private int needsRedstone = 1;
   private int shapeIndex = 0;// current index of shape array
   private int renderParticles = 1;
   private int rotations = 0;
@@ -114,6 +113,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     super(9);
     this.initEnergy(new EnergyStore(MENERGY), BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+    this.needsRedstone = 0;
   }
 
   @Override

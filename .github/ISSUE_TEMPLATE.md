@@ -15,6 +15,7 @@ Log file link:
 
 Video/images/gifs (direct upload or link): 
 
+If your bug is related to anything causing LAG you need to measure the lag by taking a sample https://minecraft.curseforge.com/projects/sampler
 
 
 

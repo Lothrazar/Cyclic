@@ -11,8 +11,8 @@
     "1.11.2-recommended": "1.5.11",
     "1.12-latest": "1.8.6",
     "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.19.10",
-    "1.12.2-recommended": "1.19.10"
+    "1.12.2-latest": "1.19.14",
+    "1.12.2-recommended": "1.19.14"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -326,5 +326,9 @@
 	,"1.19.8":"Glowing Chorus fruit flying no longer counts down while falling or while standing on non-solid blocks.  Glowing Chorus fruit flying effect is now cleansed and removed from player when milk or a Corrupted chorus fruit is eaten.  Trash Void improved better handling of multiple connections at once, should avoid item ducts and other means from backing up.   "
 	,"1.19.9":"Fluid Extraction cables can now pick up water from the world.  Fixed a hard-to-replicate fluid dupe bug.  Auto User input slots restricted to stack size 1 (fixes several issues, you can still pipe items in as fast as needed).  Exchange scepter now works with silk touch, and can be applied in anvil.  Hydrator & Dehydrator water production compatible with JEI.  The config 'CorruptedChorusPotions' now treats zero as a valid number to disable effect, and higher max value.  You can delete data in GPS Markers by hitting bedrock.  Refreshed Exp Pylon user interface with improvements.  Endgame swords now have durability.  Wireless Transmitters can now show previews.  The blue Standard exchange scepter can now build over Air blocks like a building wand.   "
 	,"1.19.10":"Updates to zh_CN.lang by mcBegins2Snow.  Broken tooltip fixed by sandtechnology.  Sneak while using GPS markers out in mid-air to wipe their location.  GPS Item now saves the side of the block clicked, and this is used in the wireless nodes and Screen Detector for items, fluid, and energy on specific sides.  Remote Lever can now be activated from within your inventory with a right-click, similar to charms.  Added the missing EnchantExpBoost config file entry.  Fixed Item Sorter ignoring the far right column.  Text Projector and Sensor Display now have a new Block Offet feature to push the text horizontally off the screen, so you can build in your own background.  Fluid storage tank now only drains downward to others of the same block, fixes not being able to pipe fluid up from the bottom.  You can now correctly sneak to avoid movement on corner pieces of conveyors. "
+	,"1.19.11":"Added Nether and End ore for both Zinc and Tritanium (off by default in cyclic_ores.cfg).  Mod no longer double-saves players extended inventory in two files, it now exclusively uses the UUID.cyclicinvo files, and ignores the legacy _playername.invo files (no data loss but backup if you like).  Fluid Extraction Cables now have a fluid filter so you can whitelist or blacklist fluids.  Fixed fluid bugs in Automated User when the itemstack holds multiple buckets worth of fluid.  "
+	,"1.19.12":"Fixed the Redstone toggle button resetting in Structure Builder.  Entity Detector now counts total items in the itemstacks when in Item mode.  zh_CN.lang changes from sandtechnology. ru_RU.lang changes from kellixon.  "
+	,"1.19.13":"In Ender Library, books with no target no longer get stuck, sent to output slot instead (PR from brad18).  Fixed an issue with cables and Hydrogel mod. Controlled Miner now skips over liquid spaces.  "
+	,"1.19.14":"New texture and model for Auto Torch by Ithronyar.  Fixed bugs in Unchant Pylon processing.  Fluid Extraction cable now stops pumping up fluid from in-world fluid blocks when its full.  Bumped to suggested forge version 14.23.5.2838.  Storage Bag only use its auto-pickup setting to grab items from world (lower-right of gui) while GUI of bag is open (could cause race-condition data loss sometimes)."
   }
 }

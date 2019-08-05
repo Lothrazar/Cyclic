@@ -181,10 +181,13 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     return null;
   }
 
-  public QuadrantEnum findMatchingQuadrant(ItemStack enchBookStack) {
+  public QuadrantEnum findMatchingQuadrant(ItemStack enchBookStack, TileEntityLibrary lib) {
     for (int i = 0; i < storage.length; i++) {
       if (storage[i].doesMatchNonEmpty(enchBookStack)) {
-        return QuadrantEnum.values()[i];
+        QuadrantEnum quad = QuadrantEnum.values()[i];
+        if (lib.getEnchantStack(quad).getCount() < TileEntityLibrary.MAX_COUNT) {
+          return quad;
+        }
       }
     }
     return null;

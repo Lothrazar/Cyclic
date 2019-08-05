@@ -99,7 +99,7 @@ public class BlockLibraryController extends BlockBaseHasTile implements IHasReci
       te = world.getTileEntity(p);
       if (te instanceof TileEntityLibrary) {
         lib = (TileEntityLibrary) te;
-        QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld);
+        QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld, lib);
         if (quad != null) {
           target.library = lib;
           target.quad = quad;
@@ -113,7 +113,7 @@ public class BlockLibraryController extends BlockBaseHasTile implements IHasReci
         te = world.getTileEntity(p);
         if (te instanceof TileEntityLibrary) {
           lib = (TileEntityLibrary) te;
-          QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld);
+          QuadrantEnum quad = lib.findMatchingQuadrant(playerHeld, lib);
           if (quad == null) {
             quad = lib.findEmptyQuadrant();
           }

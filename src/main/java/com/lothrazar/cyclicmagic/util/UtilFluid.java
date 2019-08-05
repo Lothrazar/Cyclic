@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -44,25 +45,11 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 public class UtilFluid {
 
-  //  public static ItemStack dispenseStack(World world, BlockPos pos, ItemStack stack, EnumFacing facing) {
-  //    if (FluidUtil.getFluidContained(stack) != null) {
-  //      return dumpContainer(world, pos, stack);
-  //    }
-  //    else {
-  //      return fillContainer(world, pos, stack, facing);
-  //    }
-  //  }
   /**
    * Picks up fluid fills a container with it.
    */
   public static FluidActionResult fillContainer(World world, BlockPos pos, ItemStack stackIn, EnumFacing facing) {
-    //    ItemStack result = stackIn.copy();
     return FluidUtil.tryPickUpFluid(stackIn, null, world, pos, facing);
-    //  if (--stackIn.stackSize == 0) {
-    //    stackIn.deserializeNBT(result.serializeNBT());
-    //  }
-    //    if (res == FluidActionResult.FAILURE) { return stackIn; }
-    //    return res.getResult();
   }
 
   /**
@@ -77,17 +64,25 @@ public class UtilFluid {
       return ItemStack.EMPTY;
     }
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
-    if (fluidStack != null && fluidStack.amount >= Fluid.BUCKET_VOLUME) {
-      //      FluidActionResult placeResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack);
-      if (FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack, fluidStack).isSuccess()) {
+    if (fluidStack != null// && fluidStack.amount >= Fluid.BUCKET_VOLUME
+    ) {
+      ModCyclic.logger.info(fluidStack.amount + " amt BEFORE ");
+      FluidActionResult placementResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack,
+          fluidStack.copy());
+      if (placementResult.isSuccess()) {
         //http://www.minecraftforge.net/forum/topic/56265-1112-fluidhandler-capability-on-buckets/
-        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
-        ItemStack returnMe = fluidHandler.getContainer();
-        //        stackIn.deserializeNBT(returnMe.serializeNBT()); 
-        return returnMe;
+        //        ModCyclic.logger.info("fluid placed so try drain " + stackIn);
+        //        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
+        ModCyclic.logger.info(placementResult.success + " and  returnMe = " + placementResult.result);
+        //stupid hack but otherwise the bucket stays full forever because wtf
+        //        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
+        //        FluidStack test = FluidUtil.getFluidContained(placementResult.result);
+        //        if (test != null)
+        //          ModCyclic.logger.info(test.amount + " amt after");
+        return placementResult.result;
       }
     }
-    return fluidHandler.getContainer();
+    return stackIn;
   }
 
   public static ItemStack drainOneBucket(ItemStack d) {
@@ -100,7 +95,8 @@ public class UtilFluid {
   }
 
   public static boolean isEmptyOfFluid(ItemStack returnMe) {
-    return FluidUtil.getFluidContained(returnMe) == null;
+    FluidStack fs = FluidUtil.getFluidContained(returnMe);
+    return fs == null || fs.amount == 0;
   }
 
   public static FluidStack getFluidContained(ItemStack returnMe) {
@@ -128,18 +124,36 @@ public class UtilFluid {
     return FluidUtil.interactWithFluidHandler(player, EnumHand.MAIN_HAND, world, pos, side);
   }
 
+  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount) {
+    return tryFillTankFromPosition(world, posSide, sideOpp, tankTo, amount, false, null);
+  }
+
+  public static boolean isStackInvalid(FluidStack stackToTest,
+      boolean isWhitelist, List<FluidStack> filterList) {
+    if (filterList == null) {
+      return true;
+    }
+    boolean hasMatch = false;
+    for (FluidStack filt : filterList) {
+      if (stackToTest.getFluid() == filt.getFluid()) {
+        hasMatch = true;
+        break;
+      }
+    }
+    if (hasMatch) {
+      // fluid matches something in my list . so whitelist means ok
+      return isWhitelist;
+    }
+    //here is the opposite: i did NOT match the list
+    return !isWhitelist;
+  }
+
   /**
    * Look for a fluid handler with gien position and direction try to extract from that pos and fill the tank
    * 
-   * 
-   * @param world
-   * @param posSide
-   * @param sideOpp
-   * @param tankTo
-   * @param amount
-   * @return
    */
-  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount) {
+  public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount,
+      boolean isWhitelist, @Nullable List<FluidStack> allowedToMove) {
     try {
       IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
       if (fluidFrom != null) {
@@ -147,6 +161,9 @@ public class UtilFluid {
         // SO: pull fluid from that into myself
         FluidStack wasDrained = fluidFrom.drain(amount, false);
         if (wasDrained == null) {
+          return false;
+        }
+        if (!isStackInvalid(wasDrained, isWhitelist, allowedToMove)) {
           return false;
         }
         int filled = tankTo.fill(wasDrained, false);

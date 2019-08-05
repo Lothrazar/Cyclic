@@ -26,11 +26,9 @@ package com.lothrazar.cyclicmagic.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import javax.annotation.Nonnull;
-import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,29 +47,15 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  * **/
 public class UtilPlayerInventoryFilestorage {
 
+  private static final String newExtension = "cyclicinvo";
   public static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
   private static HashMap<String, InventoryPlayerExtended> playerItems = new HashMap<String, InventoryPlayerExtended>();
 
   public static void playerSetupOnLoad(PlayerEvent.LoadFromFile event) {
     EntityPlayer player = event.getEntityPlayer();
     clearPlayerInventory(player);
-    File playerFile = getPlayerFileName(event.getPlayerDirectory(), event.getEntityPlayer());
-    if (!playerFile.exists()) {
-      //file does not exist, create new
-      File fileNew = event.getPlayerFile(legacyExt);
-      //and copy in the basocs
-      if (fileNew.exists()) {
-        try {
-          Files.copy(fileNew, playerFile);
-          fileNew.delete();
-          //          File fb = event.getPlayerFile(extback);
-          //          if (fb.exists())
-          //            fb.delete();
-        }
-        catch (IOException e) {}
-      }
-    }
-    loadPlayerInventory(event.getEntityPlayer(), playerFile);//, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString())
+    File playerFile = getPlayerFileID(event.getPlayerDirectory(), event.getEntityPlayer());
+    loadPlayerInventory(event.getEntityPlayer(), playerFile);
     playerEntityIds.add(event.getEntityPlayer().getEntityId());
   }
 
@@ -92,7 +76,6 @@ public class UtilPlayerInventoryFilestorage {
   }
 
   public static void setPlayerInventoryStack(EntityPlayer player, int slot, ItemStack itemStack) {
-    //    UtilPlayerInventoryFilestorage.getPlayerInventory(player).setInventorySlotContents(slot, itemStack);
     getPlayerInventory(player).inv.set(slot, itemStack);
   }
 
@@ -100,7 +83,7 @@ public class UtilPlayerInventoryFilestorage {
     playerItems.put(player.getDisplayNameString(), inventory);
   }
 
-  public static void loadPlayerInventory(EntityPlayer player, File file1) {
+  private static void loadPlayerInventory(EntityPlayer player, File file1) {
     if (player != null && !player.getEntityWorld().isRemote) {
       try {
         NBTTagCompound data = null;
@@ -136,18 +119,6 @@ public class UtilPlayerInventoryFilestorage {
   public static void savePlayerItems(@Nonnull EntityPlayer player, File playerDirectory) {
     if (!player.getEntityWorld().isRemote) {
       try {
-        File fileToSave = getPlayerFileName(playerDirectory, player);
-        if (fileToSave != null) {
-          InventoryPlayerExtended inventory = getPlayerInventory(player);
-          NBTTagCompound data = new NBTTagCompound();
-          inventory.saveNBT(data);
-          FileOutputStream fileoutputstream = new FileOutputStream(fileToSave);
-          CompressedStreamTools.writeCompressed(data, fileoutputstream);
-          fileoutputstream.close();
-        }
-        else {
-          ModCyclic.logger.error("Could not save file for player " + player.getDisplayNameString());
-        }
         //if original fails to save, ID version will not be overwritten! 
         File fileToSaveID = getPlayerFileID(playerDirectory, player);
         if (fileToSaveID != null) {
@@ -167,19 +138,6 @@ public class UtilPlayerInventoryFilestorage {
         ModCyclic.logger.error("Could not save file for player " + player.getDisplayNameString(), e);
       }
     }
-  }
-
-  public static final String legacyExt = "invo";
-  public static final String newExtension = "cyclicinvo";
-  //  public static final String extback = "backup";
-  public static final String regex = "[^a-zA-Z0-9_]";
-
-  private static File getPlayerFileName(File playerDirectory, EntityPlayer player) {
-    // some other mods/servers/plugins add things like "[Owner] > " prefix to player names
-    //which are invalid filename chars.   https://github.com/PrinceOfAmber/Cyclic/issues/188
-    //mojang username rules https://help.mojang.com/customer/en/portal/articles/928638-minecraft-usernames
-    String playernameFiltered = player.getDisplayNameString().replaceAll(regex, "");
-    return new File(playerDirectory, "_" + playernameFiltered + "." + legacyExt);
   }
 
   private static File getPlayerFileID(File playerDirectory, EntityPlayer player) {

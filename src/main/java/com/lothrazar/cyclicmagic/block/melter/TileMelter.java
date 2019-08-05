@@ -139,8 +139,6 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
 
   public boolean tryProcessRecipe() {
     if (currentRecipe != null) {
-      // FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(), currentRecipe.getFluidSize());
-      //   int testFill = this.fill(fluidStack, false);
       int current = this.getCurrentFluidStackAmount();
       int incoming = currentRecipe.getFluidSize();
       Fluid holding = this.getFluidContainedOrNull();
@@ -151,13 +149,9 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
         ModCyclic.logger.error(current + "/" + this.getCapacity());
         ModCyclic.logger.error(fluidAllowed + " fluidAllowed");
         //only create the output if cost was successfully paid 
-        FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(),
-            //  current +
-            incoming);
-        ModCyclic.logger.error(fluidStack.amount + "/" + this.getCapacity());
+        FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(), incoming);
         this.fill(fluidStack, true);
-        this.setCurrentFluid(current +
-            incoming);
+        this.setCurrentFluid(current + incoming);
         return true;
       }
     }

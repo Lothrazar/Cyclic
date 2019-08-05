@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.InvWrapperRestricted;
-import com.lothrazar.cyclicmagic.gui.container.StackWrapper;
+import com.lothrazar.cyclicmagic.data.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;

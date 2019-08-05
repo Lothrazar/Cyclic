@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.disenchanter;
 
 import java.util.Map;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
@@ -78,7 +79,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     else if (index == SLOT_GLOWSTONE) {
       return UtilOreDictionary.doesMatchOreDict(stack, "dustGlowstone");
     }
-    return false;
+    return super.isItemValidForSlot(index, stack);
   }
 
   @Override
@@ -98,7 +99,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       return;
     }
     timer -= 1;
-    if (timer > 0) {
+    if (timer > 0 || this.world.isRemote) {//important client check !!!
       return;
     } //timer zero so go
     timer = TIMER_FULL;
@@ -117,8 +118,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     if (outEnchants.size() == 0 || keyMoved == null) {
       return;
     } //weird none were found. so anyweay dont pay cost
+    ModCyclic.logger.log("keyMoved  " + keyMoved.getName());
     enchants.remove(keyMoved);
     // TODO: merge removeEnchant with blockLibrary
+    ModCyclic.logger.log("Give this many outEnchants to the eBook " + outEnchants.size());
     EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
     dropStack(eBook); // drop the new enchanted book
     //special case if input was book, we dont want an ench book with nothin on it
@@ -133,6 +136,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
         dropStack(inputCopy);
       }
       else {
+        ModCyclic.logger.log("remaining overwrite enchants  " + enchants.size());
         EnchantmentHelper.setEnchantments(enchants, input);//set as removed
         dropStack(input);
       }

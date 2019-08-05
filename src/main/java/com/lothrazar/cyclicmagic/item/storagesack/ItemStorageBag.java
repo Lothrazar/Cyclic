@@ -96,6 +96,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public static enum StorageActionType {
     NOTHING, MERGE, DEPOSIT;
 
+    private final static String NBT_OPEN = "isOpen";
     private final static String NBT_COLOUR = "COLOUR";
     private final static String NBT = "build";
     private final static String NBTTIMEOUT = "timeout";
@@ -150,6 +151,19 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       return tags.getInteger(NBT_COLOUR);
     }
 
+    public static boolean getIsOpen(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      if (tags.hasKey(NBT_OPEN) == false) {
+        return false;
+      }
+      return tags.getBoolean(NBT_OPEN);
+    }
+
+    public static void setIsOpen(ItemStack wand, boolean s) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      tags.setBoolean(NBT_OPEN, s);
+    }
+
     public static void setColour(ItemStack wand, int color) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       //      int type = tags.getInteger(NBT_COLOUR);
@@ -189,13 +203,18 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
 
   @SubscribeEvent
   public void onEntityItemPickupEvent(EntityItemPickupEvent event) {
-    if (event.getItem().isDead) {
+    if (event.getItem().isDead) {//|| event.getItem().world.isRemote
       return;
     }
     ItemStack stackOnGround = event.getItem().getItem();
     //multiple bags held by player
     NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
     for (ItemStack stackIsBag : foundBags) {
+      if (StorageActionType.getIsOpen(stackIsBag)) {
+        // 
+        ModCyclic.logger.log("is open skip ", stackIsBag);
+        return;
+      }
       int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
       if (pickupType == StoragePickupType.NOTHING.ordinal()) {
         continue;
@@ -219,6 +238,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), stackIsBag);
       NonNullList<ItemStack> onGround = NonNullList.create();
       onGround.add(stackOnGround);
+      ModCyclic.logger.log("Send onGround to bag " + stackOnGround);
       BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
       if (ret.stacks.get(0).isEmpty()) {
         /// we got everything 
@@ -273,6 +293,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack wand = player.getHeldItem(hand);
     setIdIfEmpty(wand);
+    //    StorageActionType.setIsOpen(wand, true);
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.PLAYERS, 0.1F);
     if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
         && hand == EnumHand.MAIN_HAND) {
