@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary.ctrl;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.block.enchantlibrary.EnchantStorageTarget;
 import com.lothrazar.cyclicmagic.util.UtilSound;

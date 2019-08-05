@@ -69,14 +69,12 @@ public class ContainerStorage extends ContainerBase {
       }
     }
     this.bindPlayerInventory(player.inventory);
-
   }
 
   @Override
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
     StorageActionType.setIsOpen(bagReference, false);
-
     ModCyclic.logger.log(" container is open false is set ", bagReference);
   }
 

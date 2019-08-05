@@ -206,7 +206,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     if (event.getItem().isDead) {//|| event.getItem().world.isRemote
       return;
     }
-
     ItemStack stackOnGround = event.getItem().getItem();
     //multiple bags held by player
     NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
