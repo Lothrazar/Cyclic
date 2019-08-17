@@ -1,4 +1,8 @@
 {
+	"_comments":"Thanks to https://tterrag.com/lang2json/",
+    "itemGroup.cyclic": "Cyclic",
+    "block.cyclic.trash": "Trash Void",
+  
     "builder.toggle": "Toggle",
     "buildertype.circle": "Circle",
     "buildertype.cup": "Cup",
@@ -535,7 +539,6 @@
     "item.water_spreader.guide": "Turns nearby flowing water into source water.  Fills lakes and rivers out very quickly.",
     "item.water_spreader": "Water Spreader",
     "item.water_spreader.tooltip": "Replace nearby flowing water with source water",
-    "itemGroup.cyclicmagic": "Cyclic",
     "key.categories.inventorycontrol": "Cyclic Keybindings",
     "key.columnbardown": "Row Shift Down",
     "key.columnbarup": "Row Shift Up",
@@ -594,9 +597,6 @@
     "spell.spawnegg.info": "Move animals using a respawn egg",
     "spell.spawnegg": "Respawn Egg",
     "teleport.dimension": "Cannot cross dimensions",
-    "block.trash": "Trash Void",
-    "block.trash.tooltip": "Dispose of any fluid or item",
-    "block.trash.guide": "Dispose of any fluid or item by pumping items into this with hoppers or cables.",
     "button.trash.fluid.tooltip": "Accepts and deletes Fluids",
     "button.trash.items.tooltip": "Accepts and deletes Items",
     "block.trash.warning": "Warning! DELETES all items",
