@@ -1,9 +1,0 @@
-{
-    "variants": {
-		"normal": { "model": "cyclicmagic:conveyor_medium_straight" },
-        "facing=north": { "model": "cyclicmagic:conveyor_medium_straight" },
-        "facing=east":  { "model": "cyclicmagic:conveyor_medium_straight" ,"y":90},
-        "facing=south": { "model": "cyclicmagic:conveyor_medium_straight" ,"y":180},
-        "facing=west":  { "model": "cyclicmagic:conveyor_medium_straight" ,"y":270}
-    }
-}

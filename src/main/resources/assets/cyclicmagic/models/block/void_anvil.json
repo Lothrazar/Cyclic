@@ -1,9 +1,0 @@
-{
-   "parent": "cyclicmagic:parent/anvil",
-   "textures": {
-        "particle": "blocks/obsidian",
-        "body": "blocks/obsidian",
-        "base": "blocks/cauldron_side",
-        "pillar": "blocks/cauldron_side"
-    }
-}

@@ -1,9 +1,0 @@
-{
-    "variants": {
-        "normal": { "model": "cyclicmagic:sprinkler" },
-        "facing=north": { "model": "cyclicmagic:sprinkler"},
-        "facing=east": { "model":  "cyclicmagic:sprinkler"},
-        "facing=south": { "model": "cyclicmagic:sprinkler"},
-        "facing=west": { "model":  "cyclicmagic:sprinkler" }
-    }
-}

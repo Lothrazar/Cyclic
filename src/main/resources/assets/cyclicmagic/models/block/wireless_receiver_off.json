@@ -1,6 +1,0 @@
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "cyclicmagic:blocks/wireless_receiver_off"
-    }
-}

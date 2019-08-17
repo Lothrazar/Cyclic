@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "normal": { "model": "cyclicmagic:battery_infinite" },
-        "inventory": { "model": "cyclicmagic:battery_infinite" }
-    }
-}

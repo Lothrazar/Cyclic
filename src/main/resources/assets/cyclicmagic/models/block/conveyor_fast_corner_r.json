@@ -1,8 +1,0 @@
-{
-	"parent": "cyclicmagic:parent/conveyor_corner_r",
-
-	"textures": {
-		"top": "cyclicmagic:blocks/conveyor/conveyor_fast_corner",
-		"particle": "cyclicmagic:blocks/conveyor/conveyor_fast_corner"
-	}
-}

@@ -1,8 +1,0 @@
-{
-	"parent": "cyclicmagic:parent/conveyor_angle",
-
-	"textures": {
-		"top": "cyclicmagic:blocks/conveyor/conveyor_medium_straight",
-		"particle": "cyclicmagic:blocks/conveyor/conveyor_medium_straight"
-	}
-}

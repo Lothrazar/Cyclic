@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "normal": { "model": "cyclicmagic:block_anvil_magma" },
-        "inventory": { "model": "cyclicmagic:block_anvil_magma" }
-    }
-}

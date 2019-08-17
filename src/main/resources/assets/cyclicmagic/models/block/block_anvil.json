@@ -1,9 +1,0 @@
-{
-   "parent": "cyclicmagic:parent/anvil",
-   "textures": {
-        "particle": "blocks/diamond_block",
-        "body": "blocks/diamond_block",
-        "base": "blocks/iron_block",
-        "pillar": "blocks/iron_block"
-    }
-}

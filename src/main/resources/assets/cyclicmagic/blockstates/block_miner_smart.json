@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "cyclicmagic:block_miner_smart","y":180},
-        "facing=east":  { "model": "cyclicmagic:block_miner_smart","y":270},
-        "facing=south": { "model": "cyclicmagic:block_miner_smart"},
-        "facing=west":  { "model": "cyclicmagic:block_miner_smart" ,"y":90}
-    }
-}

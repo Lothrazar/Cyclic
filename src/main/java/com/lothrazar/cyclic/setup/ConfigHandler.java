@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.setup;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import com.lothrazar.cyclic.ExampleMod;
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.nio.file.Path;
@@ -18,7 +18,7 @@ public class ConfigHandler {
   }
 
   private static void initConfig() {
-    COMMON_BUILDER.comment("General settings").push(ExampleMod.MODID);
+    COMMON_BUILDER.comment("General settings").push(ModCyclic.MODID);
     TOOLTIPS = COMMON_BUILDER.comment("Testing config Tooltip").define("itemTooltip", true);
 
     COMMON_BUILDER.pop();

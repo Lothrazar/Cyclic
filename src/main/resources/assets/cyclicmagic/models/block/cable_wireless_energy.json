@@ -1,9 +1,0 @@
-{
-	"parent":"cyclicmagic:parent/node",
-	"textures": {
-		"main": "cyclicmagic:blocks/node/main_energy",
-		"particle": "cyclicmagic:blocks/node/main_energy",
-		"plate_front": "cyclicmagic:blocks/node/front_energy",
-		"plate_back": "cyclicmagic:blocks/node/back_energy"
-	}
-}
