@@ -15,7 +15,7 @@ apply plugin: 'maven-publish'
 
 version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'cyclic'
+archivesBaseName = 'Cyclic'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
