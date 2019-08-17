@@ -1,134 +1,151 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-
+apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 version = "${mc_version}-${mod_version}"
-group = "com.lothrazar.cyclicmagic" 
-archivesBaseName = "Cyclic"
+group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'cyclic'
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
+    // The mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   Snapshot are built nightly.
+    // stable_#            Stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not always work.
+    // Simply re-run your setup task after changing the mappings to update your workspace.
+    
+    mappings channel: 'snapshot', version: '20190717-1.14.3'
 
+    //makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    
+    // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
 
-    version = "${mc_version}-${forge_version}"
-    mappings = "stable_39"
-    runDir = "run"
-    makeObfSourceJar = false
-    useDepAts = true
-    //Makes those replacement changes to the main mod class.
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            workingDirectory project.file('run')
 
-    replace '@VERSION@', project.version
-    //Replaces all text that matches the left side with the right.
-    replace '@FINGERPRINT@', project.findProperty('signSHA1')
-    //Makes those replacement changes to the main mod class.
-    //My mod class is set in my project's gradle.properties file.
-    replaceIn "ModCyclic.java"
-}
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
-task signJar(type: SignJar, dependsOn: reobfJar) {
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
 
-    // Skips if the keyStore property is missing.
-    onlyIf {
-        project.hasProperty('keyStore')
+            mods {
+                cyclic {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                cyclic {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'cyclic', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                cyclic {
+                    source sourceSets.main
+                }
+            }
+        }
     }
-
-    // findProperty allows us to reference the property without it existing. 
-    // Using project.propName would cause the script to fail validation if 
-    // the property did not exist. 
-    keyStore = project.findProperty('keyStore')
-    alias = project.findProperty('keyStoreAlias')
-    storePass = project.findProperty('keyStorePass')
-    keyPass = project.findProperty('keyStoreKeyPass')
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
-}
-
-// Runs this task automatically when build is ran. 
-build.dependsOn signJar
-
-//Defines basic patterns for pulling various dependencies.
-repositories {
-	maven {
-		url "https://maven.mcmoddev.com"
-	}
-    maven {
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-		url 'http://maven.blamejared.com'
-	}
-	maven {
-		url 'https://maven.mcmoddev.com/'
-	}
-	maven {
-        url = "http://minecraft.curseforge.com/api/maven/"
-    }
-    maven {
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-		url 'http://maven.blamejared.com'
-	}
-    maven {
-    	name = "Progwml6 maven"
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven { //Guide API
-		url "http://tehnut.info/maven/"
-	}
-	maven {
-	    // location of a maven mirror for JEI files, as a fallback
-	    name = "ModMaven"
-	    url = "modmaven.k-4u.nl"
-	}
-	maven { url "http://maven.amadornes.com/" }
-	ivy {
-		name 'asie dependency mirror'
-		artifactPattern "http://asie.pl/javadeps/[module]-[revision](-[classifier]).[ext]"
-	}
 }
 
 dependencies {
+    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
+    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${crt_version}"
-  deobfCompile "baubles:Baubles:1.12:${baubles_version}"
-  deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"
-  deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+    // You may put jars on which you depend on in ./libs or you may define them like so..
+    // compile "some.group:artifact:version:classifier"
+    // compile "some.group:artifact:version"
 
-  // https://maven.mcmoddev.com/net/darkhax/enchdesc/EnchantmentDescriptions-1.12.2/1.1.9/
-  // deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-${mc_version}-${ench_descr_version}:+"
+    // Real examples
+    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
+    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
+    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // These dependencies get remapped to your current MCP mappings
+    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // For more info...
+    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
 }
 
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "cyclic",
+            "Specification-Vendor": "cyclicsareus",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"cyclicsareus",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }
 
+// Example configuration to allow publishing using the maven-publish task
+// we define a custom artifact that is sourced from the reobfJar output task
+// and then declare that to be published
+// Note you'll need to add a repository here
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
