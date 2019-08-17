@@ -8,7 +8,7 @@ modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[26,)" #mandatory (26 is current forge version)
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/Lothrazar/MODPAGEGOESHERE/issues" #optional
+issueTrackerURL="https://github.com/Lothrazar/cyclic/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
@@ -16,11 +16,11 @@ modId="cyclic" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
-displayName="Example Mod" #mandatory
+displayName="Cyclic" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://raw.githubusercontent.com/Lothrazar/MODPAGEGOESHERE/master/update.json" #optional
+updateJSONURL="https://raw.githubusercontent.com/Lothrazar/cyclic/master/update.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="CURSEWEBSITEGOESHERE" #optional
+displayURL="http://minecraft.curseforge.com/projects/cyclic" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="cyclic.png" #optional
 # A text field displayed in the mod UI
