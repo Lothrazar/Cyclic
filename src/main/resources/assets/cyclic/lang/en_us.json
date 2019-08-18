@@ -4,6 +4,7 @@
     "block.cyclic.trash": "Trash Void",
     "block.cyclic.experience_pylon": "Experience Pylon",
 	"item.cyclic.experience_food": "Experience Confection",
+	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon; holds 50xp",
     
     
     
