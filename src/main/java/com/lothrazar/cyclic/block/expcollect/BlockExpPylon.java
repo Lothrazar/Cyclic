@@ -1,11 +1,14 @@
 package com.lothrazar.cyclic.block.expcollect;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.UtilStuff;
 import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -14,13 +17,23 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockExpPylon extends Block {
 
   public BlockExpPylon(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.GLASS));
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip"));
   }
 
   @Override

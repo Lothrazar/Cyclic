@@ -2,7 +2,9 @@
 	"_comments":"Thanks to https://tterrag.com/lang2json/",
     "itemGroup.cyclic": "Cyclic",
     "block.cyclic.trash": "Trash Void",
+    "block.cyclic.trash.tooltip": "Deletes any item piped into it",
     "block.cyclic.experience_pylon": "Experience Pylon",
+    "block.cyclic.experience_pylon.tooltip": "Collects nearby XP orbs",
 	"item.cyclic.experience_food": "Experience Confection",
 	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon; holds 50xp",
     
