@@ -1,10 +1,14 @@
 package com.lothrazar.cyclic.block.expcollect;
 
+import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.UtilStuff;
+import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
@@ -21,10 +25,22 @@ public class BlockExpPylon extends Block {
 
   @Override
   public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    if (player.isSneaking() && !worldIn.isRemote) {
-      TileExpPylon tile = (TileExpPylon) worldIn.getTileEntity(pos);
-      UtilStuff.messageStatus(player, "" + tile.getStoredXp());
-      return true;
+    if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+      ItemStack held = player.getHeldItem(handIn);
+      if (held.isEmpty() || player.isSneaking()) {
+        TileExpPylon tile = (TileExpPylon) worldIn.getTileEntity(pos);
+        UtilStuff.messageStatus(player, "" + tile.getStoredXp());
+        return true;
+      }
+      if (held.getItem() == Items.SUGAR) {
+        TileExpPylon tile = (TileExpPylon) worldIn.getTileEntity(pos);
+        if (tile.drainStoredXp(ItemExp.EXP_PER_FOOD)) {
+          //do it
+          held.shrink(1);
+          player.dropItem(new ItemStack(CyclicRegistry.experience_food), true);
+          return true;
+        }
+      }
     }
     return false;
   }

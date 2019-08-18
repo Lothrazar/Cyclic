@@ -83,6 +83,14 @@ public class TileExpPylon extends TileEntity implements ITickableTileEntity {
     return storedXp;
   }
 
+  public boolean drainStoredXp(int drainMe) {
+    if (drainMe > this.getStoredXp()) {
+      return false;
+    }
+    this.setStoredXp(this.getStoredXp() - drainMe);
+    return true;
+  }
+
   public void setStoredXp(int storedXp) {
     this.storedXp = storedXp;
   }

@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
+import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
@@ -14,6 +15,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class CyclicRegistry {
@@ -23,21 +25,25 @@ public class CyclicRegistry {
 
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-      event.getRegistry().register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
-      event.getRegistry().register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
+      IForgeRegistry<Block> r = event.getRegistry();
+      r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
+      r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
     }
 
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       Item.Properties properties = new Item.Properties().group(CyclicRegistry.itemGroup);
-      event.getRegistry().register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
-      event.getRegistry().register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
+      IForgeRegistry<Item> r = event.getRegistry();
+      r.register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
+      r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
+      r.register(new ItemExp(properties).setRegistryName("experience_food"));
     }
 
     @SubscribeEvent
     public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
-      event.getRegistry().register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
-      event.getRegistry().register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
+      IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+      r.register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
+      r.register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
     }
   }
 
@@ -48,6 +54,8 @@ public class CyclicRegistry {
       return new ItemStack(trash);
     }
   };
+  @ObjectHolder(ModCyclic.MODID + ":experience_food")
+  public static Item experience_food;
   @ObjectHolder(ModCyclic.MODID + ":trash")
   public static BlockTrash trash;
   @ObjectHolder(ModCyclic.MODID + ":trash")
