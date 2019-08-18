@@ -86,6 +86,6 @@ public class CyclicRegistry {
   public static BlockCollector collector;
   @ObjectHolder(ModCyclic.MODID + ":collector")
   public static TileEntityType<TileCollector> collectortile;
-  @ObjectHolder(ModCyclic.MODID + "collector")
+  @ObjectHolder(ModCyclic.MODID + ":collector")
   public static ContainerType<ContainerCollector> collectortileContainer;
 }

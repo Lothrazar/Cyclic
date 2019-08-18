@@ -9,17 +9,23 @@ import net.minecraft.block.ChestBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockCollector extends Block {
 
@@ -32,6 +38,21 @@ public class BlockCollector extends Block {
     if (entity != null) {
       world.setBlockState(pos, state.with(ChestBlock.FACING, UtilStuff.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
+  }
+
+  @Override
+  public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+    if (!world.isRemote) {
+      TileEntity tileEntity = world.getTileEntity(pos);
+      if (tileEntity instanceof INamedContainerProvider) {
+        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+      }
+      else {
+        throw new IllegalStateException("Our named container provider is missing!");
+      }
+      return true;
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, result);
   }
 
   @Override

@@ -22,9 +22,19 @@ public class ContainerCollector extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      addSlot(new SlotItemHandler(h, 0, 64, 24));
+      //      ChestContainer x;
+      //      addSlot(new SlotItemHandler(h, 0, 64, 24));
+      int numRows = 2;
+      for (int j = 0; j < numRows; ++j) {
+        for (int k = 0; k < 9; ++k) {
+          this.addSlot(new SlotItemHandler(h,
+              k + j * 9,
+              8 + k * 18,
+              17 + (j + 1) * 18));
+        }
+      }
     });
-    layoutPlayerInventorySlots(10, 70);
+    layoutPlayerInventorySlots(8, 74);
   }
 
   @Override
