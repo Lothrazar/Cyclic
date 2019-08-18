@@ -3,17 +3,21 @@ package com.lothrazar.cyclic;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
+import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -50,6 +54,14 @@ public class CyclicRegistry {
       r.register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
       r.register(TileEntityType.Builder.create(TileCollector::new, CyclicRegistry.collector).build(null).setRegistryName("collector"));
     }
+
+    @SubscribeEvent
+    public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
+      }).setRegistryName("collector"));
+    }
   }
 
   public static ItemGroup itemGroup = new ItemGroup(ModCyclic.MODID) {
@@ -74,4 +86,6 @@ public class CyclicRegistry {
   public static BlockCollector collector;
   @ObjectHolder(ModCyclic.MODID + ":collector")
   public static TileEntityType<TileCollector> collectortile;
+  @ObjectHolder(ModCyclic.MODID + "collector")
+  public static ContainerType<ContainerCollector> collectortileContainer;
 }

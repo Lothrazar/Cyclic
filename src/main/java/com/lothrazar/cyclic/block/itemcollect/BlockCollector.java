@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.itemcollect;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.UtilStuff;
+import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;

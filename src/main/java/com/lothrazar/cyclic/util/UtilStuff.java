@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic;
+package com.lothrazar.cyclic.util;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
