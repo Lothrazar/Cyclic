@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "cyclic:block/experience_pylon" }
+    }
+}

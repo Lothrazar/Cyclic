@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.trash;
+package com.lothrazar.cyclic.block.trash;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.CyclicRegistry;

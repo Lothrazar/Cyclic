@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "vhv",
+    "grg",
+    "sis"
+  ],
+  "key": {
+    "v": {
+      "item": "minecraft:vine"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "g": {
+      "item": "minecraft:lime_dye"
+    },
+    "r": {
+      "item": "minecraft:fire_charge"
+    },
+    "s": {
+      "item": "minecraft:nether_brick"
+    }
+  },
+  "result": {
+    "item": "cyclic:experience_pylon"
+  }
+}

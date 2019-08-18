@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.trash;
+package com.lothrazar.cyclic.block.trash;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
