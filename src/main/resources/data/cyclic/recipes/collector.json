@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "r r",
+    "glg",
+    "hhh"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:lapis_block"
+    },
+    "g": {
+      "item": "minecraft:dropper"
+    },
+    "r": {
+      "item": "minecraft:iron_ingot"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "item": "cyclic:collector"
+  }
+}

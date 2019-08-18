@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -15,6 +16,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -26,7 +28,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCollector extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
-  private static final int RADIUS = 8;
+  private int radius = 8;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileCollector() {
@@ -58,6 +60,7 @@ public class TileCollector extends TileEntity implements ITickableTileEntity, IN
 
   @Override
   public void read(CompoundNBT tag) {
+    radius = tag.getInt("radius");
     CompoundNBT invTag = tag.getCompound("inv");
     handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(invTag));
     super.read(tag);
@@ -65,6 +68,7 @@ public class TileCollector extends TileEntity implements ITickableTileEntity, IN
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("radius", radius);
     handler.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
@@ -72,14 +76,24 @@ public class TileCollector extends TileEntity implements ITickableTileEntity, IN
     return super.write(tag);
   }
 
+  private BlockPos getTargetCenter() {
+    //move center over that much, not including exact horizontal
+    return this.getPos().offset(this.getCurrentFacing(), radius);
+  }
+
+  private Direction getCurrentFacing() {
+    return this.getBlockState().get(ChestBlock.FACING);
+  }
+
   @Override
   public void tick() {
     if (world.isRemote) {
       return;
     }
+    BlockPos center = getTargetCenter();
     List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(
-        pos.getX() - RADIUS, pos.getY(), pos.getZ() - RADIUS,
-        pos.getX() + RADIUS, pos.getY() + 2, pos.getZ() + RADIUS), (entity) -> {
+        center.getX() - radius, center.getY(), center.getZ() - radius,
+        center.getX() + radius, center.getY() + 2, center.getZ() + radius), (entity) -> {
           return entity.isAlive();//  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
         });
     if (list.size() > 0) {

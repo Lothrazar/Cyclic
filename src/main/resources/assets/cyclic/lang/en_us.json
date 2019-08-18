@@ -1,5 +1,5 @@
 {
-	"_comments":"Thanks to https://tterrag.com/lang2json/",
+	"_comments": "Thanks to https://tterrag.com/lang2json/",
     "itemGroup.cyclic": "Cyclic",
     "block.cyclic.trash": "Trash Void",
     "block.cyclic.trash.tooltip": "Deletes any item piped into it",
@@ -8,6 +8,7 @@
 	"item.cyclic.experience_food": "Experience Confection",
 	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
 	"item.cyclic.experience_food.notenough": "Not enough stored",
+    "block.cyclic.collector": "Item Collector",
     
     
     
