@@ -2,6 +2,8 @@ package com.lothrazar.cyclic;
 
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
+import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
+import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.item.ItemExp;
@@ -28,6 +30,7 @@ public class CyclicRegistry {
       IForgeRegistry<Block> r = event.getRegistry();
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
+      r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
     }
 
     @SubscribeEvent
@@ -36,6 +39,7 @@ public class CyclicRegistry {
       IForgeRegistry<Item> r = event.getRegistry();
       r.register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
+      r.register(new BlockItem(CyclicRegistry.collector, properties).setRegistryName("collector"));
       r.register(new ItemExp(properties).setRegistryName("experience_food"));
     }
 
@@ -44,6 +48,7 @@ public class CyclicRegistry {
       IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
       r.register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
       r.register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
+      r.register(TileEntityType.Builder.create(TileCollector::new, CyclicRegistry.collector).build(null).setRegistryName("collector"));
     }
   }
 
@@ -64,4 +69,9 @@ public class CyclicRegistry {
   public static BlockExpPylon experience_pylon;
   @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
   public static TileEntityType<TileExpPylon> experience_pylontile;
+  //
+  @ObjectHolder(ModCyclic.MODID + ":collector")
+  public static BlockCollector collector;
+  @ObjectHolder(ModCyclic.MODID + ":collector")
+  public static TileEntityType<TileCollector> collectortile;
 }
