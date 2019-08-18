@@ -53,6 +53,9 @@ public class BlockExpPylon extends Block {
           player.dropItem(new ItemStack(CyclicRegistry.experience_food), true);
           return true;
         }
+        else {
+          UtilStuff.messageStatus(player, getTranslationKey() + "notenough");
+        }
       }
     }
     return false;
