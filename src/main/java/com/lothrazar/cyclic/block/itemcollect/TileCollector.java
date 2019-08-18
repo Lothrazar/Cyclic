@@ -36,7 +36,7 @@ public class TileCollector extends TileEntity implements ITickableTileEntity, IN
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(36);
+    return new ItemStackHandler(2 * 9);
   }
 
   @Override
