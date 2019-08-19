@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.itemcollect;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.util.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,7 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class BlockCollector extends Block {
+public class BlockCollector extends BlockBase {
 
   public BlockCollector(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.STONE));

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic;
 
+import com.lothrazar.cyclic.block.BlockDarkGlass;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
@@ -32,6 +33,7 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
+      r.register(new BlockDarkGlass(Block.Properties.create(Material.ROCK)).setRegistryName("dark_glass"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
       r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
@@ -41,6 +43,7 @@ public class CyclicRegistry {
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       Item.Properties properties = new Item.Properties().group(CyclicRegistry.itemGroup);
       IForgeRegistry<Item> r = event.getRegistry();
+      r.register(new BlockItem(CyclicRegistry.dark_glass, properties).setRegistryName("dark_glass"));
       r.register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
       r.register(new BlockItem(CyclicRegistry.collector, properties).setRegistryName("collector"));
@@ -71,6 +74,8 @@ public class CyclicRegistry {
       return new ItemStack(trash);
     }
   };
+  @ObjectHolder(ModCyclic.MODID + ":dark_glass")
+  public static BlockDarkGlass dark_glass;
   @ObjectHolder(ModCyclic.MODID + ":experience_food")
   public static Item experience_food;
   @ObjectHolder(ModCyclic.MODID + ":trash")

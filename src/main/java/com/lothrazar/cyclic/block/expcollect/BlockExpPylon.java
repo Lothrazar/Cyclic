@@ -4,8 +4,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.item.ItemExp;
+import com.lothrazar.cyclic.util.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockExpPylon extends Block {
+public class BlockExpPylon extends BlockBase {
 
   public BlockExpPylon(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.GLASS));

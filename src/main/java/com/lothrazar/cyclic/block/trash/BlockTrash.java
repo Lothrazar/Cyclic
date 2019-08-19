@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.trash;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import net.minecraft.block.Block;
+import com.lothrazar.cyclic.util.BlockBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockTrash extends Block {
+public class BlockTrash extends BlockBase {
 
   public BlockTrash(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.METAL));

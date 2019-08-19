@@ -1,0 +1,37 @@
+package com.lothrazar.cyclic.block;
+
+import com.lothrazar.cyclic.util.BlockBase;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
+
+public class BlockDarkGlass extends BlockBase {
+
+  public BlockDarkGlass(Properties properties) {
+    super(properties.hardnessAndResistance(0.25F, 6000001.0F).harvestTool(ToolType.PICKAXE));
+  }
+
+  @Override
+  @Deprecated
+  public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    return 255;//zero is transparent fully
+  }
+
+  @Override
+  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+    return true;
+  }
+
+  /**
+   * Gets the render layer this block will render on. SOLID for solid blocks, CUTOUT or CUTOUT_MIPPED for on-off transparency (glass, reeds),
+   *
+   * TRANSLUCENT for fully blended transparency (stained glass)
+   */
+  @Override
+  public BlockRenderLayer getRenderLayer() {
+    //    Blocks.STONE
+    return BlockRenderLayer.CUTOUT;
+  }
+}
