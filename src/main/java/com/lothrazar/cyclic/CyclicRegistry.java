@@ -33,7 +33,7 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
-      r.register(new BlockDarkGlass(Block.Properties.create(Material.ROCK)).setRegistryName("dark_glass"));
+      r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
       r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));

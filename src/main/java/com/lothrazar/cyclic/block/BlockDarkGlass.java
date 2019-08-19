@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.util.BlockBase;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -10,7 +11,7 @@ import net.minecraftforge.common.ToolType;
 public class BlockDarkGlass extends BlockBase {
 
   public BlockDarkGlass(Properties properties) {
-    super(properties.hardnessAndResistance(0.5F, 6000001.0F).harvestTool(ToolType.PICKAXE));
+    super(properties.hardnessAndResistance(0.5F, 6000001.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS));
   }
 
   @Override
