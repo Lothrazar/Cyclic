@@ -9,6 +9,9 @@
 	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
 	"item.cyclic.experience_food.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
+    "block.cyclic.dark_glass": "Tempered Glass",
+    "block.cyclic.dark_glass.tooltip": "Immune to light and explosions",
+    
     
     
     
@@ -1455,10 +1458,6 @@
     "block.water_candle.guide": "Light with flint and steel.  Greatly increases natural mobs spawns nearby.  Follows normal spawning rules of mobs and biome.  Has a chance of being extinguished on every spawn.  Many propertes in config file.",
 
     "extended.toolbelt": "key to open in tool-belt mode",
-
-    "block.glass_strong": "Tempered Glass",
-    "block.glass_strong.tooltip": "Immune to light and explosions",
-    "block.glass_strong.guide": "Tempered with void properties to resist light.  Explosion resistant including wither",
 
     "item.crystallized_obsidian": "Crystallized Obsidian",
     "item.crystallized_obsidian.tooltip": "Crafting material",

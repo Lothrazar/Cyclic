@@ -10,7 +10,7 @@ import net.minecraftforge.common.ToolType;
 public class BlockDarkGlass extends BlockBase {
 
   public BlockDarkGlass(Properties properties) {
-    super(properties.hardnessAndResistance(0.25F, 6000001.0F).harvestTool(ToolType.PICKAXE));
+    super(properties.hardnessAndResistance(0.5F, 6000001.0F).harvestTool(ToolType.PICKAXE));
   }
 
   @Override
@@ -31,7 +31,6 @@ public class BlockDarkGlass extends BlockBase {
    */
   @Override
   public BlockRenderLayer getRenderLayer() {
-    //    Blocks.STONE
     return BlockRenderLayer.CUTOUT;
   }
 }
