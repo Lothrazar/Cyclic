@@ -1,10 +1,13 @@
 package com.lothrazar.cyclic.util;
 
+import java.util.ArrayList;
+import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
 public class UtilStuff {
 
@@ -32,5 +35,27 @@ public class UtilStuff {
       return entity.getHorizontalFacing().getOpposite();
     }
     return d;
+  }
+
+  public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
+    ArrayList<BlockPos> found = new ArrayList<BlockPos>();
+    int xMin = start.getX() - RADIUS;
+    int xMax = start.getX() + RADIUS;
+    int yMin = start.getY() - RADIUS;
+    int yMax = start.getY() + RADIUS;
+    int zMin = start.getZ() - RADIUS;
+    int zMax = start.getZ() + RADIUS;
+    BlockPos posCurrent = null;
+    for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
+      for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
+        for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+          posCurrent = new BlockPos(xLoop, yLoop, zLoop);
+          if (world.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
+            found.add(posCurrent);
+          }
+        }
+      }
+    }
+    return found;
   }
 }

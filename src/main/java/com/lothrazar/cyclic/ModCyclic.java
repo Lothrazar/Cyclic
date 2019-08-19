@@ -36,6 +36,7 @@ public class ModCyclic {
   private void setup(final FMLCommonSetupEvent event) {
     //now all blocks/items exist
     proxy.init();
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.soundproofing);
   }
 
   @SubscribeEvent

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "sos",
+    " s "
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:orange_dye"
+    },
+    "o": {
+      "item": "minecraft:bone_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:soundproofing",
+    "count": 4
+  }
+}

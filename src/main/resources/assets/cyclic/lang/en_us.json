@@ -11,7 +11,9 @@
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.dark_glass": "Tempered Glass",
     "block.cyclic.dark_glass.tooltip": "Immune to light and explosions",
-    
+    "block.cyclic.soundproofing": "Soundproofing",
+    "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
+   
     
     
     
@@ -670,9 +672,6 @@
     "block.block_shears.guide": "This is a block with shears attached to all sides.  It will shear anyone that collides with it.  Put it in a sheep pen with hoppers around it to automate your wool collection.",
     "block.block_shears": "Shearing Block",
     "block.block_shears.tooltip": "Shear entities on collision",
-    "block.block_soundproofing.guide": "Reduces sounds produced nearby.  Place more blocks to reduce sound more.",
-    "block.block_soundproofing": "Soundproofing",
-    "block.block_soundproofing.tooltip": "Each block reduces sound within a radius of",
     "block.block_storeempty.guide": "This is not a tank.  It is a fake tank that instead stores the full bucket along with the liquid.  Meant for the low tech player to transport large numbers of buckets.",
     "block.block_storeempty": "Fluid Storage Tank",
     "block.block_storeempty.tooltip": "Stores up to 64 buckets of any liquid",
