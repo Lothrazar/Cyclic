@@ -10,7 +10,7 @@
 	"item.cyclic.experience_food.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.dark_glass": "Tempered Glass",
-    "block.cyclic.dark_glass.tooltip": "Immune to light and explosions",
+    "block.cyclic.dark_glass.tooltip": "Immune to light, explosions, and wither blasts",
     "block.cyclic.soundproofing": "Soundproofing",
     "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
    
