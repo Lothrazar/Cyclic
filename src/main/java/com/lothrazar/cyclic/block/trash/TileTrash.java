@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.trash;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.util.TileEntityBase;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -13,7 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileTrash extends TileEntity implements ITickableTileEntity {
+public class TileTrash extends TileEntityBase implements ITickableTileEntity {
 
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.util.TileEntityBase;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +14,6 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +26,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCollector extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class TileCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private int radius = 8;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);

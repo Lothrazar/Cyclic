@@ -11,7 +11,7 @@ import net.minecraftforge.common.ToolType;
 public class BlockDarkGlass extends BlockBase {
 
   public BlockDarkGlass(Properties properties) {
-    super(properties.hardnessAndResistance(0.5F, 6000001.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS));
+    super(properties.hardnessAndResistance(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS));
   }
 
   @Override

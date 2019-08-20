@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.block.expcollect;
 import java.util.List;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.util.TileEntityBase;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,7 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileExpPylon extends TileEntity implements ITickableTileEntity {
+public class TileExpPylon extends TileEntityBase implements ITickableTileEntity {
 
   private static final int RADIUS = 8;
   private static final int MAX = 64 * 64;
