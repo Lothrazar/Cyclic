@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileFan extends TileEntityBase implements ITickableTileEntity {
 
   private int range = 7;
-  private int speed = 1;
+  private int speed = 5;
 
   public TileFan() {
     super(CyclicRegistry.fantile);
@@ -24,7 +24,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void tick() {
     if (this.isPowered() == false) {
-      //      return;
+      return;
     }
     this.pushEntities();
   }
@@ -148,7 +148,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
         break;
         case UP:
           direction = doPush ? 1 : -1;
-          newz += direction * SPEED;
+          newy += direction * SPEED;
         default:
         break;
       }
