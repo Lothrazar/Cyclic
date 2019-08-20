@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.util;
+package com.lothrazar.cyclic.base;
 
 import java.util.List;
 import javax.annotation.Nullable;

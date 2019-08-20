@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.util.BlockBase;
+import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.audio.ISound;

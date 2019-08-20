@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.item.ItemExp;
-import com.lothrazar.cyclic.util.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.trash;
 
-import com.lothrazar.cyclic.util.BlockBase;
+import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.tileentity.TileEntity;

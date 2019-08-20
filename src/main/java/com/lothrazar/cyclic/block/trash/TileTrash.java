@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.trash;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.CyclicRegistry;
-import com.lothrazar.cyclic.util.TileEntityBase;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;

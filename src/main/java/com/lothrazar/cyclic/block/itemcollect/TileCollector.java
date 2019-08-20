@@ -4,7 +4,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
-import com.lothrazar.cyclic.util.TileEntityBase;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;

@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.expcollect;
 import java.util.List;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.CyclicRegistry;
-import com.lothrazar.cyclic.util.TileEntityBase;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;

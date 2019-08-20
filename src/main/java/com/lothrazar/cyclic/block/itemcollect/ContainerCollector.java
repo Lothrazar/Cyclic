@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.itemcollect;
 
 import com.lothrazar.cyclic.CyclicRegistry;
-import com.lothrazar.cyclic.util.ContainerBase;
+import com.lothrazar.cyclic.base.ContainerBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;

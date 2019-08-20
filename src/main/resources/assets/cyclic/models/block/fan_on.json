@@ -1,0 +1,7 @@
+{
+	"parent": "cyclic:block/fan",
+
+	"textures": {
+		"blades": "cyclic:blocks/fan_blades_on"
+	}
+}

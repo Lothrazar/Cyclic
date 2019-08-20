@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.util;
+package com.lothrazar.cyclic.base;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
