@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +14,7 @@ public class GloveItem extends Item {
   private static final double CLIMB_SPEED = 0.288D;
 
   public GloveItem(Properties properties) {
-    super(properties);
+    super(properties.maxStackSize(1));
   }
 
   @Override
@@ -26,7 +25,6 @@ public class GloveItem extends Item {
     }
     if (entityIn instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) entityIn;
-      ModCyclic.LOGGER.info("collidedHorizontally" + player.collidedHorizontally);
       if (player.collidedHorizontally) {
         World world = player.getEntityWorld();
         UtilStuff.tryMakeEntityClimb(world, player, CLIMB_SPEED);

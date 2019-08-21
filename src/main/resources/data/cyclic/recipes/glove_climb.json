@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ssl",
+    "skl",
+    "lli"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:slime_ball"
+    },
+    "i": {
+      "item": "minecraft:string"
+    },
+    "k": {
+      "item": "minecraft:scute"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "cyclic:glove_climb"
+  }
+}

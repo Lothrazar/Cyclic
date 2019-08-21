@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +15,8 @@ import net.minecraft.world.World;
 
 public class UtilStuff {
 
+  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
+
   public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
     if (entity.isSneaking()) {
       entity.setMotion(entity.getMotion().x, 0.0, entity.getMotion().z);
@@ -21,11 +25,10 @@ public class UtilStuff {
       entity.setMotion(entity.getMotion().x, climbSpeed, entity.getMotion().z);
       entity.fallDistance = 0.0F;
       //TODO: packet for falldamgage
+    } //setting fall distance on clientside wont work
+    if (worldIn.isRemote && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+      PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
     }
-    //    if (worldIn.isRemote && //setting fall distance on clientside wont work
-    //        entity instanceof EntityPlayer && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-    //      ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
-    //    }
   }
 
   public static void playSound(PlayerEntity player, SoundEvent thunk) {

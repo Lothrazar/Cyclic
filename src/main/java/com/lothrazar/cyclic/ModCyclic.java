@@ -2,6 +2,7 @@ package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.ConfigHandler;
 import com.lothrazar.cyclic.setup.IProxy;
@@ -35,6 +36,7 @@ public class ModCyclic {
 
   private void setup(final FMLCommonSetupEvent event) {
     //now all blocks/items exist
+    PacketRegistry.init();
     proxy.init();
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.soundproofing);
   }
