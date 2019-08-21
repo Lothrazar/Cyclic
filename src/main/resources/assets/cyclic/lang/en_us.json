@@ -15,8 +15,9 @@
     "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
     "block.cyclic.fan": "Fan",
     "block.cyclic.fan.tooltip": "Pushes entities",
+    "item.cyclic.glove_climb": "Climbing Gloves",
+    "item.cyclic.glove_climb.tooltip": "Climb any vertical surface",
    
-    
     
     
     "builder.toggle": "Toggle",
@@ -347,9 +348,6 @@
     "item.food_step.guide": "Eating increases your step height to a full block like a horse (eat again to undo)",
     "item.food_step": "Apple of Lofty Stature",
     "item.food_step.tooltip": "Eating increases your step height to a full block like a horse (eat again to undo)",
-    "item.glove_climb.guide": "Lets you climb any surface like it was a ladder.  Right click in your inventory to turn it off.  To climb down, sneak and walk into the wall.  To hold still in mid-air, walk forward into the wall and then also sneak while walking forward; this will cause you to come to a full stop.  Compatible with baubles.",
-    "item.glove_climb": "Climbing Gloves",
-    "item.glove_climb.tooltip": "Climb any vertical surface",
     "item.glowing_chorus.guide": "A balanced way to get the power of flight.  Gives you a few (stackable) minutes of creative flight each time its eaten.  Use milk to remove.",
     "item.glowing_chorus": "Glowing Chorus Fruit",
     "item.glowing_chorus.tooltip": "Gives you a few (stackable) minutes of creative flight each time its eaten.",

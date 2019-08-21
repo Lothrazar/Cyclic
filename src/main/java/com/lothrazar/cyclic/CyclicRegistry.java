@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
+import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -81,6 +82,7 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
       r.register(new BlockItem(CyclicRegistry.collector, properties).setRegistryName("collector"));
       r.register(new ItemExp(properties).setRegistryName("experience_food"));
+      r.register(new GloveItem(properties).setRegistryName("glove_climb"));
     }
 
     @SubscribeEvent
