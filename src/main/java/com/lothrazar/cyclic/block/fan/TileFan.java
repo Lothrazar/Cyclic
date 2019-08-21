@@ -24,9 +24,15 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void tick() {
     if (this.isPowered() == false) {
+      setAnimation(false);
       return;
     }
+    setAnimation(true);
     this.pushEntities();
+  }
+
+  private void setAnimation(boolean lit) {
+    this.world.setBlockState(pos, this.world.getBlockState(pos).with(BlockFan.IS_LIT, lit));
   }
 
   private static final int MIN_RANGE = 1;

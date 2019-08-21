@@ -13,6 +13,8 @@
     "block.cyclic.dark_glass.tooltip": "Immune to light, explosions, and wither blasts",
     "block.cyclic.soundproofing": "Soundproofing",
     "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
+    "block.cyclic.fan": "Fan",
+    "block.cyclic.fan.tooltip": "Pushes entities",
    
     
     
@@ -809,9 +811,6 @@
     "block.entity_detector.rangey": "Range Y",
     "block.entity_detector.rangez": "Range Z",
     "block.entity_detector.tooltip": "Detect entity types and output redstone, configure limit and >,<,=",
- "block.fan.guide": "Used to move entities in the world.  Use its interface to control direction and range.",
-    "block.fan": "Fan",
-    "block.fan.tooltip": "Pushes entities away up to 16 blocks with redstone power",
     "block.fire_dark": "Dark Fire",
     "block.fire_dark.tooltip": "Does not harm players or destroy blocks",
     "block.harvester_block.guide": "Point this at your field of crops and it will gently harvest everything, replanting seeds as it goes.  The harvested crops just land where they are, so you can use other means to collect them (magnet, fan).  Redstone controlled, and the harvested area can be changed.",
