@@ -2,8 +2,9 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
+import com.lothrazar.cyclic.net.PacketItemToggle;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,25 +17,21 @@ public class EventHandler {
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent(priority = EventPriority.HIGH)
-  public void onMouseEvent(GuiScreenEvent.MouseClickedEvent event) {
+  public void onMouseEvent(GuiScreenEvent.MouseClickedEvent.Pre event) {
     if (event.getGui() == null || !(event.getGui() instanceof ContainerScreen)) {
       return;
     }
     ContainerScreen gui = (ContainerScreen) event.getGui();
     boolean rightClickDown = event.getButton() == 1;
-    //   event
-    System.out.println(" Mouse.getEventButton() " + event.getButton());
     try {
       if (rightClickDown && gui.getSlotUnderMouse() != null) {
         Slot slotHit = gui.getSlotUnderMouse();
-        int slot = slotHit.slotNumber;
         if (!slotHit.getStack().isEmpty()) {
-          ItemStack maybeCharm = slotHit.getStack().getStack();
+          ItemStack maybeCharm = slotHit.getStack();
+          System.out.println(slotHit.slotNumber + "=slotHit.slotNumber;  maybehcharm eventhandler is .slot() " + maybeCharm);
           if (maybeCharm.getItem() instanceof IHasClickToggle) {
-            //example: is a charm or something
-            //            PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slot));
-            PlayerEntity player = ModCyclic.proxy.getClientPlayer();
-            //            UtilSound.playSound(player, SoundEvents.UI_BUTTON_CLICK);
+            PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.slotNumber));
+            //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
             event.setCanceled(true);
           }
         }
