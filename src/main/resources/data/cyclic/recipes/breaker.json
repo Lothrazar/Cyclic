@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rlr",
+    "tsg",
+    "ooo"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "o": {
+      "item": "minecraft:mossy_cobblestone_slab"
+    },
+    "g": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "t": {
+      "item": "minecraft:stone_shovel"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "r": { 
+      "item": "minecraft:tripwire_hook"
+    }
+  },
+  "result": {
+    "item": "cyclic:breaker"
+  }
+}

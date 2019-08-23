@@ -1,0 +1,21 @@
+{
+    "variants": {
+		"facing=north,lit=false":	{ "model": "cyclic:block/breaker"},
+		"facing=north,lit=true":	{ "model": "cyclic:block/breaker_on" },
+	
+		"facing=east,lit=false":	{ "model": "cyclic:block/breaker", "y": 90 },
+		"facing=east,lit=true":		{ "model": "cyclic:block/breaker_on", "y": 90 },
+	
+		"facing=south,lit=false":	{ "model": "cyclic:block/breaker" , "y": 180 },
+		"facing=south,lit=true":	{ "model": "cyclic:block/breaker_on" , "y": 180 },
+	
+		"facing=west,lit=false":	{ "model": "cyclic:block/breaker", "y": 270 },
+		"facing=west,lit=true":		{ "model": "cyclic:block/breaker_on", "y": 270 },
+	
+		"facing=up,lit=false":		{ "model": "cyclic:block/breaker_up" },
+		"facing=up,lit=true":		{ "model": "cyclic:block/breaker_up_on" },
+	
+		"facing=down,lit=false":	{ "model": "cyclic:block/breaker_up", "x": 180 },
+		"facing=down,lit=true":		{ "model": "cyclic:block/breaker_up_on", "x": 180 }
+    }
+}

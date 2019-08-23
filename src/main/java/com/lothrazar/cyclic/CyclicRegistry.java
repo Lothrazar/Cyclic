@@ -2,6 +2,8 @@ package com.lothrazar.cyclic;
 
 import com.lothrazar.cyclic.block.BlockDarkGlass;
 import com.lothrazar.cyclic.block.BlockSound;
+import com.lothrazar.cyclic.block.breaker.BlockBreaker;
+import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
@@ -31,6 +33,10 @@ import net.minecraftforge.registries.ObjectHolder;
 
 public class CyclicRegistry {
 
+  @ObjectHolder(ModCyclic.MODID + ":breaker")
+  public static Block breaker;
+  @ObjectHolder(ModCyclic.MODID + ":breaker")
+  public static TileEntityType<TileBreaker> breakerTile;
   @ObjectHolder(ModCyclic.MODID + ":fan")
   public static Block fan;
   @ObjectHolder(ModCyclic.MODID + ":fan")
@@ -63,40 +69,44 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
-      r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
-      r.register(new BlockFan(Block.Properties.create(Material.ROCK)).setRegistryName("fan"));
-      r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
-      r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
+      r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
       r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
+      r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
+      r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
+      r.register(new BlockFan(Block.Properties.create(Material.ROCK)).setRegistryName("fan"));
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
+      r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
     }
 
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       Item.Properties properties = new Item.Properties().group(CyclicRegistry.itemGroup);
       IForgeRegistry<Item> r = event.getRegistry();
-      r.register(new BlockItem(CyclicRegistry.fan, properties).setRegistryName("fan"));
+      r.register(new BlockItem(CyclicRegistry.breaker, properties).setRegistryName("breaker"));
+      r.register(new BlockItem(CyclicRegistry.collector, properties).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, properties).setRegistryName("dark_glass"));
+      r.register(new ItemExp(properties).setRegistryName("experience_food"));
+      r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
+      r.register(new GloveItem(properties).setRegistryName("glove_climb"));
+      r.register(new BlockItem(CyclicRegistry.fan, properties).setRegistryName("fan"));
       r.register(new BlockItem(CyclicRegistry.soundproofing, properties).setRegistryName("soundproofing"));
       r.register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
-      r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
-      r.register(new BlockItem(CyclicRegistry.collector, properties).setRegistryName("collector"));
-      r.register(new ItemExp(properties).setRegistryName("experience_food"));
-      r.register(new GloveItem(properties).setRegistryName("glove_climb"));
     }
 
     @SubscribeEvent
     public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
       IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
-      r.register(TileEntityType.Builder.create(TileFan::new, CyclicRegistry.fan).build(null).setRegistryName("fan"));
-      r.register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
-      r.register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
+      r.register(TileEntityType.Builder.create(TileBreaker::new, CyclicRegistry.breaker).build(null).setRegistryName("breaker"));
       r.register(TileEntityType.Builder.create(TileCollector::new, CyclicRegistry.collector).build(null).setRegistryName("collector"));
+      r.register(TileEntityType.Builder.create(TileFan::new, CyclicRegistry.fan).build(null).setRegistryName("fan"));
+      r.register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
+      r.register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
     }
 
     @SubscribeEvent
     public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+      IForgeRegistry<ContainerType<?>> r = event.getRegistry();
+      r.register(IForgeContainerType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
       }).setRegistryName("collector"));

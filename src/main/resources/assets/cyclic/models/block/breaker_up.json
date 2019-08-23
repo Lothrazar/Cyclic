@@ -1,0 +1,10 @@
+{
+ 	"parent": "cyclic:parent/machine_vertical",
+	"textures":{
+        "1": "minecraft:block/dispenser_front_vertical",
+        "0": "minecraft:block/furnace_top",
+        "2": "minecraft:block/quartz_block_bottom",
+        "3": "minecraft:block/mossy_cobblestone",
+        "particle": "minecraft:block/iron_block"
+	}
+}

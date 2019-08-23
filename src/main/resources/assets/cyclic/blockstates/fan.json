@@ -1,5 +1,4 @@
 {
-	"comment": "Model locally faces north, but air direction is south in-game. Model is flipped to match air direction.",
 	"variants": {
 		"facing=north,lit=false":	{ "model": "cyclic:block/fan"},
 		"facing=north,lit=true":	{ "model": "cyclic:block/fan_on" },
