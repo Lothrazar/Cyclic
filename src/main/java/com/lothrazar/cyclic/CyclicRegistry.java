@@ -13,7 +13,7 @@ import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
-import com.lothrazar.cyclic.enchantment.EnchantXp;
+import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;

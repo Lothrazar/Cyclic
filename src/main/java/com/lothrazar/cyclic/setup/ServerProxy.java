@@ -17,4 +17,9 @@ public class ServerProxy implements IProxy {
   public PlayerEntity getClientPlayer() {
     throw new IllegalStateException("Only run this on the client!");
   }
+
+  @Override
+  public void setPlayerReach(PlayerEntity player, int currentReach) {
+    player.getAttribute(PlayerEntity.REACH_DISTANCE).setBaseValue(currentReach);
+  }
 }

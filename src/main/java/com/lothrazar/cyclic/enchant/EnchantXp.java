@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.enchantment;
+package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;

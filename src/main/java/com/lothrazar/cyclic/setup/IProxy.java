@@ -10,4 +10,6 @@ public interface IProxy {
   World getClientWorld();
 
   PlayerEntity getClientPlayer();
+
+  void setPlayerReach(PlayerEntity player, int currentReach);
 }
