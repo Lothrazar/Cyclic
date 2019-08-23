@@ -34,7 +34,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantLifeLeech extends EnchantBase {
 
-  protected EnchantLifeLeech(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantLifeLeech(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
   }
 

@@ -37,7 +37,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Deprecated
 public class EnchantQuickdraw extends EnchantBase {
 
-  protected EnchantQuickdraw(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantQuickdraw(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
   }
 

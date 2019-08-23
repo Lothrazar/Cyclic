@@ -191,12 +191,12 @@ public class UtilEntity {
     Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
-      ridingEntity.getMotion().y = 0;
+      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
       ridingEntity.fallDistance = 0;
       ridingEntity.addVelocity(velX, velY, velZ);
     }
     else {
-      entity.getMotion().y = 0;
+      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
       entity.fallDistance = 0;
       entity.addVelocity(velX, velY, velZ);
     }
@@ -218,9 +218,7 @@ public class UtilEntity {
 
   //      float LIMIT = 180F;
   public static void setVelocity(Entity entity, float rotationPitch, float rotationYaw, float power) {
-    entity.getMotion().x = 0;
-    entity.getMotion().y = 0;
-    entity.getMotion().z = 0;
+    entity.setMotion(0, 0, 0);
     double velX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
     double velZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
     double velY = MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
@@ -253,12 +251,12 @@ public class UtilEntity {
     Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
-      ridingEntity.getMotion().y = 0;
+      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
       ridingEntity.fallDistance = 0;
       ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
     }
     else {
-      entity.getMotion().y = 0;
+      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
       entity.fallDistance = 0;
       entity.addVelocity(velX, velY, velZ);
     }
@@ -307,8 +305,9 @@ public class UtilEntity {
   }
 
   public static void speedupEntity(LivingEntity entity, float factor) {
-    entity.getMotion().x += MathHelper.sin(-entity.rotationYaw * 0.017453292F) * factor;
-    entity.getMotion().z += MathHelper.cos(entity.rotationYaw * 0.017453292F) * factor;
+    float x = MathHelper.sin(-entity.rotationYaw * 0.017453292F) * factor;
+    float z = MathHelper.cos(entity.rotationYaw * 0.017453292F) * factor;
+    entity.setMotion(x, entity.getMotion().y, z);
   }
 
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos, float speed) {
@@ -498,8 +497,9 @@ public class UtilEntity {
    * @param verticalMomentumFactor
    */
   public static void dragEntityMomentum(LivingEntity entity, double verticalMomentumFactor) {
-    entity.getMotion().x = entity.getMotion().x / verticalMomentumFactor;
-    entity.getMotion().z = entity.getMotion().z / verticalMomentumFactor;
+    double x = entity.getMotion().x / verticalMomentumFactor;
+    double z = entity.getMotion().z / verticalMomentumFactor;
+    entity.setMotion(x, entity.getMotion().y, z);
   }
 
   //  public static ResourceLocation getResourceLocation(Entity entityHit) {

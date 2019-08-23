@@ -40,7 +40,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantLaunch extends EnchantBase {
 
-  protected EnchantLaunch(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantLaunch(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
   }
 

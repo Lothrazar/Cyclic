@@ -46,7 +46,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantExcavation extends EnchantBase {
 
-  protected EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
   }
 

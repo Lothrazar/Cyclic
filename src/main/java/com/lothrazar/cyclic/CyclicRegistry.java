@@ -13,6 +13,13 @@ import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
+import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
+import com.lothrazar.cyclic.enchant.EnchantExcavation;
+import com.lothrazar.cyclic.enchant.EnchantLaunch;
+import com.lothrazar.cyclic.enchant.EnchantLifeLeech;
+import com.lothrazar.cyclic.enchant.EnchantMagnet;
+import com.lothrazar.cyclic.enchant.EnchantMultishot;
+import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.ItemExp;
@@ -119,7 +126,18 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onContainerERegistry(final RegistryEvent.Register<Enchantment> event) {
       IForgeRegistry<Enchantment> r = event.getRegistry();
+      //no beheading
+      //no quickshot
+      //no waterwalk
+      r.register(new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("excavate"));
       r.register(new EnchantXp(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("experience_boost"));
+      r.register(new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("launch"));
+      r.register(new EnchantLifeLeech(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("life_leech"));
+      r.register(new EnchantMagnet(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("magnet"));
+      r.register(new EnchantMultishot(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("multishot"));
+      r.register(new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("smelting"));
+      r.register(new EnchantVenom(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("venom"));
+      //      r.register(new EnchantWaterwalking(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("waterwalking"));
     }
   }
 

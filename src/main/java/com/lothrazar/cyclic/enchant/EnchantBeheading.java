@@ -34,11 +34,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@Deprecated
 public class EnchantBeheading extends EnchantBase {
 
-  protected EnchantBeheading(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantBeheading(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
-    // TODO Auto-generated constructor stub
   }
 
   private Map<String, String> mapClassToSkin;

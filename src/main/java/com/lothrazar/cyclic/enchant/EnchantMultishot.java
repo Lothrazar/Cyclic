@@ -43,7 +43,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantMultishot extends EnchantBase {
 
-  protected EnchantMultishot(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantMultishot(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
   }
 

@@ -43,7 +43,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantAutoSmelt extends EnchantBase {
 
-  protected EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
   }
 

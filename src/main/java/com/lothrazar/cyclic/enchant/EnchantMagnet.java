@@ -33,7 +33,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantMagnet extends EnchantBase {
 
-  protected EnchantMagnet(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  public EnchantMagnet(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
   }
 
