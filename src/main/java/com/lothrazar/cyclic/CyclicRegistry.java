@@ -13,10 +13,14 @@ import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
+import com.lothrazar.cyclic.enchantment.EnchantXp;
 import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -110,6 +114,12 @@ public class CyclicRegistry {
         BlockPos pos = data.readBlockPos();
         return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
       }).setRegistryName("collector"));
+    }
+
+    @SubscribeEvent
+    public static void onContainerERegistry(final RegistryEvent.Register<Enchantment> event) {
+      IForgeRegistry<Enchantment> r = event.getRegistry();
+      r.register(new EnchantXp(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("experience_boost"));
     }
   }
 
