@@ -138,6 +138,8 @@ public class ItemNoclipGhost extends ItemFoodCreative implements IHasRecipe, ICo
       if (playerGhost > 0) {
         ModCyclic.proxy.closeSpectatorGui();
         props.setChorusTimer(playerGhost - 1);
+        // no fall damage set
+        player.fallDistance = 0.0F;
       }
       else {
         //times up!
