@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -54,6 +53,12 @@ public class EnchantExcavation extends EnchantBase {
   @Override
   public int getMaxLevel() {
     return 3;
+  }
+
+  int[] levelToMaxBreak = { 8, 16, 36 };
+
+  private int getHarvestMax(int level) {
+    return levelToMaxBreak[level];
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -84,10 +89,6 @@ public class EnchantExcavation extends EnchantBase {
     }
   }
 
-  private int getHarvestMax(int level) {
-    return levelToMaxBreak[level];
-  }
-
   /**
    * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
    *
@@ -99,9 +100,9 @@ public class EnchantExcavation extends EnchantBase {
         || player.getHeldItem(player.swingingHand).isEmpty()) {
       return totalBroken;
     }
-    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
+    //    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
-    ModCyclic.LOGGER.info("theFuture harvest " + theFuture.size());
+    //    ModCyclic.LOGGER.info("theFuture harvest " + theFuture.size());
     List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
     for (BlockPos targetPos : theFuture) {
       BlockState targetState = world.getBlockState(targetPos);
@@ -144,6 +145,4 @@ public class EnchantExcavation extends EnchantBase {
     }
     return list;
   }
-
-  int[] levelToMaxBreak = { 1, 2, 3, 4 };
 }

@@ -13,7 +13,6 @@ import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
-import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
 import com.lothrazar.cyclic.enchant.EnchantExcavation;
 import com.lothrazar.cyclic.enchant.EnchantLifeLeech;
 import com.lothrazar.cyclic.enchant.EnchantMagnet;
@@ -59,8 +58,8 @@ public class CyclicRegistry {
   public static EnchantMultishot multishot;
   //  @ObjectHolder(ModCyclic.MODID + ":quickshot")
   //  public static Enchantment quickshot;
-  @ObjectHolder(ModCyclic.MODID + ":smelting")
-  public static EnchantAutoSmelt smelting;
+  //  @ObjectHolder(ModCyclic.MODID + ":smelting")
+  //  public static EnchantAutoSmelt smelting;
   @ObjectHolder(ModCyclic.MODID + ":venom")
   public static EnchantVenom venom;
   //  @ObjectHolder(ModCyclic.MODID + ":waterwalking")
@@ -155,7 +154,7 @@ public class CyclicRegistry {
       r.register(new EnchantMagnet(Enchantment.Rarity.RARE, EnchantmentType.ALL, EquipmentSlotType.MAINHAND).setRegistryName("magnet"));
       r.register(new EnchantMultishot(Enchantment.Rarity.RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND).setRegistryName("multishot"));
       //      r.register(new EnchantQuickdraw(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("quickshot"));
-      r.register(new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName("smelting"));
+      //      r.register(new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName("smelting"));
       r.register(new EnchantVenom(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("venom"));
       //      r.register(new EnchantWaterwalking(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("waterwalk"));
     }
