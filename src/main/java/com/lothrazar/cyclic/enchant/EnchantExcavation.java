@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -100,6 +101,7 @@ public class EnchantExcavation extends EnchantBase {
     }
     int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
+    ModCyclic.LOGGER.info("theFuture harvest " + theFuture.size());
     List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
     for (BlockPos targetPos : theFuture) {
       BlockState targetState = world.getBlockState(targetPos);
@@ -143,5 +145,5 @@ public class EnchantExcavation extends EnchantBase {
     return list;
   }
 
-  int[] levelToMaxBreak;
+  int[] levelToMaxBreak = { 1, 2, 3, 4 };
 }

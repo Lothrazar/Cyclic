@@ -1,5 +1,5 @@
 /*******************************************************************************
- * The MIT License (MIT)
+t * The MIT License (MIT)
  *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
  *
@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
@@ -62,7 +61,6 @@ public class EnchantLifeLeech extends EnchantBase {
           //hearts
           if (attacker.getHealth() < attacker.getMaxHealth()) {
             attacker.heal(restore);
-            ModCyclic.LOGGER.info(restore + " heal " + attacker);
             //            UtilParticle.spawnParticle(target.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(1));
             //            UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(1));
           }
