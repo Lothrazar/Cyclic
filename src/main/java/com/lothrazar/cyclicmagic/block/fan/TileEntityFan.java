@@ -231,7 +231,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
 
   private float getSpeedCalc() {
-    return (this.speed) / 35F;
+    return this.speed / 35F;
   }
 
   private int getCurrentRange() {
