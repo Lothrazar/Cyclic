@@ -92,6 +92,13 @@ public class EnchantXpBoost extends BaseEnchant {
     }
   }
 
+  private void dropExp(World world, BlockPos pos, int xp) {
+    if (world.isRemote == false) {
+      world.spawnEntity(
+          new EntityXPOrb(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, xp));
+    }
+  }
+
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onBreakEvent(BreakEvent event) {
     World world = event.getWorld();
@@ -108,15 +115,6 @@ public class EnchantXpBoost extends BaseEnchant {
     int xpDropped = block.getExpDrop(event.getState(), world, pos, 0);
     int bonus = xpDropped * XP_PER_LVL * level;
     UtilExperience.incrementExp(player, bonus);
-    //    dropExp(world, pos, xpDropped * XP_PER_LVL * level);
   }
 
-  private void dropExp(World world, BlockPos pos, int xp) {
-    if (world.isRemote == false) {
-      EntityXPOrb orb = new EntityXPOrb(world);
-      orb.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-      orb.xpValue = xp;
-      world.spawnEntity(orb);
-    }
-  }
 }
