@@ -55,7 +55,7 @@ public class EnchantExcavation extends EnchantBase {
     return 3;
   }
 
-  int[] levelToMaxBreak = { 8, 16, 36 };
+  int[] levelToMaxBreak = { 0, 8, 14, 36 };
 
   private int getHarvestMax(int level) {
     return levelToMaxBreak[level];
