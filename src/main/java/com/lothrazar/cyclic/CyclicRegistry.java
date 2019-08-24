@@ -15,7 +15,6 @@ import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
 import com.lothrazar.cyclic.enchant.EnchantExcavation;
-import com.lothrazar.cyclic.enchant.EnchantLaunch;
 import com.lothrazar.cyclic.enchant.EnchantLifeLeech;
 import com.lothrazar.cyclic.enchant.EnchantMagnet;
 import com.lothrazar.cyclic.enchant.EnchantMultishot;
@@ -44,6 +43,28 @@ import net.minecraftforge.registries.ObjectHolder;
 
 public class CyclicRegistry {
 
+  //  @ObjectHolder(ModCyclic.MODID + ":quickshot")
+  //  public static Enchantment quickshot;
+  @ObjectHolder(ModCyclic.MODID + ":excavate")
+  public static EnchantExcavation excavate;
+  @ObjectHolder(ModCyclic.MODID + ":experience_boost")
+  public static EnchantXp experience_boost;
+  @ObjectHolder(ModCyclic.MODID + ":life_leech")
+  public static EnchantLifeLeech life_leech;
+  //  @ObjectHolder(ModCyclic.MODID + ":launch")
+  //  public static Enchantment launch;
+  @ObjectHolder(ModCyclic.MODID + ":magnet")
+  public static EnchantMagnet magnet;
+  @ObjectHolder(ModCyclic.MODID + ":multishot")
+  public static EnchantMultishot multishot;
+  //  @ObjectHolder(ModCyclic.MODID + ":quickshot")
+  //  public static Enchantment quickshot;
+  @ObjectHolder(ModCyclic.MODID + ":smelting")
+  public static EnchantAutoSmelt smelting;
+  @ObjectHolder(ModCyclic.MODID + ":venom")
+  public static EnchantVenom venom;
+  //  @ObjectHolder(ModCyclic.MODID + ":waterwalking")
+  //  public static Enchantment waterwalking;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static Block breaker;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
@@ -126,18 +147,17 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onContainerERegistry(final RegistryEvent.Register<Enchantment> event) {
       IForgeRegistry<Enchantment> r = event.getRegistry();
-      //no beheading
-      //no quickshot
-      //no waterwalk
-      r.register(new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("excavate"));
+      //      r.register(new EnchantBeheading(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("beheading"));
+      r.register(new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName("excavate"));
       r.register(new EnchantXp(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("experience_boost"));
-      r.register(new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("launch"));
+      //      r.register(new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("launch"));
       r.register(new EnchantLifeLeech(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("life_leech"));
-      r.register(new EnchantMagnet(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("magnet"));
-      r.register(new EnchantMultishot(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("multishot"));
-      r.register(new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("smelting"));
+      r.register(new EnchantMagnet(Enchantment.Rarity.RARE, EnchantmentType.ALL, EquipmentSlotType.MAINHAND).setRegistryName("magnet"));
+      r.register(new EnchantMultishot(Enchantment.Rarity.RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND).setRegistryName("multishot"));
+      //      r.register(new EnchantQuickdraw(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("quickshot"));
+      r.register(new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName("smelting"));
       r.register(new EnchantVenom(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("venom"));
-      //      r.register(new EnchantWaterwalking(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("waterwalking"));
+      //      r.register(new EnchantWaterwalking(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("waterwalk"));
     }
   }
 

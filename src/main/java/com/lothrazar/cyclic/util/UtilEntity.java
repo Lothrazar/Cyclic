@@ -333,6 +333,7 @@ public class UtilEntity {
   }
 
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all, float speedClose, float speedFar) {
+    //    ModCyclic.LOGGER.info("Found for magnet " + all.size());
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
@@ -349,11 +350,23 @@ public class UtilEntity {
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
       if (hdist > ENTITY_PULL_DIST) {
         speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? speedFar : speedClose;
-        //        Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
+        setEntityMotionFromVector(entity, x, y, z, direction * speed);
         moved++;
       } //else its basically on it, no point
     }
     return moved;
+  }
+
+  public static void setEntityMotionFromVector(Entity entity, double x, double y, double z, float modifier) {
+    Vector3 originalPosVector = new Vector3(x, y, z);
+    Vector3 entityVector = new Vector3(entity);
+    Vector3 finalVector = originalPosVector.copy().subtract(entityVector);
+    if (finalVector.mag() > 1)
+      finalVector.normalize();
+    double motionX = finalVector.x * modifier;
+    double motionY = finalVector.y * modifier;
+    double motionZ = finalVector.z * modifier;
+    entity.setMotion(motionX, motionY, motionZ);
   }
 
   public static void addOrMergePotionEffect(LivingEntity player, EffectInstance newp) {
