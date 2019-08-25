@@ -1,7 +1,11 @@
 package com.lothrazar.cyclic;
 
 import com.lothrazar.cyclic.block.BlockDarkGlass;
+import com.lothrazar.cyclic.block.BlockPeat;
+import com.lothrazar.cyclic.block.BlockPeatFuel;
+import com.lothrazar.cyclic.block.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.BlockSound;
+import com.lothrazar.cyclic.block.TilePeatGenerator;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
@@ -23,6 +27,7 @@ import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.ItemEnderBag;
 import com.lothrazar.cyclic.item.ItemExp;
 import com.lothrazar.cyclic.item.ItemGemstone;
+import com.lothrazar.cyclic.item.ItemObsShears;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -65,14 +70,16 @@ public class CyclicRegistry {
   @ObjectHolder(ModCyclic.MODID + ":venom")
   public static EnchantVenom venom;
   //
-  //  @ObjectHolder(ModCyclic.MODID + ":waterwalking")
-  //  public static Enchantment waterwalking;
-  //  @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-  //  public static BlockPeatGenerator peat_generator;
-  //  @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
-  //  public static BlockPeat peat_unbaked;
-  //  @ObjectHolder(ModCyclic.MODID + ":peat_baked")
-  //  public static BlockPeatFuel peat_baked;
+  @ObjectHolder(ModCyclic.MODID + ":lava_walking")
+  public static Enchantment lava_walking;
+  @ObjectHolder(ModCyclic.MODID + ":peat_generator")
+  public static TileEntityType<TilePeatGenerator> peat_generatorTile;
+  @ObjectHolder(ModCyclic.MODID + ":peat_generator")
+  public static BlockPeatGenerator peat_generator;
+  @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
+  public static BlockPeat peat_unbaked;
+  @ObjectHolder(ModCyclic.MODID + ":peat_baked")
+  public static BlockPeatFuel peat_baked;
   //peat disabled
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static Block breaker;
@@ -115,9 +122,9 @@ public class CyclicRegistry {
       r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
       r.register(new BlockFan(Block.Properties.create(Material.ROCK)).setRegistryName("fan"));
-      //      r.register(new BlockPeatGenerator(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
-      //      r.register(new BlockPeat(Block.Properties.create(Material.EARTH)).setRegistryName("peat_unbaked"));
-      //      r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH)).setRegistryName("peat_baked"));
+      r.register(new BlockPeatGenerator(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
+      r.register(new BlockPeat(Block.Properties.create(Material.EARTH)).setRegistryName("peat_unbaked"));
+      r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH)).setRegistryName("peat_baked"));
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
     }
@@ -132,13 +139,14 @@ public class CyclicRegistry {
       r.register(new ItemEnderBag(properties).setRegistryName("ender_bag"));
       r.register(new ItemGemstone(properties).setRegistryName("gem_obsidian"));
       r.register(new ItemGemstone(properties).setRegistryName("gem_amber"));
+      r.register(new ItemObsShears(properties).setRegistryName("shears_obsidian"));
       r.register(new ItemExp(properties).setRegistryName("experience_food"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
       r.register(new GloveItem(properties).setRegistryName("glove_climb"));
       r.register(new BlockItem(CyclicRegistry.fan, properties).setRegistryName("fan"));
-      //      r.register(new BlockItem(CyclicRegistry.peat_generator, properties).setRegistryName("peat_generator"));
-      //      r.register(new BlockItem(CyclicRegistry.peat_unbaked, properties).setRegistryName("peat_unbaked"));
-      //      r.register(new BlockItem(CyclicRegistry.peat_baked, properties).setRegistryName("peat_baked"));
+      r.register(new BlockItem(CyclicRegistry.peat_generator, properties).setRegistryName("peat_generator"));
+      r.register(new BlockItem(CyclicRegistry.peat_unbaked, properties).setRegistryName("peat_unbaked"));
+      r.register(new BlockItem(CyclicRegistry.peat_baked, properties).setRegistryName("peat_baked"));
       r.register(new BlockItem(CyclicRegistry.soundproofing, properties).setRegistryName("soundproofing"));
       r.register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
     }

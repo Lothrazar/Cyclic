@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ofo",
+    "beb",
+    "ofo"
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:emerald"
+    },
+    "b": {
+      "item": "cyclic:gem_amber"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "f": {
+      "item": "minecraft:chorus_fruit"
+    }
+  },
+  "result": {
+    "item": "cyclic:gem_obsidian"
+  }
+}

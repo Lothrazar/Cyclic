@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ofo",
+    "beb",
+    "ofo"
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:diamond"
+    },
+    "b": {
+      "item": "minecraft:sugar"
+    },
+    "o": {
+      "item": "minecraft:dye_orange"
+    },
+    "f": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "result": {
+    "item": "cyclic:gem_obsidian"
+  }
+}
