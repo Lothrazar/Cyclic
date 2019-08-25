@@ -3,6 +3,9 @@ package com.lothrazar.cyclic.block.fan;
 import java.util.List;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.item.GloveItem;
+import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -159,6 +162,10 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
         break;
       }
       entity.setMotion(newx, newy, newz);
+      if (world.isRemote && entity.ticksExisted % GloveItem.TICKS_FALLDIST_SYNC == 0
+          && entity instanceof PlayerEntity) {
+        PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+      }
     }
     return moved;
   }

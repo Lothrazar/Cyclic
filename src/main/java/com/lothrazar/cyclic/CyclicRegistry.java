@@ -20,6 +20,7 @@ import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.GloveItem;
+import com.lothrazar.cyclic.item.ItemEnderBag;
 import com.lothrazar.cyclic.item.ItemExp;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -116,6 +117,7 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.breaker, properties).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.collector, properties).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, properties).setRegistryName("dark_glass"));
+      r.register(new ItemEnderBag(properties).setRegistryName("ender_bag"));
       r.register(new ItemExp(properties).setRegistryName("experience_food"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
       r.register(new GloveItem(properties).setRegistryName("glove_climb"));

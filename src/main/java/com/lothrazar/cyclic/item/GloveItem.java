@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.entity.Entity;
@@ -14,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GloveItem extends Item implements IHasClickToggle {
 
-  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
+  public static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final double CLIMB_SPEED = 0.288D;
   private final static String NBT_STATUS = "onoff";
 
@@ -57,7 +56,7 @@ public class GloveItem extends Item implements IHasClickToggle {
     }
     tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
     held.setTag(tag);
-    ModCyclic.LOGGER.info("after toggle " + held.getTag().getInt(NBT_STATUS));
+    //    ModCyclic.LOGGER.info("after toggle " + held.getTag().getInt(NBT_STATUS));
   }
 
   @Override
