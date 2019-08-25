@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.state.IProperty;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -15,29 +17,50 @@ public class UtilPlaceBlocks {
       return;
     }
     Block clickedBlock = clicked.getBlock();
-    //    clickedBlock.rotate
-    switch (side) {
-      case DOWN:
-        clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
-      break;
-      case EAST:
-        clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_90);
-      break;
-      case NORTH:
-        clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
-      break;
-      case SOUTH:
-        clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_90);
-      break;
-      case UP:
-        clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_90);
-      break;
-      case WEST:
-        clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
-      break;
-      default:
-      break;
+    BlockState newState = null;
+    if (clickedBlock.isIn(BlockTags.SLABS)) {
+      final String key = "type";//top or bottom
+      final String valueDupe = "double";//actually theres 3 but dont worry about it
+      for (IProperty prop : clicked.getProperties()) {
+        //yes
+        if (prop.getName().equals(key)) {
+          //then cycle me
+          newState = clicked.cycle(prop);
+          if (newState.get(prop).toString().equals(valueDupe)) {
+            //haha just hack and skip. turns into length 2. dont worry about it
+            //      ModCyclic.LOGGER.info("yes is double");
+            newState = newState.cycle(prop);
+          }
+        }
+      }
     }
-    clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
+    else {
+      //default whatever
+      switch (side) {
+        case DOWN:
+          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_180);
+        break;
+        case EAST:
+          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_90);
+        break;
+        case NORTH:
+          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
+        break;
+        case SOUTH:
+          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_90);
+        break;
+        case UP:
+          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_180);
+        break;
+        case WEST:
+          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
+        break;
+        default:
+        break;
+      }
+    }
+    if (newState != null) {
+      worldObj.setBlockState(pos, newState);
+    }
   }
 }
