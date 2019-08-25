@@ -65,7 +65,6 @@ public class PacketMoveBlock {
   public static void handle(PacketMoveBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      System.out.println(message.side + "  packet move block " + message.pos);
       UtilPlaceBlocks.rotateBlockValidState(ctx.get().getSender().world, message.pos, message.side);
     });
   }
