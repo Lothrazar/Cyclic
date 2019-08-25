@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic;
 
-import com.lothrazar.cyclic.base.BlockPeat;
-import com.lothrazar.cyclic.base.ItemGemstone;
 import com.lothrazar.cyclic.block.BlockDarkGlass;
 import com.lothrazar.cyclic.block.BlockSound;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
@@ -24,6 +22,7 @@ import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.ItemEnderBag;
 import com.lothrazar.cyclic.item.ItemExp;
+import com.lothrazar.cyclic.item.ItemGemstone;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -65,14 +64,16 @@ public class CyclicRegistry {
   //  public static EnchantAutoSmelt smelting;
   @ObjectHolder(ModCyclic.MODID + ":venom")
   public static EnchantVenom venom;
+  //
   //  @ObjectHolder(ModCyclic.MODID + ":waterwalking")
   //  public static Enchantment waterwalking;
-  @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-  public static Block peat_generator;
-  @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
-  public static Block peat_unbaked;
-  @ObjectHolder(ModCyclic.MODID + ":peat_baked")
-  public static Block peat_baked;
+  //  @ObjectHolder(ModCyclic.MODID + ":peat_generator")
+  //  public static BlockPeatGenerator peat_generator;
+  //  @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
+  //  public static BlockPeat peat_unbaked;
+  //  @ObjectHolder(ModCyclic.MODID + ":peat_baked")
+  //  public static BlockPeatFuel peat_baked;
+  //peat disabled
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static Block breaker;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
@@ -114,9 +115,9 @@ public class CyclicRegistry {
       r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
       r.register(new BlockFan(Block.Properties.create(Material.ROCK)).setRegistryName("fan"));
-      r.register(new BlockPeat(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
-      r.register(new BlockPeat(Block.Properties.create(Material.ROCK)).setRegistryName("peat_unbaked"));
-      r.register(new BlockPeat(Block.Properties.create(Material.ROCK)).setRegistryName("peat_baked"));
+      //      r.register(new BlockPeatGenerator(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
+      //      r.register(new BlockPeat(Block.Properties.create(Material.EARTH)).setRegistryName("peat_unbaked"));
+      //      r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH)).setRegistryName("peat_baked"));
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
     }
@@ -135,9 +136,9 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
       r.register(new GloveItem(properties).setRegistryName("glove_climb"));
       r.register(new BlockItem(CyclicRegistry.fan, properties).setRegistryName("fan"));
-      r.register(new BlockItem(CyclicRegistry.peat_generator, properties).setRegistryName("peat_generator"));
-      r.register(new BlockItem(CyclicRegistry.peat_unbaked, properties).setRegistryName("peat_unbaked"));
-      r.register(new BlockItem(CyclicRegistry.peat_baked, properties).setRegistryName("peat_baked"));
+      //      r.register(new BlockItem(CyclicRegistry.peat_generator, properties).setRegistryName("peat_generator"));
+      //      r.register(new BlockItem(CyclicRegistry.peat_unbaked, properties).setRegistryName("peat_unbaked"));
+      //      r.register(new BlockItem(CyclicRegistry.peat_baked, properties).setRegistryName("peat_baked"));
       r.register(new BlockItem(CyclicRegistry.soundproofing, properties).setRegistryName("soundproofing"));
       r.register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
     }

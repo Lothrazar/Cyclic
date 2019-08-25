@@ -1177,16 +1177,16 @@
     "item.peat_fuel_enriched.tooltip": "Create energy in a Peat-fired Generator",
     "item.peat_fuel_enriched.guide": "Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks.",
 
-    "block.peat_unbaked": "Dry Peat Bog",
-    "block.peat_unbaked.tooltip": "Slowly turns into a Peat Deposit when sitting in water",
+    "block.cyclic.peat_unbaked": "Dry Peat Bog",
+    "block.cyclic.peat_unbaked.tooltip": "Slowly turns into a Peat Deposit when sitting in water",
     "block.peat_unbaked.guide": "Let sit in water to turn into Solid Peat.  Then harvest the Peat Deposit to obtain Peat Fuel",
 
-    "block.peat_baked": "Saturated Peat Deposit",
-    "block.peat_baked.tooltip": "Peat ready to be harvested",
+    "block.cyclic.peat_baked": "Saturated Peat Deposit",
+    "block.cyclic.peat_baked.tooltip": "Peat ready to be harvested",
     "block.peat_baked.guide": "After the Peat Bog soaks in water, it turns into a Peat Deposit and can be harvested to get Peat Fuel",
 
-    "block.peat_generator": "Peat-fired Generator",
-    "block.peat_generator.tooltip": "Create 128 energy per tick using Peat Fuel",
+    "block.cyclic.peat_generator": "Peat-fired Generator",
+    "block.cyclic.peat_generator.tooltip": "Create 128 energy per tick using Peat Fuel",
     "block.peat_generator.guide": "Burn peat to create Energy.  Create Peat Fuel using Biomass, Peat Bog, and Carbon Catalyst.",
 
     "block.peat_farm": "Peat Farmer",
@@ -1455,13 +1455,11 @@
 
     "extended.toolbelt": "key to open in tool-belt mode",
 
-    "item.crystallized_obsidian": "Crystallized Obsidian",
-    "item.crystallized_obsidian.tooltip": "Crafting material",
-    "item.crystallized_obsidian.guide": "Crystal made from an obsidian alloy.  Crafting material",
+    "item.cyclic.gem_obsidian": "Crystallized Obsidian",
+    "item.cyclic.gem_obsidian.tooltip": "Crafting material",
 
-    "item.crystallized_amber": "Crystallized Amber",
-    "item.crystallized_amber.tooltip": "Crafting material",
-    "item.crystallized_amber.guide": "Amber Alloy made from an alloy of raw materials, elemental magic, and liquid gemstones.  Crafting material",
+    "item.cyclic.gem_amber": "Crystallized Amber",
+    "item.cyclic._amber.tooltip": "Crafting material",
 
     "item.crystal_sword": "Crystal Sword",
     "item.crystal_pickaxe": "Crystal Pickaxe",
