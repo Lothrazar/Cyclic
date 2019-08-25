@@ -24,8 +24,14 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilPlaceBlocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemAutoTorch extends ItemBase {
@@ -34,32 +40,38 @@ public class ItemAutoTorch extends ItemBase {
     super(properties);
   }
 
-  @Override
-  public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {}
-
   //  private static final int durability = 256;
   public static final int lightLimit = 8;
-  //  @Override
-  //  public void onTick(ItemStack stack, PlayerEntity player) {
-  //    if (!this.canTick(stack)) {
-  //      return;
-  //    }
-  //    World world = player.world;
-  //    BlockPos pos = player.getPosition();
-  //    if (world.getLight(pos, true) < lightLimit
-  //        && player.isSpectator() == false
-  //        && world.isSideSolid(pos.down(), Direction.UP)
-  //        && world.isAirBlock(pos)) { // dont overwrite liquids
-  //      if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
-  //        super.damageCharm(player, stack);
-  //      }
-  //    }
-  //    else if (stack.isItemDamaged()) {
-  //      ItemStack torches = this.findAmmo(player, Item.getItemFromBlock(Blocks.TORCH));
-  //      if (!torches.isEmpty()) {
-  //        torches.shrink(1);
-  //        UtilItemStack.repairItem(player, stack);
-  //      }
-  //    }
-  //  }
+
+  @Override
+  public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
+    //  @Override
+    //  public void onTick(ItemStack stack, PlayerEntity player) {
+    //    if (!this.canTick(stack)) {
+    //      return;
+    //    }
+    if (entityIn instanceof PlayerEntity == false) {
+      return;
+    }
+    PlayerEntity player = (PlayerEntity) entityIn;
+    //      World world = player.world;
+    BlockPos pos = entityIn.getPosition();
+    if (world.getLight(pos) < lightLimit
+        //            && player.isSpectator() == false
+        //            && world.isSideSolid(pos.down(), Direction.UP)
+        && world.isAirBlock(pos)) { // dont overwrite liquids
+      if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
+        //        super.damageCharm(player, stack);
+        UtilItemStack.damageItem(player, stack);
+      }
+    }
+    else if (stack.isDamaged()) {
+      ItemStack torches = player.findAmmo(new ItemStack(Items.TORCH));
+      //      = this.findAmmo(player, Item.getItemFromBlock(Blocks.TORCH));
+      if (!torches.isEmpty()) {
+        torches.shrink(1);
+        UtilItemStack.repairItem(player, stack);
+      }
+    }
+  }
 }

@@ -23,7 +23,17 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class ItemIceWand extends ItemBase {
 
@@ -34,6 +44,23 @@ public class ItemIceWand extends ItemBase {
 
   private static final int DURABILITY = 256;
   private static final int RADIUS = 2;
+
+  @Override
+  public ActionResultType onItemUse(ItemUseContext context) {
+    PlayerEntity player = context.getPlayer();
+    //
+    ItemStack stack = context.getItem();
+    BlockPos pos = context.getPos();
+    Direction side = context.getFace();
+    if (side != null) {
+      pos = pos.offset(side);
+    }
+    if (spreadWaterFromCenter(context.getWorld(), pos.offset(side))) {
+      //      super.onUse(stack, player, world, hand);
+    }
+    return super.onItemUse(context);
+  }
+
   //  @Override
   //  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
   //    ItemStack stack = player.getHeldItem(hand);
@@ -58,21 +85,26 @@ public class ItemIceWand extends ItemBase {
   //    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   //  }
   //
-  //  private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
-  //    int count = 0;
-  //    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
-  //    water.addAll(UtilWorld.findBlocks(world, posCenter, Blocks.FLOWING_WATER, RADIUS));
-  //    for (BlockPos pos : water) {
-  //      world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
-  //      //       world.markChunkDirty(pos, null);
-  //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
-  //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
-  //      count++;
-  //    }
-  //    boolean success = count > 0;
-  //    if (success) {//particles are on each location, sound is just once
-  //      UtilSound.playSound(world, posCenter, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
-  //    }
-  //    return success;
-  //  }
+  private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
+    int count = 0;
+    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
+    //    water.addAll(UtilWorld.findBlocks(world, posCenter, Blocks.WATER_FLOWING, RADIUS));
+    for (BlockPos pos : water) {
+      //      System.out.println("Itemicewand " + world.getBlockState(pos).getFluidState());
+      if (world.getBlockState(pos).getFluidState() != null &&
+          world.getBlockState(pos).getFluidState().getFluidState() != null &&
+          world.getBlockState(pos).getFluidState().getFluidState().getLevel() >= 8) {
+        world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
+      }
+      //       world.markChunkDirty(pos, null);
+      //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
+      //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
+      count++;
+    }
+    boolean success = count > 0;
+    if (success) {//particles are on each location, sound is just once
+      //      UtilSound.playSound(world, posCenter, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
+    }
+    return success;
+  }
 }

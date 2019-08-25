@@ -7,6 +7,24 @@ import net.minecraft.util.math.BlockPos;
 
 public class UtilShape {
 
+  public static List<BlockPos> squareHorizontalFull(final BlockPos pos, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    // search in a cube
+    int xMin = pos.getX() - radius;
+    int xMax = pos.getX() + radius;
+    int zMin = pos.getZ() - radius;
+    int zMax = pos.getZ() + radius;
+    int y = pos.getY();
+    for (int x = xMin; x <= xMax; x++) {
+      for (int z = zMin; z <= zMax; z++) {
+        shape.add(new BlockPos(x, y, z));
+        shape.add(new BlockPos(x, y, z));
+      }
+    }
+    //corners are done so offset
+    return shape;
+  }
+
   public static List<BlockPos> line(BlockPos pos, Direction efacing, int want) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int skip = 1;

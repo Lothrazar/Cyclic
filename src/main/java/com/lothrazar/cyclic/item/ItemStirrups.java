@@ -24,18 +24,20 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 
 public class ItemStirrups extends ItemBase {
 
   public ItemStirrups(Properties properties) {
     super(properties);
   }
-  //  @Override
-  //  public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, EntityLivingBase entity, EnumHand hand) {
-  //    World world = entity.getEntityWorld();
-  //    // if (world.isRemote) { return false; }
-  //    player.startRiding(entity, true);
-  //    super.onUse(stack, player, world, hand);
-  //    return true;
-  //  }
+
+  @Override
+  public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    // if (world.isRemote) { return false; }
+    return playerIn.startRiding(target, true);
+  }
 }

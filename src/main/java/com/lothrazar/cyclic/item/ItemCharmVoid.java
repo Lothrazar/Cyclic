@@ -24,8 +24,10 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemCharmVoid extends ItemBase {
@@ -35,7 +37,7 @@ public class ItemCharmVoid extends ItemBase {
     // TODO Auto-generated constructor stub
   }
 
-  private static final int durability = 16;
+  //  private static final int durability = 16;
   private static final int yLowest = -30;
   private static final int yDest = 255;
   //  private static final ItemStack craftItem = new ItemStack(Items.ENDER_EYE);
@@ -43,7 +45,14 @@ public class ItemCharmVoid extends ItemBase {
   //
 
   @Override
-  public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {}
+  public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    if (entityIn.getPosition().getY() < yLowest) {
+      UtilEntity.teleportWallSafe(entityIn, worldIn, new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
+      //      super.damageCharm(living, stack);
+      //      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
+      //      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
+    }
+  }
   //  @Override
   //  public void onTick(ItemStack stack, EntityPlayer living) {
   //    if (!this.canTick(stack)) {

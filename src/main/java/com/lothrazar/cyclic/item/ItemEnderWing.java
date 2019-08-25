@@ -24,6 +24,11 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.world.World;
 
 public class ItemEnderWing extends ItemBase {
 
@@ -34,51 +39,14 @@ public class ItemEnderWing extends ItemBase {
   private static final int cooldown = 600;//ticks not seconds
   private static final int durability = 16;
 
-  public static enum WarpType {
-    BED, SPAWN
+  @Override
+  public ActionResultType onItemUse(ItemUseContext context) {
+    PlayerEntity player = context.getPlayer();
+    World world = context.getWorld();
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return super.onItemUse(context);
+    }
+    boolean success = UtilWorld.tryTpPlayerToBed(world, player);
+    return super.onItemUse(context);
   }
-
-  private WarpType warpType;
-  //
-  //  @Override
-  //  public String getContentName() {
-  //    return warpType == WarpType.SPAWN ? "tool_warp_spawn" : "tool_warp_home";
-  //  }
-  //  private boolean tryActivate(EntityPlayer player, ItemStack held) {
-  //    if (player.getCooldownTracker().hasCooldown(this)) {
-  //      return false;
-  //    }
-  //    World world = player.getEntityWorld();
-  //    if (player.dimension != 0) {
-  //      UtilChat.sendStatusMessage(player, "command.worldhome.dim");
-  //      return false;
-  //    }
-  //    //boolean success = false;
-  //    BlockPos target = null;
-  //    switch (warpType) {
-  //      case BED:
-  //        target = player.getBedLocation(0);
-  //        // success = UtilWorld.tryTpPlayerToBed(world, player);
-  //        if (target == null) {
-  //          UtilChat.sendStatusMessage(player, "command.gethome.bed");
-  //          return false;
-  //        }
-  //      break;
-  //      case SPAWN:
-  //        target = world.getSpawnPoint();
-  //      //UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
-  //      //success = true;
-  //      break;
-  //    }
-  //    if (target == null) {
-  //      return false;
-  //    }
-  //    boolean success = UtilEntity.enderTeleportEvent(player, world, target);
-  //    if (success) {
-  //      UtilItemStack.damageItem(player, held);
-  //      UtilSound.playSound(player, SoundRegistry.warp);
-  //      UtilEntity.setCooldownItem(player, this, cooldown);
-  //    }
-  //    return success;
-  //  }
 }

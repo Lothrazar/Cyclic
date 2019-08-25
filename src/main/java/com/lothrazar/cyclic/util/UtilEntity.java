@@ -55,6 +55,15 @@ public class UtilEntity {
   private final static float ITEMSPEEDFAR = 0.9F;
   private final static float ITEMSPEEDCLOSE = 0.2F;
 
+  public static void teleportWallSafe(Entity player, World world, double x, double y, double z) {
+    BlockPos coords = new BlockPos(x, y, z);
+    //    world.markBlockRangeForRenderUpdate(coords, coords);
+    //    world.notifyBlockUpdate(pos, oldState, newState, flags);
+    world.getChunk(coords).setModified(true);
+    player.setPositionAndUpdate(x, y, z);
+    moveEntityWallSafe(player, world);
+  }
+
   /**
    *
    * @return true if teleport was a success
@@ -86,11 +95,11 @@ public class UtilEntity {
     moveEntityWallSafe(player, world);
   }
 
-  public static void teleportWallSafe(LivingEntity player, World world, BlockPos coords) {
-    teleportWallSafe(player, world, coords.getX(), coords.getY(), coords.getZ());
+  public static void teleportWallSafe(Entity entityIn, World world, BlockPos coords) {
+    teleportWallSafe(entityIn, world, coords.getX(), coords.getY(), coords.getZ());
   }
 
-  public static void moveEntityWallSafe(LivingEntity entity, World world) {
+  public static void moveEntityWallSafe(Entity entity, World world) {
     //    world.checkBlockCollision(bb)
     while (world.checkBlockCollision(entity.getBoundingBox())) {
       entity.setPositionAndUpdate(entity.posX, entity.posY + 1.0D, entity.posZ);

@@ -23,7 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.net.PacketScythe;
+import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.UtilShape;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 
 public class ItemScythe extends ItemBase {
 
@@ -39,6 +50,32 @@ public class ItemScythe extends ItemBase {
   }
 
   private ScytheType harvestType;
+
+  @Override
+  public ActionResultType onItemUse(ItemUseContext context) {
+    PlayerEntity player = context.getPlayer();
+    //
+    ItemStack stack = context.getItem();
+    BlockPos pos = context.getPos();
+    Direction side = context.getFace();
+    if (side != null) {
+      pos = pos.offset(side);
+    }
+    int radius = (player.isSneaking()) ? RADIUS_SNEAKING : RADIUS;
+    //    List<BlockPos> shape = getShape(pos, radius);
+    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, this.harvestType, radius));
+    return super.onItemUse(context);
+  }
+
+  public static List<BlockPos> getShape(BlockPos center, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    shape.addAll(UtilShape.squareHorizontalFull(center.down().down(), radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center.down(), radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center, radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center.up(), radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center.up().up(), radius));
+    return shape;
+  }
   //
   //  @Override
   //  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
