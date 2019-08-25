@@ -24,10 +24,19 @@ import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.GloveItem;
+import com.lothrazar.cyclic.item.ItemAutoTorch;
+import com.lothrazar.cyclic.item.ItemCharmVoid;
 import com.lothrazar.cyclic.item.ItemEnderBag;
+import com.lothrazar.cyclic.item.ItemEnderWing;
+import com.lothrazar.cyclic.item.ItemEnderWingSp;
 import com.lothrazar.cyclic.item.ItemExp;
 import com.lothrazar.cyclic.item.ItemGemstone;
+import com.lothrazar.cyclic.item.ItemIceWand;
 import com.lothrazar.cyclic.item.ItemObsShears;
+import com.lothrazar.cyclic.item.ItemScythe;
+import com.lothrazar.cyclic.item.ItemScytheSp;
+import com.lothrazar.cyclic.item.ItemStirrups;
+import com.lothrazar.cyclic.item.ItemWaterSpreader;
 import com.lothrazar.cyclic.item.ItemWoodenWrench;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -152,8 +161,17 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.peat_unbaked, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_unbaked"));
       r.register(new BlockItem(CyclicRegistry.peat_baked, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_baked"));
       r.register(new BlockItem(CyclicRegistry.soundproofing, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("soundproofing"));
-      r.register(new ItemWoodenWrench(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("wooden_wrench"));
+      r.register(new ItemWoodenWrench(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("wrench"));///!!!!
       r.register(new BlockItem(CyclicRegistry.trash, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("trash"));
+      r.register(new ItemAutoTorch(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_torch"));
+      r.register(new ItemCharmVoid(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_void"));
+      r.register(new ItemEnderWing(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_home"));
+      r.register(new ItemEnderWingSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_world"));
+      r.register(new ItemIceWand(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_ice"));
+      r.register(new ItemScythe(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_brush"));
+      r.register(new ItemScytheSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_leaves"));
+      r.register(new ItemStirrups(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("stirrups"));
+      r.register(new ItemWaterSpreader(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_water"));
     }
 
     @SubscribeEvent
