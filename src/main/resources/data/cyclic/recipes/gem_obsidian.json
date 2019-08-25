@@ -1,11 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ofo",
+    "ofi",
     "beb",
-    "ofo"
+    "ifo"
   ],
   "key": {
+  	"i": {
+  		"item":"minecraft:iron_block"
+  	},
     "e": {
       "item": "minecraft:emerald"
     },
@@ -20,6 +23,7 @@
     }
   },
   "result": {
-    "item": "cyclic:gem_obsidian"
+    "item": "cyclic:gem_obsidian",
+    "count": 3
   }
 }

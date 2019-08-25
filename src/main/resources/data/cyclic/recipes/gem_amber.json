@@ -10,7 +10,7 @@
       "item": "minecraft:diamond"
     },
     "b": {
-      "item": "minecraft:bone_meal"
+      "item": "minecraft:bone_block"
     },
     "o": {
       "item": "minecraft:magma_cream"
@@ -20,6 +20,7 @@
     }
   },
   "result": {
-    "item": "cyclic:gem_obsidian"
+    "item": "cyclic:gem_amber",
+    "count": 2
   }
 }

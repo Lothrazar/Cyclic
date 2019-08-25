@@ -164,6 +164,7 @@ public class CyclicRegistry {
       r.register(TileEntityType.Builder.create(TileFan::new, CyclicRegistry.fan).build(null).setRegistryName("fan"));
       r.register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
       r.register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
+      r.register(TileEntityType.Builder.create(TilePeatGenerator::new, CyclicRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
     }
 
     @SubscribeEvent

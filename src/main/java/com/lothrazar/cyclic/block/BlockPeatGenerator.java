@@ -9,7 +9,6 @@ public class BlockPeatGenerator extends BlockBase {
 
   public BlockPeatGenerator(Properties properties) {
     super(properties);
-    // TODO Auto-generated constructor stub
   }
 
   @Override
