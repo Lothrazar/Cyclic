@@ -10,13 +10,13 @@
       "item": "minecraft:diamond"
     },
     "b": {
-      "item": "minecraft:sugar"
+      "item": "minecraft:bone_meal"
     },
     "o": {
-      "item": "minecraft:dye_orange"
+      "item": "minecraft:magma_cream"
     },
     "f": {
-      "item": "minecraft:lava_bucket"
+      "item": "minecraft:fire_charge"
     }
   },
   "result": {

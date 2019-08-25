@@ -28,6 +28,7 @@ import com.lothrazar.cyclic.item.ItemEnderBag;
 import com.lothrazar.cyclic.item.ItemExp;
 import com.lothrazar.cyclic.item.ItemGemstone;
 import com.lothrazar.cyclic.item.ItemObsShears;
+import com.lothrazar.cyclic.item.ItemWoodenWrench;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -69,6 +70,8 @@ public class CyclicRegistry {
   //  public static EnchantAutoSmelt smelting;
   @ObjectHolder(ModCyclic.MODID + ":venom")
   public static EnchantVenom venom;
+  @ObjectHolder(ModCyclic.MODID + ":wooden_wrench")
+  public static ItemWoodenWrench wrench;
   //
   @ObjectHolder(ModCyclic.MODID + ":lava_walking")
   public static Enchantment lava_walking;
@@ -131,24 +134,26 @@ public class CyclicRegistry {
 
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
-      Item.Properties properties = new Item.Properties().group(CyclicRegistry.itemGroup);
       IForgeRegistry<Item> r = event.getRegistry();
-      r.register(new BlockItem(CyclicRegistry.breaker, properties).setRegistryName("breaker"));
-      r.register(new BlockItem(CyclicRegistry.collector, properties).setRegistryName("collector"));
-      r.register(new BlockItem(CyclicRegistry.dark_glass, properties).setRegistryName("dark_glass"));
-      r.register(new ItemEnderBag(properties).setRegistryName("ender_bag"));
-      r.register(new ItemGemstone(properties).setRegistryName("gem_obsidian"));
-      r.register(new ItemGemstone(properties).setRegistryName("gem_amber"));
-      r.register(new ItemObsShears(properties).setRegistryName("shears_obsidian"));
-      r.register(new ItemExp(properties).setRegistryName("experience_food"));
-      r.register(new BlockItem(CyclicRegistry.experience_pylon, properties).setRegistryName("experience_pylon"));
-      r.register(new GloveItem(properties).setRegistryName("glove_climb"));
-      r.register(new BlockItem(CyclicRegistry.fan, properties).setRegistryName("fan"));
-      r.register(new BlockItem(CyclicRegistry.peat_generator, properties).setRegistryName("peat_generator"));
-      r.register(new BlockItem(CyclicRegistry.peat_unbaked, properties).setRegistryName("peat_unbaked"));
-      r.register(new BlockItem(CyclicRegistry.peat_baked, properties).setRegistryName("peat_baked"));
-      r.register(new BlockItem(CyclicRegistry.soundproofing, properties).setRegistryName("soundproofing"));
-      r.register(new BlockItem(CyclicRegistry.trash, properties).setRegistryName("trash"));
+      r.register(new BlockItem(CyclicRegistry.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
+      r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
+      r.register(new BlockItem(CyclicRegistry.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));
+      r.register(new ItemEnderBag(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_bag"));
+      r.register(new ItemGemstone(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_obsidian"));
+      r.register(new ItemGemstone(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_amber"));
+      //      Items.SHEARS
+      r.register(new ItemObsShears(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("shears_obsidian"));
+      r.register(new ItemExp(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_food"));
+      //      properties = new Item.Properties().group(CyclicRegistry.itemGroup);
+      r.register(new BlockItem(CyclicRegistry.experience_pylon, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_pylon"));
+      r.register(new GloveItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("glove_climb"));
+      r.register(new BlockItem(CyclicRegistry.fan, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fan"));
+      r.register(new BlockItem(CyclicRegistry.peat_generator, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_generator"));
+      r.register(new BlockItem(CyclicRegistry.peat_unbaked, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_unbaked"));
+      r.register(new BlockItem(CyclicRegistry.peat_baked, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_baked"));
+      r.register(new BlockItem(CyclicRegistry.soundproofing, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("soundproofing"));
+      r.register(new ItemWoodenWrench(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("wooden_wrench"));
+      r.register(new BlockItem(CyclicRegistry.trash, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("trash"));
     }
 
     @SubscribeEvent

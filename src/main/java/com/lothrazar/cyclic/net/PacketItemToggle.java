@@ -47,8 +47,12 @@ public class PacketItemToggle {
   }
 
   public static PacketItemToggle decode(PacketBuffer buf) {
-    return new PacketItemToggle();
+    PacketItemToggle p = new PacketItemToggle();
+    p.slot = buf.readInt();
+    return p;
   }
 
-  public static void encode(PacketItemToggle msg, PacketBuffer buf) {}
+  public static void encode(PacketItemToggle msg, PacketBuffer buf) {
+    buf.writeInt(msg.slot);
+  }
 }

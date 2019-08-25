@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:shears",
+    "cyclic:obsidian_shears"
+  ]
+}

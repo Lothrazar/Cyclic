@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.net.PacketItemToggle;
+import com.lothrazar.cyclic.net.PacketMoveBlock;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -22,5 +23,6 @@ public class PacketRegistry {
     int id = 0;
     INSTANCE.registerMessage(id++, PacketPlayerFalldamage.class, PacketPlayerFalldamage::encode, PacketPlayerFalldamage::decode, PacketPlayerFalldamage::handle);
     INSTANCE.registerMessage(id++, PacketItemToggle.class, PacketItemToggle::encode, PacketItemToggle::decode, PacketItemToggle::handle);
+    INSTANCE.registerMessage(id++, PacketMoveBlock.class, PacketMoveBlock::encode, PacketMoveBlock::decode, PacketMoveBlock::handle);
   }
 }
