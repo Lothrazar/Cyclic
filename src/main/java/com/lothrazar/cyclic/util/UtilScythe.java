@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemScythe;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -148,61 +147,32 @@ public class UtilScythe {
   //  }
   private static boolean doesMatch(BlockState state, ItemScythe.ScytheType type) {
     switch (type) {
-      case CROPS:
-        //        return state.isIn(HARVESTABLE);
-        return false;
       case LEAVES:
-        return state.isIn(SLEAVES) || state.isIn(BlockTags.LEAVES);
+        return state.isIn(SLEAVES);
       case WEEDS:
-        return state.isIn(SBRUSH) || state.isIn(BlockTags.SMALL_FLOWERS);
+        return state.isIn(SBRUSH);
       default:
         return false;
     }
   }
 
   public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ItemScythe.ScytheType type) {
-    boolean doBreakAbove = false;
-    boolean doBreakBelow = false;
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
-    String blockId = blockState.getBlock().getRegistryName().toString();
-    if (blockId == null) {
-      ModCyclic.LOGGER.error("Error: a block has not been registered correctly");
-      return false;
+    switch (type) {
+      case LEAVES:
+        doBreak = doesMatch(blockState, ItemScythe.ScytheType.LEAVES);
+      break;
+      case WEEDS:
+        doBreak = doesMatch(blockState, ItemScythe.ScytheType.WEEDS);
+      break;
     }
-    else {
-      switch (type) {
-        case CROPS:
-          if (doesMatch(blockState, ItemScythe.ScytheType.CROPS)) {
-            doBreak = true;
-          }
-        break;
-        case LEAVES:
-          if (doesMatch(blockState, ItemScythe.ScytheType.LEAVES)) {
-            doBreak = true;
-          }
-        break;
-        case WEEDS:
-          if (doesMatch(blockState, ItemScythe.ScytheType.WEEDS)) {
-            doBreak = true;
-          }
-        break;
-      }
-    }
-    //    BlockState bsAbove = world.getBlockState(posCurrent.up());
-    //    BlockState bsBelow = world.getBlockState(posCurrent.down());
     if (doBreak) {
       //harvest block with player context: better mod compatibility
       blockState.getBlock().harvestBlock(world, player, posCurrent, blockState, world.getTileEntity(posCurrent), player.getHeldItemMainhand());
       //sometimes this doesnt work and/or doesnt sync ot client, so force it
       world.destroyBlock(posCurrent, false);
       //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
-      if (doBreakAbove) {
-        world.destroyBlock(posCurrent.up(), false);
-      }
-      if (doBreakBelow) {
-        world.destroyBlock(posCurrent.down(), false);
-      }
       return true;
     }
     return false;

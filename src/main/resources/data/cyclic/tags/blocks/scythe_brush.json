@@ -1,6 +1,23 @@
 {
   "replace": false,
   "values": [
-    "cyclic:dark_glass"
+    "#minecraft:underwater_bonemeals",
+    "#minecraft:small_flowers",
+    "#minecraft:coral_plants",
+	"minecraft:grass",
+	"minecraft:sugar_cane",
+	"minecraft:bamboo",
+	"minecraft:red_mushroom",
+	"minecraft:brown_mushroom",
+	"minecraft:kelp",
+	"minecraft:melon",
+	"minecraft:pumpkin",
+	"minecraft:lilac",
+	"minecraft:rose_bush",
+	"minecraft:peony",
+	"minecraft:tall_grass",
+	"minecraft:sunflower",
+	"minecraft:large_fern",
+	"minecraft:vine"
   ]
 }

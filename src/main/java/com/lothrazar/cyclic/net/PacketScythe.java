@@ -25,7 +25,9 @@ package com.lothrazar.cyclic.net;
 
 import java.util.List;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemScythe;
+import com.lothrazar.cyclic.item.ItemScythe.ScytheType;
 import com.lothrazar.cyclic.util.UtilScythe;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -52,6 +54,7 @@ public class PacketScythe {
       ServerPlayerEntity player = ctx.get().getSender();
       World world = player.getEntityWorld();
       List<BlockPos> shape = ItemScythe.getShape(message.pos, message.radius);
+      ModCyclic.LOGGER.info("shape " + shape.size());
       for (BlockPos posCurrent : shape) {
         UtilScythe.harvestSingle(world, player, posCurrent, message.type);
       }
@@ -62,6 +65,7 @@ public class PacketScythe {
     PacketScythe p = new PacketScythe();
     p.radius = buf.readInt();
     p.pos = buf.readBlockPos();
+    p.type = ScytheType.values()[buf.readInt()];
     return p;
   }
 
