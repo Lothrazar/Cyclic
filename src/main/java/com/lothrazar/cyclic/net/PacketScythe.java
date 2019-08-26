@@ -23,9 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
+import java.util.List;
+import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.ItemScythe;
-import com.lothrazar.cyclic.item.ItemScythe.ScytheType;
+import com.lothrazar.cyclic.util.UtilScythe;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketScythe {
 
@@ -40,36 +46,28 @@ public class PacketScythe {
     type = t;
     radius = r;
   }
-  //  @Override
-  //  public void fromBytes(ByteBuf buf) {
-  //    NBTTagCompound tags = ByteBufUtils.readTag(buf);
-  //    int x = tags.getInteger("x");
-  //    int y = tags.getInteger("y");
-  //    int z = tags.getInteger("z");
-  //    pos = new BlockPos(x, y, z);
-  //    int t = tags.getInteger("t");
-  //    type = ItemScythe.ScytheType.values()[t];
-  //    radius = tags.getInteger("s");
-  //  }
-  //
-  //  @Override
-  //  public void toBytes(ByteBuf buf) {
-  //    NBTTagCompound tags = new NBTTagCompound();
-  //    tags.setInteger("x", pos.getX());
-  //    tags.setInteger("y", pos.getY());
-  //    tags.setInteger("z", pos.getZ());
-  //    tags.setInteger("t", type.ordinal());
-  //    tags.setInteger("s", radius);
-  //    ByteBufUtils.writeTag(buf, tags);
-  //  }
-  //  @Override
-  //  public IMessage onMessage(final PacketScythe message, final MessageContext ctx) {
-  //    EntityPlayer player = ctx.getServerHandler().player;
-  //    World world = player.getEntityWorld();
-  //    List<BlockPos> shape = ItemScythe.getShape(message.pos, message.radius);
-  //    for (BlockPos posCurrent : shape) {
-  //      UtilScythe.harvestSingle(world, player, posCurrent, message.type);
-  //    }
-  //    return null;
-  //  }
+
+  public static void handle(PacketScythe message, Supplier<NetworkEvent.Context> ctx) {
+    ctx.get().enqueueWork(() -> {
+      ServerPlayerEntity player = ctx.get().getSender();
+      World world = player.getEntityWorld();
+      List<BlockPos> shape = ItemScythe.getShape(message.pos, message.radius);
+      for (BlockPos posCurrent : shape) {
+        UtilScythe.harvestSingle(world, player, posCurrent, message.type);
+      }
+    });
+  }
+
+  public static PacketScythe decode(PacketBuffer buf) {
+    PacketScythe p = new PacketScythe();
+    p.radius = buf.readInt();
+    p.pos = buf.readBlockPos();
+    return p;
+  }
+
+  public static void encode(PacketScythe msg, PacketBuffer buf) {
+    buf.writeInt(msg.radius);
+    buf.writeBlockPos(msg.pos);
+    buf.writeInt(msg.type.ordinal());
+  }
 }
