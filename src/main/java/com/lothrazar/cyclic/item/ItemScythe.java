@@ -26,8 +26,6 @@ package com.lothrazar.cyclic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.net.PacketScythe;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -63,7 +61,7 @@ public class ItemScythe extends ItemBase {
     }
     int radius = (player.isSneaking()) ? RADIUS_SNEAKING : RADIUS;
     //    List<BlockPos> shape = getShape(pos, radius);
-    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, this.harvestType, radius));
+    //    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, this.harvestType, radius));
     return super.onItemUse(context);
   }
 

@@ -40,23 +40,17 @@ public class ItemAutoTorch extends ItemBase {
     super(properties);
   }
 
-  //  private static final int durability = 256;
-  public static final int lightLimit = 8;
+  public static final int lightLimit = 9;
 
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-    //  @Override
-    //  public void onTick(ItemStack stack, PlayerEntity player) {
-    //    if (!this.canTick(stack)) {
-    //      return;
-    //    }
     if (entityIn instanceof PlayerEntity == false) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entityIn;
-    //      World world = player.world;
     BlockPos pos = entityIn.getPosition();
-    if (world.getLight(pos) < lightLimit
+    //    ModCyclic.LOGGER.info("world.getLight(pos)" + world.getLight(pos));
+    if (world.getLight(pos) <= lightLimit
         //            && player.isSpectator() == false
         //            && world.isSideSolid(pos.down(), Direction.UP)
         && world.isAirBlock(pos)) { // dont overwrite liquids
@@ -67,7 +61,6 @@ public class ItemAutoTorch extends ItemBase {
     }
     else if (stack.isDamaged()) {
       ItemStack torches = player.findAmmo(new ItemStack(Items.TORCH));
-      //      = this.findAmmo(player, Item.getItemFromBlock(Blocks.TORCH));
       if (!torches.isEmpty()) {
         torches.shrink(1);
         UtilItemStack.repairItem(player, stack);
