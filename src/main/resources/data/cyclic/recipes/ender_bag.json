@@ -2,7 +2,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ppp",
+    "pqp",
     "lsl",
     "lll"
   ],
@@ -15,6 +15,9 @@
     },
     "s": {
       "item": "minecraft:ender_chest"
+    },
+    "q": {
+      "item": "cyclic:gem_amber"
     }
   },
   "result": {

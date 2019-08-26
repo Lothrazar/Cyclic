@@ -7,20 +7,19 @@
   ],
   "key": {
     "e": {
-      "item": "minecraft:redstone_block"
+      "item": "cyclic:gem_obsidian"
     },
     "b": {
       "item": "minecraft:bone_block"
     },
     "o": {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:nether_brick"
     },
     "f": {
-      "item": "minecraft:fire_charge"
+      "item": "minecraft:gold_nugget"
     }
   },
   "result": {
-    "item": "cyclic:gem_amber",
-    "count": 3
+    "item": "cyclic:spell_ice"
   }
 }

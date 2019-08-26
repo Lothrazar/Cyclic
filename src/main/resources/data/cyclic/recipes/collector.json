@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "r r",
-    "glg",
+    "rlr",
+    "gqg",
     "hhh"
   ],
   "key": {
@@ -17,6 +17,9 @@
     },
     "h": {
       "item": "minecraft:hopper"
+    },
+    "q": {
+      "item": "cyclic:gem_amber"
     }
   },
   "result": {

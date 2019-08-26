@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "wwe",
+    "iew",
+    "iiw"
+  ],
+  "key": {
+    "e": {
+      "item": "cyclic:gem_amber"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "w": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_void",
+    "count": 2
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ffq",
+    "ggf",
+    "egf"
+  ],
+  "key": {
+    "f": {
+      "item": "minecraft:feather"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "e": {
+      "item": "cyclic:gem_amber"
+    },
+    "q": {
+      "item": "minecraft:quartz_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_world"
+  }
+}

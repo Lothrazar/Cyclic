@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cic",
+    "tat",
+    "cic"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:coal_block"
+    },
+    "t": {
+      "item": "minecraft:torch"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
+    },
+    "a": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_torch",
+    "count": 2
+  }
+}
