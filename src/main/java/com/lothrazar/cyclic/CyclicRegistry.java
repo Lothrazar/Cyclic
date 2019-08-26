@@ -33,11 +33,13 @@ import com.lothrazar.cyclic.item.ItemExp;
 import com.lothrazar.cyclic.item.ItemGemstone;
 import com.lothrazar.cyclic.item.ItemIceWand;
 import com.lothrazar.cyclic.item.ItemObsShears;
-import com.lothrazar.cyclic.item.ItemScythe;
-import com.lothrazar.cyclic.item.ItemScytheSp;
 import com.lothrazar.cyclic.item.ItemStirrups;
 import com.lothrazar.cyclic.item.ItemWaterSpreader;
 import com.lothrazar.cyclic.item.ItemWoodenWrench;
+import com.lothrazar.cyclic.item.ScytheBrush;
+import com.lothrazar.cyclic.item.ScytheFlowers;
+import com.lothrazar.cyclic.item.ScytheForage;
+import com.lothrazar.cyclic.item.ScytheLeaves;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -168,8 +170,10 @@ public class CyclicRegistry {
       r.register(new ItemEnderWing(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_home"));
       r.register(new ItemEnderWingSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_world"));
       r.register(new ItemIceWand(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_ice"));
-      r.register(new ItemScythe(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_brush"));
-      r.register(new ItemScytheSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_leaves"));
+      r.register(new ScytheBrush(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_brush"));
+      r.register(new ScytheFlowers(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_flowers"));
+      r.register(new ScytheForage(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_forage"));
+      r.register(new ScytheLeaves(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_leaves"));
       r.register(new ItemStirrups(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("stirrups"));
       r.register(new ItemWaterSpreader(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_water"));
     }

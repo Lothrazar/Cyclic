@@ -23,18 +23,19 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.item.ItemScythe;
+import com.lothrazar.cyclic.item.ScytheType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilScythe {
 
-  private static final BlockTags.Wrapper SBRUSH = new BlockTags.Wrapper(new ResourceLocation("cyclic", "scythe_brush"));
-  private static final BlockTags.Wrapper SLEAVES = new BlockTags.Wrapper(new ResourceLocation("cyclic", "scythe_leaves"));
+  private static final BlockTags.Wrapper SBRUSH = new BlockTags.Wrapper(ScytheType.BRUSH.type());
+  private static final BlockTags.Wrapper SLEAVES = new BlockTags.Wrapper(ScytheType.LEAVES.type());
+  private static final BlockTags.Wrapper SFLOWERS = new BlockTags.Wrapper(ScytheType.FLOWERS.type());
+  private static final BlockTags.Wrapper SFORAGE = new BlockTags.Wrapper(ScytheType.FORAGE.type());
   //  private static final BlockTags.Wrapper HARVESTABLE = new BlockTags.Wrapper(new ResourceLocation("cyclic", "harvest"));
 
   //  private static class ScytheConfig {
@@ -145,26 +146,23 @@ public class UtilScythe {
 //        /* @formatter:on */
   //    }, "Blocks that the Brush Scythe will attempt to harvest as if they are leaves.  A star is for a wildcard "));
   //  }
-  private static boolean doesMatch(BlockState state, ItemScythe.ScytheType type) {
-    switch (type) {
-      case LEAVES:
-        return state.isIn(SLEAVES);
-      case WEEDS:
-        return state.isIn(SBRUSH);
-      default:
-        return false;
-    }
-  }
-
-  public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ItemScythe.ScytheType type) {
+  public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ScytheType type) {
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
     switch (type) {
       case LEAVES:
-        doBreak = doesMatch(blockState, ItemScythe.ScytheType.LEAVES);
+        doBreak = blockState.isIn(SLEAVES);
       break;
-      case WEEDS:
-        doBreak = doesMatch(blockState, ItemScythe.ScytheType.WEEDS);
+      case BRUSH:
+        doBreak = blockState.isIn(SBRUSH);
+      break;
+      case FLOWERS:
+        doBreak = blockState.isIn(SFLOWERS);
+      break;
+      case FORAGE:
+        doBreak = blockState.isIn(SFORAGE);
+      break;
+      default:
       break;
     }
     if (doBreak) {

@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+	"minecraft:red_mushroom",
+	"minecraft:brown_mushroom",
+	"minecraft:mushroomblocks",
+	"minecraft:cocoa",
+	"minecraft:sugar_cane",
+	"minecraft:bamboo",
+	"minecraft:kelp",
+	"minecraft:melon",
+	"minecraft:pumpkin"
+  ]
+}

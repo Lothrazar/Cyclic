@@ -31,9 +31,9 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
-public class ItemScytheSp extends ItemBase {
+public class ScytheBrush extends ItemBase {
 
-  public ItemScytheSp(Properties properties) {
+  public ScytheBrush(Properties properties) {
     super(properties);
   }
 
@@ -48,7 +48,7 @@ public class ItemScytheSp extends ItemBase {
       pos = pos.offset(side);
     }
     int radius = (context.getPlayer().isSneaking()) ? RADIUS_SNEAKING : RADIUS;
-    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ItemScythe.ScytheType.LEAVES, radius));
+    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius));
     return super.onItemUse(context);
   }
 }
