@@ -37,7 +37,6 @@ import com.lothrazar.cyclic.item.ItemStirrups;
 import com.lothrazar.cyclic.item.ItemWaterSpreader;
 import com.lothrazar.cyclic.item.ItemWoodenWrench;
 import com.lothrazar.cyclic.item.ScytheBrush;
-import com.lothrazar.cyclic.item.ScytheFlowers;
 import com.lothrazar.cyclic.item.ScytheForage;
 import com.lothrazar.cyclic.item.ScytheLeaves;
 import net.minecraft.block.Block;
@@ -171,7 +170,7 @@ public class CyclicRegistry {
       r.register(new ItemEnderWingSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_world"));
       r.register(new ItemIceWand(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_ice"));
       r.register(new ScytheBrush(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_brush"));
-      r.register(new ScytheFlowers(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_flowers"));
+      //  r.register(new ScytheFlowers(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_flowers"));
       r.register(new ScytheForage(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_forage"));
       r.register(new ScytheLeaves(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_leaves"));
       r.register(new ItemStirrups(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("stirrups"));

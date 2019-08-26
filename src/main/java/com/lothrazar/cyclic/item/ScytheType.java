@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 public enum ScytheType {
-  BRUSH, FLOWERS, FORAGE, LEAVES;
+  BRUSH, FORAGE, LEAVES;
 
   public ResourceLocation type() {
     return new ResourceLocation("cyclic", "scythe_" + this.toString().toLowerCase());

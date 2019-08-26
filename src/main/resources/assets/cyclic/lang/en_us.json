@@ -480,6 +480,8 @@
     "item.tool_harvest_crops": "Garden Scythe",
     "item.tool_harvest_crops.tooltip": "Harvest and replant large areas",
     "item.tool_harvest_leaves.guide": "Harvests all nearby leaves.",
+    "item.cyclic.scythe_forage": "Scythe of Foraging",
+    "item.cyclic.scythe_forage.tooltip": "Forage growing resources",
     "item.cyclic.scythe_leaves": "Tree Scythe",
     "item.cyclic.scythe_leaves.tooltip": "Mass leaf removal",
     "item.cyclic.scythe_brush.guide": "Slice down large areas of tall grass and flowers.",

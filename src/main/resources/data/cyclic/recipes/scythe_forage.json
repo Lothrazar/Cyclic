@@ -10,13 +10,13 @@
       "item": "minecraft:stick"
     },
     "t": {
-      "item": "minecraft:charcoal"
+      "item": "minecraft:iron_nugget"
     },
     "h": {
-      "item": "minecraft:stone_axe"
+      "item": "minecraft:golden_pickaxe"
     }
   },
   "result": {
-    "item": "cyclic:scythe_leaves"
+    "item": "cyclic:scythe_forage"
   }
 }

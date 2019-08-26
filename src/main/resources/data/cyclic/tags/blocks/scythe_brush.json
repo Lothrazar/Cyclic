@@ -7,7 +7,9 @@
 	"minecraft:sugar_cane",
 	"minecraft:bamboo",
 	"minecraft:tall_grass",
-	"minecraft:large_fern",
-	"minecraft:vine"
+	"minecraft:fern",
+	"minecraft:dead_bush",
+	"minecraft:seagrass",
+	"minecraft:large_fern"
   ]
 }

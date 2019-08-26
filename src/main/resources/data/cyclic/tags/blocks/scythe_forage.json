@@ -1,14 +1,22 @@
 {
   "replace": false,
   "values": [
+    "#minecraft:small_flowers",
 	"minecraft:red_mushroom",
 	"minecraft:brown_mushroom",
-	"minecraft:mushroomblocks",
-	"minecraft:cocoa",
+	"minecraft:red_mushroom_block",
+	"minecraft:brown_mushroom_block",
+	"minecraft:mushroom_stem",
+	"minecraft:lily_pad",
+	"minecraft:lilac",
+	"minecraft:rose_bush",
+	"minecraft:sunflower",
+	"minecraft:peony",
 	"minecraft:sugar_cane",
 	"minecraft:bamboo",
 	"minecraft:kelp",
 	"minecraft:melon",
-	"minecraft:pumpkin"
+	"minecraft:pumpkin",
+	"minecraft:vine"
   ]
 }

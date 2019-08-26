@@ -34,7 +34,6 @@ public class UtilScythe {
 
   private static final BlockTags.Wrapper SBRUSH = new BlockTags.Wrapper(ScytheType.BRUSH.type());
   private static final BlockTags.Wrapper SLEAVES = new BlockTags.Wrapper(ScytheType.LEAVES.type());
-  private static final BlockTags.Wrapper SFLOWERS = new BlockTags.Wrapper(ScytheType.FLOWERS.type());
   private static final BlockTags.Wrapper SFORAGE = new BlockTags.Wrapper(ScytheType.FORAGE.type());
   //  private static final BlockTags.Wrapper HARVESTABLE = new BlockTags.Wrapper(new ResourceLocation("cyclic", "harvest"));
 
@@ -156,13 +155,8 @@ public class UtilScythe {
       case BRUSH:
         doBreak = blockState.isIn(SBRUSH);
       break;
-      case FLOWERS:
-        doBreak = blockState.isIn(SFLOWERS);
-      break;
       case FORAGE:
         doBreak = blockState.isIn(SFORAGE);
-      break;
-      default:
       break;
     }
     if (doBreak) {
