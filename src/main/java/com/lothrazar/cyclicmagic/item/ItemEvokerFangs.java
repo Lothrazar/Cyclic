@@ -44,6 +44,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -54,14 +55,14 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
+public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
 
   private static final String NBT_FANG_FROMPLAYER = "cyclicfang";
   private static final int COOLDOWN = 10;//ticks not seconds
   private static final int DURABILITY = 666;
   private static final int MAX_RANGE = 16;
 
-  public ItemFangs() {
+  public ItemEvokerFangs() {
     super(DURABILITY);
   }
 
@@ -100,13 +101,19 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     if (player.getCooldownTracker().hasCooldown(this)) {
-      return EnumActionResult.PASS;
+      return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
     summonFangRay(player, pos.getX() + hitX, pos.getY() + hitY + 1, pos.getZ() + hitZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return EnumActionResult.SUCCESS;
+  }
+
+  @Override
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    this.summonFangRay(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ);
+    return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 
   /**

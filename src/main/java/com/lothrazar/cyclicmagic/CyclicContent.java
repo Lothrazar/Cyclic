@@ -78,7 +78,7 @@ import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemCraftingUnlock;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderWing;
-import com.lothrazar.cyclicmagic.item.ItemFangs;
+import com.lothrazar.cyclicmagic.item.ItemEvokerFangs;
 import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
 import com.lothrazar.cyclicmagic.item.ItemFlight;
 import com.lothrazar.cyclicmagic.item.ItemGemAmber;
@@ -187,7 +187,7 @@ public class CyclicContent {
     content.add(new ItemLeverRemote());
     content.add(new ItemWarpSurface());
     content.add(new ItemRotateBlock());
-    content.add(new ItemFangs());
+    content.add(new ItemEvokerFangs());
     content.add(new ItemWaterSpreader());
     content.add(new ItemEnderEyeReuse());
     content.add(new ItemGloveClimb());
