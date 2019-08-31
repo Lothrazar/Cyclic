@@ -95,7 +95,8 @@ public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return false;
     }
-    summonFangRay(player, entity.posX, entity.posY, entity.posZ);
+
+    summonFangRay(player.posX, player.posZ, player, entity.posX, entity.posY, entity.posZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return true;
   }
@@ -105,14 +106,15 @@ public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
-    summonFangRay(player, pos.getX() + hitX, pos.getY() + hitY + 1, pos.getZ() + hitZ);
+    summonFangRay(pos.getX(), pos.getZ(), player, pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return EnumActionResult.SUCCESS;
   }
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-    this.summonFangRay(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ);
+    BlockPos target = playerIn.getPosition().offset(playerIn.getAdjustedHorizontalFacing());
+    this.summonFangRay(playerIn.posX, playerIn.posZ, playerIn, target.getX(), target.getY(), target.getZ());
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 
@@ -124,16 +126,16 @@ public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
    * @param posY
    * @param posZ
    */
-  private void summonFangRay(EntityPlayer caster, double posX, double posY, double posZ) {
-    double minY = Math.min(posY, caster.posY);
+  private void summonFangRay(double startX, double startZ, EntityPlayer caster, double posX, double posY, double posZ) {
+    double minY = posY;//Math.min(posY, caster.posY);
     //double d1 = Math.max(posY,caster.posY) ;
     float arctan = (float) MathHelper.atan2(posZ - caster.posZ, posX - caster.posX);
     for (int i = 0; i < MAX_RANGE; ++i) {
       double fract = 1.25D * (i + 1);
       this.summonFangSingle(caster,
-          caster.posX + MathHelper.cos(arctan) * fract,
+          startX + MathHelper.cos(arctan) * fract,
           minY,
-          caster.posZ + MathHelper.sin(arctan) * fract,
+          startZ + MathHelper.sin(arctan) * fract,
           arctan, i);
     }
     onCastSuccess(caster);
