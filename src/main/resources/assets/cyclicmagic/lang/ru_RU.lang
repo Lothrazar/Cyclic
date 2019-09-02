@@ -773,6 +773,7 @@ tile.clock.guide=Эти часы позволяют вам контролиро�
 tile.clock.name=Часы из редстоуна
 tile.clock.power=Сила
 tile.clock.tooltip=Часы контроля времени и силы
+
 tile.end_coal_ore.guide=Каменный уголь, который появляется в Энде.
 tile.end_coal_ore.name=Каменный уголь Энда
 tile.end_diamond_ore.guide=Алмазная руда, которая появляется в Энде.
@@ -1257,6 +1258,8 @@ tile.battery.guide=Хранит миллион единиц энергии (FE).
 tile.battery_infinite.name=Бесконечная батарея
 tile.battery_infinite.tooltip=Творческий источник энергии
 
+
+
 item.stone_pebble.name=Галька
 item.stone_pebble.tooltip=Крошечный снаряд для рогатки
 item.stone_pebble.guide=Крошечный снаряд для рогатки.
@@ -1267,6 +1270,71 @@ item.slingshot_weapon.tooltip=Стреляет галькой
 item.slingshot_weapon.guide=Имеет силу натяжения как и лук.  Стреляет галькой из вашего инвентаря.  Все предметы в словаре руд, которые соответствуют 'rock', могут быть использованы в качестве боеприпасов.
 
 tile.battery_infinite.guide=Бесконечный источник энергии для творческого режима (для читерства и тестирования)
+
+tile.zinc_nether_ore.name=Цинковая руда Незера
+tile.zinc_end_ore.name=Цинковая руда Энда
+
+tile.tritanium_nether_ore.name=Тритановая руда Незера
+tile.tritanium_end_ore.name=Тритановая руда Энда
+
+tile.titanium_nether_ore.name=Титановая руда Незера
+tile.titanium_end_ore.name=Тритановая руда Энда
+tile.aquamarine_nether_ore.name=Аквамариновая руда Незера
+tile.aquamarine_end_ore.name=Аквамариновая руда Энда
+tile.bauxite_nether_ore.name=Бокситовая руда Незера
+tile.bauxite_end_ore.name=Бокситовая руда Энда
+tile.boron_nether_ore.name=Боратовая руда Незера
+tile.boron_end_ore.name=Боратовая руда Энда
+tile.cobalt_nether_ore.name=Кобальтовая руда Незера
+tile.cobalt_end_ore.name=Кобальтовая руда Энда
+tile.copper_nether_ore.name=Медная руда Незера
+tile.copper_end_ore.name=Медная руда Энда
+tile.dilithium_nether_ore.name=Дилитиевая руда Незера
+tile.dilithium_end_ore.name=Дилитиевая руда Энда
+tile.galena_nether_ore.name=Геленитовая руда Незера
+tile.galena_end_ore.name=Геленитовая руда Энда
+tile.iridium_nether_ore.name=Иридиевая руда Незера
+tile.iridium_end_ore.name=Иридиевая руда  Энда
+tile.lead_nether_ore.name=Свинцовая руда Незера
+tile.lead_end_ore.name=Свинцовая руда Энда
+tile.lithium_nether_ore.name=Литиевая руда Незера
+tile.lithium_end_ore.name=Литиевая руда Энда
+tile.magnesium_nether_ore.name=Магниевая руда Незера
+tile.magnesium_end_ore.name=Магниевая руда Энда
+tile.mithril_nether_ore.name=Мифриловая руда Незера
+tile.mithril_end_ore.name=Мифриловая руда Энда
+tile.nickel_nether_ore.name=Никелевая руда Незера
+tile.nickel_end_ore.name=Никелевая руда Энда
+tile.nitre_nether_ore.name=Азотная руда Незера
+tile.nitre_end_ore.name=Азотная руда Энда
+tile.osmium_nether_ore.name=Осмиевая руда Незера
+tile.osmium_end_ore.name=Осмиевая руда Энда
+tile.platinum_nether_ore.name=Платиновая руда Незера
+tile.platinum_end_ore.name=Платиновая руда Энда
+tile.quartz_black_nether_ore.name=Руда чёрного кварца Незера
+tile.quartz_black_end_ore.name=Руда чёрного кварца Энда
+tile.quartz_certus_nether_ore.name=Руда истинного кварца Незера
+tile.quartz_certus_end_ore.name=Руда истинного кварца Энда
+tile.quartz_certus_charged_nether_ore.name=Заряженная руда истинного кварца Незера
+tile.quartz_certus_charged_end_ore.name=Заряженная руда истинного кварца Энда
+tile.sapphire_nether_ore.name=Сапфировая руда Незера
+tile.sapphire_end_ore.name=Сапфировая руда Энда
+tile.thorium_nether_ore.name=Ториевая руда Незера
+tile.thorium_end_ore.name=Ториевая руда Энда
+tile.tungsten_nether_ore.name=Вольфрамовая руда Незера
+tile.tungsten_end_ore.name=Вольфрамовая руда Энда
+tile.ruby_nether_ore.name=Рубиновая руда Незера
+tile.ruby_end_ore.name=Рубиновая руда Энда
+tile.silver_nether_ore.name=Серебряная руда Незера
+tile.silver_end_ore.name=Серебряная руда Энда
+tile.tin_nether_ore.name=Оловянная руда Незера
+tile.tin_end_ore.name=Оловянная руд Энда
+tile.uranium_nether_ore.name=Урановая руда Незера
+tile.uranium_end_ore.name=Урановая руда Энда
+tile.yellorite_nether_ore.name=Йеллоритовая руда Незера
+tile.yellorite_end_ore.name=Йеллоритовая руда Энда
+
+tile.fire_dark.guide=Не разрушает блоки и не причиняет вреда игрокам. Спаунится эссенцией сумеречного пламени
 
 
 item.laser_cannon.name=Радужная пушка
