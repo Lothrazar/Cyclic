@@ -47,8 +47,12 @@ public class ScytheBrush extends ItemBase {
     if (side != null) {
       pos = pos.offset(side);
     }
+    //send work packet
     int radius = (context.getPlayer().isSneaking()) ? RADIUS_SNEAKING : RADIUS;
     PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius));
+    //client actions
+    context.getPlayer().swingArm(context.getHand());
+    context.getItem().damageItem(1, context.getPlayer(), (e) -> {});
     return super.onItemUse(context);
   }
 }

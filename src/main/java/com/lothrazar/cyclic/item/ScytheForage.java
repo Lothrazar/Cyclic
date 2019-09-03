@@ -49,6 +49,8 @@ public class ScytheForage extends ItemBase {
     }
     int radius = (context.getPlayer().isSneaking()) ? RADIUS_SNEAKING : RADIUS;
     PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
+    context.getPlayer().swingArm(context.getHand());
+    context.getItem().damageItem(1, context.getPlayer(), (e) -> {});
     return super.onItemUse(context);
   }
 }
