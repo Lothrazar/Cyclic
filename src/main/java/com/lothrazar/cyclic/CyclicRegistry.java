@@ -27,23 +27,24 @@ import com.lothrazar.cyclic.enchant.EnchantMagnet;
 import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
-import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.AutoTorchItem;
 import com.lothrazar.cyclic.item.CharmVoidItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
 import com.lothrazar.cyclic.item.EnderWingItem;
 import com.lothrazar.cyclic.item.EnderWingSp;
+import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
+import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.IceWand;
 import com.lothrazar.cyclic.item.ObsidianShears;
-import com.lothrazar.cyclic.item.StirrupsItem;
-import com.lothrazar.cyclic.item.WaterSpreaderItem;
-import com.lothrazar.cyclic.item.WrenchItem;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.ScytheBrush;
 import com.lothrazar.cyclic.item.ScytheForage;
 import com.lothrazar.cyclic.item.ScytheLeaves;
+import com.lothrazar.cyclic.item.StirrupsItem;
+import com.lothrazar.cyclic.item.WaterSpreaderItem;
+import com.lothrazar.cyclic.item.WrenchItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -194,6 +195,7 @@ public class CyclicRegistry {
       r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_fuel"));
       r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
       r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("biomass"));
+      r.register(new EvokerFangItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("evoker_fang"));
     }
 
     @SubscribeEvent

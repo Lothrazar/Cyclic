@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "wac",
+    " da",
+    "d w"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:cobweb"
+    },
+    "a": {
+      "item": "cyclic:gem_amber"
+    },
+    "d": {
+      "item": "minecraft:blaze_rod"
+    },
+    "c": {
+      "item": "minecraft:purple_stained_glass"
+    }
+  },
+  "result": {
+    "item": "cyclic:evoker_fang"
+  }
+}
