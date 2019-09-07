@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:clay_ball"
+    },
+    "b": {
+      "item": "minecraft:glass"
+    },
+    "a": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:battery"
+  }
+}

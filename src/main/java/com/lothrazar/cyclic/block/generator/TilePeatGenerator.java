@@ -28,7 +28,6 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TilePeatGenerator extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int BURNTIME = 40;
-  private static final int FUEL_WEAK = 256;
   private int fuelRate = 10;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);

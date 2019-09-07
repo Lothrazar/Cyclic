@@ -1207,10 +1207,9 @@
     "cable.block.toggled.false": "Restored cable connection",
     "cable.block.toggled.true": "Blocked cable connection",
 
-    "block.battery": "Battery",
-    "block.battery.tooltip": "Stores energy (FE)",
-    "block.battery.guide": "Stores one million energy units (FE).  Has a slot to charge up items.",
-
+    "block.cyclic.battery": "Battery",
+    "block.cyclic.battery.tooltip": "Stores forge energy",
+ 
     "block.battery_infinite": "Infinite Battery",
     "block.battery_infinite.tooltip": "Creative energy source",
     "block.battery_infinite.guide": "Creative mode infinite energy source (for cheating and testing)",

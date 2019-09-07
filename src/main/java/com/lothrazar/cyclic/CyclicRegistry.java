@@ -4,6 +4,8 @@ import com.lothrazar.cyclic.block.BlockDarkGlass;
 import com.lothrazar.cyclic.block.BlockPeat;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
 import com.lothrazar.cyclic.block.BlockSound;
+import com.lothrazar.cyclic.block.battery.BlockBattery;
+import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
@@ -130,6 +132,10 @@ public class CyclicRegistry {
   public static ContainerType<ContainerCollector> collectortileContainer;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static ContainerType<ContainerGenerator> generatorCont;
+  @ObjectHolder(ModCyclic.MODID + ":battery")
+  public static Block battery;
+  @ObjectHolder(ModCyclic.MODID + ":battery")
+  public static TileEntityType<TileBattery> batterytile;
 
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents {
@@ -147,6 +153,7 @@ public class CyclicRegistry {
       r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
+      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
     }
 
     @SubscribeEvent
@@ -155,6 +162,7 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));
+      r.register(new BlockItem(CyclicRegistry.battery, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("battery"));
       r.register(new ItemEnderBag(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_bag"));
       r.register(new ItemGemstone(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_obsidian"));
       r.register(new ItemGemstone(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_amber"));

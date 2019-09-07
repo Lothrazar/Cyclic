@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntityType;
 
 public class TileEntityBase extends TileEntity {
 
+  public static final int FUEL_WEAK = 256;
   public static final int MENERGY = 64 * 1000;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
