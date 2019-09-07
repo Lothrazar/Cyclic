@@ -3,15 +3,16 @@ package com.lothrazar.cyclic;
 import com.lothrazar.cyclic.block.BlockDarkGlass;
 import com.lothrazar.cyclic.block.BlockPeat;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
-import com.lothrazar.cyclic.block.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.BlockSound;
-import com.lothrazar.cyclic.block.TilePeatGenerator;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fan.TileFan;
+import com.lothrazar.cyclic.block.generator.BlockPeatGenerator;
+import com.lothrazar.cyclic.block.generator.ContainerGenerator;
+import com.lothrazar.cyclic.block.generator.TilePeatGenerator;
 import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
 import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
@@ -123,6 +124,8 @@ public class CyclicRegistry {
   public static TileEntityType<TileCollector> collectortile;
   @ObjectHolder(ModCyclic.MODID + ":collector")
   public static ContainerType<ContainerCollector> collectortileContainer;
+  @ObjectHolder(ModCyclic.MODID + ":peat_generator")
+  public static ContainerType<ContainerGenerator> generatorCont;
 
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents {
@@ -195,6 +198,11 @@ public class CyclicRegistry {
         BlockPos pos = data.readBlockPos();
         return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
       }).setRegistryName("collector"));
+      //
+      r.register(IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
+      }).setRegistryName("peat_generator"));
     }
 
     @SubscribeEvent

@@ -1,6 +1,11 @@
 {
-    "parent": "block/cube_all",
+ 	"parent": "cyclic:parent/machine_peat",
     "textures": {
-        "all": "cyclic:blocks/peat_generator"
+        "0": "cyclic:blocks/hydrator_bottom",
+        "1": "minecraft:block/cauldron_inner",
+        "2": "cyclic:blocks/hydrator_bottom",
+        "3": "cyclic:blocks/peat_unbaked",
+        "4": "cyclic:blocks/peat_unbaked",
+        "particle": "cyclic:blocks/peat_unbaked"
     }
 }

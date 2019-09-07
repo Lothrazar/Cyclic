@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.setup;
 
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.block.generator.ScreenGenerator;
 import com.lothrazar.cyclic.block.itemcollect.ScreenCollector;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -12,6 +13,7 @@ public class ClientProxy implements IProxy {
   @Override
   public void init() {
     ScreenManager.registerFactory(CyclicRegistry.collectortileContainer, ScreenCollector::new);
+    ScreenManager.registerFactory(CyclicRegistry.generatorCont, ScreenGenerator::new);
   }
 
   @Override
