@@ -30,9 +30,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemCharmVoid extends ItemBase {
+public class CharmVoidItem extends ItemBase {
 
-  public ItemCharmVoid(Properties properties) {
+  public CharmVoidItem(Properties properties) {
     super(properties);
     // TODO Auto-generated constructor stub
   }

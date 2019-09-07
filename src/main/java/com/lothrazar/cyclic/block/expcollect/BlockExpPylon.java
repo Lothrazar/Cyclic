@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.item.ItemExp;
+import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -34,7 +34,7 @@ public class BlockExpPylon extends BlockBase {
       }
       if (held.getItem() == Items.SUGAR) {
         TileExpPylon tile = (TileExpPylon) worldIn.getTileEntity(pos);
-        if (tile.drainStoredXp(ItemExp.EXP_PER_FOOD)) {
+        if (tile.drainStoredXp(ExpItemGain.EXP_PER_FOOD)) {
           //do it
           held.shrink(1);
           player.dropItem(new ItemStack(CyclicRegistry.experience_food), true);

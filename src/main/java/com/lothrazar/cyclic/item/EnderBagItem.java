@@ -24,29 +24,38 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilEntity;
+import net.minecraft.block.EnderChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.inventory.EnderChestInventory;
+import net.minecraft.inventory.container.ChestContainer;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
+import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
-public class ItemEnderWingSp extends ItemBase {
+public class EnderBagItem extends ItemBase {
 
-  public ItemEnderWingSp(Properties properties) {
-    super(properties);
+  public EnderBagItem(Properties properties) {
+    super(properties.maxStackSize(1));
   }
 
-  private static final int cooldown = 600;//ticks not seconds
-  private static final int durability = 16;
-
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    World world = context.getWorld();
-    if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemUse(context);
-    }
-    UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
-    return super.onItemUse(context);
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    EnderChestInventory enderchestinventory = player.getInventoryEnderChest();
+    enderchestinventory.setChestTileEntity(null);
+    player.openContainer(new SimpleNamedContainerProvider((p_220114_1_, p_220114_2_, p_220114_3_) -> {
+      return ChestContainer.createGeneric9X3(p_220114_1_, p_220114_2_, enderchestinventory);
+    }, EnderChestBlock.field_220115_d));
+    player.addStat(Stats.OPEN_ENDERCHEST);
+    world.playSound(player, player.getPosition(), SoundEvents.BLOCK_ENDER_CHEST_OPEN, SoundCategory.BLOCKS, 0.3F, 1);
+    //    if (world.rand.nextDouble() > 0.5)
+    //      UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_OPEN);
+    //    else
+    //      UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_CLOSE);
+    return super.onItemRightClick(world, player, hand);
   }
 }

@@ -34,9 +34,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemAutoTorch extends ItemBase {
+public class AutoTorchItem extends ItemBase {
 
-  public ItemAutoTorch(Properties properties) {
+  public AutoTorchItem(Properties properties) {
     super(properties);
   }
 

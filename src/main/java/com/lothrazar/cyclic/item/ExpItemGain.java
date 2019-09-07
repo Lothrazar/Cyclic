@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ItemExp extends ItemBase {
+public class ExpItemGain extends ItemBase {
 
   public static final int EXP_PER_FOOD = 50;
 
-  public ItemExp(Properties properties) {
+  public ExpItemGain(Properties properties) {
     super(properties.food(new Food.Builder().setAlwaysEdible().fastToEat().build()));
   }
 

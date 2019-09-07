@@ -7,9 +7,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 
-public class ItemWoodenWrench extends ItemBase {
+public class WrenchItem extends ItemBase {
 
-  public ItemWoodenWrench(Properties properties) {
+  public WrenchItem(Properties properties) {
     super(properties);
   }
 

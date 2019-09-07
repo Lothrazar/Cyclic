@@ -29,9 +29,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
-public class ItemStirrups extends ItemBase {
+public class StirrupsItem extends ItemBase {
 
-  public ItemStirrups(Properties properties) {
+  public StirrupsItem(Properties properties) {
     super(properties);
   }
 
