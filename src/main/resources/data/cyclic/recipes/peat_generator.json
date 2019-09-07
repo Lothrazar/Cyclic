@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pip",
+    "cbc",
+    "pip"
+  ],
+  "key": {
+    "p": {
+      "item": "cyclic:peat_fuel"
+    },
+    "i": {
+      "item": "minecraft:piston"
+    },
+    "b": {
+      "item": "minecraft:iron_ingot"
+    },
+    "c": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:peat_generator"
+  }
+}

@@ -15,6 +15,8 @@ import net.minecraft.world.World;
 
 public class BlockPeat extends BlockBase {
 
+  public static int FUEL_WEAK = 256;
+  public static int FUEL_STRONG = 4096;
   private static final double CHANCE_BAKE_PCT = 0.05;
 
   public BlockPeat(Properties properties) {
@@ -45,12 +47,11 @@ public class BlockPeat extends BlockBase {
     if (world.rand.nextDouble() < CHANCE_BAKE_PCT) {
       int drinkHere = MathHelper.nextInt(world.rand, 0, waters.size() - 1);
       world.setBlockState(waters.get(drinkHere), Blocks.AIR.getDefaultState());
-    }
-    else if (world.rand.nextDouble() < CHANCE_BAKE_PCT * 2) {
-      //      world.setBlockToAir(pos);
-      //myself is unbaked
-      world.setBlockState(pos, CyclicRegistry.peat_baked.getDefaultState());
-      //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, pos);
+      if (world.rand.nextDouble() < CHANCE_BAKE_PCT * 2) {
+        //ok you won the second roll, NOW bake yourself
+        world.setBlockState(pos, CyclicRegistry.peat_baked.getDefaultState());
+        //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, pos);
+      }
     }
   }
 }

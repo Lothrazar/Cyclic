@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sis",
+    "ipi",
+    "sis"
+  ],
+  "key": {
+    "s": {
+      "tag": "minecraft:leaves"
+    },
+    "i": {
+      "tag": "minecraft:small_flowers"
+    },
+    "p": {
+      "tag": "minecraft:saplings"
+    }
+  },
+  "result": {
+    "item": "cyclic:biomass",
+    "count": 8
+  }
+}
