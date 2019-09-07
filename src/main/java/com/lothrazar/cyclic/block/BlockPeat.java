@@ -20,7 +20,7 @@ public class BlockPeat extends BlockBase {
   private static final double CHANCE_BAKE_PCT = 0.05;
 
   public BlockPeat(Properties properties) {
-    super(properties.tickRandomly());
+    super(properties.tickRandomly().hardnessAndResistance(2.1F));
   }
 
   @Override

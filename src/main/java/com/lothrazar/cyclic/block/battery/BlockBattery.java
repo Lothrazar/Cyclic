@@ -16,7 +16,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class BlockBattery extends BlockBase {
 
   public BlockBattery(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.8F));
   }
 
   @Override
