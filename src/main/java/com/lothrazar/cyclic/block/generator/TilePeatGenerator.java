@@ -27,6 +27,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePeatGenerator extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  private static final int BURNTIME = 40;
+  private static final int FUEL_WEAK = 256;
+  private int fuelRate = 10;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private int burnTime;
@@ -40,7 +43,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   }
 
   private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(100000, 0);
+    return new CustomEnergyStorage(MENERGY, FUEL_WEAK);
   }
 
   @Override
@@ -61,6 +64,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   @Override
   public void read(CompoundNBT tag) {
     burnTime = tag.getInt("burnTime");
+    fuelRate = tag.getInt("fuelRate");
     CompoundNBT energyTag = tag.getCompound("energy");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
     CompoundNBT invTag = tag.getCompound("inv");
@@ -70,6 +74,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("fuelRate", fuelRate);
     tag.putInt("burnTime", burnTime);
     handler.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
@@ -88,21 +93,30 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void tick() {
-    if (this.burnTime == 1) {//about to be zero and refil
-      energy.ifPresent(e -> ((CustomEnergyStorage) e).addEnergy(1000));
-    }
-    if (this.isBurning()) {
+    if (this.isBurning() && !this.isFull()) {
       --this.burnTime;
+      this.addEnergy(fuelRate);
     }
     handler.ifPresent(h -> {
       ItemStack stack = h.getStackInSlot(0);
       if (stack.getItem() == CyclicRegistry.peat_fuel &&
           this.isBurning() == false) {
+        fuelRate = FUEL_WEAK;//for peat_fuel item
+        //other types of fuel in the future
         //burn time
         h.extractItem(0, 1, false);
-        this.burnTime = 200;
+        this.burnTime = BURNTIME;
       }
     });
+  }
+
+  public boolean isFull() {
+    CustomEnergyStorage e = (CustomEnergyStorage) energy.cast().orElse(null);
+    return e == null || e.getEnergyStored() >= e.getMaxEnergyStored();
+  }
+
+  private void addEnergy(int i) {
+    energy.ifPresent(e -> ((CustomEnergyStorage) e).addEnergy(i));
   }
 
   public int getBurnTime() {

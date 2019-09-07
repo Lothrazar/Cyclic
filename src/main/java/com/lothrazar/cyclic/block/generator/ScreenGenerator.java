@@ -12,6 +12,8 @@ public class ScreenGenerator extends ContainerScreen<ContainerGenerator> {
 
   private ResourceLocation GUI = new ResourceLocation(ModCyclic.MODID, "textures/gui/peat_generator.png");
   private ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_slot.png");
+  private ResourceLocation ENERGY_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_ctr.png");
+  private ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
 
   public ScreenGenerator(ContainerGenerator screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -26,8 +28,9 @@ public class ScreenGenerator extends ContainerScreen<ContainerGenerator> {
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    drawString(Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy(), 10, 10, 0xffffff);
-    drawString(Minecraft.getInstance().fontRenderer, "Burn Time: " + container.getBurnTime(), 10, 30, 0xffffff);
+    int x = 10, y = 50;
+    drawString(Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy(), x, y, 0xffffff);
+    drawString(Minecraft.getInstance().fontRenderer, "Burn Time: " + container.getBurnTime(), x, y + 10, 0xffffff);
   }
 
   @Override
@@ -38,9 +41,19 @@ public class ScreenGenerator extends ContainerScreen<ContainerGenerator> {
     int relY = (this.height - this.ySize) / 2;
     this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
     this.minecraft.getTextureManager().bindTexture(SLOT);
-    //    relX = guiLeft + 30;
     relX = guiLeft + 60;
     relY = guiTop + 20;
-    blit(relX, relY, 0, 0, 18, 18, 18, 18);
+    int size = 18;
+    blit(relX, relY, 0, 0, size, size, size, size);
+    this.minecraft.getTextureManager().bindTexture(ENERGY_CTR);
+    relX = guiLeft + 154;
+    relY = guiTop + 8;
+    blit(relX, relY, 0, 0, 16, 66, 16, 78);
+    this.minecraft.getTextureManager().bindTexture(ENERGY_INNER);
+    relX = relX + 1;
+    relY = relY + 1;
+    float energ = container.getEnergy();
+    float pct = Math.min(energ / TilePeatGenerator.MENERGY, 1.0F);
+    blit(relX, relY, 0, 0, 14, (int) (64 * pct), 14, 64);
   }
 }

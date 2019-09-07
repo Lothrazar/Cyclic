@@ -16,7 +16,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class BlockPeatGenerator extends BlockBase {
 
   public BlockPeatGenerator(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.8F));
   }
 
   @Override
