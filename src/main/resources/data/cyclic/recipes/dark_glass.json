@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ggg",
-    "gog",
-    "ggg"
+    "ggg",
+    "gog"
   ],
   "key": {
     "g": {
