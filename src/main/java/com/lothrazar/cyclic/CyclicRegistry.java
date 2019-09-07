@@ -37,10 +37,12 @@ import com.lothrazar.cyclic.item.ItemObsShears;
 import com.lothrazar.cyclic.item.ItemStirrups;
 import com.lothrazar.cyclic.item.ItemWaterSpreader;
 import com.lothrazar.cyclic.item.ItemWoodenWrench;
+import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.ScytheBrush;
 import com.lothrazar.cyclic.item.ScytheForage;
 import com.lothrazar.cyclic.item.ScytheLeaves;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -94,6 +96,8 @@ public class CyclicRegistry {
   public static BlockPeat peat_unbaked;
   @ObjectHolder(ModCyclic.MODID + ":peat_baked")
   public static BlockPeatFuel peat_baked;
+  @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
+  public static PeatItem peat_fuel;
   //peat disabled
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static Block breaker;
@@ -139,8 +143,8 @@ public class CyclicRegistry {
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
       r.register(new BlockFan(Block.Properties.create(Material.ROCK)).setRegistryName("fan"));
       r.register(new BlockPeatGenerator(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
-      r.register(new BlockPeat(Block.Properties.create(Material.EARTH)).setRegistryName("peat_unbaked"));
-      r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH)).setRegistryName("peat_baked"));
+      r.register(new BlockPeat(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
+      r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
     }
@@ -157,7 +161,6 @@ public class CyclicRegistry {
       //      Items.SHEARS
       r.register(new ItemObsShears(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("shears_obsidian"));
       r.register(new ItemExp(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_food"));
-      //      properties = new Item.Properties().group(CyclicRegistry.itemGroup);
       r.register(new BlockItem(CyclicRegistry.experience_pylon, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_pylon"));
       r.register(new GloveItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("glove_climb"));
       r.register(new BlockItem(CyclicRegistry.fan, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fan"));
@@ -173,11 +176,13 @@ public class CyclicRegistry {
       r.register(new ItemEnderWingSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_world"));
       r.register(new ItemIceWand(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_ice"));
       r.register(new ScytheBrush(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_brush"));
-      //  r.register(new ScytheFlowers(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_flowers"));
       r.register(new ScytheForage(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_forage"));
       r.register(new ScytheLeaves(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_leaves"));
       r.register(new ItemStirrups(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("stirrups"));
       r.register(new ItemWaterSpreader(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_water"));
+      r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_fuel"));
+      r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
+      r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_biomass"));
     }
 
     @SubscribeEvent

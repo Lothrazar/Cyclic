@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "cyclic:peat_baked"
+  },
+  "result": "cyclic:peat_fuel",
+  "experience": 0.38,
+  "cookingtime": 400
+}

@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -30,6 +29,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  private int burnTime;
 
   public TilePeatGenerator() {
     super(CyclicRegistry.peat_generatorTile);
@@ -60,7 +60,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void read(CompoundNBT tag) {
-    //    radius = tag.getInt("radius");
+    burnTime = tag.getInt("burnTime");
     CompoundNBT energyTag = tag.getCompound("energy");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
     CompoundNBT invTag = tag.getCompound("inv");
@@ -70,7 +70,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    //    tag.putInt("radius", radius);
+    tag.putInt("burnTime", burnTime);
     handler.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
@@ -82,32 +82,35 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     return super.write(tag);
   }
 
+  private boolean isBurning() {
+    return this.burnTime > 0;
+  }
+
   @Override
   public void tick() {
-    if (world.isRemote) {
-      return;
+    if (this.burnTime == 1) {//about to be zero and refil
+      energy.ifPresent(e -> ((CustomEnergyStorage) e).addEnergy(1000));
+    }
+    if (this.isBurning()) {
+      --this.burnTime;
     }
     handler.ifPresent(h -> {
       ItemStack stack = h.getStackInSlot(0);
-      if (stack.getItem() == Items.DIAMOND) {
-        //        h.extractItem(0, 1, false);
-        energy.ifPresent(e -> ((CustomEnergyStorage) e).addEnergy(1000));
-        //        counter = 20;
+      if (stack.getItem() == CyclicRegistry.peat_fuel &&
+          this.isBurning() == false) {
+        //burn time
+        h.extractItem(0, 1, false);
+        this.burnTime = 200;
       }
     });
-    //    if (this.isPowered() == false) {
-    //      setAnimation(false);
-    //      return;
-    //    }
-    //    setAnimation(true);
-    //    if (world.rand.nextDouble() < 0.3) {
-    //      BlockPos target = pos.offset(this.getCurrentFacing());
-    //      BlockState state = world.getBlockState(target);
-    //      if (state.getBlockHardness(world, target) >= 0) {
-    //        this.world.destroyBlock(target, true);
-    //      }
-    //      //else unbreakable
-    //    }
+  }
+
+  public int getBurnTime() {
+    return this.burnTime;
+  }
+
+  public void setBurnTime(int value) {
+    burnTime = value;
   }
 
   @Override

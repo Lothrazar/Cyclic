@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclic.CyclicRegistry;
@@ -9,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockPeat extends BlockBase {
@@ -25,20 +27,26 @@ public class BlockPeat extends BlockBase {
     super.tick(state, world, pos, random);
     List<BlockPos> around = UtilShape.squareHorizontalHollow(pos, 1);
     int sidesWet = 0;
+    List<BlockPos> waters = new ArrayList<>();
     for (BlockPos p : around) {
       //try to bake if SOURCE water is nearby
       Block bSide = world.getBlockState(p).getBlock();
       if (bSide == Blocks.WATER) {
         sidesWet++;
+        waters.add(p);
       }
     }
     if (sidesWet >= 2) {
-      tryBake(world, pos);
+      tryBake(world, pos, waters);
     }
   }
 
-  private void tryBake(World world, BlockPos pos) {
+  private void tryBake(World world, BlockPos pos, List<BlockPos> waters) {
     if (world.rand.nextDouble() < CHANCE_BAKE_PCT) {
+      int drinkHere = MathHelper.nextInt(world.rand, 0, waters.size() - 1);
+      world.setBlockState(waters.get(drinkHere), Blocks.AIR.getDefaultState());
+    }
+    else if (world.rand.nextDouble() < CHANCE_BAKE_PCT * 2) {
       //      world.setBlockToAir(pos);
       //myself is unbaked
       world.setBlockState(pos, CyclicRegistry.peat_baked.getDefaultState());
