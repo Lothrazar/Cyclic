@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.block.BlockPeat;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
 import com.lothrazar.cyclic.block.BlockSound;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
+import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
@@ -136,6 +137,8 @@ public class CyclicRegistry {
   public static Block battery;
   @ObjectHolder(ModCyclic.MODID + ":battery")
   public static TileEntityType<TileBattery> batterytile;
+  @ObjectHolder(ModCyclic.MODID + ":battery")
+  public static ContainerType<ContainerBattery> batteryCont;
 
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents {
@@ -202,6 +205,7 @@ public class CyclicRegistry {
       r.register(TileEntityType.Builder.create(TileExpPylon::new, CyclicRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
       r.register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
       r.register(TileEntityType.Builder.create(TilePeatGenerator::new, CyclicRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
+      r.register(TileEntityType.Builder.create(TileBattery::new, CyclicRegistry.battery).build(null).setRegistryName("battery"));
     }
 
     @SubscribeEvent
@@ -216,6 +220,10 @@ public class CyclicRegistry {
         BlockPos pos = data.readBlockPos();
         return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
       }).setRegistryName("peat_generator"));
+      r.register(IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        return new ContainerBattery(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
+      }).setRegistryName("battery"));
     }
 
     @SubscribeEvent
