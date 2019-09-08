@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
-import com.lothrazar.cyclic.block.cable.BlockCable;
+import com.lothrazar.cyclic.block.cable.BlockCableEnergy;
 import com.lothrazar.cyclic.block.cable.TileCableEnergy;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
@@ -164,7 +164,7 @@ public class CyclicRegistry {
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
-      r.register(new BlockCable(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
+      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
     }
 
     @SubscribeEvent

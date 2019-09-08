@@ -22,9 +22,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class BlockCable extends BlockBase {
+public class BlockCableEnergy extends BlockBase {
 
-  public BlockCable(Properties properties) {
+  public BlockCableEnergy(Properties properties) {
     super(properties);
   }
 
