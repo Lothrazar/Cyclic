@@ -1169,12 +1169,11 @@
     "block.item_pipe_sort.everything": "Output everything here, ignoring this filter",
     "block.item_pipe_sort.nothing": "Output nothing here, ignoring this filter",
 
-    "item.cyclic.peat_biomass.tooltip": "Used to create Peat Bog",
-    "item.cyclic.peat_biomass": "Biomass",
-    "item.cyclic.peat_biomass.guide": "Created using plant matter in the Hydrator",
+    "item.cyclic.biomass.tooltip": "For bio energy",
+    "item.cyclic.biomass": "Biomass",
 
     "item.cyclic.peat_fuel": "Peat",
-    "item.cyclic.peat_fuel.tooltip": "Create energy in a Peat-fired Generator",
+    "item.cyclic.peat_fuel.tooltip": "Smelted peat.  Use in a generator.",
     "item.cyclic.peat_fuel.guide": "Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks.",
 
     "item.cyclic.peat_fuel_enriched": "Enriched Peat",
@@ -1186,11 +1185,11 @@
     "block.cyclic.peat_unbaked.guide": "Let sit in water to turn into Solid Peat.  Then harvest the Peat Deposit to obtain Peat Fuel",
 
     "block.cyclic.peat_baked": "Saturated Peat Deposit",
-    "block.cyclic.peat_baked.tooltip": "Peat ready to be harvested",
+    "block.cyclic.peat_baked.tooltip": "Wet peat ready to be harvested and smelted",
     "block.cyclic.peat_baked.guide": "After the Peat Bog soaks in water, it turns into a Peat Deposit and can be harvested to get Peat Fuel",
 
     "block.cyclic.peat_generator": "Peat-fired Generator",
-    "block.cyclic.peat_generator.tooltip": "Create 128 energy per tick using Peat Fuel",
+    "block.cyclic.peat_generator.tooltip": "Generate power",
     "block.cyclic.peat_generator.guide": "Burn peat to create Energy.  Create Peat Fuel using Biomass, Peat Bog, and Carbon Catalyst.",
 
     "block.peat_farm": "Peat Farmer",
