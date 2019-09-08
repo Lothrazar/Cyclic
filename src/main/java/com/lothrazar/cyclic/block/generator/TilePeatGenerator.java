@@ -1,5 +1,9 @@
 package com.lothrazar.cyclic.block.generator;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
@@ -107,6 +111,18 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
         this.burnTime = BURNTIME;
       }
     });
+    this.tickCableFlow();
+  }
+
+  private void tickCableFlow() {
+    List<Integer> rawList = IntStream.rangeClosed(
+        0,
+        5).boxed().collect(Collectors.toList());
+    Collections.shuffle(rawList);
+    for (Integer i : rawList) {
+      Direction exportToSide = Direction.values()[i];
+      moveEnergy(exportToSide, FUEL_WEAK);
+    }
   }
 
   public boolean isFull() {

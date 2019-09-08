@@ -1,5 +1,9 @@
 package com.lothrazar.cyclic.block.battery;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
@@ -10,6 +14,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -19,10 +24,11 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileBattery extends TileEntityBase implements INamedContainerProvider {
+public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  private static final int MAX = 10000000;
+  static final int MAX = 6400000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  private boolean flowing;
 
   public TileBattery() {
     super(CyclicRegistry.batterytile);
@@ -65,5 +71,22 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerBattery(i, world, pos, playerInventory, playerEntity);
+  }
+
+  @Override
+  public void tick() {
+    if (this.flowing)
+      this.tickCableFlow();
+  }
+
+  private void tickCableFlow() {
+    List<Integer> rawList = IntStream.rangeClosed(
+        0,
+        5).boxed().collect(Collectors.toList());
+    Collections.shuffle(rawList);
+    for (Integer i : rawList) {
+      Direction exportToSide = Direction.values()[i];
+      moveEnergy(exportToSide, MAX / 4);
+    }
   }
 }

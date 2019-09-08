@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.battery;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.generator.TilePeatGenerator;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -54,7 +53,7 @@ public class ScreenBattery extends ContainerScreen<ContainerBattery> {
     relX = relX + 1;
     relY = relY + 1;
     float energ = container.getEnergy();
-    float pct = Math.min(energ / TilePeatGenerator.MENERGY, 1.0F);
+    float pct = Math.min(energ / TileBattery.MAX, 1.0F);
     blit(relX, relY, 0, 0, 14, (int) (64 * pct), 14, 64);
   }
 }

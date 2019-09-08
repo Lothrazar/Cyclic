@@ -1143,9 +1143,9 @@
     "block.energy_pump.tooltip": "Extract power into cables or machines",
     "block.energy_pump.guide": "Transfer energy out of machines.  Can be used with cables and machines.  Compatible with all Forge Energy systems such as RF.",
 
-    "block.energy_pipe": "Energy Cable",
-    "block.energy_pipe.tooltip": "Connect to an Extraction Cable to transfer power",
-    "block.energy_pipe.guide": "Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  Disable output on any face of a cable by hitting with a redstone torch.  You need an Extraction cable to start the flow.  Compatible with all Forge Energy systems such as RF.",
+    "block.cyclic.energy_pipe": "Energy Cable",
+    "block.cyclic.energy_pipe.tooltip": "RF energy power transfer wire",
+    "block.cyclic.energy_pipe.guide": "Each cable segment holds a small amount, and it gets pushed through from previous cable segments, and goes out any direction it can find.  Disable output on any face of a cable by hitting with a redstone torch.  You need an Extraction cable to start the flow.  Compatible with all Forge Energy systems such as RF.",
 
     "cyclic.redstone.on": "Restone: On",
     "cyclic.redstone.off": "Restone: Off",
