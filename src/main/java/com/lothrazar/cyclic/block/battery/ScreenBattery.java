@@ -31,6 +31,7 @@ public class ScreenBattery extends ContainerScreen<ContainerBattery> {
     int x = 10, y = 50;
     drawString(Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy(), x, y, 0xffffff);
     //    drawString(Minecraft.getInstance().fontRenderer, "Burn Time: " + container.getBurnTime(), x, y + 10, 0xffffff);
+    drawString(Minecraft.getInstance().fontRenderer, "<>: " + container.getFlowing(), x, y + 10, 0xffffff);
   }
 
   @Override

@@ -94,4 +94,9 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity 
   public void setStoredXp(int storedXp) {
     this.storedXp = storedXp;
   }
+
+  @Override
+  public void setField(int field, int value) {
+    // TODO Auto-generated method stub
+  }
 }

@@ -28,7 +28,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   static final int MAX = 6400000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private boolean flowing;
+  private int flowing;
 
   public TileBattery() {
     super(CyclicRegistry.batterytile);
@@ -48,6 +48,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void read(CompoundNBT tag) {
+    setFlowing(tag.getInt("flowing"));
     CompoundNBT energyTag = tag.getCompound("energy");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
     super.read(tag);
@@ -55,6 +56,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("flowing", getFlowing());
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
@@ -75,7 +77,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
-    if (this.flowing)
+    if (this.getFlowing() == 1)
       this.tickCableFlow();
   }
 
@@ -88,5 +90,18 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
       Direction exportToSide = Direction.values()[i];
       moveEnergy(exportToSide, MAX / 4);
     }
+  }
+
+  public int getFlowing() {
+    return flowing;
+  }
+
+  public void setFlowing(int flowing) {
+    this.flowing = flowing;
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    this.flowing = value % 2;
   }
 }

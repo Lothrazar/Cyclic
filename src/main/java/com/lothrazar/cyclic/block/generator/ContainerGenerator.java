@@ -17,7 +17,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerGenerator extends ContainerBase {
 
-  private TilePeatGenerator tileEntity;
+  TilePeatGenerator tileEntity;
 
   public ContainerGenerator(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(CyclicRegistry.generatorCont, windowId);
@@ -53,6 +53,22 @@ public class ContainerGenerator extends ContainerBase {
         tileEntity.setBurnTime(value);
       }
     });
+    trackInt(new IntReferenceHolder() {
+
+      @Override
+      public int get() {
+        return getFlowing();
+      }
+
+      @Override
+      public void set(int value) {
+        tileEntity.setFlowing(value);
+      }
+    });
+  }
+
+  int getFlowing() {
+    return tileEntity.getFlowing();
   }
 
   public int getEnergy() {

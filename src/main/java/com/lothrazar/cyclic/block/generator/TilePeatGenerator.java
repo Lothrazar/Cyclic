@@ -36,6 +36,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private int burnTime;
+  private int flowing = 1;
 
   public TilePeatGenerator() {
     super(CyclicRegistry.peat_generatorTile);
@@ -66,6 +67,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void read(CompoundNBT tag) {
+    setFlowing(tag.getInt("flowing"));
     burnTime = tag.getInt("burnTime");
     fuelRate = tag.getInt("fuelRate");
     CompoundNBT energyTag = tag.getCompound("energy");
@@ -77,6 +79,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("flowing", getFlowing());
     tag.putInt("fuelRate", fuelRate);
     tag.putInt("burnTime", burnTime);
     handler.ifPresent(h -> {
@@ -111,7 +114,8 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
         this.burnTime = BURNTIME;
       }
     });
-    this.tickCableFlow();
+    if (this.getFlowing() == 1)
+      this.tickCableFlow();
   }
 
   private void tickCableFlow() {
@@ -151,5 +155,18 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerGenerator(i, world, pos, playerInventory, playerEntity);
+  }
+
+  public int getFlowing() {
+    return flowing;
+  }
+
+  public void setFlowing(int flowing) {
+    this.flowing = flowing;
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    // TODO Auto-generated method stub
   }
 }

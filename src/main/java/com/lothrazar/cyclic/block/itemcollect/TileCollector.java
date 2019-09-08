@@ -112,4 +112,9 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
       }
     }
   }
+
+  @Override
+  public void setField(int field, int value) {
+    // TODO Auto-generated method stub
+  }
 }

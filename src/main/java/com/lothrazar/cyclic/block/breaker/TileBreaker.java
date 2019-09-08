@@ -39,4 +39,9 @@ public class TileBreaker extends TileEntityBase implements ITickableTileEntity {
       //else unbreakable
     }
   }
+
+  @Override
+  public void setField(int field, int value) {
+    // TODO Auto-generated method stub
+  }
 }

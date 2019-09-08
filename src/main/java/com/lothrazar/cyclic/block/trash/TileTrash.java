@@ -53,4 +53,7 @@ public class TileTrash extends TileEntityBase implements ITickableTileEntity {
   public void tick() {
     this.handler.orElse(null).extractItem(0, 64, false);
   }
+
+  @Override
+  public void setField(int field, int value) {}
 }

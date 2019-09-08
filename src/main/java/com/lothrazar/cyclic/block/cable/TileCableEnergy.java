@@ -101,4 +101,9 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   public void updateIncomingEnergyFace(Direction inputFrom) {
     mapIncomingEnergy.put(inputFrom, TIMER_SIDE_INPUT);
   }
+
+  @Override
+  public void setField(int field, int value) {
+    // TODO Auto-generated method stub
+  }
 }

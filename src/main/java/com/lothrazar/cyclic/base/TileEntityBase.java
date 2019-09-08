@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityBase extends TileEntity {
+public abstract class TileEntityBase extends TileEntity {
 
   public static final int FUEL_WEAK = 256;
   public static final int MENERGY = 64 * 1000;
@@ -54,4 +54,6 @@ public class TileEntityBase extends TileEntity {
       }
     }
   }
+
+  public abstract void setField(int field, int value);
 }

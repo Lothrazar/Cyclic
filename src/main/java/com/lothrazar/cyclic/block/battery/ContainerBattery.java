@@ -35,6 +35,22 @@ public class ContainerBattery extends ContainerBase {
         tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
+    trackInt(new IntReferenceHolder() {
+
+      @Override
+      public int get() {
+        return getFlowing();
+      }
+
+      @Override
+      public void set(int value) {
+        tileEntity.setFlowing(value);
+      }
+    });
+  }
+
+  int getFlowing() {
+    return tileEntity.getFlowing();
   }
 
   public int getEnergy() {
