@@ -9,6 +9,8 @@ import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
+import com.lothrazar.cyclic.block.cable.BlockCable;
+import com.lothrazar.cyclic.block.cable.TileCableEnergy;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
@@ -140,6 +142,10 @@ public class CyclicRegistry {
   public static TileEntityType<TileBattery> batterytile;
   @ObjectHolder(ModCyclic.MODID + ":battery")
   public static ContainerType<ContainerBattery> batteryCont;
+  @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
+  public static Block energy_pipe;
+  @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
+  public static TileEntityType<TileCableEnergy> energy_pipeTile;
 
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents {
@@ -158,6 +164,7 @@ public class CyclicRegistry {
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
+      r.register(new BlockCable(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
     }
 
     @SubscribeEvent
@@ -174,6 +181,7 @@ public class CyclicRegistry {
       r.register(new ObsidianShears(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("shears_obsidian"));
       r.register(new ExpItemGain(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_food"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_pylon"));
+      r.register(new BlockItem(CyclicRegistry.energy_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("energy_pipe"));
       r.register(new GloveItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("glove_climb"));
       r.register(new BlockItem(CyclicRegistry.fan, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fan"));
       r.register(new BlockItem(CyclicRegistry.peat_generator, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_generator"));
@@ -208,6 +216,7 @@ public class CyclicRegistry {
       r.register(TileEntityType.Builder.create(TileTrash::new, CyclicRegistry.trash).build(null).setRegistryName("trash"));
       r.register(TileEntityType.Builder.create(TilePeatGenerator::new, CyclicRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
       r.register(TileEntityType.Builder.create(TileBattery::new, CyclicRegistry.battery).build(null).setRegistryName("battery"));
+      r.register(TileEntityType.Builder.create(TileCableEnergy::new, CyclicRegistry.energy_pipe).build(null).setRegistryName("energy_pipe"));
     }
 
     @SubscribeEvent
