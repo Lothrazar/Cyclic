@@ -1,6 +1,10 @@
 package com.lothrazar.cyclic.block.battery;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.ButtonTooltip;
+import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -14,9 +18,20 @@ public class ScreenBattery extends ContainerScreen<ContainerBattery> {
   private ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_slot.png");
   private ResourceLocation ENERGY_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_ctr.png");
   private ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
+  private ButtonTooltip btnToggle;
 
   public ScreenBattery(ContainerBattery screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
+  }
+
+  @Override
+  public void init() {
+    super.init();
+    int x = guiLeft + 132, y = guiTop + 8;
+    btnToggle = addButton(new ButtonTooltip(x, y, 20, 20, "", (p) -> {
+      container.tileEntity.setFlowing((container.getFlowing() + 1) % 2);
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(0, container.tileEntity.getFlowing(), container.tileEntity.getPos()));
+    }));
   }
 
   @Override
@@ -29,9 +44,17 @@ public class ScreenBattery extends ContainerScreen<ContainerBattery> {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     int x = 10, y = 50;
-    drawString(Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy(), x, y, 0xffffff);
-    //    drawString(Minecraft.getInstance().fontRenderer, "Burn Time: " + container.getBurnTime(), x, y + 10, 0xffffff);
-    drawString(Minecraft.getInstance().fontRenderer, "<>: " + container.getFlowing(), x, y + 10, 0xffffff);
+    drawString(Minecraft.getInstance().fontRenderer, "" + container.getEnergy(), x, y, 0xffffff);
+    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
+    btnToggle.setMessage(container.getFlowing() == 1 ? "<>" : "|");
+    this.drawTooltips(mouseX, mouseY);
+  }
+
+  private void drawTooltips(int mouseX, int mouseY) {
+    if (this.btnToggle.isMouseOver(mouseX, mouseY)) {
+      btnToggle.renderToolTip(mouseX, mouseY);
+      this.renderTooltip(btnToggle.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+    }
   }
 
   @Override

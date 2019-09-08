@@ -19,6 +19,8 @@
     "item.cyclic.glove_climb.tooltip": "Climb any vertical surface",
     "block.cyclic.breaker": "Block Breaker",
 	"item.cyclic.wrench":"Wooden Wrench",   
+	"gui.cyclic.flowing0":"Storing Power",  
+	"gui.cyclic.flowing1":"Exporting Power",
     
     
     "builder.toggle": "Toggle",

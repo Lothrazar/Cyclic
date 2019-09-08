@@ -167,6 +167,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void setField(int field, int value) {
-    // TODO Auto-generated method stub
+    //field 0 is flowing
+    flowing = value;
   }
 }

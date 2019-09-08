@@ -36,12 +36,14 @@ public abstract class TileEntityBase extends TileEntity {
     if (handlerOutput == null) {
       return;
     }
+    //    System.out.println("Bttery export " + myFacingDir);
     if (handlerHere != null && handlerOutput != null
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
       //first simulate
       int drain = handlerHere.extractEnergy(quantity, true);
       if (drain > 0
-          && handlerOutput.getEnergyStored() + drain <= handlerOutput.getMaxEnergyStored()) {
+      //          && handlerOutput.getEnergyStored() + drain <= handlerOutput.getMaxEnergyStored()
+      ) {
         //now push it into output, but find out what was ACTUALLY taken
         int filled = handlerOutput.receiveEnergy(drain, false);
         //now actually drain that much from here

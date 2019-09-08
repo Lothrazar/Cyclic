@@ -145,7 +145,7 @@ public class BlockCableEnergy extends BlockBase {
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     if (isEnergy(stateIn, facing, facingState, world, currentPos, facingPos)) {
-      return stateIn.with(property, EnumConnectType.INVENTORY);
+      return stateIn.with(property, EnumConnectType.CABLE);
     }
     else {
       return stateIn.with(property, EnumConnectType.NONE);

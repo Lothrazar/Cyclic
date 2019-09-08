@@ -102,6 +102,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void setField(int field, int value) {
-    this.flowing = value % 2;
+    //field 0 is flowing
+    flowing = value;
   }
 }

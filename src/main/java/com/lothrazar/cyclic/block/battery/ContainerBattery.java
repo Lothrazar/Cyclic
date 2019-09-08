@@ -15,7 +15,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerBattery extends ContainerBase {
 
-  private TileBattery tileEntity;
+  TileBattery tileEntity;
 
   public ContainerBattery(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(CyclicRegistry.batteryCont, windowId);
