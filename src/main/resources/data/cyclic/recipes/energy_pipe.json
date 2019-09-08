@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sis",
+    "i i",
+    "sis"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stone_brick_stairs"
+    },
+    "i": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:energy_pipe",
+    "count": 8
+  }
+}
