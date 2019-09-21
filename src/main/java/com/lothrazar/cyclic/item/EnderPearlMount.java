@@ -25,7 +25,7 @@ public class EnderPearlMount extends ItemBase {
     playerIn.startRiding(ent, true);
     //    ent.riding
     playerIn.getCooldownTracker().setCooldown(stack.getItem(), 10);
-    UtilItemStack.damageItem(playerIn, stack);
+    UtilItemStack.damageItem( stack);
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }

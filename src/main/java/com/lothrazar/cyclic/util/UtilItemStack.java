@@ -5,11 +5,11 @@ import net.minecraft.item.ItemStack;
 
 public class UtilItemStack {
 
-  public static void repairItem(PlayerEntity player, ItemStack s) {
+  public static void repairItem(ItemStack s) {
     s.setDamage(s.getDamage() - 1);
   }
 
-  public static void damageItem(PlayerEntity player, ItemStack s) {
+  public static void damageItem( ItemStack s) {
     s.setDamage(s.getDamage() + 1);
   }
 }

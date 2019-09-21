@@ -56,14 +56,14 @@ public class AutoTorchItem extends ItemBase {
         && world.isAirBlock(pos)) { // dont overwrite liquids
       if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
         //        super.damageCharm(player, stack);
-        UtilItemStack.damageItem(player, stack);
+        UtilItemStack.damageItem( stack);
       }
     }
     else if (stack.isDamaged()) {
       ItemStack torches = player.findAmmo(new ItemStack(Items.TORCH));
       if (!torches.isEmpty()) {
         torches.shrink(1);
-        UtilItemStack.repairItem(player, stack);
+        UtilItemStack.repairItem( stack);
       }
     }
   }

@@ -67,12 +67,12 @@ public class EnchantReach extends EnchantBase {
   }
 
   private void turnReachOff(PlayerEntity player) {
-    player.getEntityData().putBoolean(NBT_REACH_ON, false);
+    player.getPersistentData().putBoolean(NBT_REACH_ON, false);
     ModCyclic.proxy.setPlayerReach(player, REACH_VANILLA);
   }
 
   private void turnReachOn(PlayerEntity player) {
-    player.getEntityData().putBoolean(NBT_REACH_ON, true);//.setInteger(NBT_REACH_ON, 1);
+    player.getPersistentData().putBoolean(NBT_REACH_ON, true);//.setInteger(NBT_REACH_ON, 1);
     ModCyclic.proxy.setPlayerReach(player, REACH_BOOST);
   }
 
@@ -96,7 +96,7 @@ public class EnchantReach extends EnchantBase {
     }
     else {
       //was it on before, do we need to do an off hit
-      if (player.getEntityData().contains(NBT_REACH_ON) && player.getEntityData().getBoolean(NBT_REACH_ON)) {
+      if (player.getPersistentData().contains(NBT_REACH_ON) && player.getPersistentData().getBoolean(NBT_REACH_ON)) {
         turnReachOff(player);
       }
     }

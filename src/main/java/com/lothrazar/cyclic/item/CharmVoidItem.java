@@ -25,45 +25,35 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class CharmVoidItem extends ItemBase {
 
-  public CharmVoidItem(Properties properties) {
-    super(properties);
-    // TODO Auto-generated constructor stub
-  }
+	public CharmVoidItem(Properties properties) {
+		super(properties);
+	}
+ 
+	private static final int yLowest = -30;
+	private static final int yDest = 255;
+ 
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (entityIn.getPosition().getY() < yLowest) {
+			UtilEntity.teleportWallSafe(entityIn, worldIn,
+					new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
 
-  //  private static final int durability = 16;
-  private static final int yLowest = -30;
-  private static final int yDest = 255;
-  //  private static final ItemStack craftItem = new ItemStack(Items.ENDER_EYE);
-  //
-  //
-
-  @Override
-  public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn.getPosition().getY() < yLowest) {
-      UtilEntity.teleportWallSafe(entityIn, worldIn, new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
-      //      super.damageCharm(living, stack);
-      //      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
-      //      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
-    }
-  }
-  //  @Override
-  //  public void onTick(ItemStack stack, EntityPlayer living) {
-  //    if (!this.canTick(stack)) {
-  //      return;
-  //    }
-  //    World worldIn = living.getEntityWorld();
-  //    if (living.getPosition().getY() < yLowest) {
-  //      UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
-  //      super.damageCharm(living, stack);
-  //      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
-  //      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
-  //    }
-  //  }
+			UtilItemStack.damageItem(stack);
+			UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT);
+			// UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL,
+			// living.getPosition());
+		}
+	}
+ 
 }
