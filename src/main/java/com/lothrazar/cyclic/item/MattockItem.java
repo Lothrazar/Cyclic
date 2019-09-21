@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
+import javax.annotation.Nullable;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -31,8 +32,6 @@ public class MattockItem extends ToolItem {
 
   public MattockItem(Properties builder) {
     super(5.0F, -3.0F, ItemTier.DIAMOND, Sets.newHashSet(), builder);
-    //    super.onBlockStartBreak(itemstack, pos, player)
-    AxeItem x;
   }
 
   final static int RADIUS = 1;//radius 2 is 5x5 area square
@@ -61,8 +60,10 @@ public class MattockItem extends ToolItem {
             + " " + ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
             + " BUT IS IT " + this.efficiency);
         if (player.canPlayerEdit(posCurrent, sideHit, stack)
-            && ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)) {
+            && ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
+            && this.getDestroySpeed(stack, bsCurrent) > 1) {
           // 
+          System.out.println("YES I CAN BREAK IT " + bsCurrent.getBlock());
           stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
           if (world.isRemote) {//C
@@ -71,11 +72,6 @@ public class MattockItem extends ToolItem {
               blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
             }
             //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
-            if (stack.getCount() == 0 && stack == player.getHeldItemMainhand()) {
-              //              ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
-              //              player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-            }
-            //            Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, posCurrent, Minecraft.getMinecraft().objectMouseOver.sideHit));
           }
           else if (player instanceof ServerPlayerEntity) {//Server side, so this works
             ServerPlayerEntity mp = (ServerPlayerEntity) player;
@@ -96,38 +92,15 @@ public class MattockItem extends ToolItem {
     return super.onBlockStartBreak(stack, pos, player);
   }
 
-//  @Override
-//  public boolean canHarvestBlock(BlockState state) {
-//    
-//    super.canHarvestBlock(blockIn)
-//  
-//    Block block = state.getBlock();//    super.canHarvestBlock(blockIn)
-//    return block == Blocks.OBSIDIAN ? 
-//        this.toolMaterial.getHarvestLevel() == 3 : 
-//          (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
-//  }
+  @Override
+  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
+    return Math.max(Items.DIAMOND_PICKAXE.getHarvestLevel(stack, tool, player, blockState),
+        Items.DIAMOND_SHOVEL.getHarvestLevel(stack, tool, player, blockState));
+  }
 
   @Override
   public float getDestroySpeed(ItemStack stack, BlockState state) {
-    
-return     Math.max(Items.DIAMOND_PICKAXE.getDestroySpeed(stack, state), 
-
-         Items.DIAMOND_SHOVEL.getDestroySpeed(stack, state)
-        
-        );
-//    return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL
-//        && state.getMaterial() != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
+    return Math.max(Items.DIAMOND_PICKAXE.getDestroySpeed(stack, state),
+        Items.DIAMOND_SHOVEL.getDestroySpeed(stack, state));
   }
-  //  @Override
-  //  public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity player) {
-  //    boolean worked = super.onBlockDestroyed(stack, worldIn, state, pos, player);
-  //    if (worked && player instanceof PlayerEntity) {
-  //      // 
-  //      RayTraceResult ray = rayTrace(worldIn, (PlayerEntity) player, RayTraceContext.FluidMode.NONE);
-  //      if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK) {
-  //        //
-  //      }
-  //    }
-  //    return worked;
-  //  }
 }

@@ -23,8 +23,7 @@ public class ShearsMaterial extends ShearsItem {
     Block block = state.getBlock();
     if (state.isIn(BlockTags.LEAVES) || block != Blocks.COBWEB && block == Blocks.VINE) {
       ItemStack drop = new ItemStack(block);
-      ModCyclic.LOGGER.info("hit the drop eh" + drop);
-      worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), drop));
+       worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), drop));
     }
     return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
   }
@@ -41,7 +40,8 @@ public class ShearsMaterial extends ShearsItem {
   @Override
   public float getDestroySpeed(ItemStack stack, BlockState state) {
     Block block = state.getBlock();
-    if (block == Blocks.MELON || block == Blocks.PUMPKIN
+    if (block == Blocks.MELON 
+         || block == Blocks.PUMPKIN
         || block.isIn(BlockTags.CARPETS)
         || block.isIn(BlockTags.WOOL)
         || state.isIn(BlockTags.LEAVES)) {
