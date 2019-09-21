@@ -32,6 +32,8 @@ import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.AutoTorchItem;
 import com.lothrazar.cyclic.item.CharmVoidItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
+import com.lothrazar.cyclic.item.EnderPearlMount;
+import com.lothrazar.cyclic.item.EnderPearlReuse;
 import com.lothrazar.cyclic.item.EnderWingItem;
 import com.lothrazar.cyclic.item.EnderWingSp;
 import com.lothrazar.cyclic.item.EvokerFangItem;
@@ -204,6 +206,8 @@ public class CyclicRegistry {
       //      r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
       r.register(new PeatItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("biomass"));
       r.register(new EvokerFangItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("evoker_fang"));
+      r.register(new EnderPearlReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
+      r.register(new EnderPearlMount(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
     }
 
     @SubscribeEvent
