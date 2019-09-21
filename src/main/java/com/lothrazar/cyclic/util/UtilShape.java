@@ -25,6 +25,49 @@ public class UtilShape {
     return shape;
   }
 
+
+  public static List<BlockPos> squareVerticalX(final BlockPos pos, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    // search in a cube
+    int xMin = pos.getX() - radius;
+    int xMax = pos.getX() + radius;
+    int yMin = pos.getY() - radius;
+    int yMax = pos.getY() + radius;
+    int z = pos.getZ();
+    //first, leave x fixed and track along +/- y
+    for (int x = xMin; x <= xMax; x++) {
+      shape.add(new BlockPos(x, yMin, z));
+      shape.add(new BlockPos(x, yMax, z));
+    }
+    //corners are done so offset
+    for (int y = yMin + 1; y < yMax; y++) {
+      shape.add(new BlockPos(xMin, y, z));
+      shape.add(new BlockPos(xMax, y, z));
+    }
+    return shape;
+  }
+
+  //TODO: merge x/z vers
+  public static List<BlockPos> squareVerticalZ(final BlockPos pos, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    // search in a cube
+    int x = pos.getX();
+    int zMin = pos.getZ() - radius;
+    int zMax = pos.getZ() + radius;
+    int yMin = pos.getY() - radius;
+    int yMax = pos.getY() + radius;
+    //first, leave x fixed and track along +/- y
+    for (int z = zMin; z <= zMax; z++) {
+      shape.add(new BlockPos(x, yMin, z));
+      shape.add(new BlockPos(x, yMax, z));
+    }
+    //corners are done so offset
+    for (int y = yMin + 1; y < yMax; y++) {
+      shape.add(new BlockPos(x, y, zMin));
+      shape.add(new BlockPos(x, y, zMax));
+    }
+    return shape;
+  }
   public static List<BlockPos> line(BlockPos pos, Direction efacing, int want) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int skip = 1;
