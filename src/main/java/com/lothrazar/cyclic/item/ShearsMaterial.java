@@ -12,9 +12,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ObsidianShears extends ShearsItem {
+public class ShearsMaterial extends ShearsItem {
 
-  public ObsidianShears(Properties builder) {
+  public ShearsMaterial(Properties builder) {
     super(builder);
   }
 

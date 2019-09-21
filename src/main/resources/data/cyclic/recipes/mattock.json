@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "iri",
+    "sis"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "r": {
+      "item": "minecraft:repeater"
+    },
+    "s": {
+      "item": "minecraft:stone_slab"
+    }
+  },
+  "result": {
+    "item": "cyclic:mattock"
+  }
+}

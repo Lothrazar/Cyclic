@@ -42,7 +42,7 @@ import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.IceWand;
 import com.lothrazar.cyclic.item.MattockItem;
-import com.lothrazar.cyclic.item.ObsidianShears;
+import com.lothrazar.cyclic.item.ShearsMaterial;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.ScytheBrush;
 import com.lothrazar.cyclic.item.ScytheForage;
@@ -181,9 +181,9 @@ public class CyclicRegistry {
       r.register(new GemstoneItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_obsidian"));
       r.register(new GemstoneItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_amber"));
       //      Items.SHEARS
-      r.register(new MattockItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("mattock"));
-      r.register(new ObsidianShears(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("shears_wooden"));
-      r.register(new ObsidianShears(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("shears_obsidian"));
+      r.register(new MattockItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(9000)).setRegistryName("mattock"));
+      r.register(new ShearsMaterial(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256*2)).setRegistryName("shears_obsidian"));
+      r.register(new ShearsMaterial(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(64)).setRegistryName("shears_flint"));
       r.register(new ExpItemGain(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_food"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_pylon"));
       r.register(new BlockItem(CyclicRegistry.energy_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("energy_pipe"));

@@ -389,10 +389,10 @@
     "item.inventory_food.tooltip": "Eat to Upgrade your inventory",
     "item.magic_net.guide": "Capture any living creature (non-player) in this magical ball by throwing it at your target.  Release it by throwing it again.",
     "item.magic_net": "Monster Ball",
-    "item.magic_net.tooltip": "Throw at a living entity to capture",
-    "item.mattock.guide": "3x3 mining that treats dirt and stone type blocks equally.",
-    "item.mattock": "Mattock",
-    "item.mattock.tooltip": "3x3 mining; equal parts shovel and pickaxe",
+    "item.cyclic.magic_net.tooltip": "Throw at a living entity to capture",
+    "item.cyclic.mattock.guide": "3x3 mining that treats dirt and stone type blocks equally.",
+    "item.cyclic.mattock": "Mattock",
+    "item.cyclic.mattock.tooltip": "3x3 mining; equal parts shovel and pickaxe",
     "item.password_remote.guide": "Remote redstone lever that you bind to a lever in the world by sneaking.  Works across any distance including dimensions if the chunk is loaded.",
     "item.password_remote.invalid": "Invalid position, Lever not found",
     "item.password_remote": "Remote Lever",
@@ -1437,8 +1437,9 @@
     "block.dehydrator.tooltip": "Process dehydration recipes",
     "block.dehydrator.guide": "Dehydrate certain items.  Add more recipes using CraftTweaker.  Lava is optional but will increase processing speed.",
 
+    "item.cyclic.shears_obsidian": "Flint Shears",
 
-    "item.cyclic.shears_obsidian": "Obsidian Shears",
+    "item.cyclic.shears_flint": "Obsidian Shears",
     "item.cyclic.shears_obsidian.tooltip": "Reinforced durability",
     "item.shears_obsidian.guide": "Ten times the durability of regular shears.  Can also harvest whole melons and pumpkins.",
 

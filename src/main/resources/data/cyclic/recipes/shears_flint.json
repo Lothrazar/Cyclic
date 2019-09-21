@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " io",
+    "ioi",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:stick"
+    },
+    "o": {
+      "item": "minecraft:flint"
+    }
+  },
+  "result": {
+    "item": "cyclic:shears_flint"
+  }
+}
