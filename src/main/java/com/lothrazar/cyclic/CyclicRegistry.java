@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.block.BlockDarkGlass;
 import com.lothrazar.cyclic.block.BlockPeat;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
 import com.lothrazar.cyclic.block.BlockSound;
+import com.lothrazar.cyclic.block.BlockSpikes;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -150,6 +151,9 @@ public class CyclicRegistry {
   @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
   public static TileEntityType<TileCableEnergy> energy_pipeTile;
 
+  @ObjectHolder(ModCyclic.MODID + ":spikes_iron")
+  public static Block spikes_iron;
+
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents {
 
@@ -168,11 +172,13 @@ public class CyclicRegistry {
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
       r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
+      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK)).setRegistryName("spikes_iron"));
     }
 
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
+      r.register(new BlockItem(CyclicRegistry.spikes_iron, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_iron"));
       r.register(new BlockItem(CyclicRegistry.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));

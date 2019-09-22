@@ -1,0 +1,10 @@
+{
+	"parent": "cyclic:parent/spikes_on",
+
+	"textures": {
+		"side": "cyclic:blocks/spikes_iron_side",
+		"base_up": "cyclic:blocks/spikes_iron_base_up",
+		"down": "cyclic:blocks/spikes_iron_base_down",
+		"particle": "cyclic:blocks/spikes_iron_side"
+	}
+}
