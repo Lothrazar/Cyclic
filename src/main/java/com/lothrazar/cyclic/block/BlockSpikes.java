@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -36,7 +37,7 @@ public class BlockSpikes extends BlockBase {
   private static final VoxelShape DOWN_BOX = Block.makeCuboidShape(0.0F, LARGE, 0.0F, 1.0F, 1.0F, 1.0F);
 
   public BlockSpikes(Properties properties) {
-    super(properties); 
+    super(properties);
     //    Blocks.LADDER?
   }
 
@@ -95,13 +96,15 @@ public class BlockSpikes extends BlockBase {
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-    if (entity != null) {
-      Direction dir=UtilStuff.getFacingFromEntity(pos, entity);
-      ModCyclic.LOGGER.info("so ",dir);// message, p0, p1, p2, p3, p4, p5, p6, p7);
-      world.setBlockState(pos, state.with(BlockStateProperties.FACING, dir), 2);
-    }
+  public BlockState getStateForPlacement(BlockItemUseContext context) {
+    World worldIn = context.getWorld();
+    BlockPos pos = context.getPos();
+    Direction facing = context.getFace();
+    return worldIn.getBlockState(pos.offset(facing.getOpposite())).isSolid() //worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) 
+        ? this.getDefaultState().with(BlockStateProperties.FACING, facing).with(ACTIVATED, false)
+        : this.getDefaultState().with(BlockStateProperties.FACING, Direction.DOWN).with(ACTIVATED, false);
   }
+ 
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
