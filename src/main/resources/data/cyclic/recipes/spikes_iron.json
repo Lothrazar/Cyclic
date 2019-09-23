@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "cyclic:spikes_iron"
+    "item": "cyclic:spikes_iron",
+    "count": 4
   }
 }

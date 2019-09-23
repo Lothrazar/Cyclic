@@ -17,6 +17,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -29,20 +30,29 @@ public class BlockSpikes extends BlockBase {
   public static final BooleanProperty ACTIVATED = BooleanProperty.create("lit");
   private static final float LARGE = 0.9375F;
   private static final float SMALL = 0.0625F;
-  private static final VoxelShape NORTH_BOX = Block.makeCuboidShape(0.0F, 0.0F, LARGE, 1.0F, 1.0F, 1.0F);
-  private static final VoxelShape EAST_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, SMALL, 1.0F, 1.0F);
-  private static final VoxelShape SOUTH_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, SMALL);
-  private static final VoxelShape WEST_BOX = Block.makeCuboidShape(LARGE, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-  private static final VoxelShape UP_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, 1.0F, SMALL, 1.0F);
-  private static final VoxelShape DOWN_BOX = Block.makeCuboidShape(0.0F, LARGE, 0.0F, 1.0F, 1.0F, 1.0F);
-
+  private static final VoxelShape NORTH_BOX = Block.makeCuboidShape(0.0F, 0.0F, LARGE, 15.0F, 15.0F, 1.0F);
+  private static final VoxelShape EAST_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, SMALL*15, 15.0F, 15.0F);
+  private static final VoxelShape SOUTH_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F,    15.0F, 15.0F, SMALL*15);
+  private static final VoxelShape WEST_BOX = Block.makeCuboidShape(LARGE, 0.0F, 0.0F,    15.0F, 15.0F, 15.0F);
+  private static final VoxelShape UP_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, 15.0F, SMALL*15, 15.0F);
+  private static final VoxelShape DOWN_BOX = Block.makeCuboidShape(0.0F, LARGE, 0.0F, 15.0F, 15.0F, 15.0F);
+ 
+  protected static final VoxelShape UNPRESSED_AABB = Block.makeCuboidShape(
+      1.0D, 0.0D, 1.0D,
+      15.0D, 1.0D, 15.0D); 
   public BlockSpikes(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.1F));
+//   Blocks.ACACIA_PRESSURE_PLATE 
     //    Blocks.LADDER?
   }
-
+//  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+//    return state.get(ACTIVATED).booleanValue() ? PRESSED_AABB : UNPRESSED_AABB;
+// }
+//
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    
+  
     switch ((Direction) state.get(BlockStateProperties.FACING)) {
       case NORTH:
         return NORTH_BOX;
