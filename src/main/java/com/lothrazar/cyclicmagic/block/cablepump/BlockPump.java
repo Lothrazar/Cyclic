@@ -57,9 +57,9 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   private boolean powerTransport = false;
 
   public BlockPump() {
-    super(Material.LEAVES);//shears look for wool block not cloth
-    setHardness(0.5F);
+    super(Material.ROCK);
     setSoundType(SoundType.CLOTH);
+    setHardness(0.5F);
     this.setTranslucent();
     this.placeType = PlacementType.SIDE_BLOCK;
   }
