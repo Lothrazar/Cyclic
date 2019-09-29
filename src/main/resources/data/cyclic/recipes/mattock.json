@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " i ",
-    "iri",
-    "sis"
+    "ooo",
+    "ses",
+    " e "
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
+    "e": {
+      "item": "minecraft:quartz_block"
     },
-    "r": {
-      "item": "minecraft:repeater"
+    "o": {
+      "item": "cyclic:gem_obsidian"
     },
     "s": {
-      "item": "minecraft:stone_slab"
+      "item": "minecraft:lead"
     }
   },
   "result": {
