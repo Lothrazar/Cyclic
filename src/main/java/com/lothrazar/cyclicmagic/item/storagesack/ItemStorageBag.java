@@ -207,12 +207,13 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       return;
     }
     ItemStack stackOnGround = event.getItem().getItem();
+    if (this.canPickup(stackOnGround) == false) {
+      return;
+    }
     //multiple bags held by player
     NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
     for (ItemStack stackIsBag : foundBags) {
       if (StorageActionType.getIsOpen(stackIsBag)) {
-        // 
-        ModCyclic.logger.log("is open skip ", stackIsBag);
         return;
       }
       int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
@@ -238,7 +239,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), stackIsBag);
       NonNullList<ItemStack> onGround = NonNullList.create();
       onGround.add(stackOnGround);
-      ModCyclic.logger.log("Send onGround to bag " + stackOnGround);
       BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
       if (ret.stacks.get(0).isEmpty()) {
         /// we got everything 
@@ -251,6 +251,14 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       }
       break;
     }
+  }
+
+  /**
+   * not empty and not another bag
+   * 
+   */
+  private boolean canPickup(ItemStack stack) {
+    return !stack.isEmpty() && stack.getItem() != this;
   }
 
   @SubscribeEvent
