@@ -440,10 +440,12 @@ public class UtilEntity {
       return all.get(0);
   }
 
+  @SuppressWarnings("deprecation")
   public static int getVillagerCareer(EntityVillager merchant) {
     return ObfuscationReflectionHelper.getPrivateValue(EntityVillager.class, merchant, "careerId", "field_175563_bv");
   }
 
+  @SuppressWarnings("deprecation")
   public static void setVillagerCareer(EntityVillager merchant, int c) {
     ObfuscationReflectionHelper.setPrivateValue(EntityVillager.class, merchant, c, "careerId", "field_175563_bv");
   }

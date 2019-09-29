@@ -92,6 +92,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 //@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
+@SuppressWarnings("deprecation")
 public class ClientProxy extends CommonProxy {
 
   public static ParticleRenderer particleRenderer = new ParticleRenderer();

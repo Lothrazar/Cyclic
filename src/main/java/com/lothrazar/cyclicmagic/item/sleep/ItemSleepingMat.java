@@ -68,6 +68,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class ItemSleepingMat extends BaseTool implements IHasRecipe, IContent, IHasClickToggle {
 
   // thank you for the examples forge. player data storage based on API source
