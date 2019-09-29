@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.storagesack;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
 import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StorageActionType;
@@ -53,8 +52,8 @@ public class ContainerStorage extends ContainerBase {
     this.setScreenSize(ScreenSize.SACK);
     this.player = par1Player;
     bagReference = player.getHeldItemMainhand();
+
     StorageActionType.setIsOpen(bagReference, true);
-    ModCyclic.logger.log(" CONSTRUCT is open TRUE is set ", bagReference);
     this.stackId = ItemStorageBag.getId(bagReference);
     this.inventory = invoWand;
     int x, y = pad, k, l, slot;
@@ -75,7 +74,6 @@ public class ContainerStorage extends ContainerBase {
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
     StorageActionType.setIsOpen(bagReference, false);
-    ModCyclic.logger.log(" container is open false is set ", bagReference);
   }
 
   @Override

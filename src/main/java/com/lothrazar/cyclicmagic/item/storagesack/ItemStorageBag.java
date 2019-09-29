@@ -296,7 +296,8 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     //    StorageActionType.setIsOpen(wand, true);
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.PLAYERS, 0.1F);
     if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
-        && hand == EnumHand.MAIN_HAND) {
+        && hand == EnumHand.MAIN_HAND
+        && wand.getCount() == 1) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
       player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);

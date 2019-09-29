@@ -332,6 +332,6 @@
 	,"1.19.14":"New texture and model for Auto Torch by Ithronyar.  Fixed bugs in Unchant Pylon processing.  Fluid Extraction cable now stops pumping up fluid from in-world fluid blocks when its full.  Bumped to suggested forge version 14.23.5.2838.  Storage Bag only use its auto-pickup setting to grab items from world (lower-right of gui) while GUI of bag is open (could cause race-condition data loss sometimes)."
 	,"1.19.15":"Fall damage nerf for Chorus.  Reduced volume of some magic items.   Fix for clumps + exp boost enchantment desyncing xp orb entities.  "
   	,"1.19.16":"Evoker Fang will now start casting at the targeted block instead of always the casters feet.  Evoker Fang will now cast when activated in mid air, does not require a block to be clicked specifically.  Updated ender fang 3D model & textures by a contributor.  "
-	,"1.19.17":"updated ru_RU.lang by Bytegm.  Extractor cables are now rock material."
+	,"1.19.17":"updated ru_RU.lang by Bytegm.  Extractor cables are now rock material.  storage_bag now checks that the stack size is 1 before opening.  "
   }
 }
