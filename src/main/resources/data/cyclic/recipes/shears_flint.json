@@ -3,7 +3,7 @@
   "pattern": [
     " io",
     "ioi",
-    " i "
+    "si "
   ],
   "key": {
     "i": {
@@ -11,6 +11,9 @@
     },
     "o": {
       "item": "minecraft:flint"
+    },
+    "s": {
+      "item": "minecraft:string"
     }
   },
   "result": {

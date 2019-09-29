@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.cable;
 
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
@@ -7,6 +8,8 @@ import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -18,8 +21,11 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 public class BlockCableEnergy extends BlockBase {
@@ -27,6 +33,10 @@ public class BlockCableEnergy extends BlockBase {
   public BlockCableEnergy(Properties properties) {
     super(properties);
   }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {}
 
   public static BlockState cleanBlockState(BlockState state) {
     for (Direction d : Direction.values()) {

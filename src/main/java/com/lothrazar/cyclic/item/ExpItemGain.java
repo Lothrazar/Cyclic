@@ -21,13 +21,7 @@ public class ExpItemGain extends ItemBase {
   public ExpItemGain(Properties properties) {
     super(properties.food(new Food.Builder().setAlwaysEdible().fastToEat().build()));
   }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip"));
-  }
-
+ 
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
     if (entityLiving instanceof PlayerEntity) {
