@@ -52,7 +52,6 @@ public class ContainerStorage extends ContainerBase {
     this.setScreenSize(ScreenSize.SACK);
     this.player = par1Player;
     bagReference = player.getHeldItemMainhand();
-
     StorageActionType.setIsOpen(bagReference, true);
     this.stackId = ItemStorageBag.getId(bagReference);
     this.inventory = invoWand;

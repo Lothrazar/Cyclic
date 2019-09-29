@@ -95,7 +95,6 @@ public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return false;
     }
-
     summonFangRay(player.posX, player.posZ, player, entity.posX, entity.posY, entity.posZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return true;

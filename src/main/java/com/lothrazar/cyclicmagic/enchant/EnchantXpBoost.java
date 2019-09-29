@@ -116,5 +116,4 @@ public class EnchantXpBoost extends BaseEnchant {
     int bonus = xpDropped * XP_PER_LVL * level;
     UtilExperience.incrementExp(player, bonus);
   }
-
 }
