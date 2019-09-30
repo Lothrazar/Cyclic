@@ -9,6 +9,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -28,6 +30,10 @@ import net.minecraft.world.World;
 
 public class BlockSpikes extends BlockBase {
 
+  private static final double CURSE_CHANCE = 0.2;
+  private static final int CURSE_TIME = 30;
+  private static final int FIRE_TIME = 30;
+
   public static enum EnumSpikeType implements IStringSerializable {
     PLAIN, FIRE, CURSE;
 
@@ -37,7 +43,6 @@ public class BlockSpikes extends BlockBase {
     }
   }
 
-  public static final EnumProperty<EnumSpikeType> TYPE = EnumProperty.create("type", EnumSpikeType.class);
   public static final BooleanProperty ACTIVATED = BooleanProperty.create("lit");
   private static final float LARGE = 0.9375F;
   private static final float SMALL = 0.0625F;
@@ -50,23 +55,11 @@ public class BlockSpikes extends BlockBase {
   protected static final VoxelShape UNPRESSED_AABB = Block.makeCuboidShape(
       1.0D, 0.0D, 1.0D,
       15.0D, 1.0D, 15.0D);
+  private EnumSpikeType type;
 
-  public BlockSpikes(Properties properties) {
-    super(properties.hardnessAndResistance(1.1F)); 
-  }
-
-  @Override
-  public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    if (player.getHeldItem(handIn).getItem() == Items.BLAZE_POWDER) {
-      worldIn.setBlockState(pos, worldIn.getBlockState(pos).with(TYPE, EnumSpikeType.FIRE));
-    }
-    if (player.getHeldItem(handIn).getItem() == Items.SPIDER_EYE) {
-      worldIn.setBlockState(pos, worldIn.getBlockState(pos).with(TYPE, EnumSpikeType.CURSE));
-    }
-    if (player.getHeldItem(handIn).getItem() == Items.BREAD) {
-      worldIn.setBlockState(pos, worldIn.getBlockState(pos).with(TYPE, EnumSpikeType.PLAIN));
-    }
-    return false;
+  public BlockSpikes(Properties properties, EnumSpikeType type) {
+    super(properties.hardnessAndResistance(1.1F));
+    this.type = type;
   }
 
   @Override
@@ -91,7 +84,39 @@ public class BlockSpikes extends BlockBase {
   @Override
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
     if (entity instanceof LivingEntity && state.get(ACTIVATED)) {
-      entity.attackEntityFrom(DamageSource.CACTUS, getDamage());
+      //extra effects
+      switch (this.type) {
+        case CURSE:
+          if (worldIn.rand.nextDouble() < CURSE_CHANCE) {
+            entity.attackEntityFrom(DamageSource.MAGIC, 1);
+          }
+          LivingEntity living = (LivingEntity) entity;
+          switch (worldIn.rand.nextInt(4)) {//[0,3] if nextInt(4) given 
+            case 0:
+              living.addPotionEffect(new EffectInstance(Effects.SLOWNESS, CURSE_TIME, 2));
+            break;
+            case 1:
+              living.addPotionEffect(new EffectInstance(Effects.WEAKNESS, CURSE_TIME, 2));
+            break;
+            case 2:
+              living.addPotionEffect(new EffectInstance(Effects.UNLUCK, CURSE_TIME, 1));
+            break;
+            case 3:
+              living.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, CURSE_TIME, 1));
+            break;
+          }
+        break;
+        case FIRE:
+          if (!entity.isBurning()) {
+            entity.setFire(FIRE_TIME);
+          }
+        break;
+        case PLAIN:
+          entity.attackEntityFrom(DamageSource.CACTUS, 1);
+        break;
+        default:
+        break;
+      }
     }
   }
 
@@ -109,10 +134,6 @@ public class BlockSpikes extends BlockBase {
     super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
   }
 
-  private float getDamage() {
-    return 1;
-  }
-
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
     return true;
@@ -128,13 +149,13 @@ public class BlockSpikes extends BlockBase {
     World worldIn = context.getWorld();
     BlockPos pos = context.getPos();
     Direction facing = context.getFace();
-    return worldIn.getBlockState(pos.offset(facing.getOpposite())).isSolid() //worldIn.isSideSolid(pos.offset(facing.getOpposite()), facing, true) 
-        ? this.getDefaultState().with(BlockStateProperties.FACING, facing).with(ACTIVATED, false).with(TYPE, EnumSpikeType.PLAIN)
-        : this.getDefaultState().with(BlockStateProperties.FACING, Direction.DOWN).with(ACTIVATED, false).with(TYPE, EnumSpikeType.PLAIN);
+    return worldIn.getBlockState(pos.offset(facing.getOpposite())).isSolid()
+        ? this.getDefaultState().with(BlockStateProperties.FACING, facing).with(ACTIVATED, false)
+        : this.getDefaultState().with(BlockStateProperties.FACING, Direction.DOWN).with(ACTIVATED, false);
   }
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.FACING).add(ACTIVATED).add(TYPE);
+    builder.add(BlockStateProperties.FACING).add(ACTIVATED);
   }
 }

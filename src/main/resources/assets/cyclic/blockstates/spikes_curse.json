@@ -1,0 +1,22 @@
+{
+	"__comment": "forge_marker is required for this formatting. It allows properties to be additively defined in multiple sections instead of requiring every possible block state to be explicitly defined",
+
+	"forge_marker": 1,
+
+	"variants": {
+
+		"lit": {
+			"false": { "model": "cyclic:block/spikes_curse" },
+			"true": { "model": "cyclic:block/spikes_curse_on" }
+		},
+
+		"facing": {
+			"up":		{},
+			"down":		{ "x": 180 },
+			"north":	{ "x": 90 },
+			"south":	{ "x": 90, "y": 180 },
+			"east":		{ "x": 90, "y": 90 },
+			"west":		{ "x": 90, "y": 270 }
+		}
+	}
+}

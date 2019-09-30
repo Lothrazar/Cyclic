@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.block.BlockPeat;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
 import com.lothrazar.cyclic.block.BlockSound;
 import com.lothrazar.cyclic.block.BlockSpikes;
+import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -150,10 +151,17 @@ public class CyclicRegistry {
   public static Block energy_pipe;
   @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
   public static TileEntityType<TileCableEnergy> energy_pipeTile;
-
   @ObjectHolder(ModCyclic.MODID + ":spikes_iron")
   public static Block spikes_iron;
+  @ObjectHolder(ModCyclic.MODID + ":spikes_curse")
+  public static Block spikes_curse;
+  @ObjectHolder(ModCyclic.MODID + ":spikes_fire")
+  public static Block spikes_fire;
 
+  @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
+  public static Block fluid_pipe;
+  @ObjectHolder(ModCyclic.MODID + ":item_pipe")
+  public static Block item_pipe;
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents {
 
@@ -171,14 +179,21 @@ public class CyclicRegistry {
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
+      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large"));
       r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
-      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK)).setRegistryName("spikes_iron"));
+      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
+      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
+      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
+      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
+      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     }
 
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       r.register(new BlockItem(CyclicRegistry.spikes_iron, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_iron"));
+      r.register(new BlockItem(CyclicRegistry.spikes_fire, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_fire"));
+      r.register(new BlockItem(CyclicRegistry.spikes_curse, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_curse"));
       r.register(new BlockItem(CyclicRegistry.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));
@@ -188,11 +203,13 @@ public class CyclicRegistry {
       r.register(new GemstoneItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_amber"));
       //      Items.SHEARS
       r.register(new MattockItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(9000)).setRegistryName("mattock"));
-      r.register(new ShearsMaterial(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256*2)).setRegistryName("shears_obsidian"));
+      r.register(new ShearsMaterial(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256 * 2)).setRegistryName("shears_obsidian"));
       r.register(new ShearsMaterial(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(64)).setRegistryName("shears_flint"));
       r.register(new ExpItemGain(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_food"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_pylon"));
       r.register(new BlockItem(CyclicRegistry.energy_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("energy_pipe"));
+      r.register(new BlockItem(CyclicRegistry.item_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("item_pipe"));
+      r.register(new BlockItem(CyclicRegistry.fluid_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fluid_pipe"));
       r.register(new GloveItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("glove_climb"));
       r.register(new BlockItem(CyclicRegistry.fan, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fan"));
       r.register(new BlockItem(CyclicRegistry.peat_generator, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_generator"));
