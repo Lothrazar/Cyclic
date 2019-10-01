@@ -181,19 +181,19 @@ public class CyclicRegistry {
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large"));
       r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
-      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
-      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
+//      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
+//      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
       r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
-      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
-      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
+//      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
+//      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     }
 
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       r.register(new BlockItem(CyclicRegistry.spikes_iron, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_iron"));
-      r.register(new BlockItem(CyclicRegistry.spikes_fire, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_fire"));
-      r.register(new BlockItem(CyclicRegistry.spikes_curse, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_curse"));
+      //r.register(new BlockItem(CyclicRegistry.spikes_fire, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_fire"));
+//      r.register(new BlockItem(CyclicRegistry.spikes_curse, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_curse"));
       r.register(new BlockItem(CyclicRegistry.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));
@@ -208,8 +208,8 @@ public class CyclicRegistry {
       r.register(new ExpItemGain(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_food"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_pylon"));
       r.register(new BlockItem(CyclicRegistry.energy_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("energy_pipe"));
-      r.register(new BlockItem(CyclicRegistry.item_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("item_pipe"));
-      r.register(new BlockItem(CyclicRegistry.fluid_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fluid_pipe"));
+//      r.register(new BlockItem(CyclicRegistry.item_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("item_pipe"));
+//      r.register(new BlockItem(CyclicRegistry.fluid_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fluid_pipe"));
       r.register(new GloveItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("glove_climb"));
       r.register(new BlockItem(CyclicRegistry.fan, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fan"));
       r.register(new BlockItem(CyclicRegistry.peat_generator, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_generator"));
