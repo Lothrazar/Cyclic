@@ -1496,3 +1496,7 @@ tile.heat.level=热量等级
 tile.solidifier.name=冷凝炉
 tile.solidifier.guide=将流体冷凝成固体，支持JEI和Crafttweaker。
 tile.solidifier.tooltip=将流体冷凝成固体
+
+
+
+cyclicmagic.fake_player.spikes=钉刺
