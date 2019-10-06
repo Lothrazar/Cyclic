@@ -34,6 +34,7 @@ import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.AutoTorchItem;
 import com.lothrazar.cyclic.item.CharmVoidItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
+import com.lothrazar.cyclic.item.EnderEyeReuse;
 import com.lothrazar.cyclic.item.EnderPearlMount;
 import com.lothrazar.cyclic.item.EnderPearlReuse;
 import com.lothrazar.cyclic.item.EnderWingItem;
@@ -179,7 +180,7 @@ public class CyclicRegistry {
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
-      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large"));
+      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large")); 
       r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
 //      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
 //      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
@@ -234,6 +235,7 @@ public class CyclicRegistry {
       r.register(new EvokerFangItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("evoker_fang"));
       r.register(new EnderPearlReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
       r.register(new EnderPearlMount(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
+      r.register(new EnderEyeReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_eye_reuse"));
     }
 
     @SubscribeEvent
