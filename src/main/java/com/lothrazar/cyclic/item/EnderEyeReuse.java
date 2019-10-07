@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.EnderEyeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -31,7 +32,7 @@ public class EnderEyeReuse extends ItemBase {
       BlockPos blockpos = worldIn.getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(playerIn), 100, false);
       if (blockpos != null) {
         EyeOfEnderEntity eyeofenderentity = new EyeOfEnderEntity(worldIn, playerIn.posX, playerIn.posY + (double) (playerIn.getHeight() / 2.0F), playerIn.posZ);
-        eyeofenderentity.func_213863_b(stack);
+        eyeofenderentity.func_213863_b(new ItemStack(Items.ENDER_EYE));
         eyeofenderentity.moveTowards(blockpos);
         worldIn.addEntity(eyeofenderentity);
         if (playerIn instanceof ServerPlayerEntity) {
