@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class UtilChat {
@@ -11,6 +12,11 @@ public class UtilChat {
     }
   }
 
+  public static String blockPosToString(BlockPos pos) {
+    return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
+  }
+
+  //sendStatusMessage
   public static void statusMessage(PlayerEntity player, String message) {
     if (player.world.isRemote) {
       player.sendStatusMessage(new TranslationTextComponent((message)), true);

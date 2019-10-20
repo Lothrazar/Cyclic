@@ -42,13 +42,13 @@ public class ModCyclic {
     proxy.init();
     //TODO: LOOP
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.soundproofing);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.excavate);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.experience_boost);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.life_leech);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.magnet);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.multishot);//y
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.excavate);//y
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.experience_boost);//y
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.life_leech);//y
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.magnet);//y
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.multishot);//y
     //    MinecraftForge.EVENT_BUS.register(CyclicRegistry.smelting);//  ?
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.venom);//y
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.venom);//y
   }
 
   @SubscribeEvent

@@ -105,7 +105,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     }
     handler.ifPresent(h -> {
       ItemStack stack = h.getStackInSlot(0);
-      if (stack.getItem() == CyclicRegistry.peat_fuel &&
+      if (stack.getItem() == CyclicRegistry.Items.peat_fuel &&
           this.isBurning() == false) {
         fuelRate = FUEL_WEAK;//for peat_fuel item
         //other types of fuel in the future

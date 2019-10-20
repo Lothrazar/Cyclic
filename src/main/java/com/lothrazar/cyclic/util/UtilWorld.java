@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeverBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -49,5 +51,28 @@ public class UtilWorld {
     UtilEntity.teleportWallSafe(player, world, pos);
     //    UtilSound.playSound(player, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
     return true;
+  }
+
+  public static void toggleLeverPowerState(World worldIn, BlockPos blockPos, BlockState blockState) {
+    boolean hasPowerHere = blockState.get(LeverBlock.POWERED).booleanValue();//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
+    BlockState stateNew = blockState.with(LeverBlock.POWERED, !hasPowerHere);
+    boolean success = worldIn.setBlockState(blockPos, stateNew);
+    if (success) {
+      flagUpdate(worldIn, blockPos, blockState, stateNew);
+      flagUpdate(worldIn, blockPos.down(), blockState, stateNew);
+      flagUpdate(worldIn, blockPos.up(), blockState, stateNew);
+      flagUpdate(worldIn, blockPos.west(), blockState, stateNew);
+      flagUpdate(worldIn, blockPos.east(), blockState, stateNew);
+      flagUpdate(worldIn, blockPos.north(), blockState, stateNew);
+      flagUpdate(worldIn, blockPos.south(), blockState, stateNew);
+    }
+  }
+
+  public static void flagUpdate(World worldIn, BlockPos blockPos, BlockState blockState, BlockState stateNew) {
+    //    worldIn.notifyBlockUpdate(blockPos,blockState,stateNew,3);
+    //    worldIn.notifyNeighborsOfStateChange(pos, blockIn);
+    worldIn.notifyNeighborsOfStateChange(blockPos, blockState.getBlock());//THIS one works only with true
+    //    worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
+    //    worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
   }
 }

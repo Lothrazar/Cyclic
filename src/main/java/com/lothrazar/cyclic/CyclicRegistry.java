@@ -44,12 +44,13 @@ import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.GloveItem;
 import com.lothrazar.cyclic.item.IceWand;
+import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MattockItem;
-import com.lothrazar.cyclic.item.ShearsMaterial;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.ScytheBrush;
 import com.lothrazar.cyclic.item.ScytheForage;
 import com.lothrazar.cyclic.item.ScytheLeaves;
+import com.lothrazar.cyclic.item.ShearsMaterial;
 import com.lothrazar.cyclic.item.StirrupsItem;
 import com.lothrazar.cyclic.item.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.WrenchItem;
@@ -58,6 +59,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
@@ -75,31 +77,47 @@ import net.minecraftforge.registries.ObjectHolder;
 
 public class CyclicRegistry {
 
-  //  @ObjectHolder(ModCyclic.MODID + ":quickshot")
-  //  public static Enchantment quickshot;
-  @ObjectHolder(ModCyclic.MODID + ":excavate")
-  public static EnchantExcavation excavate;
-  @ObjectHolder(ModCyclic.MODID + ":experience_boost")
-  public static EnchantXp experience_boost;
-  @ObjectHolder(ModCyclic.MODID + ":life_leech")
-  public static EnchantLifeLeech life_leech;
-  //  @ObjectHolder(ModCyclic.MODID + ":launch")
-  //  public static Enchantment launch;
-  @ObjectHolder(ModCyclic.MODID + ":magnet")
-  public static EnchantMagnet magnet;
-  @ObjectHolder(ModCyclic.MODID + ":multishot")
-  public static EnchantMultishot multishot;
-  //  @ObjectHolder(ModCyclic.MODID + ":quickshot")
-  //  public static Enchantment quickshot;
-  //  @ObjectHolder(ModCyclic.MODID + ":smelting")
-  //  public static EnchantAutoSmelt smelting;
-  @ObjectHolder(ModCyclic.MODID + ":venom")
-  public static EnchantVenom venom;
-  @ObjectHolder(ModCyclic.MODID + ":wooden_wrench")
-  public static WrenchItem wrench;
-  //
-  @ObjectHolder(ModCyclic.MODID + ":lava_walking")
-  public static Enchantment lava_walking;
+  public static class Entities {
+    //    @ObjectHolder(ModCyclic.MODID + ":boomerang")
+    //    public static EntityType<BoomerangEntity> boomerang;
+  }
+
+  public static class Enchants {
+    //  @ObjectHolder(ModCyclic.MODID + ":quickshot")
+    //  public static Enchantment quickshot;
+
+    @ObjectHolder(ModCyclic.MODID + ":excavate")
+    public static EnchantExcavation excavate;
+    @ObjectHolder(ModCyclic.MODID + ":experience_boost")
+    public static EnchantXp experience_boost;
+    @ObjectHolder(ModCyclic.MODID + ":life_leech")
+    public static EnchantLifeLeech life_leech;
+    //  @ObjectHolder(ModCyclic.MODID + ":launch")
+    //  public static Enchantment launch;
+    @ObjectHolder(ModCyclic.MODID + ":magnet")
+    public static EnchantMagnet magnet;
+    @ObjectHolder(ModCyclic.MODID + ":multishot")
+    public static EnchantMultishot multishot;
+    //  @ObjectHolder(ModCyclic.MODID + ":quickshot")
+    //  public static Enchantment quickshot;
+    //  @ObjectHolder(ModCyclic.MODID + ":smelting")
+    //  public static EnchantAutoSmelt smelting;
+    @ObjectHolder(ModCyclic.MODID + ":venom")
+    public static EnchantVenom venom;
+    @ObjectHolder(ModCyclic.MODID + ":lava_walking")
+    public static Enchantment lava_walking;
+  }
+
+  public static class Items {
+
+    //    @ObjectHolder(ModCyclic.MODID + ":boomerang")
+    //    public static BoomerangItem boomerang;
+    @ObjectHolder(ModCyclic.MODID + ":wooden_wrench")
+    public static WrenchItem wrench;
+    @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
+    public static PeatItem peat_fuel;
+  }
+
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static TileEntityType<TilePeatGenerator> peat_generatorTile;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
@@ -108,9 +126,6 @@ public class CyclicRegistry {
   public static BlockPeat peat_unbaked;
   @ObjectHolder(ModCyclic.MODID + ":peat_baked")
   public static BlockPeatFuel peat_baked;
-  @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
-  public static PeatItem peat_fuel;
-  //peat disabled
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static Block breaker;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
@@ -158,13 +173,22 @@ public class CyclicRegistry {
   public static Block spikes_curse;
   @ObjectHolder(ModCyclic.MODID + ":spikes_fire")
   public static Block spikes_fire;
-
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
   public static Block fluid_pipe;
   @ObjectHolder(ModCyclic.MODID + ":item_pipe")
   public static Block item_pipe;
+
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents {
+
+    @SubscribeEvent
+    public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> event) {
+      IForgeRegistry<EntityType<?>> r = event.getRegistry();
+      //      r.register(EntityType.Builder.create(BoomerangEntity::new, EntityClassification.CREATURE)
+      //          .size(1, 1)
+      //          .setShouldReceiveVelocityUpdates(false)
+      //          .build("boomerang").setRegistryName(ModCyclic.MODID, "boomerang"));
+    }
 
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -180,21 +204,19 @@ public class CyclicRegistry {
       r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
       r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
       r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
-      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large")); 
+      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large"));
       r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("energy_pipe"));
-//      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
-//      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
+      //      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
+      //      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
       r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
-//      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
-//      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
+      //      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
+      //      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     }
 
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       r.register(new BlockItem(CyclicRegistry.spikes_iron, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_iron"));
-      //r.register(new BlockItem(CyclicRegistry.spikes_fire, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_fire"));
-//      r.register(new BlockItem(CyclicRegistry.spikes_curse, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_curse"));
       r.register(new BlockItem(CyclicRegistry.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));
@@ -209,8 +231,8 @@ public class CyclicRegistry {
       r.register(new ExpItemGain(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_food"));
       r.register(new BlockItem(CyclicRegistry.experience_pylon, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("experience_pylon"));
       r.register(new BlockItem(CyclicRegistry.energy_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("energy_pipe"));
-//      r.register(new BlockItem(CyclicRegistry.item_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("item_pipe"));
-//      r.register(new BlockItem(CyclicRegistry.fluid_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fluid_pipe"));
+      //      r.register(new BlockItem(CyclicRegistry.item_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("item_pipe"));
+      //      r.register(new BlockItem(CyclicRegistry.fluid_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fluid_pipe"));
       r.register(new GloveItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("glove_climb"));
       r.register(new BlockItem(CyclicRegistry.fan, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fan"));
       r.register(new BlockItem(CyclicRegistry.peat_generator, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_generator"));
@@ -236,6 +258,8 @@ public class CyclicRegistry {
       r.register(new EnderPearlReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
       r.register(new EnderPearlMount(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
       r.register(new EnderEyeReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_eye_reuse"));
+      //      r.register(new BoomerangItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_item"));
+      r.register(new LeverRemote(new Item.Properties().group(CyclicRegistry.itemGroup).maxStackSize(1)).setRegistryName("lever_remote"));
     }
 
     @SubscribeEvent
