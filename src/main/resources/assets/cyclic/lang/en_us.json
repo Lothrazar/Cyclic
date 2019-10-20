@@ -401,8 +401,8 @@
 
     "dimension.notfound": "Dimension not found",
     "chunk.unloaded": "Action failed; chunk not loaded",
-    "item.password_remote.powered.true": "On",
-    "item.password_remote.powered.false": "Off",
+    "item.cyclic.lever_remote.powered.true": "On",
+    "item.cyclic.lever_remote.powered.false": "Off",
 
     "item.purple_boots.guide": "Stronger than diamond, comes pre-enchanted with Feather Falling and Depth Strider.",
     "item.purple_boots": "Crystallized Obsidian Boots",
