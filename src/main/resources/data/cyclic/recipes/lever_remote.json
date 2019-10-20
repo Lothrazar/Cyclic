@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    " t ",
+    " l "
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "s": {
+      "item": "minecraft:stone_button"
+    },
+    "t": {
+      "item": "minecraft:lever"
+    }
+  },
+  "result": {
+    "item": "cyclic:lever_remote"
+  }
+}
