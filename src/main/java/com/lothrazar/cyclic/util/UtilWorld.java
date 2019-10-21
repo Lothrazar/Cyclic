@@ -1,14 +1,42 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeverBlock;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilWorld {
+
+  public static ItemEntity dropItemStackInWorld(World world, BlockPos pos, ItemStack stack) {
+    if (pos == null || world == null || stack.isEmpty()) {
+      return null;
+    }
+    ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+    if (world.isRemote == false) {
+      world.addEntity(entityItem);
+    }
+    return entityItem;
+  }
+
+  public static BlockPos getRandomPos(Random rand, BlockPos here, int hRadius) {
+    int x = here.getX();
+    int z = here.getZ();
+    // search in a square
+    int xMin = x - hRadius;
+    int xMax = x + hRadius;
+    int zMin = z - hRadius;
+    int zMax = z + hRadius;
+    int posX = MathHelper.nextInt(rand, xMin, xMax);
+    int posZ = MathHelper.nextInt(rand, zMin, zMax);
+    return new BlockPos(posX, here.getY(), posZ);
+  }
 
   public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();

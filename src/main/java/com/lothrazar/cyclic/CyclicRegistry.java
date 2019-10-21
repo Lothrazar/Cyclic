@@ -20,6 +20,8 @@ import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.generator.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.generator.ContainerGenerator;
 import com.lothrazar.cyclic.block.generator.TilePeatGenerator;
+import com.lothrazar.cyclic.block.harvester.BlockHarvester;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
 import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
@@ -118,6 +120,10 @@ public class CyclicRegistry {
     public static PeatItem peat_fuel;
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":harvester")
+  public static TileEntityType<TileHarvester> harvesterTile;
+  @ObjectHolder(ModCyclic.MODID + ":harvester")
+  public static BlockHarvester harvester;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static TileEntityType<TilePeatGenerator> peat_generatorTile;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
@@ -211,6 +217,7 @@ public class CyclicRegistry {
       r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
       //      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
       //      r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
+      r.register(new BlockHarvester(Block.Properties.create(Material.ROCK)).setRegistryName("harvester"));
     }
 
     @SubscribeEvent
@@ -221,6 +228,8 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));
       r.register(new BlockItem(CyclicRegistry.battery, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("battery"));
+      r.register(new BlockItem(CyclicRegistry.harvester,
+          new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("harvester"));
       r.register(new EnderBagItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_bag"));
       r.register(new GemstoneItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_obsidian"));
       r.register(new GemstoneItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("gem_amber"));
@@ -273,6 +282,8 @@ public class CyclicRegistry {
       r.register(TileEntityType.Builder.create(TilePeatGenerator::new, CyclicRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
       r.register(TileEntityType.Builder.create(TileBattery::new, CyclicRegistry.battery).build(null).setRegistryName("battery"));
       r.register(TileEntityType.Builder.create(TileCableEnergy::new, CyclicRegistry.energy_pipe).build(null).setRegistryName("energy_pipe"));
+      r.register(TileEntityType.Builder.create(TileHarvester::new, CyclicRegistry.harvester)
+          .build(null).setRegistryName("harvester"));
     }
 
     @SubscribeEvent
