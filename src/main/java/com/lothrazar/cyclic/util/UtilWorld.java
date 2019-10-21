@@ -97,10 +97,10 @@ public class UtilWorld {
   }
 
   public static void flagUpdate(World worldIn, BlockPos blockPos, BlockState blockState, BlockState stateNew) {
-    //    worldIn.notifyBlockUpdate(blockPos,blockState,stateNew,3);
-    //    worldIn.notifyNeighborsOfStateChange(pos, blockIn);
+    worldIn.notifyBlockUpdate(blockPos, blockState, stateNew, 3);
+    worldIn.notifyNeighborsOfStateChange(blockPos, stateNew.getBlock());
     worldIn.notifyNeighborsOfStateChange(blockPos, blockState.getBlock());//THIS one works only with true
-    //    worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
-    //    worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
+    //        worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
+    //        worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
   }
 }

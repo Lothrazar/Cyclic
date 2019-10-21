@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,6 +29,9 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity {
 
+  BlockPos laserTarget;
+  int laserTimer;
+
   public TileHarvester() {
     super(CyclicRegistry.harvesterTile);
   }
@@ -42,6 +46,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
+    if (this.laserTimer > 0) {
+      laserTimer--;
+      return;
+    }
+    //k is zero
     BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), 9);
     this.tryHarvestSingle(target);
     IEnergyStorage cap = this.energy.orElse(null);
@@ -72,17 +81,22 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
         final ItemStack drop = iterator.next();
         if (drop.getItem() == seed.getItem()) { // Remove exactly one seed (consume for replanting
+          drop.shrink(1);
           ModCyclic.LOGGER.info("Harvester remove seed item " + drop);
           //          iterator.remove();
           //           break;
         }
-        else {
+        if (drop.getCount() > 0) {
           UtilWorld.dropItemStackInWorld(world, posCurrent, drop);
         }
       }
     }
-    //    world.destroyBlock(posCurrent, false);
     world.setBlockState(posCurrent, blockState.with(propInt, minAge));
+    laserTarget = posCurrent;
+    laserTimer = 15;
+    world.notifyBlockUpdate(posCurrent, getBlockState(), getBlockState(), 3);
+    UtilWorld.flagUpdate(world, pos, this.getBlockState(), this.getBlockState());
+    this.markDirty();
   }
 
   private IntegerProperty getAgeProp(BlockState blockState) {
@@ -116,6 +130,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void read(CompoundNBT tag) {
+    this.laserTarget = UtilNBT.getBlockPos(tag);
+    laserTimer = tag.getInt("lt");
     CompoundNBT energyTag = tag.getCompound("energy");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
     super.read(tag);
@@ -123,6 +139,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    if (laserTarget == null) {
+      laserTarget = BlockPos.ZERO;
+    }
+    UtilNBT.putBlockPos(tag, laserTarget);
+    tag.putInt("lt", laserTimer);
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);

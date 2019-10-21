@@ -15,11 +15,21 @@ public class UtilNBT {
     UtilNBT.setItemStackNBTVal(item, "zpos", pos.getZ());
   }
 
+  public static void putBlockPos(CompoundNBT tag, BlockPos pos) {
+    tag.putInt("xpos", pos.getX());
+    tag.putInt("ypos", pos.getY());
+    tag.putInt("zpos", pos.getZ());
+  }
+
   public static BlockPos getItemStackBlockPos(ItemStack item) {
     if (item.isEmpty() || !item.getOrCreateTag().contains("xpos")) {
       return null;
     }
     CompoundNBT tag = item.getOrCreateTag();
+    return getBlockPos(tag);
+  }
+
+  public static BlockPos getBlockPos(CompoundNBT tag) {
     return new BlockPos(tag.getInt("xpos"), tag.getInt("ypos"), tag.getInt("zpos"));
   }
 

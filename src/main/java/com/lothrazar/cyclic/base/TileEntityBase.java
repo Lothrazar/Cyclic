@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.block.cable.TileCableEnergy;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -15,6 +17,25 @@ public abstract class TileEntityBase extends TileEntity {
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
+  }
+
+  @Override
+  public CompoundNBT getUpdateTag() {
+    //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
+    CompoundNBT syncData = new CompoundNBT();
+    this.write(syncData);//this calls writeInternal
+    return syncData;
+  }
+
+  @Override
+  public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.SUpdateTileEntityPacket pkt) {
+    this.read(pkt.getNbtCompound());
+    super.onDataPacket(net, pkt);
+  }
+
+  @Override
+  public SUpdateTileEntityPacket getUpdatePacket() {
+    return new SUpdateTileEntityPacket(this.pos, 1, getUpdateTag());
   }
 
   public boolean isPowered() {
