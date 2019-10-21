@@ -32,6 +32,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     super(CyclicRegistry.harvesterTile);
   }
 
+  @Override
+  public boolean hasFastRenderer() {
+    return true;
+  }
+
   static final int MAX = 6400000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 
@@ -52,8 +57,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     int currentAge = blockState.get(propInt);
     int minAge = Collections.min(propInt.getAllowedValues());
     int maxAge = Collections.max(propInt.getAllowedValues());
-    //    RenderUtil.renderLaser(new LaserConfig(posCurrent, this.getPos(),
-    //        rotationTime, alpha, beamWidth, laserColor));
     if (minAge == maxAge || currentAge < maxAge) {
       //not grown
       return;
@@ -81,11 +84,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     //    world.destroyBlock(posCurrent, false);
     world.setBlockState(posCurrent, blockState.with(propInt, minAge));
   }
-
-  static final float[] laserColor = new float[] { 0.99F, 0F, 0F };
-  static final double rotationTime = 0;
-  static final double beamWidth = 0.02;
-  static final float alpha = 0.9F;
 
   private IntegerProperty getAgeProp(BlockState blockState) {
     for (IProperty<?> p : blockState.getProperties()) {
