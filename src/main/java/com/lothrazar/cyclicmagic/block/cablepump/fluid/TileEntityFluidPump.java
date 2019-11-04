@@ -132,8 +132,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
-    needsRedstone = compound.getInteger(NBT_REDST);
     transferRate = compound.getInteger("transferSaved");
+    filterType = compound.getInteger("filterType");
     NBTTagList invList = compound.getTagList("fluidGhostSlots", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < invList.tagCount(); i++) {
       NBTTagCompound stackTag = invList.getCompoundTagAt(i);
@@ -148,8 +148,8 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setInteger(NBT_REDST, needsRedstone);
     compound.setInteger("transferSaved", this.transferRate);
+    compound.setInteger("filterType", this.filterType);
     NBTTagList invList = new NBTTagList();
     for (int i = 0; i < this.getWrapperCount(); i++) {
       NBTTagCompound stackTag = new NBTTagCompound();

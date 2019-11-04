@@ -333,6 +333,6 @@
 	,"1.19.15":"Fall damage nerf for Chorus.  Reduced volume of some magic items.   Fix for clumps + exp boost enchantment desyncing xp orb entities.  "
   	,"1.19.16":"Evoker Fang will now start casting at the targeted block instead of always the casters feet.  Evoker Fang will now cast when activated in mid air, does not require a block to be clicked specifically.  Updated ender fang 3D model & textures by a contributor.  "
 	,"1.19.17":"updated ru_RU.lang by Bytegm.  Extractor cables are now rock material.  storage_bag now checks that the stack size is 1 before opening.  "
-  	,"1.19.18":"Changes to crafting_food and inventory_food: They toggle off when you eat them again; and inventory buttons get hidden correclty now if you eat one then turn it off"
+  	,"1.19.18":"Merge pull request #1245 from sandtechnology (Update zh_CN.lang).  Changes to crafting_food and inventory_food: They toggle off when you eat them again; and inventory buttons get hidden correclty now if you eat one then turn it off.  Fluid Extraction cables fix bug with cables resetting filter-type button after reloading world. "
   }
 }
