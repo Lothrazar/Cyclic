@@ -61,7 +61,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
   public static String KEY_LOC = "location";
   public static String KEY_LARGEST = "loc_largest";
   public static int maximumSaved;
-  public static int expDistRatio = 10;
+  public static float expDistRatio = 10;
   public static final int BTNS_PER_COLUMN = 8;
   private static final String KEY_BACK = "location_back";
   public static final int BACK_TICKS = 600;
@@ -268,7 +268,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IContent {
     maximumSaved = config.getInt("EnderBookMaxSaved", Const.ConfigCategory.modpackMisc,
         64, 1, 512, "Maximum number of saved waypoints in the ender book.  It still uses " + BTNS_PER_COLUMN +
             " per column, and putting too many may send it offscreen");
-    expDistRatio = config.getInt("EnderBookExpCostRatio", Const.ConfigCategory.modpackMisc,
+    expDistRatio = config.getFloat("EnderBookExpCostRatio", Const.ConfigCategory.modpackMisc,
         10, 0, 100, "The exp cost of teleporting is [the horizontal distance] divided by [this number] rounded to the nearest integer.  For example, if this number is 10, then teleporting 20 blocks costs 2 exp");
   }
 }
