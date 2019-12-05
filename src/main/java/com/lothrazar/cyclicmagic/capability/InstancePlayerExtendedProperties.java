@@ -9,7 +9,8 @@ import net.minecraft.util.math.BlockPos;
 
 public class InstancePlayerExtendedProperties implements IPlayerExtendedProperties {
 
-  private static final String MHEALTH = "mhealth";
+  private static final String OLD_MHEALTH = "mhealth";
+  private static final String MOD_HEALTH = "modhealth";
   private static final String NBT_TODO = "todo";
   private static final String HAS_INVENTORY_EXTENDED = "hasInventoryExtended";
   private static final String HAS_INVENTORY_CRAFTING = "hasInventoryCrafting";
@@ -27,7 +28,7 @@ public class InstancePlayerExtendedProperties implements IPlayerExtendedProperti
   private boolean hasInventoryCrafting = false;
   private boolean hasInventoryExtended = false;
   private String todo = "";
-  private int health = ItemHeartContainer.defaultHearts * 2;//two health per heart. magic number alert!
+  private int healthModifier = ItemHeartContainer.heartModifierInitial * 2;//two health per heart. magic number alert!
   private boolean isChorusSpectator = false;
   private BlockPos chorusStart = null;
   private int chorusDim = 0;
@@ -71,7 +72,7 @@ public class InstancePlayerExtendedProperties implements IPlayerExtendedProperti
     tags.setByte(HAS_INVENTORY_CRAFTING, (byte) (this.hasInventoryCrafting() ? 1 : 0));
     tags.setByte(HAS_INVENTORY_EXTENDED, (byte) (this.hasInventoryExtended() ? 1 : 0));
     tags.setString(NBT_TODO, this.getTODO());
-    tags.setInteger(MHEALTH, this.getMaxHealth());
+    tags.setInteger(MOD_HEALTH, this.getMaxHealthModifier());
     tags.setBoolean(KEY_BOOLEAN, this.isChorusSpectator);
     tags.setString(KEY_EATLOC, UtilNBT.posToStringCSV(this.chorusStart));
     tags.setInteger(KEY_EATDIM, this.chorusDim);
@@ -96,7 +97,14 @@ public class InstancePlayerExtendedProperties implements IPlayerExtendedProperti
     this.setInventoryCrafting(tags.getByte(HAS_INVENTORY_CRAFTING) == 1);
     this.setInventoryExtended(tags.getByte(HAS_INVENTORY_EXTENDED) == 1);
     this.setTODO(tags.getString(NBT_TODO));
-    this.setMaxHealth(tags.getInteger(MHEALTH));
+    // Migrate from old max health
+    if (tags.hasKey(OLD_MHEALTH)) {
+      int healthModifier = tags.getInteger(OLD_MHEALTH) - 20;
+      this.setMaxHealthModifier(healthModifier);
+      tags.setInteger(MOD_HEALTH, healthModifier);
+      tags.removeTag(OLD_MHEALTH);
+    }
+    this.setMaxHealthModifier(tags.getInteger(MOD_HEALTH));
     this.setChorusDim(tags.getInteger(KEY_EATDIM));
     this.setChorusTimer(tags.getInteger(KEY_TIMER));
     this.setChorusOn(tags.getBoolean(KEY_BOOLEAN));
@@ -121,13 +129,13 @@ public class InstancePlayerExtendedProperties implements IPlayerExtendedProperti
   }
 
   @Override
-  public int getMaxHealth() {
-    return health;
+  public int getMaxHealthModifier() {
+    return healthModifier;
   }
 
   @Override
-  public void setMaxHealth(int value) {
-    health = value;
+  public void setMaxHealthModifier(int value) {
+    healthModifier = value;
   }
 
   @Override

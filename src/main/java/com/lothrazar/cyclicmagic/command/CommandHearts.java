@@ -35,7 +35,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class CommandHearts extends BaseCommand implements ICommand {
 
-  public static final String name = "sethearts";
+  public static final String name = "setheartmod";
 
   public CommandHearts(boolean op) {
     super(name, op);
@@ -44,13 +44,13 @@ public class CommandHearts extends BaseCommand implements ICommand {
 
   @Override
   public String getUsage(ICommandSender sender) {
-    return "/" + getName() + " <player> <hearts>";
+    return "/" + getName() + " <player> <heart modifier>";
   }
 
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
     EntityPlayer ptarget = null;
-    int hearts = 0;
+    int heartModifier = 0;
     try {
       ptarget = super.getPlayerByUsername(server, args[0]);
       if (ptarget == null) {
@@ -63,18 +63,18 @@ public class CommandHearts extends BaseCommand implements ICommand {
       return;
     }
     try {
-      hearts = Integer.parseInt(args[1]);
+      heartModifier = Integer.parseInt(args[1]);
     }
     catch (Exception e) {
       UtilChat.addChatMessage(sender, getUsage(sender));
       return;
     }
-    if (hearts < 1) {
-      hearts = 1;
+    if (heartModifier < -9) {
+      heartModifier = -9;
     }
-    int health = hearts * 2;
+    int healthModifier = heartModifier * 2;
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(ptarget);
-    prop.setMaxHealth(health);
-    UtilEntity.setMaxHealth(ptarget, health);
+    prop.setMaxHealthModifier(healthModifier);
+    UtilEntity.setMaxHealthModifier(ptarget, healthModifier);
   }
 }
