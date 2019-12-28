@@ -66,19 +66,10 @@ public class UtilFluid {
     FluidStack fluidStack = fluidHandler.drain(Fluid.BUCKET_VOLUME, false);
     if (fluidStack != null// && fluidStack.amount >= Fluid.BUCKET_VOLUME
     ) {
-      ModCyclic.logger.info(fluidStack.amount + " amt BEFORE ");
       FluidActionResult placementResult = FluidUtil.tryPlaceFluid(null, world, pos, dispensedStack,
           fluidStack.copy());
       if (placementResult.isSuccess()) {
         //http://www.minecraftforge.net/forum/topic/56265-1112-fluidhandler-capability-on-buckets/
-        //        ModCyclic.logger.info("fluid placed so try drain " + stackIn);
-        //        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
-        ModCyclic.logger.info(placementResult.success + " and  returnMe = " + placementResult.result);
-        //stupid hack but otherwise the bucket stays full forever because wtf
-        //        fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
-        //        FluidStack test = FluidUtil.getFluidContained(placementResult.result);
-        //        if (test != null)
-        //          ModCyclic.logger.info(test.amount + " amt after");
         return placementResult.result;
       }
     }

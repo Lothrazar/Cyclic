@@ -155,7 +155,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
       afterSpawnFailure(world, posTarget);
     }
     else if (world.spawnEntity(monster)) {
-      ModCyclic.logger.info("[CANDLE] spawn " + monster.getName() + " - " + world.isAirBlock(posTarget) + posTarget);
+      ModCyclic.logger.log("[CANDLE] spawn " + monster.getName() + " - " + world.isAirBlock(posTarget) + posTarget);
       afterSpawnSuccess(monster, world, posTarget, rand);
     }
   }

@@ -118,10 +118,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     if (outEnchants.size() == 0 || keyMoved == null) {
       return;
     } //weird none were found. so anyweay dont pay cost
-    ModCyclic.logger.log("keyMoved  " + keyMoved.getName());
+//    ModCyclic.logger.log("keyMoved  " + keyMoved.getName());
     enchants.remove(keyMoved);
     // TODO: merge removeEnchant with blockLibrary
-    ModCyclic.logger.log("Give this many outEnchants to the eBook " + outEnchants.size());
+//    ModCyclic.logger.log("Give this many outEnchants to the eBook " + outEnchants.size());
     EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
     dropStack(eBook); // drop the new enchanted book
     //special case if input was book, we dont want an ench book with nothin on it
