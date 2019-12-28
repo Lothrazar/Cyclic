@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.sprinkler;
 
 import org.lwjgl.opengl.GL11;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BaseTESR;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.block.Block;
@@ -48,12 +49,17 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
     // Translate to the location of our tile entity
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
-    this.renderAnimation(te);
+    try {
+      this.renderAnimation(te);
+    }
+    catch (Exception e) {
+      ModCyclic.logger.error("sprinkler animation crash", e);
+    }
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
 
-  protected void renderAnimation(TileEntityBaseMachineInvo te) {
+  protected void renderAnimation(TileEntityBaseMachineInvo te) throws Exception {
     GlStateManager.pushMatrix();
     if (te.isRunning()) {
       //start of rotate
@@ -76,12 +82,16 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
     GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
     Tessellator tessellator = Tessellator.getInstance();
     tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-    Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
-        world,
-        getBakedModel(),
-        world.getBlockState(te.getPos()),
-        te.getPos(),
-        Tessellator.getInstance().getBuffer(), false);
+    if (Minecraft.getMinecraft() != null &&
+        Minecraft.getMinecraft().getBlockRendererDispatcher() != null &&
+        Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer() != null) {
+      Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
+          world,
+          getBakedModel(),
+          world.getBlockState(te.getPos()),
+          te.getPos(),
+          Tessellator.getInstance().getBuffer(), false);
+    }
     tessellator.draw();
     RenderHelper.enableStandardItemLighting();
     GlStateManager.popMatrix();
