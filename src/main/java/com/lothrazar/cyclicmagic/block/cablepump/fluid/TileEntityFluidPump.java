@@ -33,20 +33,16 @@ import com.lothrazar.cyclicmagic.data.ITileFluidWrapper;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankBase;
 import com.lothrazar.cyclicmagic.util.UtilFluid;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityFluidPump extends TileEntityBasePump implements ITickable, ITileRedstoneToggle, ITileFluidWrapper {
 
@@ -89,22 +85,25 @@ public class TileEntityFluidPump extends TileEntityBasePump implements ITickable
     BlockPos target = pos.offset(this.getCurrentFacing());
     UtilFluid.tryFillTankFromPosition(world, target, this.getCurrentFacing().getOpposite(), tank, transferRate,
         this.isWhitelist(), this.getFilterNonempty());
-    if (!this.tank.isFull()
-        && world.getBlockState(target).getMaterial().isLiquid()
-        && this.transferRate == Fluid.BUCKET_VOLUME) {
-      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
-      IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
-      if (handle.getTankProperties() == null || handle.getTankProperties().length == 0) {
-        return;
-      }
-      FluidStack fluidFromWorld = handle.getTankProperties()[0].getContents();
-      if (fluidFromWorld != null
-          && UtilFluid.isStackInvalid(fluidFromWorld, isWhitelist(), getFilterNonempty())
-          && this.tank.canFillFluidType(fluidFromWorld)) {
-        this.tank.fill(fluidFromWorld, true);
-        world.setBlockToAir(target);
-      }
-    }
+//    if (!this.tank.isFull()
+//        && world.getBlockState(target).getMaterial().isLiquid() 
+//        && this.transferRate == Fluid.BUCKET_VOLUME
+//        ) {
+//      System.out.println("META,"+
+//        world.getBlockState(target).getBlock().getMetaFromState(  world.getBlockState(target)  ));
+//      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, target);
+//      IFluidHandler handle = FluidUtil.getFluidHandler(world, target, EnumFacing.UP);
+//      if (handle==null || handle.getTankProperties() == null || handle.getTankProperties().length == 0) {
+//        return;
+//      } 
+//      FluidStack fluidFromWorld = handle.getTankProperties()[0].getContents();
+//      if (fluidFromWorld != null
+//          && UtilFluid.isStackInvalid(fluidFromWorld, isWhitelist(), getFilterNonempty())
+//          && this.tank.canFillFluidType(fluidFromWorld)) {
+//        this.tank.fill(fluidFromWorld, true);
+//        world.setBlockToAir(target);
+//      }
+//    }
     //eXPORT: now try to DEPOSIT fluid next door
     List<EnumFacing> sidesOut = getSidesNotFacing();
     Collections.shuffle(sidesOut);
