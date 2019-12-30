@@ -30,6 +30,7 @@ import com.lothrazar.cyclicmagic.command.CommandGetHome;
 import com.lothrazar.cyclicmagic.command.CommandHeal;
 import com.lothrazar.cyclicmagic.command.CommandHearts;
 import com.lothrazar.cyclicmagic.command.CommandHome;
+import com.lothrazar.cyclicmagic.command.CommandHunger;
 import com.lothrazar.cyclicmagic.command.CommandNbt;
 import com.lothrazar.cyclicmagic.command.CommandNbtSet;
 import com.lothrazar.cyclicmagic.command.CommandPing;
@@ -64,6 +65,9 @@ public class CommandModule extends BaseModule implements IHasConfig {
     }
     if (configToggle.get(CommandHeal.name)) {
       event.registerServerCommand(new CommandHeal(commandNeedsOp.get(CommandHeal.name)));
+    }
+    if (configToggle.get(CommandHunger.name)) {
+      event.registerServerCommand(new CommandHunger(commandNeedsOp.get(CommandHunger.name)));
     }
     if (configToggle.get(CommandHearts.name)) {
       event.registerServerCommand(new CommandHearts(commandNeedsOp.get(CommandHearts.name)));
@@ -124,5 +128,6 @@ public class CommandModule extends BaseModule implements IHasConfig {
     syncCommandConfig(config, CommandTodoList.name, false, "Set reminders on screen for yourself");
     syncCommandConfig(config, CommandVillageInfo.name, false, "Get the stats on the nearest village (if any)");
     syncCommandConfig(config, CommandWorldHome.name, true, "Teleport to true worldspawn");
+    syncCommandConfig(config, CommandHunger.name, true, "Command to set users food level");
   }
 }
