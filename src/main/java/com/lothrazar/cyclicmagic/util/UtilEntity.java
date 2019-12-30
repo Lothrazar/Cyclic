@@ -105,9 +105,8 @@ public class UtilEntity {
     }
   }
 
-  public static void setMaxHealth(EntityLivingBase living, double max) {
+  public static void setMaxHealthModifier(EntityLivingBase living, double amount) {
     IAttributeInstance healthAttribute = living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-    double amount = max - healthAttribute.getBaseValue();
     AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
     // Need to remove modifier to apply a new one
     if (modifier != null) {
@@ -118,20 +117,19 @@ public class UtilEntity {
     healthAttribute.applyModifier(modifier);
   }
 
-  public static double getMaxHealth(EntityLivingBase living) {
+  public static double getMaxHealthModifier(EntityLivingBase living) {
     IAttributeInstance healthAttribute = living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-    double maxHealth = healthAttribute.getBaseValue();
     AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
     if (modifier != null) {
-      maxHealth += modifier.getAmount();
+      return modifier.getAmount();
     }
-    return maxHealth;
+    return 0;
   }
 
-  public static int incrementMaxHealth(EntityLivingBase living, int by) {
-    int newVal = (int) getMaxHealth(living) + by;
-    setMaxHealth(living, newVal);
-    return newVal;
+  public static int incrementMaxHealthModifier(EntityLivingBase living, int by) {
+    int newModifier = (int) getMaxHealthModifier(living) + by;
+    setMaxHealthModifier(living, newModifier);
+    return newModifier;
   }
 
   public static EnumFacing getFacing(EntityLivingBase entity) {

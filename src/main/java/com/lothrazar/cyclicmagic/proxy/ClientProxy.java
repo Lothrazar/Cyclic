@@ -237,8 +237,8 @@ public class ClientProxy extends CommonProxy {
       IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(getClientPlayer());
       if (props != null) {
         props.setDataFromNBT(tags);
-        if (props.getMaxHealth() != 0 && props.getMaxHealth() > player.getMaxHealth()) {//it doesnt always need to do this somehow. i get 24>20 sometimes then 24>24 other tiems
-          UtilEntity.setMaxHealth(player, props.getMaxHealth());
+        if (props.getMaxHealthModifier() != 0) {
+          UtilEntity.setMaxHealthModifier(player, props.getMaxHealthModifier());
         }
       }
     }

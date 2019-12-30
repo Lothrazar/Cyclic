@@ -36,24 +36,24 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSyncPlayerHealth implements IMessage, IMessageHandler<PacketSyncPlayerHealth, IMessage> {
 
-  private int health;
+  private int healthModifier;
 
   public PacketSyncPlayerHealth() {}
 
   public PacketSyncPlayerHealth(int h) {
-    health = h;
+    healthModifier = h;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
-    health = tags.getInteger("h");
+    healthModifier = tags.getInteger("h");
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
-    tags.setInteger("h", health);
+    tags.setInteger("h", healthModifier);
     ByteBufUtils.writeTag(buf, tags);
   }
 
@@ -63,7 +63,7 @@ public class PacketSyncPlayerHealth implements IMessage, IMessageHandler<PacketS
       EntityPlayer p = ModCyclic.proxy.getPlayerEntity(ctx);
       if (p != null) {
         //force clientside hearts to update and match real value
-        UtilEntity.setMaxHealth(p, message.health);
+        UtilEntity.setMaxHealthModifier(p, message.healthModifier);
       }
     }
     return null;

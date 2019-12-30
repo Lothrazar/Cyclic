@@ -17,9 +17,9 @@ public interface IPlayerExtendedProperties {
 
   void setInventoryExtended(boolean value);
 
-  int getMaxHealth();
+  int getMaxHealthModifier();
 
-  void setMaxHealth(int value);
+  void setMaxHealthModifier(int value);
 
   NBTTagCompound getDataAsNBT();
 

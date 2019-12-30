@@ -59,8 +59,9 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
 
   private static final int numFood = 2;
   private int heartChangeOnEat = 1;
-  public static int defaultHearts = 10;
-  private static int maxHearts = 20;
+  public static int heartModifierInitial = 0;
+  private static int heartModifierMax = 10;
+  private static int heartModifierMin = -9;
 
   public ItemHeartContainer(int heartChangeOnEat) {
     super(numFood, false);
@@ -75,9 +76,9 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
     int healthChange = 2 * heartChangeOnEat;
     //one heart is 2 health points (half heart = 1 health)
-    int newVal = UtilEntity.incrementMaxHealth(player, healthChange);
-    prop.setMaxHealth(newVal);
-    UtilChat.sendStatusMessage(player, (newVal / 2) + "");
+    int newModifier = UtilEntity.incrementMaxHealthModifier(player, healthChange);
+    prop.setMaxHealthModifier(newModifier);
+    UtilChat.sendStatusMessage(player, (newModifier / 2) + "");
     UtilSound.playSound(player, SoundRegistry.heart_container);
   }
 
@@ -96,18 +97,31 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
   @SubscribeEvent
   public void onPlayerWarp(PlayerChangedDimensionEvent event) {
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(event.player);
-    if (props.getMaxHealth() > 0 && event.player instanceof EntityPlayerMP) {
+    if (props.getMaxHealthModifier() != 0 && event.player instanceof EntityPlayerMP) {
       //force clientside hearts to visually update
-      ModCyclic.network.sendTo(new PacketSyncPlayerHealth(props.getMaxHealth()), (EntityPlayerMP) event.player);
+      ModCyclic.network.sendTo(new PacketSyncPlayerHealth(props.getMaxHealthModifier()), (EntityPlayerMP) event.player);
     }
   }
 
   @Override
   public void syncConfig(Configuration config) {
-    maxHearts = config.getInt("HeartContainerMax", Const.ConfigCategory.modpackMisc,
-        20, 10, 100, "Maximum number of heart containers you can get by eating heart containers.  Does not limit the /" + CommandHearts.name + " command");
-    defaultHearts = config.getInt("HeartContainerDefault", Const.ConfigCategory.player,
-        10, 1, 100, "Default number of heart containers a new player will start with when first joining the world.  Will not affect existing players once they have joined.  (For Maximum heart limit given by the heart container see 'modpacks' category in the config file)");
+    heartModifierMax = config.getInt("HeartModifierMax", Const.ConfigCategory.modpackMisc,
+        10, 0, 90, "Maximum number of heart containers you can get by eating heart containers.  Does not limit the /" + CommandHearts.name + " command");
+    heartModifierInitial = config.getInt("HeartModifierInitial", Const.ConfigCategory.player,
+        0, -9, 90, "Default modifier for heart containers a new player will start with when first joining the world.  Will not affect existing players once they have joined.  (For Maximum heart modifier limit given by the heart containers see 'modpacks' category in the config file)");
+    // Migration from old heart configs
+    if (config.hasKey(Const.ConfigCategory.modpackMisc, "HeartContainerMax") && config.hasKey(Const.ConfigCategory.player, "HeartContainerDefault")) {
+      int maxHearts = config.getInt("HeartContainerMax", Const.ConfigCategory.modpackMisc,
+          20, 10, 100, "DEPRECATED");
+      heartModifierMax = maxHearts - 10;
+      config.getCategory(Const.ConfigCategory.modpackMisc).remove("HeartContainerMax");
+      config.getCategory(Const.ConfigCategory.modpackMisc).get("HeartModifierMax").set(heartModifierMax);
+      int defaultHearts = config.getInt("HeartContainerDefault", Const.ConfigCategory.player,
+          10, 1, 100, "DEPRECATED");
+      heartModifierInitial = defaultHearts - 10;
+      config.getCategory(Const.ConfigCategory.player).remove("HeartContainerDefault");
+      config.getCategory(Const.ConfigCategory.player).get("HeartModifierInitial").set(heartModifierInitial);
+    }
   }
 
   @SideOnly(Side.CLIENT)
@@ -118,8 +132,8 @@ public class ItemHeartContainer extends ItemFoodCreative implements IHasRecipe, 
   private boolean canEat(EntityPlayer player) {
     //this line is KEY to stop user from eating food at max health
     // ( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
-    double currentHearts = UtilEntity.getMaxHealth(player) / 2;
-    if (currentHearts + heartChangeOnEat > maxHearts || currentHearts + heartChangeOnEat < 1) {
+    double currentModifier = UtilEntity.getMaxHealthModifier(player) / 2;
+    if (currentModifier + heartChangeOnEat > heartModifierMax || currentModifier + heartChangeOnEat < heartModifierMin) {
       return false;
     }
     return true;
