@@ -99,10 +99,8 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
-            //  UtilSound.playSoundFromServer(SoundRegistry.uncraft, SoundCategory.BLOCKS, this.getPos(), this.getDimension(), 16);
-          }
-          //          UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
-        }
+           }
+         }
         else {//success = false, so try to dump to inventory first
           ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
           toDrop.add(stack.copy());
@@ -116,7 +114,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       }
       catch (Exception e) {
         ModCyclic.logger.error("Unhandled exception in uncrafting ", e);
-        e.printStackTrace();
       }
     } //end of timer go
   }
