@@ -683,4 +683,12 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return super.isRunning();
   }
+
+  protected int calculateInventoryHash(int start, int end) {
+    int invHash = 0;
+    for (int i = start; i < end; i++) {
+      invHash = (invHash + UtilItemStack.hashCode(this.inv.get(i))) % Integer.MAX_VALUE;
+    }
+    return invHash;
+  }
 }

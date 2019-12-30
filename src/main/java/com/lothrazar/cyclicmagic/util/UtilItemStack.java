@@ -266,7 +266,7 @@ public class UtilItemStack {
   }
 
   public static int hashCode(ItemStack itemStack) {
-    
-    return itemStack.getItem().hashCode() + itemStack.getCount();
+    int tagHash = (itemStack.getTagCompound() == null) ? 0 : itemStack.getTagCompound().hashCode();
+    return itemStack.getItem().hashCode() + itemStack.getCount() + tagHash;
   }
 }

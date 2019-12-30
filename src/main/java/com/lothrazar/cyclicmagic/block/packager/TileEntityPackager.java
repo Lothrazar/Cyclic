@@ -65,13 +65,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     return getFieldOrdinals().length;
   }
 
-  private int updateInvoHash(int start, int end) {
-    int invHash = 0;
-    for (int i = start; i < end; i++) {
-      invHash = (invHash + UtilItemStack.hashCode(this.inv.get(i))) % Integer.MAX_VALUE;
-    }
-    return invHash;
-  } 
 
   private int lastInvHash = 0;
 
@@ -92,7 +85,7 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
       else if (!world.isRemote) {
         //no matching recipe found, OR could not process (ingredients not found)
         this.lastRecipe = null;
-        int currHash = updateInvoHash(0, INPUT_SIZE);
+        int currHash = calculateInventoryHash(0, INPUT_SIZE);
         // before we go hunting for recipes
         //use hash to say "has inventory contents changed since last time"
         //if they have changed, and if not empty, 
