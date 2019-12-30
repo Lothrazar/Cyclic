@@ -65,6 +65,16 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     return getFieldOrdinals().length;
   }
 
+  private int updateInvoHash(int start, int end) {
+    int invHash = 0;
+    for (int i = start; i < end; i++) {
+      invHash = (invHash + UtilItemStack.hashCode(this.inv.get(i))) % Integer.MAX_VALUE;
+    }
+    return invHash;
+  } 
+
+  private int lastInvHash = 0;
+
   @Override
   public void update() {
     if (this.isRunning() == false) {
@@ -79,10 +89,21 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
         // are we empty? if empty dont consume
         this.consumeEnergy();
       }
-      else {
+      else if (!world.isRemote) {
         //no matching recipe found, OR could not process (ingredients not found)
         this.lastRecipe = null;
-        findRecipe();
+        int currHash = updateInvoHash(0, INPUT_SIZE);
+        // before we go hunting for recipes
+        //use hash to say "has inventory contents changed since last time"
+        //if they have changed, and if not empty, 
+        // THEN go recipe hunting (expensive operation)
+        if (currHash != lastInvHash &&
+            !this.isInventoryEmpty(0, INPUT_SIZE)) {
+          //inventory changed since last check, and its not empty
+          lastInvHash = currHash;
+         // ModCyclic.logger.log("packager find recipe new lastInvHash=" + lastInvHash);
+          findRecipe();
+        } 
       }
     }
   }

@@ -264,4 +264,9 @@ public class UtilItemStack {
           && tthis.areCapsCompatible(other);
     }
   }
+
+  public static int hashCode(ItemStack itemStack) {
+    
+    return itemStack.getItem().hashCode() + itemStack.getCount();
+  }
 }

@@ -556,12 +556,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   /**
    * Returns true only if every slot is empty
    * 
-   * ignores fuelSlot
    * 
    * @return boolean
    */
   protected boolean isInventoryEmpty() {
-    for (int i = 0; i < this.inv.size(); i++) {
+    return this.isInventoryEmpty(0, this.inv.size());
+  }
+
+  protected boolean isInventoryEmpty(int start, int end) {
+    for (int i = start; i < end; i++) {
       // something is non-empty: false right away
       if (this.inv.get(i).isEmpty() == false) {
         return false;
@@ -671,7 +674,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   @Override
-  public boolean isRunning() { 
+  public boolean isRunning() {
     if (this.hasEnergy) {
       //fix energy power client desync. 
       //without this. if power is coming in when redstone is toggled off, 
