@@ -97,7 +97,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
   }
 
   private boolean enabled;
-
+ 
   @Override
   public boolean enabled() {
     return enabled;
@@ -108,5 +108,10 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
     enabled = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 10, 0, 500000, Const.ConfigText.fuelCost);
     maxAttackPer = config.getInt("AutoUserMaxAttackPerAction", Const.ConfigCategory.modpackMisc, 0, 0, 100, "How many entities can be attacked with one swipe from the block_user when in attack mode.  Zero means no limit.  ");
+ //
+    TileEntityUser.MAX_SPEED = config.getInt("AutoUserLargestTick", Const.ConfigCategory.modpackMisc, 200, 2, 999, "Largest tick delay allowed in auto user control  ");
+    TileEntityUser.MIN_SPEED = config.getInt("AutoUserSmallestTick", Const.ConfigCategory.modpackMisc, 1, 1, 200, "Smallest tick delay allowed in auto user control.  if 1 use per tick is too much for your server than raise this larger");
+    
+  
   }
 }
