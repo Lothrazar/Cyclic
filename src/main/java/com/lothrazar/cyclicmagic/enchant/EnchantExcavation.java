@@ -99,6 +99,9 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
   }
 
   private int getHarvestMax(int level) {
+    if (level >= levelToMaxBreak.length) {
+      level = levelToMaxBreak.length - 1;
+    }
     return levelToMaxBreak[level];
   }
 
