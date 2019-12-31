@@ -73,14 +73,14 @@ public class ItemCaveFinder extends BaseTool implements IHasRecipe, IContent {
         }
         else if (worldObj.getBlockState(current) == Blocks.WATER.getDefaultState()
             || worldObj.getBlockState(current) == Blocks.FLOWING_WATER.getDefaultState()) {
-          UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.water") + i);
-          found = true;
-        }
+              UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.water") + i);
+              found = true;
+            }
         else if (worldObj.getBlockState(current) == Blocks.LAVA.getDefaultState()
             || worldObj.getBlockState(current) == Blocks.FLOWING_LAVA.getDefaultState()) {
-          UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.lava") + i);
-          found = true;
-        }
+              UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.lava") + i);
+              found = true;
+            }
         if (found) {
           break;//stop looping
         }

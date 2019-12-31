@@ -144,7 +144,7 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
       boolean fluidAllowed = holding == null || holding == currentRecipe.getFluidResult();
       if (fluidAllowed
           && current + incoming <= this.getCapacity()
-          && currentRecipe.tryPayCost(this, this.recipeIsLocked == 1)) { 
+          && currentRecipe.tryPayCost(this, this.recipeIsLocked == 1)) {
         //only create the output if cost was successfully paid 
         FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(), incoming);
         this.fill(fluidStack, true);

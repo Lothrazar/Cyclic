@@ -65,7 +65,6 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
     return getFieldOrdinals().length;
   }
 
-
   private int lastInvHash = 0;
 
   @Override
@@ -94,9 +93,9 @@ public class TileEntityPackager extends TileEntityBaseMachineInvo implements ITi
             !this.isInventoryEmpty(0, INPUT_SIZE)) {
           //inventory changed since last check, and its not empty
           lastInvHash = currHash;
-         // ModCyclic.logger.log("packager find recipe new lastInvHash=" + lastInvHash);
+          // ModCyclic.logger.log("packager find recipe new lastInvHash=" + lastInvHash);
           findRecipe();
-        } 
+        }
       }
     }
   }

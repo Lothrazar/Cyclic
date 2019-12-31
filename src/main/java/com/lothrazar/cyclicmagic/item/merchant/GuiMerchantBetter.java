@@ -109,7 +109,6 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.BackgroundDrawnEvent(this));
-    
   }
 
   @Override

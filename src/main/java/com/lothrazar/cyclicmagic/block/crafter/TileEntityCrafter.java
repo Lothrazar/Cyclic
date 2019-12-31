@@ -97,15 +97,14 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       ////////
       //only call the expensive findRecipe() if and when the grid changes
       //tracked using hashed summary
-      int currHash = calculateInventoryHash(SIZE_INPUT, SIZE_INPUT+SIZE_GRID );
-      if (currHash != lastInvHash 
+      int currHash = calculateInventoryHash(SIZE_INPUT, SIZE_INPUT + SIZE_GRID);
+      if (currHash != lastInvHash
           && this.isGridEmpty() == false) {
         lastInvHash = currHash;
         //ModCyclic.logger.log("hashchanged now go findrecipe" + lastInvHash);
         findRecipe();
-       
-      }// else ModCyclic.logger.log("hash is the same or grid empty"+lastInvHash);
-      //doesnt matter if recipe changed or not, see about processing
+      } // else ModCyclic.logger.log("hash is the same or grid empty"+lastInvHash);
+        //doesnt matter if recipe changed or not, see about processing
       if (recipe != null) {
         ItemStack craftResult = recipe.getCraftingResult(this.crafter);
         if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
@@ -117,7 +116,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         }
       }
     }
-    
   }
 
   private int lastInvHash = 0;
@@ -135,7 +133,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       //
       //
       recipe = CraftingManager.findMatchingRecipe(crafter, world);
-
       ModCyclic.logger.log("Recipe Found" + recipe);
     }
     catch (Exception err) {

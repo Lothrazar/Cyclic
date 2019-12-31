@@ -108,16 +108,16 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyBarDown != null && ClientProxy.keyBarDown.isPressed()
         && KeyInventoryShiftModule.enableInvoKeys) {
-      ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
-    }
+          ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
+        }
     else if (ClientProxy.keyShiftUp != null && ClientProxy.keyShiftUp.isPressed()
         && KeyInventoryShiftModule.enableInvoKeys) {
-      ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, false));
-    }
+          ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, false));
+        }
     else if (ClientProxy.keyShiftDown != null && ClientProxy.keyShiftDown.isPressed()
         && KeyInventoryShiftModule.enableInvoKeys) {
-      ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
-    }
+          ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
+        }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
       if (!data.getChorusOn()) {//treat it like spectator
@@ -177,9 +177,9 @@ public class EventKeyInput {
       }
       else if (ClientProxy.keyBarDown != null && isGuiKeyDown(ClientProxy.keyBarDown)
           && KeyInventoryShiftModule.enableInvoKeys) {
-        ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
-        return;
-      }
+            ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
+            return;
+          }
       GuiInventory gui = (GuiInventory) event.getGui();
       if (gui.getSlotUnderMouse() != null) {
         // only becuase it expects actually a column number
@@ -190,8 +190,8 @@ public class EventKeyInput {
         }
         else if (ClientProxy.keyShiftDown != null && isGuiKeyDown(ClientProxy.keyShiftDown)
             && KeyInventoryShiftModule.enableInvoKeys) {
-          ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
-        }
+              ModCyclic.network.sendToServer(new PacketMovePlayerColumn(slot, true));
+            }
       }
     }
     if (ClientProxy.keyExtraInvo != null && isGuiKeyDown(ClientProxy.keyExtraInvo) && event.getGui() instanceof GuiPlayerExtended) {
@@ -202,8 +202,8 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin)
         && CompatFastBench.LOADED) {
-      tryCloseFastbench(event, thePlayer);
-    }
+          tryCloseFastbench(event, thePlayer);
+        }
   }
 
   @SideOnly(Side.CLIENT)

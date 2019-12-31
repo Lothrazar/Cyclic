@@ -152,8 +152,8 @@ public class CyclicContent {
   public static BlockDeHydrator dehydrator;
   public static BlockSolidifier solidifier;
   public static BlockMelter melter;
-public static ItemInventoryUnlock invfood;
-public static ItemCraftingUnlock invthing;
+  public static ItemInventoryUnlock invfood;
+  public static ItemCraftingUnlock invthing;
 
   public static void init() {
     content = new ArrayList<IContent>();
@@ -244,9 +244,9 @@ public static ItemCraftingUnlock invthing;
     content.add(new BlockMagnet());
     content.add(new BlockMagnetAnti());
     content.add(new BlockDoorbell());
-   invfood = new ItemInventoryUnlock();
+    invfood = new ItemInventoryUnlock();
     content.add(invfood);
-    invthing=new ItemCraftingUnlock();
+    invthing = new ItemCraftingUnlock();
     content.add(invthing);
     dehydrator = new BlockDeHydrator();
     content.add(dehydrator);

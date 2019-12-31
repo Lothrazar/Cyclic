@@ -68,6 +68,7 @@ public class ItemRandomizer extends BaseTool implements IRenderOutline, IHasReci
   }
 
   public enum ActionType {
+
     X3, X5, X7, X9;
 
     private final static String NBT = "ActionType";

@@ -98,8 +98,8 @@ public class TileEntityTrash extends TileEntityBaseMachineFluid implements ITile
     }
     else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
         && this.doItems == false) {
-      return false;
-    }
+          return false;
+        }
     return super.hasCapability(capability, facing);
   }
 

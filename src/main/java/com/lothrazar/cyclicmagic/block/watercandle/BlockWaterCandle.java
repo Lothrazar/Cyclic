@@ -108,10 +108,10 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     }
     else if (state.getValue(IS_LIT).booleanValue()
         && player.getHeldItem(hand).isEmpty()) {
-      //turn it off
-      world.setBlockState(pos, state.withProperty(IS_LIT, false));
-      UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
-    }
+          //turn it off
+          world.setBlockState(pos, state.withProperty(IS_LIT, false));
+          UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
+        }
     return false;
   }
 

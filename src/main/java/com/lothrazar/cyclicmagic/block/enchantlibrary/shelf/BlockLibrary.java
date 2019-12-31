@@ -144,18 +144,18 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     }
     else if (playerHeld.getItem().equals(Items.BOOK)
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
-      EnchantStack es = library.getEnchantStack(segment);
-      if (es.isEmpty() == false) {
-        //also let them know what youre withdrawing. without the counter
-        UtilChat.sendStatusMessage(player, UtilChat.lang(es.getEnch().getName()) + " " + es.levelName());
-        this.dropEnchantedBookOnPlayer(es, player, pos);
-        playerHeld.shrink(1);
-        library.removeEnchantment(segment);
-        onSuccess(player);
-        library.markDirty();
-        return true;
-      }
-    }
+          EnchantStack es = library.getEnchantStack(segment);
+          if (es.isEmpty() == false) {
+            //also let them know what youre withdrawing. without the counter
+            UtilChat.sendStatusMessage(player, UtilChat.lang(es.getEnch().getName()) + " " + es.levelName());
+            this.dropEnchantedBookOnPlayer(es, player, pos);
+            playerHeld.shrink(1);
+            library.removeEnchantment(segment);
+            onSuccess(player);
+            library.markDirty();
+            return true;
+          }
+        }
     //display information about whats inside ??maybe?? if sneaking
     else if (player.isSneaking() == false && !player.world.isRemote) {
       EnchantStack es = library.getEnchantStack(segment);

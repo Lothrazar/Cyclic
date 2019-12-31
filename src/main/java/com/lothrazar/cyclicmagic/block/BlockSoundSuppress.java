@@ -108,7 +108,7 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe, IConten
     }
     catch (Exception e) {
       ModCyclic.logger.error("Error trying to detect volume of sound from 3rd party ", e);
-      ModCyclic.logger.error(e.getMessage()); 
+      ModCyclic.logger.error(e.getMessage());
     }
   }
 

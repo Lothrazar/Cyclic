@@ -5,6 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public enum GuideCategory {
+
   BLOCK, ITEM, WORLD, GEAR, ENCHANT, BLOCKMACHINE, BLOCKPLATE, ITEMBAUBLES, ITEMTHROW, TRANSPORT;
 
   public String text() {

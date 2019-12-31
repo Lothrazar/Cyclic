@@ -171,6 +171,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
   }
 
   public enum BuildType {
+
     FIRST, ROTATE, RANDOM;
 
     private final static String NBT = "build";

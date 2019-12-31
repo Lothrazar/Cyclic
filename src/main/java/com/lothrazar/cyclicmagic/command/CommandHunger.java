@@ -45,16 +45,15 @@ public class CommandHunger extends BaseCommand {
 
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
- 
     EntityPlayer player = null;
     try {
       player = super.getPlayerByUsername(server, args[0]);
-      int food=Integer.parseInt(args[1]);
+      int food = Integer.parseInt(args[1]);
       if (player == null) {
         UtilChat.addChatMessage(sender, getUsage(sender));
         return;
       }
-      player.getFoodStats().setFoodLevel(food); 
+      player.getFoodStats().setFoodLevel(food);
     }
     catch (Exception e) {
       UtilChat.addChatMessage(sender, getUsage(sender));

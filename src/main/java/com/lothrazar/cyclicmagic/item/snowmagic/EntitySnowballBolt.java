@@ -157,8 +157,8 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
         // air
         && // and we landed at air or replaceable
         world.isAirBlock(hitUp) == true) {
-      setNewSnow(world, hitUp);
-    }
+          setNewSnow(world, hitUp);
+        }
   }
 
   public void onHitWater(RayTraceResult mop) {

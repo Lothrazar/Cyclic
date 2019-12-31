@@ -30,6 +30,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public abstract class BlockPump extends BlockBaseFacingOmni {
 
   public enum EnumConnectType implements IStringSerializable {
+
     NONE, CABLE, BLOCKED;
 
     @Override

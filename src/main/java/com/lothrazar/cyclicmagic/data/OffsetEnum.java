@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.data;
 public enum OffsetEnum {
+
   TOP, CENTER, BOTTOM;
 
   public double getOffset() {

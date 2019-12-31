@@ -65,6 +65,7 @@ public class Const {
   }
 
   public static enum ScreenSize {
+
     STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE, LARGEPLAIN, SACK, PLAINWIDE;
 
     public int width() {

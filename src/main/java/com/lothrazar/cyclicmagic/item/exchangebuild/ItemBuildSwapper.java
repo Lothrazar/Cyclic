@@ -87,6 +87,7 @@ public class ItemBuildSwapper extends BaseTool implements IRenderOutline, IHasRe
   }
 
   public enum ActionType {
+
     SINGLE, X3, X5, X7, X9, X91, X19;
 
     private final static String NBT = "ActionType";

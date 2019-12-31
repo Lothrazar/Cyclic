@@ -53,7 +53,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
- 
+
   private static final int COOLDOWN = 10;//ticks not seconds
   private static final int DURABILITY = 666;
   private static final int MAX_RANGE = 16;
@@ -153,7 +153,7 @@ public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
     }
     // so. WE are using this hack because the entity has a MAGIC NUMBER of 6.0F hardcoded in a few places deep inside methods and if statements
     //this number is the damage that it deals.  ( It should be a property )
-//    UtilNBT.setEntityBoolean(entityevokerfangs, NBT_FANG_FROMPLAYER);
+    //    UtilNBT.setEntityBoolean(entityevokerfangs, NBT_FANG_FROMPLAYER);
   }
 
   private void onCastSuccess(EntityPlayer caster) {
@@ -173,6 +173,4 @@ public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
         'p', Blocks.ICE, //ore dict ice doesnt exist
         'd', "gemEmerald");
   }
-
- 
 }

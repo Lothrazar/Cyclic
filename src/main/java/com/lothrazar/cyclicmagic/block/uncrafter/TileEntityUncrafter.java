@@ -99,8 +99,8 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
-           }
-         }
+          }
+        }
         else {//success = false, so try to dump to inventory first
           ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
           toDrop.add(stack.copy());

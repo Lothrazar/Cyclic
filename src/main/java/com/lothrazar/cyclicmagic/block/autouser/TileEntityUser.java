@@ -88,8 +88,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 9;//WAS 4 9x9 area 
   //  public final static int TIMER_FULL = 120;
-  public static   int MAX_SPEED = 200;
-  public static   int MIN_SPEED = 1;
+  public static int MAX_SPEED = 200;
+  public static int MIN_SPEED = 1;
   private static final int SLOT_TOOL = 0;
   private static final int SLOT_OUTPUT_START = 3;
   private static final int INV_SIZE = 9;
@@ -516,7 +516,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.yOffset = value;
       break;
       case SPEED:
-        if(value < MIN_SPEED) {
+        if (value < MIN_SPEED) {
           value = MIN_SPEED;
         }
         if (value <= MAX_SPEED && value != 0) {

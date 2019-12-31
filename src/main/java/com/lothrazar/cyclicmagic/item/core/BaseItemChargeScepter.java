@@ -70,6 +70,7 @@ public abstract class BaseItemChargeScepter extends BaseTool {
   private static final int COOLDOWN = 5;
 
   public enum ActionType {
+
     SINGLE, DOUBLE, TRIPLE;
 
     private final static String NBT = "ActionType";

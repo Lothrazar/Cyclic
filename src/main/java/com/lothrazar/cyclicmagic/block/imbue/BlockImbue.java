@@ -51,6 +51,7 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   private static final String NBT_IMBUE_CHARGE = "CYCLIC_CHARGE";
 
   enum ImbueFlavor {
+
     //TODO: maybe instead a potion type with potion meta
     NONE, LEVITATE, EXPLOSION, FIRE, INVISIBILITY, POISON, SLOWNESS, GLOWING;
 

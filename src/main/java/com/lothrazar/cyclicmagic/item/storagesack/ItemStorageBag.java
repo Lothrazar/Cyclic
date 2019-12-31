@@ -62,6 +62,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   private static final String GUI_ID = "guiID";
 
   public static enum StoragePickupType {
+
     NOTHING, FILTER, EVERYTHING;
 
     private final static String NBT = "deposit";
@@ -94,6 +95,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
 
   public static enum StorageActionType {
+
     NOTHING, MERGE, DEPOSIT;
 
     private final static String NBT_OPEN = "isOpen";

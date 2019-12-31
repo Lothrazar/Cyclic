@@ -96,6 +96,7 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
           .build());
 
   public enum EnumConnectType implements IStringSerializable {
+
     NONE, CABLE, INVENTORY, BLOCKED;
 
     public boolean isHollow() {

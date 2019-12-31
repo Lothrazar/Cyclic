@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityGolemLaser extends Entity {
 
   public static enum VariantColors {
+
     RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE;
 
     public String nameLower() {

@@ -47,7 +47,7 @@ public class ContainerTrash extends ContainerBaseMachine {
   }
 
   @Override
-  public ItemStack transferStackInSlot(EntityPlayer player, int slot) { 
+  public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)
