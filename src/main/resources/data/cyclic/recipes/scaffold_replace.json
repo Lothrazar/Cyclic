@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s s",
+    "sds",
+    "s s"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "d": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "cyclic:scaffold_replace",
+    "count": 16
+  }
+}

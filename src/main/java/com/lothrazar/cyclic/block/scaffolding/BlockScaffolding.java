@@ -23,7 +23,7 @@ public class BlockScaffolding extends BlockBase {
   private boolean doesAutobreak = true;
 
   public BlockScaffolding(Properties properties, boolean autobreak) {
-    super(properties.hardnessAndResistance(0F).tickRandomly());
+    super(properties.hardnessAndResistance(0.1F).tickRandomly().harvestLevel(0));
     this.doesAutobreak = autobreak;
   }
 

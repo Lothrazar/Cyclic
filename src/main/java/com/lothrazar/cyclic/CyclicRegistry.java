@@ -26,6 +26,7 @@ import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
 import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
+import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
@@ -123,6 +124,11 @@ public class CyclicRegistry {
     public static PeatItem peat_fuel;
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
+  public static ItemScaffolding item_scaffold_replace;
+  @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
+  public static BlockScaffolding scaffold_replace;
+  //
   @ObjectHolder(ModCyclic.MODID + ":scaffold_responsive")
   public static ItemScaffolding item_scaffold_responsive;
   @ObjectHolder(ModCyclic.MODID + ":scaffold_responsive")
@@ -215,6 +221,8 @@ public class CyclicRegistry {
           .setRegistryName("scaffold_fragile"));
       r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), true)
           .setRegistryName("scaffold_responsive"));
+      r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD))
+          .setRegistryName("scaffold_replace"));
       r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
       r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
@@ -238,6 +246,8 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
+      r.register(new ItemScaffolding(CyclicRegistry.scaffold_replace,
+          new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("scaffold_replace"));
       r.register(new ItemScaffolding(CyclicRegistry.scaffold_fragile,
           new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("scaffold_fragile"));
       r.register(new ItemScaffolding(CyclicRegistry.scaffold_responsive,

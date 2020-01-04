@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s s",
+    " s ",
+    "s s"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cyclic:scaffold_fragile",
+    "count": 16
+  }
+}

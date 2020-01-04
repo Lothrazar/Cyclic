@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "cyclic:block/scaffold_replace" }
+    }
+}

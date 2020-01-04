@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "cyclic:battery"
+    "item": "cyclic:battery",
+    "count": 1
   }
 }
