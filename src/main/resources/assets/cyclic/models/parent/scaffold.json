@@ -1,9 +1,9 @@
 {
-	"parent": "block/block",
+	"parent": "block/cube",
 
 	"textures": {
-		"all": "blocks/stone",
-		"particle": "blocks/stone"
+		"all": "block/stone",
+		"particle": "block/stone"
 	},
 
 	"elements": [

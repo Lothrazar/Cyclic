@@ -25,6 +25,8 @@ import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
 import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
+import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
+import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.enchant.EnchantExcavation;
@@ -120,6 +122,8 @@ public class CyclicRegistry {
     public static PeatItem peat_fuel;
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":scaffold_fragile")
+  public static BlockScaffolding scaffold_fragile;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
   public static TileEntityType<TileHarvester> harvesterTile;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
@@ -200,6 +204,7 @@ public class CyclicRegistry {
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
       r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
+      r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD)).setRegistryName("scaffold_fragile"));
       r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
       r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
@@ -223,6 +228,8 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
+      r.register(new ItemScaffolding(CyclicRegistry.scaffold_fragile,
+          new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("scaffold_fragile"));
       r.register(new BlockItem(CyclicRegistry.spikes_iron, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_iron"));
       r.register(new BlockItem(CyclicRegistry.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
