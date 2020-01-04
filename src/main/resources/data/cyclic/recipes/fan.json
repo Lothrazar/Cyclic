@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "cyclic:fan"
+    "item": "cyclic:fan",
+    "count":1
   }
 }

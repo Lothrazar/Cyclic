@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "r r",
+    "gbg",
+    "sss"
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:emerald"
+    },
+    "g": {
+      "item": "minecraft:quartz"
+    },
+    "b": {
+      "item": "minecraft:dispenser"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "item": "cyclic:harvester",
+    "count":1
+  }
+}

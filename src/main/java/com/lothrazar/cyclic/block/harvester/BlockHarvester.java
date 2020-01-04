@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockReader;
 public class BlockHarvester extends BlockBase {
 
   public BlockHarvester(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.3F));
   }
 
   @Override

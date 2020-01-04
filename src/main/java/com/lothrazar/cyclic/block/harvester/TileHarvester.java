@@ -29,6 +29,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity {
 
+  private static final int RADIUS = 9;
+  private static final int ATTEMPTS_PERTICK = 16;
   BlockPos laserTarget;
   int laserTimer;
 
@@ -48,27 +50,30 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public void tick() {
     if (this.laserTimer > 0) {
       laserTimer--;
-      return;
     }
     //k is zero
-    BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), 9);
-    this.tryHarvestSingle(target);
-    IEnergyStorage cap = this.energy.orElse(null);
-    cap.extractEnergy(1, true);
+    for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
+      BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), RADIUS);
+      if (this.tryHarvestSingle(target)) {
+        IEnergyStorage cap = this.energy.orElse(null);
+        cap.extractEnergy(1, true);
+        break;
+      }
+    }
   }
 
-  private void tryHarvestSingle(BlockPos posCurrent) {
+  private boolean tryHarvestSingle(BlockPos posCurrent) {
     BlockState blockState = world.getBlockState(posCurrent);
     IntegerProperty propInt = this.getAgeProp(blockState);
     if (propInt == null || !(world instanceof ServerWorld)) {
-      return;
+      return false;
     }
     int currentAge = blockState.get(propInt);
     int minAge = Collections.min(propInt.getAllowedValues());
     int maxAge = Collections.max(propInt.getAllowedValues());
     if (minAge == maxAge || currentAge < maxAge) {
       //not grown
-      return;
+      return false;
     }
     //what does the non-grown state drop
     List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, (TileEntity) null);
@@ -97,6 +102,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     world.notifyBlockUpdate(posCurrent, getBlockState(), getBlockState(), 3);
     UtilWorld.flagUpdate(world, pos, this.getBlockState(), this.getBlockState());
     this.markDirty();
+    return true;
   }
 
   private IntegerProperty getAgeProp(BlockState blockState) {

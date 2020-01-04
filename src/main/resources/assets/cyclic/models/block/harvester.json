@@ -1,11 +1,11 @@
-{ 
- 	"parent": "cyclic:parent/machine_south",
+{
+ 	"parent": "cyclic:parent/machine_peat",
     "textures": {
-        "0": "minecraft:block/furnace_top",
-        "1": "minecraft:block/furnace_top",
-        "2": "minecraft:block/cauldron_inner",
-        "3": "minecraft:block/iron_block",
-        "4": "minecraft:block/emerald_block",
-        "particle": "minecraft:block/iron_block"
+        "0": "cyclic:blocks/trash_end",
+        "1": "minecraft:block/cauldron_inner",
+        "2": "cyclic:blocks/trash_end",
+        "3": "cyclic:blocks/pylon",
+        "4": "cyclic:blocks/pylon",
+        "particle": "cyclic:blocks/pylon"
     }
 }
