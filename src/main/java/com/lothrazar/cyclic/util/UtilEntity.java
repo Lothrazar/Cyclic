@@ -26,6 +26,8 @@ package com.lothrazar.cyclic.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -404,20 +406,22 @@ public class UtilEntity {
     entity.setPosition(fixedX, entity.posY, fixedZ);
   }
 
-  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
+  private static final int TICKS_FALLDIST_SYNC = 16;//tick every so often
 
-  //  public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
-  //    if (entity.isSneaking()) {
-  //      entity.motionY = 0.0D;
-  //    }
-  //    else if (entity.moveForward > 0.0F && entity.motionY < climbSpeed) {
-  //      entity.motionY = climbSpeed;
-  //    }
-  //    if (worldIn.isRemote && //setting fall distance on clientside wont work
-  //        entity instanceof PlayerEntity && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-  //      ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
-  //    }
-  //  }
+  public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
+    Vec3d motion = entity.getMotion();
+    if (entity.isSneaking()) {
+      entity.setMotion(motion.x, 0, motion.z);
+    }
+    else if (entity.moveForward > 0.0F && motion.y < climbSpeed) {
+      entity.setMotion(motion.x, climbSpeed, motion.z);
+    }
+    if (worldIn.isRemote && //setting fall distance on clientside wont work
+        entity instanceof PlayerEntity && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+      PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+    }
+  }
+
   public static List<VillagerEntity> getVillagers(World world, BlockPos p, int r) {
     BlockPos start = p.add(-r, -r, -r);
     BlockPos end = p.add(r, r, r);

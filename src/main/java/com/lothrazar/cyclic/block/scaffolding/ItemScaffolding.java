@@ -20,7 +20,6 @@ public class ItemScaffolding extends BlockItem {
 
   public ItemScaffolding(Block blockIn, Properties builder) {
     super(blockIn, builder);
-    //    super.onItemRightClick(worldIn, playerIn, handIn)
   }
 
   @SubscribeEvent
@@ -82,7 +81,7 @@ public class ItemScaffolding extends BlockItem {
           facing = Direction.EAST;
         break;
         case Const.DIR_WEST:
-          pos = pos.west();// .offset(Direction.WEST);
+          pos = pos.west();
           facing = Direction.WEST;
         break;
         case Const.DIR_SOUTH:

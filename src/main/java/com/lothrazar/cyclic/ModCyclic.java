@@ -42,6 +42,7 @@ public class ModCyclic {
     proxy.init();
     //TODO: LOOP 
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.item_scaffold_fragile);
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.item_scaffold_responsive);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.soundproofing);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.excavate);//y
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.experience_boost);//y
