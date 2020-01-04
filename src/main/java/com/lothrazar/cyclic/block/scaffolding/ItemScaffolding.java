@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
 import com.lothrazar.cyclic.util.Const;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -13,6 +13,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemScaffolding extends BlockItem {
 
@@ -21,24 +23,20 @@ public class ItemScaffolding extends BlockItem {
     //    super.onItemRightClick(worldIn, playerIn, handIn)
   }
 
-  @Override
-  public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-    System.out.println("onItemUse FIRST");
-    return super.onItemUseFirst(stack, context);
+  @SubscribeEvent
+  public void onRightClickBlock(RightClickBlock event) {
+    if (event.getItemStack() != null && event.getItemStack().getItem() == this && event.getPlayer().isSneaking()) {
+      Direction opp = event.getFace().getOpposite();
+      BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, this.getBlock());
+      event.getWorld().setBlockState(dest, Block.getBlockFromItem(this).getDefaultState());
+      ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
+      stac.shrink(1);
+      event.setCanceled(true);
+    }
   }
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-    //    System.out.println("onItemUse RIGHTCLICK");
-    //place in AIR
-    //    return super.onItemRightClick(worldIn, playerIn, handIn);
-    //  }
-    //  @Override
-    //  public ActionResultType onItemUse(ItemUseContext context) {
-    //    super.onItemUseFirst(stack, context)
-    //    this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand());
-    //    return super.onItemUse(context);
-    //    ItemStack stack = player.getHeldItem(hand);
     if (player.isSneaking()) {// || worldIn.getBlockState(context.getPos()).isAir() == false) {
       return super.onItemRightClick(worldIn, player, hand);
     }
@@ -98,15 +96,10 @@ public class ItemScaffolding extends BlockItem {
       }
     }
     if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) {
-      System.out.println("!!  NEWPOS " + pos);
-      //      Vec3d vec = new Vec3d(pos.getX() + 0.5D + facing.getXOffset() * 0.5D, pos.getY() + 0.5D + facing.getYOffset() * 0.5D, pos.getZ() + 0.5D + facing.getZOffset() * 0.5D);
-      //      BlockRayTraceResult trace = new BlockRayTraceResult(vec, facing, pos, doHoriz);
-      //      this.onItemUse(context)
       worldIn.setBlockState(pos, Block.getBlockFromItem(this).getDefaultState());
-      //      return ActionResultType.SUCCESS;
-      //      ItemUseContext context2 = new ItemUseContext(player, hand, trace);
-      //      ActionResultType res = super.onItemUse(context2);//ActionResultType.SUCCESS;//new ActionResult<ItemStack>(this.onItemUse(context), stack);
-      return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+      ItemStack stac = player.getHeldItem(hand);
+      stac.shrink(1);
+      return new ActionResult<>(ActionResultType.SUCCESS, stac);
     }
     return super.onItemRightClick(worldIn, player, hand);
   }

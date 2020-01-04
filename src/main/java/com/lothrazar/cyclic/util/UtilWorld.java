@@ -2,17 +2,38 @@ package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilWorld {
+
+  public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, Direction facing, int max, @Nullable Block blockMatch) {
+    BlockPos posToPlaceAt = new BlockPos(posIn);
+    BlockPos posLoop = new BlockPos(posIn);
+    //    world.getBlockState(posLoop).getBlock().isReplaceable(state, useContext)
+    for (int i = 0; i < max; i++) {
+      BlockState state = world.getBlockState(posLoop);
+      if (state.getBlock() != null
+          && world.getBlockState(posLoop).getBlock().isAir(state)//.isReplaceable(world, posLoop)
+      ) {
+        posToPlaceAt = posLoop;
+        break;
+      }
+      else {
+        posLoop = posLoop.offset(facing);
+      }
+    }
+    return posToPlaceAt;
+  }
 
   public static ItemEntity dropItemStackInWorld(World world, BlockPos pos, ItemStack stack) {
     if (pos == null || world == null || stack.isEmpty()) {

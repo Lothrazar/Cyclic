@@ -124,6 +124,8 @@ public class CyclicRegistry {
 
   @ObjectHolder(ModCyclic.MODID + ":scaffold_fragile")
   public static BlockScaffolding scaffold_fragile;
+  @ObjectHolder(ModCyclic.MODID + ":scaffold_fragile")
+  public static ItemScaffolding item_scaffold_fragile;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
   public static TileEntityType<TileHarvester> harvesterTile;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
