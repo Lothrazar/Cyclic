@@ -17,14 +17,14 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerGenerator extends ContainerBase {
 
-  TilePeatGenerator tileEntity;
+  TilePeatGenerator tile;
 
   public ContainerGenerator(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(CyclicRegistry.ContainerScreens.generatorCont, windowId);
-    tileEntity = (TilePeatGenerator) world.getTileEntity(pos);
+    tile = (TilePeatGenerator) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
-    tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 61, 21));
     });
@@ -38,7 +38,7 @@ public class ContainerGenerator extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
     trackInt(new IntReferenceHolder() {
@@ -50,7 +50,7 @@ public class ContainerGenerator extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tileEntity.setBurnTime(value);
+        tile.setBurnTime(value);
       }
     });
     trackInt(new IntReferenceHolder() {
@@ -62,25 +62,29 @@ public class ContainerGenerator extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tileEntity.setFlowing(value);
+        tile.setFlowing(value);
       }
     });
   }
 
   int getFlowing() {
-    return tileEntity.getFlowing();
+    return tile.getFlowing();
   }
 
   public int getEnergy() {
-    return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   public int getBurnTime() {
-    return tileEntity.getBurnTime();
+    return tile.getBurnTime();
   }
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.Blocks.peat_generator);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, CyclicRegistry.Blocks.peat_generator);
+  }
+
+  public int getNeedsRedstone() {
+    return tile.getNeedsRedstone();
   }
 }

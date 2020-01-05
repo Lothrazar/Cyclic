@@ -22,7 +22,6 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
-
 public class Const {
   //  public static class Res {
   //

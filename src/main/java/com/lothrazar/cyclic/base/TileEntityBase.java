@@ -14,6 +14,7 @@ public abstract class TileEntityBase extends TileEntity {
 
   public static final int FUEL_WEAK = 256;
   public static final int MENERGY = 64 * 1000;
+  private int needsRedstone = 1;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
@@ -79,4 +80,12 @@ public abstract class TileEntityBase extends TileEntity {
   }
 
   public abstract void setField(int field, int value);
+
+  public int getNeedsRedstone() {
+    return needsRedstone;
+  }
+
+  public void setNeedsRedstone(int needsRedstone) {
+    this.needsRedstone = needsRedstone;
+  }
 }

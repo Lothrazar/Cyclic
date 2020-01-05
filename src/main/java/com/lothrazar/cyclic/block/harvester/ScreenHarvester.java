@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.harvester;
 
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.ScreenBase;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;

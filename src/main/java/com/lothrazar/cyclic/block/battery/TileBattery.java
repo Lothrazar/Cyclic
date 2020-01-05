@@ -27,6 +27,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static final int MAX = 6400000;
+
+  public static enum Fields {
+    FLOWING, REDSTONE;
+  }
+
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private int flowing;
 
@@ -102,7 +107,13 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void setField(int field, int value) {
-    //field 0 is flowing
-    flowing = value;
+    switch (Fields.values()[field]) {
+      case FLOWING:
+        flowing = value;
+      break;
+      case REDSTONE:
+        setNeedsRedstone(value);
+      break;
+    }
   }
 }

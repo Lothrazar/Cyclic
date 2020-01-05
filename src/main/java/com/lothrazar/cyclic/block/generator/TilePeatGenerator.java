@@ -32,6 +32,11 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TilePeatGenerator extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int BURNTIME = 40;
+
+  public static enum Fields {
+    FLOWING, REDSTONE;
+  }
+
   private int fuelRate = 10;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -167,7 +172,13 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void setField(int field, int value) {
-    //field 0 is flowing
-    flowing = value;
+    switch (Fields.values()[field]) {
+      case FLOWING:
+        flowing = value;
+      break;
+      case REDSTONE:
+        setNeedsRedstone(value);
+      break;
+    }
   }
 }

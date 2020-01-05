@@ -1,19 +1,20 @@
 package com.lothrazar.cyclic.block.battery;
 
 import com.lothrazar.cyclic.CyclicRegistry;
-import com.lothrazar.cyclic.base.ButtonTooltip;
+import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.ScreenBase;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenBattery extends ScreenBase<ContainerBattery> {
 
-  private ButtonTooltip btnToggle;
+  private ButtonMachine btnToggle;
+  private ButtonMachine btnRedstone;
   private EnergyBar energy;
 
   public ScreenBattery(ContainerBattery screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -28,9 +29,15 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     int x = guiLeft + 132, y = guiTop + 8;
-    btnToggle = addButton(new ButtonTooltip(x, y, 20, 20, "", (p) -> {
-      container.tileEntity.setFlowing((container.getFlowing() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(0, container.tileEntity.getFlowing(), container.tileEntity.getPos()));
+    btnToggle = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
+      container.tile.setFlowing((container.getFlowing() + 1) % 2);
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(0, container.tile.getFlowing(), container.tile.getPos()));
+    }));
+    x = guiLeft + 8;
+    y = guiTop + 8;
+    btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
+      container.tile.setNeedsRedstone((container.getNeedsRedstone() + 1) % 2);
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileBattery.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
   }
 
@@ -45,20 +52,14 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
-    btnToggle.setMessage(container.getFlowing() == 1 ? "<>" : "|");
-    this.drawTooltips(mouseX, mouseY);
-  }
-
-  private void drawTooltips(int mouseX, int mouseY) {
-    if (this.btnToggle.isMouseOver(mouseX, mouseY)) {
-      btnToggle.renderToolTip(mouseX, mouseY);
-      this.renderTooltip(btnToggle.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
-    }
+    btnToggle.setTextureId(container.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
+    btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.getNeedsRedstone()));
+    btnRedstone.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
+    this.drawButtonTooltips(mouseX, mouseY);
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.drawBackground(CyclicRegistry.Textures.GUI);
     energy.renderEnergy(container.getEnergy());
   }

@@ -1,7 +1,9 @@
-package com.lothrazar.cyclic.gui;
+package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.gui.ButtonMachine;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.ResourceLocation;
@@ -26,5 +28,14 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     int relY = guiTop + y;
     int size = 18;
     blit(relX, relY, 0, 0, size, size, size, size);
+  }
+
+  public void drawButtonTooltips(int mouseX, int mouseY) {
+    for (Widget btn : this.buttons) {
+      if (btn instanceof ButtonMachine && btn.isMouseOver(mouseX, mouseY)) {
+        btn.renderToolTip(mouseX, mouseY);
+        this.renderTooltip(((ButtonMachine) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+      }
+    }
   }
 }

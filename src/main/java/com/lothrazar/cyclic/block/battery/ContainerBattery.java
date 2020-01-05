@@ -15,11 +15,11 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerBattery extends ContainerBase {
 
-  TileBattery tileEntity;
+  TileBattery tile;
 
   public ContainerBattery(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(CyclicRegistry.ContainerScreens.batteryCont, windowId);
-    tileEntity = (TileBattery) world.getTileEntity(pos);
+    tile = (TileBattery) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     layoutPlayerInventorySlots(8, 84);
@@ -32,7 +32,7 @@ public class ContainerBattery extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
     trackInt(new IntReferenceHolder() {
@@ -44,21 +44,25 @@ public class ContainerBattery extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tileEntity.setFlowing(value);
+        tile.setFlowing(value);
       }
     });
   }
 
+  public int getNeedsRedstone() {
+    return tile.getNeedsRedstone();
+  }
+
   int getFlowing() {
-    return tileEntity.getFlowing();
+    return tile.getFlowing();
   }
 
   public int getEnergy() {
-    return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.Blocks.battery);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, CyclicRegistry.Blocks.battery);
   }
 }
