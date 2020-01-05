@@ -6,22 +6,17 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -31,10 +26,11 @@ import net.minecraft.world.World;
 public class BlockSpikes extends BlockBase {
 
   private static final double CURSE_CHANCE = 0.2;
-  private static final int CURSE_TIME = 30;
-  private static final int FIRE_TIME = 30;
+  private static final int CURSE_TIME = 8 * 20;
+  private static final int FIRE_TIME = 20;
 
   public static enum EnumSpikeType implements IStringSerializable {
+
     PLAIN, FIRE, CURSE;
 
     @Override
@@ -64,7 +60,7 @@ public class BlockSpikes extends BlockBase {
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    switch ((Direction) state.get(BlockStateProperties.FACING)) {
+    switch (state.get(BlockStateProperties.FACING)) {
       case NORTH:
         return NORTH_BOX;
       case EAST:
@@ -88,28 +84,41 @@ public class BlockSpikes extends BlockBase {
       switch (this.type) {
         case CURSE:
           if (worldIn.rand.nextDouble() < CURSE_CHANCE) {
-            entity.attackEntityFrom(DamageSource.MAGIC, 1);
-          }
-          LivingEntity living = (LivingEntity) entity;
-          switch (worldIn.rand.nextInt(4)) {//[0,3] if nextInt(4) given 
-            case 0:
-              living.addPotionEffect(new EffectInstance(Effects.SLOWNESS, CURSE_TIME, 2));
-            break;
-            case 1:
-              living.addPotionEffect(new EffectInstance(Effects.WEAKNESS, CURSE_TIME, 2));
-            break;
-            case 2:
-              living.addPotionEffect(new EffectInstance(Effects.UNLUCK, CURSE_TIME, 1));
-            break;
-            case 3:
-              living.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, CURSE_TIME, 1));
-            break;
+            LivingEntity living = (LivingEntity) entity;
+            switch (worldIn.rand.nextInt(4)) {//[0,3] if nextInt(4) given 
+              case 0:
+                if (!living.isPotionActive(Effects.SLOWNESS))
+                  living.addPotionEffect(new EffectInstance(Effects.SLOWNESS, CURSE_TIME, 2));
+              break;
+              case 1:
+                if (!living.isPotionActive(Effects.WEAKNESS))
+                  living.addPotionEffect(new EffectInstance(Effects.WEAKNESS, CURSE_TIME, 2));
+              break;
+              case 2:
+                if (!living.isPotionActive(Effects.UNLUCK))
+                  living.addPotionEffect(new EffectInstance(Effects.UNLUCK, CURSE_TIME, 1));
+              break;
+              case 3:
+                if (!living.isPotionActive(Effects.MINING_FATIGUE))
+                  living.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, CURSE_TIME, 2));
+              break;
+              case 4:
+                entity.attackEntityFrom(DamageSource.MAGIC, 1);
+              break;
+              case 5:
+                if (!living.isPotionActive(Effects.BLINDNESS))
+                  living.addPotionEffect(new EffectInstance(Effects.BLINDNESS, CURSE_TIME, 1));
+              break;
+            }
           }
         break;
         case FIRE:
-          if (!entity.isBurning()) {
-            entity.setFire(FIRE_TIME);
-          }
+          //          if (!entity.isBurning()) {
+          //            entity.fire
+          entity.setFire(FIRE_TIME);
+        //          }
+        //          else
+        //            ModCyclic.LOGGER.info("is burning " + entity);
         break;
         case PLAIN:
           entity.attackEntityFrom(DamageSource.CACTUS, 1);
@@ -120,6 +129,7 @@ public class BlockSpikes extends BlockBase {
     }
   }
 
+  @Override
   public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     if (state.get(ACTIVATED).booleanValue() == false
         && world.isBlockPowered(pos)) {
@@ -128,9 +138,9 @@ public class BlockSpikes extends BlockBase {
     }
     else if (state.get(ACTIVATED).booleanValue()
         && world.isBlockPowered(pos) == false) {
-      //  UtilSound.playSoundFromServer(SoundRegistry.spikes_off, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
-      world.setBlockState(pos, state.with(ACTIVATED, false));
-    }
+          //  UtilSound.playSoundFromServer(SoundRegistry.spikes_off, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+          world.setBlockState(pos, state.with(ACTIVATED, false));
+        }
     super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
   }
 

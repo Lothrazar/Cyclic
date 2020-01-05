@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "srs",
+    "ttt"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:iron_bars"
+    },
+    "t": {
+      "item": "minecraft:iron_block"
+    },
+    "r": {
+      "item": "minecraft:fire_charge"
+    }
+  },
+  "result": {
+    "item": "cyclic:spikes_iron",
+    "count": 4
+  }
+}
