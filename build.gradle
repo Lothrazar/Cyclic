@@ -92,7 +92,9 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-
+    
+    compile fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
+    compile fg.deobf("top.theillusivec4.curios:curios:FORGE-1.14.4-${curios_version}")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
@@ -123,7 +125,14 @@ repositories {
     // location of a maven mirror for JEI files, as a fallback
     name = "ModMaven"
     url = "https://modmaven.k-4u.nl"
-  }
+  }    
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
+    maven {
+        url 'http://maven.mcmoddev.com'
+    }
+    
 }
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
