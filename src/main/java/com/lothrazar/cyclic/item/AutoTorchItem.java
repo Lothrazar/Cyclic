@@ -53,17 +53,18 @@ public class AutoTorchItem extends ItemBase {
     if (world.getLight(pos) <= lightLimit
         //            && player.isSpectator() == false
         //            && world.isSideSolid(pos.down(), Direction.UP)
+        && world.getBlockState(pos.down()).isSolid()
         && world.isAirBlock(pos)) { // dont overwrite liquids
       if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
         //        super.damageCharm(player, stack);
-        UtilItemStack.damageItem( stack);
+        UtilItemStack.damageItem(stack);
       }
     }
     else if (stack.isDamaged()) {
       ItemStack torches = player.findAmmo(new ItemStack(Items.TORCH));
       if (!torches.isEmpty()) {
         torches.shrink(1);
-        UtilItemStack.repairItem( stack);
+        UtilItemStack.repairItem(stack);
       }
     }
   }

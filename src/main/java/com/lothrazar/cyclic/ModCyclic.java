@@ -11,12 +11,14 @@ import com.lothrazar.cyclic.setup.ServerProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import top.theillusivec4.curios.api.imc.CurioIMCMessage;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ModCyclic.MODID)
@@ -37,6 +39,7 @@ public class ModCyclic {
   }
 
   private void setup(final FMLCommonSetupEvent event) {
+    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("charm").setSize(2).setEnabled(true).setHidden(false));
     //now all blocks/items exist
     PacketRegistry.init();
     proxy.init();
