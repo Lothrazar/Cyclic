@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -45,8 +44,7 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
-    btnToggle.setMessage(container.getFlowing() == 1 ? "<>" : "|");
-    //    drawString(Minecraft.getInstance().fontRenderer, "Burn Time: " + container.getBurnTime(), x, y + 10, 0xffffff);
+    //    btnToggle.setMessage(container.getFlowing() == 1 ? "<>" : "|");
     this.drawTooltips(mouseX, mouseY);
   }
 
@@ -59,7 +57,7 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    //    GlStateManager.color4f(1.0F,  1.0F, 1.0F, 1.0F);
     this.drawBackground(CyclicRegistry.Textures.GUI);
     this.drawSlot(60, 20);
     energy.renderEnergy(container.getEnergy());

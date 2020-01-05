@@ -23,44 +23,41 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import net.minecraft.util.ResourceLocation;
-
 public class Const {
-
-  public static class Res {
-
-    public static final String folder = "textures/gui/";
-    public static final ResourceLocation SLOT_LARGE = new ResourceLocation(Const.MODID, folder + "slot_large.png");//26x
-    public static final ResourceLocation SLOT_LARGE_PLAIN = new ResourceLocation(Const.MODID, folder + "slot_large_plain.png");//26x
-    public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
-    public static final ResourceLocation SLOT_GPS = new ResourceLocation(Const.MODID, folder + "slot_gps.png");
-    public static final ResourceLocation SLOT_SAPLING = new ResourceLocation(Const.MODID, folder + "slot_sapling.png");
-    public static final ResourceLocation SLOT_WATER = new ResourceLocation(Const.MODID, folder + "slot_bucket_water.png");
-    public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, folder + "inventory_slot_bottle.png");
-    public static final ResourceLocation SLOT_BUCKET = new ResourceLocation(Const.MODID, folder + "slot_bucket.png");
-    public static final ResourceLocation PROGRESS = new ResourceLocation(Const.MODID, folder + "progress.png");
-    public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
-    public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
-    public static final ResourceLocation TABLEPLAIN = new ResourceLocation(Const.MODID, folder + "table_plain.png");
-    public static final ResourceLocation PLAINWIDE = new ResourceLocation(Const.MODID, folder + "plain_wide.png");
-    public static final ResourceLocation TABLELARGE = new ResourceLocation(Const.MODID, folder + "pattern.png");
-    public static final ResourceLocation TABLEFILTER = new ResourceLocation(Const.MODID, folder + "filter.png");
-    public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
-    public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
-    public static final ResourceLocation BACKGROUND_SACK = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
-    public static final ResourceLocation ENERGY_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_ctr.png");
-    public static final ResourceLocation ENERGY_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_inner.png");
-    //    public static final ResourceLocation FUEL_CTRVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr_vert.png");
-    //    public static final ResourceLocation FUEL_INNERVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner_vert.png");
-    public static final ResourceLocation FLUID_BACKGROUND = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid.png");
-    //    public static final ResourceLocation FLUID_WATER = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_water.png");
-    //    public static final ResourceLocation FLUID_EXP = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_exp.png");
-    //    public static final ResourceLocation FLUID_LAVA = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_lava.png");
-    public static final ResourceLocation SLOT_GLOWSTONE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_glowstone.png");
-    public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
-    public static final ResourceLocation SLOT_BOOK = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_book.png");
-    public static final ResourceLocation SLOT_REDST = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_redstone.png");
-  }
+  //  public static class Res {
+  //
+  //    public static final String folder = "textures/gui/";
+  //    public static final ResourceLocation SLOT_LARGE = new ResourceLocation(Const.MODID, folder + "slot_large.png");//26x
+  //    public static final ResourceLocation SLOT_LARGE_PLAIN = new ResourceLocation(Const.MODID, folder + "slot_large_plain.png");//26x
+  //    public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
+  //    public static final ResourceLocation SLOT_GPS = new ResourceLocation(Const.MODID, folder + "slot_gps.png");
+  //    public static final ResourceLocation SLOT_SAPLING = new ResourceLocation(Const.MODID, folder + "slot_sapling.png");
+  //    public static final ResourceLocation SLOT_WATER = new ResourceLocation(Const.MODID, folder + "slot_bucket_water.png");
+  //    public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, folder + "inventory_slot_bottle.png");
+  //    public static final ResourceLocation SLOT_BUCKET = new ResourceLocation(Const.MODID, folder + "slot_bucket.png");
+  //    public static final ResourceLocation PROGRESS = new ResourceLocation(Const.MODID, folder + "progress.png");
+  //    public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
+  //    public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
+  //    public static final ResourceLocation TABLEPLAIN = new ResourceLocation(Const.MODID, folder + "table_plain.png");
+  //    public static final ResourceLocation PLAINWIDE = new ResourceLocation(Const.MODID, folder + "plain_wide.png");
+  //    public static final ResourceLocation TABLELARGE = new ResourceLocation(Const.MODID, folder + "pattern.png");
+  //    public static final ResourceLocation TABLEFILTER = new ResourceLocation(Const.MODID, folder + "filter.png");
+  //    public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
+  //    public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, Const.Res.folder + "inventory_slot_coal.png");
+  //    public static final ResourceLocation BACKGROUND_SACK = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
+  //    public static final ResourceLocation ENERGY_CTR = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_ctr.png");
+  //    public static final ResourceLocation ENERGY_INNER = new ResourceLocation(Const.MODID, Const.Res.folder + "energy_inner.png");
+  //    //    public static final ResourceLocation FUEL_CTRVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_ctr_vert.png");
+  //    //    public static final ResourceLocation FUEL_INNERVERT = new ResourceLocation(Const.MODID, Const.Res.folder + "fuel_inner_vert.png");
+  //    public static final ResourceLocation FLUID_BACKGROUND = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid.png");
+  //    //    public static final ResourceLocation FLUID_WATER = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_water.png");
+  //    //    public static final ResourceLocation FLUID_EXP = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_exp.png");
+  //    //    public static final ResourceLocation FLUID_LAVA = new ResourceLocation(Const.MODID, Const.Res.folder + "fluid_lava.png");
+  //    public static final ResourceLocation SLOT_GLOWSTONE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_glowstone.png");
+  //    public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
+  //    public static final ResourceLocation SLOT_BOOK = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_book.png");
+  //    public static final ResourceLocation SLOT_REDST = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_redstone.png");
+  //  }
 
   public static enum ScreenSize {
 
@@ -135,28 +132,28 @@ public class Const {
       }
       return 0;
     }
-
-    public ResourceLocation texture() {
-      switch (this) {
-        case STANDARD:
-          return Res.TABLEDEFAULT;
-        case STANDARDPLAIN:
-          return Res.TABLEPLAIN;
-        case PLAINWIDE:
-          return Res.PLAINWIDE;
-        case LARGE:
-          return Res.TABLELARGE;
-        case LARGEWIDE:
-          return Res.VILLAGER;
-        case SACK:
-          return Res.BACKGROUND_SACK;
-        case LARGEPLAIN:
-          return Res.SLOT_LARGE_PLAIN;
-        default:
-        break;
-      }
-      return null;
-    }
+    //
+    //    public ResourceLocation texture() {
+    //      switch (this) {
+    //        case STANDARD:
+    //          return Res.TABLEDEFAULT;
+    //        case STANDARDPLAIN:
+    //          return Res.TABLEPLAIN;
+    //        case PLAINWIDE:
+    //          return Res.PLAINWIDE;
+    //        case LARGE:
+    //          return Res.TABLELARGE;
+    //        case LARGEWIDE:
+    //          return Res.VILLAGER;
+    //        case SACK:
+    //          return Res.BACKGROUND_SACK;
+    //        case LARGEPLAIN:
+    //          return Res.SLOT_LARGE_PLAIN;
+    //        default:
+    //        break;
+    //      }
+    //      return null;
+    //    }
   }
 
   public static final String MODID = "cyclicmagic";
