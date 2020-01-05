@@ -42,7 +42,11 @@ import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
-import com.lothrazar.cyclic.item.bauble.CharmVoidItem;
+import com.lothrazar.cyclic.item.bauble.CharmAntidote;
+import com.lothrazar.cyclic.item.bauble.CharmFire;
+import com.lothrazar.cyclic.item.bauble.CharmOverpowered;
+import com.lothrazar.cyclic.item.bauble.CharmVoid;
+import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
 import com.lothrazar.cyclic.item.tool.EnderBagItem;
 import com.lothrazar.cyclic.item.tool.EnderEyeReuse;
@@ -304,7 +308,11 @@ public class CyclicRegistry {
       r.register(new WrenchItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("wrench"));///!!!!
       r.register(new BlockItem(CyclicRegistry.Blocks.trash, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("trash"));
       r.register(new AutoTorchItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_torch"));
-      r.register(new CharmVoidItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_void"));
+      r.register(new CharmVoid(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_void"));
+      r.register(new CharmAntidote(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_antidote"));
+      r.register(new CharmFire(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_fire"));
+      r.register(new CharmWither(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_wither"));
+      r.register(new CharmOverpowered(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_ultimate"));
       r.register(new EnderWingItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_home"));
       r.register(new EnderWingSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_world"));
       r.register(new IceWand(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_ice"));

@@ -22,38 +22,10 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
+public class CharmFire extends CharmBase {
 
-import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
-public class CharmVoidItem extends ItemBase {
-
-	public CharmVoidItem(Properties properties) {
-		super(properties);
-	}
- 
-	private static final int yLowest = -30;
-	private static final int yDest = 255;
- 
-	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn.getPosition().getY() < yLowest) {
-			UtilEntity.teleportWallSafe(entityIn, worldIn,
-					new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
-
-			UtilItemStack.damageItem(stack);
-			UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT);
-			// UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL,
-			// living.getPosition());
-		}
-	}
- 
+  public CharmFire(Properties properties) {
+    super(properties);
+    this.fireProt = true;
+  }
 }

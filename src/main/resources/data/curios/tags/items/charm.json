@@ -1,6 +1,10 @@
 {
   "replace": "false",
   "values": [
-    "cyclic:charm_void"
+    "cyclic:charm_void",
+    "cyclic:charm_antidote",
+    "cyclic:charm_ultimate",
+    "cyclic:charm_wither",
+    "cyclic:charm_fire"
   ]
 }

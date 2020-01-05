@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.util;
 
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 public class UtilItemStack {
@@ -9,7 +8,7 @@ public class UtilItemStack {
     s.setDamage(s.getDamage() - 1);
   }
 
-  public static void damageItem( ItemStack s) {
+  public static void damageItem(ItemStack s) {
     s.setDamage(s.getDamage() + 1);
   }
 }
