@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.itemcollect;
 
 import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.gui.ScreenBase;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
-public class ScreenCollector extends ContainerScreen<ContainerCollector> {
+public class ScreenCollector extends ScreenBase<ContainerCollector> {
 
   public ScreenCollector(ContainerCollector screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -25,9 +25,6 @@ public class ScreenCollector extends ContainerScreen<ContainerCollector> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.GUIINVENTORY);
-    int relX = (this.width - this.xSize) / 2;
-    int relY = (this.height - this.ySize) / 2;
-    this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
+    this.drawBackground(CyclicRegistry.Textures.GUIINVENTORY);
   }
 }

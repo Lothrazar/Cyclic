@@ -3,16 +3,16 @@ package com.lothrazar.cyclic.block.generator;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ButtonTooltip;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
-public class ScreenGenerator extends ContainerScreen<ContainerGenerator> {
+public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
 
   private ButtonTooltip btnToggle;
   private EnergyBar energy;
@@ -62,15 +62,8 @@ public class ScreenGenerator extends ContainerScreen<ContainerGenerator> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.GUI);
-    int relX = (this.width - this.xSize) / 2;
-    int relY = (this.height - this.ySize) / 2;
-    this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
-    this.minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.SLOT);
-    relX = guiLeft + 60;
-    relY = guiTop + 20;
-    int size = 18;
-    blit(relX, relY, 0, 0, size, size, size, size);
+    this.drawBackground(CyclicRegistry.Textures.GUI);
+    this.drawSlot(60, 20);
     energy.renderEnergy(container.getEnergy());
   }
 }
