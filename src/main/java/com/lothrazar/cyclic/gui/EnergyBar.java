@@ -37,4 +37,11 @@ public class EnergyBar {
     float pct = Math.min(energ / max, 1.0F);
     Screen.blit(relX, relY, 0, 0, 14, (int) (64 * pct), 14, 64);
   }
+
+  public void renderHoveredToolTip(int mouseX, int mouseY, int energ) {
+    if (this.isMouseover(mouseX, mouseY)) {
+      String tips = "" + energ + "/" + this.max;
+      parent.renderTooltip(tips, mouseX, mouseY);
+    }
+  }
 }

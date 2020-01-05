@@ -29,6 +29,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
+    energy.renderHoveredToolTip(mouseX, mouseY, container.getEnergy());
   }
 
   @Override

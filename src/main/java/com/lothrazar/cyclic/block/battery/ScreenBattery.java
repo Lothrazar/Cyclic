@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -40,12 +39,11 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
+    energy.renderHoveredToolTip(mouseX, mouseY, container.getEnergy());
   }
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    int x = 10, y = 50;
-    drawString(Minecraft.getInstance().fontRenderer, "" + container.getEnergy(), x, y, 0xffffff);
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
     btnToggle.setMessage(container.getFlowing() == 1 ? "<>" : "|");
     this.drawTooltips(mouseX, mouseY);
