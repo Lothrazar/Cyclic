@@ -9,7 +9,7 @@ public class ButtonTooltip extends GuiButtonExt {
 
   public static enum TextureEnum {
 
-    REDSTONE_ON, REDSTONE_OFF;
+    REDSTONE_ON, REDSTONE_OFF, POWER_MOVING, POWER_STOP;
 
     public int getX() {
       switch (this) {
@@ -17,8 +17,10 @@ public class ButtonTooltip extends GuiButtonExt {
           return 94;
         case REDSTONE_ON://lit redstone torch
           return 78;
-        default:
-        break;
+        case POWER_MOVING:
+          return -2;
+        case POWER_STOP:
+          return 46;
       }
       return 0;
     }
@@ -29,8 +31,10 @@ public class ButtonTooltip extends GuiButtonExt {
           return 478;
         case REDSTONE_ON:
           return 478;
-        default:
-        break;
+        case POWER_MOVING:
+          return 110;
+        case POWER_STOP:
+          return 110;
       }
       return 0;
     }
@@ -39,10 +43,14 @@ public class ButtonTooltip extends GuiButtonExt {
   private TextureEnum textureId = TextureEnum.REDSTONE_OFF;
   private String tooltip;
 
+  public ButtonTooltip(int xPos, int yPos, int width, int height, String displayString, IPressable handler) {
+    super(xPos, yPos, width, height, displayString, handler);
+  }
+
   @Override
   public void renderButton(int mouseX, int mouseY, float partial) {
     super.renderButton(mouseX, mouseY, partial);
-    textureId = TextureEnum.REDSTONE_ON;
+    textureId = TextureEnum.POWER_STOP;
     Minecraft minecraft = Minecraft.getInstance();
     minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.WIDGETS);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, this.alpha);
@@ -54,10 +62,6 @@ public class ButtonTooltip extends GuiButtonExt {
           width, height);
     }
     this.renderBg(minecraft, mouseX, mouseY);
-  }
-
-  public ButtonTooltip(int xPos, int yPos, int width, int height, String displayString, IPressable handler) {
-    super(xPos, yPos, width, height, displayString, handler);
   }
 
   public String getTooltip() {
