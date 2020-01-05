@@ -10,13 +10,13 @@
       "item": "cyclic:gem_amber"
     },
     "i": {
-      "item": "minecraft:end_stone"
+      "item": "minecraft:iron_block"
     },
     "w": {
-      "item": "minecraft:nether_wart"
+      "item": "minecraft:wither_rose"
     }
   },
   "result": {
-    "item": "cyclic:charm_void"
+    "item": "cyclic:charm_wither"
   }
 }

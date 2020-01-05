@@ -305,14 +305,14 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.Blocks.peat_unbaked, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_unbaked"));
       r.register(new BlockItem(CyclicRegistry.Blocks.peat_baked, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("peat_baked"));
       r.register(new BlockItem(CyclicRegistry.Blocks.soundproofing, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("soundproofing"));
-      r.register(new WrenchItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("wrench"));///!!!!
+      r.register(new WrenchItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("wrench"));
       r.register(new BlockItem(CyclicRegistry.Blocks.trash, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("trash"));
       r.register(new AutoTorchItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_torch"));
-      r.register(new CharmVoid(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_void"));
-      r.register(new CharmAntidote(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_antidote"));
-      r.register(new CharmFire(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_fire"));
-      r.register(new CharmWither(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_wither"));
-      r.register(new CharmOverpowered(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(2)).setRegistryName("charm_ultimate"));
+      r.register(new CharmVoid(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(64)).setRegistryName("charm_void"));
+      r.register(new CharmAntidote(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(64)).setRegistryName("charm_antidote"));
+      r.register(new CharmFire(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(64)).setRegistryName("charm_fire"));
+      r.register(new CharmWither(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(64)).setRegistryName("charm_wither"));
+      r.register(new CharmOverpowered(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_ultimate"));
       r.register(new EnderWingItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_home"));
       r.register(new EnderWingSp(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_world"));
       r.register(new IceWand(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_ice"));

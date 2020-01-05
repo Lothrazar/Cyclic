@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sws",
+    "fga",
+    "svs"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:gray_concrete"
+    },
+    "w": {
+      "item": "cyclic:charm_wither"
+    },
+    "f": {
+      "item": "cyclic:charm_fire"
+    },
+    "a": {
+      "item": "cyclic:charm_antidote"
+    },
+    "v": {
+      "item": "cyclic:charm_void"
+    },
+    "g": {
+      "item": "cyclic:gem_obsidian"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_ultimate"
+  }
+}
