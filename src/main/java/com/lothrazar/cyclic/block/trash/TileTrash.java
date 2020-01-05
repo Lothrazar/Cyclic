@@ -18,7 +18,7 @@ public class TileTrash extends TileEntityBase implements ITickableTileEntity {
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileTrash() {
-    super(CyclicRegistry.trashtile);
+    super(CyclicRegistry.Tiles.trashtile);
   }
 
   private IItemHandler createHandler() {

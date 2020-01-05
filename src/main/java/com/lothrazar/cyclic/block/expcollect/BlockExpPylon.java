@@ -37,7 +37,7 @@ public class BlockExpPylon extends BlockBase {
         if (tile.drainStoredXp(ExpItemGain.EXP_PER_FOOD)) {
           //do it
           held.shrink(1);
-          player.dropItem(new ItemStack(CyclicRegistry.experience_food), true);
+          player.dropItem(new ItemStack(CyclicRegistry.Items.experience_food), true);
           return true;
         }
         else {

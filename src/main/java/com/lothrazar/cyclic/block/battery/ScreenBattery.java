@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.battery;
 
-import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ButtonTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -9,15 +9,10 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenBattery extends ContainerScreen<ContainerBattery> {
 
-  private ResourceLocation GUI = new ResourceLocation(ModCyclic.MODID, "textures/gui/peat_generator.png");
-  private ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_slot.png");
-  private ResourceLocation ENERGY_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_ctr.png");
-  private ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
   private ButtonTooltip btnToggle;
 
   public ScreenBattery(ContainerBattery screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -60,20 +55,21 @@ public class ScreenBattery extends ContainerScreen<ContainerBattery> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.minecraft.getTextureManager().bindTexture(GUI);
+    this.minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.GUI);
     int relX = (this.width - this.xSize) / 2;
     int relY = (this.height - this.ySize) / 2;
     this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
-    //    this.minecraft.getTextureManager().bindTexture(SLOT);
-    //    relX = guiLeft + 60;
-    //    relY = guiTop + 20;
-    //    int size = 18;
-    //    blit(relX, relY, 0, 0, size, size, size, size);
-    this.minecraft.getTextureManager().bindTexture(ENERGY_CTR);
+    renderEnergy();
+  }
+
+  private void renderEnergy() {
+    int relX;
+    int relY;
+    this.minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.ENERGY_CTR);
     relX = guiLeft + 154;
     relY = guiTop + 8;
     blit(relX, relY, 0, 0, 16, 66, 16, 78);
-    this.minecraft.getTextureManager().bindTexture(ENERGY_INNER);
+    this.minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.ENERGY_INNER);
     relX = relX + 1;
     relY = relY + 1;
     float energ = container.getEnergy();

@@ -24,7 +24,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity 
   private int storedXp;
 
   public TileExpPylon() {
-    super(CyclicRegistry.experience_pylontile);
+    super(CyclicRegistry.Tiles.experience_pylontile);
   }
 
   private IItemHandler createHandler() {

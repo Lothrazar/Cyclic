@@ -21,7 +21,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   private int speed = 5;
 
   public TileFan() {
-    super(CyclicRegistry.fantile);
+    super(CyclicRegistry.Tiles.fantile);
   }
 
   @Override

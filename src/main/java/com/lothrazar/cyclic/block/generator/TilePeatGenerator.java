@@ -39,7 +39,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   private int flowing = 1;
 
   public TilePeatGenerator() {
-    super(CyclicRegistry.peat_generatorTile);
+    super(CyclicRegistry.Tiles.peat_generatorTile);
   }
 
   private IItemHandler createHandler() {

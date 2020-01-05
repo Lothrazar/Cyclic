@@ -48,8 +48,8 @@ public class BlockPeat extends BlockBase {
       int drinkHere = MathHelper.nextInt(world.rand, 0, waters.size() - 1);
       world.setBlockState(waters.get(drinkHere), Blocks.AIR.getDefaultState());
       if (world.rand.nextDouble() < CHANCE_BAKE_PCT * 2) {
-        //ok you won the second roll, NOW bake yourself
-        world.setBlockState(pos, CyclicRegistry.peat_baked.getDefaultState());
+        //ok you won the second roll, NOW bake yourself 
+        world.setBlockState(pos, CyclicRegistry.Blocks.peat_baked.getDefaultState());
         //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, pos);
       }
     }

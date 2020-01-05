@@ -31,7 +31,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   private int flowing;
 
   public TileBattery() {
-    super(CyclicRegistry.batterytile);
+    super(CyclicRegistry.Tiles.batterytile);
   }
 
   private IEnergyStorage createEnergy() {

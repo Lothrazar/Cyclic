@@ -32,7 +32,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileCollector() {
-    super(CyclicRegistry.collectortile);
+    super(CyclicRegistry.Tiles.collectortile);
   }
 
   private IItemHandler createHandler() {

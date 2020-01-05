@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
@@ -12,6 +13,10 @@ import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.IProperty;
@@ -20,6 +25,8 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -27,7 +34,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileHarvester extends TileEntityBase implements ITickableTileEntity {
+public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int RADIUS = 9;
   private static final int ATTEMPTS_PERTICK = 16;
@@ -35,7 +42,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   int laserTimer;
 
   public TileHarvester() {
-    super(CyclicRegistry.harvesterTile);
+    super(CyclicRegistry.Tiles.harvesterTile);
   }
 
   @Override
@@ -155,5 +162,16 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       tag.put("energy", compound);
     });
     return super.write(tag);
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerHarvester(i, world, pos, playerInventory, playerEntity);
   }
 }

@@ -20,7 +20,7 @@ public class ContainerGenerator extends ContainerBase {
   TilePeatGenerator tileEntity;
 
   public ContainerGenerator(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(CyclicRegistry.generatorCont, windowId);
+    super(CyclicRegistry.ContainerScreens.generatorCont, windowId);
     tileEntity = (TilePeatGenerator) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -81,6 +81,6 @@ public class ContainerGenerator extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.peat_generator);
+    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.Blocks.peat_generator);
   }
 }

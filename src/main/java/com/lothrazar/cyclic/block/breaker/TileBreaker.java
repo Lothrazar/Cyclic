@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileBreaker extends TileEntityBase implements ITickableTileEntity {
 
   public TileBreaker() {
-    super(CyclicRegistry.breakerTile);
+    super(CyclicRegistry.Tiles.breakerTile);
   }
 
   private void setAnimation(boolean lit) {

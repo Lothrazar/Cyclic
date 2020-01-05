@@ -1,10 +1,11 @@
-package com.lothrazar.cyclic.block.battery;
+package com.lothrazar.cyclic.block.harvester;
 
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
@@ -13,13 +14,13 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class ContainerBattery extends ContainerBase {
+public class ContainerHarvester extends ContainerBase {
 
-  TileBattery tileEntity;
+  private TileEntity tileEntity;
 
-  public ContainerBattery(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(CyclicRegistry.ContainerScreens.batteryCont, windowId);
-    tileEntity = (TileBattery) world.getTileEntity(pos);
+  public ContainerHarvester(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    super(CyclicRegistry.ContainerScreens.harvester, windowId);
+    tileEntity = world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     layoutPlayerInventorySlots(8, 84);
@@ -35,22 +36,6 @@ public class ContainerBattery extends ContainerBase {
         tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return getFlowing();
-      }
-
-      @Override
-      public void set(int value) {
-        tileEntity.setFlowing(value);
-      }
-    });
-  }
-
-  int getFlowing() {
-    return tileEntity.getFlowing();
   }
 
   public int getEnergy() {
@@ -59,6 +44,6 @@ public class ContainerBattery extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.Blocks.battery);
+    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.Blocks.harvester);
   }
 }

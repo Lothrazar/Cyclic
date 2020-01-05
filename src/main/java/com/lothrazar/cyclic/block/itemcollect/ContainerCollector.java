@@ -17,7 +17,7 @@ public class ContainerCollector extends ContainerBase {
   private TileEntity tileEntity;
 
   public ContainerCollector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(CyclicRegistry.collectortileContainer, windowId);
+    super(CyclicRegistry.ContainerScreens.collectortileContainer, windowId);
     tileEntity = world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -40,6 +40,6 @@ public class ContainerCollector extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.collector);
+    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.Blocks.collector);
   }
 }
