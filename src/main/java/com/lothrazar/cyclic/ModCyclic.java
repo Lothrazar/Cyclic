@@ -40,6 +40,8 @@ public class ModCyclic {
 
   private void setup(final FMLCommonSetupEvent event) {
     InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("charm").setSize(2).setEnabled(true).setHidden(false));
+    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("necklace").setSize(1).setEnabled(true).setHidden(false));
+    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("ring").setSize(2).setEnabled(true).setHidden(false));
     //now all blocks/items exist
     PacketRegistry.init();
     proxy.init();

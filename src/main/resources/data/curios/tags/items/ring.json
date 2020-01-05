@@ -1,0 +1,7 @@
+{
+  "replace": "false",
+  "values": [
+    "cyclic:charm_torch",
+    "cyclic:charm_void"
+  ]
+}
