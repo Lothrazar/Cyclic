@@ -83,6 +83,18 @@ public abstract class TileEntityBase extends TileEntity {
     }
   }
 
+  @Override
+  public void read(CompoundNBT tag) {
+    needsRedstone = tag.getInt("needsRedstone");
+    super.read(tag);
+  }
+
+  @Override
+  public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("needsRedstone", needsRedstone);
+    return super.write(tag);
+  }
+
   public abstract void setField(int field, int value);
 
   public int getNeedsRedstone() {

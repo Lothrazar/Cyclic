@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ContainerBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,14 +13,14 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerCollector extends ContainerBase {
 
-  private TileEntity tileEntity;
+  TileCollector tile;
 
   public ContainerCollector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(CyclicRegistry.ContainerScreens.collectortileContainer, windowId);
-    tileEntity = world.getTileEntity(pos);
+    tile = (TileCollector) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
-    tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
       int numRows = 2;
       for (int j = 0; j < numRows; ++j) {
@@ -36,8 +35,12 @@ public class ContainerCollector extends ContainerBase {
     layoutPlayerInventorySlots(8, 74);
   }
 
+  public int getNeedsRedstone() {
+    return tile.getNeedsRedstone();
+  }
+
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, CyclicRegistry.Blocks.collector);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, CyclicRegistry.Blocks.collector);
   }
 }

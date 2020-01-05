@@ -28,6 +28,10 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  public static enum Fields {
+    REDSTONE;
+  }
+
   private int radius = 8;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
@@ -87,6 +91,9 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
     if (world.isRemote) {
       return;
     }
@@ -115,6 +122,10 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void setField(int field, int value) {
-    // TODO Auto-generated method stub
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        setNeedsRedstone(value);
+      break;
+    }
   }
 }
