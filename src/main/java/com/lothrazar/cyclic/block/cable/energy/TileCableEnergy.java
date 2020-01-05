@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.cable;
+package com.lothrazar.cyclic.block.cable.energy;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,20 +1,21 @@
-package com.lothrazar.cyclic.block.cable;
+package com.lothrazar.cyclic.block.cable.energy;
 
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -24,9 +25,11 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockCableEnergy extends BlockBase {
 
@@ -47,20 +50,6 @@ public class BlockCableEnergy extends BlockBase {
       }
     }
     return state;
-  }
-
-  public enum EnumConnectType implements IStringSerializable {
-
-    NONE, CABLE, INVENTORY, BLOCKED;
-
-    public boolean isHollow() {
-      return this == NONE || this == BLOCKED;
-    }
-
-    @Override
-    public String getName() {
-      return name().toLowerCase();
-    }
   }
 
   private static final EnumProperty<EnumConnectType> DOWN = EnumProperty.create("down", EnumConnectType.class);
@@ -150,6 +139,18 @@ public class BlockCableEnergy extends BlockBase {
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
     super.fillStateContainer(builder);
     builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
+  }
+
+  @Override
+  public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
+    for (Direction d : Direction.values()) {
+      TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
+      IEnergyStorage energy = facingTile.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+      if (energy != null) {
+        stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.CABLE);
+        worldIn.setBlockState(pos, stateIn);
+      }
+    }
   }
 
   @Override

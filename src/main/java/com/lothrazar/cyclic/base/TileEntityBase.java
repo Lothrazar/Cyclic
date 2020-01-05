@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.base;
 
-import com.lothrazar.cyclic.block.cable.TileCableEnergy;
+import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;

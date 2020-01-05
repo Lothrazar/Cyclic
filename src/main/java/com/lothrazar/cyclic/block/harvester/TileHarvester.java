@@ -39,11 +39,13 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   private static final int ENERGY_COST = 250;
   private static final int RADIUS = 9;
   private static final int ATTEMPTS_PERTICK = 16;
+  static final int MAX = 640000;
 
   public static enum Fields {
     REDSTONE;
   }
 
+  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   BlockPos laserTarget;
   int laserTimer;
 
@@ -55,9 +57,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public boolean hasFastRenderer() {
     return true;
   }
-
-  static final int MAX = 640000;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 
   @Override
   public void tick() {
