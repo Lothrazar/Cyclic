@@ -1,9 +1,9 @@
 {
  	"parent": "cyclic:parent/machine_peat",
     "textures": {
-        "0": "cyclic:blocks/hydrator_bottom",
+        "0": "cyclic:blocks/plate",
         "1": "minecraft:block/cauldron_inner",
-        "2": "cyclic:blocks/hydrator_bottom",
+        "2": "cyclic:blocks/plate",
         "3": "cyclic:blocks/peat_unbaked",
         "4": "cyclic:blocks/peat_unbaked",
         "particle": "cyclic:blocks/peat_unbaked"

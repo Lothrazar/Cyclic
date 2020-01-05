@@ -31,7 +31,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 public class BlockCableEnergy extends BlockBase {
 
   public BlockCableEnergy(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(0.5F));
   }
 
   @Override
@@ -50,6 +50,7 @@ public class BlockCableEnergy extends BlockBase {
   }
 
   public enum EnumConnectType implements IStringSerializable {
+
     NONE, CABLE, INVENTORY, BLOCKED;
 
     public boolean isHollow() {
