@@ -14,7 +14,6 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenBattery extends ScreenBase<ContainerBattery> {
 
   private ButtonMachine btnToggle;
-  private ButtonMachine btnRedstone;
   private EnergyBar energy;
 
   public ScreenBattery(ContainerBattery screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -33,12 +32,6 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
       container.tile.setFlowing((container.getFlowing() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(0, container.tile.getFlowing(), container.tile.getPos()));
     }));
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
-      container.tile.setNeedsRedstone((container.getNeedsRedstone() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileBattery.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
-    }));
   }
 
   @Override
@@ -53,8 +46,6 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
     btnToggle.setTextureId(container.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
-    btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.getNeedsRedstone()));
-    btnRedstone.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
     this.drawButtonTooltips(mouseX, mouseY);
   }
 

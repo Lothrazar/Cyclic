@@ -49,10 +49,6 @@ public class ContainerBattery extends ContainerBase {
     });
   }
 
-  public int getNeedsRedstone() {
-    return tile.getNeedsRedstone();
-  }
-
   int getFlowing() {
     return tile.getFlowing();
   }

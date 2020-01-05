@@ -36,8 +36,14 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  private static final int ENERGY_COST = 250;
   private static final int RADIUS = 9;
   private static final int ATTEMPTS_PERTICK = 16;
+
+  public static enum Fields {
+    REDSTONE;
+  }
+
   BlockPos laserTarget;
   int laserTimer;
 
@@ -50,11 +56,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     return true;
   }
 
-  static final int MAX = 6400000;
+  static final int MAX = 640000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 
   @Override
   public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
     if (this.laserTimer > 0) {
       laserTimer--;
     }
@@ -63,7 +72,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), RADIUS);
       if (this.tryHarvestSingle(target)) {
         IEnergyStorage cap = this.energy.orElse(null);
-        cap.extractEnergy(1, true);
+        cap.extractEnergy(ENERGY_COST, true);
         break;
       }
     }
@@ -126,7 +135,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void setField(int field, int value) {
-    // TODO Auto-generated method stub
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        setNeedsRedstone(value);
+      break;
+    }
   }
 
   private IEnergyStorage createEnergy() {

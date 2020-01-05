@@ -14,7 +14,7 @@ public abstract class TileEntityBase extends TileEntity {
 
   public static final int FUEL_WEAK = 256;
   public static final int MENERGY = 64 * 1000;
-  private int needsRedstone = 1;
+  private int needsRedstone;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
@@ -41,6 +41,10 @@ public abstract class TileEntityBase extends TileEntity {
 
   public boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
+  }
+
+  public boolean requiresRedstone() {
+    return this.needsRedstone == 1;
   }
 
   protected void moveEnergy(Direction myFacingDir, int quantity) {

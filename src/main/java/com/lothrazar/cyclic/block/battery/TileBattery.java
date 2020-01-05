@@ -29,11 +29,11 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   static final int MAX = 6400000;
 
   public static enum Fields {
-    FLOWING, REDSTONE;
+    FLOWING;
   }
 
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private int flowing;
+  private int flowing = 0;
 
   public TileBattery() {
     super(CyclicRegistry.Tiles.batterytile);
@@ -110,9 +110,6 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     switch (Fields.values()[field]) {
       case FLOWING:
         flowing = value;
-      break;
-      case REDSTONE:
-        setNeedsRedstone(value);
       break;
     }
   }
