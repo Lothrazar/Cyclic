@@ -3,16 +3,13 @@ package com.lothrazar.cyclic.item.tool;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.item.EyeOfEnderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.EnderEyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -38,7 +35,8 @@ public class EnderEyeReuse extends ItemBase {
         if (playerIn instanceof ServerPlayerEntity) {
           CriteriaTriggers.USED_ENDER_EYE.trigger((ServerPlayerEntity) playerIn, blockpos);
         }
-        worldIn.playSound((PlayerEntity) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound((PlayerEntity) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.NEUTRAL, 0.5F,
+            0.4F / (random.nextFloat() * 0.4F + 0.8F));
         worldIn.playEvent((PlayerEntity) null, 1003, new BlockPos(playerIn), 0);
         if (!playerIn.abilities.isCreativeMode) {
           //           stack.shrink(1);

@@ -23,7 +23,7 @@ public class EnderPearlReuse extends ItemBase {
     ent.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
     playerIn.getCooldownTracker().setCooldown(stack.getItem(), 10);
-    UtilItemStack.damageItem( stack);
+    UtilItemStack.damageItem(stack);
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }

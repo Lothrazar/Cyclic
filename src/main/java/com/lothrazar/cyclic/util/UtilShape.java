@@ -25,7 +25,6 @@ public class UtilShape {
     return shape;
   }
 
-
   public static List<BlockPos> squareVerticalX(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -68,6 +67,7 @@ public class UtilShape {
     }
     return shape;
   }
+
   public static List<BlockPos> line(BlockPos pos, Direction efacing, int want) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int skip = 1;

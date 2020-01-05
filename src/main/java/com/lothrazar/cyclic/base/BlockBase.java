@@ -21,8 +21,8 @@ public abstract class BlockBase extends Block {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-     TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
+    TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
     t.applyTextStyle(TextFormatting.GRAY);
     tooltip.add(t);
-   }
+  }
 }

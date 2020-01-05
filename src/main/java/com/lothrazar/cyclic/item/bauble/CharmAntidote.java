@@ -22,7 +22,6 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
-
 public class CharmAntidote extends CharmBase {
 
   public CharmAntidote(Properties properties) {
