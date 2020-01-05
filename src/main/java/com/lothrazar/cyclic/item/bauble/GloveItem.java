@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;

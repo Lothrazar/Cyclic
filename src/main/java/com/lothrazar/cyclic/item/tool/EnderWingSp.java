@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.tool;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
 
-public class EnderWingItem extends ItemBase {
+public class EnderWingSp extends ItemBase {
 
-  public EnderWingItem(Properties properties) {
+  public EnderWingSp(Properties properties) {
     super(properties);
   }
 
@@ -46,7 +46,7 @@ public class EnderWingItem extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(context);
     }
-    boolean success = UtilWorld.tryTpPlayerToBed(world, player);
+    UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
     return super.onItemUse(context);
   }
 }

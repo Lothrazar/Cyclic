@@ -21,39 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.tool;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
+import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
 
-public class CharmVoidItem extends ItemBase {
+public class EnderWingItem extends ItemBase {
 
-	public CharmVoidItem(Properties properties) {
-		super(properties);
-	}
- 
-	private static final int yLowest = -30;
-	private static final int yDest = 255;
- 
-	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn.getPosition().getY() < yLowest) {
-			UtilEntity.teleportWallSafe(entityIn, worldIn,
-					new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
+  public EnderWingItem(Properties properties) {
+    super(properties);
+  }
 
-			UtilItemStack.damageItem(stack);
-			UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT);
-			// UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL,
-			// living.getPosition());
-		}
-	}
- 
+  private static final int cooldown = 600;//ticks not seconds
+  private static final int durability = 16;
+
+  @Override
+  public ActionResultType onItemUse(ItemUseContext context) {
+    PlayerEntity player = context.getPlayer();
+    World world = context.getWorld();
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return super.onItemUse(context);
+    }
+    boolean success = UtilWorld.tryTpPlayerToBed(world, player);
+    return super.onItemUse(context);
+  }
 }

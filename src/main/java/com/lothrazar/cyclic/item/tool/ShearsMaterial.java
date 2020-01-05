@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.tool;
 
 import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.Block;

@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.net;
 
 import java.util.List;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.ScytheType;
+import com.lothrazar.cyclic.item.tool.ScytheType;
 import com.lothrazar.cyclic.util.UtilScythe;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;

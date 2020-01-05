@@ -21,23 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.tool;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import com.lothrazar.cyclic.net.PacketScythe;
+import com.lothrazar.cyclic.registry.PacketRegistry;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 
-public class StirrupsItem extends ItemBase {
+public class ScytheForage extends ItemBase {
 
-  public StirrupsItem(Properties properties) {
+  public ScytheForage(Properties properties) {
     super(properties);
   }
 
+  private static final int RADIUS = 6;//13x13
+  private static final int RADIUS_SNEAKING = 2;//2x2
+
   @Override
-  public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-    // if (world.isRemote) { return false; }
-    return playerIn.startRiding(target, true);
+  public ActionResultType onItemUse(ItemUseContext context) {
+    BlockPos pos = context.getPos();
+    Direction side = context.getFace();
+    if (side != null) {
+      pos = pos.offset(side);
+    }
+    int radius = (context.getPlayer().isSneaking()) ? RADIUS_SNEAKING : RADIUS;
+    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
+    context.getPlayer().swingArm(context.getHand());
+    context.getItem().damageItem(1, context.getPlayer(), (e) -> {});
+    return super.onItemUse(context);
   }
 }

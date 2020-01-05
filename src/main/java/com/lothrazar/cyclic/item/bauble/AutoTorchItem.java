@@ -21,41 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import net.minecraft.block.EnderChestBlock;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilPlaceBlocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EnderChestInventory;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.item.Items;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EnderBagItem extends ItemBase {
+public class AutoTorchItem extends ItemBase {
 
-  public EnderBagItem(Properties properties) {
-    super(properties.maxStackSize(1));
+  public AutoTorchItem(Properties properties) {
+    super(properties);
   }
 
+  public static final int lightLimit = 9;
+
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-    EnderChestInventory enderchestinventory = player.getInventoryEnderChest();
-    enderchestinventory.setChestTileEntity(null);
-    player.openContainer(new SimpleNamedContainerProvider((p_220114_1_, p_220114_2_, p_220114_3_) -> {
-      return ChestContainer.createGeneric9X3(p_220114_1_, p_220114_2_, enderchestinventory);
-    }, EnderChestBlock.field_220115_d));
-    player.addStat(Stats.OPEN_ENDERCHEST);
-    world.playSound(player, player.getPosition(), SoundEvents.BLOCK_ENDER_CHEST_OPEN, SoundCategory.BLOCKS, 0.3F, 1);
-    //    if (world.rand.nextDouble() > 0.5)
-    //      UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_OPEN);
-    //    else
-    //      UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_CLOSE);
-    return super.onItemRightClick(world, player, hand);
+  public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
+    if (entityIn instanceof PlayerEntity == false) {
+      return;
+    }
+    PlayerEntity player = (PlayerEntity) entityIn;
+    BlockPos pos = entityIn.getPosition();
+    //    ModCyclic.LOGGER.info("world.getLight(pos)" + world.getLight(pos));
+    if (world.getLight(pos) <= lightLimit
+        //            && player.isSpectator() == false
+        //            && world.isSideSolid(pos.down(), Direction.UP)
+        && world.getBlockState(pos.down()).isSolid()
+        && world.isAirBlock(pos)) { // dont overwrite liquids
+      if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
+        //        super.damageCharm(player, stack);
+        UtilItemStack.damageItem(stack);
+      }
+    }
+    else if (stack.isDamaged()) {
+      ItemStack torches = player.findAmmo(new ItemStack(Items.TORCH));
+      if (!torches.isEmpty()) {
+        torches.shrink(1);
+        UtilItemStack.repairItem(stack);
+      }
+    }
   }
 }

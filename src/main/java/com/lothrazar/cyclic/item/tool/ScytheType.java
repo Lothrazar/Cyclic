@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.tool;
 
 import java.util.ArrayList;
 import java.util.List;

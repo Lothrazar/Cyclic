@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.tool;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.net.PacketScythe;
@@ -31,9 +31,9 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
-public class ScytheForage extends ItemBase {
+public class ScytheBrush extends ItemBase {
 
-  public ScytheForage(Properties properties) {
+  public ScytheBrush(Properties properties) {
     super(properties);
   }
 
@@ -47,8 +47,10 @@ public class ScytheForage extends ItemBase {
     if (side != null) {
       pos = pos.offset(side);
     }
+    //send work packet
     int radius = (context.getPlayer().isSneaking()) ? RADIUS_SNEAKING : RADIUS;
-    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
+    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius));
+    //client actions
     context.getPlayer().swingArm(context.getHand());
     context.getItem().damageItem(1, context.getPlayer(), (e) -> {});
     return super.onItemUse(context);

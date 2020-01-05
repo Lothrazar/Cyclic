@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.fan;
 import java.util.List;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.item.GloveItem;
+import com.lothrazar.cyclic.item.bauble.GloveItem;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
