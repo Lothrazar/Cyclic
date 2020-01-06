@@ -30,6 +30,8 @@ import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.block.tank.BlockFluidTank;
+import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.enchant.EnchantExcavation;
@@ -150,6 +152,8 @@ public class CyclicRegistry {
 
   public static class Tiles {
 
+    @ObjectHolder(ModCyclic.MODID + ":tank")
+    public static TileEntityType<TileTank> tank;
     @ObjectHolder(ModCyclic.MODID + ":battery")
     public static TileEntityType<TileBattery> batterytile;
     @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
@@ -184,6 +188,8 @@ public class CyclicRegistry {
 
   public static class Blocks {
 
+    @ObjectHolder(ModCyclic.MODID + ":tank")
+    public static BlockFluidTank tank;
     @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
     public static BlockScaffolding scaffold_replace;
     @ObjectHolder(ModCyclic.MODID + ":scaffold_responsive")
@@ -250,6 +256,7 @@ public class CyclicRegistry {
           .setRegistryName("scaffold_responsive"));
       r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD))
           .setRegistryName("scaffold_replace"));
+      r.register(new BlockFluidTank(Block.Properties.create(Material.ROCK)).setRegistryName("tank"));
       r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
       r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
       r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
@@ -279,6 +286,8 @@ public class CyclicRegistry {
           new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("scaffold_fragile"));
       r.register(new ItemScaffolding(CyclicRegistry.Blocks.scaffold_responsive,
           new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("scaffold_responsive"));
+      r.register(new BlockItem(CyclicRegistry.Blocks.tank, new Item.Properties().group(
+          CyclicRegistry.itemGroup)).setRegistryName("tank"));
       r.register(new BlockItem(CyclicRegistry.Blocks.spikes_iron, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_iron"));
       r.register(new BlockItem(CyclicRegistry.Blocks.spikes_curse, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_curse"));
       r.register(new BlockItem(CyclicRegistry.Blocks.spikes_fire, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_fire"));
@@ -335,6 +344,7 @@ public class CyclicRegistry {
     @SubscribeEvent
     public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
       IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+      r.register(TileEntityType.Builder.create(TileTank::new, CyclicRegistry.Blocks.tank).build(null).setRegistryName("tank"));
       r.register(TileEntityType.Builder.create(TileBreaker::new, CyclicRegistry.Blocks.breaker).build(null).setRegistryName("breaker"));
       r.register(TileEntityType.Builder.create(TileCollector::new, CyclicRegistry.Blocks.collector).build(null).setRegistryName("collector"));
       r.register(TileEntityType.Builder.create(TileFan::new, CyclicRegistry.Blocks.fan).build(null).setRegistryName("fan"));

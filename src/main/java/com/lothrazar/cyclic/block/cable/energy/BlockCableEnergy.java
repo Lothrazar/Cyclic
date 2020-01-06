@@ -39,7 +39,9 @@ public class BlockCableEnergy extends BlockBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {}
+  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    //keep this to delete tooltip 
+  }
 
   public static BlockState cleanBlockState(BlockState state) {
     for (Direction d : Direction.values()) {
@@ -115,7 +117,7 @@ public class BlockCableEnergy extends BlockBase {
   }
 
   @Override
-  public BlockRenderType getRenderType(BlockState p_149645_1_) {
+  public BlockRenderType getRenderType(BlockState bs) {
     return BlockRenderType.MODEL;
   }
 
@@ -128,11 +130,6 @@ public class BlockCableEnergy extends BlockBase {
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new TileCableEnergy();
-  }
-
-  @Override
-  public BlockState getExtendedState(BlockState state, IBlockReader world, BlockPos pos) {
-    return super.getExtendedState(state, world, pos);
   }
 
   @Override
