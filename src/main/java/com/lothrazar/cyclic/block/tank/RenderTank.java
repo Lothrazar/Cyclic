@@ -47,8 +47,9 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
     float alph = 1.0F;
     // THANKS FOR POST http://www.minecraftforge.net/forum/topic/44388-1102-render-fluid-level-in-tank-with-tesr/
     // T/B for top and bottom
-    float T = 15.9F / 16F;
-    float B = 0.1F / 16F;
+    float distance = 0.1F;
+    float T = (16F - distance) / 16F;
+    float B = distance / 16F;
     int single = 1;
     int S = 1, E = 15;//for start and end. vertex ranges from [0,16];
     //TOP SIDE
