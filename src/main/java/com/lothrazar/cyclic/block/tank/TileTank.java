@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -27,6 +28,26 @@ public class TileTank extends TileEntityBase {
   }
 
   @Override
+  public void read(CompoundNBT tag) {
+    CompoundNBT fluid = tag.getCompound("fluid");
+    tank.readFromNBT(fluid);
+    super.read(tag);
+  }
+
+  @Override
+  public CompoundNBT write(CompoundNBT tag) {
+    CompoundNBT fluid = new CompoundNBT();
+    tank.writeToNBT(fluid);
+    tag.put("fluid", fluid);
+    return super.write(tag);
+  }
+
+  @Override
+  public boolean hasFastRenderer() {
+    return true;
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return LazyOptional.of(() -> tank).cast();
@@ -39,5 +60,9 @@ public class TileTank extends TileEntityBase {
 
   public FluidStack getFluid() {
     return tank.getFluid();
+  }
+
+  public float getCapacity() {
+    return CAPACITY;
   }
 }

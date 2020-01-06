@@ -12,7 +12,7 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   static final float alpha = 0.9F;
 
   @Override
-  public void renderTileEntityFast(TileHarvester te, double x, double y, double z, float partialTicks, int destroyStage, net.minecraft.client.renderer.BufferBuilder buffer) {
+  public void renderTileEntityFast(TileHarvester te, double x, double y, double z, float partialTicks, int destroyStage, net.minecraft.client.renderer.BufferBuilder bufferDoNotUse) {
     //test 
     if (te.laserTimer > 0) {
       RenderUtil.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
