@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.block.BlockSpikes;
 import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
+import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
@@ -31,6 +32,7 @@ import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
+import com.lothrazar.cyclic.block.tank.ItemBlockTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
@@ -286,7 +288,7 @@ public class CyclicRegistry {
           new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("scaffold_fragile"));
       r.register(new ItemScaffolding(CyclicRegistry.Blocks.scaffold_responsive,
           new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("scaffold_responsive"));
-      r.register(new BlockItem(CyclicRegistry.Blocks.tank, new Item.Properties().group(
+      r.register(new ItemBlockTank(CyclicRegistry.Blocks.tank, new Item.Properties().group(
           CyclicRegistry.itemGroup)).setRegistryName("tank"));
       r.register(new BlockItem(CyclicRegistry.Blocks.spikes_iron, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_iron"));
       r.register(new BlockItem(CyclicRegistry.Blocks.spikes_curse, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("spikes_curse"));
@@ -294,7 +296,7 @@ public class CyclicRegistry {
       r.register(new BlockItem(CyclicRegistry.Blocks.breaker, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("breaker"));
       r.register(new BlockItem(CyclicRegistry.Blocks.collector, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("collector"));
       r.register(new BlockItem(CyclicRegistry.Blocks.dark_glass, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("dark_glass"));
-      r.register(new BlockItem(CyclicRegistry.Blocks.battery, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("battery"));
+      r.register(new ItemBlockBattery(CyclicRegistry.Blocks.battery, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("battery"));
       r.register(new BlockItem(CyclicRegistry.Blocks.harvester,
           new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("harvester"));
       r.register(new EnderBagItem(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_bag"));

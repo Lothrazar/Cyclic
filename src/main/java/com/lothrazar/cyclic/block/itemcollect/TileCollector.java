@@ -37,6 +37,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
 
   public TileCollector() {
     super(CyclicRegistry.Tiles.collectortile);
+    this.setNeedsRedstone(1);
   }
 
   private IItemHandler createHandler() {

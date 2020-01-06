@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -23,12 +24,12 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class BlockFluidTank extends BlockBase {
 
-  //  public static final BooleanProperty TANK_ABOVE = BooleanProperty.create("above");
-  //  public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");
+  public static final BooleanProperty TANK_ABOVE = BooleanProperty.create("above");
+  public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");
   public static final int heightCheckMax = 16;
 
   public BlockFluidTank(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE));
+    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F));
     //    this.getExtendedState(state, world, pos)
     //    this.setDefaultState(this.getDefaultState().with(TANK_ABOVE, false).with(TANK_BELOW, false));
   }

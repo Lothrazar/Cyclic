@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+        "igi",
+        "gog",
+        "igi"
+  ],
+  "key": {
+    "o": { "item": "minecraft:obsidian"    },
+    "i": { "item": "minecraft:iron_ingot"  },
+    "g": { "item": "minecraft:glass" }
+  },
+  "result": {
+    "item": "cyclic:tank",
+    "count": 1
+  }
+}
