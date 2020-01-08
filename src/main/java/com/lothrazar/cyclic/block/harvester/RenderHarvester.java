@@ -3,7 +3,10 @@ package com.lothrazar.cyclic.block.harvester;
 import com.lothrazar.cyclic.util.RenderUtil;
 import com.lothrazar.cyclic.util.RenderUtil.LaserConfig;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
 
   static final float[] laserColor = new float[] { 0.04F, 0.99F, 0F };

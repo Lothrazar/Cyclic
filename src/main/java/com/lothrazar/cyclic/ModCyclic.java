@@ -2,13 +2,20 @@ package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.event.EventHandler;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.ConfigHandler;
 import com.lothrazar.cyclic.setup.IProxy;
 import com.lothrazar.cyclic.setup.ServerProxy;
+import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
@@ -49,9 +56,6 @@ public class ModCyclic {
     PacketRegistry.init();
     proxy.init();
     //TODO: LOOP 
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.item_scaffold_fragile);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.item_scaffold_responsive);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.item_scaffold_replace);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Blocks.soundproofing);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.excavate);//y
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.experience_boost);//y
@@ -60,6 +64,23 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.multishot);//y
     //    MinecraftForge.EVENT_BUS.register(CyclicRegistry.smelting);//  ?
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.venom);//y
+    MinecraftForge.EVENT_BUS.register(this);
+    scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
+  }
+
+  ItemScaffolding[] scaffoldingListen = new ItemScaffolding[0];
+
+  @SubscribeEvent
+  public void onRightClickBlock(RightClickBlock event) {
+    for (ItemScaffolding loop : scaffoldingListen)
+      if (event.getItemStack() != null && event.getItemStack().getItem() == loop && event.getPlayer().isSneaking()) {
+        Direction opp = event.getFace().getOpposite();
+        BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, loop.getBlock());
+        event.getWorld().setBlockState(dest, Block.getBlockFromItem(loop).getDefaultState());
+        ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
+        stac.shrink(1);
+        event.setCanceled(true);
+      }
   }
 
   @SubscribeEvent
