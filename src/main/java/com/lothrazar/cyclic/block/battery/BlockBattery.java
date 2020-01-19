@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.battery;
 
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +31,7 @@ public class BlockBattery extends BlockBase {
       //      if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
       IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
       if (storage == null) {
-        ModCyclic.LOGGER.info("HOW to give capability  to BlockItem" + stack);
+        //        ModCyclic.LOGGER.info("HOW to give capability  to BlockItem" + stack);
         //just use NBT data
         //write to the data tag eh 
         //        stack.write(handlerHere)

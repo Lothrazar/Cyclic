@@ -28,7 +28,6 @@ public class EventHandler {
         Slot slotHit = gui.getSlotUnderMouse();
         if (!slotHit.getStack().isEmpty()) {
           ItemStack maybeCharm = slotHit.getStack();
-          System.out.println(slotHit.slotNumber + "=slotHit.slotNumber;  maybehcharm eventhandler is .slot() " + maybeCharm);
           if (maybeCharm.getItem() instanceof IHasClickToggle) {
             PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.slotNumber));
             //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);

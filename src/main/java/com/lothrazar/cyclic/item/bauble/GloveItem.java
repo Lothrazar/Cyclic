@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.entity.Entity;
@@ -57,7 +56,7 @@ public class GloveItem extends Item implements IHasClickToggle {
     }
     tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
     held.setTag(tag);
-    ModCyclic.LOGGER.info("after toggle " + held.getTag().getInt(NBT_STATUS));
+    //    ModCyclic.LOGGER.info("after toggle " + held.getTag().getInt(NBT_STATUS));
   }
 
   @Override

@@ -44,7 +44,7 @@ public class BoomerangItem extends ItemBase {
   public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entity, int chargeTimer) {
     //
     int charge = this.getUseDuration(stack) - chargeTimer;
-    System.out.println(" " + charge);
+    //    System.out.println(" " + charge);
     float percentageCharged = BowItem.getArrowVelocity(charge);//never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
       return;//not enough force to go with any realistic path 
