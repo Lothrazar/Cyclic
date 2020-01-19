@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -21,12 +20,7 @@ public class BlockFan extends BlockBase {
   public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
 
   public BlockFan(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
-  }
-
-  @Override
-  public BlockRenderType getRenderType(BlockState bs) {
-    return BlockRenderType.INVISIBLE;
+    super(properties.hardnessAndResistance(1.8F).func_226896_b_());
   }
 
   @Override

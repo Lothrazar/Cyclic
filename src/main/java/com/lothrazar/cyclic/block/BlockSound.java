@@ -24,7 +24,7 @@ public class BlockSound extends BlockBase {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.SCAFFOLDING));
   }
 
-  private static final int VOL_REDUCE_PER_BLOCK = 1;
+  private static final int VOL_REDUCE_PER_BLOCK = 2;
   private static final int RADIUS = 6;
 
   @OnlyIn(Dist.CLIENT)
