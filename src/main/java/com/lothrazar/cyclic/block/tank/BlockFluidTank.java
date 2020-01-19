@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.tank;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -10,6 +11,7 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -17,6 +19,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -35,10 +39,41 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
+  public float func_220080_a(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    return 1.0f;
+  }
+
+  @Override
+  public BlockRenderLayer getRenderLayer() {
+    return BlockRenderLayer.CUTOUT;
+  }
+
+  @Override
+  public BlockRenderType getRenderType(BlockState s) {
+    //    this.isSideInvisible(state, adjacentBlockState, side)
+    return BlockRenderType.MODEL;
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+    return false;
+  }
+  //  @Override
+  //  public boolean canRenderInLayer(BlockState state, BlockRenderLayer layer) {
+  //    return (layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT);
+  //  }
+  //  @Override
+  //  public boolean doesSideBlockRendering(BlockState state, IEnviromentBlockReader world, BlockPos pos, Direction face) {
+  //    return false;
+  //  }
+
+  @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
     super.fillStateContainer(builder);
     //    builder.add(TANK_ABOVE, TANK_BELOW);
   }
+
   //  @Override
   //  public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
   //    boolean tileAbove = world.getTileEntity(pos.up()) instanceof TileTank;
@@ -47,10 +82,11 @@ public class BlockFluidTank extends BlockBase {
   //        .with(TANK_ABOVE, tileAbove)
   //        .with(TANK_BELOW, tileBelow);
   //  }
-
   @Override
-  public BlockRenderLayer getRenderLayer() {
-    return BlockRenderLayer.CUTOUT;
+  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+    TileEntity tileEntity = reader.getTileEntity(pos);
+    //    TankBlockEntity tankEntity = (tileEntity != null) ? (TankBlockEntity)tileEntity : null;
+    return true;// (tankEntity == null || tankEntity.getFillLevel() == 0);
   }
 
   @Override
