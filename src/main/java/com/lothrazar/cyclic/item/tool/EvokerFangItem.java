@@ -24,13 +24,16 @@ public class EvokerFangItem extends ItemBase {
 
   private static final int MAX_RANGE = 16;
 
-  private void summonFangRay(double startX, double startZ, PlayerEntity caster, double posX, double posY, double posZ) {
+  private void summonFangRay(double startX, double startZ, PlayerEntity player, double posX, double posY, double posZ) {
     double minY = posY;//Math.min(posY, caster.posY);
     //double d1 = Math.max(posY,caster.posY) ;
-    float arctan = (float) MathHelper.atan2(posZ - caster.posZ, posX - caster.posX);
+    double tposX = player.func_226277_ct_();
+    double tposY = player.func_226278_cu_();
+    double tposZ = player.func_226281_cx_();
+    float arctan = (float) MathHelper.atan2(posZ - tposZ, posX - tposX);
     for (int i = 0; i < MAX_RANGE; ++i) {
       double fract = 1.25D * (i + 1);
-      this.summonFangSingle(caster,
+      this.summonFangSingle(player,
           startX + MathHelper.cos(arctan) * fract,
           minY,
           startZ + MathHelper.sin(arctan) * fract,

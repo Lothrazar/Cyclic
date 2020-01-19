@@ -81,8 +81,8 @@ public class EnchantWaterwalking extends EnchantBase {
   private void setLiquidWalk(PlayerEntity player) {
     BlockPos belowPos = player.getPosition().down();
     if (player.world.containsAnyLiquid(new AxisAlignedBB(belowPos)) && player.world.isAirBlock(player.getPosition()) && player.getMotion().y < 0
-        && !player.isSneaking()) {// let them slip down into it when sneaking
-      double diff = player.posY - (player.getPosition().getY());
+        && !player.isCrouching()) {// let them slip down into it when sneaking
+      double diff = player.lastTickPosY - (player.getPosition().getY());
       if (diff < 0.1) {
         //        player.motionY = 0;// stop falling
         player.setMotion(player.getMotion().x, 0, player.getMotion().z);

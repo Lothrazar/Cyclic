@@ -18,7 +18,7 @@ public class UtilStuff {
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
 
   public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
-    if (entity.isSneaking()) {
+    if (entity.isCrouching()) {
       entity.setMotion(entity.getMotion().x, 0.0, entity.getMotion().z);
     }
     else if (entity.moveForward > 0.0F && entity.getMotion().y < climbSpeed) {
@@ -65,7 +65,7 @@ public class UtilStuff {
   }
 
   public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
-    return Direction.getFacingFromVector((float) (entity.posX - clickedBlock.getX()), (float) (entity.posY - clickedBlock.getY()), (float) (entity.posZ - clickedBlock.getZ()));
+    return Direction.getFacingFromVector((float) (entity.lastTickPosX - clickedBlock.getX()), (float) (entity.lastTickPosY - clickedBlock.getY()), (float) (entity.lastTickPosZ - clickedBlock.getZ()));
   }
 
   public static Direction getFacingFromEntityHorizontal(BlockPos clickedBlock, LivingEntity entity) {

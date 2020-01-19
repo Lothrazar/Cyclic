@@ -73,7 +73,7 @@ public class ModCyclic {
   @SubscribeEvent
   public void onRightClickBlock(RightClickBlock event) {
     for (ItemScaffolding loop : scaffoldingListen)
-      if (event.getItemStack() != null && event.getItemStack().getItem() == loop && event.getPlayer().isSneaking()) {
+      if (event.getItemStack() != null && event.getItemStack().getItem() == loop && event.getPlayer().isCrouching()) {
         Direction opp = event.getFace().getOpposite();
         BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, loop.getBlock());
         event.getWorld().setBlockState(dest, Block.getBlockFromItem(loop).getDefaultState());

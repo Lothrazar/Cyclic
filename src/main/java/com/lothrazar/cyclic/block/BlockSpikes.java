@@ -12,7 +12,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
@@ -148,11 +147,11 @@ public class BlockSpikes extends BlockBase {
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
     return true;
   }
-
-  @Override
-  public BlockRenderLayer getRenderLayer() {
-    return BlockRenderLayer.CUTOUT;
-  }
+  //
+  //  @Override
+  //  public BlockRenderLayer getRenderLayer() {
+  //    return BlockRenderLayer.CUTOUT;
+  //  }
 
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {

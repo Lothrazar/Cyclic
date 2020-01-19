@@ -55,7 +55,7 @@ public class EnchantVenom extends EnchantBase {
       return;
     }
     LivingEntity target = (LivingEntity) event.getTarget();
-    PlayerEntity attacker = event.getEntityPlayer();
+    PlayerEntity attacker = event.getPlayer();
     ItemStack main = attacker.getHeldItemMainhand();
     ItemStack off = attacker.getHeldItemOffhand();
     int mainLevel = -1, offLevel = -1;

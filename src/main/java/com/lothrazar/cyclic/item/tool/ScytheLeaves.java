@@ -47,7 +47,7 @@ public class ScytheLeaves extends ItemBase {
     if (side != null) {
       pos = pos.offset(side);
     }
-    int radius = (context.getPlayer().isSneaking()) ? RADIUS_SNEAKING : RADIUS;
+    int radius = (context.getPlayer().isCrouching()) ? RADIUS_SNEAKING : RADIUS;
     PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.LEAVES, radius));
     context.getPlayer().swingArm(context.getHand());
     context.getItem().damageItem(1, context.getPlayer(), (e) -> {});

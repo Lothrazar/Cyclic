@@ -29,6 +29,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -41,19 +42,18 @@ public class BlockScaffoldingReplace extends BlockScaffolding {
   }
 
   @Override
-  public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-      Hand hand, BlockRayTraceResult hit) {
+  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     ItemStack heldItem = player.getHeldItem(hand);
     if (heldItem.isEmpty()) {
-      return false;
+      return ActionResultType.SUCCESS;
     }
     Block b = Block.getBlockFromItem(heldItem.getItem());
     if (b != null && b != Blocks.AIR && !(b instanceof BlockScaffolding)) {
-      worldIn.destroyBlock(pos, true);
+      world.destroyBlock(pos, true);
       ItemUseContext context = new ItemUseContext(player, hand, hit);
       heldItem.onItemUse(context);
-      return true;//to cancel event chains
+      return ActionResultType.SUCCESS;//to cancel event chains
     }
-    return false;
+    return ActionResultType.PASS;
   }
 }

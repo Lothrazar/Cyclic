@@ -17,7 +17,7 @@ public class UtilSound {
     entityIn.connection.sendPacket(new SPlaySoundEffectPacket(
         soundIn,
         SoundCategory.BLOCKS,
-        entityIn.posX, entityIn.posY, entityIn.posZ,
+        entityIn.lastTickPosX, entityIn.lastTickPosY, entityIn.lastTickPosZ,
         1.0f, 1.0f));
   }
 }

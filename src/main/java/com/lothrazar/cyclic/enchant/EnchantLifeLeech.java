@@ -72,7 +72,7 @@ public class EnchantLifeLeech extends EnchantBase {
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
     //    EntityLivingBase target = (EntityLivingBase) event.getTarget();
-    PlayerEntity attacker = event.getEntityPlayer();
+    PlayerEntity attacker = event.getPlayer();
     int level = getCurrentLevelTool(attacker);
     if (level > 0 && attacker.getHealth() < attacker.getMaxHealth()) {
       //      UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(2));

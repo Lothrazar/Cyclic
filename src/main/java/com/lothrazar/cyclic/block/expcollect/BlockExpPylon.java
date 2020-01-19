@@ -4,13 +4,14 @@ import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.util.UtilStuff;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -24,33 +25,33 @@ public class BlockExpPylon extends BlockBase {
   }
 
   @Override
-  public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
-      ItemStack held = player.getHeldItem(handIn);
-      if (held.isEmpty() || player.isSneaking()) {
-        TileExpPylon tile = (TileExpPylon) worldIn.getTileEntity(pos);
+  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+    if (!world.isRemote && hand == Hand.MAIN_HAND) {
+      ItemStack held = player.getHeldItem(hand);
+      if (held.isEmpty() || player.isCrouching()) {
+        TileExpPylon tile = (TileExpPylon) world.getTileEntity(pos);
         UtilStuff.messageStatus(player, "" + tile.getStoredXp());
-        return true;
+        return ActionResultType.SUCCESS;
       }
       if (held.getItem() == Items.SUGAR) {
-        TileExpPylon tile = (TileExpPylon) worldIn.getTileEntity(pos);
+        TileExpPylon tile = (TileExpPylon) world.getTileEntity(pos);
         if (tile.drainStoredXp(ExpItemGain.EXP_PER_FOOD)) {
           //do it
           held.shrink(1);
           player.dropItem(new ItemStack(CyclicRegistry.Items.experience_food), true);
-          return true;
+          return ActionResultType.SUCCESS;
         }
         else {
           UtilStuff.messageStatus(player, getTranslationKey() + "notenough");
         }
       }
     }
-    return false;
+    return ActionResultType.PASS;
   }
 
   @Override
-  public BlockRenderLayer getRenderLayer() {
-    return BlockRenderLayer.CUTOUT_MIPPED;
+  public BlockRenderType getRenderType(BlockState bs) {
+    return BlockRenderType.INVISIBLE;
   }
 
   @Override

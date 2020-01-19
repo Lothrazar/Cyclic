@@ -3,14 +3,13 @@ package com.lothrazar.cyclic.block.tank;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
@@ -42,17 +41,10 @@ public class BlockFluidTank extends BlockBase {
   public float func_220080_a(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0f;
   }
-
-  @Override
-  public BlockRenderLayer getRenderLayer() {
-    return BlockRenderLayer.CUTOUT;
-  }
-
-  @Override
-  public BlockRenderType getRenderType(BlockState s) {
-    //    this.isSideInvisible(state, adjacentBlockState, side)
-    return BlockRenderType.MODEL;
-  }
+  //  @Override
+  //  public BlockRenderLayer getRenderLayer() {
+  //    return BlockRenderLayer.CUTOUT;
+  //  }
 
   @Override
   @OnlyIn(Dist.CLIENT)
@@ -100,7 +92,7 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
-  public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!world.isRemote) {
       TileEntity tankHere = world.getTileEntity(pos);
       if (tankHere != null) {
@@ -122,8 +114,8 @@ public class BlockFluidTank extends BlockBase {
       }
     }
     if (FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
-      return true;
+      return ActionResultType.SUCCESS;
     }
-    return super.onBlockActivated(state, world, pos, player, hand, hit);
+    return super.func_225533_a_(state, world, pos, player, hand, hit);
   }
 }

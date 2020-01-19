@@ -32,7 +32,7 @@ public class Vector3 {
   }
 
   public Vector3(Entity e) {
-    this(e.posX, e.posY, e.posZ);
+    this(e.lastTickPosX, e.lastTickPosY, e.lastTickPosZ);
   }
 
   public double mag() {

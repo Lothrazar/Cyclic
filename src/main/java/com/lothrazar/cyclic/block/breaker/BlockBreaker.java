@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -13,7 +14,6 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
@@ -27,6 +27,7 @@ public class BlockBreaker extends BlockBase {
 
   public BlockBreaker(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
+    //    super.render
   }
 
   @Override
@@ -34,8 +35,8 @@ public class BlockBreaker extends BlockBase {
   public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {}
 
   @Override
-  public BlockRenderLayer getRenderLayer() {
-    return BlockRenderLayer.CUTOUT_MIPPED;
+  public BlockRenderType getRenderType(BlockState bs) {
+    return BlockRenderType.INVISIBLE;
   }
 
   @Override

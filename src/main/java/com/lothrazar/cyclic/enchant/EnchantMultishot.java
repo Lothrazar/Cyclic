@@ -64,7 +64,7 @@ public class EnchantMultishot extends EnchantBase {
     if (level <= 0) {
       return;
     }
-    PlayerEntity player = event.getEntityPlayer();
+    PlayerEntity player = event.getPlayer();
     World worldIn = player.world;
     if (worldIn.isRemote == false) {
       float charge = BowItem.getArrowVelocity(stackBow.getUseDuration() - event.getCharge());
@@ -85,9 +85,9 @@ public class EnchantMultishot extends EnchantBase {
     AbstractArrowEntity entityarrow = itemarrow.createArrow(worldIn, stackBow, player);
     entityarrow.pickupStatus = ArrowEntity.PickupStatus.DISALLOWED;
     //off set bow to the side using the vec, and then aim
-    entityarrow.posX += offsetVector.x;
-    entityarrow.posY += offsetVector.y;
-    entityarrow.posZ += offsetVector.z;
+    entityarrow.prevPosX += offsetVector.x;
+    entityarrow.prevPosY += offsetVector.y;
+    entityarrow.prevPosZ += offsetVector.z;
     entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, charge, 1.0F);
     //from ItemBow vanilla class
     if (charge == 1.0F) {

@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -54,7 +53,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    //    GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.drawBackground(CyclicRegistry.Textures.GUI);
     //energy
     energy.renderEnergy(container.getEnergy());

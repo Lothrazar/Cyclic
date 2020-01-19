@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
@@ -31,7 +31,7 @@ public class BlockDarkGlass extends BlockBase {
    * TRANSLUCENT for fully blended transparency (stained glass)
    */
   @Override
-  public BlockRenderLayer getRenderLayer() {
-    return BlockRenderLayer.CUTOUT;
+  public BlockRenderType getRenderType(BlockState bs) {
+    return BlockRenderType.INVISIBLE;
   }
 }

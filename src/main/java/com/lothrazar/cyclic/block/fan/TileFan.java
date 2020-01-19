@@ -127,7 +127,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
     int direction = 1;
     float SPEED = this.getSpeedCalc();
     for (Entity entity : entitiesFound) {
-      if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isSneaking()) {
+      if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
         continue;//sneak avoid feature
       }
       moved++;

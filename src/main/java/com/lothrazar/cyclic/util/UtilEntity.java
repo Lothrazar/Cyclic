@@ -104,7 +104,7 @@ public class UtilEntity {
   public static void moveEntityWallSafe(Entity entity, World world) {
     //    world.checkBlockCollision(bb)
     while (world.checkBlockCollision(entity.getBoundingBox())) {
-      entity.setPositionAndUpdate(entity.posX, entity.posY + 1.0D, entity.posZ);
+      entity.setPositionAndUpdate(entity.prevPosX, entity.prevPosY + 1.0D, entity.prevPosZ);
     }
   }
   //
@@ -353,7 +353,7 @@ public class UtilEntity {
       if (entity == null) {
         continue;
       } //being paranoid
-      if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isSneaking()) {
+      if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
         continue;//sneak avoid feature
       }
       xDist = Math.abs(x - entity.getPosition().getX());
@@ -403,14 +403,14 @@ public class UtilEntity {
   public static void centerEntityHoriz(Entity entity, BlockPos pos) {
     float fixedX = pos.getX() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
     float fixedZ = pos.getZ() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
-    entity.setPosition(fixedX, entity.posY, fixedZ);
+    entity.setPosition(fixedX, entity.getPosition().getY(), fixedZ);
   }
 
   private static final int TICKS_FALLDIST_SYNC = 16;//tick every so often
 
   public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
     Vec3d motion = entity.getMotion();
-    if (entity.isSneaking()) {
+    if (entity.isCrouching()) {
       entity.setMotion(motion.x, 0, motion.z);
     }
     else if (entity.moveForward > 0.0F && motion.y < climbSpeed) {
@@ -433,8 +433,8 @@ public class UtilEntity {
     double minDist = 999999;
     double dist, xDistance, zDistance;
     for (LivingEntity ent : list) {
-      xDistance = Math.abs(player.posX - ent.posX);
-      zDistance = Math.abs(player.posZ - ent.posZ);
+      xDistance = Math.abs(player.prevPosX - ent.prevPosX);
+      zDistance = Math.abs(player.prevPosZ - ent.prevPosZ);
       dist = Math.sqrt(xDistance * xDistance + zDistance * zDistance);
       if (dist < minDist) {
         minDist = dist;

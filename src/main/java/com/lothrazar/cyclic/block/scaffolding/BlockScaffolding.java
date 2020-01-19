@@ -7,13 +7,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class BlockScaffolding extends BlockBase {
 
@@ -26,19 +26,19 @@ public class BlockScaffolding extends BlockBase {
     super(properties.hardnessAndResistance(0.1F).tickRandomly().harvestLevel(0));
     this.doesAutobreak = autobreak;
   }
-
-  @Override
-  public BlockRenderLayer getRenderLayer() {
-    return BlockRenderLayer.CUTOUT;
-  }
+  //  @Override
+  //  public BlockRenderLayer getRenderLayer() {
+  //    return BlockRenderLayer.CUTOUT;
+  //  }
 
   @Override
   public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
     return AABB;
   }
 
+  // TICK
   @Override
-  public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+  public void func_225534_a_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
     if (doesAutobreak && worldIn.rand.nextDouble() < 0.5) {
       worldIn.destroyBlock(pos, true);
     }

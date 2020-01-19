@@ -12,6 +12,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class BlockPeat extends BlockBase {
 
@@ -25,8 +26,8 @@ public class BlockPeat extends BlockBase {
 
   @Override
   @Deprecated
-  public void tick(BlockState state, World world, BlockPos pos, Random random) {
-    super.tick(state, world, pos, random);
+  public void func_225534_a_(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    super.func_225534_a_(state, world, pos, random);
     List<BlockPos> around = UtilShape.squareHorizontalHollow(pos, 1);
     int sidesWet = 0;
     List<BlockPos> waters = new ArrayList<>();

@@ -21,7 +21,7 @@ public class ItemScaffolding extends BlockItem {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-    if (player.isSneaking()) {// || worldIn.getBlockState(context.getPos()).isAir() == false) {
+    if (player.isCrouching()) {// || worldIn.getBlockState(context.getPos()).isAir() == false) {
       return super.onItemRightClick(worldIn, player, hand);
     }
     //skip if sneaking
