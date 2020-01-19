@@ -16,7 +16,6 @@ public class BlockDarkGlass extends BlockBase {
   public BlockDarkGlass(Properties properties) {
     super(properties.hardnessAndResistance(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS)
         .func_226896_b_());
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
   }
 
   @Override
@@ -39,5 +38,11 @@ public class BlockDarkGlass extends BlockBase {
   @Override
   public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return false;
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
   }
 }

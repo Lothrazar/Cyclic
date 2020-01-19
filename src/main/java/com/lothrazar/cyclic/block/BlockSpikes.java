@@ -23,6 +23,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockSpikes extends BlockBase {
 
@@ -56,8 +58,13 @@ public class BlockSpikes extends BlockBase {
 
   public BlockSpikes(Properties properties, EnumSpikeType type) {
     super(properties.hardnessAndResistance(1.1F).func_226896_b_());
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
     this.type = type;
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
   }
 
   @Override

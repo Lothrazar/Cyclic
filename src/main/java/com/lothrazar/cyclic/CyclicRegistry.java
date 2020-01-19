@@ -1,5 +1,8 @@
 package com.lothrazar.cyclic;
 
+import java.util.ArrayList;
+import java.util.List;
+import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.BlockDarkGlass;
 import com.lothrazar.cyclic.block.BlockPeat;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
@@ -190,6 +193,9 @@ public class CyclicRegistry {
 
   public static class Blocks {
 
+    //not populated in the most ideal way 
+    public static List<BlockBase> blocks = new ArrayList<>();
+    //now the auto binding
     @ObjectHolder(ModCyclic.MODID + ":tank")
     public static BlockFluidTank tank;
     @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")

@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.block.generator;
 
+import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -43,5 +45,10 @@ public class BlockPeatGenerator extends BlockBase {
       return ActionResultType.SUCCESS;
     }
     return super.func_225533_a_(state, world, pos, player, hand, result);
+  }
+
+  @Override
+  public void registerClient() {
+    ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.generatorCont, ScreenGenerator::new);
   }
 }

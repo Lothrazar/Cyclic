@@ -36,8 +36,6 @@ public class BlockFluidTank extends BlockBase {
   public BlockFluidTank(Properties properties) {
     super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F)
         .func_226896_b_());
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228645_f_()); //    this.getExtendedState(state, world, pos)
-    //    this.setDefaultState(this.getDefaultState().with(TANK_ABOVE, false).with(TANK_BELOW, false));
   }
 
   @Override
@@ -120,5 +118,12 @@ public class BlockFluidTank extends BlockBase {
       return ActionResultType.SUCCESS;
     }
     return super.func_225533_a_(state, world, pos, player, hand, hit);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    RenderTypeLookup.setRenderLayer(this, RenderType.func_228645_f_());
+    //    ClientRegistry.bindTileEntityRenderer(TileTank.class, new RenderTank());
   }
 }

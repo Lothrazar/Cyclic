@@ -3,10 +3,13 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -19,6 +22,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -30,14 +35,20 @@ public class BlockBattery extends BlockBase {
   }
 
   @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.batteryCont, ScreenBattery::new);
+  }
+
+  @Override
   public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 
     return new ArrayList<>();
   }
 
   @Override
-  public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity ent, ItemStack stack) {
-    super.harvestBlock(worldIn, player, pos, state, ent, stack);
+  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity ent, ItemStack stack) {
+    super.harvestBlock(world, player, pos, state, ent, stack);
     //    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());//is this needed???
     ItemStack battery = new ItemStack(this);
     if (ent != null) {
@@ -48,7 +59,9 @@ public class BlockBattery extends BlockBase {
       }
     }
     //even if energy fails 
-    player.dropItem(battery, true);
+    if (world.isRemote == false)
+      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), battery));
+    //    player.dropItem(battery, true);
   }
 
   @Override

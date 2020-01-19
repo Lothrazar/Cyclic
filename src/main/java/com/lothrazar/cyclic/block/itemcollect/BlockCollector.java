@@ -2,12 +2,14 @@ package com.lothrazar.cyclic.block.itemcollect;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -78,5 +80,10 @@ public class BlockCollector extends BlockBase {
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new TileCollector();
+  }
+
+  @Override
+  public void registerClient() {
+    ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.collectortileContainer, ScreenCollector::new);
   }
 }

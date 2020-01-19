@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.block.harvester;
 
+import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -12,12 +14,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockHarvester extends BlockBase {
 
   public BlockHarvester(Properties properties) {
     super(properties.hardnessAndResistance(1.3F));
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    //    ClientRegistry.bindTileEntityRenderer(TileHarvester.class, new RenderHarvester());
+    ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.harvester, ScreenHarvester::new);
   }
 
   @Override

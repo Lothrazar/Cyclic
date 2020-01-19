@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.base;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.CyclicRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ public abstract class BlockBase extends Block {
 
   public BlockBase(Properties properties) {
     super(properties);
+    CyclicRegistry.Blocks.blocks.add(this);
   }
 
   @Override
@@ -25,4 +27,7 @@ public abstract class BlockBase extends Block {
     t.applyTextStyle(TextFormatting.GRAY);
     tooltip.add(t);
   }
+
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {}
 }
