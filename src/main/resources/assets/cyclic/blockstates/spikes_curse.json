@@ -4,19 +4,19 @@
 	"forge_marker": 1,
 
 	"variants": {
+	
+		"facing=up,lit=true":{    "model": "cyclic:block/spikes_curse_on"  },
+		"facing=down,lit=true":{  "model": "cyclic:block/spikes_curse_on", "x": 180 },
+		"facing=north,lit=true":{ "model": "cyclic:block/spikes_curse_on", "x": 90  },
+		"facing=south,lit=true":{ "model": "cyclic:block/spikes_curse_on","x": 90, "y": 180 },
+		"facing=east,lit=true":{  "model": "cyclic:block/spikes_curse_on","x": 90, "y": 90  },
+		"facing=west,lit=true":{  "model": "cyclic:block/spikes_curse_on", "x": 90, "y": 270  },
 
-		"lit": {
-			"false": { "model": "cyclic:block/spikes_curse" },
-			"true": { "model": "cyclic:block/spikes_curse_on" }
-		},
-
-		"facing": {
-			"up":		{},
-			"down":		{ "x": 180 },
-			"north":	{ "x": 90 },
-			"south":	{ "x": 90, "y": 180 },
-			"east":		{ "x": 90, "y": 90 },
-			"west":		{ "x": 90, "y": 270 }
-		}
+		"facing=up,lit=false":{   "model": "cyclic:block/spikes_curse"  },
+		"facing=down,lit=false":{ "model": "cyclic:block/spikes_curse" , "x": 180},
+		"facing=north,lit=false":{"model": "cyclic:block/spikes_curse", "x": 90   },
+		"facing=south,lit=false":{"model": "cyclic:block/spikes_curse","x": 90, "y": 180 },
+		"facing=east,lit=false":{ "model": "cyclic:block/spikes_curse","x": 90, "y": 90   },
+		"facing=west,lit=false":{ "model": "cyclic:block/spikes_curse"  , "x": 90, "y": 270  } 
 	}
 }

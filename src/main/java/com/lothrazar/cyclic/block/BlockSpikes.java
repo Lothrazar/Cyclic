@@ -4,6 +4,8 @@ import java.util.Locale;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -53,7 +55,8 @@ public class BlockSpikes extends BlockBase {
   private EnumSpikeType type;
 
   public BlockSpikes(Properties properties, EnumSpikeType type) {
-    super(properties.hardnessAndResistance(1.1F));
+    super(properties.hardnessAndResistance(1.1F).func_226896_b_());
+    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
     this.type = type;
   }
 
@@ -147,11 +150,6 @@ public class BlockSpikes extends BlockBase {
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
     return true;
   }
-  //
-  //  @Override
-  //  public BlockRenderLayer getRenderLayer() {
-  //    return BlockRenderLayer.CUTOUT;
-  //  }
 
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {
