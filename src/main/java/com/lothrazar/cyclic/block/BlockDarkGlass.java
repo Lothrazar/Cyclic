@@ -19,33 +19,24 @@ public class BlockDarkGlass extends BlockBase {
     RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
   }
 
-  //
   @Override
   @Deprecated
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 255;//zero is transparent fully
   }
 
-  //  //
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
     return false;
   }
 
-  //
-  @Override //BlockGlass
+  @Override
   @OnlyIn(Dist.CLIENT)
   public float func_220080_a(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0F;
   }
 
-  //
-  //  @Override //BlockGlass
-  //  public boolean func_229869_c_(BlockState p_229869_1_, IBlockReader p_229869_2_, BlockPos p_229869_3_) {
-  //    return false;
-  //  }
-  //
-  @Override //BlockGlass
+  @Override
   public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return false;
   }
