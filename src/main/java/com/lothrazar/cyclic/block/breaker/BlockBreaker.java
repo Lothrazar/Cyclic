@@ -36,7 +36,7 @@ public class BlockBreaker extends BlockBase {
 
   @Override
   public BlockRenderType getRenderType(BlockState bs) {
-    return BlockRenderType.INVISIBLE;
+    return BlockRenderType.MODEL;
   }
 
   @Override
