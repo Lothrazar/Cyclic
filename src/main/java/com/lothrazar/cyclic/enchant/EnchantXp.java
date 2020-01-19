@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -28,7 +27,7 @@ public class EnchantXp extends EnchantBase {
       PlayerEntity p = (PlayerEntity) user;
       // ModCyclic.LOGGER.info("before " + p.experience);
       p.giveExperiencePoints(user.world.rand.nextInt(3) * (level + 1));
-      ModCyclic.LOGGER.info("kil   " + p.experience);
+      //      ModCyclic.LOGGER.info("kil   " + p.experience);
     }
   }
 

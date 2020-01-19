@@ -33,7 +33,7 @@ public class MattockItem extends ToolItem {
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
     World world = player.world;
-    RayTraceResult ray = rayTrace(world, (PlayerEntity) player, RayTraceContext.FluidMode.NONE);
+    RayTraceResult ray = rayTrace(world, player, RayTraceContext.FluidMode.NONE);
     if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK) {
       BlockRayTraceResult brt = (BlockRayTraceResult) ray;
       Direction sideHit = brt.getFace();
@@ -50,14 +50,12 @@ public class MattockItem extends ToolItem {
       for (BlockPos posCurrent : shape) {
         //
         BlockState bsCurrent = world.getBlockState(posCurrent);
-        System.out.println(bsCurrent.getBlock() + " " + this.getDestroySpeed(stack, bsCurrent)
-            + " " + ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
-            + " BUT IS IT " + this.efficiency);
+        //        System.out.println(bsCurrent.getBlock() + " " + this.getDestroySpeed(stack, bsCurrent)
+        //            + " " + ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
+        //            + " BUT IS IT " + this.efficiency);
         if (player.canPlayerEdit(posCurrent, sideHit, stack)
             && ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
             && this.getDestroySpeed(stack, bsCurrent) > 1) {
-          // 
-          System.out.println("YES I CAN BREAK IT " + bsCurrent.getBlock());
           stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
           if (world.isRemote) {//C

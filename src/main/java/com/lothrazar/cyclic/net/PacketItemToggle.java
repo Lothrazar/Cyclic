@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Slot;
@@ -32,10 +31,8 @@ public class PacketItemToggle {
         return;
       }
       Slot slotObj = player.openContainer.getSlot(message.slot);
-      ModCyclic.LOGGER.error(message.slot + " slotObjslotObj stack" + slotObj.getStack());
       if (slotObj != null
           && !slotObj.getStack().isEmpty()) {
-        ModCyclic.LOGGER.error("packetde " + slotObj.getStack());
         ItemStack maybeCharm = slotObj.getStack();
         if (maybeCharm.getItem() instanceof IHasClickToggle) {
           //example: is a charm or something

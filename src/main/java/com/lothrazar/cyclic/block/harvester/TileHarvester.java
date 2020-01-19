@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.CyclicRegistry;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.util.UtilNBT;
@@ -102,7 +101,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         final ItemStack drop = iterator.next();
         if (drop.getItem() == seed.getItem()) { // Remove exactly one seed (consume for replanting
           drop.shrink(1);
-          ModCyclic.LOGGER.info("Harvester remove seed item " + drop);
+          //          ModCyclic.LOGGER.info("Harvester remove seed item " + drop);
           //          iterator.remove();
           //           break;
         }
