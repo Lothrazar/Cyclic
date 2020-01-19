@@ -5,6 +5,8 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
@@ -23,8 +25,9 @@ public class BlockScaffolding extends BlockBase {
   private boolean doesAutobreak = true;
 
   public BlockScaffolding(Properties properties, boolean autobreak) {
-    super(properties.hardnessAndResistance(0.1F).tickRandomly().harvestLevel(0));
+    super(properties.hardnessAndResistance(0.1F).tickRandomly().harvestLevel(0).func_226896_b_());
     this.doesAutobreak = autobreak;
+    RenderTypeLookup.setRenderLayer(this, RenderType.func_228643_e_());
   }
   //  @Override
   //  public BlockRenderLayer getRenderLayer() {
