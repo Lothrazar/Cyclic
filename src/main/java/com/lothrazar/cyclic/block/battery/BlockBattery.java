@@ -1,8 +1,12 @@
 package com.lothrazar.cyclic.block.battery;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -14,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -25,22 +30,25 @@ public class BlockBattery extends BlockBase {
   }
 
   @Override
+  public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    //because harvestBlock manually forces a drop 
+    return new ArrayList<>();
+  }
+
+  @Override
   public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity ent, ItemStack stack) {
     super.harvestBlock(worldIn, player, pos, state, ent, stack);
-    if (ent != null) {//&& ent.hasCapability(CapabilityEnergy.ENERGY, null)) {
+    //    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());//is this needed???
+    ItemStack battery = new ItemStack(this);
+    if (ent != null) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      //      if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (storage == null) {
-        //        ModCyclic.LOGGER.info("HOW to give capability  to BlockItem" + stack);
-        //just use NBT data
-        //write to the data tag eh 
-        //        stack.write(handlerHere)
-        return;
+      IEnergyStorage storage = battery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (storage != null) {
+        ((CustomEnergyStorage) storage).setEnergy(handlerHere.getEnergyStored());
       }
-      storage.receiveEnergy(handlerHere.getEnergyStored(), true);//.setEnergyStored(handlerHere.getEnergyStored());
-      //      }
     }
+    //even if energy fails 
+    player.dropItem(battery, true);
   }
 
   @Override
@@ -66,5 +74,22 @@ public class BlockBattery extends BlockBase {
       return ActionResultType.SUCCESS;
     }
     return super.func_225533_a_(state, world, pos, player, hand, result);
+  }
+
+  @Override
+  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    try {
+      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (storage != null) {
+        TileBattery container = (TileBattery) world.getTileEntity(pos);
+        CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        if (storageTile != null) {
+          storageTile.setEnergy(storage.getEnergyStored());
+        }
+      }
+    }
+    catch (Exception e) {
+      //
+    }
   }
 }
