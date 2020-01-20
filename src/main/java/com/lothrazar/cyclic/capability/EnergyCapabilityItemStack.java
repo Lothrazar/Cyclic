@@ -57,9 +57,8 @@ public class EnergyCapabilityItemStack implements ICapabilityProvider {
   @Nullable
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-    if (capability == CapabilityEnergy.ENERGY) {
-      return energy.cast();
-    }
+    if (CapabilityEnergy.ENERGY == capability)
+      return energy.cast();//CapabilityEnergy.ENERGY.orEmpty(capability, this.energy);
     return LazyOptional.empty();
   }
 }

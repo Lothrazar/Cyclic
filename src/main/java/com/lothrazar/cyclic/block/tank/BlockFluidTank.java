@@ -1,13 +1,20 @@
 package com.lothrazar.cyclic.block.tank;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -20,9 +27,11 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -125,5 +134,31 @@ public class BlockFluidTank extends BlockBase {
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.func_228645_f_());
     //    ClientRegistry.bindTileEntityRenderer(TileTank.class, new RenderTank());
+  }
+
+  @Override
+  public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    //because harvestBlock manually forces a drop 
+    return new ArrayList<>();
+  }
+
+  @Override
+  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity ent, ItemStack stack) {
+    super.harvestBlock(world, player, pos, state, ent, stack);
+    ItemStack tankStack = new ItemStack(this);
+    if (ent != null) {
+      IFluidHandler fluidInTile = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
+      // note a DIFFERENT cap here for the item
+      IFluidHandler fluidInStack = tankStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
+      if (fluidInStack != null) {
+        //now give 
+        FluidStack fs = fluidInTile.getFluidInTank(0);
+        ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
+      }
+      else
+        ModCyclic.LOGGER.info("Storage capability is null from itemstack " + tankStack);
+    }
+    if (world.isRemote == false)
+      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
   }
 }

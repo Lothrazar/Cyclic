@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileTank extends TileEntityBase {
 
-  private static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
+  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
 
   public TileTank() {

@@ -26,7 +26,9 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public boolean showDurabilityBar(ItemStack stack) {
-    return true;
+    //    return true;
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    return storage != null && storage.getEnergyStored() > 0;
   }
 
   @Override
