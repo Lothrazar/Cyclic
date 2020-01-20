@@ -1,9 +1,18 @@
 package com.lothrazar.cyclic.util;
 
+import org.lwjgl.opengl.GL11;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.OffsetEnum;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
+import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -47,7 +56,7 @@ public class RenderUtil {
   public static final int MAX_LIGHT_Y = MAX_LIGHT_X;
 
   @OnlyIn(Dist.CLIENT)
-  public static void renderLaser(LaserConfig conf) {
+  public static void renderLaser(LaserConfig conf, MatrixStack matrixStack) {
     if (conf.first == null || conf.second == null) {
       return;
     }
@@ -57,7 +66,7 @@ public class RenderUtil {
     RenderUtil.renderLaser(
         conf.first.getX() + offsetX, conf.first.getY() + offsetY, conf.first.getZ() + offsetZ,
         conf.second.getX() + offsetX, conf.second.getY() + offsetY, conf.second.getZ() + offsetZ,
-        conf.rotationTime, conf.alpha, conf.beamWidth, conf.color, conf.timer);
+        conf.rotationTime, conf.alpha, conf.beamWidth, conf.color, conf.timer, matrixStack);
   }
 
   //I got this function from ActuallyAdditions by Ellpeck 
@@ -68,7 +77,7 @@ public class RenderUtil {
   @OnlyIn(Dist.CLIENT)
   public static void renderLaser(double firstX, double firstY, double firstZ,
       double secondX, double secondY, double secondZ,
-      double rotationTime, float alpha, double beamWidth, float[] color, double timer) {
+      double rotationTime, float alpha, double beamWidth, float[] color, double timer, MatrixStack matrixStack) {
     Tessellator tessy = Tessellator.getInstance();
     BufferBuilder buffer = tessy.getBuffer();
     World world = Minecraft.getInstance().world;
@@ -84,42 +93,62 @@ public class RenderUtil {
     double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
     double length = combinedVec.length();
     length = length * (timer / (LaserConfig.MAX_TIMER * 1.0));
-    //    GlStateManager.pushMatrix();
-    //    GlStateManager.translated(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
-    //    GlStateManager.rotated((float) (180 * yaw / Math.PI), 0, 1, 0);
-    //    GlStateManager.rotated((float) (180 * pitch / Math.PI), 0, 0, 1);
-    //    GlStateManager.rotated((float) rot, 1, 0, 0);
-    //    GlStateManager.disableTexture();
-    //    //    GlStateManager.disableTexture2D();
-    //    GlStateManager.disableLighting();
-    //    GlStateManager.enableBlend();
-    //    GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+    RenderSystem.pushMatrix();
+    RenderSystem.rotatef((float) (180 * yaw / Math.PI), 0, 1, 0);
+    RenderSystem.rotatef((float) (180 * pitch / Math.PI), 0, 0, 1);
+    RenderSystem.rotatef((float) rot, 1, 0, 0);
+    PlayerEntity player = ModCyclic.proxy.getClientPlayer();
+    ActiveRenderInfo renderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
+    double staticPlayerX = player.lastTickPosX;
+    double staticPlayerY = player.lastTickPosY;
+    double staticPlayerZ = player.lastTickPosZ;
+    staticPlayerX = renderInfo.getProjectedView().getX();
+    staticPlayerY = renderInfo.getProjectedView().getY();
+    staticPlayerZ = renderInfo.getProjectedView().getZ();
+    //    matrixStack.func_227860_a_(); // push
+    //    matrixStack.func_227861_a_(firstX - staticPlayerX, firstY - staticPlayerY, firstZ - staticPlayerZ);
+    //    RenderSystem.translated(firstX, firstY, firstZ);
+    RenderSystem.translated(firstX - staticPlayerX, firstY - staticPlayerY, firstZ - staticPlayerZ);
+    //    RenderSystem.translated(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ);
+    //    GL11.glTranslated(staticPlayerX, staticPlayerY, staticPlayerZ);
+    //        RenderSystem.translated(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
+    RenderSystem.disableTexture();
+    //    RenderSystem.disableTexture2D();
+    RenderSystem.disableLighting();
+    RenderSystem.enableBlend();
+    RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
     //    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-    //    for (double i = 0; i < 4; i++) {//four corners of the quad 
-    //      double width = beamWidth * (i / 4.0);
-    //      buffer.pos(length, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(length, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(length, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(length, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(length, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(length, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(length, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(0, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //      buffer.pos(length, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-    //    }
-    //    tessy.draw();
-    //    GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-    //    GlStateManager.disableBlend();
-    //    GlStateManager.enableLighting();
-    //    GlStateManager.disableTexture();
-    //    //    GlStateManager.enableTexture2D();
-    //    GlStateManager.popMatrix();
+    for (double i = 0; i < 4; i++) {//four corners of the quad 
+      double width = beamWidth * (i / 4.0);
+      // func_225582_a_ == .pos
+      //          func_225583_a_ == .tex// for UR
+      //func_227885_a_ == color
+      // .lightmap(MAX_LIGHT_X, MAX_LIGHT_Y) ==  I DONT KNOW
+      buffer.func_225582_a_(length, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(length, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(length, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(length, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(length, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(length, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(length, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(0, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      buffer.func_225582_a_(length, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+    }
+    tessy.draw();
+    //    matrixStack.func_227865_b_(); // pop
+    RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+    RenderSystem.disableBlend();
+    RenderSystem.enableLighting();
+    RenderSystem.disableTexture();
+    //    RenderSystem.enableTexture2D();
+    RenderSystem.popMatrix();
   }
 }

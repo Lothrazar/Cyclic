@@ -33,9 +33,9 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   public void func_225616_a_(TileHarvester te, float v, MatrixStack matrixStack,
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
-    if (te.laserTimer > 0) {
-      RenderUtil.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
-          rotationTime, alpha, beamWidth, laserColor));
-    }
+    //    if (te.laserTimer > 0) {
+    RenderUtil.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
+        rotationTime, alpha, beamWidth, laserColor), matrixStack);
+    //    }
   }
 }
