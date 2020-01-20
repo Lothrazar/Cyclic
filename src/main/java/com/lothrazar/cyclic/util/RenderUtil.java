@@ -105,9 +105,6 @@ public class RenderUtil {
     staticPlayerX = renderInfo.getProjectedView().getX();
     staticPlayerY = renderInfo.getProjectedView().getY();
     staticPlayerZ = renderInfo.getProjectedView().getZ();
-    //    matrixStack.func_227860_a_(); // push
-    //    matrixStack.func_227861_a_(firstX - staticPlayerX, firstY - staticPlayerY, firstZ - staticPlayerZ);
-    //    RenderSystem.translated(firstX, firstY, firstZ);
     RenderSystem.translated(firstX - staticPlayerX, firstY - staticPlayerY, firstZ - staticPlayerZ);
     //    RenderSystem.translated(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ);
     //    GL11.glTranslated(staticPlayerX, staticPlayerY, staticPlayerZ);
@@ -124,7 +121,7 @@ public class RenderUtil {
       // func_225582_a_ == .pos
       //          func_225583_a_ == .tex// for UR
       //func_227885_a_ == color
-      // .lightmap(MAX_LIGHT_X, MAX_LIGHT_Y) ==  I DONT KNOW
+      // .lightmap(MAX_LIGHT_X, MAX_LIGHT_Y) ==  I DONT KNOW maybe func_225583_a_(MAX_LIGHT_X, MAX_LIGHT_Y).
       buffer.func_225582_a_(length, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
       buffer.func_225582_a_(0, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
       buffer.func_225582_a_(0, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();

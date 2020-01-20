@@ -20,6 +20,7 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   static final double rotationTime = 0;
   static final double beamWidth = 0.02;
   static final float alpha = 0.9F;
+  private static final boolean ENABLED = false;
   //  @Override //renderTileEntityFast
   //  public void func_225616_a_(TileHarvester te, double x, double y, double z, float partialTicks, int destroyStage) {
   //    //test 
@@ -33,9 +34,9 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   public void func_225616_a_(TileHarvester te, float v, MatrixStack matrixStack,
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
-    //    if (te.laserTimer > 0) {
-    RenderUtil.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
-        rotationTime, alpha, beamWidth, laserColor), matrixStack);
-    //    }
+    if (ENABLED && te.laserTimer > 0) {
+      RenderUtil.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
+          rotationTime, alpha, beamWidth, laserColor), matrixStack);
+    }
   }
 }
