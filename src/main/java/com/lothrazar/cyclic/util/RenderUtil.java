@@ -150,7 +150,7 @@ public class RenderUtil {
   }
 
   /**
-   * SHOUTOUT https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
+   * SHOUTOUT THANK YOU https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
    */
   public static void drawBlock(final BufferBuilder bufferbuilder, final double x, final double y, final double z, final float minU, final float maxU, final float minV, final float maxV,
       final double x_size, final double y_size, final double z_size) {
