@@ -148,4 +148,41 @@ public class RenderUtil {
     //    RenderSystem.enableTexture2D();
     RenderSystem.popMatrix();
   }
+
+  /**
+   * SHOUTOUT https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
+   */
+  public static void drawBlock(final BufferBuilder bufferbuilder, final double x, final double y, final double z, final float minU, final float maxU, final float minV, final float maxV,
+      final double x_size, final double y_size, final double z_size) {
+    // UP
+    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
+    // DOWN
+    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
+    // LEFT
+    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
+    // RIGHT
+    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    // BACK
+    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, -z_size + z).func_225583_a_(minU, minV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, y_size + y, -z_size + z).func_225583_a_(maxU, minV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    // FRONT
+    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
+    bufferbuilder.func_225582_a_(x_size + x, y_size + y, z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, z_size + z).func_225583_a_(minU, maxV).endVertex();
+    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
+  }
 }

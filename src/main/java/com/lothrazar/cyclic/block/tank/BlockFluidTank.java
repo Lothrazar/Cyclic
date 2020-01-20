@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.tank;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
@@ -38,6 +39,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockFluidTank extends BlockBase {
 
@@ -137,7 +139,7 @@ public class BlockFluidTank extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.func_228645_f_());
-    //    ClientRegistry.bindTileEntityRenderer(TileTank.class, new RenderTank());
+    ClientRegistry.bindTileEntityRenderer(CyclicRegistry.Tiles.tank, RenderTank::new);
   }
 
   @Override
