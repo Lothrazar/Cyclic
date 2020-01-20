@@ -50,7 +50,9 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       String id = EntityType.getKey(target.getType()).toString();
       //TODO: is id blacklisted
       compound.putString(NBT_ENTITYID, id);
-      ModCyclic.LOGGER.info(compound);
+      //      target.rotationYaw// TODO
+      //      target.rotationPitch
+      //      ModCyclic.LOGGER.info(compound);
       ItemStack drop = new ItemStack(CyclicRegistry.Items.mob_container);
       drop.setTag(compound);
       UtilItemStack.drop(world, this.getPosition(), drop);

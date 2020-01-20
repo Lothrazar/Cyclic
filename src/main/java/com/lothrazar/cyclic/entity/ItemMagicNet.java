@@ -1,14 +1,14 @@
 package com.lothrazar.cyclic.entity;
 
 import javax.annotation.Nonnull;
+import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class ItemMagicNet extends Item {
+public class ItemMagicNet extends ItemBase {
 
   public ItemMagicNet(Properties properties) {
     super(properties);

@@ -192,10 +192,10 @@ public class RegistryEvents {
     r.register(new EnderPearlReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
     r.register(new EnderPearlMount(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
     r.register(new EnderEyeReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_eye_reuse"));
-    //      r.register(new BoomerangItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_item"));
+    //    r.register(new BoomerangItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_item"));
     r.register(new LeverRemote(new Item.Properties().group(CyclicRegistry.itemGroup).maxStackSize(1)).setRegistryName("lever_remote"));
     r.register(new ItemMagicNet(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("magic_net"));
-    r.register(new ItemMobContainer(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("mob_container"));
+    r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1).group(CyclicRegistry.itemGroup)).setRegistryName("mob_container"));
   }
 
   @SubscribeEvent
