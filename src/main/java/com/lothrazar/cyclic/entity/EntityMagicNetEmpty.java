@@ -2,10 +2,10 @@ package com.lothrazar.cyclic.entity;
 
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
@@ -51,10 +51,16 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       //TODO: is id blacklisted
       compound.putString(NBT_ENTITYID, id);
       ModCyclic.LOGGER.info(compound);
-      return;
+      ItemStack drop = new ItemStack(CyclicRegistry.Items.mob_container);
+      drop.setTag(compound);
+      UtilItemStack.drop(world, this.getPosition(), drop);
+      target.remove();
     }
-    BlockPos pos = this.getPosition();
-    world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(CyclicRegistry.Items.magic_net)));
+    else if (type == RayTraceResult.Type.BLOCK) {
+      //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
+      BlockPos pos = this.getPosition();
+      UtilItemStack.drop(world, pos, new ItemStack(CyclicRegistry.Items.magic_net));
+    }
     this.remove();
   }
 

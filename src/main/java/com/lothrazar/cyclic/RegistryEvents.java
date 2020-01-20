@@ -45,6 +45,7 @@ import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.entity.ItemMagicNet;
+import com.lothrazar.cyclic.entity.ItemMobContainer;
 import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.PeatItem;
@@ -99,15 +100,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryEvents {
-
-  @SubscribeEvent
-  public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> event) {
-    IForgeRegistry<EntityType<?>> r = event.getRegistry();
-    //      r.register(EntityType.Builder.create(BoomerangEntity::new, EntityClassification.CREATURE)
-    //          .size(1, 1)
-    //          .setShouldReceiveVelocityUpdates(false)
-    //          .build("boomerang").setRegistryName(ModCyclic.MODID, "boomerang"));
-  }
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -203,6 +195,7 @@ public class RegistryEvents {
     //      r.register(new BoomerangItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_item"));
     r.register(new LeverRemote(new Item.Properties().group(CyclicRegistry.itemGroup).maxStackSize(1)).setRegistryName("lever_remote"));
     r.register(new ItemMagicNet(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("magic_net"));
+    r.register(new ItemMobContainer(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("mob_container"));
   }
 
   @SubscribeEvent

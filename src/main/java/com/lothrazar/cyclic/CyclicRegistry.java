@@ -35,6 +35,7 @@ import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
+import com.lothrazar.cyclic.entity.ItemMobContainer;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.tool.WrenchItem;
 import net.minecraft.block.Block;
@@ -110,8 +111,8 @@ public class CyclicRegistry {
     public static ItemScaffolding item_scaffold_fragile;
     @ObjectHolder(ModCyclic.MODID + ":scaffold_responsive")
     public static ItemScaffolding item_scaffold_responsive;
-    //    @ObjectHolder(ModCyclic.MODID + ":boomerang")
-    //    public static BoomerangItem boomerang;
+    @ObjectHolder(ModCyclic.MODID + ":mob_container")
+    public static ItemMobContainer mob_container;
     @ObjectHolder(ModCyclic.MODID + ":wooden_wrench")
     public static WrenchItem wrench;
     @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
