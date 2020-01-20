@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.harvester;
 
+import com.lothrazar.cyclic.util.RenderUtil;
+import com.lothrazar.cyclic.util.RenderUtil.LaserConfig;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -10,8 +12,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
 
-  public RenderHarvester(TileEntityRendererDispatcher p_i226006_1_) {
-    super(p_i226006_1_);
+  public RenderHarvester(TileEntityRendererDispatcher d) {
+    super(d);
   }
 
   static final float[] laserColor = new float[] { 0.04F, 0.99F, 0F };
@@ -28,7 +30,12 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   //  }
 
   @Override
-  public void func_225616_a_(TileHarvester p_225616_1_, float p_225616_2_, MatrixStack p_225616_3_, IRenderTypeBuffer p_225616_4_, int p_225616_5_, int p_225616_6_) {
-    // TODO Auto-generated method stub
+  public void func_225616_a_(TileHarvester te, float v, MatrixStack matrixStack,
+      IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
+    // ok
+    if (te.laserTimer > 0) {
+      RenderUtil.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
+          rotationTime, alpha, beamWidth, laserColor));
+    }
   }
 }

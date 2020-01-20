@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockHarvester extends BlockBase {
@@ -27,7 +28,7 @@ public class BlockHarvester extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    //    ClientRegistry.bindTileEntityRenderer(TileHarvester.class, new RenderHarvester());
+    ClientRegistry.bindTileEntityRenderer(CyclicRegistry.Tiles.harvesterTile, RenderHarvester::new);
     ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.harvester, ScreenHarvester::new);
   }
 
