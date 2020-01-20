@@ -1,6 +1,9 @@
 package com.lothrazar.cyclic.entity;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -8,13 +11,31 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemMobContainer extends ItemBase {
 
   public ItemMobContainer(Properties properties) {
     super(properties);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    if (stack.hasTag()) {
+      TranslationTextComponent t = new TranslationTextComponent(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
+      t.applyTextStyle(TextFormatting.GRAY);
+      tooltip.add(t);
+    }
+    else {
+      super.addInformation(stack, worldIn, tooltip, flagIn);
+    }
   }
 
   @Override
