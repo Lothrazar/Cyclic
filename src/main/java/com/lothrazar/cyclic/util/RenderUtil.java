@@ -10,6 +10,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
@@ -105,7 +106,14 @@ public class RenderUtil {
     staticPlayerX = renderInfo.getProjectedView().getX();
     staticPlayerY = renderInfo.getProjectedView().getY();
     staticPlayerZ = renderInfo.getProjectedView().getZ();
-    RenderSystem.translated(firstX - staticPlayerX, firstY - staticPlayerY, firstZ - staticPlayerZ);
+    //    RenderSystem.translated(firstX - staticPlayerX, firstY - staticPlayerY, firstZ - staticPlayerZ);
+    //    
+    //    
+    //    
+    matrixStack.func_227860_a_(); // push
+    matrixStack.func_227861_a_(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ); // translate back to camera
+    Matrix4f matrix4f = matrixStack.func_227866_c_().func_227870_a_(); // get final transformation matrix, handy to get yaw+pitch transformation
+    RenderSystem.multMatrix(matrix4f);
     //    RenderSystem.translated(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ);
     //    GL11.glTranslated(staticPlayerX, staticPlayerY, staticPlayerZ);
     //        RenderSystem.translated(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
@@ -140,7 +148,7 @@ public class RenderUtil {
       buffer.func_225582_a_(length, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
     }
     tessy.draw();
-    //    matrixStack.func_227865_b_(); // pop
+    matrixStack.func_227865_b_(); // pop
     RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
     RenderSystem.disableBlend();
     RenderSystem.enableLighting();
