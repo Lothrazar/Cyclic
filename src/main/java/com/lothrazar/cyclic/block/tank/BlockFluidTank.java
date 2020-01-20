@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -35,6 +36,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 public class BlockFluidTank extends BlockBase {
 
@@ -113,7 +116,8 @@ public class BlockFluidTank extends BlockBase {
             //success so display new amount
             if (handler.getFluidInTank(0) != null) {
               player.sendStatusMessage(new TranslationTextComponent(""
-                  + handler.getFluidInTank(0).getAmount()), true);
+                  + handler.getFluidInTank(0).getAmount()
+                  + "/" + handler.getTankCapacity(0)), true);
             }
             //and also play the fluid sound
             if (player instanceof ServerPlayerEntity) {
@@ -140,6 +144,24 @@ public class BlockFluidTank extends BlockBase {
   public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 
     return new ArrayList<>();
+  }
+
+  @Override
+  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    try {
+      IFluidHandlerItem storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
+      TileEntity container = world.getTileEntity(pos);
+      if (storage != null && container != null) {
+        IFluidHandler storageTile = container.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
+        if (storageTile != null) {
+          storageTile.fill(storage.getFluidInTank(0), FluidAction.EXECUTE);
+        }
+      }
+    }
+    catch (Exception e) {
+      //
+      ModCyclic.LOGGER.error("fill from item ", e);
+    }
   }
 
   @Override

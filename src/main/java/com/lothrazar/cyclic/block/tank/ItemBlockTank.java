@@ -54,7 +54,8 @@ public class ItemBlockTank extends BlockItem {
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null) {// + 
-        TranslationTextComponent t = new TranslationTextComponent(fs.getAmount() + "/" + storage.getTankCapacity(0));
+        TranslationTextComponent t = new TranslationTextComponent(fs.getAmount()
+            + "/" + storage.getTankCapacity(0));
         t.applyTextStyle(TextFormatting.GRAY);
         tooltip.add(t);
         return;
