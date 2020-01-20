@@ -30,6 +30,26 @@ public class ItemBlockTank extends BlockItem {
     return fstack != null && fstack.getAmount() > 0;//  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
   }
 
+  /**
+   * Queries the percentage of the 'Durability' bar that should be drawn.
+   *
+   * @param stack
+   * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
+   */
+  @Override
+  public double getDurabilityForDisplay(ItemStack stack) {
+    try {
+      //this is always null
+      //   IFluidHandler storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+      FluidStack fstack = copyFluidFromStack(stack);
+      float qty = fstack.getAmount();
+      float ratio = qty / (TileTank.CAPACITY);
+      return 1 - ratio;
+    }
+    catch (Throwable e) {} //lazy 
+    return 1;
+  }
+
   public static FluidStack copyFluidFromStack(ItemStack stack) {
     if (stack.getTag() != null) {
       FluidHandlerCapabilityStack handler = new FluidHandlerCapabilityStack(stack, TileTank.CAPACITY);
@@ -53,9 +73,11 @@ public class ItemBlockTank extends BlockItem {
     IFluidHandler storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
-      if (fs != null) {// + 
-        TranslationTextComponent t = new TranslationTextComponent(fs.getAmount()
-            + "/" + storage.getTankCapacity(0));
+      if (fs != null && !fs.isEmpty()) {// + 
+        TranslationTextComponent t = new TranslationTextComponent(
+            fs.getDisplayName().getFormattedText()
+                + " " + fs.getAmount()
+                + "/" + storage.getTankCapacity(0));
         t.applyTextStyle(TextFormatting.GRAY);
         tooltip.add(t);
         return;
