@@ -91,8 +91,8 @@ public class RenderUtil {
     double rot = rotationTime > 0 ? (360D * ((world.getGameTime() % rotationTime) / rotationTime)) : 0;
     double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z));
     double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
-    double length = combinedVec.length();
-    length = length * (timer / (LaserConfig.MAX_TIMER * 1.0));
+    float length = (float) combinedVec.length();
+    length = (float) (length * (timer / (LaserConfig.MAX_TIMER * 1.0F)));
     RenderSystem.pushMatrix();
     RenderSystem.rotatef((float) (180 * yaw / Math.PI), 0, 1, 0);
     RenderSystem.rotatef((float) (180 * pitch / Math.PI), 0, 0, 1);
@@ -120,7 +120,7 @@ public class RenderUtil {
     buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
     //    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
     for (double i = 0; i < 4; i++) {//four corners of the quad 
-      double width = beamWidth * (i / 4.0);
+      float width = (float) (beamWidth * (i / 4.0F));
       // func_225582_a_ == .pos
       //          func_225583_a_ == .tex// for UR
       //func_227885_a_ == color
