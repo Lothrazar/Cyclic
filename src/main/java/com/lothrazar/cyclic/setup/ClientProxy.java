@@ -2,11 +2,16 @@ package com.lothrazar.cyclic.setup;
 
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientProxy implements IProxy {
@@ -56,5 +61,22 @@ public class ClientProxy implements IProxy {
     //      //does not affect functionality, its working before the player can ever make use of this.
     //      ModCyclic.logger.error("Error setting reach : ", e);
     //    }
+  }
+
+  @Override
+  public void initColours() {
+    Minecraft.getInstance().getItemColors()
+        .register((stack, tintIndex) -> {
+          if (stack.hasTag() && tintIndex > 0) {
+            EntityType<?> thing = ForgeRegistries.ENTITIES.getValue(
+                new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
+            for (SpawnEggItem spawneggitem : SpawnEggItem.getEggs()) {
+              if (spawneggitem.getType(null) == thing) {
+                return spawneggitem.getColor(tintIndex - 1);
+              }
+            }
+          }
+          return -1;
+        }, CyclicRegistry.Items.mob_container);
   }
 }

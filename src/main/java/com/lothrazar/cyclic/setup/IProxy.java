@@ -12,4 +12,6 @@ public interface IProxy {
   PlayerEntity getClientPlayer();
 
   void setPlayerReach(PlayerEntity player, int currentReach);
+
+  void initColours();
 }

@@ -22,4 +22,7 @@ public class ServerProxy implements IProxy {
   public void setPlayerReach(PlayerEntity player, int currentReach) {
     player.getAttribute(PlayerEntity.REACH_DISTANCE).setBaseValue(currentReach);
   }
+
+  @Override
+  public void initColours() {}
 }

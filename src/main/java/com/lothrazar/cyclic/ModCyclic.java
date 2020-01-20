@@ -66,6 +66,8 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.venom);//y
     MinecraftForge.EVENT_BUS.register(this);
     scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
+    //lets go
+    proxy.initColours();
   }
 
   ItemScaffolding[] scaffoldingListen = new ItemScaffolding[0];

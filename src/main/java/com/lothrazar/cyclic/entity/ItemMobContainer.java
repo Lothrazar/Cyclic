@@ -19,16 +19,20 @@ public class ItemMobContainer extends ItemBase {
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
-    World world = context.getWorld();
     PlayerEntity player = context.getPlayer();
+    ItemStack stack = player.getHeldItem(context.getHand());
+    if (stack.hasTag() == false) {
+      return ActionResultType.PASS;
+    }
     BlockPos pos = context.getPos();
     if (context.getFace() != null) {
       pos = pos.offset(context.getFace());
     }
-    ItemStack stack = player.getHeldItem(context.getHand());
+    World world = context.getWorld();
     Entity entity = ForgeRegistries.ENTITIES.getValue(
         new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
         .create(world);
+    //    entity.egg
     entity.read(stack.getTag());
     //  target.rotationYaw// TODO
     //  target.rotationPitch
