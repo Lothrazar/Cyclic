@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lal",
+    "qiq",
+    "lal"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "l": {
+      "tag": "minecraft:coral_blocks"
+    },
+    "a": {
+      "item": "minecraft:cyan_dye"
+    },
+    "q": {
+      "item": "minecraft:snowball"
+    }
+  },
+  "result": {
+    "item": "cyclic:magic_net",
+    "count": 2
+  }
+}
