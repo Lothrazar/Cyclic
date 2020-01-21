@@ -44,8 +44,10 @@ import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
+import com.lothrazar.cyclic.entity.EntityTorchBolt;
 import com.lothrazar.cyclic.entity.ItemMagicNet;
 import com.lothrazar.cyclic.entity.ItemMobContainer;
+import com.lothrazar.cyclic.entity.ItemTorchThrower;
 import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.PeatItem;
@@ -196,6 +198,7 @@ public class RegistryEvents {
     r.register(new LeverRemote(new Item.Properties().group(CyclicRegistry.itemGroup).maxStackSize(1)).setRegistryName("lever_remote"));
     r.register(new ItemMagicNet(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("magic_net"));
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1).group(CyclicRegistry.itemGroup)).setRegistryName("mob_container"));
+    r.register(new ItemTorchThrower(new Item.Properties().maxStackSize(1).maxDamage(256).group(CyclicRegistry.itemGroup)).setRegistryName("torch_launcher"));
   }
 
   @SubscribeEvent
@@ -253,7 +256,8 @@ public class RegistryEvents {
 
   @SubscribeEvent
   public static void registerEntity(RegistryEvent.Register<EntityType<?>> e) {
-    e.getRegistry().register(
+    IForgeRegistry<EntityType<?>> r = e.getRegistry();
+    r.register(
         EntityType.Builder.<EntityMagicNetEmpty> create(EntityMagicNetEmpty::new, EntityClassification.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
@@ -261,11 +265,20 @@ public class RegistryEvents {
             .size(.6f, .6f)
             .build("magic_net")
             .setRegistryName("magic_net"));
+    r.register(
+        EntityType.Builder.<EntityTorchBolt> create(EntityTorchBolt::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("torch_bolt")
+            .setRegistryName("torch_bolt"));
   }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void registerModels(FMLClientSetupEvent event) {
     RenderingRegistry.registerEntityRenderingHandler(Entities.netball, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(Entities.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
 }

@@ -35,7 +35,9 @@ import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
+import com.lothrazar.cyclic.entity.EntityTorchBolt;
 import com.lothrazar.cyclic.entity.ItemMobContainer;
+import com.lothrazar.cyclic.entity.ItemTorchThrower;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.tool.WrenchItem;
 import net.minecraft.block.Block;
@@ -73,6 +75,9 @@ public class CyclicRegistry {
 
     @ObjectHolder(ModCyclic.MODID + ":magic_net")
     public static EntityType<EntityMagicNetEmpty> netball;
+    @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
+    public static EntityType<EntityTorchBolt> torchbolt;
+    //    
     //    @ObjectHolder(ModCyclic.MODID + ":boomerang")
     //    public static EntityType<BoomerangEntity> boomerang;
   }
@@ -105,6 +110,8 @@ public class CyclicRegistry {
 
   public static class Items {
 
+    @ObjectHolder(ModCyclic.MODID + ":torch_launcher")
+    public static ItemTorchThrower torch_launcher;
     @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
     public static ItemScaffolding item_scaffold_replace;
     @ObjectHolder(ModCyclic.MODID + ":scaffold_fragile")
