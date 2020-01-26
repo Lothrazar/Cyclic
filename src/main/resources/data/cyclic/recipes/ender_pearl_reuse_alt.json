@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ere",
+    "rsr",
+    "ere"
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:ender_pearl"
+    },
+    "r": {
+      "item": "minecraft:lapis_block"
+    },
+    "s": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:ender_pearl_reuse",
+    "count": 1
+  }
+}

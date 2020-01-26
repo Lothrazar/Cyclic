@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "eee",
+    " s ",
+    " r "
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:ender_pearl"
+    },
+    "r": {
+      "item": "minecraft:saddle"
+    },
+    "s": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "item": "cyclic:ender_pearl_mounted",
+    "count": 1
+  }
+}
