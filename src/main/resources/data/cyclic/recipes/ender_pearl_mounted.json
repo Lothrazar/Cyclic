@@ -1,25 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ffq",
-    "ggf",
-    "egf"
+    "ere",
+    "rsr",
+    "ere"
   ],
   "key": {
-    "f": {
-      "item": "minecraft:feather"
-    },
-    "g": {
-      "item": "minecraft:gold_ingot"
-    },
     "e": {
-      "item": "minecraft:ender_eye"
+      "item": "minecraft:ender_pearl"
     },
-    "q": {
-      "item": "cyclic:gem_amber"
+    "r": {
+      "item": "minecraft:gold_block"
+    },
+    "s": {
+      "item": "minecraft:redstone_block"
     }
   },
   "result": {
-    "item": "cyclic:ender_pearl_mounted"
+    "item": "cyclic:ender_pearl_mounted",
+    "count": 1
   }
 }
