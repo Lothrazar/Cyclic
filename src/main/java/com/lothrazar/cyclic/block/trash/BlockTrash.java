@@ -14,13 +14,13 @@ public class BlockTrash extends BlockBase {
 
   public BlockTrash(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.METAL)
-        .func_226896_b_());
+        .notSolid());
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
+    RenderTypeLookup.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @Override

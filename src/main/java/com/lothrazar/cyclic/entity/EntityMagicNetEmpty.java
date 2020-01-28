@@ -31,7 +31,7 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
   }
 
   @Override
-  protected Item func_213885_i() {
+  protected Item getDefaultItem() {
     return CyclicRegistry.Items.magic_net;
   }
 

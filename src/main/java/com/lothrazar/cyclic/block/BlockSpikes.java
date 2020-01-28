@@ -57,17 +57,17 @@ public class BlockSpikes extends BlockBase {
   private EnumSpikeType type;
 
   public BlockSpikes(Properties properties, EnumSpikeType type) {
-    super(properties.hardnessAndResistance(1.1F).func_226896_b_());
+    super(properties.hardnessAndResistance(1.1F).notSolid());
     this.type = type;
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
+    RenderTypeLookup.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  @Override
+  @Override @Deprecated
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
     switch (state.get(BlockStateProperties.FACING)) {
       case NORTH:
@@ -86,7 +86,7 @@ public class BlockSpikes extends BlockBase {
     return VoxelShapes.fullCube();//CANT BE NULL, causes crashes.   
   }
 
-  @Override
+  @Override @Deprecated
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
     if (entity instanceof LivingEntity && state.get(ACTIVATED)) {
       //extra effects

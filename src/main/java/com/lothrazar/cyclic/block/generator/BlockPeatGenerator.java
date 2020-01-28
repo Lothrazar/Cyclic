@@ -32,8 +32,8 @@ public class BlockPeatGenerator extends BlockBase {
     return new TilePeatGenerator();
   }
 
-  @Override
-  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+  @Override @Deprecated
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote) {
       TileEntity tileEntity = world.getTileEntity(pos);
       if (tileEntity instanceof INamedContainerProvider) {
@@ -44,7 +44,7 @@ public class BlockPeatGenerator extends BlockBase {
       }
       return ActionResultType.SUCCESS;
     }
-    return super.func_225533_a_(state, world, pos, player, hand, result);
+    return super.onBlockActivated(state, world, pos, player, hand, result);
   }
 
   @Override

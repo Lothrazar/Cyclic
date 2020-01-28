@@ -25,7 +25,7 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   public static boolean ENABLED = false;
 
   @Override
-  public void func_225616_a_(TileHarvester te, float v, MatrixStack matrixStack,
+  public void render(TileHarvester te, float v, MatrixStack matrixStack,
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
     if (ENABLED) {

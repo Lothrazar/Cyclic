@@ -49,11 +49,11 @@ public class BlockFluidTank extends BlockBase {
 
   public BlockFluidTank(Properties properties) {
     super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F)
-        .func_226896_b_());
+        .notSolid());
   }
 
-  @Override
-  public float func_220080_a(BlockState state, IBlockReader worldIn, BlockPos pos) {
+  @Override @Deprecated
+  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0f;
   }
   //  @Override
@@ -106,8 +106,8 @@ public class BlockFluidTank extends BlockBase {
     return new TileTank();
   }
 
-  @Override
-  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+  @Override @Deprecated
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!world.isRemote) {
       TileEntity tankHere = world.getTileEntity(pos);
       if (tankHere != null) {
@@ -132,13 +132,13 @@ public class BlockFluidTank extends BlockBase {
     if (FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
       return ActionResultType.SUCCESS;
     }
-    return super.func_225533_a_(state, world, pos, player, hand, hit);
+    return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228645_f_());
+    RenderTypeLookup.setRenderLayer(this, RenderType.translucent());
     ClientRegistry.bindTileEntityRenderer(CyclicRegistry.Tiles.tank, RenderTank::new);
   }
 

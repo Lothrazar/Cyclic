@@ -32,9 +32,9 @@ public class EnderEyeReuse extends ItemBase {
       //      BlockPos blockpos = worldIn.getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(playerIn), 100, false);
       BlockPos blockpos = ((ServerWorld) worldIn).getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(player), 100, false);
       if (blockpos != null) {
-        double posX = player.func_226277_ct_();
-        double posY = player.func_226278_cu_();
-        double posZ = player.func_226281_cx_();
+        double posX = player.getPosX();
+        double posY = player.getPosY();
+        double posZ = player.getPosZ();
         EyeOfEnderEntity eyeofenderentity = new EyeOfEnderEntity(worldIn, posX, posY + player.getHeight() / 2.0F, posZ);
         eyeofenderentity.func_213863_b(new ItemStack(Items.ENDER_EYE));
         eyeofenderentity.moveTowards(blockpos);

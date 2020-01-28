@@ -27,14 +27,14 @@ public class BlockScaffolding extends BlockBase {
   private boolean doesAutobreak = true;
 
   public BlockScaffolding(Properties properties, boolean autobreak) {
-    super(properties.hardnessAndResistance(0.1F).tickRandomly().harvestLevel(0).func_226896_b_());
+    super(properties.hardnessAndResistance(0.1F).tickRandomly().harvestLevel(0).notSolid());
     this.doesAutobreak = autobreak;
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228643_e_());
+    RenderTypeLookup.setRenderLayer(this, RenderType.cutout());
   }
 
   @Override
@@ -43,8 +43,8 @@ public class BlockScaffolding extends BlockBase {
   }
 
   // TICK
-  @Override
-  public void func_225534_a_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+  @Override @Deprecated
+  public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
     if (doesAutobreak && worldIn.rand.nextDouble() < 0.5) {
       worldIn.destroyBlock(pos, true);
     }
