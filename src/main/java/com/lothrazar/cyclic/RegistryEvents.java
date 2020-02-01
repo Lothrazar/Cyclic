@@ -201,9 +201,9 @@ public class RegistryEvents {
     r.register(new ItemMagicNet(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("magic_net"));
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1).group(CyclicRegistry.itemGroup)).setRegistryName("mob_container"));
     r.register(new ItemTorchThrower(new Item.Properties().maxStackSize(1).maxDamage(256).group(CyclicRegistry.itemGroup)).setRegistryName("torch_launcher"));
-    r.register(new ItemChestSackEmpty(new Item.Properties())
+    r.register(new ItemChestSackEmpty(new Item.Properties().group(CyclicRegistry.itemGroup))
         .setRegistryName("tile_transporter_empty"));
-    r.register(new ItemChestSack(new Item.Properties().group(CyclicRegistry.itemGroup))
+    r.register(new ItemChestSack(new Item.Properties())
         .setRegistryName("tile_transporter"));
   }
 

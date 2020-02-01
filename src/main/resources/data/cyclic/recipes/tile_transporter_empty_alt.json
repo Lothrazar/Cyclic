@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "lcl",
+    "lll"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:slime_ball"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "cyclic:tile_transporter_empty",
+    "count": 1
+  }
+}
