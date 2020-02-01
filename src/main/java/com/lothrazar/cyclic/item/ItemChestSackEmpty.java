@@ -38,6 +38,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -109,6 +110,7 @@ public class ItemChestSackEmpty extends ItemBase {
     itemData.putString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getTranslationKey());
     itemData.put(ItemChestSack.KEY_BLOCKTILE, tileData);
     itemData.putString(ItemChestSack.KEY_BLOCKID, state.getBlock().getRegistryName().toString());
+    itemData.put(ItemChestSack.KEY_BLOCKSTATE, NBTUtil.writeBlockState(state));
     Hand hand = Hand.MAIN_HAND;
     ItemStack held = player.getHeldItem(hand);
     if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {

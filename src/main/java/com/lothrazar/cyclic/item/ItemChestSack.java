@@ -39,6 +39,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -98,14 +99,11 @@ public class ItemChestSack extends ItemBase {
     Block block = ForgeRegistries.BLOCKS.getValue(res);
     //    Block.regi
     if (block == null) {
-      //      heldChestSack.stackSize = 0;
       heldChestSack = ItemStack.EMPTY;
       UtilChat.addChatMessage(player, "Invalid block id " + res);
       return false;
     }
-    BlockState toPlace;
-    //placement state is default for now 
-    toPlace = block.getDefaultState();
+    BlockState toPlace = NBTUtil.readBlockState(itemData.getCompound(KEY_BLOCKSTATE));
     //maybe get from player direction or offset face, but instead rely on that from saved data
     World world = player.getEntityWorld();
     try {
