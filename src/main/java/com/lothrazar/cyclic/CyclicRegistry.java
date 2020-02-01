@@ -128,6 +128,10 @@ public class CyclicRegistry {
     public static Item experience_food;
     @ObjectHolder(ModCyclic.MODID + ":magic_net")
     public static Item magic_net;
+    @ObjectHolder(ModCyclic.MODID + ":tile_transporter")
+    public static Item tile_transporter;
+    @ObjectHolder(ModCyclic.MODID + ":tile_transporter_empty")
+    public static Item tile_transporterempty;
   }
 
   public static class Tiles {

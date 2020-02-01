@@ -138,4 +138,8 @@ public class UtilPlaceBlocks {
     }
     return success;
   }
+
+  public static boolean destroyBlock(World world, BlockPos pos) {
+    return world.destroyBlock(pos, false);
+  }
 }

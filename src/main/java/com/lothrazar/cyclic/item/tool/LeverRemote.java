@@ -70,7 +70,7 @@ public class LeverRemote extends ItemBase {
       //and save dimension
       UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
       if (world.isRemote) {
-        UtilChat.statusMessage(player, this.getTranslationKey() + ".saved");
+        UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".saved");
       }
       //      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       return ActionResultType.SUCCESS;
@@ -91,7 +91,7 @@ public class LeverRemote extends ItemBase {
     //default is zero which is ok
     if (blockPos == null) {
       if (world.isRemote) {
-        UtilChat.statusMessage(player, this.getTranslationKey() + ".invalid");
+        UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".invalid");
       }
       return false;
     }
@@ -101,14 +101,14 @@ public class LeverRemote extends ItemBase {
       BlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (world.isRemote) {
-          UtilChat.statusMessage(player, this.getTranslationKey() + ".invalid");
+          UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".invalid");
         }
         return false;
       }
       blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.get(LeverBlock.POWERED).booleanValue();
       UtilWorld.toggleLeverPowerState(world, blockPos, blockState);
-      UtilChat.statusMessage(player, this.getTranslationKey() + ".powered." + hasPowerHere);
+      UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".powered." + hasPowerHere);
       //      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       //      UtilEntity.setCooldownItem(player, this, COOLDOWN);
       return true;

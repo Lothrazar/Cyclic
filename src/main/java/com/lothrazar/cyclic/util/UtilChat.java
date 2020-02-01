@@ -6,7 +6,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class UtilChat {
 
-  public static void chatMessage(PlayerEntity player, String message) {
+  public static void addChatMessage(PlayerEntity player, String message) {
     if (player.world.isRemote) {
       player.sendMessage(new TranslationTextComponent((message)));
     }
@@ -17,7 +17,7 @@ public class UtilChat {
   }
 
   //sendStatusMessage
-  public static void statusMessage(PlayerEntity player, String message) {
+  public static void sendStatusMessage(PlayerEntity player, String message) {
     if (player.world.isRemote) {
       player.sendStatusMessage(new TranslationTextComponent((message)), true);
     }
