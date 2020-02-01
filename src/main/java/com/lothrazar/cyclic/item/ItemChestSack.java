@@ -138,10 +138,17 @@ public class ItemChestSack extends ItemBase {
     if (itemStack.getTag() != null && itemStack.getTag().contains(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTag().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
-        TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang(blockname + ".name"));
+        TranslationTextComponent t = new TranslationTextComponent(
+            UtilChat.lang(blockname));//.replace("block.", "item.") + ".name"
         t.applyTextStyle(TextFormatting.DARK_GREEN);
         list.add(t);
       }
+    }
+    else {
+      TranslationTextComponent t = new TranslationTextComponent(
+          UtilChat.lang("invalid"));//.replace("block.", "item.") + ".name"
+      t.applyTextStyle(TextFormatting.DARK_RED);
+      list.add(t);
     }
     //super.addInformation(itemStack, player, list, advanced);
   }
