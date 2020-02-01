@@ -26,8 +26,8 @@ public class BlockPeat extends BlockBase {
 
   @Override
   @Deprecated
-  public void func_225534_a_(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-    super.func_225534_a_(state, world, pos, random);
+  public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    super.tick(state, world, pos, random);
     List<BlockPos> around = UtilShape.squareHorizontalHollow(pos, 1);
     int sidesWet = 0;
     List<BlockPos> waters = new ArrayList<>();

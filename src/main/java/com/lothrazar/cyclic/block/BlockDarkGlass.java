@@ -15,7 +15,7 @@ public class BlockDarkGlass extends BlockBase {
 
   public BlockDarkGlass(Properties properties) {
     super(properties.hardnessAndResistance(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS)
-        .func_226896_b_());
+        .notSolid());
   }
 
   @Override
@@ -29,13 +29,13 @@ public class BlockDarkGlass extends BlockBase {
     return false;
   }
 
-  @Override
+  @Override @Deprecated
   @OnlyIn(Dist.CLIENT)
-  public float func_220080_a(BlockState state, IBlockReader worldIn, BlockPos pos) {
+  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0F;
   }
 
-  @Override
+  @Override @Deprecated
   public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return false;
   }
@@ -43,6 +43,6 @@ public class BlockDarkGlass extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
+    RenderTypeLookup.setRenderLayer(this, RenderType.cutoutMipped());
   }
 }

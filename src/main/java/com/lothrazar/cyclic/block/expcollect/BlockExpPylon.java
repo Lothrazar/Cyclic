@@ -25,17 +25,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BlockExpPylon extends BlockBase {
 
   public BlockExpPylon(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.GLASS).func_226896_b_());
+    super(properties.hardnessAndResistance(1.8F).sound(SoundType.GLASS).notSolid());
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.func_228641_d_());
+    RenderTypeLookup.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  @Override
-  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+  @Override @Deprecated
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote && hand == Hand.MAIN_HAND) {
       ItemStack held = player.getHeldItem(hand);
       if (held.isEmpty() || player.isCrouching()) {

@@ -27,9 +27,9 @@ public class EvokerFangItem extends ItemBase {
   private void summonFangRay(double startX, double startZ, PlayerEntity player, double posX, double posY, double posZ) {
     double minY = posY;//Math.min(posY, caster.posY);
     //double d1 = Math.max(posY,caster.posY) ;
-    double tposX = player.func_226277_ct_();
-    double tposY = player.func_226278_cu_();
-    double tposZ = player.func_226281_cx_();
+    double tposX = player.getPosX();
+    double tposY = player.getPosY();
+    double tposZ = player.getPosZ();
     float arctan = (float) MathHelper.atan2(posZ - tposZ, posX - tposX);
     for (int i = 0; i < MAX_RANGE; ++i) {
       double fract = 1.25D * (i + 1);

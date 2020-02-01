@@ -110,9 +110,9 @@ public class RenderUtil {
     //    
     //    
     //    
-    matrixStack.func_227860_a_(); // push
-    matrixStack.func_227861_a_(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ); // translate back to camera
-    Matrix4f matrix4f = matrixStack.func_227866_c_().func_227870_a_(); // get final transformation matrix, handy to get yaw+pitch transformation
+    matrixStack.push(); // push
+    matrixStack.translate(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ); // translate back to camera
+    Matrix4f matrix4f = matrixStack.getLast().getPositionMatrix(); // get final transformation matrix, handy to get yaw+pitch transformation
     RenderSystem.multMatrix(matrix4f);
     //    RenderSystem.translated(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ);
     //    GL11.glTranslated(staticPlayerX, staticPlayerY, staticPlayerZ);
@@ -124,31 +124,31 @@ public class RenderUtil {
     RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
     buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
     //    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-    for (double i = 0; i < 4; i++) {//four corners of the quad 
+    for (double i = 0; i < 4; i++) {//four corners of the quad
       float width = (float) (beamWidth * (i / 4.0F));
-      // func_225582_a_ == .pos
-      //          func_225583_a_ == .tex// for UR
+      // pos == .pos
+      //          tex == .tex// for UR
       //func_227885_a_ == color
-      // .lightmap(MAX_LIGHT_X, MAX_LIGHT_Y) ==  I DONT KNOW maybe func_225583_a_(MAX_LIGHT_X, MAX_LIGHT_Y).
-      buffer.func_225582_a_(length, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(length, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(length, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(length, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(length, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(length, width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(length, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, -width, width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(0, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
-      buffer.func_225582_a_(length, -width, -width).func_225587_b_(0, 0).func_227885_a_(r, g, b, alpha).endVertex();
+      // .lightmap(MAX_LIGHT_X, MAX_LIGHT_Y) ==  I DONT KNOW maybe tex(MAX_LIGHT_X, MAX_LIGHT_Y).
+      buffer.pos(length, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(length, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(length, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(length, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(length, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(length, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(length, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(0, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
+      buffer.pos(length, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
     }
     tessy.draw();
-    matrixStack.func_227865_b_(); // pop
+    matrixStack.pop(); // pop
     RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
     RenderSystem.disableBlend();
     RenderSystem.enableLighting();
@@ -163,34 +163,34 @@ public class RenderUtil {
   public static void drawBlock(final BufferBuilder bufferbuilder, final double x, final double y, final double z, final float minU, final float maxU, final float minV, final float maxV,
       final double x_size, final double y_size, final double z_size) {
     // UP
-    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, y_size + y, -z_size + z).tex(maxU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, y_size + y, z_size + z).tex(maxU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, y_size + y, z_size + z).tex(minU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, y_size + y, -z_size + z).tex(minU, maxV).endVertex();
     // DOWN
-    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
+    bufferbuilder.pos(-x_size + x, -y_size + y, z_size + z).tex(minU, minV).endVertex();
+    bufferbuilder.pos(-x_size + x, -y_size + y, -z_size + z).tex(minU, maxV).endVertex();
+    bufferbuilder.pos(x_size + x, -y_size + y, -z_size + z).tex(maxU, maxV).endVertex();
+    bufferbuilder.pos(x_size + x, -y_size + y, z_size + z).tex(maxU, minV).endVertex();
     // LEFT
-    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, -y_size + y, z_size + z).tex(maxU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, -y_size + y, -z_size + z).tex(maxU, maxV).endVertex();
+    bufferbuilder.pos(x_size + x, y_size + y, -z_size + z).tex(minU, maxV).endVertex();
+    bufferbuilder.pos(x_size + x, y_size + y, z_size + z).tex(minU, minV).endVertex();
     // RIGHT
-    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, -y_size + y, -z_size + z).tex(minU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, -y_size + y, z_size + z).tex(minU, minV).endVertex();
+    bufferbuilder.pos(-x_size + x, y_size + y, z_size + z).tex(maxU, minV).endVertex();
+    bufferbuilder.pos(-x_size + x, y_size + y, -z_size + z).tex(maxU, maxV).endVertex();
     // BACK
-    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, -z_size + z).func_225583_a_(minU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, -z_size + z).func_225583_a_(minU, minV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, y_size + y, -z_size + z).func_225583_a_(maxU, minV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, -z_size + z).func_225583_a_(maxU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, -y_size + y, -z_size + z).tex(minU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, y_size + y, -z_size + z).tex(minU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, y_size + y, -z_size + z).tex(maxU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, -y_size + y, -z_size + z).tex(maxU, maxV).endVertex();
     // FRONT
-    bufferbuilder.func_225582_a_(x_size + x, -y_size + y, z_size + z).func_225583_a_(maxU, minV).endVertex();
-    bufferbuilder.func_225582_a_(x_size + x, y_size + y, z_size + z).func_225583_a_(maxU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, y_size + y, z_size + z).func_225583_a_(minU, maxV).endVertex();
-    bufferbuilder.func_225582_a_(-x_size + x, -y_size + y, z_size + z).func_225583_a_(minU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, -y_size + y, z_size + z).tex(maxU, minV).endVertex();
+    bufferbuilder.pos(x_size + x, y_size + y, z_size + z).tex(maxU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, y_size + y, z_size + z).tex(minU, maxV).endVertex();
+    bufferbuilder.pos(-x_size + x, -y_size + y, z_size + z).tex(minU, minV).endVertex();
   }
 }

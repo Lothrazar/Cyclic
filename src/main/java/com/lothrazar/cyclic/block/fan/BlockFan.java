@@ -20,7 +20,7 @@ public class BlockFan extends BlockBase {
   public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
 
   public BlockFan(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).func_226896_b_());
+    super(properties.hardnessAndResistance(1.8F).notSolid());
   }
 
   @Override
