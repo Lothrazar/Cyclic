@@ -13,6 +13,10 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
+import net.minecraftforge.gradle.common.task.SignJar
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Cyclic'
@@ -170,3 +174,21 @@ publishing {
         }
     }
 }
+
+
+task signJar(type: SignJar, dependsOn: jar) {
+
+    project.logger.lifecycle('!Signing jar ' + jar.archivePath.getName());
+    // findProperty allows us to reference the property without it existing. 
+    // Using project.propName would cause the script to fail validation if 
+    // the property did not exist. 
+    keyStore = project.findProperty('keyStore')
+    alias = project.findProperty('keyStoreAlias')
+    storePass = project.findProperty('keyStorePass')
+    keyPass = project.findProperty('keyStoreKeyPass')
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
+
+}
+
+build.dependsOn signJar
