@@ -110,6 +110,8 @@ public class CyclicRegistry {
 
   public static class Items {
 
+    @ObjectHolder(ModCyclic.MODID + ":diamond_carrot_health")
+    public static Item diamond_carrot_health;
     @ObjectHolder(ModCyclic.MODID + ":torch_launcher")
     public static ItemTorchThrower torch_launcher;
     @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")

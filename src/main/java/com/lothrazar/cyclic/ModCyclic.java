@@ -63,7 +63,8 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.magnet);//y
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.multishot);//y
     //    MinecraftForge.EVENT_BUS.register(CyclicRegistry.smelting);//  ?
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.venom);//y
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.venom);//y ?
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.diamond_carrot_health);
     MinecraftForge.EVENT_BUS.register(this);
     scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
     //lets go

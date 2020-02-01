@@ -52,6 +52,7 @@ import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemChestSack;
 import com.lothrazar.cyclic.item.ItemChestSackEmpty;
+import com.lothrazar.cyclic.item.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmAntidote;
@@ -203,8 +204,8 @@ public class RegistryEvents {
     r.register(new ItemTorchThrower(new Item.Properties().maxStackSize(1).maxDamage(256).group(CyclicRegistry.itemGroup)).setRegistryName("torch_launcher"));
     r.register(new ItemChestSackEmpty(new Item.Properties().group(CyclicRegistry.itemGroup))
         .setRegistryName("tile_transporter_empty"));
-    r.register(new ItemChestSack(new Item.Properties())
-        .setRegistryName("tile_transporter"));
+    r.register(new ItemChestSack(new Item.Properties()).setRegistryName("tile_transporter"));
+    r.register(new ItemHorseHealthDiamondCarrot(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("diamond_carrot_health"));
   }
 
   @SubscribeEvent
