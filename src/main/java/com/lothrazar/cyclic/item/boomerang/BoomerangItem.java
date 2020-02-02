@@ -16,7 +16,6 @@ public class BoomerangItem extends ItemBase {
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;
   private static final float VELOCITY_MAX = 1.5F;
-  protected static final float MAX_CHARGE = 9.7F;
   private static final int TICKS_USING = 93000;
 
   public BoomerangItem(Properties properties) {
@@ -44,7 +43,6 @@ public class BoomerangItem extends ItemBase {
   public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entity, int chargeTimer) {
     //
     int charge = this.getUseDuration(stack) - chargeTimer;
-    //    System.out.println(" " + charge);
     float percentageCharged = BowItem.getArrowVelocity(charge);//never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
       return;//not enough force to go with any realistic path 
