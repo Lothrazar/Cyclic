@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-	" c ",    
-    " c ",
+	"ccc",    
+    " d ",
     " d "
   ],
   "key": {
@@ -10,11 +10,11 @@
   		"item":"minecraft:diamond"
   	},
   	"c": {
-  		"item":"cyclic:gem_obsidian"
+  		"item":"minecraft:emerald"
   	}
   },
   "result": {
-    "item": "cyclic:crystal_sword",
+    "item": "cyclic:emerald_pickaxe",
     "count": 1
   }
 }

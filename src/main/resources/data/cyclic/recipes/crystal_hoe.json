@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-	" c ",    
-    " c ",
+	" cc",    
+    " d ",
     " d "
   ],
   "key": {
@@ -14,7 +14,7 @@
   	}
   },
   "result": {
-    "item": "cyclic:crystal_sword",
+    "item": "cyclic:crystal_hoe",
     "count": 1
   }
 }

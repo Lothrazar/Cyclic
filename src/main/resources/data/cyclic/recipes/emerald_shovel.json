@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
 	" c ",    
-    " c ",
+    " d ",
     " d "
   ],
   "key": {
@@ -10,11 +10,11 @@
   		"item":"minecraft:diamond"
   	},
   	"c": {
-  		"item":"cyclic:gem_obsidian"
+  		"item":"minecraft:emerald"
   	}
   },
   "result": {
-    "item": "cyclic:crystal_sword",
+    "item": "cyclic:emerald_shovel",
     "count": 1
   }
 }

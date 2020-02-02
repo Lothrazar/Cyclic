@@ -10,11 +10,11 @@
   		"item":"minecraft:diamond"
   	},
   	"c": {
-  		"item":"cyclic:gem_obsidian"
+  		"item":"minecraft:emerald"
   	}
   },
   "result": {
-    "item": "cyclic:crystal_sword",
+    "item": "cyclic:emerald_sword",
     "count": 1
   }
 }

@@ -45,9 +45,12 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTier;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ObjectHolder;
@@ -61,6 +64,74 @@ public class CyclicRegistry {
       return new ItemStack(Blocks.trash);
     }
   };
+
+  public static class Materials {
+
+    public static final IItemTier OBSIDIAN = new IItemTier() {
+
+      @Override
+      public int getMaxUses() {
+        return ItemTier.DIAMOND.getMaxUses() * 4;
+      }
+
+      @Override
+      public float getEfficiency() {
+        return ItemTier.DIAMOND.getEfficiency() * 4;
+      }
+
+      @Override
+      public float getAttackDamage() {
+        return ItemTier.DIAMOND.getAttackDamage() * 3.5F;
+      }
+
+      @Override
+      public int getHarvestLevel() {
+        return ItemTier.DIAMOND.getHarvestLevel() + 1;
+      }
+
+      @Override
+      public int getEnchantability() {
+        return ItemTier.GOLD.getEnchantability() + 1;
+      }
+
+      @Override
+      public Ingredient getRepairMaterial() {
+        return null;// net.minecraft.item.Items.EMERALD;
+      }
+    };
+    public static final IItemTier EMERALD = new IItemTier() {
+
+      @Override
+      public int getMaxUses() {
+        return ItemTier.DIAMOND.getMaxUses() + ItemTier.GOLD.getMaxUses();
+      }
+
+      @Override
+      public float getEfficiency() {
+        return ItemTier.DIAMOND.getEfficiency() * 2;
+      }
+
+      @Override
+      public float getAttackDamage() {
+        return ItemTier.DIAMOND.getAttackDamage() * 1.5F;
+      }
+
+      @Override
+      public int getHarvestLevel() {
+        return ItemTier.DIAMOND.getHarvestLevel();
+      }
+
+      @Override
+      public int getEnchantability() {
+        return ItemTier.GOLD.getEnchantability() + 1;
+      }
+
+      @Override
+      public Ingredient getRepairMaterial() {
+        return null;// net.minecraft.item.Items.EMERALD;
+      }
+    };
+  }
 
   public static class Textures {
 
