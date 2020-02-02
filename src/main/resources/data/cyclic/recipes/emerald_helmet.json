@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    
+    "ccc",
+    "c c"
+  ],
+  "key": {
+  	"c": {
+  		"item":"minecraft:emerald"
+  	}
+  },
+  "result": {
+    "item": "cyclic:emerald_helmet",
+    "count": 1
+  }
+}

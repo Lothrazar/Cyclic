@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cdc",
+    "ccc",
+    "ccc"
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:diamond_chestplate",
+  		"data":0
+  	},
+  	"c": {
+  		"item":"cyclic:gem_obsidian"
+  	}
+  },
+  "result": {
+    "item": "cyclic:crystal_chestplate",
+    "count": 1
+  }
+}

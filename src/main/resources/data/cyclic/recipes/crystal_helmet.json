@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    
+    "ccc",
+    "cdc"
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:diamond_helmet",
+  		"data":0
+  	},
+  	"c": {
+  		"item":"cyclic:gem_obsidian"
+  	}
+  },
+  "result": {
+    "item": "cyclic:crystal_helmet",
+    "count": 1
+  }
+}

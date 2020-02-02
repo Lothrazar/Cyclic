@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" cc",    
+    " dc",
+    " d "
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:diamond"
+  	},
+  	"c": {
+  		"item":"cyclic:gem_obsidian"
+  	}
+  },
+  "result": {
+    "item": "cyclic:crystal_axe",
+    "count": 1
+  }
+}

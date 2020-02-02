@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"c",    
+    "d",
+    "d"
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:diamond"
+  	},
+  	"c": {
+  		"item":"cyclic:gem_obsidian"
+  	}
+  },
+  "result": {
+    "item": "cyclic:crystal_shovel",
+    "count": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    
+    "c c",
+    "c c"
+  ],
+  "key": {
+  	"c": {
+  		"item":"minecraft:emerald"
+  	}
+  },
+  "result": {
+    "item": "cyclic:emerald_boots",
+    "count": 1
+  }
+}
