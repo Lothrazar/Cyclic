@@ -49,15 +49,21 @@ public class BoomerangItem extends ItemBase {
     if (percentageCharged < 0.1) {
       return;//not enough force to go with any realistic path 
     }
-    float amountCharged = percentageCharged * MAX_CHARGE;
+    //    float amountCharged = percentageCharged * MAX_CHARGE;
     float velocityFactor = percentageCharged * 1.5F;
     if (entity instanceof PlayerEntity == false) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entity;
-    //    BoomerangEntity e = new BoomerangEntity(CyclicRegistry.Entities.boomerang, worldIn);
-    //    e.shoot(entity, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
-    //    worldIn.addEntity(e);
-    //    e.setOwner(player);
+    //    System.out.println("GO" + velocityFactor);
+    BoomerangEntity e = new BoomerangEntity(worldIn, player);
+    e.shoot(entity, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    worldIn.addEntity(e);
+    stack.damageItem(1, player, (p) -> {
+      p.sendBreakAnimation(Hand.MAIN_HAND);
+    });
+    player.setHeldItem(player.getActiveHand(), ItemStack.EMPTY);
+    e.setBoomerangThrown(stack.copy());
+    e.setOwner(player);
   }
 }

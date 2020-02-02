@@ -63,6 +63,8 @@ import com.lothrazar.cyclic.item.bauble.CharmOverpowered;
 import com.lothrazar.cyclic.item.bauble.CharmVoid;
 import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
+import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
+import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
 import com.lothrazar.cyclic.item.tool.EnderBagItem;
 import com.lothrazar.cyclic.item.tool.EnderEyeReuse;
 import com.lothrazar.cyclic.item.tool.EnderPearlMount;
@@ -199,7 +201,7 @@ public class RegistryEvents {
     r.register(new EnderPearlReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
     r.register(new EnderPearlMount(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
     r.register(new EnderEyeReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_eye_reuse"));
-    //    r.register(new BoomerangItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_item"));
+    r.register(new BoomerangItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang"));
     r.register(new LeverRemote(new Item.Properties().group(CyclicRegistry.itemGroup).maxStackSize(1)).setRegistryName("lever_remote"));
     r.register(new ItemMagicNet(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("magic_net"));
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1).group(CyclicRegistry.itemGroup)).setRegistryName("mob_container"));
@@ -284,11 +286,36 @@ public class RegistryEvents {
             .size(.6f, .6f)
             .build("torch_bolt")
             .setRegistryName("torch_bolt"));
+    r.register(
+        EntityType.Builder.<BoomerangEntity> create(BoomerangEntity::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("boomerang")
+            .setRegistryName("boomerang"));
   }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void registerModels(FMLClientSetupEvent event) {
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    //TODO: loop here
+    RenderingRegistry.registerEntityRenderingHandler(Entities.boomerang, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(Entities.netball, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(Entities.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }

@@ -67,16 +67,6 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
   }
 
   @Override
-  public void writeAdditional(CompoundNBT tag) {
-    super.writeAdditional(tag);
-  }
-
-  @Override
-  public void readAdditional(CompoundNBT tag) {
-    super.readAdditional(tag);
-  }
-
-  @Override
   public IPacket<?> createSpawnPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
   }

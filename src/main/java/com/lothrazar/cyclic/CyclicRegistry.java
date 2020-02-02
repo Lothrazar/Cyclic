@@ -39,6 +39,7 @@ import com.lothrazar.cyclic.entity.EntityTorchBolt;
 import com.lothrazar.cyclic.entity.ItemMobContainer;
 import com.lothrazar.cyclic.entity.ItemTorchThrower;
 import com.lothrazar.cyclic.item.PeatItem;
+import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.tool.WrenchItem;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -77,9 +78,8 @@ public class CyclicRegistry {
     public static EntityType<EntityMagicNetEmpty> netball;
     @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
     public static EntityType<EntityTorchBolt> torchbolt;
-    //    
-    //    @ObjectHolder(ModCyclic.MODID + ":boomerang")
-    //    public static EntityType<BoomerangEntity> boomerang;
+    @ObjectHolder(ModCyclic.MODID + ":boomerang")
+    public static EntityType<BoomerangEntity> boomerang;
   }
 
   public static class Enchants {
@@ -110,6 +110,8 @@ public class CyclicRegistry {
 
   public static class Items {
 
+    @ObjectHolder(ModCyclic.MODID + ":boomerang")
+    public static Item boomerang;
     @ObjectHolder(ModCyclic.MODID + ":emerald_carrot_jump")
     public static Item emerald_carrot_jump;
     @ObjectHolder(ModCyclic.MODID + ":redstone_carrot_speed")
