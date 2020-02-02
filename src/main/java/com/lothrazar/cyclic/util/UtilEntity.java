@@ -23,7 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +36,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -532,45 +535,26 @@ public class UtilEntity {
     entity.setMotion(x, entity.getMotion().y, z);
   }
 
-  //  public static ResourceLocation getResourceLocation(Entity entityHit) {
-  //    try {
-  //      return ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(entityHit.getClass()));
-  //    }
-  //    catch (Exception e) {
-  //      return null;
-  //    }
-  //  }
-  private static void setCooldownItemInternal(PlayerEntity player, Item item, int cooldown) {
+  public static void setCooldownItem(PlayerEntity player, Item item, int cooldown) {
     player.getCooldownTracker().setCooldown(item, cooldown);
   }
 
-  /**
-   * Threadsafe
-   *
-   * https://github.com/SpongePowered/SpongeForge/issues/2301
-   *
-   * https://github.com/Lothrazar/Cyclic/issues/1065
-   *
-   * @param player
-   * @param item
-   * @param cooldown
-   */
-  public static void setCooldownItem(PlayerEntity player, Item item, int cooldown) {
-    if (player.world.isRemote) {
-      //client
-      setCooldownItemInternal(player, item, cooldown);
+  public static IAttributeInstance getAttributeJump(HorseEntity ahorse) {
+    try {
+      //    IAttribute x = AbstractHorseEntity.JUMP_STRENGTH; 
+      Field f = AbstractHorseEntity.class.getDeclaredField("JUMP_STRENGTH");
+      f.setAccessible(true);
+      Field modifiersField = Field.class.getDeclaredField("modifiers");
+      modifiersField.setAccessible(true);
+      modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+      //now we can read it
+      IAttribute jump = (IAttribute) f.get(null);
+      return ahorse.getAttribute(jump);
     }
-    else {
-      //server
-      //      final MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
-      //      s.addScheduledTask(new Runnable() {
-      //
-      //        @Override
-      //        public void run() {
-      //          setCooldownItemInternal(player, item, cooldown);
-      //        }
-      //      });
+    catch (Exception e) {
+      ModCyclic.LOGGER.error("Horse jump error", e);
     }
+    return null;
   }
 
   public static void eatingHorse(HorseEntity ahorse) {
@@ -581,7 +565,6 @@ public class UtilEntity {
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Horse eating animation error", e);
-      //      e.printStackTrace();
     }
   }
 }

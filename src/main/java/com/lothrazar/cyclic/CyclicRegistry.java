@@ -110,6 +110,8 @@ public class CyclicRegistry {
 
   public static class Items {
 
+    @ObjectHolder(ModCyclic.MODID + ":emerald_carrot_jump")
+    public static Item emerald_carrot_jump;
     @ObjectHolder(ModCyclic.MODID + ":redstone_carrot_speed")
     public static Item redstone_carrot_speed;
     @ObjectHolder(ModCyclic.MODID + ":diamond_carrot_health")
