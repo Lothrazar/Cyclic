@@ -362,6 +362,8 @@
     "item.cyclic.heart_toxic": "Empty Heart Container",
     "item.cyclic.heart_toxic.tooltip": "-1 Heart",
     
+    "item.cyclic.toxic_carrot.tooltip": "Zombify your horse",
+    "item.cyclic.toxic_carrot": "Toxic Carrot",
     "item.cyclic.diamond_carrot_health.tooltip": "Increase horse max health",
     "item.cyclic.diamond_carrot_health": "Diamond Carrot",
     "item.cyclic.redstone_carrot_speed.tooltip": "Increase horse speed",

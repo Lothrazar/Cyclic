@@ -142,6 +142,8 @@ public class CyclicRegistry {
     public static Item tile_transporter;
     @ObjectHolder(ModCyclic.MODID + ":tile_transporter_empty")
     public static Item tile_transporterempty;
+    @ObjectHolder(ModCyclic.MODID + ":toxic_carrot")
+    public static Item toxic_carrot;
   }
 
   public static class Tiles {

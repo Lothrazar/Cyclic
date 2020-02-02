@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cpc",
+    "cdc",
+    "cbc"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:golden_carrot"
+    },
+    "b": {
+      "item": "minecraft:beetroot"
+    },
+    "p": {
+      "item": "minecraft:poisonous_potato"
+    },
+    "d": {
+      "item": "minecraft:fermented_spider_eye"
+    }
+  },
+  "result": {
+    "item": "cyclic:toxic_carrot",
+    "count": 1
+  }
+}

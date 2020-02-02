@@ -85,6 +85,7 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.redstone_carrot_speed);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.emerald_carrot_jump);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.lapis_carrot_variant);
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.toxic_carrot);
     MinecraftForge.EVENT_BUS.register(this);
     scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
     //lets go
