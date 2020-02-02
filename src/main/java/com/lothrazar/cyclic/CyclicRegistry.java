@@ -44,7 +44,10 @@ import com.lothrazar.cyclic.item.tool.WrenchItem;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -53,6 +56,8 @@ import net.minecraft.item.ItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class CyclicRegistry {
@@ -64,6 +69,84 @@ public class CyclicRegistry {
       return new ItemStack(Blocks.trash);
     }
   };
+
+  public static class MaterialArmor {
+
+    public static IArmorMaterial EMERALD = new IArmorMaterial() {
+
+      @Override
+      public int getDurability(EquipmentSlotType slotIn) {
+        return ArmorMaterial.DIAMOND.getDurability(slotIn) + ArmorMaterial.IRON.getDurability(slotIn);
+      }
+
+      @Override
+      public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+        return ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) + ArmorMaterial.IRON.getDamageReductionAmount(slotIn);
+      }
+
+      @Override
+      public int getEnchantability() {
+        return ArmorMaterial.GOLD.getEnchantability();
+      }
+
+      @Override
+      public SoundEvent getSoundEvent() {
+        return SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND;
+      }
+
+      @Override
+      public Ingredient getRepairMaterial() {
+        return Ingredient.fromStacks(new ItemStack(net.minecraft.item.Items.EMERALD));
+      }
+
+      @Override
+      public String getName() {
+        return "emerald";
+      }
+
+      @Override
+      public float getToughness() {
+        return ArmorMaterial.DIAMOND.getToughness() * 1.5F;
+      }
+    };
+    public static final IArmorMaterial OBSIDIAN = new IArmorMaterial() {
+
+      @Override
+      public int getDurability(EquipmentSlotType slotIn) {
+        return ArmorMaterial.DIAMOND.getDurability(slotIn) * 4;
+      }
+
+      @Override
+      public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+        return ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) * 3;
+      }
+
+      @Override
+      public int getEnchantability() {
+        return ArmorMaterial.GOLD.getEnchantability() + 3;
+      }
+
+      @Override
+      public SoundEvent getSoundEvent() {
+        return SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND;
+      }
+
+      @Override
+      public Ingredient getRepairMaterial() {
+        return Ingredient.fromStacks(new ItemStack(Items.gem_obsidian));
+      }
+
+      @Override
+      public String getName() {
+        return "crystal";
+      }
+
+      @Override
+      public float getToughness() {
+        return ArmorMaterial.DIAMOND.getToughness() * 3F;
+      }
+    };
+  }
 
   public static class Materials {
 
@@ -96,7 +179,7 @@ public class CyclicRegistry {
 
       @Override
       public Ingredient getRepairMaterial() {
-        return null;// net.minecraft.item.Items.EMERALD;
+        return Ingredient.fromStacks(new ItemStack(Items.gem_obsidian));
       }
     };
     public static final IItemTier EMERALD = new IItemTier() {
@@ -128,7 +211,72 @@ public class CyclicRegistry {
 
       @Override
       public Ingredient getRepairMaterial() {
-        return null;// net.minecraft.item.Items.EMERALD;
+        return Ingredient.fromStacks(new ItemStack(net.minecraft.item.Items.EMERALD));
+      }
+    };
+    public static final IItemTier SANDSTONE = new IItemTier() {
+
+      @Override
+      public int getMaxUses() {
+        return (ItemTier.WOOD.getMaxUses() + ItemTier.STONE.getMaxUses()) / 2;
+      }
+
+      @Override
+      public float getEfficiency() {
+        return (ItemTier.WOOD.getEfficiency() + ItemTier.STONE.getEfficiency()) / 2;
+      }
+
+      @Override
+      public float getAttackDamage() {
+        return (ItemTier.WOOD.getAttackDamage() + ItemTier.STONE.getAttackDamage()) / 2;
+      }
+
+      @Override
+      public int getHarvestLevel() {
+        return (ItemTier.WOOD.getHarvestLevel() + ItemTier.STONE.getHarvestLevel()) / 2;
+      }
+
+      @Override
+      public int getEnchantability() {
+        return (ItemTier.WOOD.getEnchantability() + ItemTier.STONE.getEnchantability()) / 2;
+      }
+
+      @Override
+      public Ingredient getRepairMaterial() {
+        //        Ingredient.fromTag(Tag.)
+        return Ingredient.fromStacks(new ItemStack(net.minecraft.block.Blocks.SANDSTONE));
+      }
+    };
+    public static final IItemTier NETHERBRICK = new IItemTier() {
+
+      @Override
+      public int getMaxUses() {
+        return (ItemTier.WOOD.getMaxUses() + ItemTier.STONE.getMaxUses()) / 2;
+      }
+
+      @Override
+      public float getEfficiency() {
+        return (ItemTier.WOOD.getEfficiency() + ItemTier.STONE.getEfficiency()) / 2;
+      }
+
+      @Override
+      public float getAttackDamage() {
+        return (ItemTier.WOOD.getAttackDamage() + ItemTier.STONE.getAttackDamage()) / 2;
+      }
+
+      @Override
+      public int getHarvestLevel() {
+        return (ItemTier.WOOD.getHarvestLevel() + ItemTier.STONE.getHarvestLevel()) / 2;
+      }
+
+      @Override
+      public int getEnchantability() {
+        return (ItemTier.WOOD.getEnchantability() + ItemTier.STONE.getEnchantability()) / 2;
+      }
+
+      @Override
+      public Ingredient getRepairMaterial() {
+        return Ingredient.fromStacks(new ItemStack(net.minecraft.block.Blocks.NETHER_BRICKS));
       }
     };
   }
@@ -181,6 +329,8 @@ public class CyclicRegistry {
 
   public static class Items {
 
+    @ObjectHolder(ModCyclic.MODID + ":gem_obsidian")
+    protected static Item gem_obsidian;
     @ObjectHolder(ModCyclic.MODID + ":lapis_carrot_variant")
     public static Item lapis_carrot_variant;
     @ObjectHolder(ModCyclic.MODID + ":boomerang")

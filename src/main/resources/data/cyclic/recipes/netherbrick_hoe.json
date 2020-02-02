@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" cc",    
+    " d ",
+    " d "
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:stick"
+  	},
+  	"c": {
+  		"item":"minecraft:nether_bricks"
+  	}
+  },
+  "result": {
+    "item": "cyclic:netherbrick_hoe",
+    "count": 1
+  }
+}

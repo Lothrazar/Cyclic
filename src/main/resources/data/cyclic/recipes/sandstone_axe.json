@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" cc",    
+    " dc",
+    " d "
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:stick"
+  	},
+  	"c": {
+  		"item":"minecraft:smooth_sandstone"
+  	}
+  },
+  "result": {
+    "item": "cyclic:sandstone_axe",
+    "count": 1
+  }
+}

@@ -1176,10 +1176,10 @@
     "colour.white": "White",
     "colour.black": "Black",
 
-    "item.netherbrick_pickaxe": "Nether Pickaxe",
-    "item.netherbrick_axe": "Nether Axe",
-    "item.netherbrick_shovel": "Nether Shovel",
-    "item.netherbrick_hoe": "Nether Hoe",
+    "item.cyclic.netherbrick_pickaxe": "Nether Pickaxe",
+    "item.cyclic.netherbrick_axe": "Nether Axe",
+    "item.cyclic.netherbrick_shovel": "Nether Shovel",
+    "item.cyclic.netherbrick_hoe": "Nether Hoe",
 
     "pump.rate": "Transfer Rate",
 
