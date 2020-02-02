@@ -53,6 +53,7 @@ import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemChestSack;
 import com.lothrazar.cyclic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclic.item.ItemHorseHealthDiamondCarrot;
+import com.lothrazar.cyclic.item.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmAntidote;
@@ -206,6 +207,7 @@ public class RegistryEvents {
         .setRegistryName("tile_transporter_empty"));
     r.register(new ItemChestSack(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ItemHorseHealthDiamondCarrot(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("diamond_carrot_health"));
+    r.register(new ItemHorseRedstoneSpeed(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("redstone_carrot_speed"));
   }
 
   @SubscribeEvent

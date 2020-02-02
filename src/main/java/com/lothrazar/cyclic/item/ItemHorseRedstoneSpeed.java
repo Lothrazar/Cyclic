@@ -31,11 +31,12 @@ import net.minecraft.util.ActionResultType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ItemHorseHealthDiamondCarrot extends ItemBase {
+public class ItemHorseRedstoneSpeed extends ItemBase {
 
-  private static final int HEARTS_MAX = 40;
+  public static final int SPEED_MAX = 50;
+  private static final double SPEED_AMT = 0.004;
 
-  public ItemHorseHealthDiamondCarrot(Properties prop) {
+  public ItemHorseRedstoneSpeed(Properties prop) {
     super(prop);
   }
 
@@ -45,14 +46,13 @@ public class ItemHorseHealthDiamondCarrot extends ItemBase {
         && event.getTarget() instanceof HorseEntity) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
-      float mh = (float) ahorse.getAttribute(SharedMonsterAttributes.MAX_HEALTH).getValue();
-      if (mh < 2 * HEARTS_MAX) { // 20 hearts == 40 health points
-        ahorse.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(mh + 2);
+      double speed = ahorse.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
+      double newSpeed = speed + SPEED_AMT;
+      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
+        ahorse.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         event.setCanceled(true);
         event.setCancellationResult(ActionResultType.SUCCESS);
         event.getItemStack().shrink(1);
-        ahorse.processInteract(event.getPlayer(), event.getHand());
-        //trigger eatingHorse
         UtilEntity.eatingHorse(ahorse);
       }
     }

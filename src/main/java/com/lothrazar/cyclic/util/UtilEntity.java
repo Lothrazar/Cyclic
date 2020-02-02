@@ -23,9 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.entity.Entity;
@@ -36,6 +38,8 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.potion.EffectInstance;
@@ -566,6 +570,18 @@ public class UtilEntity {
       //          setCooldownItemInternal(player, item, cooldown);
       //        }
       //      });
+    }
+  }
+
+  public static void eatingHorse(HorseEntity ahorse) {
+    try {
+      Method m = AbstractHorseEntity.class.getDeclaredMethod("eatingHorse");
+      m.setAccessible(true);
+      m.invoke(ahorse);
+    }
+    catch (Exception e) {
+      ModCyclic.LOGGER.error("Horse eating animation error", e);
+      //      e.printStackTrace();
     }
   }
 }
