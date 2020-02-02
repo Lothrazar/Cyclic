@@ -1,0 +1,7 @@
+{
+	"parent": "cyclic:item/ender_lightning",
+
+	"textures": {
+		"arc": "cyclic:items/ender_lightning_arc_2"
+	}
+}

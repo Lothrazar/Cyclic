@@ -56,6 +56,23 @@ public class ModCyclic {
     PacketRegistry.init();
     proxy.init();
     //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
+    //TODO: LOOP 
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Blocks.soundproofing);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.excavate);//y
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.experience_boost);//y
@@ -67,6 +84,7 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.diamond_carrot_health);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.redstone_carrot_speed);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.emerald_carrot_jump);
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.lapis_carrot_variant);
     MinecraftForge.EVENT_BUS.register(this);
     scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
     //lets go

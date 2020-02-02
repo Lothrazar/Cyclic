@@ -110,6 +110,8 @@ public class CyclicRegistry {
 
   public static class Items {
 
+    @ObjectHolder(ModCyclic.MODID + ":lapis_carrot_variant")
+    public static Item lapis_carrot_variant;
     @ObjectHolder(ModCyclic.MODID + ":boomerang")
     public static Item boomerang;
     @ObjectHolder(ModCyclic.MODID + ":emerald_carrot_jump")
