@@ -56,6 +56,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -420,6 +421,12 @@ public class CyclicRegistry {
     public static final List<TickableEffect> effects = new ArrayList<TickableEffect>();
     @ObjectHolder(ModCyclic.MODID + ":stun")
     public static StunEffect stun;
+  }
+
+  public static class PotionItem {
+
+    @ObjectHolder(ModCyclic.MODID + ":stun")
+    public static Potion stun;
   }
 
   public static class Blocks {

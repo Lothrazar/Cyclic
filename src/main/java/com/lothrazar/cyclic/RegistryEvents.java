@@ -163,9 +163,9 @@ public class RegistryEvents {
   @SubscribeEvent
   public static void onPotEffectRegistry(RegistryEvent.Register<Effect> event) {
     IForgeRegistry<Effect> r = event.getRegistry();
-    StunEffect stun = new StunEffect(EffectType.HARMFUL, 2445989);
+    StunEffect stun = new StunEffect(EffectType.HARMFUL, 001111);
     stun.setRegistryName(new ResourceLocation(ModCyclic.MODID, "stun"));
-    stun.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "91AEAA56-376B-4498-935B-2F7F68070636", -5, AttributeModifier.Operation.ADDITION);
+    stun.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "91AEAA56-376B-4498-935B-2F7F68070636", -50, AttributeModifier.Operation.ADDITION);
     //    stun.addAttributesModifier(SharedMonsterAttributes.MAX_HEALTH, "92AEAA56-376B-4498-935B-2F7F68070636", 2, AttributeModifier.Operation.ADDITION);
     r.register(stun);
     CyclicRegistry.PotionEffects.effects.add(stun);
@@ -174,7 +174,7 @@ public class RegistryEvents {
   @SubscribeEvent
   public static void onPotRegistry(RegistryEvent.Register<Potion> event) {
     IForgeRegistry<Potion> r = event.getRegistry();
-    r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(CyclicRegistry.PotionEffects.stun, 33)).setRegistryName(ModCyclic.MODID + ":stun"));
+    r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(CyclicRegistry.PotionEffects.stun, 1800)).setRegistryName(ModCyclic.MODID + ":stun"));
   }
 
   @SubscribeEvent

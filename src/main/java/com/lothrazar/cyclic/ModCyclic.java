@@ -13,9 +13,15 @@ import com.lothrazar.cyclic.setup.ServerProxy;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipe;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -92,6 +98,15 @@ public class ModCyclic {
     scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
     //lets go
     proxy.initColours();
+    //input is bottom slot: water bottle
+    //ingredient is top
+    //    PotionBrewing 
+    ItemStack AWKWARD = PotionUtils.addPotionToItemStack(
+        new ItemStack(Items.POTION), Potions.AWKWARD);
+    //hmm wat 
+    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(AWKWARD), Ingredient.fromItems(Items.CLAY),
+        PotionUtils.addPotionToItemStack(
+            new ItemStack(Items.POTION), CyclicRegistry.PotionItem.stun)));
   }
 
   ItemScaffolding[] scaffoldingListen = new ItemScaffolding[0];
