@@ -16,6 +16,13 @@ import net.minecraft.world.World;
 
 public class UtilWorld {
 
+  public static double distanceBetweenHorizontal(BlockPos start, BlockPos end) {
+    int xDistance = Math.abs(start.getX() - end.getX());
+    int zDistance = Math.abs(start.getZ() - end.getZ());
+    // ye olde pythagoras
+    return Math.sqrt(xDistance * xDistance + zDistance * zDistance);
+  }
+
   public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, Direction facing, int max, @Nullable Block blockMatch) {
     BlockPos posToPlaceAt = new BlockPos(posIn);
     BlockPos posLoop = new BlockPos(posIn);

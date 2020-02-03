@@ -6,6 +6,8 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -13,7 +15,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
@@ -28,6 +29,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -55,12 +57,12 @@ public class BoomerangEntity extends ProjectileItemEntity {
     this.dataManager.register(OWNER, "");
   }
 
-  private static final int STUN_TICKS = 10 * 20;
-  private static final int TICKS_UNTIL_RETURN = 12;
+  private static final int STUN_SECONDS = 7;
+  private static final int TICKS_UNTIL_RETURN = 15;
   private static final int TICKS_UNTIL_DEATH = 900;
   private static final double SPEED = 0.95;
   static final float DAMAGE_MIN = 1.5F;
-  static final float DAMAGE_MAX = 2.8F;
+  static final float DAMAGE_MAX = 3.8F;
   private static final DataParameter<Byte> IS_RETURNING = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.BYTE);
   private static final DataParameter<Byte> REDSTONE_TRIGGERED = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.BYTE);
   private static final DataParameter<String> OWNER = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.STRING);
@@ -164,12 +166,12 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   private void dropAsItem() {
-    if (this.targetEntity != null) {
+    if (this.owner != null) {
       //try to give it to the player the nicest way possible 
-      if (targetEntity.getHeldItemMainhand().isEmpty())
-        targetEntity.setHeldItem(Hand.MAIN_HAND, boomerangThrown);
+      if (owner.getHeldItemMainhand().isEmpty())
+        owner.setHeldItem(Hand.MAIN_HAND, boomerangThrown);
       else
-        targetEntity.entityDropItem(boomerangThrown, 0.5F);
+        owner.entityDropItem(boomerangThrown, 0.5F);
     }
     else {
       UtilItemStack.drop(world, this.getPosition().up(), boomerangThrown);
@@ -188,6 +190,11 @@ public class BoomerangEntity extends ProjectileItemEntity {
       setIsReturning();
     }
     final BlockPos pos = this.getPosition();
+    if (owner != null && UtilWorld.distanceBetweenHorizontal(pos, this.owner.getPosition()) < 1) {
+      //       ModCyclic.LOGGER.info("Drop by distance");
+      dropAsItem();
+      return;
+    }
     if (hasTriggeredRedstoneAlready() == false && world.isAirBlock(pos) == false) {
       tryToggleRedstone(pos);
     }
@@ -211,7 +218,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   private void onImpactBlock(BlockRayTraceResult mop) {
-    //    BlockState block = world.getBlockState(mop.getPos());
+    BlockState block = world.getBlockState(mop.getPos());
     //crops are 0.0, farmland 0.6, leaves are 0.2  etc
     //    if (this.canHarvest(block, mop.getPos(), mop.getFace())) {
     //      if (this.owner instanceof PlayerEntity) {
@@ -222,43 +229,44 @@ public class BoomerangEntity extends ProjectileItemEntity {
     //      //still break regardless of harvest 
     //      world.destroyBlock(mop.getPos(), false);
     //    }
-    if (mop.getFace() != Direction.UP) {
+    if (mop.getFace() != Direction.UP
+        && block.isSolidSide(this.getEntityWorld(), mop.getPos(), mop.getFace())) {
       //ok return 
       this.setIsReturning();
     }
   }
 
   private void onImpactEntity(EntityRayTraceResult entityRayTrace) {
-    //pickup
-    if (owner == null) {
+    Entity entityHit = entityRayTrace.getEntity();
+    if (entityHit == null || !entityHit.isAlive()) {
       return;
     }
-    if (owner == entityRayTrace.getEntity()) {
+    if (owner == entityHit) {
       //player catch it on return 
       dropAsItem();
+      //      ModCyclic.LOGGER.info("Drop by catching ");
       return;
     }
     switch (this.boomerangType) {
       case CARRY:
-        if (entityRayTrace.getEntity() instanceof AnimalEntity) {
-          entityRayTrace.getEntity().startRiding(this);
-        }
+        entityHit.startRiding(this);
       break;
       case DAMAGE:
-        if (entityRayTrace.getEntity() instanceof LivingEntity) {
-          LivingEntity live = (LivingEntity) entityRayTrace.getEntity();
+        if (entityHit instanceof LivingEntity) {
+          LivingEntity live = (LivingEntity) entityHit;
           float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
           boolean attackSucc = live.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
           if (attackSucc && live.isAlive() == false) {
-            System.out.println("killed one");
+            //            System.out.println("killed one");
           }
         }
       break;
       case STUN:
-        if (entityRayTrace.getEntity() instanceof LivingEntity) {
-          LivingEntity live = (LivingEntity) entityRayTrace.getEntity();
+        if (entityHit != owner && entityHit instanceof LivingEntity) {
+          LivingEntity live = (LivingEntity) entityHit;
           if (live.isPotionActive(CyclicRegistry.PotionEffects.stun) == false) {
-            live.addPotionEffect(new EffectInstance(CyclicRegistry.PotionEffects.stun, STUN_TICKS, 1));
+            live.addPotionEffect(new EffectInstance(CyclicRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
+            UtilSound.playSound(live, live.getPosition(), SoundEvents.ENTITY_IRON_GOLEM_ATTACK);
           }
         }
       break;

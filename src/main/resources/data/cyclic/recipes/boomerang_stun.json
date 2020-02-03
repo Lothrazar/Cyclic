@@ -10,14 +10,14 @@
       "item": "minecraft:glowstone_dust"
     },
     "g": {
-      "item": "minecraft:gold_block"
+      "item": "minecraft:slime_block"
     },
     "f": {
       "item": "minecraft:acacia_fence"
     }
   },
   "result": {
-    "item": "cyclic:boomerang",
+    "item": "cyclic:boomerang_stun",
     "count": 1
   }
 }

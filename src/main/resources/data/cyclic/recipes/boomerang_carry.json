@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " fd",
+    "dgf",
+    " fd"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "g": {
+      "item": "minecraft:gold_block"
+    },
+    "f": {
+      "item": "minecraft:acacia_fence"
+    }
+  },
+  "result": {
+    "item": "cyclic:boomerang_carry",
+    "count": 1
+  }
+}
