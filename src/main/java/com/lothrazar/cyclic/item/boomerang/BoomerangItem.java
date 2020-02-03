@@ -18,8 +18,15 @@ public class BoomerangItem extends ItemBase {
   private static final float VELOCITY_MAX = 1.5F;
   private static final int TICKS_USING = 93000;
 
-  public BoomerangItem(Properties properties) {
+  public static enum Boomer {
+    STUN, DAMAGE, CARRY;
+  }
+
+  private Boomer type;
+
+  public BoomerangItem(Boomer type, Properties properties) {
     super(properties);
+    this.type = type;
   }
 
   @Override
@@ -41,7 +48,6 @@ public class BoomerangItem extends ItemBase {
 
   @Override
   public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entity, int chargeTimer) {
-    //
     int charge = this.getUseDuration(stack) - chargeTimer;
     float percentageCharged = BowItem.getArrowVelocity(charge);//never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
@@ -55,6 +61,7 @@ public class BoomerangItem extends ItemBase {
     PlayerEntity player = (PlayerEntity) entity;
     //    System.out.println("GO" + velocityFactor);
     BoomerangEntity e = new BoomerangEntity(worldIn, player);
+    e.setBoomerType(this.type);
     e.shoot(entity, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
     worldIn.addEntity(e);
     stack.damageItem(1, player, (p) -> {

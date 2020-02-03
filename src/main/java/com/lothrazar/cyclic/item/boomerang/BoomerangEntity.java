@@ -3,11 +3,11 @@ package com.lothrazar.cyclic.item.boomerang;
 import java.util.List;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -23,6 +23,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -43,7 +44,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   public BoomerangEntity(World worldIn, LivingEntity throwerIn) {
-    super(CyclicRegistry.Entities.boomerang, throwerIn, worldIn);
+    super(CyclicRegistry.Entities.boomerang_entity, throwerIn, worldIn);
   }
 
   @Override
@@ -54,7 +55,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
     this.dataManager.register(OWNER, "");
   }
 
-  private static final int STUN_TICKS = 45;
+  private static final int STUN_TICKS = 10 * 20;
   private static final int TICKS_UNTIL_RETURN = 12;
   private static final int TICKS_UNTIL_DEATH = 900;
   private static final double SPEED = 0.95;
@@ -65,6 +66,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   private static final DataParameter<String> OWNER = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.STRING);
   private ItemStack boomerangThrown = ItemStack.EMPTY;
   private PlayerEntity targetEntity;
+  private Boomer boomerangType;
 
   public void setBoomerangThrown(ItemStack boomerangThrown) {
     this.boomerangThrown = boomerangThrown;
@@ -162,7 +164,6 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   private void dropAsItem() {
-    //    this.dismountRidingEntity();
     if (this.targetEntity != null) {
       //try to give it to the player the nicest way possible 
       if (targetEntity.getHeldItemMainhand().isEmpty())
@@ -189,86 +190,99 @@ public class BoomerangEntity extends ProjectileItemEntity {
     final BlockPos pos = this.getPosition();
     if (hasTriggeredRedstoneAlready() == false && world.isAirBlock(pos) == false) {
       tryToggleRedstone(pos);
-      //      ModCyclic.LOGGER.info("redstone");
     }
     tryPickupNearby();
     movementReturnCheck();
-    //    ModCyclic.LOGGER.info("check");
   }
 
   @Override
   protected void onImpact(RayTraceResult result) {
-    //
-    RayTraceResult.Type type = result.getType();
-    if (type == RayTraceResult.Type.ENTITY && owner != null) {
-      EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
-      //pickup
-      if (owner == entityRayTrace.getEntity()) {
-        dropAsItem();
-      }
-      else if (entityRayTrace.getEntity() instanceof AnimalEntity) {
-        entityRayTrace.getEntity().startRiding(this);
-      }
-      else if (entityRayTrace.getEntity() instanceof LivingEntity) {
-        LivingEntity live = (LivingEntity) entityRayTrace.getEntity();
-        float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
-        //        if (living.isPotionActive(PotionEffectRegistry.STUN) == false) {
-        //          living.addPotionEffect(new PotionEffect(PotionEffectRegistry.STUN, STUN_TICKS, 1));
-        //        }
-        entityRayTrace.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
-      }
-    }
-    else {
-      if (type == RayTraceResult.Type.BLOCK) {
-        BlockRayTraceResult mop = (BlockRayTraceResult) result;
-        BlockState block = world.getBlockState(mop.getPos());
-        //crops are 0.0, farmland 0.6, leaves are 0.2  etc
-        if (this.canHarvest(block, mop.getPos(), mop.getFace())) {
-          if (this.owner instanceof PlayerEntity) {
-            PlayerEntity p = (PlayerEntity) owner;
-            //  block.getBlock().harvestBlock(world, p, mop.getBlockPos(), block, null, boomerangThrown);
-            block.getBlock().removedByPlayer(block, world, mop.getPos(), p, true, null);
-          }
-          //still break regardless of harvest 
-          world.destroyBlock(mop.getPos(), false);
-        }
-        if (mop.getFace() != Direction.UP) {
-          //ok return 
-          this.setIsReturning();
-        }
-        //        else {
-        //          //block impact so fall over
-        //          this.dropAsItem();
-        //        }
-      }
-      else
-        this.setIsReturning();
+    switch (result.getType()) {
+      case BLOCK:
+        onImpactBlock((BlockRayTraceResult) result);
+      break;
+      case ENTITY:
+        onImpactEntity((EntityRayTraceResult) result);
+      break;
+      case MISS:
+      default:
+      break;
     }
   }
 
-  private boolean canHarvest(BlockState block, BlockPos pos, Direction sideHit) {
-    //is it in whitelist to override 
-    //TAG? !?!?!?
-    Block b = block.getBlock();
-    if (b == Blocks.MELON || b == Blocks.PUMPKIN || b == Blocks.CHORUS_FLOWER) {
-      return true;
+  private void onImpactBlock(BlockRayTraceResult mop) {
+    //    BlockState block = world.getBlockState(mop.getPos());
+    //crops are 0.0, farmland 0.6, leaves are 0.2  etc
+    //    if (this.canHarvest(block, mop.getPos(), mop.getFace())) {
+    //      if (this.owner instanceof PlayerEntity) {
+    //        PlayerEntity p = (PlayerEntity) owner;
+    //        //  block.getBlock().harvestBlock(world, p, mop.getBlockPos(), block, null, boomerangThrown);
+    //        block.getBlock().removedByPlayer(block, world, mop.getPos(), p, true, null);
+    //      }
+    //      //still break regardless of harvest 
+    //      world.destroyBlock(mop.getPos(), false);
+    //    }
+    if (mop.getFace() != Direction.UP) {
+      //ok return 
+      this.setIsReturning();
     }
-    return false;
+  }
+
+  private void onImpactEntity(EntityRayTraceResult entityRayTrace) {
+    //pickup
+    if (owner == null) {
+      return;
+    }
+    if (owner == entityRayTrace.getEntity()) {
+      //player catch it on return 
+      dropAsItem();
+      return;
+    }
+    switch (this.boomerangType) {
+      case CARRY:
+        if (entityRayTrace.getEntity() instanceof AnimalEntity) {
+          entityRayTrace.getEntity().startRiding(this);
+        }
+      break;
+      case DAMAGE:
+        if (entityRayTrace.getEntity() instanceof LivingEntity) {
+          LivingEntity live = (LivingEntity) entityRayTrace.getEntity();
+          float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
+          boolean attackSucc = live.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
+          if (attackSucc && live.isAlive() == false) {
+            System.out.println("killed one");
+          }
+        }
+      break;
+      case STUN:
+        if (entityRayTrace.getEntity() instanceof LivingEntity) {
+          LivingEntity live = (LivingEntity) entityRayTrace.getEntity();
+          if (live.isPotionActive(CyclicRegistry.PotionEffects.stun) == false) {
+            live.addPotionEffect(new EffectInstance(CyclicRegistry.PotionEffects.stun, STUN_TICKS, 1));
+          }
+        }
+      break;
+      default:
+      break;
+    }
   }
 
   @Override
   protected float getGravityVelocity() {
-    //    return super.getGravityVelocity();
     return -1 * 0.02F;
   }
 
   @Override
   protected Item getDefaultItem() {
-    return CyclicRegistry.Items.boomerang;
+    return null;
   }
 
   @Override
   public IPacket<?> createSpawnPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
+  }
+
+  public void setBoomerType(Boomer type) {
+    this.boomerangType = type;
   }
 }

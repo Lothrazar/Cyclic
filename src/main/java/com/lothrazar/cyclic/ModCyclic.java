@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.event.EventHandler;
+import com.lothrazar.cyclic.potion.EventPotionTick;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.ConfigHandler;
@@ -73,6 +74,7 @@ public class ModCyclic {
     //TODO: LOOP 
     //TODO: LOOP 
     //TODO: LOOP 
+    MinecraftForge.EVENT_BUS.register(new EventPotionTick());
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Blocks.soundproofing);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.excavate);//y
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.experience_boost);//y

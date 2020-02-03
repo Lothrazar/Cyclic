@@ -532,13 +532,14 @@
     "key.keyExtraInvo": "Extended Inventory (if unlocked)",
     "key.keyWheel": "Extended Inventory Tool Belt (if unlocked)",
     "minecart.fuel": "Fuel:",
-    "potion.bounce": "Bouncy",
-    "potion.ender": "Ender Aura",
-    "potion.magnet": "Magnet",
-    "potion.slowfall": "Slowfall",
-    "potion.snow": "Snow",
-    "potion.swimspeed": "Swim Speed",
-    "potion.waterwalk": "Waterwalking",
+    "effect.cyclic.bounce": "Bouncy",
+    "effect.cyclic.ender": "Ender Aura",
+    "effect.cyclic.magnet": "Magnet",
+    "effect.cyclic.slowfall": "Slowfall",
+    "effect.cyclic.snow": "Snow",
+    "effect.cyclic.swimspeed": "Swim Speed",
+    "effect.cyclic.stun": "Stun",
+    "effect.cyclic.waterwalk": "Waterwalking",
     "screentext.flying.seconds": "Flying:",
     "screentext.noclip.seconds": "NoClip:",
 
@@ -880,23 +881,6 @@
     "potion.potency.3": "IV",
     "potion.potency.2": "III",
 
-    "item.potion.slowfall.guide": "Reduces fall speed just like a parachute",
-    "item.potion.bounce.guide": "Continually bounce and gain momentum",
-    "item.potion.frostwalker.guide": "Frost walk over water with magic cold",
-    "item.potion.butter.guide": "Randomly drop items whenever you move",
-    "item.potion.waterwalk.guide": "Walk on water",
-    "item.potion.swim.guide": "Increase swim speed well beyond normal",
-    "item.potion.magnet.guide": "Pull items and exp towards you",
-    "item.potion.resistance.guide": "Resistance for standard combat defense",
-    "item.potion.haste.guide": "Haste for improved mining speed",
-    "item.potion.ender.guide": "No damage from ender pearl throws",
-    "item.potion.snow.guide": "Place snow wherever you walk",
-    "item.potion.levitation.guide": "Levitate out of control",
-    "item.potion.healthboost.guide": "Temporary boost to max health",
-    "item.potion.saturation.guide": "Food is satisfied completely",
-    "item.potion.wither.guide": "Withered",
-    "item.potion.blindness.guide": "Blinded",
-
     "potion.butter.oops": "Butterfingers!  Dropped something when you moved.",
     "potion.effect.slowfall": "Potion of Slowfall",
     "splash_potion.effect.slowfall": "Splash Potion of Slowfall",
@@ -938,6 +922,12 @@
     "splash_potion.effect.bounce": "Splash Potion of Bouncing",
     "lingering_potion.effect.bounce": "Lingering Potion of Bouncing",
     "tipped_arrow.effect.bounce": "Arrow of Bouncing",
+    
+
+    "item.minecraft.potion.effect.cyclic_stun": "Potion of Paralyze",
+    "item.minecraft.splash_potion.effect.cyclic_stun": "Splash Potion of Paralyze",
+    "item.minecraft.lingering_potion.effect.cyclic_stun": "Lingering Potion of Paralyze",
+    "item.minecraft.tipped_arrow.effect.cyclic_stun": "Arrow of Paralyze",
 
     "potion.effect.magnet": "Potion of Magnetism",
     "splash_potion.effect.magnet": "Splash Potion of Magnetism",
@@ -1176,6 +1166,7 @@
     "colour.white": "White",
     "colour.black": "Black",
 
+    "item.cyclic.netherbrick_sword": "Nether Sword",
     "item.cyclic.netherbrick_pickaxe": "Nether Pickaxe",
     "item.cyclic.netherbrick_axe": "Nether Axe",
     "item.cyclic.netherbrick_shovel": "Nether Shovel",
@@ -1228,8 +1219,15 @@
 
     "item.cyclic.shears_flint": "Flint Shears",
  
-    "item.cyclic.boomerang": "Boomerang",
-    "item.cyclic.boomerang.tooltip": "",
+    "item.cyclic.boomerang_carry": "Boomerang",
+    "item.cyclic.boomerang_carry.tooltip": "Throw to gather items that it returns to you",
+ 
+    "item.cyclic.boomerang_stun": "Magic Boomerang",
+    "item.cyclic.boomerang_stun.tooltip": "Gathers items and stun your enemies",
+
+ 
+    "item.cyclic.boomerang_damage": "Sharpened Boomerang",
+    "item.cyclic.boomerang_damage.tooltip": "Gathers items and attacks your enemies",
 
     "block.laser": "Laser Cell",
     "block.laser.tooltip": "Render harmless lasers",

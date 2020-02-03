@@ -41,6 +41,8 @@ import com.lothrazar.cyclic.entity.ItemTorchThrower;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.tool.WrenchItem;
+import com.lothrazar.cyclic.potion.StunEffect;
+import com.lothrazar.cyclic.potion.TickableEffect;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
@@ -72,7 +74,9 @@ public class CyclicRegistry {
 
   public static class MaterialArmor {
 
-    public static IArmorMaterial EMERALD = new IArmorMaterial() {
+    private static final String EMERALDID = ModCyclic.MODID + ":emerald";
+    private static final String CRYSTALID = ModCyclic.MODID + ":crystal";
+    public static final IArmorMaterial EMERALD = new IArmorMaterial() {
 
       @Override
       public int getDurability(EquipmentSlotType slotIn) {
@@ -101,7 +105,7 @@ public class CyclicRegistry {
 
       @Override
       public String getName() {
-        return "emerald";
+        return EMERALDID;
       }
 
       @Override
@@ -109,7 +113,7 @@ public class CyclicRegistry {
         return ArmorMaterial.DIAMOND.getToughness() * 1.5F;
       }
     };
-    public static final IArmorMaterial OBSIDIAN = new IArmorMaterial() {
+    public static final IArmorMaterial GEMOBSIDIAN = new IArmorMaterial() {
 
       @Override
       public int getDurability(EquipmentSlotType slotIn) {
@@ -138,7 +142,7 @@ public class CyclicRegistry {
 
       @Override
       public String getName() {
-        return "crystal";
+        return CRYSTALID;
       }
 
       @Override
@@ -148,9 +152,9 @@ public class CyclicRegistry {
     };
   }
 
-  public static class Materials {
+  public static class MaterialTools {
 
-    public static final IItemTier OBSIDIAN = new IItemTier() {
+    public static final IItemTier GEMOBSIDIAN = new IItemTier() {
 
       @Override
       public int getMaxUses() {
@@ -218,12 +222,12 @@ public class CyclicRegistry {
 
       @Override
       public int getMaxUses() {
-        return (ItemTier.WOOD.getMaxUses() + ItemTier.STONE.getMaxUses()) / 2;
+        return ItemTier.STONE.getMaxUses() - 2;
       }
 
       @Override
       public float getEfficiency() {
-        return (ItemTier.WOOD.getEfficiency() + ItemTier.STONE.getEfficiency()) / 2;
+        return ItemTier.STONE.getEfficiency();
       }
 
       @Override
@@ -233,7 +237,7 @@ public class CyclicRegistry {
 
       @Override
       public int getHarvestLevel() {
-        return (ItemTier.WOOD.getHarvestLevel() + ItemTier.STONE.getHarvestLevel()) / 2;
+        return ItemTier.STONE.getHarvestLevel();
       }
 
       @Override
@@ -251,27 +255,27 @@ public class CyclicRegistry {
 
       @Override
       public int getMaxUses() {
-        return (ItemTier.WOOD.getMaxUses() + ItemTier.STONE.getMaxUses()) / 2;
+        return (ItemTier.IRON.getMaxUses() + ItemTier.STONE.getMaxUses()) / 2;
       }
 
       @Override
       public float getEfficiency() {
-        return (ItemTier.WOOD.getEfficiency() + ItemTier.STONE.getEfficiency()) / 2;
+        return (ItemTier.IRON.getEfficiency() + ItemTier.STONE.getEfficiency()) / 2;
       }
 
       @Override
       public float getAttackDamage() {
-        return (ItemTier.WOOD.getAttackDamage() + ItemTier.STONE.getAttackDamage()) / 2;
+        return (ItemTier.IRON.getAttackDamage() + ItemTier.STONE.getAttackDamage()) / 2;
       }
 
       @Override
       public int getHarvestLevel() {
-        return (ItemTier.WOOD.getHarvestLevel() + ItemTier.STONE.getHarvestLevel()) / 2;
+        return ItemTier.IRON.getHarvestLevel();
       }
 
       @Override
       public int getEnchantability() {
-        return (ItemTier.WOOD.getEnchantability() + ItemTier.STONE.getEnchantability()) / 2;
+        return (ItemTier.IRON.getEnchantability() + ItemTier.STONE.getEnchantability()) / 2;
       }
 
       @Override
@@ -298,7 +302,7 @@ public class CyclicRegistry {
     @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
     public static EntityType<EntityTorchBolt> torchbolt;
     @ObjectHolder(ModCyclic.MODID + ":boomerang")
-    public static EntityType<BoomerangEntity> boomerang;
+    public static EntityType<BoomerangEntity> boomerang_entity;
   }
 
   public static class Enchants {
@@ -333,8 +337,12 @@ public class CyclicRegistry {
     protected static Item gem_obsidian;
     @ObjectHolder(ModCyclic.MODID + ":lapis_carrot_variant")
     public static Item lapis_carrot_variant;
-    @ObjectHolder(ModCyclic.MODID + ":boomerang")
-    public static Item boomerang;
+    @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
+    public static Item boomerang_damage;
+    @ObjectHolder(ModCyclic.MODID + ":boomerang_carry")
+    public static Item boomerang_carry;
+    @ObjectHolder(ModCyclic.MODID + ":boomerang_stun")
+    public static Item boomerang_stun;
     @ObjectHolder(ModCyclic.MODID + ":emerald_carrot_jump")
     public static Item emerald_carrot_jump;
     @ObjectHolder(ModCyclic.MODID + ":redstone_carrot_speed")
@@ -401,6 +409,13 @@ public class CyclicRegistry {
     public static ContainerType<ContainerGenerator> generatorCont;
     @ObjectHolder(ModCyclic.MODID + ":harvester")
     public static ContainerType<ContainerHarvester> harvester;
+  }
+
+  public static class PotionEffects {
+
+    public static final List<TickableEffect> effects = new ArrayList<TickableEffect>();
+    @ObjectHolder(ModCyclic.MODID + ":stun")
+    public static StunEffect stun;
   }
 
   public static class Blocks {

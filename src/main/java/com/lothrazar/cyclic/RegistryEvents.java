@@ -65,8 +65,9 @@ import com.lothrazar.cyclic.item.bauble.CharmOverpowered;
 import com.lothrazar.cyclic.item.bauble.CharmVoid;
 import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
-import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
+import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
+import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.item.tool.EnderBagItem;
 import com.lothrazar.cyclic.item.tool.EnderEyeReuse;
 import com.lothrazar.cyclic.item.tool.EnderPearlMount;
@@ -84,6 +85,7 @@ import com.lothrazar.cyclic.item.tool.ShearsMaterial;
 import com.lothrazar.cyclic.item.tool.StirrupsItem;
 import com.lothrazar.cyclic.item.tool.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.tool.WrenchItem;
+import com.lothrazar.cyclic.potion.StunEffect;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -93,6 +95,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ArmorItem;
@@ -103,7 +107,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectType;
+import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -147,6 +156,23 @@ public class RegistryEvents {
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     r.register(new BlockHarvester(Block.Properties.create(Material.ROCK)).setRegistryName("harvester"));
+  }
+
+  @SubscribeEvent
+  public static void onPotEffectRegistry(RegistryEvent.Register<Effect> event) {
+    IForgeRegistry<Effect> r = event.getRegistry();
+    StunEffect stun = new StunEffect(EffectType.HARMFUL, 2445989);
+    stun.setRegistryName(new ResourceLocation(ModCyclic.MODID, "stun"));
+    stun.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "91AEAA56-376B-4498-935B-2F7F68070636", -5, AttributeModifier.Operation.ADDITION);
+    //    stun.addAttributesModifier(SharedMonsterAttributes.MAX_HEALTH, "92AEAA56-376B-4498-935B-2F7F68070636", 2, AttributeModifier.Operation.ADDITION);
+    r.register(stun);
+    CyclicRegistry.PotionEffects.effects.add(stun);
+  }
+
+  @SubscribeEvent
+  public static void onPotRegistry(RegistryEvent.Register<Potion> event) {
+    IForgeRegistry<Potion> r = event.getRegistry();
+    r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(CyclicRegistry.PotionEffects.stun, 33)).setRegistryName(ModCyclic.MODID + ":stun"));
   }
 
   @SubscribeEvent
@@ -209,7 +235,9 @@ public class RegistryEvents {
     r.register(new EnderPearlReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
     r.register(new EnderPearlMount(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
     r.register(new EnderEyeReuse(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_eye_reuse"));
-    r.register(new BoomerangItem(new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang"));
+    r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_stun"));
+    r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_carry"));
+    r.register(new BoomerangItem(Boomer.DAMAGE, new Item.Properties().group(CyclicRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_damage"));
     r.register(new LeverRemote(new Item.Properties().group(CyclicRegistry.itemGroup).maxStackSize(1)).setRegistryName("lever_remote"));
     r.register(new ItemMagicNet(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("magic_net"));
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1)).setRegistryName("mob_container"));
@@ -222,41 +250,41 @@ public class RegistryEvents {
     r.register(new ItemHorseEmeraldJump(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_carrot_jump"));
     r.register(new ItemHorseLapisVariant(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("lapis_carrot_variant"));
     r.register(new ItemHorseToxic(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("toxic_carrot"));
-    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_dungeon"));
-    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sleeping_mat"));
-    r.register(new SwordItem(CyclicRegistry.Materials.EMERALD, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("emerald_sword"));
-    r.register(new PickaxeItem(CyclicRegistry.Materials.EMERALD, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_pickaxe"));
-    r.register(new AxeItem(CyclicRegistry.Materials.EMERALD, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_axe"));
-    r.register(new HoeItem(CyclicRegistry.Materials.EMERALD, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_hoe"));
-    r.register(new ShovelItem(CyclicRegistry.Materials.EMERALD, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_shovel"));
-    r.register(new SwordItem(CyclicRegistry.Materials.OBSIDIAN, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("crystal_sword"));
-    r.register(new PickaxeItem(CyclicRegistry.Materials.OBSIDIAN, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_pickaxe"));
-    r.register(new AxeItem(CyclicRegistry.Materials.OBSIDIAN, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_axe"));
-    r.register(new HoeItem(CyclicRegistry.Materials.OBSIDIAN, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_hoe"));
-    r.register(new ShovelItem(CyclicRegistry.Materials.OBSIDIAN, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_shovel"));
-    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.OBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_boots"));
-    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.OBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_helmet"));
-    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.OBSIDIAN, EquipmentSlotType.CHEST, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_chestplate"));
-    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.OBSIDIAN, EquipmentSlotType.LEGS, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_leggings"));
+    r.register(new SwordItem(CyclicRegistry.MaterialTools.EMERALD, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("emerald_sword"));
+    r.register(new PickaxeItem(CyclicRegistry.MaterialTools.EMERALD, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_pickaxe"));
+    r.register(new AxeItem(CyclicRegistry.MaterialTools.EMERALD, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_axe"));
+    r.register(new HoeItem(CyclicRegistry.MaterialTools.EMERALD, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_hoe"));
+    r.register(new ShovelItem(CyclicRegistry.MaterialTools.EMERALD, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_shovel"));
+    r.register(new SwordItem(CyclicRegistry.MaterialTools.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("crystal_sword"));
+    r.register(new PickaxeItem(CyclicRegistry.MaterialTools.GEMOBSIDIAN, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_pickaxe"));
+    r.register(new AxeItem(CyclicRegistry.MaterialTools.GEMOBSIDIAN, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_axe"));
+    r.register(new HoeItem(CyclicRegistry.MaterialTools.GEMOBSIDIAN, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_hoe"));
+    r.register(new ShovelItem(CyclicRegistry.MaterialTools.GEMOBSIDIAN, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_shovel"));
+    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.GEMOBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_boots"));
+    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.GEMOBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_helmet"));
+    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.GEMOBSIDIAN, EquipmentSlotType.CHEST, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_chestplate"));
+    r.register(new ArmorItem(CyclicRegistry.MaterialArmor.GEMOBSIDIAN, EquipmentSlotType.LEGS, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("crystal_leggings"));
     r.register(new ArmorItem(CyclicRegistry.MaterialArmor.EMERALD, EquipmentSlotType.FEET, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_boots"));
     r.register(new ArmorItem(CyclicRegistry.MaterialArmor.EMERALD, EquipmentSlotType.HEAD, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_helmet"));
     r.register(new ArmorItem(CyclicRegistry.MaterialArmor.EMERALD, EquipmentSlotType.CHEST, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_chestplate"));
     r.register(new ArmorItem(CyclicRegistry.MaterialArmor.EMERALD, EquipmentSlotType.LEGS, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("emerald_leggings"));
     //
-    r.register(new SwordItem(CyclicRegistry.Materials.SANDSTONE, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_sword"));
-    r.register(new PickaxeItem(CyclicRegistry.Materials.SANDSTONE, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_pickaxe"));
-    r.register(new AxeItem(CyclicRegistry.Materials.SANDSTONE, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_axe"));
-    r.register(new HoeItem(CyclicRegistry.Materials.SANDSTONE, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_hoe"));
-    r.register(new ShovelItem(CyclicRegistry.Materials.SANDSTONE, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_shovel"));
+    r.register(new SwordItem(CyclicRegistry.MaterialTools.SANDSTONE, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_sword"));
+    r.register(new PickaxeItem(CyclicRegistry.MaterialTools.SANDSTONE, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_pickaxe"));
+    r.register(new AxeItem(CyclicRegistry.MaterialTools.SANDSTONE, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_axe"));
+    r.register(new HoeItem(CyclicRegistry.MaterialTools.SANDSTONE, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_hoe"));
+    r.register(new ShovelItem(CyclicRegistry.MaterialTools.SANDSTONE, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sandstone_shovel"));
     //
-    r.register(new SwordItem(CyclicRegistry.Materials.NETHERBRICK, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_sword"));
-    r.register(new PickaxeItem(CyclicRegistry.Materials.NETHERBRICK, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_pickaxe"));
-    r.register(new AxeItem(CyclicRegistry.Materials.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_axe"));
-    r.register(new HoeItem(CyclicRegistry.Materials.NETHERBRICK, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_hoe"));
-    r.register(new ShovelItem(CyclicRegistry.Materials.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_shovel"));
+    r.register(new SwordItem(CyclicRegistry.MaterialTools.NETHERBRICK, 3, -2.4F, (new Item.Properties()).group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_sword"));
+    r.register(new PickaxeItem(CyclicRegistry.MaterialTools.NETHERBRICK, 1, -2.8F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_pickaxe"));
+    r.register(new AxeItem(CyclicRegistry.MaterialTools.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_axe"));
+    r.register(new HoeItem(CyclicRegistry.MaterialTools.NETHERBRICK, 0.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_hoe"));
+    r.register(new ShovelItem(CyclicRegistry.MaterialTools.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("netherbrick_shovel"));
     //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_snow"));
     //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_blaze"));
     //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_lightning"));
+    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_dungeon"));
+    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sleeping_mat"));
   }
 
   @SubscribeEvent
@@ -332,7 +360,7 @@ public class RegistryEvents {
             .build("torch_bolt")
             .setRegistryName("torch_bolt"));
     r.register(
-        EntityType.Builder.<BoomerangEntity> create(BoomerangEntity::new, EntityClassification.MISC)
+        EntityType.Builder.<BoomerangEntityStun> create(BoomerangEntityStun::new, EntityClassification.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -360,7 +388,7 @@ public class RegistryEvents {
     //TODO: loop here
     //TODO: loop here
     //TODO: loop here
-    RenderingRegistry.registerEntityRenderingHandler(Entities.boomerang, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(Entities.boomerang_entity, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(Entities.netball, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(Entities.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
