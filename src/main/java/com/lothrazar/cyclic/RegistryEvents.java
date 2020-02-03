@@ -52,11 +52,6 @@ import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemChestSack;
 import com.lothrazar.cyclic.item.ItemChestSackEmpty;
-import com.lothrazar.cyclic.item.ItemHorseEmeraldJump;
-import com.lothrazar.cyclic.item.ItemHorseHealthDiamondCarrot;
-import com.lothrazar.cyclic.item.ItemHorseLapisVariant;
-import com.lothrazar.cyclic.item.ItemHorseRedstoneSpeed;
-import com.lothrazar.cyclic.item.ItemHorseToxic;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmAntidote;
@@ -65,9 +60,19 @@ import com.lothrazar.cyclic.item.bauble.CharmOverpowered;
 import com.lothrazar.cyclic.item.bauble.CharmVoid;
 import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
+import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
+import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
+import com.lothrazar.cyclic.item.horse.ItemHorseEmeraldJump;
+import com.lothrazar.cyclic.item.horse.ItemHorseHealthDiamondCarrot;
+import com.lothrazar.cyclic.item.horse.ItemHorseLapisVariant;
+import com.lothrazar.cyclic.item.horse.ItemHorseRedstoneSpeed;
+import com.lothrazar.cyclic.item.horse.ItemHorseToxic;
+import com.lothrazar.cyclic.item.scythe.ScytheBrush;
+import com.lothrazar.cyclic.item.scythe.ScytheForage;
+import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
 import com.lothrazar.cyclic.item.tool.EnderBagItem;
 import com.lothrazar.cyclic.item.tool.EnderEyeReuse;
 import com.lothrazar.cyclic.item.tool.EnderPearlMount;
@@ -78,14 +83,11 @@ import com.lothrazar.cyclic.item.tool.EvokerFangItem;
 import com.lothrazar.cyclic.item.tool.IceWand;
 import com.lothrazar.cyclic.item.tool.LeverRemote;
 import com.lothrazar.cyclic.item.tool.MattockItem;
-import com.lothrazar.cyclic.item.tool.ScytheBrush;
-import com.lothrazar.cyclic.item.tool.ScytheForage;
-import com.lothrazar.cyclic.item.tool.ScytheLeaves;
 import com.lothrazar.cyclic.item.tool.ShearsMaterial;
 import com.lothrazar.cyclic.item.tool.StirrupsItem;
 import com.lothrazar.cyclic.item.tool.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.tool.WrenchItem;
-import com.lothrazar.cyclic.potion.StunEffect;
+import com.lothrazar.cyclic.potion.effect.StunEffect;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -365,8 +367,24 @@ public class RegistryEvents {
             .setUpdateInterval(1)
             .setTrackingRange(128)
             .size(.6f, .6f)
-            .build("boomerang")
-            .setRegistryName("boomerang"));
+            .build("boomerang_stun")
+            .setRegistryName("boomerang_stun"));
+    r.register(
+        EntityType.Builder.<BoomerangEntityCarry> create(BoomerangEntityCarry::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("boomerang_carry")
+            .setRegistryName("boomerang_carry"));
+    r.register(
+        EntityType.Builder.<BoomerangEntityDamage> create(BoomerangEntityDamage::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("boomerang_damage")
+            .setRegistryName("boomerang_damage"));
   }
 
   @OnlyIn(Dist.CLIENT)
@@ -388,7 +406,9 @@ public class RegistryEvents {
     //TODO: loop here
     //TODO: loop here
     //TODO: loop here
-    RenderingRegistry.registerEntityRenderingHandler(Entities.boomerang_entity, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(Entities.boomerang_stun, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(Entities.boomerang_carry, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(Entities.boomerang_damage, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(Entities.netball, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(Entities.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }

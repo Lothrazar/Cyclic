@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.item.tool.ScytheType;
+import com.lothrazar.cyclic.item.scythe.ScytheType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tags.BlockTags;

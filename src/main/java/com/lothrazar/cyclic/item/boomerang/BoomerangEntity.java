@@ -43,8 +43,8 @@ public class BoomerangEntity extends ProjectileItemEntity {
     super(type, worldIn);
   }
 
-  public BoomerangEntity(World worldIn, LivingEntity throwerIn) {
-    super(CyclicRegistry.Entities.boomerang_entity, throwerIn, worldIn);
+  public BoomerangEntity(EntityType<BoomerangEntity> type, LivingEntity throwerIn, World worldIn) {
+    super(type, throwerIn, worldIn);
   }
 
   @Override
@@ -66,7 +66,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   private static final DataParameter<String> OWNER = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.STRING);
   private ItemStack boomerangThrown = ItemStack.EMPTY;
   private PlayerEntity targetEntity;
-  private Boomer boomerangType;
+  protected Boomer boomerangType;
 
   public void setBoomerangThrown(ItemStack boomerangThrown) {
     this.boomerangThrown = boomerangThrown;
@@ -280,9 +280,5 @@ public class BoomerangEntity extends ProjectileItemEntity {
   @Override
   public IPacket<?> createSpawnPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
-  }
-
-  public void setBoomerType(Boomer type) {
-    this.boomerangType = type;
   }
 }

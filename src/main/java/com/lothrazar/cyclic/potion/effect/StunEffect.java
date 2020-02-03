@@ -1,6 +1,7 @@
-package com.lothrazar.cyclic.potion;
+package com.lothrazar.cyclic.potion.effect;
 
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.potion.TickableEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;

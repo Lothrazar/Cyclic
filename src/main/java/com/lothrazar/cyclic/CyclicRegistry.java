@@ -41,8 +41,8 @@ import com.lothrazar.cyclic.entity.ItemTorchThrower;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.tool.WrenchItem;
-import com.lothrazar.cyclic.potion.StunEffect;
 import com.lothrazar.cyclic.potion.TickableEffect;
+import com.lothrazar.cyclic.potion.effect.StunEffect;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
@@ -301,8 +301,12 @@ public class CyclicRegistry {
     public static EntityType<EntityMagicNetEmpty> netball;
     @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
     public static EntityType<EntityTorchBolt> torchbolt;
-    @ObjectHolder(ModCyclic.MODID + ":boomerang")
-    public static EntityType<BoomerangEntity> boomerang_entity;
+    @ObjectHolder(ModCyclic.MODID + ":boomerang_stun")
+    public static EntityType<BoomerangEntity> boomerang_stun;
+    @ObjectHolder(ModCyclic.MODID + ":boomerang_carry")
+    public static EntityType<BoomerangEntity> boomerang_carry;
+    @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
+    public static EntityType<BoomerangEntity> boomerang_damage;
   }
 
   public static class Enchants {

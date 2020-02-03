@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.tool;
+package com.lothrazar.cyclic.item.scythe;
 
 import java.util.ArrayList;
 import java.util.List;

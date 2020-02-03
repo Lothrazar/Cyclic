@@ -60,8 +60,19 @@ public class BoomerangItem extends ItemBase {
     }
     PlayerEntity player = (PlayerEntity) entity;
     //    System.out.println("GO" + velocityFactor);
-    BoomerangEntity e = new BoomerangEntity(worldIn, player);
-    e.setBoomerType(this.type);
+    BoomerangEntity e;
+    switch (this.type) {
+      case CARRY:
+        e = new BoomerangEntityCarry(worldIn, player);
+      break;
+      case DAMAGE:
+        e = new BoomerangEntityDamage(worldIn, player);
+      break;
+      default:
+      case STUN:
+        e = new BoomerangEntityStun(worldIn, player);
+      break;
+    }
     e.shoot(entity, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
     worldIn.addEntity(e);
     stack.damageItem(1, player, (p) -> {

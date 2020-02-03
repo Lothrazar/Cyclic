@@ -8,20 +8,20 @@ import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 
-public class BoomerangEntityStun extends BoomerangEntity {
+public class BoomerangEntityDamage extends BoomerangEntity {
 
-  public BoomerangEntityStun(EntityType<? extends ProjectileItemEntity> type, World worldIn) {
+  public BoomerangEntityDamage(EntityType<? extends ProjectileItemEntity> type, World worldIn) {
     super(type, worldIn);
-    boomerangType = Boomer.STUN;
+    boomerangType = Boomer.DAMAGE;
   }
 
-  public BoomerangEntityStun(World worldIn, LivingEntity throwerIn) {
-    super(CyclicRegistry.Entities.boomerang_stun, throwerIn, worldIn);
-    boomerangType = Boomer.STUN;
+  public BoomerangEntityDamage(World worldIn, LivingEntity throwerIn) {
+    super(CyclicRegistry.Entities.boomerang_damage, throwerIn, worldIn);
+    boomerangType = Boomer.DAMAGE;
   }
 
   @Override
   protected Item getDefaultItem() {
-    return CyclicRegistry.Items.boomerang_stun;
+    return CyclicRegistry.Items.boomerang_damage;
   }
 }
