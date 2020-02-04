@@ -24,9 +24,9 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.net.PacketChestSack;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -131,7 +131,7 @@ public class ItemChestSackEmpty extends ItemBase {
           //    tileCopy.readFromNBT(tileData);
           //  } 
         }
-        ItemStack drop = new ItemStack(CyclicRegistry.Items.tile_transporter);
+        ItemStack drop = new ItemStack(ItemRegistry.tile_transporter);
         drop.setTag(itemData);
         UtilItemStack.drop(world, player.getPosition(), drop);
         if (player.isCreative() == false && held.getCount() > 0) {

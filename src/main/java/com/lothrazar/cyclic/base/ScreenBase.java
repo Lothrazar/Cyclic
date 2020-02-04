@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.base;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.gui.ButtonMachine;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
@@ -23,7 +23,7 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
   }
 
   protected void drawSlot(int x, int y) {
-    this.minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.SLOT);
+    this.minecraft.getTextureManager().bindTexture(TextureRegistry.SLOT);
     int relX = guiLeft + x;
     int relY = guiTop + y;
     int size = 18;

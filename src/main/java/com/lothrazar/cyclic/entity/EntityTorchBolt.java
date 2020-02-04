@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.entity;
 
-import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.WallTorchBlock;
@@ -29,7 +29,7 @@ public class EntityTorchBolt extends ProjectileItemEntity {
   }
 
   public EntityTorchBolt(LivingEntity livingEntityIn, World worldIn) {
-    super(CyclicRegistry.Entities.torchbolt, livingEntityIn, worldIn);
+    super(EntityRegistry.torchbolt, livingEntityIn, worldIn);
   }
 
   @Override

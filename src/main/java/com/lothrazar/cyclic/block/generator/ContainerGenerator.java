@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.generator;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -20,7 +20,7 @@ public class ContainerGenerator extends ContainerBase {
   TilePeatGenerator tile;
 
   public ContainerGenerator(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(CyclicRegistry.ContainerScreens.generatorCont, windowId);
+    super(BlockRegistry.ContainerScreens.generatorCont, windowId);
     tile = (TilePeatGenerator) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -81,7 +81,7 @@ public class ContainerGenerator extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, CyclicRegistry.Blocks.peat_generator);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.peat_generator);
   }
 
   public int getNeedsRedstone() {

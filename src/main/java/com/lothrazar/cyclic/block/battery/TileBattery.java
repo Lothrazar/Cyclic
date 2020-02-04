@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -36,7 +36,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   private int flowing = 0;
 
   public TileBattery() {
-    super(CyclicRegistry.Tiles.batterytile);
+    super(BlockRegistry.Tiles.batterytile);
   }
 
   private IEnergyStorage createEnergy() {

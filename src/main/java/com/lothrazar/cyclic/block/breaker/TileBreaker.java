@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.breaker;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.fan.BlockFan;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileBreaker extends TileEntityBase implements ITickableTileEntity {
 
   public TileBreaker() {
-    super(CyclicRegistry.Tiles.breakerTile);
+    super(BlockRegistry.Tiles.breakerTile);
   }
 
   private void setAnimation(boolean lit) {

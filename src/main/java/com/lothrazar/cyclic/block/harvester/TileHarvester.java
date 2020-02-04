@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -49,7 +49,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   int laserTimer;
 
   public TileHarvester() {
-    super(CyclicRegistry.Tiles.harvesterTile);
+    super(BlockRegistry.Tiles.harvesterTile);
   }
 
   @Override

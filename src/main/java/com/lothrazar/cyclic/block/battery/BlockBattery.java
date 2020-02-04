@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
@@ -37,7 +37,7 @@ public class BlockBattery extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.batteryCont, ScreenBattery::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.batteryCont, ScreenBattery::new);
   }
 
   @Override
@@ -74,7 +74,8 @@ public class BlockBattery extends BlockBase {
     return new TileBattery();
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote) {
       TileEntity tileEntity = world.getTileEntity(pos);

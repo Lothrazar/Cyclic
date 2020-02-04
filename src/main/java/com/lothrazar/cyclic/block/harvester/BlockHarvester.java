@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.harvester;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,8 +28,8 @@ public class BlockHarvester extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(CyclicRegistry.Tiles.harvesterTile, RenderHarvester::new);
-    ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.harvester, ScreenHarvester::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.harvesterTile, RenderHarvester::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.harvester, ScreenHarvester::new);
   }
 
   @Override
@@ -42,7 +42,8 @@ public class BlockHarvester extends BlockBase {
     return new TileHarvester();
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote) {
       TileEntity tileEntity = world.getTileEntity(pos);

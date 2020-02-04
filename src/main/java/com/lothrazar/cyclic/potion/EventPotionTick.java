@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.potion;
 
-import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.registry.PotionRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +13,7 @@ public class EventPotionTick {
     if (entity == null) {
       return;
     }
-    for (TickableEffect effect : CyclicRegistry.PotionEffects.effects) {
+    for (TickableEffect effect : PotionRegistry.PotionEffects.effects) {
       if (effect != null && entity.isPotionActive(effect)) {
         effect.tick(event);
       }

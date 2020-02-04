@@ -1,8 +1,9 @@
 package com.lothrazar.cyclic.setup;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
+import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +20,7 @@ public class ClientProxy implements IProxy {
   @Override
   public void init() {
     //TODO: clean this up ? maybe
-    for (BlockBase b : CyclicRegistry.Blocks.blocks) {
+    for (BlockBase b : BlockRegistry.blocks) {
       b.registerClient();
     }
   }
@@ -77,6 +78,6 @@ public class ClientProxy implements IProxy {
             }
           }
           return -1;
-        }, CyclicRegistry.Items.mob_container);
+        }, ItemRegistry.mob_container);
   }
 }

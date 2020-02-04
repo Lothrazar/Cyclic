@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.tank;
 
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,7 +19,7 @@ public class TileTank extends TileEntityBase {
   public FluidTankBase tank;
 
   public TileTank() {
-    super(CyclicRegistry.Tiles.tank);
+    super(BlockRegistry.Tiles.tank);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

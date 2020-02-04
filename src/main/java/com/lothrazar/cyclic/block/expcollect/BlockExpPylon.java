@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.expcollect;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.item.ExpItemGain;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -48,7 +48,7 @@ public class BlockExpPylon extends BlockBase {
         if (tile.drainStoredXp(ExpItemGain.EXP_PER_FOOD)) {
           //do it
           held.shrink(1);
-          player.dropItem(new ItemStack(CyclicRegistry.Items.experience_food), true);
+          player.dropItem(new ItemStack(ItemRegistry.experience_food), true);
           return ActionResultType.SUCCESS;
         }
         else {

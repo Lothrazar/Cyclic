@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.block.tank;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -52,7 +52,8 @@ public class BlockFluidTank extends BlockBase {
         .notSolid());
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0f;
   }
@@ -106,7 +107,8 @@ public class BlockFluidTank extends BlockBase {
     return new TileTank();
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!world.isRemote) {
       TileEntity tankHere = world.getTileEntity(pos);
@@ -139,7 +141,7 @@ public class BlockFluidTank extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.translucent());
-    ClientRegistry.bindTileEntityRenderer(CyclicRegistry.Tiles.tank, RenderTank::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.tank, RenderTank::new);
   }
 
   @Override

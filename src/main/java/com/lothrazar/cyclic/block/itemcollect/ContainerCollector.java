@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.itemcollect;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ContainerBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -16,7 +16,7 @@ public class ContainerCollector extends ContainerBase {
   TileCollector tile;
 
   public ContainerCollector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(CyclicRegistry.ContainerScreens.collectortileContainer, windowId);
+    super(BlockRegistry.ContainerScreens.collectortileContainer, windowId);
     tile = (TileCollector) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -41,6 +41,6 @@ public class ContainerCollector extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, CyclicRegistry.Blocks.collector);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.collector);
   }
 }

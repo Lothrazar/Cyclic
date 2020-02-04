@@ -1,7 +1,8 @@
 package com.lothrazar.cyclic.item.boomerang;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
+import com.lothrazar.cyclic.registry.EntityRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -16,12 +17,12 @@ public class BoomerangEntityStun extends BoomerangEntity {
   }
 
   public BoomerangEntityStun(World worldIn, LivingEntity throwerIn) {
-    super(CyclicRegistry.Entities.boomerang_stun, throwerIn, worldIn);
+    super(EntityRegistry.boomerang_stun, throwerIn, worldIn);
     boomerangType = Boomer.STUN;
   }
 
   @Override
   protected Item getDefaultItem() {
-    return CyclicRegistry.Items.boomerang_stun;
+    return ItemRegistry.boomerang_stun;
   }
 }

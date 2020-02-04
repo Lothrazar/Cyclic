@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.harvester;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -54,7 +54,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     //    GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.drawBackground(CyclicRegistry.Textures.GUI);
+    this.drawBackground(TextureRegistry.GUI);
     //energy
     energy.renderEnergy(container.getEnergy());
   }

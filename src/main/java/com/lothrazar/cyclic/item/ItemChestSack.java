@@ -25,9 +25,9 @@ package com.lothrazar.cyclic.item;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -87,7 +87,7 @@ public class ItemChestSack extends ItemBase {
       player.setHeldItem(context.getHand(), ItemStack.EMPTY);
       UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT);//SoundRegistry.chest_sack_capture);
       if (player.isCreative() == false) {//its never really null tho
-        UtilItemStack.drop(world, player.getPosition(), new ItemStack(CyclicRegistry.Items.tile_transporterempty));
+        UtilItemStack.drop(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
       }
     }
     return ActionResultType.SUCCESS;

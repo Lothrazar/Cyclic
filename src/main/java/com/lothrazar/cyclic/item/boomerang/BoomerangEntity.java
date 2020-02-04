@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.boomerang;
 
 import java.util.List;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
+import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -264,8 +264,8 @@ public class BoomerangEntity extends ProjectileItemEntity {
       case STUN:
         if (entityHit != owner && entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
-          if (live.isPotionActive(CyclicRegistry.PotionEffects.stun) == false) {
-            live.addPotionEffect(new EffectInstance(CyclicRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
+          if (live.isPotionActive(PotionRegistry.PotionEffects.stun) == false) {
+            live.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
             UtilSound.playSound(live, live.getPosition(), SoundEvents.ENTITY_IRON_GOLEM_ATTACK);
           }
         }

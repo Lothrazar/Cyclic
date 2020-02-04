@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.harvester;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -18,7 +18,7 @@ public class ContainerHarvester extends ContainerBase {
   protected TileHarvester tile;
 
   public ContainerHarvester(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(CyclicRegistry.ContainerScreens.harvester, windowId);
+    super(BlockRegistry.ContainerScreens.harvester, windowId);
     tile = (TileHarvester) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -47,6 +47,6 @@ public class ContainerHarvester extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, CyclicRegistry.Blocks.harvester);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.harvester);
   }
 }

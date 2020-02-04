@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -26,7 +26,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 
   public TileCableEnergy() {
-    super(CyclicRegistry.Tiles.energy_pipeTile);
+    super(BlockRegistry.Tiles.energy_pipeTile);
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }

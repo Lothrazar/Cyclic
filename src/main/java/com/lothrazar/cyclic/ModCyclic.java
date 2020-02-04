@@ -5,7 +5,11 @@ import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.event.EventHandler;
 import com.lothrazar.cyclic.potion.EventPotionTick;
+import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.EnchantRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.ConfigHandler;
 import com.lothrazar.cyclic.setup.IProxy;
@@ -81,21 +85,21 @@ public class ModCyclic {
     //TODO: LOOP 
     //TODO: LOOP 
     MinecraftForge.EVENT_BUS.register(new EventPotionTick());
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Blocks.soundproofing);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.excavate);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.experience_boost);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.life_leech);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.magnet);//y
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.multishot);//y
+    MinecraftForge.EVENT_BUS.register(BlockRegistry.soundproofing);
+    MinecraftForge.EVENT_BUS.register(EnchantRegistry.excavate);//y
+    MinecraftForge.EVENT_BUS.register(EnchantRegistry.experience_boost);//y
+    MinecraftForge.EVENT_BUS.register(EnchantRegistry.life_leech);//y
+    MinecraftForge.EVENT_BUS.register(EnchantRegistry.magnet);//y
+    MinecraftForge.EVENT_BUS.register(EnchantRegistry.multishot);//y
     //    MinecraftForge.EVENT_BUS.register(CyclicRegistry.smelting);//  ?
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.venom);//y ?
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.diamond_carrot_health);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.redstone_carrot_speed);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.emerald_carrot_jump);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.lapis_carrot_variant);
-    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Items.toxic_carrot);
+    MinecraftForge.EVENT_BUS.register(EnchantRegistry.venom);//y ?
+    MinecraftForge.EVENT_BUS.register(ItemRegistry.diamond_carrot_health);
+    MinecraftForge.EVENT_BUS.register(ItemRegistry.redstone_carrot_speed);
+    MinecraftForge.EVENT_BUS.register(ItemRegistry.emerald_carrot_jump);
+    MinecraftForge.EVENT_BUS.register(ItemRegistry.lapis_carrot_variant);
+    MinecraftForge.EVENT_BUS.register(ItemRegistry.toxic_carrot);
     MinecraftForge.EVENT_BUS.register(this);
-    scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
+    scaffoldingListen = new ItemScaffolding[] { ItemRegistry.item_scaffold_fragile, ItemRegistry.item_scaffold_responsive, ItemRegistry.item_scaffold_replace };
     //lets go
     proxy.initColours();
     //input is bottom slot: water bottle
@@ -106,20 +110,20 @@ public class ModCyclic {
     //hmm wat 
     BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(AWKWARD), Ingredient.fromItems(Items.CLAY),
         PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.POTION), CyclicRegistry.PotionItem.stun)));
+            new ItemStack(Items.POTION), PotionRegistry.PotionItem.stun)));
     Ingredient GUNPOWDER = Ingredient.fromStacks(new ItemStack(Items.GUNPOWDER));
     //    Ingredient GLOWSTONE = Ingredient.fromStacks(new ItemStack(Items.GLOWSTONE));
     //    Ingredient REDSTONE = Ingredient.fromStacks(new ItemStack(Items.REDSTONE));
     //    Ingredient DRAG = Ingredient.fromStacks(new ItemStack(Items.DRAGON_BREATH));
     //
     BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.POTION), CyclicRegistry.PotionItem.stun)), GUNPOWDER, PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.SPLASH_POTION), CyclicRegistry.PotionItem.stun)));
+        new ItemStack(Items.POTION), PotionRegistry.PotionItem.stun)), GUNPOWDER, PotionUtils.addPotionToItemStack(
+            new ItemStack(Items.SPLASH_POTION), PotionRegistry.PotionItem.stun)));
     //lingering potion recipe
     BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
         new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD)), Ingredient.fromItems(Items.CLAY),
         PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.LINGERING_POTION), CyclicRegistry.PotionItem.stun)));
+            new ItemStack(Items.LINGERING_POTION), PotionRegistry.PotionItem.stun)));
   }
 
   ItemScaffolding[] scaffoldingListen = new ItemScaffolding[0];

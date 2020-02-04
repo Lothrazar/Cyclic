@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import java.util.List;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -24,7 +24,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity 
   private int storedXp;
 
   public TileExpPylon() {
-    super(CyclicRegistry.Tiles.experience_pylontile);
+    super(BlockRegistry.Tiles.experience_pylontile);
   }
 
   private IItemHandler createHandler() {

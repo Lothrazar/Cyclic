@@ -6,10 +6,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.fan.BlockFan;
+import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -44,7 +45,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   private int flowing = 1;
 
   public TilePeatGenerator() {
-    super(CyclicRegistry.Tiles.peat_generatorTile);
+    super(BlockRegistry.Tiles.peat_generatorTile);
   }
 
   private IItemHandler createHandler() {
@@ -113,7 +114,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     }
     handler.ifPresent(h -> {
       ItemStack stack = h.getStackInSlot(0);
-      if (stack.getItem() == CyclicRegistry.Items.peat_fuel &&
+      if (stack.getItem() == ItemRegistry.peat_fuel &&
           this.isBurning() == false) {
         fuelRate = FUEL_WEAK;//for peat_fuel item
         //other types of fuel in the future

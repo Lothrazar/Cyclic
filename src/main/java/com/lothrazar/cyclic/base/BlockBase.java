@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.base;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -17,7 +17,7 @@ public abstract class BlockBase extends Block {
 
   public BlockBase(Properties properties) {
     super(properties);
-    CyclicRegistry.Blocks.blocks.add(this);
+    BlockRegistry.blocks.add(this);
   }
 
   @Override

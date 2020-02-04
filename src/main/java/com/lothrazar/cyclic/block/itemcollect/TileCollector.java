@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.itemcollect;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +36,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileCollector() {
-    super(CyclicRegistry.Tiles.collectortile);
+    super(BlockRegistry.Tiles.collectortile);
     this.setNeedsRedstone(1);
   }
 

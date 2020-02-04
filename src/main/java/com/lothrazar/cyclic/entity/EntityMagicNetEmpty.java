@@ -1,7 +1,8 @@
 package com.lothrazar.cyclic.entity;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.registry.EntityRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -27,12 +28,12 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
   }
 
   public EntityMagicNetEmpty(World worldIn, LivingEntity livingEntityIn) {
-    super(CyclicRegistry.Entities.netball, livingEntityIn, worldIn);
+    super(EntityRegistry.netball, livingEntityIn, worldIn);
   }
 
   @Override
   protected Item getDefaultItem() {
-    return CyclicRegistry.Items.magic_net;
+    return ItemRegistry.magic_net;
   }
 
   @Override
@@ -53,7 +54,7 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       //      target.rotationYaw// TODO
       //      target.rotationPitch
       //      ModCyclic.LOGGER.info(compound);
-      ItemStack drop = new ItemStack(CyclicRegistry.Items.mob_container);
+      ItemStack drop = new ItemStack(ItemRegistry.mob_container);
       drop.setTag(compound);
       UtilItemStack.drop(world, this.getPosition(), drop);
       target.remove();
@@ -61,7 +62,7 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
     else if (type == RayTraceResult.Type.BLOCK) {
       //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
       BlockPos pos = this.getPosition();
-      UtilItemStack.drop(world, pos, new ItemStack(CyclicRegistry.Items.magic_net));
+      UtilItemStack.drop(world, pos, new ItemStack(ItemRegistry.magic_net));
     }
     this.remove();
   }

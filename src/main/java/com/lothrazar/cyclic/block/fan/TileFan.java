@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.fan;
 
 import java.util.List;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.entity.Entity;
@@ -21,7 +21,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   private int speed = 5;
 
   public TileFan() {
-    super(CyclicRegistry.Tiles.fantile);
+    super(BlockRegistry.Tiles.fantile);
   }
 
   @Override

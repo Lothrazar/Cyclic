@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.generator;
 
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +32,8 @@ public class BlockPeatGenerator extends BlockBase {
     return new TilePeatGenerator();
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote) {
       TileEntity tileEntity = world.getTileEntity(pos);
@@ -49,6 +50,6 @@ public class BlockPeatGenerator extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.generatorCont, ScreenGenerator::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.generatorCont, ScreenGenerator::new);
   }
 }

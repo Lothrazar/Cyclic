@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.gui;
 
-import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.screen.Screen;
 
 public class EnergyBar {
@@ -26,11 +26,11 @@ public class EnergyBar {
   public void renderEnergy(float energ) {
     int relX;
     int relY;
-    parent.getMinecraft().getTextureManager().bindTexture(CyclicRegistry.Textures.ENERGY_CTR);
+    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_CTR);
     relX = guiLeft + x;
     relY = guiTop + y;
     Screen.blit(relX, relY, 0, 0, 16, 66, w, h);
-    parent.getMinecraft().getTextureManager().bindTexture(CyclicRegistry.Textures.ENERGY_INNER);
+    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_INNER);
     relX = relX + 1;
     relY = relY + 1;
     //    float energ = container.getEnergy();

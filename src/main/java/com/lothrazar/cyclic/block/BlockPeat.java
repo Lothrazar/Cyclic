@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -50,7 +50,7 @@ public class BlockPeat extends BlockBase {
       world.setBlockState(waters.get(drinkHere), Blocks.AIR.getDefaultState());
       if (world.rand.nextDouble() < CHANCE_BAKE_PCT * 2) {
         //ok you won the second roll, NOW bake yourself 
-        world.setBlockState(pos, CyclicRegistry.Blocks.peat_baked.getDefaultState());
+        world.setBlockState(pos, BlockRegistry.peat_baked.getDefaultState());
         //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, pos);
       }
     }

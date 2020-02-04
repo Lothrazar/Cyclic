@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.gui;
 
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclic.CyclicRegistry;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.Minecraft;
 
 public class ButtonMachine extends ExtendedButton {
@@ -22,7 +22,7 @@ public class ButtonMachine extends ExtendedButton {
   public void renderButton(int mouseX, int mouseY, float partial) {
     super.renderButton(mouseX, mouseY, partial);
     Minecraft minecraft = Minecraft.getInstance();
-    minecraft.getTextureManager().bindTexture(CyclicRegistry.Textures.WIDGETS);
+    minecraft.getTextureManager().bindTexture(TextureRegistry.WIDGETS);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, this.alpha);
     GL11.glEnable(GL11.GL_BLEND);
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
