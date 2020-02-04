@@ -25,12 +25,21 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilNBT;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -38,133 +47,105 @@ public class EnchantBeheading extends EnchantBase {
 
   public EnchantBeheading(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
+    buildDefaultHeadList();
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
-  private Map<String, String> mapClassToSkin;
-  private Map<String, String> mapResourceToSkin;
-  private Map<String, CompoundNBT> mapClassToTag;
-  private int percentDrop;
+  private Map<String, String> mapResourceToSkin = new HashMap<String, String>();
+  private static final int percentDrop = 20;
+  private static final int percentPerLevel = 25;
 
   private void buildDefaultHeadList() {
-    mapClassToSkin = new HashMap<String, String>();
     mapResourceToSkin = new HashMap<String, String>();
-    mapClassToTag = new HashMap<String, CompoundNBT>();
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
     //mhf https://twitter.com/Marc_IRL/status/542330244473311232  https://pastebin.com/5mug6EBu
     //other https://www.planetminecraft.com/blog/minecraft-playerheads-2579899/
     //NBT image data from  http://www.minecraft-heads.com/custom/heads/animals/6746-llama
-    //TODO: Delete all classes, instead use "minecraft:mob"
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityBlaze", "MHF_Blaze");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityCaveSpider", "MHF_CaveSpider");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntityChicken", "MHF_Chicken");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntityCow", "MHF_Cow");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityEnderman", "MHF_Enderman");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityGhast", "MHF_Ghast");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityIronGolem", "MHF_Golem");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityMagmaCube", "MHF_LavaSlime");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntityMooshroom", "MHF_MushroomCow");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntityOcelot", "MHF_Ocelot");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntityPig", "MHF_Pig");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityPigZombie", "MHF_PigZombie");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntitySheep", "MHF_Sheep");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntitySlime", "MHF_Slime");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntitySpider", "MHF_Spider");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntitySquid", "MHF_Squid");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntityVillager", "MHF_Villager");
-    mapClassToSkin.put("net.minecraft.entity.boss.EntityWither", "MHF_Wither");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityWitch", "MHF_Witch");
-    mapClassToSkin.put("net.minecraft.entity.passive.EntityWolf", "MHF_Wolf");
-    mapClassToSkin.put("net.minecraft.entity.boss.EntityGuardian", "MHF_Guardian");
-    mapClassToSkin.put("net.minecraft.entity.boss.EntityElderGuardian", "MHF_Guardian");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntitySnowman", "MHF_SnowGolem");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntitySilverfish", "MHF_Silverfish");
-    mapClassToSkin.put("net.minecraft.entity.monster.EntityEndermite", "MHF_Endermite");
-    //    mapClassToTag.put("net.minecraft.entity.monster.EntityZombieVillager", UtilNBT.buildCustomSkullTag("Zombie Villager Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2ZmMDQ4MmZkMzJmYWIyY2U5ZjVmYTJlMmQ5YjRkYzc1NjFkYTQyMjE1MmM5OWZjODA0YjkxMzljYWYyNTZiIn19fQ=="));
-    //    mapClassToTag.put("net.minecraft.entity.monster.EntityVindicator", UtilNBT.buildCustomSkullTag("Vindicator Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTAwZDNmZmYxNmMyZGNhNTliOWM1OGYwOTY1MjVjODY5NzExNjZkYmFlMTMzYjFiMDUwZTVlZTcxNjQ0MyJ9fX0="));
-    //    mapClassToTag.put("net.minecraft.entity.monster.EntityEvoker", UtilNBT.buildCustomSkullTag("Evoker Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTAwZDNmZmYxNmMyZGNhNTliOWM1OGYwOTY1MjVjODY5NzExNjZkYmFlMTMzYjFiMDUwZTVlZTcxNjQ0MyJ9fX0="));
-    //    mapClassToTag.put("net.minecraft.entity.monster.EntityShulker", UtilNBT.buildCustomSkullTag("Shulker Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhmYjk2YmY0YTlhMzFiMjU1MzhiNzEyMTdkYThiNjM0ZThjMDVkNGMzNWE2YWI4N2FjYjM3ZjkzYTZmMmMifX19"));
-    //    mapClassToTag.put("net.minecraft.entity.passive.EntityRabbit", UtilNBT.buildCustomSkullTag("Rabbit Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGM3YTMxN2VjNWMxZWQ3Nzg4Zjg5ZTdmMWE2YWYzZDJlZWI5MmQxZTk4NzljMDUzNDNjNTdmOWQ4NjNkZTEzMCJ9fX0="));
-    //    mapClassToTag.put("net.minecraft.entity.monster.EntityPolarBear", UtilNBT.buildCustomSkullTag("Polar Bear Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDQ2ZDIzZjA0ODQ2MzY5ZmEyYTM3MDJjMTBmNzU5MTAxYWY3YmZlODQxOTk2NjQyOTUzM2NkODFhMTFkMmIifX19"));
-    //    mapClassToTag.put("net.minecraft.entity.passive.EntityLlama", UtilNBT.buildCustomSkullTag("Llama Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNmMWIzYjNmNTM5ZDJmNjNjMTcyZTk0Y2FjZmFhMzkxZThiMzg1Y2RkNjMzZjNiOTkxYzc0ZTQ0YjI4In19fQ=="));
-    //    mapClassToTag.put("net.minecraft.entity.passive.EntityBat", UtilNBT.buildCustomSkullTag("Bat Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzJiMWVjZmY3N2ZmZTNiNTAzYzMwYTU0OGViMjNhMWEwOGZhMjZmZDY3Y2RmZjM4OTg1NWQ3NDkyMTM2OCJ9fX0="));
-    //    NBTTagCompound horseTag = UtilNBT.buildCustomSkullTag("Horse Head", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjE5MDI4OTgzMDg3MzBjNDc0NzI5OWNiNWE1ZGE5YzI1ODM4YjFkMDU5ZmU0NmZjMzY4OTZmZWU2NjI3MjkifX19");
-    //    mapClassToTag.put("net.minecraft.entity.passive.AbstractHorse", horseTag);
-    //    mapClassToTag.put("net.minecraft.entity.passive.EntityHorse", horseTag);
-    //    mapClassToTag.put("net.minecraft.entity.passive.EntitySkeletonHorse", horseTag);
-    //    mapClassToTag.put("net.minecraft.entity.passive.EntityZombieHorse", horseTag);
+    //TODO: 
+    // config file for extra mod support
+    mapResourceToSkin.put("minecraft:blaze", "MHF_Blaze");
+    mapResourceToSkin.put("minecraft:cat", "MHF_Ocelot");
+    mapResourceToSkin.put("minecraft:cave_spider", "MHF_CaveSpider");
+    mapResourceToSkin.put("minecraft:chicken", "MHF_Chicken");
+    mapResourceToSkin.put("minecraft:cow", "MHF_Cow");
+    mapResourceToSkin.put("minecraft:enderman", "MHF_Enderman");
+    mapResourceToSkin.put("minecraft:ghast", "MHF_Ghast");
+    mapResourceToSkin.put("minecraft:iron_golem", "MHF_Golem");
+    mapResourceToSkin.put("minecraft:magma_cube", "MHF_LavaSlime");
+    mapResourceToSkin.put("minecraft:mooshroom", "MHF_MushroomCow");
+    mapResourceToSkin.put("minecraft:ocelot", "MHF_Ocelot");
+    mapResourceToSkin.put("minecraft:pig", "MHF_Pig");
+    mapResourceToSkin.put("minecraft:zombie_pigman", "MHF_PigZombie");
+    mapResourceToSkin.put("minecraft:sheep", "MHF_Sheep");
+    mapResourceToSkin.put("minecraft:slime", "MHF_Slime");
+    mapResourceToSkin.put("minecraft:spider", "MHF_Spider");
+    mapResourceToSkin.put("minecraft:squid", "MHF_Squid");
+    mapResourceToSkin.put("minecraft:villager", "MHF_Villager");
+    mapResourceToSkin.put("minecraft:witch", "MHF_Witch");
+    mapResourceToSkin.put("minecraft:wolf", "MHF_Wolf");
+    mapResourceToSkin.put("minecraft:guardian", "MHF_Guardian");
+    mapResourceToSkin.put("minecraft:elder_guardian", "MHF_Guardian");
+    mapResourceToSkin.put("minecraft:snow_golem", "MHF_SnowGolem");
+    mapResourceToSkin.put("minecraft:silverfish", "MHF_Silverfish");
+    mapResourceToSkin.put("minecraft:endermite", "MHF_Endermite");
   }
 
   @Override
   public int getMaxLevel() {
-    return 1;
+    return 3;
+  }
+
+  private int percentForLevel(int level) {
+    return percentDrop + (level - 1) * percentPerLevel;
   }
 
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
     if (event.getSource().getTrueSource() instanceof PlayerEntity) {
       PlayerEntity attacker = (PlayerEntity) event.getSource().getTrueSource();
+      int level = getCurrentLevelTool(attacker);
+      if (level <= 0) {
+        return;
+      }
       World world = attacker.world;
+      //      ModCyclic.LOGGER.info(level + "---" + percentForLevel(level));
+      if (MathHelper.nextInt(world.rand, 0, 100) > percentForLevel(level)) {
+        return;
+      }
+      LivingEntity target = (LivingEntity) event.getEntity();
+      if (target == null) {
+        return;
+      } //probably wont happen just extra safe
+      BlockPos pos = target.getPosition();
+      if (target instanceof PlayerEntity) {
+        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull((PlayerEntity) target));
+        return;
+      }
+      //else the random number was less than 10, so it passed the 10% chance req
+      String key = target.getType().getRegistryName().toString();
+      ////we allow all these, which include config, to override the vanilla skulls below
+      //first do my wacky class mapping// TODO delete and go to minecraft:blah
+      if (mapResourceToSkin.containsKey(key)) {
+        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mapResourceToSkin.get(key)));
+      }
+      else if (target.getType() == EntityType.ENDER_DRAGON) {
+        UtilItemStack.drop(world, pos, new ItemStack(Items.DRAGON_HEAD));
+      }
+      else if (target.getType() == EntityType.CREEPER) {
+        UtilItemStack.drop(world, pos, new ItemStack(Items.CREEPER_HEAD));
+      }
+      else if (target.getType() == EntityType.ZOMBIE) {
+        UtilItemStack.drop(world, pos, new ItemStack(Items.ZOMBIE_HEAD));
+      }
+      else if (target.getType() == EntityType.SKELETON) {
+        UtilItemStack.drop(world, pos, new ItemStack(Items.SKELETON_SKULL));
+      }
+      else if (target.getType() == EntityType.WITHER_SKELETON) {
+        UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL));
+      }
+      else {
+        ModCyclic.LOGGER.error("Beheading : mob not found in EntityList " + target.getName());
+      }
     }
-    //      if (MathHelper.getInt(world.rand, 0, 100) > this.percentDrop) {
-    //        return;
-    //      }
-    //      EntityLivingBase target = (EntityLivingBase) event.getEntity();
-    //      if (target == null) {
-    //        return;
-    //      } //probably wont happen just extra safe
-    //      BlockPos pos = target.getPosition();
-    //      if (target instanceof PlayerEntity) {
-    //        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((PlayerEntity) target));
-    //        return;
-    //      }
-    //      int level = getCurrentLevelTool(attacker);
-    //      if (level < 0) {
-    //        return;
-    //      }
-    //      //else the random number was less than 10, so it passed the 10% chance req
-    //      String key = target.getClass().getName();
-    //      ////we allow all these, which include config, to override the vanilla skulls below
-    //      //first do my wacky class mapping// TODO delete and go to minecraft:blah
-    //      if (mapClassToSkin.containsKey(key)) {
-    //        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapClassToSkin.get(key)));
-    //        return;
-    //      }
-    //      else if (mapClassToTag.containsKey(key)) {
-    //        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildSkullFromTag(mapClassToTag.get(key)));
-    //        return;
-    //      }
-    //      else if (target instanceof EntityCreeper) {//4
-    //        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_creeper));
-    //        return;
-    //      }
-    //      else if (target instanceof EntityZombie) {//2
-    //        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_zombie));
-    //        return;
-    //      }
-    //      else if (target instanceof EntitySkeleton) {//0
-    //        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_skeleton));
-    //        return;
-    //      }
-    //      else if (target instanceof EntityWitherSkeleton) {//1
-    //        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_wither));
-    //        return;
-    //      }
-    //      else if (target instanceof EntityDragon) {//5
-    //        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.SKULL, 1, Const.skull_dragon));
-    //        return;
-    //      }
-    //      else if (target instanceof PlayerEntity) {//player name
-    //        UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull((PlayerEntity) target));
-    //        return;
-    //      }
-    //      if (EntityList.getKey(target) != null) {
-    //        String resourcelocation = EntityList.getKey(target).toString();
-    //        if (mapResourceToSkin.containsKey(resourcelocation)) {
-    //          UtilItemStack.dropItemStackInWorld(world, pos, UtilNBT.buildNamedPlayerSkull(mapResourceToSkin.get(resourcelocation)));
-    //          return;
-    //        }
-    //      }
-    //      ModCyclic.logger.error("Beheading : mob not found in EntityList " + target.getName());
-    //    }
   }
 }

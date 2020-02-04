@@ -1,10 +1,28 @@
 package com.lothrazar.cyclic.util;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 
 public class UtilNBT {
+
+  public static ItemStack buildNamedPlayerSkull(PlayerEntity player) {
+    return buildNamedPlayerSkull(player.getDisplayName().getFormattedText());
+  }
+
+  public static ItemStack buildNamedPlayerSkull(String displayNameString) {
+    CompoundNBT t = new CompoundNBT();
+    t.putString(Const.SkullOwner, displayNameString);
+    return buildSkullFromTag(t);
+  }
+
+  public static ItemStack buildSkullFromTag(CompoundNBT player) {
+    ItemStack skull = new ItemStack(Items.PLAYER_HEAD);
+    skull.setTag(player);
+    return skull;
+  }
 
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
     if (pos == null || item.isEmpty()) {
