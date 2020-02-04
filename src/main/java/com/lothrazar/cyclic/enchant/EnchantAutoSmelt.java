@@ -25,18 +25,18 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
-import net.minecraft.block.FurnaceBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -45,6 +45,7 @@ public class EnchantAutoSmelt extends EnchantBase {
 
   public EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
@@ -54,23 +55,24 @@ public class EnchantAutoSmelt extends EnchantBase {
 
   @Override
   public boolean canApplyTogether(Enchantment ench) {
-    return ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE && super.canApplyTogether(ench);
+    return ench != Enchantments.SILK_TOUCH && super.canApplyTogether(ench);
   }
 
-  @SubscribeEvent(priority = EventPriority.HIGHEST) // // i almost tried this for the compat bugs
+  // HarvestDropsEvent broken in 1.15 
+  @SubscribeEvent(priority = EventPriority.LOW)
   public void onHarvestDrops(HarvestDropsEvent event) {
+    ModCyclic.LOGGER.info("HarvestDropsEventHarvestDropsEvent");
     if (event.getHarvester() == null) {
-      return;
-    }
-    PlayerEntity player = event.getHarvester();
-    World world = event.getHarvester().world;
-    int level = 1;//getCurrentLevelTool(event.getHarvester());
-    if (level <= 0) {
       return;
     }
     if (event.isSilkTouching()) {
       return;
     } //it should be incompabile but check anyway ya
+    //    PlayerEntity player = event.getHarvester();
+    int level = getCurrentLevelTool(event.getHarvester());
+    if (level <= 0) {
+      return;
+    }
     List<ItemStack> drops = event.getDrops();
     List<ItemStack> dropsCopy = new ArrayList<ItemStack>();
     //  Collections.copy(dropsCopy, drops);//fails
@@ -79,11 +81,10 @@ public class EnchantAutoSmelt extends EnchantBase {
     }
     //erase list of drops and rebuild it
     drops.clear();//works since byref
+    World world = event.getHarvester().world;
     for (ItemStack drop : dropsCopy) {
-      FurnaceBlock x;
-      FurnaceTileEntity c = new FurnaceTileEntity();
-      c.setInventorySlotContents(0, drop);
-      IRecipe<?> irecipe = world.getRecipeManager().getRecipe(IRecipeType.SMELTING, c, world).orElse(null);
+      Inventory furnace = new Inventory(new ItemStack[] { drop });
+      IRecipe<?> irecipe = world.getRecipeManager().getRecipe(IRecipeType.SMELTING, furnace, world).orElse(null);
       if (irecipe != null) {
         //then
         ItemStack fromSmelted = irecipe.getRecipeOutput().copy();
@@ -91,10 +92,11 @@ public class EnchantAutoSmelt extends EnchantBase {
           if (fromSmelted.getCount() == 0) { //wtf!?!?! why how does this happen? idk whatever fixed
             fromSmelted.setCount(1);
           }
-          drops.add(fromSmelted);//smelt it up yo!
+          drops.add(fromSmelted.copy());//smelt it up yo!
         }
       }
       else {//recipe is null
+        ModCyclic.LOGGER.info("No recipe for drop " + drop + "?" + irecipe);
         drops.add(drop);//same as without enchant
       }
     }
