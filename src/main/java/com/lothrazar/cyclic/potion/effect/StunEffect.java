@@ -1,10 +1,8 @@
 package com.lothrazar.cyclic.potion.effect;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.potion.TickableEffect;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
@@ -12,22 +10,7 @@ public class StunEffect extends TickableEffect {
 
   public StunEffect(EffectType typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
-  }
-
-  @Override
-  public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, LivingEntity entityLivingBaseIn, int amplifier, double health) {
-    super.affectEntity(source, indirectSource, entityLivingBaseIn, amplifier, health);
-  }
-
-  @Override
-  public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-    super.performEffect(entityLivingBaseIn, amplifier);
-  }
-
-  @Override
-  public void applyAttributesModifiersToEntity(LivingEntity entityLivingBaseIn, AbstractAttributeMap attributeMapIn, int amplifier) {
-    //    ModCyclic.LOGGER.info("    ___ " + this.getAttributeModifierMap().size());
-    super.applyAttributesModifiersToEntity(entityLivingBaseIn, attributeMapIn, amplifier);
+    this.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "91AEAA56-376B-4498-935B-2F7F68070636", -50, AttributeModifier.Operation.ADDITION);
   }
 
   @Override

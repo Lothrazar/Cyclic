@@ -164,7 +164,7 @@ public class BlockFluidTank extends BlockBase {
     }
     catch (Exception e) {
       //
-      ModCyclic.LOGGER.error("fill from item ", e);
+      ModCyclic.LOGGER.error("Error during fill from item ", e);
     }
   }
 

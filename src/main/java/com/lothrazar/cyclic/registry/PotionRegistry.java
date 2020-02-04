@@ -5,8 +5,8 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.potion.TickableEffect;
 import com.lothrazar.cyclic.potion.effect.StunEffect;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
+import com.lothrazar.cyclic.potion.effect.SwimEffect;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -32,52 +32,71 @@ public class PotionRegistry {
   @SubscribeEvent
   public static void onPotEffectRegistry(RegistryEvent.Register<Effect> event) {
     IForgeRegistry<Effect> r = event.getRegistry();
-    StunEffect stun = new StunEffect(EffectType.HARMFUL, 14605835);
-    stun.setRegistryName(new ResourceLocation(ModCyclic.MODID, "stun"));
-    stun.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "91AEAA56-376B-4498-935B-2F7F68070636", -50, AttributeModifier.Operation.ADDITION);
-    //    stun.addAttributesModifier(SharedMonsterAttributes.MAX_HEALTH, "92AEAA56-376B-4498-935B-2F7F68070636", 2, AttributeModifier.Operation.ADDITION);
-    r.register(stun);
-    PotionEffects.effects.add(stun);
+    register(r, new StunEffect(EffectType.HARMFUL, 0xcccc00), "stun");
+    register(r, new SwimEffect(EffectType.BENEFICIAL, 0x663300), "swimspeed");
+  }
+
+  private static void register(IForgeRegistry<Effect> r, TickableEffect pot, String name) {
+    pot.setRegistryName(new ResourceLocation(ModCyclic.MODID, name));
+    r.register(pot);
+    PotionEffects.effects.add(pot);
   }
 
   @SubscribeEvent
   public static void onPotRegistry(RegistryEvent.Register<Potion> event) {
     IForgeRegistry<Potion> r = event.getRegistry();
     r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(PotionEffects.stun, 1800)).setRegistryName(ModCyclic.MODID + ":stun"));
+    r.register(new Potion(ModCyclic.MODID + "_swimspeed", new EffectInstance(PotionEffects.swimspeed, 3600)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
   }
 
   public static class PotionEffects {
 
     public static final List<TickableEffect> effects = new ArrayList<TickableEffect>();
     @ObjectHolder(ModCyclic.MODID + ":stun")
-    public static StunEffect stun;
+    public static TickableEffect stun;
+    @ObjectHolder(ModCyclic.MODID + ":swimspeed")
+    public static TickableEffect swimspeed;
   }
 
   public static class PotionItem {
 
     @ObjectHolder(ModCyclic.MODID + ":stun")
     public static Potion stun;
+    @ObjectHolder(ModCyclic.MODID + ":swimspeed")
+    public static Potion swimspeed;
   }
 
   public static void setup(FMLCommonSetupEvent event) {
+    basicBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
+    splashBrewing(PotionRegistry.PotionItem.stun);
+    lingerBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
+    basicBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+    splashBrewing(PotionRegistry.PotionItem.swimspeed);
+    lingerBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+  }
+
+  private static void basicBrewing(Potion pot, Item item) {
     ItemStack AWKWARD = PotionUtils.addPotionToItemStack(
         new ItemStack(Items.POTION), Potions.AWKWARD);
     //hmm wat 
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(AWKWARD), Ingredient.fromItems(Items.CLAY),
+    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(AWKWARD), Ingredient.fromItems(item),
         PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.POTION), PotionRegistry.PotionItem.stun)));
-    Ingredient GUNPOWDER = Ingredient.fromStacks(new ItemStack(Items.GUNPOWDER));
-    //    Ingredient GLOWSTONE = Ingredient.fromStacks(new ItemStack(Items.GLOWSTONE));
-    //    Ingredient REDSTONE = Ingredient.fromStacks(new ItemStack(Items.REDSTONE));
-    //    Ingredient DRAG = Ingredient.fromStacks(new ItemStack(Items.DRAGON_BREATH));
-    //
+            new ItemStack(Items.POTION), pot)));
+  }
+
+  private static void splashBrewing(Potion pot) {
     BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.POTION), PotionRegistry.PotionItem.stun)), GUNPOWDER, PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.SPLASH_POTION), PotionRegistry.PotionItem.stun)));
-    //lingering potion recipe
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD)), Ingredient.fromItems(Items.CLAY),
+        new ItemStack(Items.POTION), pot)),
+        Ingredient.fromStacks(new ItemStack(Items.GUNPOWDER)),
         PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.LINGERING_POTION), PotionRegistry.PotionItem.stun)));
+            new ItemStack(Items.SPLASH_POTION), pot)));
+  }
+
+  private static void lingerBrewing(Potion pot, Item item) {
+    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
+        new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD)),
+        Ingredient.fromStacks(new ItemStack(item)),
+        PotionUtils.addPotionToItemStack(
+            new ItemStack(Items.LINGERING_POTION), pot)));
   }
 }

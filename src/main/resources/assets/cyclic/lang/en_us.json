@@ -532,14 +532,6 @@
     "key.keyExtraInvo": "Extended Inventory (if unlocked)",
     "key.keyWheel": "Extended Inventory Tool Belt (if unlocked)",
     "minecart.fuel": "Fuel:",
-    "effect.cyclic.bounce": "Bouncy",
-    "effect.cyclic.ender": "Ender Aura",
-    "effect.cyclic.magnet": "Magnet",
-    "effect.cyclic.slowfall": "Slowfall",
-    "effect.cyclic.snow": "Snow",
-    "effect.cyclic.swimspeed": "Swim Speed",
-    "effect.cyclic.stun": "Stun",
-    "effect.cyclic.waterwalk": "Waterwalking",
     "screentext.flying.seconds": "Flying:",
     "screentext.noclip.seconds": "NoClip:",
 
@@ -924,6 +916,20 @@
     "tipped_arrow.effect.bounce": "Arrow of Bouncing",
     
 
+    "effect.cyclic.bounce": "Bouncy",
+    "effect.cyclic.ender": "Ender Aura",
+    "effect.cyclic.magnet": "Magnet",
+    "effect.cyclic.slowfall": "Slowfall",
+    "effect.cyclic.snow": "Snow",
+    "effect.cyclic.swimspeed": "Swim Speed",
+    "effect.cyclic.stun": "Paralyze",
+    "effect.cyclic.waterwalk": "Waterwalking",
+    
+    "item.minecraft.potion.effect.cyclic_swimspeed": "Potion of Swim Speed",
+    "item.minecraft.splash_potion.effect.cyclic_swimspeed": "Splash Potion of Swim Speed",
+    "item.minecraft.lingering_potion.effect.cyclic_swimspeed": "Lingering Potion of Swim Speed",
+    "item.minecraft.tipped_arrow.effect.cyclic_swimspeed": "Arrow of Swim Speed",
+    
     "item.minecraft.potion.effect.cyclic_stun": "Potion of Paralyze",
     "item.minecraft.splash_potion.effect.cyclic_stun": "Splash Potion of Paralyze",
     "item.minecraft.lingering_potion.effect.cyclic_stun": "Lingering Potion of Paralyze",

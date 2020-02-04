@@ -96,7 +96,7 @@ public class EnchantAutoSmelt extends EnchantBase {
         }
       }
       else {//recipe is null
-        ModCyclic.LOGGER.info("No recipe for drop " + drop + "?" + irecipe);
+        //        ModCyclic.LOGGER.info("No recipe for drop " + drop + "?" + irecipe);
         drops.add(drop);//same as without enchant
       }
     }
