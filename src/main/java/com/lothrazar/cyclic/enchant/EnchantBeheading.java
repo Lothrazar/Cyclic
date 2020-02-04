@@ -34,7 +34,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Deprecated
 public class EnchantBeheading extends EnchantBase {
 
   public EnchantBeheading(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {

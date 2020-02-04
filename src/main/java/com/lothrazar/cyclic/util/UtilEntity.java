@@ -54,6 +54,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class UtilEntity {
 
@@ -559,7 +560,8 @@ public class UtilEntity {
 
   public static void eatingHorse(HorseEntity ahorse) {
     try {
-      Method m = AbstractHorseEntity.class.getDeclaredMethod("eatingHorse");
+      Method m = ObfuscationReflectionHelper.findMethod(AbstractHorseEntity.class, "func_110266_cB");// "eatingHorse");
+      //      Method m = AbstractHorseEntity.class.getDeclaredMethod("eatingHorse");
       m.setAccessible(true);
       m.invoke(ahorse);
     }
