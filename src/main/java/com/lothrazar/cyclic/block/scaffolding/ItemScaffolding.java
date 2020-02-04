@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
 import com.lothrazar.cyclic.util.Const;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -12,11 +13,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemScaffolding extends BlockItem {
 
   public ItemScaffolding(Block blockIn, Properties builder) {
     super(blockIn, builder);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
@@ -86,5 +91,18 @@ public class ItemScaffolding extends BlockItem {
       return new ActionResult<>(ActionResultType.SUCCESS, stac);
     }
     return super.onItemRightClick(worldIn, player, hand);
+  }
+
+  @SubscribeEvent
+  public void onRightClickBlock(RightClickBlock event) {
+    //    for (ItemScaffolding loop : scaffoldingListen)
+    if (event.getItemStack() != null && event.getItemStack().getItem() == this && event.getPlayer().isCrouching()) {
+      Direction opp = event.getFace().getOpposite();
+      BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, this.getBlock());
+      event.getWorld().setBlockState(dest, Block.getBlockFromItem(this).getDefaultState());
+      ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
+      stac.shrink(1);
+      event.setCanceled(true);
+    }
   }
 }

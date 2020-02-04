@@ -18,11 +18,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ClientProxy implements IProxy {
 
   @Override
-  public void init() {
+  public void setup() {
     //TODO: clean this up ? maybe
     for (BlockBase b : BlockRegistry.blocks) {
       b.registerClient();
     }
+    this.initColours();
   }
 
   @Override
@@ -64,8 +65,7 @@ public class ClientProxy implements IProxy {
     //    }
   }
 
-  @Override
-  public void initColours() {
+  private void initColours() {
     Minecraft.getInstance().getItemColors()
         .register((stack, tintIndex) -> {
           if (stack.hasTag() && tintIndex > 0) {

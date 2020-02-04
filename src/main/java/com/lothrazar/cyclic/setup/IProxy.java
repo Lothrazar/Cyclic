@@ -5,13 +5,11 @@ import net.minecraft.world.World;
 
 public interface IProxy {
 
-  void init();
+  void setup();
 
   World getClientWorld();
 
   PlayerEntity getClientPlayer();
 
   void setPlayerReach(PlayerEntity player, int currentReach);
-
-  void initColours();
 }

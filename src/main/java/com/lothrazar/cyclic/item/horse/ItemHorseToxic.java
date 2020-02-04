@@ -31,6 +31,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.passive.horse.ZombieHorseEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -40,6 +41,7 @@ public class ItemHorseToxic extends ItemBase {
 
   public ItemHorseToxic(Properties prop) {
     super(prop);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @SubscribeEvent

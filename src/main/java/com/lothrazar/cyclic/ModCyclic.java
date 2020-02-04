@@ -2,41 +2,24 @@ package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.event.EventHandler;
 import com.lothrazar.cyclic.potion.EventPotionTick;
-import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.CuriosRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.ConfigHandler;
 import com.lothrazar.cyclic.setup.IProxy;
 import com.lothrazar.cyclic.setup.ServerProxy;
-import com.lothrazar.cyclic.util.UtilWorld;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.brewing.BrewingRecipe;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import top.theillusivec4.curios.api.imc.CurioIMCMessage;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ModCyclic.MODID)
@@ -57,88 +40,13 @@ public class ModCyclic {
   }
 
   private void setup(final FMLCommonSetupEvent event) {
-    //https://github.com/TheIllusiveC4/Curios/blob/fc77c876b630dc6e4a325cb9ac627b551749a19b/src/main/java/top/theillusivec4/curios/api/CurioTags.java
-    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("charm").setSize(2).setEnabled(true).setHidden(false));
-    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("necklace").setSize(1).setEnabled(true).setHidden(false));
-    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("hands").setSize(2).setEnabled(true).setHidden(false));
-    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("belt").setSize(2).setEnabled(true).setHidden(false));
-    InterModComms.sendTo("curios", "register_type", () -> new CurioIMCMessage("ring").setSize(2).setEnabled(true).setHidden(false));
     //now all blocks/items exist
-    PacketRegistry.init();
-    proxy.init();
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
-    //TODO: LOOP 
+    CuriosRegistry.setup(event);
+    PotionRegistry.setup(event);
+    PacketRegistry.setup();
+    proxy.setup();
     MinecraftForge.EVENT_BUS.register(new EventPotionTick());
-    MinecraftForge.EVENT_BUS.register(BlockRegistry.soundproofing);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.excavate);//y
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.experience_boost);//y
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.life_leech);//y
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.magnet);//y
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.multishot);//y
-    //    MinecraftForge.EVENT_BUS.register(CyclicRegistry.smelting);//  ?
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.venom);//y ?
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.diamond_carrot_health);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.redstone_carrot_speed);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.emerald_carrot_jump);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.lapis_carrot_variant);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.toxic_carrot);
     MinecraftForge.EVENT_BUS.register(this);
-    scaffoldingListen = new ItemScaffolding[] { ItemRegistry.item_scaffold_fragile, ItemRegistry.item_scaffold_responsive, ItemRegistry.item_scaffold_replace };
-    //lets go
-    proxy.initColours();
-    //input is bottom slot: water bottle
-    //ingredient is top
-    //    PotionBrewing 
-    ItemStack AWKWARD = PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.POTION), Potions.AWKWARD);
-    //hmm wat 
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(AWKWARD), Ingredient.fromItems(Items.CLAY),
-        PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.POTION), PotionRegistry.PotionItem.stun)));
-    Ingredient GUNPOWDER = Ingredient.fromStacks(new ItemStack(Items.GUNPOWDER));
-    //    Ingredient GLOWSTONE = Ingredient.fromStacks(new ItemStack(Items.GLOWSTONE));
-    //    Ingredient REDSTONE = Ingredient.fromStacks(new ItemStack(Items.REDSTONE));
-    //    Ingredient DRAG = Ingredient.fromStacks(new ItemStack(Items.DRAGON_BREATH));
-    //
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.POTION), PotionRegistry.PotionItem.stun)), GUNPOWDER, PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.SPLASH_POTION), PotionRegistry.PotionItem.stun)));
-    //lingering potion recipe
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD)), Ingredient.fromItems(Items.CLAY),
-        PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.LINGERING_POTION), PotionRegistry.PotionItem.stun)));
-  }
-
-  ItemScaffolding[] scaffoldingListen = new ItemScaffolding[0];
-
-  @SubscribeEvent
-  public void onRightClickBlock(RightClickBlock event) {
-    for (ItemScaffolding loop : scaffoldingListen)
-      if (event.getItemStack() != null && event.getItemStack().getItem() == loop && event.getPlayer().isCrouching()) {
-        Direction opp = event.getFace().getOpposite();
-        BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, loop.getBlock());
-        event.getWorld().setBlockState(dest, Block.getBlockFromItem(loop).getDefaultState());
-        ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
-        stac.shrink(1);
-        event.setCanceled(true);
-      }
   }
 
   @SubscribeEvent

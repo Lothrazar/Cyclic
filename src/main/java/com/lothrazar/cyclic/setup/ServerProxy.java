@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 public class ServerProxy implements IProxy {
 
   @Override
-  public void init() {}
+  public void setup() {}
 
   @Override
   public World getClientWorld() {
@@ -22,7 +22,4 @@ public class ServerProxy implements IProxy {
   public void setPlayerReach(PlayerEntity player, int currentReach) {
     player.getAttribute(PlayerEntity.REACH_DISTANCE).setBaseValue(currentReach);
   }
-
-  @Override
-  public void initColours() {}
 }

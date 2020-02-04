@@ -16,12 +16,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BlockSound extends BlockBase {
 
   public BlockSound(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.SCAFFOLDING));
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   private static final int VOL_REDUCE_PER_BLOCK = 2;

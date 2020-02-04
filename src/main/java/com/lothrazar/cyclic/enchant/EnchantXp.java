@@ -8,11 +8,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraftforge.common.MinecraftForge;
 
 public class EnchantXp extends EnchantBase {
 
   public EnchantXp(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... mainhand) {
     super(rarityIn, typeIn, mainhand);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override

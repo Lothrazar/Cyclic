@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -34,6 +35,7 @@ public class ItemHorseLapisVariant extends ItemBase {
 
   public ItemHorseLapisVariant(Properties prop) {
     super(prop);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @SubscribeEvent

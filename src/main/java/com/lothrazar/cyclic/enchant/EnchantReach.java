@@ -32,6 +32,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -39,6 +40,7 @@ public class EnchantReach extends EnchantBase {
 
   public EnchantReach(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   private static final String NBT_REACH_ON = "reachon";
