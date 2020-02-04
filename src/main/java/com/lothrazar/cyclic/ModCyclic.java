@@ -107,6 +107,19 @@ public class ModCyclic {
     BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(AWKWARD), Ingredient.fromItems(Items.CLAY),
         PotionUtils.addPotionToItemStack(
             new ItemStack(Items.POTION), CyclicRegistry.PotionItem.stun)));
+    Ingredient GUNPOWDER = Ingredient.fromStacks(new ItemStack(Items.GUNPOWDER));
+    //    Ingredient GLOWSTONE = Ingredient.fromStacks(new ItemStack(Items.GLOWSTONE));
+    //    Ingredient REDSTONE = Ingredient.fromStacks(new ItemStack(Items.REDSTONE));
+    //    Ingredient DRAG = Ingredient.fromStacks(new ItemStack(Items.DRAGON_BREATH));
+    //
+    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
+        new ItemStack(Items.POTION), CyclicRegistry.PotionItem.stun)), GUNPOWDER, PotionUtils.addPotionToItemStack(
+            new ItemStack(Items.SPLASH_POTION), CyclicRegistry.PotionItem.stun)));
+    //lingering potion recipe
+    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
+        new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD)), Ingredient.fromItems(Items.CLAY),
+        PotionUtils.addPotionToItemStack(
+            new ItemStack(Items.LINGERING_POTION), CyclicRegistry.PotionItem.stun)));
   }
 
   ItemScaffolding[] scaffoldingListen = new ItemScaffolding[0];

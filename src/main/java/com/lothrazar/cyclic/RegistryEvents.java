@@ -163,7 +163,7 @@ public class RegistryEvents {
   @SubscribeEvent
   public static void onPotEffectRegistry(RegistryEvent.Register<Effect> event) {
     IForgeRegistry<Effect> r = event.getRegistry();
-    StunEffect stun = new StunEffect(EffectType.HARMFUL, 001111);
+    StunEffect stun = new StunEffect(EffectType.HARMFUL, 14605835);
     stun.setRegistryName(new ResourceLocation(ModCyclic.MODID, "stun"));
     stun.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "91AEAA56-376B-4498-935B-2F7F68070636", -50, AttributeModifier.Operation.ADDITION);
     //    stun.addAttributesModifier(SharedMonsterAttributes.MAX_HEALTH, "92AEAA56-376B-4498-935B-2F7F68070636", 2, AttributeModifier.Operation.ADDITION);
