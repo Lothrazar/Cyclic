@@ -1,11 +1,12 @@
-package com.lothrazar.cyclic.potion;
+package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.potion.TickableEffect;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EventPotionTick {
+public class PotionEvents {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {

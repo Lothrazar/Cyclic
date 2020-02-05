@@ -13,7 +13,7 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EventHandler {
+public class ClientInputEvents {
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent(priority = EventPriority.HIGH)

@@ -23,32 +23,31 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.horse;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ItemHorseHealthDiamondCarrot extends ItemBase {
+public class ItemHorseHealthDiamondCarrot extends ItemEntityInteractable {
 
-  private static final int HEARTS_MAX = 40;
+  public static final int HEARTS_MAX = 40;
 
   public ItemHorseHealthDiamondCarrot(Properties prop) {
     super(prop);
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  @SubscribeEvent
-  public void onEntityInteractEvent(EntityInteract event) {
-    if (event.getItemStack().getItem() == this
+  @Override
+  public void interactWith(EntityInteract event) {
+    if (event.getItemStack().getItem() instanceof ItemHorseHealthDiamondCarrot
         && event.getTarget() instanceof HorseEntity) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
       float mh = (float) ahorse.getAttribute(SharedMonsterAttributes.MAX_HEALTH).getValue();
-      if (mh < 2 * HEARTS_MAX) { // 20 hearts == 40 health points
+      if (mh < 2 * ItemHorseHealthDiamondCarrot.HEARTS_MAX) { // 20 hearts == 40 health points
         ahorse.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(mh + 2);
         event.setCanceled(true);
         event.setCancellationResult(ActionResultType.SUCCESS);

@@ -2,8 +2,9 @@ package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.lothrazar.cyclic.event.EventHandler;
-import com.lothrazar.cyclic.potion.EventPotionTick;
+import com.lothrazar.cyclic.event.ClientInputEvents;
+import com.lothrazar.cyclic.event.ItemEvents;
+import com.lothrazar.cyclic.event.PotionEvents;
 import com.lothrazar.cyclic.registry.CuriosRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
@@ -35,7 +36,7 @@ public class ModCyclic {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     //only for server starting
     MinecraftForge.EVENT_BUS.register(this);
-    MinecraftForge.EVENT_BUS.register(new EventHandler());
+    MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     ConfigHandler.loadConfig(ConfigHandler.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
   }
 
@@ -45,7 +46,8 @@ public class ModCyclic {
     PotionRegistry.setup(event);
     PacketRegistry.setup();
     proxy.setup();
-    MinecraftForge.EVENT_BUS.register(new EventPotionTick());
+    MinecraftForge.EVENT_BUS.register(new PotionEvents());
+    MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(this);
   }
 
