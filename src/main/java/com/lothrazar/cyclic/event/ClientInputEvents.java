@@ -18,10 +18,10 @@ public class ClientInputEvents {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent(priority = EventPriority.HIGH)
   public void onMouseEvent(GuiScreenEvent.MouseClickedEvent.Pre event) {
-    if (event.getGui() == null || !(event.getGui() instanceof ContainerScreen)) {
+    if (event.getGui() == null || !(event.getGui() instanceof ContainerScreen<?>)) {
       return;
     }
-    ContainerScreen gui = (ContainerScreen) event.getGui();
+    ContainerScreen<?> gui = (ContainerScreen<?>) event.getGui();
     boolean rightClickDown = event.getButton() == 1;
     try {
       if (rightClickDown && gui.getSlotUnderMouse() != null) {

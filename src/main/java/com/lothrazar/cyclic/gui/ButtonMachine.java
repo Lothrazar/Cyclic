@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.gui;
 
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class ButtonMachine extends ExtendedButton {
 

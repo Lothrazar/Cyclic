@@ -23,27 +23,24 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.horse;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ItemHorseEmeraldJump extends ItemBase {
+public class ItemHorseEmeraldJump extends ItemEntityInteractable {
 
   private static final int JUMP_MAX = 10;
   private static final double JUMP_AMT = 0.008;
 
   public ItemHorseEmeraldJump(Properties prop) {
     super(prop);
-    MinecraftForge.EVENT_BUS.register(this);
   }
 
-  @SubscribeEvent
-  public void onEntityInteractEvent(EntityInteract event) {
+  @Override
+  public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof HorseEntity) {
       // lets go 

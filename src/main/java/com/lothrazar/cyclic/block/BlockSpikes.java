@@ -67,7 +67,8 @@ public class BlockSpikes extends BlockBase {
     RenderTypeLookup.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
     switch (state.get(BlockStateProperties.FACING)) {
       case NORTH:
@@ -86,7 +87,8 @@ public class BlockSpikes extends BlockBase {
     return VoxelShapes.fullCube();//CANT BE NULL, causes crashes.   
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
     if (entity instanceof LivingEntity && state.get(ACTIVATED)) {
       //extra effects

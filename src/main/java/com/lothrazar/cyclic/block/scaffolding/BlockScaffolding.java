@@ -43,7 +43,8 @@ public class BlockScaffolding extends BlockBase {
   }
 
   // TICK
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
     if (doesAutobreak && worldIn.rand.nextDouble() < 0.5) {
       worldIn.destroyBlock(pos, true);

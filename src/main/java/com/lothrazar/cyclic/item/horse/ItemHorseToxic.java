@@ -23,29 +23,25 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.horse;
 
-import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.item.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.passive.horse.ZombieHorseEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class ItemHorseToxic extends ItemBase {
+public class ItemHorseToxic extends ItemEntityInteractable {
 
   public ItemHorseToxic(Properties prop) {
     super(prop);
-    MinecraftForge.EVENT_BUS.register(this);
   }
 
-  @SubscribeEvent
-  public void onEntityInteractEvent(EntityInteract event) {
+  @Override
+  public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof HorseEntity
         //        && event.getWorld().isRemote == false
@@ -55,7 +51,7 @@ public class ItemHorseToxic extends ItemBase {
       ZombieHorseEntity zombie = EntityType.ZOMBIE_HORSE.spawn(event.getWorld(), null, null, event.getPlayer(), event.getPos(), SpawnReason.NATURAL, false, false);
       event.getWorld().addEntity(zombie);
       if (ahorse.isTame() && ahorse.getOwnerUniqueId() == event.getPlayer().getUniqueID()) {
-        //        ModCyclic.LOGGER.info("tame same id");
+        // you still tamed it
         zombie.setTamedBy(event.getPlayer());
       }
       if (ahorse.isHorseSaddled()) {
@@ -70,14 +66,12 @@ public class ItemHorseToxic extends ItemBase {
       if (ahorse.hasCustomName()) {
         zombie.setCustomName(ahorse.getCustomName());
       }
+      //remove the horse    
       ahorse.remove();
-      //      int seed = event.getWorld().rand.nextInt(7);
-      //      ahorse.setHorseVariant(seed | event.getWorld().rand.nextInt(5) << 8);
       event.setCanceled(true);
       event.setCancellationResult(ActionResultType.SUCCESS);
       event.getPlayer().getCooldownTracker().setCooldown(this, 10);
       event.getItemStack().shrink(1);
-      UtilEntity.eatingHorse(ahorse);
     }
   }
 }

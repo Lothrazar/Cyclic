@@ -28,7 +28,6 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
 public class ItemHorseHealthDiamondCarrot extends ItemEntityInteractable {
@@ -37,7 +36,6 @@ public class ItemHorseHealthDiamondCarrot extends ItemEntityInteractable {
 
   public ItemHorseHealthDiamondCarrot(Properties prop) {
     super(prop);
-    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override

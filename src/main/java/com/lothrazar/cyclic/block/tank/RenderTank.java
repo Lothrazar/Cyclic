@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.tank;
 
-import net.minecraft.inventory.container.PlayerContainer;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclic.util.RenderUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -15,6 +14,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;

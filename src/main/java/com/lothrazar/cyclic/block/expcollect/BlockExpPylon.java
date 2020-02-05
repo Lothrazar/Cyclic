@@ -34,7 +34,8 @@ public class BlockExpPylon extends BlockBase {
     RenderTypeLookup.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote && hand == Hand.MAIN_HAND) {
       ItemStack held = player.getHeldItem(hand);

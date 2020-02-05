@@ -41,7 +41,8 @@ public class BlockScaffoldingReplace extends BlockScaffolding {
     super(prop, false);
   }
 
-  @Override @Deprecated
+  @Override
+  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     ItemStack heldItem = player.getHeldItem(hand);
     if (heldItem.isEmpty()) {
