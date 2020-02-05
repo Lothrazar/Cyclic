@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.trash;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -49,7 +48,6 @@ public class ContainerTrash extends ContainerBaseMachine {
 
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-    ModCyclic.logger.error("" + slot);
     ItemStack stack = ItemStack.EMPTY;
     Slot slotObject = inventorySlots.get(slot);
     // null checks and checks if the item can be stacked (maxStackSize > 1)

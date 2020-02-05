@@ -52,7 +52,7 @@ public class EventPlayerData {
       EntityPlayerMP p = (EntityPlayerMP) event.player;
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
-        setDefaultHealth(p);
+        setHealthModifier(p);
       }
     }
   }
@@ -66,16 +66,16 @@ public class EventPlayerData {
       EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
-        setDefaultHealth(p);
+        setHealthModifier(p);
       }
     }
   }
 
-  private void setDefaultHealth(EntityPlayerMP p) {
+  private void setHealthModifier(EntityPlayerMP p) {
     IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(p);
-    //    UtilChat.sendStatusMessage(p,"Setting your maximum health to "+src.getMaxHealth());
-    if (src.getMaxHealth() > 0) {
-      UtilEntity.setMaxHealth(p, src.getMaxHealth());
+    //    UtilChat.sendStatusMessage(p,"Setting your maximum health modifier to "+src.getMaxHealthModifier());
+    if (src.getMaxHealthModifier() != 0) {
+      UtilEntity.setMaxHealthModifier(p, src.getMaxHealthModifier());
     }
   }
 
@@ -101,8 +101,8 @@ public class EventPlayerData {
     IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
     IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
     dest.setDataFromNBT(src.getDataAsNBT());
-    if (src.getMaxHealth() > 0) {
-      UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
+    if (src.getMaxHealthModifier() != 0) {
+      UtilEntity.setMaxHealthModifier(event.getEntityPlayer(), src.getMaxHealthModifier());
     }
   }
 }

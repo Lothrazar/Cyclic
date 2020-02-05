@@ -67,6 +67,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
 
   public enum BuildType {
+
     FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;
 
     public static BuildType getNextType(BuildType btype) {

@@ -157,21 +157,24 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
         // air
         && // and we landed at air or replaceable
         world.isAirBlock(hitUp) == true) {
-      setNewSnow(world, hitUp);
-    }
+          setNewSnow(world, hitUp);
+        }
   }
 
   public void onHitWater(RayTraceResult mop) {
     World world = getEntityWorld();
     BlockPos posWater = this.getPosition();
-    if (world.getBlockState(posWater) != Blocks.WATER.getDefaultState()) {
+    BlockPos mopPos = mop.getBlockPos();
+    if (mopPos != null && world.getBlockState(posWater) != Blocks.WATER.getDefaultState()) {
       posWater = null;// look for the closest water source, sometimes it was
       // air and we
       // got ice right above the water if we dont do this check
-      if (world.getBlockState(mop.getBlockPos()) == Blocks.WATER.getDefaultState())
-        posWater = mop.getBlockPos();
-      else if (world.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.WATER.getDefaultState())
-        posWater = mop.getBlockPos().offset(mop.sideHit);
+      if (world.getBlockState(mopPos) == Blocks.WATER.getDefaultState()) {
+        posWater = mopPos;
+      }
+      else if (world.getBlockState(mopPos.offset(mop.sideHit)) == Blocks.WATER.getDefaultState()) {
+        posWater = mopPos.offset(mop.sideHit);
+      }
     }
     if (posWater != null) {
       world.setBlockState(posWater, Blocks.ICE.getDefaultState());

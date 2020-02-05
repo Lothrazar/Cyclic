@@ -34,7 +34,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,6 +43,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -51,17 +51,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
+public class ItemEvokerFangs extends BaseTool implements IHasRecipe, IContent {
 
-  private static final String NBT_FANG_FROMPLAYER = "cyclicfang";
   private static final int COOLDOWN = 10;//ticks not seconds
   private static final int DURABILITY = 666;
   private static final int MAX_RANGE = 16;
 
-  public ItemFangs() {
+  public ItemEvokerFangs() {
     super(DURABILITY);
   }
 
@@ -94,19 +91,26 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return false;
     }
-    summonFangRay(player, entity.posX, entity.posY, entity.posZ);
+    summonFangRay(player.posX, player.posZ, player, entity.posX, entity.posY, entity.posZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return true;
   }
 
   @Override
-  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     if (player.getCooldownTracker().hasCooldown(this)) {
-      return EnumActionResult.PASS;
+      return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
-    summonFangRay(player, pos.getX() + hitX, pos.getY() + hitY + 1, pos.getZ() + hitZ);
+    summonFangRay(pos.getX(), pos.getZ(), player, pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ);
     UtilItemStack.damageItem(player, player.getHeldItem(hand));
     return EnumActionResult.SUCCESS;
+  }
+
+  @Override
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    BlockPos target = playerIn.getPosition().offset(playerIn.getAdjustedHorizontalFacing());
+    this.summonFangRay(playerIn.posX, playerIn.posZ, playerIn, target.getX(), target.getY(), target.getZ());
+    return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 
   /**
@@ -117,16 +121,16 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
    * @param posY
    * @param posZ
    */
-  private void summonFangRay(EntityPlayer caster, double posX, double posY, double posZ) {
-    double minY = Math.min(posY, caster.posY);
+  private void summonFangRay(double startX, double startZ, EntityPlayer caster, double posX, double posY, double posZ) {
+    double minY = posY;//Math.min(posY, caster.posY);
     //double d1 = Math.max(posY,caster.posY) ;
     float arctan = (float) MathHelper.atan2(posZ - caster.posZ, posX - caster.posX);
     for (int i = 0; i < MAX_RANGE; ++i) {
       double fract = 1.25D * (i + 1);
       this.summonFangSingle(caster,
-          caster.posX + MathHelper.cos(arctan) * fract,
+          startX + MathHelper.cos(arctan) * fract,
           minY,
-          caster.posZ + MathHelper.sin(arctan) * fract,
+          startZ + MathHelper.sin(arctan) * fract,
           arctan, i);
     }
     onCastSuccess(caster);
@@ -144,10 +148,12 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
    */
   private void summonFangSingle(EntityPlayer caster, double x, double y, double z, float yaw, int delay) {
     EntityEvokerFangs entityevokerfangs = new EntityEvokerFangs(caster.world, x, y, z, yaw, delay, caster);
-    caster.world.spawnEntity(entityevokerfangs);
+    if (caster.world.isRemote == false) {
+      caster.world.spawnEntity(entityevokerfangs);
+    }
     // so. WE are using this hack because the entity has a MAGIC NUMBER of 6.0F hardcoded in a few places deep inside methods and if statements
     //this number is the damage that it deals.  ( It should be a property )
-    UtilNBT.setEntityBoolean(entityevokerfangs, NBT_FANG_FROMPLAYER);
+    //    UtilNBT.setEntityBoolean(entityevokerfangs, NBT_FANG_FROMPLAYER);
   }
 
   private void onCastSuccess(EntityPlayer caster) {
@@ -166,15 +172,5 @@ public class ItemFangs extends BaseTool implements IHasRecipe, IContent {
         'c', Items.END_CRYSTAL,
         'p', Blocks.ICE, //ore dict ice doesnt exist
         'd', "gemEmerald");
-  }
-
-  @SubscribeEvent
-  public void onAttack(LivingHurtEvent event) {
-    //true source is player that was holding the fang item
-    //immediate source is the entity. and we check the boolean flag to make sure it was one of these, not from illager or some other spawn reason
-    if (event.getSource().getImmediateSource() instanceof EntityEvokerFangs
-        && UtilNBT.getEntityBoolean(event.getSource().getImmediateSource(), NBT_FANG_FROMPLAYER)) {
-      event.setAmount(event.getAmount() * 2);
-    }
   }
 }

@@ -53,6 +53,7 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private static final int TIMER_SIDE_INPUT = 15;
 
   public static enum LockType {
+
     FILTER, EVERYTHING, NOTHING;
 
     public String nameLower() {

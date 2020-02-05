@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.melter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
@@ -146,8 +145,6 @@ public class TileMelter extends TileEntityBaseMachineFluid implements ITileRedst
       if (fluidAllowed
           && current + incoming <= this.getCapacity()
           && currentRecipe.tryPayCost(this, this.recipeIsLocked == 1)) {
-        ModCyclic.logger.error(current + "/" + this.getCapacity());
-        ModCyclic.logger.error(fluidAllowed + " fluidAllowed");
         //only create the output if cost was successfully paid 
         FluidStack fluidStack = new FluidStack(currentRecipe.getFluidResult(), incoming);
         this.fill(fluidStack, true);

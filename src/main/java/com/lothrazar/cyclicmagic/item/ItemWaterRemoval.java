@@ -67,6 +67,7 @@ public class ItemWaterRemoval extends BaseTool implements IHasRecipe, IContent {
   private static final int RADIUS = 4;
 
   public static enum ActionType {
+
     WATER, LAVA, GENERIC;
 
     private final static String NBT = "ActionType";

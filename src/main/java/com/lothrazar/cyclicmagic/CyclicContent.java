@@ -78,7 +78,7 @@ import com.lothrazar.cyclicmagic.item.ItemCaveFinder;
 import com.lothrazar.cyclicmagic.item.ItemCraftingUnlock;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderWing;
-import com.lothrazar.cyclicmagic.item.ItemFangs;
+import com.lothrazar.cyclicmagic.item.ItemEvokerFangs;
 import com.lothrazar.cyclicmagic.item.ItemFireExtinguish;
 import com.lothrazar.cyclicmagic.item.ItemFlight;
 import com.lothrazar.cyclicmagic.item.ItemGemAmber;
@@ -152,6 +152,8 @@ public class CyclicContent {
   public static BlockDeHydrator dehydrator;
   public static BlockSolidifier solidifier;
   public static BlockMelter melter;
+  public static ItemInventoryUnlock invfood;
+  public static ItemCraftingUnlock invthing;
 
   public static void init() {
     content = new ArrayList<IContent>();
@@ -187,7 +189,7 @@ public class CyclicContent {
     content.add(new ItemLeverRemote());
     content.add(new ItemWarpSurface());
     content.add(new ItemRotateBlock());
-    content.add(new ItemFangs());
+    content.add(new ItemEvokerFangs());
     content.add(new ItemWaterSpreader());
     content.add(new ItemEnderEyeReuse());
     content.add(new ItemGloveClimb());
@@ -222,8 +224,6 @@ public class CyclicContent {
     content.add(new ItemProjectileSnow());
     content.add(new ItemWaterRemoval());
     content.add(new ItemAutoTorch());
-    content.add(new ItemInventoryUnlock());
-    content.add(new ItemCraftingUnlock());
     content.add(new ItemCharmAntidote());
     content.add(new ItemMagicMissile());
     content.add(new ItemCharmWater());
@@ -244,6 +244,10 @@ public class CyclicContent {
     content.add(new BlockMagnet());
     content.add(new BlockMagnetAnti());
     content.add(new BlockDoorbell());
+    invfood = new ItemInventoryUnlock();
+    content.add(invfood);
+    invthing = new ItemCraftingUnlock();
+    content.add(invthing);
     dehydrator = new BlockDeHydrator();
     content.add(dehydrator);
     content.add(new BlockVacuum());

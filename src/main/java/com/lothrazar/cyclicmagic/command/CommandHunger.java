@@ -23,58 +23,40 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.command;
 
-import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
-public class CommandHearts extends BaseCommand implements ICommand {
+public class CommandHunger extends BaseCommand {
 
-  public static final String name = "setheartmod";
+  public static final String name = "setfood";
 
-  public CommandHearts(boolean op) {
+  public CommandHunger(boolean op) {
     super(name, op);
     this.setUsernameIndex(0);
   }
 
   @Override
   public String getUsage(ICommandSender sender) {
-    return "/" + getName() + " <player> <heart modifier>";
+    return "/" + getName() + " <player> <foodlevel>";
   }
 
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-    EntityPlayer ptarget = null;
-    int heartModifier = 0;
+    EntityPlayer player = null;
     try {
-      ptarget = super.getPlayerByUsername(server, args[0]);
-      if (ptarget == null) {
+      player = super.getPlayerByUsername(server, args[0]);
+      int food = Integer.parseInt(args[1]);
+      if (player == null) {
         UtilChat.addChatMessage(sender, getUsage(sender));
         return;
       }
+      player.getFoodStats().setFoodLevel(food);
     }
     catch (Exception e) {
       UtilChat.addChatMessage(sender, getUsage(sender));
-      return;
     }
-    try {
-      heartModifier = Integer.parseInt(args[1]);
-    }
-    catch (Exception e) {
-      UtilChat.addChatMessage(sender, getUsage(sender));
-      return;
-    }
-    if (heartModifier < -9) {
-      heartModifier = -9;
-    }
-    int healthModifier = heartModifier * 2;
-    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(ptarget);
-    prop.setMaxHealthModifier(healthModifier);
-    UtilEntity.setMaxHealthModifier(ptarget, healthModifier);
   }
 }

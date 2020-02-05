@@ -62,6 +62,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   private static final String GUI_ID = "guiID";
 
   public static enum StoragePickupType {
+
     NOTHING, FILTER, EVERYTHING;
 
     private final static String NBT = "deposit";
@@ -94,6 +95,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
 
   public static enum StorageActionType {
+
     NOTHING, MERGE, DEPOSIT;
 
     private final static String NBT_OPEN = "isOpen";
@@ -207,12 +209,13 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       return;
     }
     ItemStack stackOnGround = event.getItem().getItem();
+    if (this.canPickup(stackOnGround) == false) {
+      return;
+    }
     //multiple bags held by player
     NonNullList<ItemStack> foundBags = this.findAmmoList(event.getEntityPlayer(), this);
     for (ItemStack stackIsBag : foundBags) {
       if (StorageActionType.getIsOpen(stackIsBag)) {
-        // 
-        ModCyclic.logger.log("is open skip ", stackIsBag);
         return;
       }
       int pickupType = ItemStorageBag.StoragePickupType.get(stackIsBag);
@@ -238,7 +241,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       InventoryStorage inventoryBag = new InventoryStorage(event.getEntityPlayer(), stackIsBag);
       NonNullList<ItemStack> onGround = NonNullList.create();
       onGround.add(stackOnGround);
-      ModCyclic.logger.log("Send onGround to bag " + stackOnGround);
       BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToIInventory(event.getEntity().world, inventoryBag, onGround, false);
       if (ret.stacks.get(0).isEmpty()) {
         /// we got everything 
@@ -251,6 +253,14 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       }
       break;
     }
+  }
+
+  /**
+   * not empty and not another bag
+   * 
+   */
+  private boolean canPickup(ItemStack stack) {
+    return !stack.isEmpty() && stack.getItem() != this;
   }
 
   @SubscribeEvent
@@ -296,7 +306,8 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     //    StorageActionType.setIsOpen(wand, true);
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.PLAYERS, 0.1F);
     if (!world.isRemote && wand.getItem() instanceof ItemStorageBag
-        && hand == EnumHand.MAIN_HAND) {
+        && hand == EnumHand.MAIN_HAND
+        && wand.getCount() == 1) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
       player.openGui(ModCyclic.instance, ForgeGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);

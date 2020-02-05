@@ -82,7 +82,7 @@ public class GuiUser extends GuiBaseContainer {
     this.addButton(yOffsetBtn);
     slider = new GuiSliderInteger(tile, btnId++,
         this.guiLeft + 28,
-        this.guiTop + 22, 122, 10, 1, TileEntityUser.MAX_SPEED,
+        this.guiTop + 22, 122, 10, TileEntityUser.MIN_SPEED, TileEntityUser.MAX_SPEED,
         Fields.SPEED.ordinal());
     slider.setTooltip("tile.block_user.speed.tooltip");
     this.addButton(slider);

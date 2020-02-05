@@ -165,13 +165,10 @@ public class ModCyclic {
   @EventHandler
   public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
     // https://tutorials.darkhax.net/tutorials/jar_signing/
-    String source = (event.getSource() == null) ? "" : event.getSource().getName() + " ";
-    String msg = "CYCLIC: Invalid fingerprint detected! The file " + source + "may have been tampered with. This version will NOT be supported by the author!";
-    if (logger == null) {
-      System.out.println(msg);
-    }
-    else {
-      ModCyclic.logger.error(msg);
+    if (logger != null) {
+      String source = (event.getSource() == null) ? "" : event.getSource().getName() + " ";
+      String msg = "CYCLIC: Invalid fingerprint detected! The file " + source + "may have been tampered with. This version will NOT be supported by the author!";
+      logger.log(msg);//use normal log so the logger config will hide it
     }
   }
 }

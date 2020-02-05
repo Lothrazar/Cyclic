@@ -111,6 +111,6 @@ public abstract class BaseItemRapidScepter extends BaseTool {
       world.spawnEntity(thing);
     }
     BlockPos pos = player.getPosition();
-    UtilSound.playSound(player, pos, getSound(), SoundCategory.PLAYERS);
+    UtilSound.playSound(player, pos, getSound(), SoundCategory.PLAYERS, 0.4F);
   }
 }

@@ -36,8 +36,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryStorage extends InventoryBase implements IInventory {
 
-  public static final int INV_SIZE = 7 * 11; //6*11
-  //  private ItemStack[] inv = new ItemStack[INV_SIZE];
+  public static final int INV_SIZE = 7 * 11;
   private final ItemStack internalBag;
   private EntityPlayer thePlayer;
 

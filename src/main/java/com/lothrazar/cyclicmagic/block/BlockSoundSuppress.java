@@ -107,9 +107,8 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe, IConten
       event.setResultSound(newSound);
     }
     catch (Exception e) {
-      ModCyclic.logger.error("Error trying to detect volume of sound from 3rd party ");
+      ModCyclic.logger.error("Error trying to detect volume of sound from 3rd party ", e);
       ModCyclic.logger.error(e.getMessage());
-      e.printStackTrace();//getVolume() in naive Positioned sound event gives NPE
     }
   }
 

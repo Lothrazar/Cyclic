@@ -98,6 +98,7 @@ public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent
   }
 
   private void setFlying(EntityPlayer player) {
+    //fall dist wolrld
     player.fallDistance = 0.0F;
     player.capabilities.allowFlying = true;
   }

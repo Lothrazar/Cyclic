@@ -31,6 +31,7 @@ import java.util.Map.Entry;
 import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
@@ -53,6 +54,7 @@ public class UtilHarvester {
   private static NonNullList<String> breakGetDrops;
   private static NonNullList<String> breakSilkTouch;
   private static NonNullList<String> blockIgnore;
+  private static NonNullList<String> blockIgnoreInternal;
   private static NonNullList<String> harvestReflectionRegrow;
   private static NonNullList<String> harvestGetDropsDeprecated;
   private static NonNullList<String> breakGetDropsDeprecated;
@@ -66,20 +68,28 @@ public class UtilHarvester {
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
     String[] deflist = new String[] {
-        "terraqueous:pergola", "minecraft:*_stem", "croparia:stem_*", "rustic:grape_stem"
+        "terraqueous:pergola", "minecraft:*_stem", "croparia:stem_*", "rustic:grape_stem",
     };
     String[] blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  A star is for a wildcard");
     //TODO: config it after its decided? maybe? maybe not?
     /* @formatter:off */
     blockIgnore = NonNullList.from("",
         blacklist);
+  internalStaticConfig();
+  }
+  
+  private static void internalStaticConfig() {
+    
     breakGetDrops = NonNullList.from("",
         "minecraft:pumpkin"
         , "croparia:block_plant_*"
         , "croparia:block_cane_*"
         ,"extrautils2:redorchid"
         );
-    
+    blockIgnoreInternal = NonNullList.from(""
+
+        ,"pizzacraft:corn_plant_bottom"
+        );
     breakSilkTouch = NonNullList.from(""
         ,"minecraft:melon_block"
         );
@@ -169,7 +179,8 @@ public class UtilHarvester {
   }
 
   private static boolean isIgnored(ResourceLocation blockId) {
-    return UtilString.isInList(blockIgnore, blockId);
+    return UtilString.isInList(blockIgnore, blockId)
+        || UtilString.isInList(blockIgnoreInternal, blockId);
   }
 
   private static boolean isBreakGetDrops(ResourceLocation blockId) {
@@ -225,14 +236,15 @@ public class UtilHarvester {
       }
       else if (modsThatDontUseAge.containsKey(blockId.toString()) &&
           iproperty.getName().equals(modsThatDontUseAge.get(blockId.toString())) && iproperty instanceof PropertyInteger) {
-        return (PropertyInteger) iproperty;
-      }
+            return (PropertyInteger) iproperty;
+          }
     }
     return null;
   }
 
   @SuppressWarnings("deprecation")
   public static NonNullList<ItemStack> harvestSingle(World world, BlockPos posCurrent) {
+    //
     final NonNullList<ItemStack> drops = NonNullList.create();
     if (world.isAirBlock(posCurrent)) {
       return drops;
@@ -268,8 +280,8 @@ public class UtilHarvester {
       return drops;
     }
     //boolean hasberry type of flag harvests
-    if (useBooleanProperty.containsKey(blockId)) {
-      String property = useBooleanProperty.get(blockId);
+    if (useBooleanProperty.containsKey(blockId.toString())) {
+      String property = useBooleanProperty.get(blockId.toString());
       PropertyBool propFlag = getBoolProperty(blockState, property);
       if (blockState.getValue(propFlag)) {
         blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
@@ -279,12 +291,19 @@ public class UtilHarvester {
         world.setBlockState(posCurrent, blockState.withProperty(propFlag, false));
       }
     }
+    PropertyInteger propInt = null;
     //age growth 
-    PropertyInteger propInt = getAgeProperty(blockState, blockId);
+    propInt = getAgeProperty(blockState, blockId);
     if (propInt != null) {
       int currentAge = blockState.getValue(propInt);
       int minAge = Collections.min(propInt.getAllowedValues());
       int maxAge = Collections.max(propInt.getAllowedValues());
+      //for custom overrides
+      if (blockCheck instanceof BlockCrops) {
+        BlockCrops crop = (BlockCrops) blockCheck;
+        maxAge = crop.getMaxAge();//broccoli used to say 7 but with this is 6
+      }
+      // ModCyclic.logger.log("[harvest] test " + blockId + "-" + propInt.getName() + minAge + "_" + maxAge + "CURRENT" + currentAge);
       if (harvestCustomMaxAge.containsKey(blockId.toString())) {
         maxAge = harvestCustomMaxAge.get(blockId.toString());
       }
@@ -294,7 +313,7 @@ public class UtilHarvester {
         return drops;
       }
       if (isHarvestReflectionRegrow(blockId)) {
-        //        ModCyclic.logger.log("[harvest] isHarvestReflectionRegrow " + blockId);
+        //        
         Object toDrop = UtilReflection.getFirstPrivate(blockCheck, ItemStack.class);
         if (toDrop != null) {
           ItemStack crop = (ItemStack) toDrop;

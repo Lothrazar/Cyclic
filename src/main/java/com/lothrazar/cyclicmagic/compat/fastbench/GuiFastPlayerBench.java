@@ -119,6 +119,7 @@ public class GuiFastPlayerBench extends GuiFastBench {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void drawActivePotionEffects() {
     int i = this.guiLeft - 124;
     int j = this.guiTop;

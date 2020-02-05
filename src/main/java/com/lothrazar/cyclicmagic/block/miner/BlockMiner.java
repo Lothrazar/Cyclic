@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.miner;
 
 import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
@@ -59,7 +60,15 @@ public class BlockMiner extends BlockBaseFacingOmni implements IHasRecipe, ICont
 
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    ((TileEntityBlockMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
+    try {
+      TileEntityBlockMiner tile = ((TileEntityBlockMiner) worldIn.getTileEntity(pos));
+      if (tile != null) {
+        tile.breakBlock(worldIn, pos, state);
+      }
+    }
+    catch (Exception e) {
+      ModCyclic.logger.info("Block miner: tile entity deleted before block breaking", e);
+    }
     super.breakBlock(worldIn, pos, state);
   }
 

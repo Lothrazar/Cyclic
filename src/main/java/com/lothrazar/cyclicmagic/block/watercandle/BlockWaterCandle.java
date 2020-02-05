@@ -108,10 +108,10 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     }
     else if (state.getValue(IS_LIT).booleanValue()
         && player.getHeldItem(hand).isEmpty()) {
-      //turn it off
-      world.setBlockState(pos, state.withProperty(IS_LIT, false));
-      UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
-    }
+          //turn it off
+          world.setBlockState(pos, state.withProperty(IS_LIT, false));
+          UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
+        }
     return false;
   }
 
@@ -155,7 +155,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
       afterSpawnFailure(world, posTarget);
     }
     else if (world.spawnEntity(monster)) {
-      ModCyclic.logger.info("[CANDLE] spawn " + monster.getName() + " - " + world.isAirBlock(posTarget) + posTarget);
+      ModCyclic.logger.log("[CANDLE] spawn " + monster.getName() + " - " + world.isAirBlock(posTarget) + posTarget);
       afterSpawnSuccess(monster, world, posTarget, rand);
     }
   }

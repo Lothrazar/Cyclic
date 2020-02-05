@@ -30,7 +30,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "rawtypes", "deprecation" })
 public class UtilReflection {
 
   public static Field getPrivateField(String name, String mapping, Class c) {

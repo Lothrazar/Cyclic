@@ -70,6 +70,7 @@ public class ItemPlayerLauncher extends BaseTool implements IHasRecipe, IContent
   private static final int TICKS_USING = 53000;//bow has 72000
 
   public enum ActionType {
+
     FORWARD, REVERSE;
 
     private final static String NBT = "ActionType";

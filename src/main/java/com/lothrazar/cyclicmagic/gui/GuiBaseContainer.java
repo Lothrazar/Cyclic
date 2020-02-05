@@ -512,7 +512,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
         if (fluid == null || fluid.amount == 0) {
           return;
         }
-        int fluidAmount = fluid.amount;
         x = wrap.getX() + 1;
         y = wrap.getY() + 1;
         this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);

@@ -149,6 +149,7 @@ public class ItemVillagerMagic extends BaseItem implements IHasRecipe, IContent 
     return super.itemInteractionForEntity(itemstack, player, entity, hand);
   }
 
+  @SuppressWarnings("deprecation")
   private void startConverting(EntityZombieVillager v, int t) {
     //      v.conversionTime = t;
     ObfuscationReflectionHelper.setPrivateValue(EntityZombieVillager.class, v, t, "conversionTime", "field_82234_d");

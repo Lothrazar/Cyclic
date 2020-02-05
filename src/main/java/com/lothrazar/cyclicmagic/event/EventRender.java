@@ -139,6 +139,7 @@ public class EventRender {
 
   //TODO: refactor this
   public static enum RenderLoc {
+
     TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT;
 
     private static final int yPadding = 6;

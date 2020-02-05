@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.data;
 import net.minecraft.util.EnumFacing;
 
 public enum QuadrantEnum {
+
   TL, TR, BL, BR;
 
   private static final float HALF = 0.5F;

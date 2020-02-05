@@ -92,10 +92,20 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       return;
     }
     //so now we do not burn fuel if timer is stuck at zero with no craft action
-    if (this.getEnergyCurrent() >= this.getEnergyCost() &&
-        this.isGridEmpty() == false) {
-      findRecipe();
-      if (recipe != null && !world.isRemote) {
+    if (this.getEnergyCurrent() >= this.getEnergyCost()
+        && !world.isRemote) {
+      ////////
+      //only call the expensive findRecipe() if and when the grid changes
+      //tracked using hashed summary
+      int currHash = calculateInventoryHash(SIZE_INPUT, SIZE_INPUT + SIZE_GRID);
+      if (currHash != lastInvHash
+          && this.isGridEmpty() == false) {
+        lastInvHash = currHash;
+        //ModCyclic.logger.log("hashchanged now go findrecipe" + lastInvHash);
+        findRecipe();
+      } // else ModCyclic.logger.log("hash is the same or grid empty"+lastInvHash);
+        //doesnt matter if recipe changed or not, see about processing
+      if (recipe != null) {
         ItemStack craftResult = recipe.getCraftingResult(this.crafter);
         if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
           if (tryPayCost()) {
@@ -105,6 +115,30 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
           }
         }
       }
+    }
+  }
+
+  private int lastInvHash = 0;
+
+  private void findRecipe() {
+    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
+    if (this.recipe != null && recipe.matches(crafter, world)) {
+      //recipe exists and it matches whats currently in the gui so stop now
+      return;
+    }
+    recipe = null;//doesnt match clear old recipe
+    try {
+      ModCyclic.logger.log("Auto-crafter Searching all recipes!! " + this.pos);
+      //but wait. only try to find a new recipe if contents have changed since last time
+      //
+      //
+      recipe = CraftingManager.findMatchingRecipe(crafter, world);
+      ModCyclic.logger.log("Recipe Found" + recipe);
+    }
+    catch (Exception err) {
+      // if some 3rd party recipe or item has an exception then dont let it crash the game
+      //example: i have seen NPEs. index out of bounds, no such element, 
+      ModCyclic.logger.error("Caught exception while querying recipe ", err);
     }
   }
 
@@ -200,24 +234,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       for (ItemStack s : toDrop) {
         UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
       }
-    }
-  }
-
-  private void findRecipe() {
-    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
-    if (this.recipe != null && recipe.matches(crafter, world)) {
-      //recipe exists and it matches whats currently in the gui so stop now
-      return;
-    }
-    recipe = null;//doesnt match
-    ModCyclic.logger.log("Auto-crafter Searching all recipes!! " + this.pos);
-    try {
-      recipe = CraftingManager.findMatchingRecipe(crafter, world);
-    }
-    catch (Exception err) {
-      // if some 3rd party recipe or item has an exception then dont let it crash the game
-      //example: i have seen NPEs. index out of bounds, no such element, 
-      ModCyclic.logger.error("Caught exception while querying recipe ", err);
     }
   }
 

@@ -67,6 +67,7 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
   }
 
   public enum ActionType {
+
     PUSH, PULL, ROTATE;
 
     private final static String NBT = "ActionType";
