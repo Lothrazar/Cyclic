@@ -17,6 +17,7 @@ import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.cable.energy.BlockCableEnergy;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
@@ -109,6 +110,10 @@ public class BlockRegistry {
     public static TileEntityType<TileBattery> batterytile;
     @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
     public static TileEntityType<TileCableEnergy> energy_pipeTile;
+    @ObjectHolder(ModCyclic.MODID + ":item_pipe")
+    public static TileEntityType<TileCableItem> item_pipeTile;
+    @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
+    public static TileEntityType<TileCableEnergy> fluid_pipeTile;
     @ObjectHolder(ModCyclic.MODID + ":collector")
     public static TileEntityType<TileCollector> collectortile;
     @ObjectHolder(ModCyclic.MODID + ":trash")
@@ -160,8 +165,8 @@ public class BlockRegistry {
     r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
     //      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large"));
     r.register(new BlockCableEnergy(Block.Properties.create(Material.WOOL)).setRegistryName("energy_pipe"));
-    //      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
-    //      r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
+    //    r.register(new BlockCableItem(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
+    //    r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
@@ -180,6 +185,8 @@ public class BlockRegistry {
     r.register(TileEntityType.Builder.create(TilePeatGenerator::new, BlockRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
     r.register(TileEntityType.Builder.create(TileBattery::new, BlockRegistry.battery).build(null).setRegistryName("battery"));
     r.register(TileEntityType.Builder.create(TileCableEnergy::new, BlockRegistry.energy_pipe).build(null).setRegistryName("energy_pipe"));
+    //    r.register(TileEntityType.Builder.create(TileCableItem::new, BlockRegistry.item_pipe).build(null).setRegistryName("item_pipe"));
+    //    r.register(TileEntityType.Builder.create(TileCableItem::new, BlockRegistry.fluid_pipe).build(null).setRegistryName("fluid_pipe"));
     r.register(TileEntityType.Builder.create(TileHarvester::new, BlockRegistry.harvester)
         .build(null).setRegistryName("harvester"));
   }

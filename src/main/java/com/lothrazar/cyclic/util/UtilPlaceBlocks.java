@@ -24,7 +24,7 @@ public class UtilPlaceBlocks {
     if (clickedBlock.isIn(BlockTags.SLABS)) {
       final String key = "type";//top or bottom
       final String valueDupe = "double";//actually theres 3 but dont worry about it
-      for (IProperty prop : clicked.getProperties()) {
+      for (IProperty<?> prop : clicked.getProperties()) {
         //yes
         if (prop.getName().equals(key)) {
           //then cycle me

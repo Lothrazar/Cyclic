@@ -54,7 +54,7 @@ public class EnchantExcavation extends EnchantBase {
 
   @Override
   public int getMaxLevel() {
-    return 3;
+    return 5;
   }
 
   int[] levelToMaxBreak = { 0, 8, 14, 36 };

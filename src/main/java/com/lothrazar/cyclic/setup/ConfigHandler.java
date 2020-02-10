@@ -26,13 +26,13 @@ public class ConfigHandler {
     return TOOLTIPS.get();
   }
 
-  public static void loadConfig(ForgeConfigSpec spec, Path path) {
+  public static void loadConfig(Path path) {
     final CommentedFileConfig configData = CommentedFileConfig.builder(path)
         .sync()
         .autosave()
         .writingMode(WritingMode.REPLACE)
         .build();
     configData.load();
-    spec.setConfig(configData);
+    COMMON_CONFIG.setConfig(configData);
   }
 }

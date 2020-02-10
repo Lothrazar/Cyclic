@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.base;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
@@ -9,6 +11,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityBase extends TileEntity {
 
@@ -45,6 +49,58 @@ public abstract class TileEntityBase extends TileEntity {
 
   public boolean requiresRedstone() {
     return this.needsRedstone == 1;
+  }
+
+  public void moveItems(Direction myFacingDir, int max) {
+    if (this.world.isRemote()) {
+      return;
+    }
+    IItemHandler handlerHere = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, myFacingDir).orElse(null);
+    if (handlerHere == null) {
+      return;
+    }
+    Direction themFacingMe = myFacingDir.getOpposite();
+    BlockPos posTarget = pos.offset(myFacingDir);
+    TileEntity tileTarget = world.getTileEntity(posTarget);
+    if (tileTarget == null) {
+      return;
+    }
+    IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
+    if (handlerOutput == null) {
+      return;
+    }
+    //    System.out.println("Bttery export " + myFacingDir);
+    if (handlerHere != null && handlerOutput != null
+    //        && handlerHere.canExtract() && handlerOutput.canReceive()
+    ) {
+      int SLOT = 0;
+      //first simulate 
+      ItemStack drain = handlerHere.getStackInSlot(SLOT).copy();
+      int sizeStarted = drain.getCount();
+      if (!drain.isEmpty()
+      //          && handlerOutput.getEnergyStored() + drain <= handlerOutput.getMaxEnergyStored()
+      ) {
+        //now push it into output, but find out what was ACTUALLY taken
+        for (int i = 0; i < handlerOutput.getSlots(); i++) {
+          drain = handlerOutput.insertItem(i, drain, false);
+          if (drain.isEmpty()) {
+            break;//done draining
+          }
+        }
+      }
+      //
+      int sizeAfter = sizeStarted - drain.getCount();
+      if (sizeAfter > 0) {
+        ModCyclic.LOGGER.info("moved some out " + sizeAfter);
+        handlerHere.extractItem(SLOT, sizeAfter, false);
+        ModCyclic.LOGGER.info("current after " + handlerHere.getStackInSlot(SLOT));
+        //flow direction
+        //        TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
+        //        if (cable.isItemPipe()) {
+        //          cable.updateIncomingItemFace(themFacingMe);
+        //        }
+      }
+    }
   }
 
   protected void moveEnergy(Direction myFacingDir, int quantity) {

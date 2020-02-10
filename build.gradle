@@ -175,7 +175,6 @@ publishing {
     }
 }
 
-
 task signJar(type: SignJar, dependsOn: jar) {
 
     project.logger.lifecycle('!Signing jar ' + jar.archivePath.getName());

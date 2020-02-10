@@ -132,8 +132,8 @@ public class ItemRegistry {
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("experience_food"));
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("experience_pylon"));
     r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("energy_pipe"));
-    //      r.register(new BlockItem(CyclicRegistry.item_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("item_pipe"));
-    //      r.register(new BlockItem(CyclicRegistry.fluid_pipe, new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("fluid_pipe"));
+    //    r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_pipe"));
+    //    r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fluid_pipe"));
     r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("glove_climb"));
     r.register(new BlockItem(BlockRegistry.fan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fan"));
     r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_generator"));
@@ -207,10 +207,10 @@ public class ItemRegistry {
     r.register(new AxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_axe"));
     r.register(new HoeItem(MaterialRegistry.ToolMats.NETHERBRICK, 0.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_hoe"));
     r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_shovel"));
-    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_snow"));
-    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_blaze"));
-    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_lightning"));
-    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("ender_dungeon"));
-    //    r.register(new Item(new Item.Properties().group(CyclicRegistry.itemGroup)).setRegistryName("sleeping_mat"));
+    //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("ender_snow"));
+    //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("ender_blaze"));
+    //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("ender_lightning"));
+    //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("ender_dungeon"));
+    //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("sleeping_mat"));
   }
 }

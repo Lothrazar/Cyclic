@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.cable.energy;
+package com.lothrazar.cyclic.block.cable.item;
 
 import java.util.List;
 import java.util.Map;
@@ -28,12 +28,12 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
-public class BlockCableEnergy extends BlockBase {
+public class BlockCableItem extends BlockBase {
 
-  public BlockCableEnergy(Properties properties) {
+  public BlockCableItem(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
   }
 
@@ -129,7 +129,7 @@ public class BlockCableEnergy extends BlockBase {
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileCableEnergy();
+    return new TileCableItem();
   }
 
   @Override
@@ -142,8 +142,8 @@ public class BlockCableEnergy extends BlockBase {
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
-      IEnergyStorage energy = facingTile == null ? null : facingTile.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-      if (energy != null) {
+      IItemHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.CABLE);
         worldIn.setBlockState(pos, stateIn);
       }
@@ -153,7 +153,7 @@ public class BlockCableEnergy extends BlockBase {
   @Override
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
-    if (isEnergy(stateIn, facing, facingState, world, currentPos, facingPos)) {
+    if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
       return stateIn.with(property, EnumConnectType.CABLE);
     }
     else {

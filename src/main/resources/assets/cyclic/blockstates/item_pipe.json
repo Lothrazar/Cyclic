@@ -1,0 +1,77 @@
+{
+    "__comment": "Copyright © InsomniaKitten 2017",
+    "multipart": [
+        {
+            "when": { "down": "none" },
+            "apply": { "model": "cyclic:block/cable_none_item", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "down": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "down": "cable" }, { "down": "inventory" } ] },
+            "apply": { "model": "cyclic:block/cable_side_item", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "up": "none" },
+            "apply": { "model": "cyclic:block/cable_none_item", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "up": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "up": "cable" }, { "up": "inventory" } ] },
+            "apply": { "model": "cyclic:block/cable_side_item", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "north": "none" },
+            "apply": { "model": "cyclic:block/cable_none_item" }
+        },
+        {
+            "when": { "north": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked" }
+        },
+        {
+            "when": { "OR": [ { "north": "cable" }, { "north": "inventory" } ] },
+            "apply": { "model": "cyclic:block/cable_side_item" }
+        },
+        {
+            "when": { "south": "none" },
+            "apply": { "model": "cyclic:block/cable_none_item", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "south": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "south": "cable" }, { "south": "inventory" } ] },
+            "apply": { "model": "cyclic:block/cable_side_item", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "west": "none" },
+            "apply": { "model": "cyclic:block/cable_none_item", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "west": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "west": "cable" }, { "west": "inventory" } ] },
+            "apply": { "model": "cyclic:block/cable_side_item", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "east": "none" },
+            "apply": { "model": "cyclic:block/cable_none_item", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "east": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "OR": [ { "east": "cable" }, { "east": "inventory" } ] },
+            "apply": { "model": "cyclic:block/cable_side_item", "y": 90, "uvlock": true }
+        }
+    ]
+}
