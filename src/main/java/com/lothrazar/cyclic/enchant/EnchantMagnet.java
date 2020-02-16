@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -51,6 +52,12 @@ public class EnchantMagnet extends EnchantBase {
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     LivingEntity entity = event.getEntityLiving();
+    if (entity instanceof PlayerEntity) {
+      PlayerEntity p = (PlayerEntity) entity;
+      if (p.isSpectator()) {
+        return;
+      }
+    }
     //Ticking
     int level = getLevelAll(entity);
     if (level > 0) {
