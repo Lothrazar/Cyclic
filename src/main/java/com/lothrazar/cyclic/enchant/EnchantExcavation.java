@@ -57,10 +57,11 @@ public class EnchantExcavation extends EnchantBase {
     return 5;
   }
 
-  int[] levelToMaxBreak = { 0, 8, 14, 36 };
+  int[] levelToMaxBreak = { 0, 8, 14, 36, 48, 60 };
 
   private int getHarvestMax(int level) {
-    return levelToMaxBreak[level];
+    int index = Math.max(level, levelToMaxBreak.length - 1);
+    return levelToMaxBreak[index];
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -120,8 +121,9 @@ public class EnchantExcavation extends EnchantBase {
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
       //damage but also respect the unbreaking chant
-      player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
-      //      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
+      if (world.rand.nextDouble() > 0.5) {
+        player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
+      }
       totalBroken++;
     }
     //AFTER we harvest the close ones only THEN we branch out
