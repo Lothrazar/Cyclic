@@ -116,7 +116,7 @@ public class ItemPotionContent implements IContent {
     }
     if (ItemPotionContent.enableBounce) {
       potionTypeBounce = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.BOUNCE, NORMAL), "bounce", Items.SLIME_BALL);
-      potionTypeSlowfall.setBase(potionEnder);
+      potionTypeBounce.setBase(potionEnder);
     }
     if (ItemPotionContent.enableFrostw) {
       potionTypeIce = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.FROSTW, NORMAL), "frostwalker", new ItemStack(Blocks.ICE));
