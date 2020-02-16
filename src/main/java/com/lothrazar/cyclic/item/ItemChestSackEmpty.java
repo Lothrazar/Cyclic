@@ -58,10 +58,7 @@ public class ItemChestSackEmpty extends ItemBase {
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
-    //
-    //    ItemStack stack = context.getItem();
     BlockPos pos = context.getPos();
-    //    Direction side = context.getFace();
     World world = context.getWorld();
     TileEntity tile = world.getTileEntity(pos);
     BlockState state = world.getBlockState(pos);
@@ -81,23 +78,6 @@ public class ItemChestSackEmpty extends ItemBase {
     }
     return ActionResultType.SUCCESS;
   }
-  //  @Override
-  //  public IRecipe addRecipe() {
-  //    RecipeRegistry.addShapedRecipe(new ItemStack(this),
-  //        " s ",
-  //        "lbl",
-  //        "lll",
-  //        'l', "leather",
-  //        'b', "slimeball",
-  //        's', "string");
-  //    return RecipeRegistry.addShapedRecipe(new ItemStack(this),
-  //        " s ",
-  //        "lbl",
-  //        "lll",
-  //        'l', "leather",
-  //        'b', new ItemStack(Items.APPLE),
-  //        's', "string");
-  //  }
 
   public static void gatherTileEntity(BlockPos position, PlayerEntity player, World world, TileEntity tile) {
     if (tile == null) {
@@ -119,7 +99,6 @@ public class ItemChestSackEmpty extends ItemBase {
     }
     if (held != null && held.getCount() > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
       if (held.getItem() instanceof ItemChestSackEmpty) {
-        //        if (CyclicRegistry.Items.tile_transporter != null) {
         if (!UtilPlaceBlocks.destroyBlock(world, position)) {
           //we failed to break the block
           // try to undo the break if we can
@@ -144,21 +123,4 @@ public class ItemChestSackEmpty extends ItemBase {
       }
     }
   }
-  //
-  //  @Override
-  //  public void syncConfig(Configuration config) {
-  //    String category = Const.ConfigCategory.modpackMisc;
-  //    String[] deflist = new String[] {
-  //        "extracells:fluidcrafter",
-  //        "extracells:ecbaseblock",
-  //        "extracells:fluidfiller",
-  //        "refinedstorage:disk_drive",
-  //        "parabox:parabox",
-  //        "immersivengineering:metal_device1"
-  //    };
-  //    String[] blacklist = config.getStringList("SackHoldingBlacklist",
-  //        category, deflist, "Containers that cannot be lifted up with the Empty Sack of Holding.  Use block id; for example minecraft:chest");
-  //    blacklistAll = NonNullList.from("",
-  //        blacklist);
-  //  }
 }

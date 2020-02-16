@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.IProperty;
 import net.minecraft.tags.BlockTags;
@@ -140,6 +141,7 @@ public class UtilPlaceBlocks {
   }
 
   public static boolean destroyBlock(World world, BlockPos pos) {
-    return world.destroyBlock(pos, false);
+    world.removeTileEntity(pos);
+    return world.setBlockState(pos, Blocks.AIR.getDefaultState());// world.destroyBlock(pos, false);
   }
 }

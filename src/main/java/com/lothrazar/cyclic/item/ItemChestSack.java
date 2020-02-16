@@ -56,7 +56,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemChestSack extends ItemBase {
 
-  public static final String name = "chest_sack";
   public static final String KEY_BLOCKID = "block";
   public static final String KEY_BLOCKTILE = "tile";
   public static final String KEY_BLOCKNAME = "blockname";
