@@ -18,7 +18,7 @@ version="${file.jarVersion}" #mandatory
  # A display name for the mod
 displayName="Cyclic" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://raw.githubusercontent.com/Lothrazar/cyclic/master/update.json" #optional
+updateJSONURL="https://raw.githubusercontent.com/Lothrazar/cyclic/trunk/1.15/update.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="http://minecraft.curseforge.com/projects/cyclic" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
