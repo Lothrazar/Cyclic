@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.base;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -27,6 +28,16 @@ public class ItemBase extends Item {
       }
     }
     return ItemStack.EMPTY;
+  }
+
+  public void tryRepairWith(ItemStack stackToRepair, PlayerEntity player, Item target) {
+    if (stackToRepair.isDamaged()) {
+      ItemStack torches = this.findAmmo(player, target);
+      if (!torches.isEmpty()) {
+        torches.shrink(1);
+        UtilItemStack.repairItem(stackToRepair);
+      }
+    }
   }
 
   @Override

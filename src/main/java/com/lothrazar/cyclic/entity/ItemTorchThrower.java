@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.entity;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,13 +20,7 @@ public class ItemTorchThrower extends ItemBase {
   public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
     if (entity instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) entity;
-      if (stack.isDamaged()) {
-        ItemStack torches = this.findAmmo(player, Blocks.TORCH.asItem());
-        if (!torches.isEmpty()) {
-          torches.shrink(1);
-          UtilItemStack.repairItem(stack);
-        }
-      }
+      tryRepairWith(stack, player, Blocks.TORCH.asItem());
     }
   }
 

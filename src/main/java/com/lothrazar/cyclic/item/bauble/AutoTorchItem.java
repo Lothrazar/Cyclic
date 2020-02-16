@@ -30,7 +30,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -49,7 +48,6 @@ public class AutoTorchItem extends ItemBase {
     }
     PlayerEntity player = (PlayerEntity) entityIn;
     BlockPos pos = entityIn.getPosition();
-    //    ModCyclic.LOGGER.info("world.getLight(pos)" + world.getLight(pos));
     if (world.getLight(pos) <= lightLimit
         //            && player.isSpectator() == false
         //            && world.isSideSolid(pos.down(), Direction.UP)
@@ -60,12 +58,8 @@ public class AutoTorchItem extends ItemBase {
         UtilItemStack.damageItem(stack);
       }
     }
-    else if (stack.isDamaged()) {
-      ItemStack torches = player.findAmmo(new ItemStack(Items.TORCH));
-      if (!torches.isEmpty()) {
-        torches.shrink(1);
-        UtilItemStack.repairItem(stack);
-      }
+    else {
+      tryRepairWith(stack, player, Blocks.TORCH.asItem());
     }
   }
 }
