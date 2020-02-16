@@ -106,9 +106,9 @@ public class ItemTorchThrower extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) entityIn;
+  public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    if (entity instanceof EntityPlayer) {
+      EntityPlayer player = (EntityPlayer) entity;
       if (stack.isItemDamaged()) {
         ItemStack torches = this.findAmmo(player, Item.getItemFromBlock(Blocks.TORCH));
         if (!torches.isEmpty()) {
