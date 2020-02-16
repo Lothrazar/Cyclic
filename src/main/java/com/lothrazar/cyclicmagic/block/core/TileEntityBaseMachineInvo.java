@@ -674,13 +674,16 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
 
   @Override
-  public boolean isRunning() {
-    if (this.hasEnergy) {
-      //fix energy power client desync. 
-      //without this. if power is coming in when redstone is toggled off, 
-      //the client power bar wont update
-      this.markDirty();
-    }
+  public boolean isRunning() {     
+    // if you change this be careful to test chunk updates  see
+    // https://github.com/Lothrazar/Cyclic/issues/1286
+  
+//    if (this.hasEnergy) {
+//      //fix energy power client desync. 
+//      //without this. if power is coming in when redstone is toggled off, 
+//      //the client power bar wont update
+//      this.markDirty();
+//    }
     return super.isRunning();
   }
 
