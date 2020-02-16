@@ -101,11 +101,11 @@ public class EnchantLaunch extends EnchantBase {
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
     PlayerEntity player = ModCyclic.proxy.getClientPlayer();
-    if (player.getRidingEntity() instanceof BoatEntity) {
+    if (player == null || player.getRidingEntity() instanceof BoatEntity) {
       return;
     }
     ItemStack feet = getFirstArmorStackWithEnchant(player);
-    if (feet == null || feet.isEmpty() || player.isCrouching()) {
+    if (feet.isEmpty() || player.isCrouching()) {
       return;
     } //sneak to not double jump
     if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) {
