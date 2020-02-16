@@ -160,12 +160,12 @@ public class EntityBoomerang extends EntityThrowableDispensable {
       else if (mop.entityHit instanceof EntityLivingBase) {
         float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
         mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
-        if (mop.entityHit instanceof EntityLivingBase) {
+//        if (mop.entityHit instanceof EntityLivingBase) {
           EntityLivingBase living = (EntityLivingBase) mop.entityHit;
           if (living.isPotionActive(PotionEffectRegistry.STUN) == false) {
             living.addPotionEffect(new PotionEffect(PotionEffectRegistry.STUN, STUN_TICKS, 1));
           }
-        }
+//        }
       }
       else {
         //some other non living non-item entity, dont care
