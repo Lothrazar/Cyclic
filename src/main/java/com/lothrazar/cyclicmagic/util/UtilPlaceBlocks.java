@@ -91,29 +91,27 @@ public class UtilPlaceBlocks {
       return false;
     }
     ItemBlock itemblock = (ItemBlock) stack.getItem();
-    if (world.isAirBlock(placePos)) {
-      Block block = itemblock.getBlock();
-      IBlockState state = null;
-      if (block.canPlaceBlockAt(world, placePos)) {
-        if (stack.getMetadata() > 0) {
-          //fixes blocks that dont override their own custom getStateForPlacement
-          //example; primal core without this removes metadata from wood planks, converting it
-          state = block.getStateFromMeta(stack.getMetadata());
-        }
-        else {
-          //it might not have metadata, and it might have some crazy own way of doing this (chisels&bits/NBT data)
-          EnumFacing facing = (fake == null) ? EnumFacing.UP : fake.getHorizontalFacing();
-          state = block.getStateForPlacement(world, placePos, facing,
-              placePos.getX() + .5f,
-              placePos.getY() + .5f,
-              placePos.getZ() + .5f,
-              stack.getMetadata(), fake, EnumHand.MAIN_HAND);
-        }
-        if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.UP, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
-          world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
-          stack.shrink(1);
-          return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;
-        }
+    Block block = itemblock.getBlock();
+    IBlockState state = null;
+    if (block.canPlaceBlockAt(world, placePos)) {
+      if (stack.getMetadata() > 0) {
+        //fixes blocks that dont override their own custom getStateForPlacement
+        //example; primal core without this removes metadata from wood planks, converting it
+        state = block.getStateFromMeta(stack.getMetadata());
+      }
+      else {
+        //it might not have metadata, and it might have some crazy own way of doing this (chisels&bits/NBT data)
+        EnumFacing facing = (fake == null) ? EnumFacing.UP : fake.getHorizontalFacing();
+        state = block.getStateForPlacement(world, placePos, facing,
+            placePos.getX() + .5f,
+            placePos.getY() + .5f,
+            placePos.getZ() + .5f,
+            stack.getMetadata(), fake, EnumHand.MAIN_HAND);
+      }
+      if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.UP, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
+        world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
+        stack.shrink(1);
+        return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;
       }
     }
     return false;

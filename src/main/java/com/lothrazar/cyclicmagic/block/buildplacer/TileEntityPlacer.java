@@ -38,6 +38,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -164,7 +165,10 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       if (stack.getItem() instanceof ItemBlock && fakePlayer != null) {
         UtilEntity.setEntityFacing(fakePlayer.get(), this.getCurrentFacing());
         try {
-          UtilPlaceBlocks.placeItemblock(world, pos.offset(this.getCurrentFacing()), stack, fakePlayer.get());
+          BlockPos placePos = pos.offset(this.getCurrentFacing());
+          if (world.isAirBlock(placePos)) {
+            UtilPlaceBlocks.placeItemblock(world, placePos, stack, fakePlayer.get());
+          }
         }
         catch (Throwable e) {
           ModCyclic.logger.error("Block could be not be placed : " + stack.getItem().getRegistryName(), e);

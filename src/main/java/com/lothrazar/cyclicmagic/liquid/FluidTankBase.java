@@ -51,6 +51,11 @@ public class FluidTankBase extends FluidTank {
     if (this.fluidAllowed != null && this.fluidAllowed != fluid.getFluid()) {
       return false;
     }
+    if (this.getFluid() != null &&
+        fluid.getFluid() != this.getFluid().getFluid()) {
+      //i have fluid already, and what you are sending does not match 
+      return false;
+    }
     //else either allowed is null, or they match
     return super.canFillFluidType(fluid);
   }

@@ -97,13 +97,17 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
     if (currentState.getMaterial().isLiquid()
         && this.updateEnergyIsBurning()) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
+  
       IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
       FluidStack fs = handle.getTankProperties()[0].getContents();
       if (fs == null || tank.canFillFluidType(fs) == false) {
+        //dont pull in water if i currently hold lava
         return;
       }
-      this.tank.fill(fs, true);
-      UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null);
+      //make sure that placing the block actually works to delete the in-world-fluid, BEFORE filling the tank
+      if (UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null)) {
+        this.tank.fill(fs, true);
+      }
     }
   }
 
