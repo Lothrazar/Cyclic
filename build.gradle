@@ -10,7 +10,6 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-
 version = "${mc_version}-${mod_version}"
 group = "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
@@ -21,7 +20,6 @@ compileJava {
 }
 
 minecraft {
-
 
     version = "${mc_version}-${forge_version}"
     mappings = "stable_39"
@@ -39,11 +37,6 @@ minecraft {
 }
 
 task signJar(type: SignJar, dependsOn: reobfJar) {
-
-    // Skips if the keyStore property is missing.
-    onlyIf {
-        project.hasProperty('keyStore')
-    }
 
     // findProperty allows us to reference the property without it existing. 
     // Using project.propName would cause the script to fail validation if 
