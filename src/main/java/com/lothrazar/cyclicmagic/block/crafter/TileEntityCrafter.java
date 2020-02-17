@@ -121,7 +121,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   private int lastInvHash = 0;
 
   private void findRecipe() {
-    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
+    setRecipeInput();//make sure the 3x3 inventory is linked to the crafter
     if (this.recipe != null && recipe.matches(crafter, world)) {
       //recipe exists and it matches whats currently in the gui so stop now
       return;
@@ -151,6 +151,10 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   }
 
   private boolean tryPayCost() {
+    //very important to setRecipeInput here, otherwise external mods putting in a recipe can sometimes cause dupes 
+    //such as JEI if used multiple times with the right inventory
+    setRecipeInput();//make sure the 3x3 inventory is linked to the crafter
+    //now paying cost is accurate
     List<Integer> toIgnore = new ArrayList<>();
     NonNullList<ItemStack> remaining = recipe.getRemainingItems(crafter);
     for (int i = 0; i < remaining.size(); i++) {
