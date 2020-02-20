@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.entity;
+package com.lothrazar.cyclic.item.torchthrow;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;

@@ -2,11 +2,12 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
-import com.lothrazar.cyclic.entity.EntityTorchBolt;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
+import com.lothrazar.cyclic.item.findspawner.EntityDungeonEye;
+import com.lothrazar.cyclic.item.torchthrow.EntityTorchBolt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.EntityClassification;
@@ -24,6 +25,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityRegistry {
 
+  @ObjectHolder(ModCyclic.MODID + ":dungeon")
+  public static EntityType<EntityDungeonEye> dungeon;
   @ObjectHolder(ModCyclic.MODID + ":magic_net")
   public static EntityType<EntityMagicNetEmpty> netball;
   @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
@@ -59,6 +62,7 @@ public class EntityRegistry {
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_damage, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.netball, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dungeon, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
 
   @SubscribeEvent
@@ -104,5 +108,13 @@ public class EntityRegistry {
             .size(.6f, .6f)
             .build("boomerang_damage")
             .setRegistryName("boomerang_damage"));
+    r.register(
+        EntityType.Builder.<EntityDungeonEye> create(EntityDungeonEye::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("dungeon")
+            .setRegistryName("dungeon"));
   }
 }

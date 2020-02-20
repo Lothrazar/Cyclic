@@ -131,4 +131,41 @@ public class UtilWorld {
     //        worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
     //        worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
   }
+
+  public static BlockPos findClosestBlock(PlayerEntity player, Block blockHunt, int RADIUS) {
+    BlockPos found = null;
+    int xMin = (int) player.getPosX() - RADIUS;
+    int xMax = (int) player.getPosX() + RADIUS;
+    int yMin = (int) player.getPosY() - RADIUS;
+    int yMax = (int) player.getPosY() + RADIUS;
+    int zMin = (int) player.getPosZ() - RADIUS;
+    int zMax = (int) player.getPosZ() + RADIUS;
+    int distance = 0, distanceClosest = RADIUS * RADIUS;
+    BlockPos posCurrent = null;
+    World world = player.getEntityWorld();
+    for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
+      for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
+        for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+          posCurrent = new BlockPos(xLoop, yLoop, zLoop);
+          if (world.isAreaLoaded(posCurrent, 1) == false) {
+            continue;
+          }
+          if (world.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
+            // find closest?
+            if (found == null) {
+              found = posCurrent;
+            }
+            else {
+              distance = (int) distanceBetweenHorizontal(player.getPosition(), posCurrent);
+              if (distance < distanceClosest) {
+                found = posCurrent;
+                distanceClosest = distance;
+              }
+            }
+          }
+        }
+      }
+    }
+    return found;
+  }
 }

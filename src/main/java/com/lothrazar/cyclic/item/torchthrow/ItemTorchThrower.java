@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.entity;
+package com.lothrazar.cyclic.item.torchthrow;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.ItemBase;
