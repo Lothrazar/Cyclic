@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "wsw",
+    "dpd",
+    "wsw"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:nether_wart"
+    },
+    "s": {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    "p": {
+      "item": "minecraft:ender_pearl"
+    },
+    "d": {
+      "item": "minecraft:purple_dye"
+    }
+  },
+  "result": {
+    "item": "cyclic:ender_dungeon",
+    "count": 8
+  }
+}

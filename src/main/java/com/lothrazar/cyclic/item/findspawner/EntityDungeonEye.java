@@ -2,14 +2,12 @@ package com.lothrazar.cyclic.item.findspawner;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -68,7 +66,7 @@ public class EntityDungeonEye extends ProjectileItemEntity {
       //when thread is done, it will make me unlost, or remove me
       return;
     }
-    UtilParticle.spawnParticle(world, ParticleTypes.DRAGON_BREATH, this.getPosition(), 1);
+    //  UtilParticle.spawnParticle(world, ParticleTypes.DRAGON_BREATH, this.getPosition(), 1);
     if (!this.world.isRemote) {
       double posX = this.getPosX();
       double posY = this.getPosY();
