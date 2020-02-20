@@ -74,6 +74,7 @@ public class ItemSleepingMat extends ItemBase {
       }
     }
     player.startSleeping(at);
+    player.getPersistentData().putBoolean("cyclic_sleeping", true);
     //    tthis.sleepTimer = 0;
     ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "field_71076_b");
     if (player.world instanceof ServerWorld) {
