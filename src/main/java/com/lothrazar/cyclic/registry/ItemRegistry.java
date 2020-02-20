@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemChestSack;
 import com.lothrazar.cyclic.item.ItemChestSackEmpty;
+import com.lothrazar.cyclic.item.ItemSleepingMat;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmAntidote;
@@ -214,6 +215,6 @@ public class ItemRegistry {
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_blaze"));
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_lightning"));
     r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_dungeon"));
-    //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat")); 
+    r.register(new ItemSleepingMat(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
   }
 }
