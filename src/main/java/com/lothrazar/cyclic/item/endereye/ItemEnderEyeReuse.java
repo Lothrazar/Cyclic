@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.tool;
+package com.lothrazar.cyclic.item.endereye;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -6,7 +6,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.item.EyeOfEnderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.EnderEyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
@@ -18,9 +17,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class EnderEyeReuse extends ItemBase {
+public class ItemEnderEyeReuse extends ItemBase {
 
-  public EnderEyeReuse(Properties properties) {
+  public ItemEnderEyeReuse(Properties properties) {
     super(properties.maxDamage(256));
   }
 
@@ -28,8 +27,6 @@ public class EnderEyeReuse extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
     ItemStack stack = player.getHeldItem(hand);
     if (!worldIn.isRemote) {
-      EnderEyeItem x;
-      //      BlockPos blockpos = worldIn.getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(playerIn), 100, false);
       BlockPos blockpos = ((ServerWorld) worldIn).getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(player), 100, false);
       if (blockpos != null) {
         double posX = player.getPosX();

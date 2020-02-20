@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.tool;
+package com.lothrazar.cyclic.item.enderpearl;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;

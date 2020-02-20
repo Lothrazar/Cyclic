@@ -21,6 +21,9 @@ import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
+import com.lothrazar.cyclic.item.endereye.ItemEnderEyeReuse;
+import com.lothrazar.cyclic.item.enderpearl.EnderPearlMount;
+import com.lothrazar.cyclic.item.enderpearl.EnderPearlReuse;
 import com.lothrazar.cyclic.item.horse.ItemHorseEmeraldJump;
 import com.lothrazar.cyclic.item.horse.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.horse.ItemHorseLapisVariant;
@@ -30,9 +33,6 @@ import com.lothrazar.cyclic.item.scythe.ScytheBrush;
 import com.lothrazar.cyclic.item.scythe.ScytheForage;
 import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
 import com.lothrazar.cyclic.item.tool.EnderBagItem;
-import com.lothrazar.cyclic.item.tool.EnderEyeReuse;
-import com.lothrazar.cyclic.item.tool.EnderPearlMount;
-import com.lothrazar.cyclic.item.tool.EnderPearlReuse;
 import com.lothrazar.cyclic.item.tool.EnderWingItem;
 import com.lothrazar.cyclic.item.tool.EnderWingSp;
 import com.lothrazar.cyclic.item.tool.EvokerFangItem;
@@ -161,7 +161,7 @@ public class ItemRegistry {
     r.register(new EvokerFangItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("evoker_fang"));
     r.register(new EnderPearlReuse(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
     r.register(new EnderPearlMount(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
-    r.register(new EnderEyeReuse(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_eye_reuse"));
+    r.register(new ItemEnderEyeReuse(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_eye_reuse"));
     r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_stun"));
     r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_carry"));
     r.register(new BoomerangItem(Boomer.DAMAGE, new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_damage"));
@@ -211,6 +211,6 @@ public class ItemRegistry {
     //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("ender_blaze"));
     //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("ender_lightning"));
     //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("ender_dungeon"));
-    //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("sleeping_mat"));
+    //    r.register(new Item(new Item.Properties().group(BlockRegistry.itemGroup)).setRegistryName("sleeping_mat")); 
   }
 }
