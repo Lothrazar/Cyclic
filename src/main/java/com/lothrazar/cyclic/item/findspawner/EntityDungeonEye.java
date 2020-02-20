@@ -1,16 +1,20 @@
 package com.lothrazar.cyclic.item.findspawner;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EntityDungeonEye extends ProjectileItemEntity {
 
@@ -55,17 +59,16 @@ public class EntityDungeonEye extends ProjectileItemEntity {
     this.targetY = pos.getY();
     this.targetZ = pos.getZ();
     this.isLost = false;
-    //    this.shoot(this.targetX, this.targetY, this.targetZ, (this.getGravityVelocity()), 0.01F);
+    this.shoot(this.targetX, this.targetY, this.targetZ, (this.getGravityVelocity()), 0.01F);
   }
 
   @Override
   public void tick() {
-    boolean STOP = true;
-    if (isLost || STOP) {
-      System.out.println("TICKING with distLine distLine" + this.getPosition());
+    if (isLost) {
       //when thread is done, it will make me unlost, or remove me
       return;
     }
+    UtilParticle.spawnParticle(world, ParticleTypes.DRAGON_BREATH, this.getPosition(), 1);
     if (!this.world.isRemote) {
       double posX = this.getPosX();
       double posY = this.getPosY();
@@ -90,8 +93,7 @@ public class EntityDungeonEye extends ProjectileItemEntity {
       double horizFactor = f + (distance - f) * HORIZ;
       if (distLine < 1.0F) {
         horizFactor *= 0.8D;
-        //        this.motionY *= 0.8D;
-        System.out.println("remove with distLine distLine" + distLine);
+        //        this.motionY *= 0.8D; 
         this.remove();
       }
       motionX = Math.cos(atan) * horizFactor;
@@ -144,11 +146,9 @@ public class EntityDungeonEye extends ProjectileItemEntity {
       motionY /= speedVReduction;
       motionZ /= speedHReduction;
       if (this.ticksExisted > 9999) {
-        System.out.println("ticksExisted so delete" + ticksExisted);
         this.remove();
       }
       if (motionX == 0 && motionY == 0 && motionZ == 0) {
-        System.out.println("remove with zero motion");
         this.remove();
       }
       this.setMotion(motionX, motionY, motionZ);
@@ -162,9 +162,13 @@ public class EntityDungeonEye extends ProjectileItemEntity {
   }
 
   @Override
+  public IPacket<?> createSpawnPacket() {
+    return NetworkHooks.getEntitySpawningPacket(this);
+  }
+
+  @Override
   protected Item getDefaultItem() {
-    // TODO Auto-generated method stub
-    return Items.REDSTONE_TORCH;
+    return ItemRegistry.ender_dungeon;
   }
 
   @Override

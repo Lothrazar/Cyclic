@@ -13,11 +13,10 @@ import net.minecraft.world.World;
 
 public class ItemProjectileDungeon extends ItemBase {
 
-  private static final int COOLDOWN = 10;
-  private static int DUNGEONRADIUS = 64;
+  private static final int DUNGEONRADIUS = 64;
 
   public ItemProjectileDungeon(Properties properties) {
-    super(properties.maxStackSize(1));
+    super(properties);
   }
 
   @Override
@@ -26,9 +25,7 @@ public class ItemProjectileDungeon extends ItemBase {
     //    if (!world.isRemote) {
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
     ball.shoot(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
-    player.getHeldItem(hand).damageItem(1, player, (p) -> {
-      p.sendBreakAnimation(hand);
-    });
+    stack.shrink(1);
     world.addEntity(ball);
     Runnable runnable = new Runnable() {
 
@@ -39,7 +36,6 @@ public class ItemProjectileDungeon extends ItemBase {
     };
     Thread thread = new Thread(runnable);
     thread.start(); // starts thread in background.
-    //    }
     return super.onItemRightClick(world, player, hand);
   }
 
@@ -49,11 +45,11 @@ public class ItemProjectileDungeon extends ItemBase {
     }
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.SPAWNER, DUNGEONRADIUS);
     if (blockpos == null) {
-      //      entityendereye.remove();
-      UtilChat.sendStatusMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
+      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
+      entityendereye.remove();
     }
     else {
-      UtilChat.sendStatusMessage(player, UtilChat.lang("item.ender_dungeon.found") + " " + DUNGEONRADIUS);
+      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.ender_dungeon.found"));
       entityendereye.moveTowards(blockpos);
     }
   }

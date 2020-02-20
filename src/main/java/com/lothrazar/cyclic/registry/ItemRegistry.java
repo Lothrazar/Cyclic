@@ -62,6 +62,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  @ObjectHolder(ModCyclic.MODID + ":ender_dungeon")
+  public static Item ender_dungeon;
   @ObjectHolder(ModCyclic.MODID + ":gem_obsidian")
   public static Item gem_obsidian;
   @ObjectHolder(ModCyclic.MODID + ":lapis_carrot_variant")
