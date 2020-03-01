@@ -62,6 +62,7 @@ public class TileTransporterEmptyItem extends ItemBase {
     World world = context.getWorld();
     TileEntity tile = world.getTileEntity(pos);
     BlockState state = world.getBlockState(pos);
+    //    ModCyclic.log("hardness" + state.getPlayerRelativeBlockHardness(player, world, pos));  
     if (state == null || tile == null || state.getBlock() == null
         || state.getBlock().getRegistryName() == null) {//so it works on EXU2 machines  || tile instanceof IInventory == false
       UtilChat.sendStatusMessage(player, "chest_sack.error.null");
@@ -79,11 +80,15 @@ public class TileTransporterEmptyItem extends ItemBase {
     return ActionResultType.SUCCESS;
   }
 
-  public static void gatherTileEntity(BlockPos position, PlayerEntity player, World world, TileEntity tile) {
+  public static void gatherTileEntity(BlockPos pos, PlayerEntity player, World world, TileEntity tile) {
     if (tile == null) {
       return;
     } //was block destroyed before this packet and/or thread resolved? server desync? who knows https://github.com/PrinceOfAmber/Cyclic/issues/487
-    BlockState state = world.getBlockState(position);
+    BlockState state = world.getBlockState(pos);
+    //bedrock returns ZERO for this hardness 
+    if (state.getPlayerRelativeBlockHardness(player, world, pos) <= 0) {
+      return;
+    }
     CompoundNBT tileData = new CompoundNBT(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
     tile.write(tileData);
     CompoundNBT itemData = new CompoundNBT();
@@ -99,11 +104,11 @@ public class TileTransporterEmptyItem extends ItemBase {
     }
     if (held != null && held.getCount() > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
       if (held.getItem() instanceof TileTransporterEmptyItem) {
-        if (!UtilPlaceBlocks.destroyBlock(world, position)) {
+        if (!UtilPlaceBlocks.destroyBlock(world, pos)) {
           //we failed to break the block
           // try to undo the break if we can
           UtilChat.sendStatusMessage(player, "chest_sack.error.pickup");
-          world.setBlockState(position, state);
+          world.setBlockState(pos, state);
           return;// and dont drop the full item stack or shrink the empty just end
           //TileEntity tileCopy = world.getTileEntity(position);
           //  if (tileCopy != null) {

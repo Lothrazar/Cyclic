@@ -45,11 +45,11 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
   }
 
-  public static void error(Object... list) {
-    LOGGER.error(list);
+  public static void error(String s, Object... list) {
+    LOGGER.error(s, list);
   }
 
-  public static void log(Object... list) {
-    LOGGER.info(list);
+  public static void log(String s, Object... list) {
+    LOGGER.info(s, list);
   }
 }
