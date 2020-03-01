@@ -108,7 +108,7 @@ public class LeverRemote extends ItemBase {
       blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.get(LeverBlock.POWERED).booleanValue();
       UtilWorld.toggleLeverPowerState(world, blockPos, blockState);
-      UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".powered." + hasPowerHere);
+      UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".powered." + (!hasPowerHere));
       //      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       //      UtilEntity.setCooldownItem(player, this, COOLDOWN);
       return true;
