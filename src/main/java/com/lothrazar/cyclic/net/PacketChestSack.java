@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.ItemChestSackEmpty;
+import com.lothrazar.cyclic.item.TileTransporterEmptyItem;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -56,7 +56,7 @@ public class PacketChestSack {
       BlockPos position = message.pos;
       World world = player.getEntityWorld();
       TileEntity tile = world.getTileEntity(position);
-      ItemChestSackEmpty.gatherTileEntity(position, player, world, tile);
+      TileTransporterEmptyItem.gatherTileEntity(position, player, world, tile);
     });
   }
 }

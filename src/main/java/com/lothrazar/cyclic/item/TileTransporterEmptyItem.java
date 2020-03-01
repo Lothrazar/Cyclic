@@ -47,11 +47,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemChestSackEmpty extends ItemBase {
+public class TileTransporterEmptyItem extends ItemBase {
 
   private static List<String> blacklistAll;
 
-  public ItemChestSackEmpty(Properties prop) {
+  public TileTransporterEmptyItem(Properties prop) {
     super(prop);
   }
 
@@ -87,18 +87,18 @@ public class ItemChestSackEmpty extends ItemBase {
     CompoundNBT tileData = new CompoundNBT(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
     tile.write(tileData);
     CompoundNBT itemData = new CompoundNBT();
-    itemData.putString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getTranslationKey());
-    itemData.put(ItemChestSack.KEY_BLOCKTILE, tileData);
-    itemData.putString(ItemChestSack.KEY_BLOCKID, state.getBlock().getRegistryName().toString());
-    itemData.put(ItemChestSack.KEY_BLOCKSTATE, NBTUtil.writeBlockState(state));
+    itemData.putString(TileTransporterItem.KEY_BLOCKNAME, state.getBlock().getTranslationKey());
+    itemData.put(TileTransporterItem.KEY_BLOCKTILE, tileData);
+    itemData.putString(TileTransporterItem.KEY_BLOCKID, state.getBlock().getRegistryName().toString());
+    itemData.put(TileTransporterItem.KEY_BLOCKSTATE, NBTUtil.writeBlockState(state));
     Hand hand = Hand.MAIN_HAND;
     ItemStack held = player.getHeldItem(hand);
-    if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {
+    if (held == null || held.getItem() instanceof TileTransporterEmptyItem == false) {
       hand = Hand.OFF_HAND;
       held = player.getHeldItem(hand);
     }
     if (held != null && held.getCount() > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
-      if (held.getItem() instanceof ItemChestSackEmpty) {
+      if (held.getItem() instanceof TileTransporterEmptyItem) {
         if (!UtilPlaceBlocks.destroyBlock(world, position)) {
           //we failed to break the block
           // try to undo the break if we can

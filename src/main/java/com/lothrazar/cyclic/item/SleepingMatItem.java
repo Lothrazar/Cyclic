@@ -15,9 +15,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
-public class ItemSleepingMat extends ItemBase {
+public class SleepingMatItem extends ItemBase {
 
-  public ItemSleepingMat(Properties properties) {
+  public SleepingMatItem(Properties properties) {
     super(properties);
   }
 

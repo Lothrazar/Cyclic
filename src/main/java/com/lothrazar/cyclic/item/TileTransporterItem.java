@@ -54,14 +54,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemChestSack extends ItemBase {
+public class TileTransporterItem extends ItemBase {
 
   public static final String KEY_BLOCKID = "block";
   public static final String KEY_BLOCKTILE = "tile";
   public static final String KEY_BLOCKNAME = "blockname";
   public static final String KEY_BLOCKSTATE = "blockstate";
 
-  public ItemChestSack(Properties prop) {
+  public TileTransporterItem(Properties prop) {
     super(prop);
   }
 
@@ -109,7 +109,7 @@ public class ItemChestSack extends ItemBase {
       world.setBlockState(pos, toPlace);
       TileEntity tile = world.getTileEntity(pos);
       if (tile != null) {
-        CompoundNBT tileData = itemData.getCompound(ItemChestSack.KEY_BLOCKTILE);
+        CompoundNBT tileData = itemData.getCompound(TileTransporterItem.KEY_BLOCKTILE);
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());

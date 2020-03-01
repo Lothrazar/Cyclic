@@ -11,9 +11,9 @@ import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.IceWand;
-import com.lothrazar.cyclic.item.ItemChestSack;
-import com.lothrazar.cyclic.item.ItemChestSackEmpty;
-import com.lothrazar.cyclic.item.ItemSleepingMat;
+import com.lothrazar.cyclic.item.TileTransporterItem;
+import com.lothrazar.cyclic.item.TileTransporterEmptyItem;
+import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MattockItem;
 import com.lothrazar.cyclic.item.PeatItem;
@@ -173,9 +173,9 @@ public class ItemRegistry {
     r.register(new ItemMagicNet(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("magic_net"));
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1)).setRegistryName("mob_container"));
     r.register(new ItemTorchThrower(new Item.Properties().maxStackSize(1).maxDamage(256).group(MaterialRegistry.itemGroup)).setRegistryName("torch_launcher"));
-    r.register(new ItemChestSackEmpty(new Item.Properties().group(MaterialRegistry.itemGroup))
+    r.register(new TileTransporterEmptyItem(new Item.Properties().group(MaterialRegistry.itemGroup))
         .setRegistryName("tile_transporter_empty"));
-    r.register(new ItemChestSack(new Item.Properties()).setRegistryName("tile_transporter"));
+    r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ItemHorseHealthDiamondCarrot(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("diamond_carrot_health"));
     r.register(new ItemHorseRedstoneSpeed(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("redstone_carrot_speed"));
     r.register(new ItemHorseEmeraldJump(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_carrot_jump"));
@@ -215,6 +215,6 @@ public class ItemRegistry {
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_blaze"));
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_lightning"));
     r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("spawner_seeker"));
-    r.register(new ItemSleepingMat(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
+    r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
   }
 }
