@@ -105,7 +105,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         findRecipe();
       } // else ModCyclic.logger.log("hash is the same or grid empty"+lastInvHash);
         //doesnt matter if recipe changed or not, see about processing
-      if (recipe != null) {
+      if (recipe != null&&!this.isGridEmpty() ) {
         ItemStack craftResult = recipe.getCraftingResult(this.crafter);
         if (this.inventoryHasRoom(SIZE_INPUT + SIZE_GRID, craftResult)) {
           if (tryPayCost()) {
@@ -145,7 +145,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   private void setRecipeInput() {
     int gridStart = SIZE_INPUT, craftSlot;
     for (int i = gridStart; i < gridStart + SIZE_GRID; i++) {
-      craftSlot = i - gridStart;
+      craftSlot = i - gridStart; 
       this.crafter.setInventorySlotContents(craftSlot, this.getStackInSlot(i));
     }
   }
