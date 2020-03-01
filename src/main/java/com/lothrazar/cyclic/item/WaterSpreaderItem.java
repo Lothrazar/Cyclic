@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item.tool;
+package com.lothrazar.cyclic.item;
 
-import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,15 +35,14 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class IceWand extends ItemBase {
+public class WaterSpreaderItem extends ItemBase {
 
-  public IceWand(Properties properties) {
+  public WaterSpreaderItem(Properties properties) {
     super(properties);
-    // TODO Auto-generated constructor stub
   }
 
-  private static final int DURABILITY = 256;
-  private static final int RADIUS = 2;
+  private static final int COOLDOWN = 28;
+  private static final int RADIUS = 3;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -55,12 +54,10 @@ public class IceWand extends ItemBase {
     if (side != null) {
       pos = pos.offset(side);
     }
-    if (spreadWaterFromCenter(context.getWorld(), pos.offset(side))) {
-      //      super.onUse(stack, player, world, hand);
-    }
+    spreadWaterFromCenter(context.getWorld(), player, pos);
     return super.onItemUse(context);
   }
-
+  //
   //  @Override
   //  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
   //    ItemStack stack = player.getHeldItem(hand);
@@ -70,40 +67,41 @@ public class IceWand extends ItemBase {
   //    if (side != null) {
   //      pos = pos.offset(side);
   //    }
-  //    if (spreadWaterFromCenter(world, pos.offset(side))) {
+  //    if (spreadWaterFromCenter(world, player, pos))
   //      super.onUse(stack, player, world, hand);
-  //    }
   //    return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
   //  }
   //
   //  @Override
   //  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
   //    ItemStack stack = player.getHeldItem(hand);
-  //    if (spreadWaterFromCenter(world, player.getPosition().offset(player.getHorizontalFacing()))) {
-  //      super.onUse(stack, player, world, hand); //player.getCooldownTracker().setCooldown(this, COOLDOWN);
-  //    }
+  //    if (spreadWaterFromCenter(world, player, player.getPosition()))
+  //      super.onUse(stack, player, world, hand);
   //    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   //  }
-  //
-  private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
+
+  private boolean spreadWaterFromCenter(World world, PlayerEntity player, BlockPos posCenter) {
     int count = 0;
-    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
-    //    water.addAll(UtilWorld.findBlocks(world, posCenter, Blocks.WATER_FLOWING, RADIUS));
-    for (BlockPos pos : water) {
-      //      System.out.println("Itemicewand " + world.getBlockState(pos).getFluidState());
-      if (world.getBlockState(pos).getFluidState() != null &&
-          world.getBlockState(pos).getFluidState().getFluidState() != null &&
-          world.getBlockState(pos).getFluidState().getFluidState().getLevel() >= 8) {
-        world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
+    for (BlockPos pos : UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS)) {
+      if (world.hasWater(pos)) {
+        world.setBlockState(pos, Blocks.WATER.getDefaultState());
       }
-      //       world.markChunkDirty(pos, null);
+      //      world.setBlockState(pos, world.getBlockState(pos)
+      //          .with(WaterBlock.LEVEL, 0)); // , state.withProperty(LEVEL, 0)
+      //instead of just setBlockState, get the correct state for max level and for this fluid material, then schedule a tick update.
+      //      //this way, it sends correct block update and avoids 'stuck' water that doesnt flow
+      //      BlockDynamicLiquid blockdynamicliquid = BlockLiquid.getFlowingBlock(Material.WATER);
+      //      IBlockState state = blockdynamicliquid.getDefaultState();
+      //      world.setBlockState(pos, blockdynamicliquid.getDefaultState().withProperty(BlockLiquid.LEVEL, state.getValue(BlockLiquid.LEVEL)), 2);
+      //      world.scheduleUpdate(pos, blockdynamicliquid, blockdynamicliquid.tickRate(world));
       //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
       //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
       count++;
     }
     boolean success = count > 0;
     if (success) {//particles are on each location, sound is just once
-      //      UtilSound.playSound(world, posCenter, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
+      UtilEntity.setCooldownItem(player, this, COOLDOWN);
+      //      UtilSound.playSound(player, SoundEvents.ENTITY_PLAYER_SPLASH);
     }
     return success;
   }
