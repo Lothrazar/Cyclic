@@ -61,7 +61,7 @@ public class EnchantAutoSmelt extends EnchantBase {
   // HarvestDropsEvent broken in 1.15 
   @SubscribeEvent(priority = EventPriority.LOW)
   public void onHarvestDrops(HarvestDropsEvent event) {
-    ModCyclic.LOGGER.info("HarvestDropsEventHarvestDropsEvent");
+    ModCyclic.log("HarvestDropsEventHarvestDropsEvent");
     if (event.getHarvester() == null) {
       return;
     }

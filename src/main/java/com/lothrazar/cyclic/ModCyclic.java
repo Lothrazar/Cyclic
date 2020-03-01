@@ -26,7 +26,7 @@ public class ModCyclic {
   public static final String certificateFingerprint = "@FINGERPRINT@";
   public static final IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
   public static final String MODID = "cyclic";
-  public static final Logger LOGGER = LogManager.getLogger();
+  private static final Logger LOGGER = LogManager.getLogger();
 
   public ModCyclic() {
     // Register the setup method for modloading
@@ -43,5 +43,13 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
+  }
+
+  public static void error(Object... list) {
+    LOGGER.error(list);
+  }
+
+  public static void log(Object... list) {
+    LOGGER.info(list);
   }
 }

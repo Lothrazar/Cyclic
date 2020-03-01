@@ -164,7 +164,7 @@ public class BlockFluidTank extends BlockBase {
     }
     catch (Exception e) {
       //
-      ModCyclic.LOGGER.error("Error during fill from item ", e);
+      ModCyclic.error("Error during fill from item ", e);
     }
   }
 
@@ -181,8 +181,6 @@ public class BlockFluidTank extends BlockBase {
         FluidStack fs = fluidInTile.getFluidInTank(0);
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
-      else
-        ModCyclic.LOGGER.info("Storage capability is null from itemstack " + tankStack);
     }
     if (world.isRemote == false)
       world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));

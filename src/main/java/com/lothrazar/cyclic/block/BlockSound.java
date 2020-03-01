@@ -50,7 +50,7 @@ public class BlockSound extends BlockBase {
       event.setResultSound(newSound);
     }
     catch (Exception e) {
-      ModCyclic.LOGGER.error("Error trying to detect volume of sound from 3rd party ", e);
+      ModCyclic.error("Error trying to detect volume of sound from 3rd party ", e);
     }
   }
 

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lr",
+    "rl"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "r": {
+      "item": "minecraft:red_wool"
+    }
+  },
+  "result": {
+    "item": "cyclic:sleeping_mat",
+    "count": 1
+  }
+}

@@ -148,7 +148,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
       }
       catch (Throwable e) {
         //since activated can hit any block, be safe
-        ModCyclic.LOGGER.error("Error on activate block", e);
+        ModCyclic.error("Error on activate block", e);
       }
     }
   }

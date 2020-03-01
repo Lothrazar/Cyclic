@@ -87,7 +87,7 @@ public class EnchantQuickdraw extends EnchantBase {
       m.invoke(player);
     }
     catch (Exception e) {
-      ModCyclic.LOGGER.error("Player quickdraw error", e);
+      ModCyclic.error("Player quickdraw error", e);
     }
   }
 }

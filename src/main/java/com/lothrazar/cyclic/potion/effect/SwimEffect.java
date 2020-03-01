@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.potion.effect;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.potion.TickableEffect;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.LivingEntity;
@@ -22,8 +21,7 @@ public class SwimEffect extends TickableEffect {
     LivingEntity entity = event.getEntityLiving();
     if (entity.isInWater()) {
       EffectInstance pot = entity.getActivePotionEffect(this);
-      int amp = pot.getAmplifier() + 4;//level I is zero,  II is one
-      ModCyclic.LOGGER.info("Speed up by this much " + pot.getAmplifier());
+      int amp = pot.getAmplifier() + 4;//level I is zero,  II is one 
       UtilEntity.speedupEntityIfMoving(entity, speedfactor * amp);
     }
   }

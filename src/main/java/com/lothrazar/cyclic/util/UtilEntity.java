@@ -553,7 +553,7 @@ public class UtilEntity {
       return ahorse.getAttribute(jump);
     }
     catch (Exception e) {
-      ModCyclic.LOGGER.error("Horse jump error", e);
+      ModCyclic.error("Horse jump error", e);
     }
     return null;
   }
@@ -566,7 +566,7 @@ public class UtilEntity {
       m.invoke(ahorse);
     }
     catch (Exception e) {
-      ModCyclic.LOGGER.error("Horse eating animation error", e);
+      ModCyclic.error("Horse eating animation error", e);
     }
   }
 }

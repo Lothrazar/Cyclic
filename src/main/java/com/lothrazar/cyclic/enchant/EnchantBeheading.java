@@ -144,7 +144,7 @@ public class EnchantBeheading extends EnchantBase {
         UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL));
       }
       else {
-        ModCyclic.LOGGER.error("Beheading : mob not found in EntityList " + target.getName());
+        ModCyclic.error("Beheading : mob not found in EntityList " + target.getName());
       }
     }
   }

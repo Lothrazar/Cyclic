@@ -128,7 +128,7 @@ public class UtilPlaceBlocks {
       // PR for context https://github.com/PrinceOfAmber/Cyclic/pull/577/files
       // and  https://github.com/PrinceOfAmber/Cyclic/pull/579/files
       // show exception from above, possibly failed placement
-      ModCyclic.LOGGER.error("Error attempting to place block ", e);
+      ModCyclic.error("Error attempting to place block ", e);
     }
     // play sound to area when placement is a success
     if (success && playSound) {

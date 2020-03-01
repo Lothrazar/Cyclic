@@ -1,11 +1,13 @@
 {
   "homepage": "http://minecraft.curseforge.com/projects/cyclic",
   "promos": {
-    "1.15.2-latest": "0.1.9",
-    "1.15.2-recommended": "0.1.9"
+    "1.15.2-latest": "0.1.11",
+    "1.15.2-recommended": "0.1.11"
   },
   "1.15.2": {
   	"0.1.8":"Fixed server crash"
   	,"0.1.9":"Fixed charms not activating.  Fixed auto torch crash.  Magnet enchant now does not trigger in spectator.  Fixed error in Excavate enchant.  Ported Launch enchant"
+  	,"0.1.10":"Fix main menu crash"
+  	,"0.1.11":"Sleeping mat added.  Fix log spam."
   }
 }

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.base;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -91,9 +90,7 @@ public abstract class TileEntityBase extends TileEntity {
       //
       int sizeAfter = sizeStarted - drain.getCount();
       if (sizeAfter > 0) {
-        ModCyclic.LOGGER.info("moved some out " + sizeAfter);
         handlerHere.extractItem(SLOT, sizeAfter, false);
-        ModCyclic.LOGGER.info("current after " + handlerHere.getStackInSlot(SLOT));
         //flow direction
         //        TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
         //        if (cable.isItemPipe()) {
