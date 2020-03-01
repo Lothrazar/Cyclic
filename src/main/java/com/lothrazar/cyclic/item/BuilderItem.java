@@ -1,0 +1,110 @@
+package com.lothrazar.cyclic.item;
+
+import java.util.List;
+import javax.annotation.Nullable;
+import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilChat;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+public class BuilderItem extends ItemBase {
+
+  public enum ActionType {
+
+    SINGLE, X3, X5, X7, X9, X91, X19;
+
+    private final static String NBT = "ActionType";
+    private final static String NBTTIMEOUT = "timeout";
+
+    public static int getTimeout(ItemStack wand) {
+      return wand.getOrCreateTag().getInt(NBTTIMEOUT);
+    }
+
+    public static void setTimeout(ItemStack wand) {
+      wand.getOrCreateTag().putInt(NBTTIMEOUT, 15);//less than one tick
+    }
+
+    public static void tickTimeout(ItemStack wand) {
+      CompoundNBT tags = wand.getOrCreateTag();
+      int t = tags.getInt(NBTTIMEOUT);
+      if (t > 0) {
+        wand.getOrCreateTag().putInt(NBTTIMEOUT, t - 1);
+      }
+    }
+
+    public static int get(ItemStack wand) {
+      if (wand.isEmpty()) {
+        return 0;
+      }
+      CompoundNBT tags = wand.getOrCreateTag();
+      return tags.getInt(NBT);
+    }
+
+    public static String getName(ItemStack wand) {
+      try {
+        CompoundNBT tags = wand.getOrCreateTag();
+        return "tool.action." + ActionType.values()[tags.getInt(NBT)].toString().toLowerCase();
+      }
+      catch (Exception e) {
+        return "tool.action." + SINGLE.toString().toLowerCase();
+      }
+    }
+
+    public static void toggle(ItemStack wand) {
+      CompoundNBT tags = wand.getOrCreateTag();
+      int type = tags.getInt(NBT);
+      type++;
+      if (type >= ActionType.values().length) {
+        type = SINGLE.ordinal();
+      }
+      tags.putInt(NBT, type);
+      wand.setTag(tags);
+    }
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    String msg = TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack));
+    tooltip.add(new TranslationTextComponent(msg));
+    super.addInformation(stack, worldIn, tooltip, flagIn);
+  }
+
+  public BuilderItem(Properties properties) {
+    super(properties);
+  }
+
+  @Override
+  public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    ActionType.tickTimeout(stack);
+  }
+
+  @Override
+  public ActionResultType onItemUse(ItemUseContext context) {
+    PlayerEntity player = context.getPlayer();
+    //
+    ItemStack stack = context.getItem();
+    BlockPos pos = context.getPos();
+    Direction side = context.getFace();
+    if (side != null) {
+      pos = pos.offset(side);
+    }
+    if (context.getWorld().isRemote) {
+      //      PacketRegistry.INSTANCE.sendToServer(message);
+    }
+    return super.onItemUse(context);
+  }
+}

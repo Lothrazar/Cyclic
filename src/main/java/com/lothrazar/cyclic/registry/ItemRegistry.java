@@ -11,14 +11,14 @@ import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.IceWand;
-import com.lothrazar.cyclic.item.TileTransporterItem;
-import com.lothrazar.cyclic.item.TileTransporterEmptyItem;
-import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MattockItem;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.ShearsMaterial;
+import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.StirrupsItem;
+import com.lothrazar.cyclic.item.TileTransporterEmptyItem;
+import com.lothrazar.cyclic.item.TileTransporterItem;
 import com.lothrazar.cyclic.item.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.WrenchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
@@ -63,6 +63,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  @ObjectHolder(ModCyclic.MODID + ":scepter_build")
+  public static Item scepter_build;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
   public static Item spawner_seeker;
   @ObjectHolder(ModCyclic.MODID + ":gem_obsidian")
@@ -216,5 +218,6 @@ public class ItemRegistry {
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_lightning"));
     r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("spawner_seeker"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
+    //    r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("scepter_build"));
   }
 }

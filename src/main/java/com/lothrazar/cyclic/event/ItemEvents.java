@@ -1,12 +1,16 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.item.BuilderItem.ActionType;
 import com.lothrazar.cyclic.item.ItemEntityInteractable;
+import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
@@ -51,6 +55,31 @@ public class ItemEvents {
     ) {
       ItemEntityInteractable item = (ItemEntityInteractable) event.getItemStack().getItem();
       item.interactWith(event);
+    }
+  }
+
+  @SubscribeEvent
+  public void onHit(PlayerInteractEvent.LeftClickBlock event) {
+    PlayerEntity player = event.getPlayer();
+    ItemStack held = player.getHeldItem(event.getHand());
+    if (!held.isEmpty() && held.getItem() == ItemRegistry.scepter_build) {
+      //      if (event.getFace() != null && player.isSneaking()) {
+      //        //hita block
+      //        IBlockState hit = player.world.getBlockState(event.getPos());
+      //        ModCyclic.logger.log("HIT" + hit.getBlock());
+      //        return;
+      //      }
+      if (ActionType.getTimeout(held) > 0) {
+        //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
+        return;
+      }
+      ActionType.setTimeout(held);
+      event.setCanceled(true);
+      //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
+      if (!player.getEntityWorld().isRemote) { // server side
+        ActionType.toggle(held);
+      }
+      UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
     }
   }
 }
