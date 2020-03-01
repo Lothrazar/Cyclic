@@ -4,8 +4,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
-import com.lothrazar.cyclic.entity.ItemMagicNet;
-import com.lothrazar.cyclic.entity.ItemMobContainer;
 import com.lothrazar.cyclic.item.ExpItemGain;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemChestSack;
@@ -30,6 +28,8 @@ import com.lothrazar.cyclic.item.horse.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.horse.ItemHorseLapisVariant;
 import com.lothrazar.cyclic.item.horse.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.horse.ItemHorseToxic;
+import com.lothrazar.cyclic.item.magicnet.ItemMagicNet;
+import com.lothrazar.cyclic.item.magicnet.ItemMobContainer;
 import com.lothrazar.cyclic.item.scythe.ScytheBrush;
 import com.lothrazar.cyclic.item.scythe.ScytheForage;
 import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
@@ -63,8 +63,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
-  @ObjectHolder(ModCyclic.MODID + ":ender_dungeon")
-  public static Item ender_dungeon;
+  @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
+  public static Item spawner_seeker;
   @ObjectHolder(ModCyclic.MODID + ":gem_obsidian")
   public static Item gem_obsidian;
   @ObjectHolder(ModCyclic.MODID + ":lapis_carrot_variant")
@@ -214,7 +214,7 @@ public class ItemRegistry {
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_snow"));
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_blaze"));
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_lightning"));
-    r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_dungeon"));
+    r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("spawner_seeker"));
     r.register(new ItemSleepingMat(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
   }
 }

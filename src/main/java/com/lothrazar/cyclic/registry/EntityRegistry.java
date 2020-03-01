@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
 import com.lothrazar.cyclic.item.findspawner.EntityDungeonEye;
+import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.torchthrow.EntityTorchBolt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;

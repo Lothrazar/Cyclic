@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.entity;
+package com.lothrazar.cyclic.item.magicnet;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.entity.LivingEntity;
@@ -55,6 +55,6 @@ public class ItemMagicNet extends ItemBase {
     EntityMagicNetEmpty e = new EntityMagicNetEmpty(worldIn, player);
     e.shoot(entity, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
     worldIn.addEntity(e);
-    player.setHeldItem(player.getActiveHand(), ItemStack.EMPTY);
+    stack.shrink(1);
   }
 }

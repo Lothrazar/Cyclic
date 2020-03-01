@@ -45,11 +45,11 @@ public class ItemProjectileDungeon extends ItemBase {
     }
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.SPAWNER, DUNGEONRADIUS);
     if (blockpos == null) {
-      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
+      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.spawner_seeker.notfound") + " " + DUNGEONRADIUS);
       entityendereye.remove();
     }
     else {
-      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.ender_dungeon.found"));
+      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.spawner_seeker.found"));
       entityendereye.moveTowards(blockpos);
     }
   }

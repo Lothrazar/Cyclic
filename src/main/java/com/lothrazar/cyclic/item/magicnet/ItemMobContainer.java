@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.entity;
+package com.lothrazar.cyclic.item.magicnet;
 
 import java.util.List;
 import javax.annotation.Nullable;

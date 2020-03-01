@@ -166,7 +166,7 @@ public class EntityDungeonEye extends ProjectileItemEntity {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.ender_dungeon;
+    return ItemRegistry.spawner_seeker;
   }
 
   @Override

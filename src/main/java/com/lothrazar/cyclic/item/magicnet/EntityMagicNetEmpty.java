@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.entity;
+package com.lothrazar.cyclic.item.magicnet;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EntityRegistry;

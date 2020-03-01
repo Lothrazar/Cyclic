@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.setup;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.entity.EntityMagicNetEmpty;
+import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.client.Minecraft;
