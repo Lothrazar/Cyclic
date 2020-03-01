@@ -8,6 +8,6 @@
   	"0.1.8":"Fixed server crash"
   	,"0.1.9":"Fixed charms not activating.  Fixed auto torch crash.  Magnet enchant now does not trigger in spectator.  Fixed error in Excavate enchant.  Ported Launch enchant"
   	,"0.1.10":"Fix main menu crash"
-  	,"0.1.11":"Sleeping mat added.  Fix log spam."
+  	,"0.1.11":"Sleeping mat item ported.  Spawner Seeker item ported.  Fix log spam."
   }
 }
