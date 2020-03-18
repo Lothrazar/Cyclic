@@ -148,7 +148,7 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.soundproofing, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("soundproofing"));
     r.register(new WrenchItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("wrench"));
     r.register(new BlockItem(BlockRegistry.trash, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("trash"));
-    r.register(new AutoTorchItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("charm_torch"));
+    r.register(new AutoTorchItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256 * 4)).setRegistryName("charm_torch"));
     r.register(new CharmVoid(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(64)).setRegistryName("charm_void"));
     r.register(new CharmAntidote(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(64)).setRegistryName("charm_antidote"));
     r.register(new CharmFire(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(64)).setRegistryName("charm_fire"));
