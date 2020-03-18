@@ -88,7 +88,11 @@ public class EnchantExcavation extends EnchantBase {
     }
     //starts at 1 for current one
     if (isAnySingleOk) {
-      this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
+      int harvested = this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
+      if (harvested > 0) {
+        //damage but also respect the unbreaking chant  
+        player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.getRandom(), null);
+      }
     }
   }
 
@@ -120,10 +124,6 @@ public class EnchantExcavation extends EnchantBase {
       //      block.dropXpOnBlockBreak(world, targetPos, block.getExpDrop(targetState, world, targetPos, fortuneXp));
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
-      //damage but also respect the unbreaking chant
-      if (world.rand.nextDouble() > 0.5) {
-        player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
-      }
       totalBroken++;
     }
     //AFTER we harvest the close ones only THEN we branch out
