@@ -9,6 +9,6 @@
   	,"0.1.9":"Fixed charms not activating.  Fixed auto torch crash.  Magnet enchant now does not trigger in spectator.  Fixed error in Excavate enchant.  Ported Launch enchant"
   	,"0.1.10":"Fix main menu crash"
   	,"0.1.11":"Sleeping mat item ported.  Spawner Seeker item ported.  Fix log spam.  Fix Remote Lever message text.  Sack of holding now checks player-relative block hardness for compatibility (zero or less it will not pick up).  "
-  	,"0.1.12":"zh_cn.lang updated by sandtechnology.  Fixed game crash with Emerald Carrot, item now works as expected.  Fixed some language file issues.  Fixed Torch Launcher velocity and distance back up to 1.12 speeds.  Fixed Auto Torch going into negative durability.  "
+  	,"0.1.12":"zh_cn.lang updated by sandtechnology.  Fixed game crash with Emerald Carrot, item now works as expected.  Fixed some language file issues.  Fixed Torch Launcher velocity and distance back up to 1.12 speeds.  Fixed Auto Torch going into negative durability.  Fixed boomerange dupe. "
   }
 }

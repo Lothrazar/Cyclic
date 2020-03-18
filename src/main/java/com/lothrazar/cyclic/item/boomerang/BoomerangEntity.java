@@ -165,16 +165,27 @@ public class BoomerangEntity extends ProjectileItemEntity {
     return this.dataManager.get(REDSTONE_TRIGGERED) > 0;
   }
 
+  /**
+   * Drops any nonempty boomerangThrown stack and empties it, then calls remove() on self.
+   */
   private void dropAsItem() {
-    if (this.owner != null) {
-      //try to give it to the player the nicest way possible 
-      if (owner.getHeldItemMainhand().isEmpty())
-        owner.setHeldItem(Hand.MAIN_HAND, boomerangThrown);
-      else
-        owner.entityDropItem(boomerangThrown, 0.5F);
-    }
-    else {
-      UtilItemStack.drop(world, this.getPosition().up(), boomerangThrown);
+    if (!boomerangThrown.isEmpty()) {
+      //we have something to drop
+      if (this.owner != null) {
+        //try to give it to the player the nicest way possible 
+        if (owner.getHeldItemMainhand().isEmpty()) {
+          owner.setHeldItem(Hand.MAIN_HAND, boomerangThrown);
+          boomerangThrown = ItemStack.EMPTY;
+        }
+        else {
+          owner.entityDropItem(boomerangThrown, 0.5F);
+          boomerangThrown = ItemStack.EMPTY;
+        }
+      }
+      else {
+        UtilItemStack.drop(world, this.getPosition().up(), boomerangThrown);
+        boomerangThrown = ItemStack.EMPTY;
+      }
     }
     this.remove();
   }
