@@ -1,40 +1,39 @@
 package com.lothrazar.cyclic.block.tank;
 
-import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclic.util.RenderUtil;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import com.lothrazar.cyclic.render.CuboidRenderType;
+import com.lothrazar.cyclic.render.FluidRenderMap;
+import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
+import com.lothrazar.cyclic.render.Model3D;
+import com.lothrazar.cyclic.render.RenderHelper;
+import com.lothrazar.cyclic.render.RenderResizableCuboid;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ActiveRenderInfo;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Matrix4f;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.fluid.IFluidState;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderTank extends TileEntityRenderer<TileTank> {
 
-  public static boolean ENABLED = false;
+  public static boolean ENABLED = true;
 
   public RenderTank(TileEntityRendererDispatcher d) {
     super(d);
   }
 
   @Override
-  public void render(TileTank tankHere, float v, MatrixStack matrixStack,
-      IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
+  public void render(TileTank tankHere, float v, MatrixStack matrix,
+      IRenderTypeBuffer renderer, int light, int overlayLight) {
     if (!ENABLED) {
       return;
     }
@@ -42,37 +41,60 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }
-    FluidStack fluidStack = handler.getFluidInTank(0);
-    if (fluidStack.isEmpty()) {
+    FluidStack fluid = handler.getFluidInTank(0);
+    if (fluid.isEmpty()) {
       return;
     }
-    IFluidState fluidState = fluidStack.getFluid().getDefaultState();
-    //    fluidState.getBlockState()
-    //    ResourceLocation reg = fluidState.getBlockState().getBlock().getRegistryName();
-    //    AtlasTexture atlas = Minecraft.getInstance().func
-    TextureAtlasSprite still = Minecraft.getInstance().getTextureGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE)
-        .apply(fluidState.getFluid().getAttributes().getStillTexture(tankHere.getWorld(), tankHere.getPos()));
-    //    TextureAtlasSprite still = atlas.getSprite(fluidStack.getFluid().getAttributes().getStill(tankHere.getWorld(), tankHere.getPos()));
-    ResourceLocation reg = new ResourceLocation(still.getName().getNamespace(), "textures/" + still.getName().getPath() + ".png");
-    /* BlockRendererDispatcher x = Minecraft.getInstance().getBlockRendererDispatcher(); IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance().func_228019_au_().func_228487_b_();
-     * x.renderBlock(fluidState.getBlockState(), matrixStack, irendertypebuffer$impl, 0, 0, null); */
-    //    reg = new ResourceLocation("minecraft:stone");//STILL DOESNT WORK  
-    double posY = 0.01 + (.985 * (fluidStack.getAmount() / tankHere.getCapacity()));
-    ActiveRenderInfo renderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
-    BlockPos pos = tankHere.getPos();
-    /////https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
-    RenderSystem.pushMatrix();
-    matrixStack.push(); // push
-    matrixStack.translate(-renderInfo.getProjectedView().getX(), -renderInfo.getProjectedView().getY(), -renderInfo.getProjectedView().getZ()); // translate back to camera
-    Matrix4f matrix4f = matrixStack.getLast().getPositionMatrix(); // get final transformation matrix, handy to get yaw+pitch transformation
-    RenderSystem.multMatrix(matrix4f);
-    Minecraft.getInstance().getTextureManager().bindTexture(reg);
-    Tessellator.getInstance().getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-    //    Tessellator.getInstance().getBuffer().
-    RenderUtil.drawBlock(Tessellator.getInstance().getBuffer(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1, 0, 1, 0, 1, 0.9, posY, 0.9);
-    Tessellator.getInstance().draw();
-    matrixStack.translate(0, 0, 0); // reset translation
-    matrixStack.pop(); // pop
-    RenderSystem.popMatrix();
+    IVertexBuilder buffer = renderer.getBuffer(CuboidRenderType.resizableCuboid());
+    matrix.scale(1F, getScale(tankHere.tank), 1F);
+    RenderHelper.renderObject(getFluidModel(fluid, stages - 1), matrix, buffer, RenderHelper.getColorARGB(fluid, 0.1F),
+        RenderHelper.calculateGlowLight(light, fluid));
+  }
+
+  public static float getScale(FluidTank tank) {
+    return getScale(tank.getFluidAmount(), tank.getCapacity(), tank.isEmpty());
+  }
+
+  public static float getScale(int stored, int capacity, boolean empty) {
+    float targetScale = (float) stored / capacity;
+    if (targetScale < 0.1) {
+      targetScale = 0.1F;
+    }
+    return targetScale;
+  }
+
+  public static void renderObject(@Nullable Model3D object, @Nonnull MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
+    if (object != null) {
+      RenderResizableCuboid.INSTANCE.renderCube(object, matrix, buffer, argb, light);
+    }
+  }
+
+  private static final FluidRenderMap<Int2ObjectMap<Model3D>> cachedCenterFluids = new FluidRenderMap<>();
+  private static final FluidRenderMap<Int2ObjectMap<Model3D>> cachedValveFluids = new FluidRenderMap<>();
+  private static int stages = 1400;
+
+  private Model3D getFluidModel(@Nonnull FluidStack fluid, int stage) {
+    if (cachedCenterFluids.containsKey(fluid) && cachedCenterFluids.get(fluid).containsKey(stage)) {
+      return cachedCenterFluids.get(fluid).get(stage);
+    }
+    Model3D model = new Model3D();
+    model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidType.STILL));
+    if (fluid.getFluid().getAttributes().getStillTexture(fluid) != null) {
+      model.minX = 0.125 + .01;
+      model.minY = 0.0625 + .01;
+      model.minZ = 0.125 + .01;
+      model.maxX = 0.875 - .01;
+      model.maxY = 0.0625 + (stage / (float) stages) * 0.875 - .01;
+      model.maxZ = 0.875 - .01;
+    }
+    if (cachedCenterFluids.containsKey(fluid)) {
+      cachedCenterFluids.get(fluid).put(stage, model);
+    }
+    else {
+      Int2ObjectMap<Model3D> map = new Int2ObjectOpenHashMap<>();
+      map.put(stage, model);
+      cachedCenterFluids.put(fluid, map);
+    }
+    return model;
   }
 }

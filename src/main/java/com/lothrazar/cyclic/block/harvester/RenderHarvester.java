@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.harvester;
 
-import com.lothrazar.cyclic.util.RenderUtil;
-import com.lothrazar.cyclic.util.RenderUtil.LaserConfig;
+import com.lothrazar.cyclic.render.RenderHelper;
+import com.lothrazar.cyclic.render.RenderHelper.LaserConfig;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -30,7 +30,7 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
     // ok
     if (ENABLED) {
       if (te.laserTimer > 0) {
-        RenderUtil.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
+        RenderHelper.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),
             rotationTime, alpha, beamWidth, laserColor), matrixStack);
       }
     }

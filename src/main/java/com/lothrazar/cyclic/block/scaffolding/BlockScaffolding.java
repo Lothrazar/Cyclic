@@ -34,7 +34,7 @@ public class BlockScaffolding extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.cutout());
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());
   }
 
   @Override

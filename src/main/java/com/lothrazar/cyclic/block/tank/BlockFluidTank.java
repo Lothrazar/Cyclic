@@ -140,7 +140,7 @@ public class BlockFluidTank extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.translucent());
+    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
     ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.tank, RenderTank::new);
   }
 

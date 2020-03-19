@@ -31,7 +31,7 @@ public class BlockExpPylon extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.cutoutMipped());
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
   }
 
   @Override

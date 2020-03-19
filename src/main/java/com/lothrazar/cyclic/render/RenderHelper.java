@@ -1,5 +1,7 @@
-package com.lothrazar.cyclic.util;
+package com.lothrazar.cyclic.render;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.OffsetEnum;
@@ -7,9 +9,11 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -19,8 +23,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
 
-public class RenderUtil {
+public class RenderHelper {
 
   public static class LaserConfig {
 
@@ -64,7 +69,7 @@ public class RenderUtil {
     double offsetX = conf.xOffset.getOffset();
     double offsetY = conf.yOffset.getOffset();
     double offsetZ = conf.zOffset.getOffset();
-    RenderUtil.renderLaser(
+    RenderHelper.renderLaser(
         conf.first.getX() + offsetX, conf.first.getY() + offsetY, conf.first.getZ() + offsetZ,
         conf.second.getX() + offsetX, conf.second.getY() + offsetY, conf.second.getZ() + offsetZ,
         conf.rotationTime, conf.alpha, conf.beamWidth, conf.color, conf.timer, matrixStack);
@@ -112,7 +117,7 @@ public class RenderUtil {
     //    
     matrixStack.push(); // push
     matrixStack.translate(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ); // translate back to camera
-    Matrix4f matrix4f = matrixStack.getLast().getPositionMatrix(); // get final transformation matrix, handy to get yaw+pitch transformation
+    Matrix4f matrix4f = matrixStack.getLast().getMatrix(); // get final transformation matrix, handy to get yaw+pitch transformation
     RenderSystem.multMatrix(matrix4f);
     //    RenderSystem.translated(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ);
     //    GL11.glTranslated(staticPlayerX, staticPlayerY, staticPlayerZ);
@@ -192,5 +197,63 @@ public class RenderUtil {
     bufferbuilder.pos(x_size + x, y_size + y, z_size + z).tex(maxU, maxV).endVertex();
     bufferbuilder.pos(-x_size + x, y_size + y, z_size + z).tex(minU, maxV).endVertex();
     bufferbuilder.pos(-x_size + x, -y_size + y, z_size + z).tex(minU, minV).endVertex();
+  }
+
+  /**
+   * Source furnctions from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x
+   * 
+   * https://github.com/mekanism/Mekanism/blob/1.15x/LICENSE
+   * 
+   * See MekanismRenderer.
+   **/
+  public static void renderObject(@Nullable Model3D object, @Nonnull MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
+    if (object != null) {
+      RenderResizableCuboid.INSTANCE.renderCube(object, matrix, buffer, argb, light);
+    }
+  }
+
+  //TODO: Use these calculateGlowLight after rewriting the renderResizableCuboid?
+  public static int calculateGlowLight(int light, @Nonnull FluidStack fluid) {
+    return fluid.isEmpty() ? light : calculateGlowLight(light, fluid.getFluid().getAttributes().getLuminosity(fluid));
+  }
+
+  //TODO: Replace various usages of this with the getter for calculating glow light, at least if we end up making it only
+  // effect block light for the glow rather than having it actually become full light
+  public static final int FULL_LIGHT = 0xF000F0;
+
+  public static int calculateGlowLight(int light, int glow) {
+    if (glow >= 15) {
+      return FULL_LIGHT;
+    }
+    int blockLight = LightTexture.getLightBlock(light);
+    int skyLight = LightTexture.getLightSky(light);
+    return LightTexture.packLight(Math.max(blockLight, glow), Math.max(skyLight, glow));
+  }
+
+  public static int getColorARGB(@Nonnull FluidStack fluidStack, float fluidScale) {
+    if (fluidStack.isEmpty()) {
+      return -1;
+    }
+    return getColorARGB(fluidStack);
+  }
+
+  private static int getColorARGB(@Nonnull FluidStack fluidStack) {
+    return fluidStack.getFluid().getAttributes().getColor(fluidStack);
+  }
+
+  public static float getRed(int color) {
+    return (color >> 16 & 0xFF) / 255.0F;
+  }
+
+  public static float getGreen(int color) {
+    return (color >> 8 & 0xFF) / 255.0F;
+  }
+
+  public static float getBlue(int color) {
+    return (color & 0xFF) / 255.0F;
+  }
+
+  public static float getAlpha(int color) {
+    return (color >> 24 & 0xFF) / 255.0F;
   }
 }
