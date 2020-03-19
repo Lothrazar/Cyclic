@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.data.Const;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

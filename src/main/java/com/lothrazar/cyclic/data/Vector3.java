@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.util;
+package com.lothrazar.cyclic.data;
 
 import net.minecraft.entity.Entity;
 

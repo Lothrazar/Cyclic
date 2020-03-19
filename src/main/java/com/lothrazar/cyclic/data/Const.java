@@ -21,7 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.util;
+package com.lothrazar.cyclic.data;
+
 public class Const {
   //  public static class Res {
   //
@@ -131,28 +132,6 @@ public class Const {
       }
       return 0;
     }
-    //
-    //    public ResourceLocation texture() {
-    //      switch (this) {
-    //        case STANDARD:
-    //          return Res.TABLEDEFAULT;
-    //        case STANDARDPLAIN:
-    //          return Res.TABLEPLAIN;
-    //        case PLAINWIDE:
-    //          return Res.PLAINWIDE;
-    //        case LARGE:
-    //          return Res.TABLELARGE;
-    //        case LARGEWIDE:
-    //          return Res.VILLAGER;
-    //        case SACK:
-    //          return Res.BACKGROUND_SACK;
-    //        case LARGEPLAIN:
-    //          return Res.SLOT_LARGE_PLAIN;
-    //        default:
-    //        break;
-    //      }
-    //      return null;
-    //    }
   }
 
   public static final String MODID = "cyclicmagic";
@@ -186,12 +165,6 @@ public class Const {
     public static final String worldGenOceans = worldGen + ".ocean";
   }
 
-  public class ConfigText {
-
-    public static final String fuelCost = "Fuel/Energy/RF cost to run machine";
-    public static final String machineTimer = "Number of ticks needed to perform one action by this machine";
-  }
-
   public class ToolStrings {
 
     public static final String pickaxe = "pickaxe";
@@ -211,21 +184,9 @@ public class Const {
   public static final int skull_player = 3;
   public static final int skull_creeper = 4;
   public static final int skull_dragon = 5;
-  //saplings
-  public static final int sapling_oak = 0;
-  public static final int sapling_spruce = 1;
-  public static final int sapling_birch = 2;
-  public static final int sapling_jungle = 3;
-  public static final int sapling_acacia = 4;
-  public static final int sapling_darkoak = 5;
-  //	public static final int skull_dragon = 5;
   public static final int NOTIFY = 2;
   public static final int TICKS_PER_SEC = 20;
   public static final int CHUNK_SIZE = 16;
-  public static final int DIR_WEST = 1;
-  public static final int DIR_SOUTH = 0;
-  public static final int DIR_EAST = 3;
-  public static final int DIR_NORTH = 2;
   public static final int HOTBAR_SIZE = 9;
   public static final String SkullOwner = "SkullOwner";
 
@@ -257,20 +218,4 @@ public class Const {
    */
   public static final int LAVA_TEMPERATURE = 1300;
   public static final int REDSTONE_MAX = 16;
-
-  public static class HorseMeta {
-
-    public static final int variant_white = 0;
-    public static final int variant_creamy = 1;
-    public static final int variant_chestnut = 2;
-    public static final int variant_brown = 3;
-    public static final int variant_black = 4;
-    public static final int variant_gray = 5;
-    public static final int variant_brown_dark = 6;
-    public static final int type_standard = 0;
-    public static final int type_donkey = 1;
-    public static final int type_mule = 2;
-    public static final int type_zombie = 3;
-    public static final int type_skeleton = 4;
-  }
 }// ends class reference

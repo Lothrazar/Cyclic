@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
-import com.lothrazar.cyclic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -60,23 +59,21 @@ public class ItemScaffolding extends BlockItem {
     // else doHoriz = true; stays
     // if not, go by dir
     if (doHoriz) {
-      switch (direction) {
-        case Const.DIR_EAST:
-          pos = pos.east();
-          facing = Direction.EAST;
-        break;
-        case Const.DIR_WEST:
-          pos = pos.west();
-          facing = Direction.WEST;
-        break;
-        case Const.DIR_SOUTH:
-          pos = pos.south();
-          facing = Direction.SOUTH;
-        break;
-        case Const.DIR_NORTH:
-          pos = pos.north();
-          facing = Direction.NORTH;
-        break;
+      if (direction == Direction.EAST.ordinal()) {
+        pos = pos.east();
+        facing = Direction.EAST;
+      }
+      if (direction == Direction.WEST.ordinal()) {
+        pos = pos.west();
+        facing = Direction.WEST;
+      }
+      if (direction == Direction.SOUTH.ordinal()) {
+        pos = pos.south();
+        facing = Direction.SOUTH;
+      }
+      if (direction == Direction.NORTH.ordinal()) {
+        pos = pos.north();
+        facing = Direction.NORTH;
       }
     }
     if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) {

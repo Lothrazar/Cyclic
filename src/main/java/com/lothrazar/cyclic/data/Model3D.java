@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.render;
+package com.lothrazar.cyclic.data;
 
 import java.util.Arrays;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

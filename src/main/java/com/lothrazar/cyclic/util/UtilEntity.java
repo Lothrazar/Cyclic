@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.Vector3;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.entity.Entity;

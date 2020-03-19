@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.Const;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilParticle;

@@ -1,10 +1,12 @@
-package com.lothrazar.cyclic.render;
+package com.lothrazar.cyclic.util;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.data.OffsetEnum;
+import com.lothrazar.cyclic.render.RenderResizableCuboid;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
@@ -25,7 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 
-public class RenderHelper {
+public class UtilRender {
 
   public static class LaserConfig {
 
@@ -69,7 +71,7 @@ public class RenderHelper {
     double offsetX = conf.xOffset.getOffset();
     double offsetY = conf.yOffset.getOffset();
     double offsetZ = conf.zOffset.getOffset();
-    RenderHelper.renderLaser(
+    UtilRender.renderLaser(
         conf.first.getX() + offsetX, conf.first.getY() + offsetY, conf.first.getZ() + offsetZ,
         conf.second.getX() + offsetX, conf.second.getY() + offsetY, conf.second.getZ() + offsetZ,
         conf.rotationTime, conf.alpha, conf.beamWidth, conf.color, conf.timer, matrixStack);

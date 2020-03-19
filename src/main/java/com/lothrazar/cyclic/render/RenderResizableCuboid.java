@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.render;
 
 import java.util.Arrays;
+import com.lothrazar.cyclic.data.Model3D;
+import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
@@ -57,10 +59,10 @@ public class RenderResizableCuboid {
   }
 
   public void renderCube(Model3D cube, MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
-    float red = RenderHelper.getRed(argb);
-    float green = RenderHelper.getGreen(argb);
-    float blue = RenderHelper.getBlue(argb);
-    float alpha = RenderHelper.getAlpha(argb);
+    float red = UtilRender.getRed(argb);
+    float green = UtilRender.getGreen(argb);
+    float blue = UtilRender.getBlue(argb);
+    float alpha = UtilRender.getAlpha(argb);
     Vec3d size = new Vec3d(cube.sizeX(), cube.sizeY(), cube.sizeZ());
     matrix.push();
     matrix.translate(cube.minX, cube.minY, cube.minZ);
