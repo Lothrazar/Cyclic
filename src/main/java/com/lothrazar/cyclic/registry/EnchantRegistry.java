@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.enchant.EnchantLifeLeech;
 import com.lothrazar.cyclic.enchant.EnchantMagnet;
 import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.enchant.EnchantQuickdraw;
+import com.lothrazar.cyclic.enchant.EnchantReach;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import net.minecraft.enchantment.Enchantment;
@@ -39,6 +40,8 @@ public class EnchantRegistry {
   public static Enchantment quickshot;
   //  @ObjectHolder(ModCyclic.MODID + ":smelting")
   //  public static EnchantAutoSmelt smelting;
+  @ObjectHolder(ModCyclic.MODID + ":reach")
+  public static EnchantReach reach;
   @ObjectHolder(ModCyclic.MODID + ":venom")
   public static EnchantVenom venom;
   @ObjectHolder(ModCyclic.MODID + ":lava_walking")
@@ -57,6 +60,7 @@ public class EnchantRegistry {
       r.register(new EnchantMultishot(Enchantment.Rarity.RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND).setRegistryName("multishot"));
       // "reach"
       r.register(new EnchantQuickdraw(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("quickshot"));
+      r.register(new EnchantReach(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_CHEST, EquipmentSlotType.CHEST).setRegistryName("reach"));
       // HarvestDropsEvent broken in 1.15 
       // r.register(new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName("smelting"));
       r.register(new EnchantVenom(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("venom"));
