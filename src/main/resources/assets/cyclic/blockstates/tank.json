@@ -1,8 +1,5 @@
 {
-	"parent": "minecraft:block/cube",
     "variants": {
-		"": { "model": "cyclic:block/fluid_tank" },
-		"inventory": { "model": "cyclic:block/fluid_tank" },
 		"above=false,below=false": { "model": "cyclic:block/fluid_tank" },
 		"above=true,below=false":  { "model": "cyclic:block/fluid_tank_above" },
 		"above=false,below=true":  { "model": "cyclic:block/fluid_tank_below" },

@@ -28,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
@@ -67,17 +68,18 @@ public class BlockFluidTank extends BlockBase {
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
     super.fillStateContainer(builder);
-    //    builder.add(TANK_ABOVE, TANK_BELOW);
+    builder.add(TANK_ABOVE, TANK_BELOW);
   }
 
-  //  @Override
-  //  public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
-  //    boolean tileAbove = world.getTileEntity(pos.up()) instanceof TileTank;
-  //    boolean tileBelow = world.getTileEntity(pos.down()) instanceof TileTank;
-  //    return state
-  //        .with(TANK_ABOVE, tileAbove)
-  //        .with(TANK_BELOW, tileBelow);
-  //  }
+  @Override
+  public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+    boolean tileAbove = world.getTileEntity(pos.up()) instanceof TileTank;
+    boolean tileBelow = world.getTileEntity(pos.down()) instanceof TileTank;
+    return state
+        .with(TANK_ABOVE, tileAbove)
+        .with(TANK_BELOW, tileBelow);
+  }
+
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
     //    TileEntity tileEntity = reader.getTileEntity(pos);
@@ -154,6 +156,9 @@ public class BlockFluidTank extends BlockBase {
       //
       ModCyclic.error("Error during fill from item ", e);
     }
+    //set default state
+    state = state.with(TANK_ABOVE, false).with(TANK_BELOW, false);
+    world.setBlockState(pos, state);
   }
 
   @Override

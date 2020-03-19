@@ -42,17 +42,17 @@ public class BlockCableEnergy extends BlockBase {
   public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     //keep this to delete tooltip 
   }
-
-  public static BlockState cleanBlockState(BlockState state) {
-    for (Direction d : Direction.values()) {
-      EnumProperty<EnumConnectType> prop = FACING_TO_PROPERTY_MAP.get(d);
-      if (state.get(prop) == EnumConnectType.INVENTORY) {
-        //dont replace cable types only inv types
-        state = state.with(prop, EnumConnectType.NONE);
-      }
-    }
-    return state;
-  }
+  //
+  //  public static BlockState cleanBlockState(BlockState state) {
+  //    for (Direction d : Direction.values()) {
+  //      EnumProperty<EnumConnectType> prop = FACING_TO_PROPERTY_MAP.get(d);
+  //      if (state.get(prop) == EnumConnectType.INVENTORY) {
+  //        //dont replace cable types only inv types
+  //        state = state.with(prop, EnumConnectType.NONE);
+  //      }
+  //    }
+  //    return state;
+  //  }
 
   private static final EnumProperty<EnumConnectType> DOWN = EnumProperty.create("down", EnumConnectType.class);
   private static final EnumProperty<EnumConnectType> UP = EnumProperty.create("up", EnumConnectType.class);
