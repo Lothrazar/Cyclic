@@ -5,7 +5,10 @@ import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -13,9 +16,10 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileTank extends TileEntityBase {
+public class TileTank extends TileEntityBase implements ITickableTileEntity {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
+  public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
   public FluidTankBase tank;
 
   public TileTank() {
@@ -68,5 +72,14 @@ public class TileTank extends TileEntityBase {
 
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
+  }
+
+  @Override
+  public void tick() {
+    //drain below but only to one of myself
+    TileEntity below = this.world.getTileEntity(this.pos.down());
+    if (below != null && below instanceof TileTank) {
+      UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
+    }
   }
 }

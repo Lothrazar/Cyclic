@@ -57,24 +57,12 @@ public class BlockFluidTank extends BlockBase {
   public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0f;
   }
-  //  @Override
-  //  public BlockRenderLayer getRenderLayer() {
-  //    return BlockRenderLayer.CUTOUT;
-  //  }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
     return false;
   }
-  //  @Override
-  //  public boolean canRenderInLayer(BlockState state, BlockRenderLayer layer) {
-  //    return (layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT);
-  //  }
-  //  @Override
-  //  public boolean doesSideBlockRendering(BlockState state, IEnviromentBlockReader world, BlockPos pos, Direction face) {
-  //    return false;
-  //  }
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
@@ -92,7 +80,7 @@ public class BlockFluidTank extends BlockBase {
   //  }
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-    TileEntity tileEntity = reader.getTileEntity(pos);
+    //    TileEntity tileEntity = reader.getTileEntity(pos);
     //    TankBlockEntity tankEntity = (tileEntity != null) ? (TankBlockEntity)tileEntity : null;
     return true;// (tankEntity == null || tankEntity.getFillLevel() == 0);
   }
