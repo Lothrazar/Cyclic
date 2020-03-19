@@ -39,24 +39,11 @@ public class Model3D {
     return maxZ - minZ;
   }
 
-  public void setSideRender(Direction side, boolean value) {
-    renderSides[side.ordinal()] = value;
-  }
-
   public boolean shouldSideRender(Direction side) {
     return renderSides[side.ordinal()];
   }
 
   public void setTexture(TextureAtlasSprite tex) {
     Arrays.fill(textures, tex);
-  }
-
-  public void setTextures(TextureAtlasSprite down, TextureAtlasSprite up, TextureAtlasSprite north, TextureAtlasSprite south, TextureAtlasSprite west, TextureAtlasSprite east) {
-    textures[0] = down;
-    textures[1] = up;
-    textures[2] = north;
-    textures[3] = south;
-    textures[4] = west;
-    textures[5] = east;
   }
 }

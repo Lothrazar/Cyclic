@@ -57,9 +57,6 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
 
   public static float getScale(int stored, int capacity, boolean empty) {
     float targetScale = (float) stored / capacity;
-    if (targetScale < 0.1) {
-      targetScale = 0.1F;
-    }
     return targetScale;
   }
 
@@ -70,8 +67,7 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
   }
 
   private static final FluidRenderMap<Int2ObjectMap<Model3D>> cachedCenterFluids = new FluidRenderMap<>();
-  private static final FluidRenderMap<Int2ObjectMap<Model3D>> cachedValveFluids = new FluidRenderMap<>();
-  private static int stages = 1400;
+  private static final int stages = 1400;
 
   private Model3D getFluidModel(@Nonnull FluidStack fluid, int stage) {
     if (cachedCenterFluids.containsKey(fluid) && cachedCenterFluids.get(fluid).containsKey(stage)) {
@@ -80,12 +76,15 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
     Model3D model = new Model3D();
     model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidType.STILL));
     if (fluid.getFluid().getAttributes().getStillTexture(fluid) != null) {
-      model.minX = 0.125 + .01;
-      model.minY = 0.0625 + .01;
-      model.minZ = 0.125 + .01;
-      model.maxX = 0.875 - .01;
-      model.maxY = 0.0625 + (stage / (float) stages) * 0.875 - .01;
-      model.maxZ = 0.875 - .01;
+      double sideSpacing = 0.00625;
+      double belowSpacing = 0.0625 / 4;
+      double topSpacing = belowSpacing;
+      model.minX = sideSpacing;
+      model.minY = belowSpacing;
+      model.minZ = sideSpacing;
+      model.maxX = 1 - sideSpacing;
+      model.maxY = 1 - topSpacing;
+      model.maxZ = 1 - sideSpacing;
     }
     if (cachedCenterFluids.containsKey(fluid)) {
       cachedCenterFluids.get(fluid).put(stage, model);
