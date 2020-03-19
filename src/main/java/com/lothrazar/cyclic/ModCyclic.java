@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.registry.CuriosRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
-import com.lothrazar.cyclic.setup.ConfigHandler;
 import com.lothrazar.cyclic.setup.IProxy;
 import com.lothrazar.cyclic.setup.ServerProxy;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,11 +26,12 @@ public class ModCyclic {
   public static final IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
   public static final String MODID = "cyclic";
   private static final Logger LOGGER = LogManager.getLogger();
+  public static ConfigManager config;
 
   public ModCyclic() {
     // Register the setup method for modloading
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-    ConfigHandler.loadConfig(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
+    config = new ConfigManager(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
   }
 
   private void setup(final FMLCommonSetupEvent event) {
