@@ -84,10 +84,6 @@ public class PacketSwapBlock {
           }
           replacedBlockState = world.getBlockState(curPos);
           Block replacedBlock = replacedBlockState.getBlock();
-          boolean isEmptySpot = world.isAirBlock(curPos) || replacedBlockState == null;
-          //          if (isEmptySpot && message.wandType == WandType.MATCH) {
-          //            //cannot match anything with air
-          //            continue;
           //          }
           //TODO: CLEANUP/REFACTOR THIS
           //          String itemName = UtilItemStack.getStringForBlock(replacedBlock);

@@ -25,6 +25,7 @@
     
     
     "item.cyclic.build_scepter":"Building Scepter",
+    "scepter.cyclic.nothing":"Sneak-left-click to pick block",
     
     "builder.toggle": "Toggle",
     "buildertype.circle": "Circle",

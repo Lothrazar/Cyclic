@@ -6,10 +6,14 @@ import com.lothrazar.cyclic.item.ItemEntityInteractable;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -73,13 +77,24 @@ public class ItemEvents {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
         return;
       }
+      World world = player.getEntityWorld();
       ActionType.setTimeout(held);
       event.setCanceled(true);
       //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
-      if (!player.getEntityWorld().isRemote) { // server side
-        ActionType.toggle(held);
+      if (player.isCrouching()) {
+        //pick out target block
+        BlockState target = world.getBlockState(event.getPos());
+        CompoundNBT encoded = NBTUtil.writeBlockState(target);
+        ActionType.setBlockState(held, encoded);
+        UtilChat.sendStatusMessage(player, target.getBlock().getNameTextComponent());
       }
-      UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
+      else {
+        //change size
+        if (!world.isRemote) {
+          ActionType.toggle(held);
+        }
+        UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
+      }
     }
   }
 }

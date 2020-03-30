@@ -6,12 +6,14 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.net.PacketSwapBlock;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +30,7 @@ public class BuilderItem extends ItemBase {
 
     SINGLE, X3, X5, X7, X9, X91, X19;
 
+    private static final String NBTBLOCKSTATE = "blockstate";
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
 
@@ -75,6 +78,19 @@ public class BuilderItem extends ItemBase {
       tags.putInt(NBT, type);
       wand.setTag(tags);
     }
+
+    public static void setBlockState(ItemStack wand, CompoundNBT encoded) {
+      System.out.println(encoded);
+      wand.getOrCreateTag().put(NBTBLOCKSTATE, encoded);
+    }
+
+    @Nullable
+    public static BlockState getBlockState(ItemStack wand) {
+      if (!wand.getOrCreateTag().contains(NBTBLOCKSTATE)) {
+        return null;
+      }
+      return NBTUtil.readBlockState(wand.getOrCreateTag().getCompound(NBTBLOCKSTATE));
+    }
   }
 
   @Override
@@ -82,6 +98,13 @@ public class BuilderItem extends ItemBase {
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     String msg = TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack));
     tooltip.add(new TranslationTextComponent(msg));
+    //    String bname = ActionType.ge
+    BlockState target = ActionType.getBlockState(stack);
+    String block = "scepter.cyclic.nothing";
+    if (target != null) {
+      block = target.getBlock().getTranslationKey();
+    }
+    tooltip.add(new TranslationTextComponent(TextFormatting.AQUA + UtilChat.lang(block)));
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }
 
