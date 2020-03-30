@@ -56,17 +56,18 @@ public class PacketSwapBlock {
   public static void handle(PacketSwapBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayerEntity player = ctx.get().getSender();
-      BlockPos position = message.pos;
+      //      BlockPos position = message.pos;
       World world = player.getEntityWorld();
       BlockState replacedBlockState;
       BlockState newToPlace;
-      //      IBlockState matched = null;
+      //      IBlockState matched = null; 
       List<BlockPos> places = getSelectedBlocks(world, message.pos, message.actionType, message.side, null);
       Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
       BlockPos curPos;
       synchronized (places) {
         for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
           curPos = i.next();
+          //          ModCyclic.LOGGER.info("EARLY y value of build " + curPos.getY());
           if (processed.containsKey(curPos) == false) {
             processed.put(curPos, 0);
           }
@@ -121,6 +122,7 @@ public class PacketSwapBlock {
           //place item block gets slabs in top instead of bottom. but tries to do facing stairs
           // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
           if (!success) {
+            //            ModCyclic.LOGGER.info("y value of build " + curPos.getY());
             success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
           }
           if (success) {
@@ -208,11 +210,11 @@ public class PacketSwapBlock {
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
     for (BlockPos p : places) {
-      //      if (world.isAirBlock(p) //&& wandType == WandType.MATCH
-      //      ) {
-      //        //cannot match with air
-      //        continue;
-      //      }
+      if (!world.isAirBlock(p) //&& wandType == WandType.MATCH
+      ) {
+        //cannot match with air
+        continue;
+      }
       //      if (wandType == WandType.MATCH && matched != null &&
       //          !UtilWorld.doBlockStatesMatch(matched, world.getBlockState(p))) {
       //        //we have saved the one we clicked on so only that gets replaced

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
@@ -17,8 +18,11 @@ import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.Matrix4f;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -28,6 +32,55 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 
 public class UtilRender {
+
+  /**
+   * Render Type with help from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
+   *
+   */
+  public static class MyRenderType extends RenderType {
+
+    public MyRenderType(String nameIn, VertexFormat formatIn, int drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
+      super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
+      //direwolf20
+    }
+
+    public final static RenderType RenderBlock = makeType("GadgetRenderBlock",
+        DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256,
+        RenderType.State.getBuilder()
+            .shadeModel(SHADE_ENABLED)
+            .lightmap(LIGHTMAP_ENABLED)
+            .texture(BLOCK_SHEET_MIPPED)
+            .layer(PROJECTION_LAYERING)
+            .transparency(TRANSLUCENT_TRANSPARENCY)
+            .depthTest(DEPTH_LEQUAL)
+            .cull(CULL_DISABLED)
+            .writeMask(COLOR_DEPTH_WRITE)
+            .build(false));
+  }
+
+  /**
+   * This block-rendering function from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
+   *
+   */
+  public static void renderModelBrightnessColorQuads(MatrixStack.Entry matrixEntry, IVertexBuilder builder, float red, float green, float blue, float alpha, List<BakedQuad> quads,
+      int combinedLights, int combinedOverlay) {
+    for (BakedQuad bakedquad : quads) {
+      float r;
+      float g;
+      float b;
+      if (bakedquad.hasTintIndex()) {
+        r = red * 1f;
+        g = green * 1f;
+        b = blue * 1f;
+      }
+      else {
+        r = 1f;
+        g = 1f;
+        b = 1f;
+      }
+      builder.addVertexData(matrixEntry, bakedquad, r, g, b, alpha, combinedLights, combinedOverlay);
+    }
+  }
 
   public static class LaserConfig {
 

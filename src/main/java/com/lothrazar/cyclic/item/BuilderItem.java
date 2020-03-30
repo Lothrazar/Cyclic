@@ -107,10 +107,27 @@ public class BuilderItem extends ItemBase {
     //      pos = pos.offset(side);
     //    }
     if (context.getWorld().isRemote) {
-      ActionType type = ActionType.values()[ActionType.get(stack)];
+      ActionType type = getActionType(stack);
       PacketSwapBlock message = new PacketSwapBlock(pos, type, side, context.getHand());
       PacketRegistry.INSTANCE.sendToServer(message);
     }
     return super.onItemUse(context);
+  }
+
+  public static ActionType getActionType(ItemStack stack) {
+    ActionType type = ActionType.values()[ActionType.get(stack)];
+    return type;
+  }
+
+  public static ItemStack getIfHeld(PlayerEntity player) {
+    ItemStack heldItem = player.getHeldItemMainhand();
+    if (heldItem.getItem() instanceof BuilderItem) {
+      return heldItem;
+    }
+    heldItem = player.getHeldItemOffhand();
+    if (heldItem.getItem() instanceof BuilderItem) {
+      return heldItem;
+    }
+    return ItemStack.EMPTY;
   }
 }

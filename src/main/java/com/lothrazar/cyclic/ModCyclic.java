@@ -3,6 +3,7 @@ package com.lothrazar.cyclic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclic.event.ClientInputEvents;
+import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
 import com.lothrazar.cyclic.registry.CuriosRegistry;
@@ -25,7 +26,7 @@ public class ModCyclic {
   public static final String certificateFingerprint = "@FINGERPRINT@";
   public static final IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
   public static final String MODID = "cyclic";
-  private static final Logger LOGGER = LogManager.getLogger();
+  public static final Logger LOGGER = LogManager.getLogger();
   public static ConfigManager config;
 
   public ModCyclic() {
@@ -43,6 +44,7 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
+    MinecraftForge.EVENT_BUS.register(new EventRender());
   }
 
   public static void error(String s, Object... list) {
