@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -167,5 +168,20 @@ public class UtilWorld {
       }
     }
     return found;
+  }
+
+  public static List<BlockPos> getPositionsInRange(BlockPos pos, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
+    List<BlockPos> found = new ArrayList<BlockPos>();
+    for (int x = xMin; x <= xMax; x++)
+      for (int y = yMin; y <= yMax; y++)
+        for (int z = zMin; z <= zMax; z++) {
+          found.add(new BlockPos(x, y, z));
+        }
+    return found;
+  }
+
+  public static boolean doBlockStatesMatch(BlockState replacedBlockState, BlockState newToPlace) {
+    //    replacedBlockState.eq?
+    return replacedBlockState.equals(newToPlace);
   }
 }

@@ -39,8 +39,6 @@ public class EnchantRegistry {
   public static EnchantMultishot multishot;
   @ObjectHolder(ModCyclic.MODID + ":quickshot")
   public static Enchantment quickshot;
-  //  @ObjectHolder(ModCyclic.MODID + ":smelting")
-  //  public static EnchantAutoSmelt smelting;
   @ObjectHolder(ModCyclic.MODID + ":reach")
   public static EnchantReach reach;
   @ObjectHolder(ModCyclic.MODID + ":venom")

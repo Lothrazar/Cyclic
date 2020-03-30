@@ -7,9 +7,9 @@ public interface IProxy {
 
   void setup();
 
-  World getClientWorld();
-
   PlayerEntity getClientPlayer();
+
+  World getClientWorld();
 
   void setPlayerReach(PlayerEntity player, int currentReach);
 }

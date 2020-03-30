@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.net.PacketItemToggle;
 import com.lothrazar.cyclic.net.PacketMoveBlock;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.net.PacketScythe;
+import com.lothrazar.cyclic.net.PacketSwapBlock;
 import com.lothrazar.cyclic.net.PacketTileData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -32,5 +33,6 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketTileData.class, PacketTileData::encode, PacketTileData::decode, PacketTileData::handle);
     INSTANCE.registerMessage(id++, PacketFluidSync.class, PacketFluidSync::encode, PacketFluidSync::decode, PacketFluidSync::handle);
     INSTANCE.registerMessage(id++, PacketChestSack.class, PacketChestSack::encode, PacketChestSack::decode, PacketChestSack::handle);
+    INSTANCE.registerMessage(id++, PacketSwapBlock.class, PacketSwapBlock::encode, PacketSwapBlock::decode, PacketSwapBlock::handle);
   }
 }

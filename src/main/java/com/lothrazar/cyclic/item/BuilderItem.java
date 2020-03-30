@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.item;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.net.PacketSwapBlock;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -99,11 +101,15 @@ public class BuilderItem extends ItemBase {
     ItemStack stack = context.getItem();
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
-    if (side != null) {
-      pos = pos.offset(side);
-    }
+    //TODO: INSIDE building no offset
+    // on top of selected = do offset
+    //    if (side != null) {
+    //      pos = pos.offset(side);
+    //    }
     if (context.getWorld().isRemote) {
-      //      PacketRegistry.INSTANCE.sendToServer(message);
+      ActionType type = ActionType.values()[ActionType.get(stack)];
+      PacketSwapBlock message = new PacketSwapBlock(pos, type, side, context.getHand());
+      PacketRegistry.INSTANCE.sendToServer(message);
     }
     return super.onItemUse(context);
   }
