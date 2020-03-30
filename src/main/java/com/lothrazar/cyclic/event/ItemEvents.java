@@ -9,8 +9,6 @@ import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -84,8 +82,7 @@ public class ItemEvents {
       if (player.isCrouching()) {
         //pick out target block
         BlockState target = world.getBlockState(event.getPos());
-        CompoundNBT encoded = NBTUtil.writeBlockState(target);
-        ActionType.setBlockState(held, encoded);
+        ActionType.setBlockState(held, target);
         UtilChat.sendStatusMessage(player, target.getBlock().getNameTextComponent());
       }
       else {

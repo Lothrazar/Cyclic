@@ -26,6 +26,7 @@
     
     "item.cyclic.build_scepter":"Building Scepter",
     "scepter.cyclic.nothing":"Sneak-left-click to pick block",
+    "scepter.cyclic.empty":"Out of materials",
     
     "builder.toggle": "Toggle",
     "buildertype.circle": "Circle",
@@ -489,12 +490,7 @@
     "item.cyclic.spelunker.guide": "Searches out for empty space behind the block you click on.  Works in any direction.  If you hit the top of a block it searches down, if you hit the side it searches behind.  Always in a straight line.  Great for finding caves while branch mining.",
     "item.cyclic.spelunker": "Cavefinder",
     "item.cyclic.spelunker.tooltip": "Search for underground caves",
-    "item.cyclic.swap.guide": "Exchange the blocks selected with ones in your inventory.",
-    "item.cyclic.swap": "Standard Exchange Scepter",
-    "item.cyclic.swap.tooltip": "Replaces blocks and air with your inventory contents. Left click to change size",
-    "item.cyclic.swap_match.guide": "Exchange the blocks selected with ones in your inventory.  Only replaces blocks that match with the targeted center block.",
-    "item.cyclic.swap_match": "Gentle Exchange Scepter",
-    "item.cyclic.swap_match.tooltip": "Replaces blocks that match the target. Left click to change size",
+  
     "item.cyclic.torch_launcher": "Torch launcher",
     "item.cyclic.torch_launcher.tooltip": "Spawns in a torch wherever it lands",
     "item.cyclic.trade.guide": "Use near a villager for an advanced trading menu.  Has convenience buttons that perform one trade with each click.  Fully respects all villager trading rules, mechanics, locks, and unlocks.",

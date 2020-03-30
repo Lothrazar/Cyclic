@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
@@ -16,14 +15,14 @@ public class UtilPlayer {
     return wand;
   }
 
-  public static int getFirstSlotWithBlock(PlayerEntity player) {
+  public static int getFirstSlotWithBlock(PlayerEntity player, BlockState targetState) {
     int ret = -1;
     ItemStack stack;
-    for (int i = 9; i < 36; i++) {
+    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
       stack = player.inventory.getStackInSlot(i);
       if (!stack.isEmpty() &&
           stack.getItem() != null &&
-          Block.getBlockFromItem(stack.getItem()) != Blocks.AIR) {
+          Block.getBlockFromItem(stack.getItem()) == targetState.getBlock()) {
         return i;
       }
     }

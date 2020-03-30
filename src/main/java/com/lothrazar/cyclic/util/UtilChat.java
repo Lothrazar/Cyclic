@@ -17,11 +17,10 @@ public class UtilChat {
     return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
   }
 
-  //sendStatusMessage
   public static void sendStatusMessage(PlayerEntity player, String message) {
-    if (player.world.isRemote) {
-      player.sendStatusMessage(new TranslationTextComponent(message), true);
-    }
+    //    if (player.world.isRemote) {
+    player.sendStatusMessage(new TranslationTextComponent(message), true);
+    //    }
   }
 
   public static void sendStatusMessage(PlayerEntity player, ITextComponent nameTextComponent) {

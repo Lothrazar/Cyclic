@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.BuilderItem;
 import com.lothrazar.cyclic.item.BuilderItem.ActionType;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilPlayer;
@@ -56,6 +57,10 @@ public class PacketSwapBlock {
   public static void handle(PacketSwapBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayerEntity player = ctx.get().getSender();
+      BlockState targetState = BuilderItem.ActionType.getBlockState(player.getHeldItem(message.hand));
+      if (targetState == null) {
+        return;
+      }
       //      BlockPos position = message.pos;
       World world = player.getEntityWorld();
       BlockState replacedBlockState;
@@ -75,8 +80,9 @@ public class PacketSwapBlock {
             continue; //dont process the same location more than once per click
           }
           processed.put(curPos, processed.get(curPos) + 1);// ++
-          int slot = UtilPlayer.getFirstSlotWithBlock(player);
+          int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
+            UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
             continue;//you have no materials left
           }
           if (world.getTileEntity(curPos) != null) {

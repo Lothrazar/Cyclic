@@ -10,7 +10,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -45,6 +44,10 @@ public class EventRender {
     if (stack.isEmpty()) {
       return;
     }
+    BlockState renderBlockState = BuilderItem.ActionType.getBlockState(stack);
+    if (renderBlockState == null) {
+      return;
+    }
     //render 
     Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
     //
@@ -74,7 +77,6 @@ public class EventRender {
     //    int g = RGB[1];
     //    int b = RGB[2];
     //    BuilderItem.get
-    BlockState renderBlockState = Blocks.COBBLESTONE.getDefaultState();
     for (BlockPos coordinate : coordinates) {
       float x = coordinate.getX();
       float y = coordinate.getY();

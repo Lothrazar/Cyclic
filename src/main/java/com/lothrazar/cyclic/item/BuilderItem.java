@@ -79,8 +79,8 @@ public class BuilderItem extends ItemBase {
       wand.setTag(tags);
     }
 
-    public static void setBlockState(ItemStack wand, CompoundNBT encoded) {
-      System.out.println(encoded);
+    public static void setBlockState(ItemStack wand, BlockState target) {
+      CompoundNBT encoded = NBTUtil.writeBlockState(target);
       wand.getOrCreateTag().put(NBTBLOCKSTATE, encoded);
     }
 
