@@ -24,6 +24,8 @@
 	"gui.cyclic.flowing1":"Exporting Power",
     
     
+    "item.cyclic.build_scepter":"Building Scepter",
+    
     "builder.toggle": "Toggle",
     "buildertype.circle": "Circle",
     "buildertype.cup": "Cup",

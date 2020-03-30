@@ -86,7 +86,7 @@ public class BuilderItem extends ItemBase {
   }
 
   public BuilderItem(Properties properties) {
-    super(properties);
+    super(properties.maxStackSize(1));
   }
 
   @Override

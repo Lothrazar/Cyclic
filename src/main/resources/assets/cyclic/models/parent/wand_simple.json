@@ -1,7 +1,7 @@
 {
     "textures": {
-        "2": "blocks/anvil_base",
-        "1": "blocks/obsidian"
+        "2": "minecraft:block/stone",
+        "1": "minecraft:block/obsidian"
     },
     "elements": [
         {

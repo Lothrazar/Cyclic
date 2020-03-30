@@ -62,7 +62,7 @@ public class ItemEvents {
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     PlayerEntity player = event.getPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
-    if (!held.isEmpty() && held.getItem() == ItemRegistry.scepter_build) {
+    if (!held.isEmpty() && held.getItem() == ItemRegistry.build_scepter) {
       //      if (event.getFace() != null && player.isSneaking()) {
       //        //hita block
       //        IBlockState hit = player.world.getBlockState(event.getPos());

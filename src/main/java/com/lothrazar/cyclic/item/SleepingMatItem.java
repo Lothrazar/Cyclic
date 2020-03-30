@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 public class SleepingMatItem extends ItemBase {
 
   public SleepingMatItem(Properties properties) {
-    super(properties);
+    super(properties.maxStackSize(1));
   }
 
   @Override

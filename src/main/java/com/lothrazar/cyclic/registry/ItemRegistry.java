@@ -65,8 +65,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
-  @ObjectHolder(ModCyclic.MODID + ":scepter_build")
-  public static Item scepter_build;
+  @ObjectHolder(ModCyclic.MODID + ":build_scepter")
+  public static Item build_scepter;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
   public static Item spawner_seeker;
   @ObjectHolder(ModCyclic.MODID + ":gem_obsidian")
@@ -226,6 +226,6 @@ public class ItemRegistry {
     //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_lightning"));
     r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("spawner_seeker"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
-    r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("scepter_build"));
+    r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("build_scepter"));
   }
 }
