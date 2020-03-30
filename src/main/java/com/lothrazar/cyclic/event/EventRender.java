@@ -49,7 +49,7 @@ public class EventRender {
     Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
     //
     double range = 6F;
-    BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, true);
+    BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, false);
     if (world.isAirBlock(lookingAt.getPos())) {
       return;
     }

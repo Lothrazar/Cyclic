@@ -210,8 +210,12 @@ public class PacketSwapBlock {
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
     for (BlockPos p : places) {
-      if (!world.isAirBlock(p) //&& wandType == WandType.MATCH
+      if (
+      //!world.isAirBlock(p) ||
+      !world.getBlockState(p).getMaterial().isReplaceable()
+      //&& wandType == WandType.MATCH
       ) {
+        //if its either not-air OR not-replaceable
         //cannot match with air
         continue;
       }
