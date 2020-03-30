@@ -57,10 +57,11 @@ public class EventRender {
     if (world.isAirBlock(lookingAt.getPos())) {
       return;
     }
-    //    List<BlockPos> places = PacketSwapBlock.getSelectedBlocks(world, lookingAt.getPos(),
-    //        ActionType.values()[ActionType.get(stack)],
-    //        lookingAt.getFace(), null);
-    //
+    BlockPos pos = lookingAt.getPos();
+    if (buildStyle.isOffset() && lookingAt.getFace() != null) {
+      //
+      pos = pos.offset(lookingAt.getFace());
+    }
     MatrixStack matrix = evt.getMatrixStack();
     Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
@@ -70,7 +71,7 @@ public class EventRender {
     Vec3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
     //    ModCyclic.LOGGER.info(" lookingAt.getPos() " + lookingAt.getPos());
-    List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, lookingAt.getPos(), BuilderItem.getActionType(stack), lookingAt.getFace(), buildStyle);
+    List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getFace(), buildStyle);
     ///
     //    builder.pos
     //    int[] RGB = new int[] { 75, 0, 130 };

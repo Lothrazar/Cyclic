@@ -28,10 +28,14 @@ public class BuilderItem extends ItemBase {
 
   public enum BuildStyle {
 
-    NORMAL, REPLACE;
+    NORMAL, REPLACE, OFFSET;
 
     public boolean isReplaceable() {
       return this == REPLACE;
+    }
+
+    public boolean isOffset() {
+      return this == OFFSET;
     }
   }
 
@@ -131,16 +135,17 @@ public class BuilderItem extends ItemBase {
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
+    //    PlayerEntity player = context.getPlayer();
     //
     ItemStack stack = context.getItem();
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
+    BuilderItem.BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
     //TODO: INSIDE building no offset
     // on top of selected = do offset
-    //    if (side != null) {
-    //      pos = pos.offset(side);
-    //    }
+    if (side != null && buildStyle.isOffset()) {
+      pos = pos.offset(side);
+    }
     if (context.getWorld().isRemote) {
       ActionType type = getActionType(stack);
       PacketSwapBlock message = new PacketSwapBlock(pos, type, side, context.getHand());
