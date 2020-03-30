@@ -223,10 +223,11 @@ public class PacketSwapBlock {
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
     for (BlockPos p : places) {
-      if (!world.getBlockState(p).getMaterial().isReplaceable()
-          && style.isReplaceable()) {
-        //i am not replaceable, AND i am normal type not replace
-        continue;
+      if (!world.getBlockState(p).getMaterial().isReplaceable()) {
+        //i am not replaceable. so i am a solid block or somethign
+        if (!style.isReplaceable()) {
+          continue;
+        }
       }
       //      if (wandType == WandType.MATCH && matched != null &&
       //          !UtilWorld.doBlockStatesMatch(matched, world.getBlockState(p))) {
