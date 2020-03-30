@@ -26,6 +26,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BuilderItem extends ItemBase {
 
+  public enum BuildStyle {
+
+    NORMAL, REPLACE;
+
+    public boolean isReplaceable() {
+      return this == REPLACE;
+    }
+  }
+
   public enum ActionType {
 
     SINGLE, X3, X5, X7, X9, X91, X19;
@@ -93,6 +102,13 @@ public class BuilderItem extends ItemBase {
     }
   }
 
+  public BuildStyle style;
+
+  public BuilderItem(Properties properties, BuildStyle t) {
+    super(properties.maxStackSize(1));
+    style = t;
+  }
+
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
@@ -106,10 +122,6 @@ public class BuilderItem extends ItemBase {
     }
     tooltip.add(new TranslationTextComponent(TextFormatting.AQUA + UtilChat.lang(block)));
     super.addInformation(stack, worldIn, tooltip, flagIn);
-  }
-
-  public BuilderItem(Properties properties) {
-    super(properties.maxStackSize(1));
   }
 
   @Override

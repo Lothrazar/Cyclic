@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.item.BuilderItem;
 import com.lothrazar.cyclic.item.BuilderItem.ActionType;
 import com.lothrazar.cyclic.item.ItemEntityInteractable;
-import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
@@ -64,7 +64,7 @@ public class ItemEvents {
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     PlayerEntity player = event.getPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
-    if (!held.isEmpty() && held.getItem() == ItemRegistry.build_scepter) {
+    if (!held.isEmpty() && held.getItem() instanceof BuilderItem) {
       //      if (event.getFace() != null && player.isSneaking()) {
       //        //hita block
       //        IBlockState hit = player.world.getBlockState(event.getPos());

@@ -41,9 +41,10 @@ public class EventRender {
     }
     World world = player.world;
     ItemStack stack = BuilderItem.getIfHeld(player);
-    if (stack.isEmpty()) {
+    if (stack.isEmpty() || stack.getItem() instanceof BuilderItem == false) {
       return;
     }
+    BuilderItem.BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
     BlockState renderBlockState = BuilderItem.ActionType.getBlockState(stack);
     if (renderBlockState == null) {
       return;
@@ -69,7 +70,7 @@ public class EventRender {
     Vec3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
     //    ModCyclic.LOGGER.info(" lookingAt.getPos() " + lookingAt.getPos());
-    List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, lookingAt.getPos(), BuilderItem.getActionType(stack), lookingAt.getFace(), null);
+    List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, lookingAt.getPos(), BuilderItem.getActionType(stack), lookingAt.getFace(), buildStyle);
     ///
     //    builder.pos
     //    int[] RGB = new int[] { 75, 0, 130 };

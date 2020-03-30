@@ -57,16 +57,18 @@ public class PacketSwapBlock {
   public static void handle(PacketSwapBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayerEntity player = ctx.get().getSender();
-      BlockState targetState = BuilderItem.ActionType.getBlockState(player.getHeldItem(message.hand));
-      if (targetState == null) {
+      ItemStack itemStackHeld = player.getHeldItem(message.hand);
+      BlockState targetState = BuilderItem.ActionType.getBlockState(itemStackHeld);
+      if (targetState == null || itemStackHeld.getItem() instanceof BuilderItem == false) {
         return;
       }
+      BuilderItem.BuildStyle buildStyle = ((BuilderItem) itemStackHeld.getItem()).style;
       //      BlockPos position = message.pos;
       World world = player.getEntityWorld();
       BlockState replacedBlockState;
-      BlockState newToPlace;
+      //      BlockState newToPlace;
       //      IBlockState matched = null; 
-      List<BlockPos> places = getSelectedBlocks(world, message.pos, message.actionType, message.side, null);
+      List<BlockPos> places = getSelectedBlocks(world, message.pos, message.actionType, message.side, buildStyle);
       Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
       BlockPos curPos;
       synchronized (places) {
@@ -80,11 +82,25 @@ public class PacketSwapBlock {
             continue; //dont process the same location more than once per click
           }
           processed.put(curPos, processed.get(curPos) + 1);// ++
+          ItemStack stackBuildWith = ItemStack.EMPTY;
           int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
-            UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
-            continue;//you have no materials left
+            //nothign found. is that ok?
+            if (!player.isCreative()) {
+              UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
+              return;//you have no materials left
+            }
           }
+          else {
+            //i am survival AND have a valid slot
+            stackBuildWith = player.inventory.getStackInSlot(slot);
+          }
+          //          if (stackBuildWith.isEmpty() || stackBuildWith.getCount() <= 0) {
+          //            if (!player.isCreative()) {
+          //              UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
+          //              return;//you have no materials left
+          //            }
+          //          }
           if (world.getTileEntity(curPos) != null) {
             continue;//ignore tile entities IE do not break chests / etc
           }
@@ -106,26 +122,21 @@ public class PacketSwapBlock {
           if (UtilItemStack.getBlockHardness(replacedBlockState, world, curPos) < 0) {
             continue;//since we know -1 is unbreakable
           }
-          newToPlace = UtilPlayer.getBlockstateFromSlot(player, slot);
+          //          newToPlace = UtilPlayer.getBlockstateFromSlot(player, slot);
           //wait, do they match? are they the same? do not replace myself
-          if (UtilWorld.doBlockStatesMatch(replacedBlockState, newToPlace)) {
+          if (UtilWorld.doBlockStatesMatch(replacedBlockState, targetState)) {
             continue;
           }
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
-          ItemStack stackBuildWith = player.inventory.getStackInSlot(slot);
-          if (stackBuildWith.isEmpty() || stackBuildWith.getCount() <= 0) {
-            continue;
-          }
           world.setBlockState(curPos, Blocks.AIR.getDefaultState());
           boolean success = false;
-          ItemStack itemStackHeld = player.getHeldItem(message.hand);
           //TODO: maybe toggle between
           //place item block gets slabs in top instead of bottom. but tries to do facing stairs
           // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
           if (!success) {
             //            ModCyclic.LOGGER.info("y value of build " + curPos.getY());
-            success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
+            success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, targetState);
           }
           if (success) {
             UtilPlayer.decrStackSize(player, slot);
@@ -134,17 +145,17 @@ public class PacketSwapBlock {
             world.playEvent(2001, curPos, Block.getStateId(replacedBlockState));
             //always break with PLAYER CONTEXT in mind
             replacedBlock.harvestBlock(world, player, curPos, replacedBlockState, null, itemStackHeld);
-            ItemStack held = player.getHeldItem(message.hand);
-            if (!held.isEmpty() && held.getItem() instanceof BuilderItem) {
-              //              UtilItemStack.damageItem(player, held);
-            }
+            //            ItemStack held = player.getHeldItem(message.hand);
+            //            if (!held.isEmpty() && held.getItem() instanceof BuilderItem) {
+            //              //              UtilItemStack.damageItem(player, held);
+            //            }
           }
         } // close off the for loop   
       }
     });
   }
 
-  public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, ActionType actionType, Direction side, BlockState matched) {
+  public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, ActionType actionType, Direction side, BuilderItem.BuildStyle style) {
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = pos.getX();
     int yMin = pos.getY();
@@ -212,13 +223,9 @@ public class PacketSwapBlock {
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
     for (BlockPos p : places) {
-      if (
-      //!world.isAirBlock(p) ||
-      !world.getBlockState(p).getMaterial().isReplaceable()
-      //&& wandType == WandType.MATCH
-      ) {
-        //if its either not-air OR not-replaceable
-        //cannot match with air
+      if (!world.getBlockState(p).getMaterial().isReplaceable()
+          && style.isReplaceable()) {
+        //i am not replaceable, AND i am normal type not replace
         continue;
       }
       //      if (wandType == WandType.MATCH && matched != null &&
