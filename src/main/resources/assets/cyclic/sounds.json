@@ -30,7 +30,7 @@
 	"metal_pitch"  : {"category" : "player", "sounds" : [{"name":"cyclic:metal_pitch"}]},
 	"pew_long"	   : {"category" : "player", "sounds" : [{"name":"cyclic:pew_long"}]},
 	"pschew_fire"  : {"category" : "player", "sounds" : [{"name":"cyclic:pschew_fire"}]},
-	"block_scaffolding"  		: {"category" : "player", "sounds" : [{"name":"cyclic:block_scaffolding_0"},{"name":"cyclic:block_scaffolding_1"}]}         ,
+	"block_scaffolding_0"  		: {"category" : "player", "sounds" : [{"name":"cyclic:block_scaffolding_0"},{"name":"cyclic:block_scaffolding_1"}]}         ,
 	"chaos_reaper"  		    : {"category" : "player", "sounds" : [{"name":"cyclic:chaos_reaper"}]}                ,
 	"fireball_explode"  		: {"category" : "player", "sounds" : [{"name":"cyclic:fireball_explode"}]}            ,
 	"fireball_staff_launch"  	: {"category" : "player", "sounds" : [{"name":"cyclic:fireball_staff_launch"}]}       ,
