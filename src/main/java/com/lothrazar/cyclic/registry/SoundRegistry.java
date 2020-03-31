@@ -16,8 +16,8 @@ public class SoundRegistry {
 
   private static List<SoundEvent> sounds = new ArrayList<>();
   public static SoundEvent block_scaffolding_0 = make("block_scaffolding_0");
-  //  public static SoundEvent block_scaffolding_1 = make("block_scaffolding_1");
-  public static SoundType SCAFFOLD = new SoundType(1.0F, 1.0F, block_scaffolding_0, block_scaffolding_0, block_scaffolding_0, block_scaffolding_0, block_scaffolding_0);
+  public static SoundEvent block_scaffolding_1 = make("block_scaffolding_1");
+  public static SoundType SCAFFOLD = new SoundType(1.0F, 1.0F, block_scaffolding_0, block_scaffolding_1, block_scaffolding_0, block_scaffolding_1, block_scaffolding_1);
 
   private static SoundEvent make(String s) {
     SoundEvent se = new SoundEvent(new ResourceLocation(ModCyclic.MODID, s));
