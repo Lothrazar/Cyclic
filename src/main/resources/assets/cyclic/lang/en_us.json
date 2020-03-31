@@ -24,9 +24,13 @@
 	"gui.cyclic.flowing1":"Exporting Power",
     
     
-    "item.cyclic.build_scepter":"Building Scepter",
+    "item.cyclic.build_scepter":"Building Scepter (fill)",
+    "item.cyclic.offset_scepter":"Building Scepter (place)",
+    "item.cyclic.replace_scepter":"Building Scepter (exchange)",
     "scepter.cyclic.nothing":"Sneak-left-click to pick block",
     "scepter.cyclic.empty":"Out of materials",
+    "item.cyclic.randomize_scepter":"Block Randomizer",
+    "item.cyclic.randomize_scepter.tooltip":"Randomly shuffle around the blocks in a 5x5x1 area around the target block",
     
     "builder.toggle": "Toggle",
     "buildertype.circle": "Circle",
@@ -217,9 +221,8 @@
     "item.carbon_paper": "Carbon Paper",
     "item.carbon_paper.note": "Note:",
     "item.carbon_paper.tooltip": "Use to copy a sign or noteblock",
-    "item.charm_air.guide": "Use this to walk on air.  Right click in your inventory to turn it off.  Compatible with baubles API.",
-    "item.charm_air": "Air Charm",
-    "item.charm_air.tooltip": "Walk on air; Sneak to descend.",
+    "item.cyclic.antigravity": "Anti-gravity Ring",
+    "item.cyclic.antigravity.tooltip": "Ignore gravity and walk on air",
     "item.cyclic.charm_antidote": "Antidote Charm",
     "item.cyclic.charm_antidote.tooltip": "Poison protection",
     "item.cyclic.charm_wither": "Wither Charm",

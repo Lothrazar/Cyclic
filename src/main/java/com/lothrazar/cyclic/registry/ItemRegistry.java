@@ -17,6 +17,7 @@ import com.lothrazar.cyclic.item.IceWand;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MattockItem;
 import com.lothrazar.cyclic.item.PeatItem;
+import com.lothrazar.cyclic.item.RandomizerItem;
 import com.lothrazar.cyclic.item.ShearsMaterial;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.StirrupsItem;
@@ -24,6 +25,7 @@ import com.lothrazar.cyclic.item.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.TileTransporterItem;
 import com.lothrazar.cyclic.item.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.WrenchItem;
+import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmAntidote;
 import com.lothrazar.cyclic.item.bauble.CharmFire;
@@ -66,6 +68,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  @ObjectHolder(ModCyclic.MODID + ":antigravity")
+  public static Item antigravity;
   @ObjectHolder(ModCyclic.MODID + ":build_scepter")
   public static Item build_scepter;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
@@ -230,5 +234,8 @@ public class ItemRegistry {
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.NORMAL).setRegistryName("build_scepter"));
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.REPLACE).setRegistryName("replace_scepter"));
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.OFFSET).setRegistryName("offset_scepter"));
+    r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("randomize_scepter"));
+    //air charm
+    r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024)).setRegistryName("antigravity"));
   }
 }

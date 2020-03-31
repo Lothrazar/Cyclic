@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "r r",
+    "id ",
+    "iir"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:bone_block"
+    },
+    "d": {
+      "item": "cyclic:gem_obsidian"
+    },
+    "r": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "result": {
+    "item": "cyclic:antigravity",
+    "count": 1
+  }
+}

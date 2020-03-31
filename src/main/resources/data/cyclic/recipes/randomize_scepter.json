@@ -1,23 +1,26 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " gi",
+    "pgi",
     " ig",
-    "o  "
+    "o p"
   ],
   "key": {
+    "p": {
+      "item": "minecraft:purple_dye"
+    },
     "i": {
       "item": "minecraft:iron_ingot"
     },
     "g": {
-      "item": "minecraft:lapis_block"
+      "item": "minecraft:redstone"
     },
     "o": {
       "item": "cyclic:gem_amber"
     }
   },
   "result": {
-    "item": "cyclic:build_scepter",
+    "item": "cyclic:randomize_scepter",
     "count": 1
   }
 }

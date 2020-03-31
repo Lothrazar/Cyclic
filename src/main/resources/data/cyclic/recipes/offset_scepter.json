@@ -10,14 +10,14 @@
       "item": "minecraft:iron_ingot"
     },
     "g": {
-      "item": "minecraft:lapis_block"
+      "item": "minecraft:emerald"
     },
     "o": {
       "item": "cyclic:gem_amber"
     }
   },
   "result": {
-    "item": "cyclic:build_scepter",
+    "item": "cyclic:offset_scepter",
     "count": 1
   }
 }
