@@ -45,13 +45,11 @@ public class PacketRandomize {
       BlockState stateHere = null;
       for (BlockPos p : places) {
         stateHere = world.getBlockState(p);
-        if (stateHere.getBlock().getBlockHardness(stateHere, world, p) < 0) {
-          continue;//skip unbreakable
-        }
-        if (stateHere != null
-            && world.getTileEntity(p) == null
-            && world.isAirBlock(p) == false
-            && stateHere.getMaterial().isLiquid() == false) {
+        boolean canMove = RandomizerItem.canMove(stateHere, world, p);
+        //        if (stateHere.getBlock().getBlockHardness(stateHere, world, p) < 0) {
+        //          continue;//skip unbreakable
+        //        }
+        if (canMove) {
           //removed world.isSideSolid(p, message.side) && as it was blocking stairs/slabs from moving
           rpos.add(p);
           rstates.add(stateHere);

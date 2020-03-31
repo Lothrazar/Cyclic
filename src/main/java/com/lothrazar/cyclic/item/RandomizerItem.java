@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.net.PacketRandomize;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class RandomizerItem extends ItemBase {
 
@@ -22,6 +24,18 @@ public class RandomizerItem extends ItemBase {
   public RandomizerItem(Properties properties) {
     super(properties.maxStackSize(1));
     CatEntity x;
+  }
+
+  public static ItemStack getIfHeld(PlayerEntity player) {
+    ItemStack heldItem = player.getHeldItemMainhand();
+    if (heldItem.getItem() instanceof RandomizerItem) {
+      return heldItem;
+    }
+    heldItem = player.getHeldItemOffhand();
+    if (heldItem.getItem() instanceof RandomizerItem) {
+      return heldItem;
+    }
+    return ItemStack.EMPTY;
   }
 
   @Override
@@ -78,5 +92,17 @@ public class RandomizerItem extends ItemBase {
       places = UtilWorld.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
     }
     return places;
+  }
+
+  public static boolean canMove(BlockState stateHere, World world, BlockPos p) {
+    if (stateHere.getBlock().getBlockHardness(stateHere, world, p) < 0) {
+      return false;//unbreakable
+    }
+    if (world.getTileEntity(p) == null
+        && world.isAirBlock(p) == false
+        && stateHere.getMaterial().isLiquid() == false) {
+      return true;
+    }
+    return false;
   }
 }

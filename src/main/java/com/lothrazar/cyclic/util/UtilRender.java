@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import java.awt.Color;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,18 +34,52 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class UtilRender {
 
+  public static void renderCube(Matrix4f matrix, IVertexBuilder builder, BlockPos pos, Color color) {
+    float red = color.getRed() / 255f, green = color.getGreen() / 255f, blue = color.getBlue() / 255f, alpha = .125f;
+    float startX = 0, startY = 0, startZ = -1, endX = 1, endY = 1, endZ = 0;
+    //down
+    builder.pos(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    //up
+    builder.pos(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    //east
+    builder.pos(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    //west
+    builder.pos(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    //south
+    builder.pos(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    //north
+    builder.pos(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.pos(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
+  }
+
   /**
-   * Render Type with help from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
+   * Render Types with help from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
    *
    */
   public static class MyRenderType extends RenderType {
 
     public MyRenderType(String nameIn, VertexFormat formatIn, int drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
       super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
-      //direwolf20
     }
 
-    public final static RenderType RenderBlock = makeType("GadgetRenderBlock",
+    public final static RenderType FAKE_BLOCK = makeType("fakeBlock",
         DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256,
         RenderType.State.getBuilder()
             .shadeModel(SHADE_ENABLED)
@@ -54,6 +89,17 @@ public class UtilRender {
             .transparency(TRANSLUCENT_TRANSPARENCY)
             .depthTest(DEPTH_LEQUAL)
             .cull(CULL_DISABLED)
+            .writeMask(COLOR_DEPTH_WRITE)
+            .build(false));
+    public static final RenderType TRANSPARENT_SOLID_COLOUR = makeType("transparentColour",
+        DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256,
+        RenderType.State.getBuilder()
+            .layer(PROJECTION_LAYERING)
+            .transparency(TRANSLUCENT_TRANSPARENCY)
+            .texture(NO_TEXTURE)
+            .depthTest(DEPTH_LEQUAL)
+            .cull(CULL_ENABLED)
+            .lightmap(LIGHTMAP_DISABLED)
             .writeMask(COLOR_DEPTH_WRITE)
             .build(false));
   }

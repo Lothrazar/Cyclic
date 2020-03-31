@@ -1,18 +1,24 @@
 package com.lothrazar.cyclic.event;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.BuilderItem;
+import com.lothrazar.cyclic.item.RandomizerItem;
 import com.lothrazar.cyclic.net.PacketSwapBlock;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Matrix4f;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,11 +45,50 @@ public class EventRender {
     if (player == null) {
       return;
     }
-    World world = player.world;
     ItemStack stack = BuilderItem.getIfHeld(player);
-    if (stack.isEmpty() || stack.getItem() instanceof BuilderItem == false) {
+    if (stack.getItem() instanceof BuilderItem) {
+      builderItemRender(evt, player, stack);
+    }
+    stack = RandomizerItem.getIfHeld(player);
+    if (stack.getItem() instanceof RandomizerItem) {
+      randomizerItemRender(evt, player, stack);
+    }
+  }
+
+  private void randomizerItemRender(RenderWorldLastEvent evt, PlayerEntity player, ItemStack stack) {
+    World world = player.world;
+    final Minecraft mc = Minecraft.getInstance();
+    IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+    int range = 5;
+    BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, false);
+    if (world.getBlockState(lookingAt.getPos()) == Blocks.AIR.getDefaultState()) {
       return;
     }
+    List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getPos(), lookingAt.getFace());
+    Vec3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+    MatrixStack matrix = evt.getMatrixStack();
+    matrix.push();
+    matrix.translate(-view.getX(), -view.getY(), -view.getZ());
+    IVertexBuilder builder;
+    builder = buffer.getBuffer(UtilRender.MyRenderType.TRANSPARENT_SOLID_COLOUR);
+    for (BlockPos e : coords) {
+      matrix.push();
+      matrix.translate(e.getX(), e.getY(), e.getZ());
+      matrix.translate(-0.005f, -0.005f, -0.005f);
+      matrix.scale(1.01f, 1.01f, 1.01f);
+      matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
+      Matrix4f positionMatrix = matrix.getLast().getMatrix();
+      Color color = RandomizerItem.canMove(world.getBlockState(e), world, e) ? Color.GREEN : Color.RED;
+      UtilRender.renderCube(positionMatrix, builder, e, color);
+      matrix.pop();
+    }
+    matrix.pop();
+    RenderSystem.disableDepthTest();
+    buffer.finish(UtilRender.MyRenderType.TRANSPARENT_SOLID_COLOUR);
+  }
+
+  private void builderItemRender(RenderWorldLastEvent evt, PlayerEntity player, ItemStack stack) {
+    World world = player.world;
     BuilderItem.BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
     BlockState renderBlockState = BuilderItem.ActionType.getBlockState(stack);
     if (renderBlockState == null) {
@@ -65,7 +110,7 @@ public class EventRender {
     MatrixStack matrix = evt.getMatrixStack();
     Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    IVertexBuilder builder = buffer.getBuffer(UtilRender.MyRenderType.RenderBlock);//i guess?
+    IVertexBuilder builder = buffer.getBuffer(UtilRender.MyRenderType.FAKE_BLOCK);//i guess?
     BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
     matrix.push();
     Vec3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
@@ -118,12 +163,4 @@ public class EventRender {
     ///
     matrix.pop();
   }
-  //  @Override
-  //  public int[] getRgb() {
-  //    if (this.getWandType() == WandType.MATCH) {
-  //      return new int[] { 75, 0, 130 };
-  //    }
-  //    else
-  //      return new int[] { 28, 00, 132 };
-  //  }
 }
