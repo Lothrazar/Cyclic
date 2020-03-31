@@ -10,7 +10,9 @@ import net.minecraft.util.math.BlockPos;
 public class UtilSound {
 
   public static void playSound(Entity entityIn, BlockPos position, SoundEvent soundIn) {
-    entityIn.playSound(soundIn, 1.0F, 1.0F);
+    if (entityIn != null) {
+      entityIn.playSound(soundIn, 1.0F, 1.0F);
+    }
   }
 
   public static void playSoundFromServer(ServerPlayerEntity entityIn, SoundEvent soundIn) {

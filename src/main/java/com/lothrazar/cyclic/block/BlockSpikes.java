@@ -1,7 +1,10 @@
 package com.lothrazar.cyclic.block;
 
 import java.util.Locale;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
@@ -144,11 +147,12 @@ public class BlockSpikes extends BlockBase {
   public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     if (state.get(ACTIVATED).booleanValue() == false
         && world.isBlockPowered(pos)) {
-      //  UtilSound.playSoundFromServer(SoundRegistry.spikes_on, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+      UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), pos, SoundRegistry.spikes_on);
       world.setBlockState(pos, state.with(ACTIVATED, true));
     }
     else if (state.get(ACTIVATED).booleanValue()
         && world.isBlockPowered(pos) == false) {
+          UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), pos, SoundRegistry.spikes_off);
           //  UtilSound.playSoundFromServer(SoundRegistry.spikes_off, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
           world.setBlockState(pos, state.with(ACTIVATED, false));
         }
