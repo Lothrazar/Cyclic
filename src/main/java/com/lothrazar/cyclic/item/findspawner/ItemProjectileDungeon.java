@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.item.findspawner;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,6 +29,7 @@ public class ItemProjectileDungeon extends ItemBase {
     ball.shoot(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
     stack.shrink(1);
     world.addEntity(ball);
+    UtilSound.playSound(player, player.getPosition(), SoundRegistry.dungeonfinder);
     Runnable runnable = new Runnable() {
 
       @Override

@@ -12,7 +12,7 @@
 	"pow"     : {"category" : "player", "sounds" : [{"name":"cyclic:pow"}]},
 	"thunk"   : {"category" : "player", "sounds" : [{"name":"cyclic:thunk"}]},
 	"warp"    : {"category" : "player", "sounds" : [{"name":"cyclic:warp"}]},
-	"dungeonfinder": {"category" : "player", "sounds" : [{"name":"cyclic:dungeonfinder"}]},
+	"dungeonfinder": {"category" : "item", "sounds" : [{"name":"cyclic:dungeonfinder"}]},
 	"firelaunch"   : {"category" : "player", "sounds" : [{"name":"cyclic:firelaunch"}]},
 	"goodlaunch"   : {"category" : "player", "sounds" : [{"name":"cyclic:goodlaunch"}]},
 	"laserbeanpew" : {"category" : "player", "sounds" : [{"name":"cyclic:laserbeanpew"}]},
