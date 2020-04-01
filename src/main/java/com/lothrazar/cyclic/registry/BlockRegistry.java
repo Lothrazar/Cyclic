@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.block.BlockSound;
 import com.lothrazar.cyclic.block.BlockSpikes;
 import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
@@ -45,7 +46,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -138,6 +138,8 @@ public class BlockRegistry {
 
   public static class ContainerScreens {
 
+    @ObjectHolder(ModCyclic.MODID + ":anvil")
+    public static ContainerType<ContainerAnvil> anvil;
     @ObjectHolder(ModCyclic.MODID + ":battery")
     public static ContainerType<ContainerBattery> batteryCont;
     @ObjectHolder(ModCyclic.MODID + ":collector")
@@ -202,20 +204,19 @@ public class BlockRegistry {
   public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
     IForgeRegistry<ContainerType<?>> r = event.getRegistry();
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      BlockPos pos = data.readBlockPos();
-      return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("collector"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      BlockPos pos = data.readBlockPos();
-      return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("peat_generator"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      BlockPos pos = data.readBlockPos();
-      return new ContainerBattery(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerBattery(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("battery"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      BlockPos pos = data.readBlockPos();
-      return new ContainerHarvester(windowId, ModCyclic.proxy.getClientWorld(), pos, inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerHarvester(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("harvester"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerAnvil(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("anvil"));
   }
 }
