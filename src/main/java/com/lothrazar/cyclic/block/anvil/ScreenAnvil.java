@@ -47,6 +47,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.GUI);
+    this.drawSlot(60, 20);
     energy.renderEnergy(container.getEnergy());
   }
 }

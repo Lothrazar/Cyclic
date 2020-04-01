@@ -9,6 +9,8 @@
 	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
 	"item.cyclic.experience_food.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
+    "block.cyclic.collector.tooltip": "Picks up nearby items",
+    
     "block.cyclic.dark_glass": "Tempered Glass",
     "block.cyclic.dark_glass.tooltip": "Immune to light, explosions, and wither blasts",
     "block.cyclic.soundproofing": "Soundproofing",
@@ -610,9 +612,7 @@
     "block.cyclic.user.tooltip": "Autonomous right-click activation using any item",
     "block.cyclic.user.yoffset": "Vertical Offset",
     "block.cyclic.vacuum.filter": "Filter:",
-    "block.cyclic.vacuum.guide": "Collects items in front of it.  Only fires once per second.  Optional whitelist.  Can be redstone controlled.  Option to render the active selected area.",
-    "block.cyclic.vacuum": "Item Collector",
-    "block.cyclic.vacuum.tooltip": "A Vacuum Chest with an optional whitelist.",
+
     "block.cyclic.workbench.guide": "A crafting table that also keeps its inventory saved.",
     "block.cyclic.workbench": "Workbench",
     "block.cyclic.workbench.tooltip": "A Crafting table that keeps its inventory",

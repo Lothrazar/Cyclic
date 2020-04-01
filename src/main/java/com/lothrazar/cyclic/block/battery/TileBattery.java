@@ -23,6 +23,9 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
@@ -39,6 +42,12 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     super(BlockRegistry.Tiles.batterytile);
   }
 
+  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+
+  private IItemHandler createHandler() {
+    return new ItemStackHandler(1);
+  }
+
   private IEnergyStorage createEnergy() {
     return new CustomEnergyStorage(MAX, MAX / 4);
   }
@@ -48,14 +57,17 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     if (cap == CapabilityEnergy.ENERGY) {
       return energy.cast();
     }
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return inventory.cast();
+    }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(CompoundNBT tag) {
     setFlowing(tag.getInt("flowing"));
-    CompoundNBT energyTag = tag.getCompound("energy");
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
+    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     super.read(tag);
   }
 
@@ -65,6 +77,10 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
+    });
+    inventory.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("inv", compound);
     });
     return super.write(tag);
   }
