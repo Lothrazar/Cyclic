@@ -10,6 +10,8 @@ import com.lothrazar.cyclic.block.BlockPeatFuel;
 import com.lothrazar.cyclic.block.BlockSound;
 import com.lothrazar.cyclic.block.BlockSpikes;
 import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
+import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
+import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -57,6 +59,8 @@ public class BlockRegistry {
   //not populated in the most ideal way 
   public static List<BlockBase> blocks = new ArrayList<>();
   //now the auto binding
+  @ObjectHolder(ModCyclic.MODID + ":anvil")
+  public static Block anvil;
   @ObjectHolder(ModCyclic.MODID + ":tank")
   public static BlockFluidTank tank;
   @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
@@ -97,13 +101,15 @@ public class BlockRegistry {
   public static Block spikes_curse;
   @ObjectHolder(ModCyclic.MODID + ":spikes_fire")
   public static Block spikes_fire;
-  @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
-  public static Block fluid_pipe;
-  @ObjectHolder(ModCyclic.MODID + ":item_pipe")
-  public static Block item_pipe;
+  //  @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
+  //  public static Block fluid_pipe;
+  //  @ObjectHolder(ModCyclic.MODID + ":item_pipe")
+  //  public static Block item_pipe;
 
   public static class Tiles {
 
+    @ObjectHolder(ModCyclic.MODID + ":anvil")
+    public static TileEntityType<TileAnvilAuto> anvil;
     @ObjectHolder(ModCyclic.MODID + ":tank")
     public static TileEntityType<TileTank> tank;
     @ObjectHolder(ModCyclic.MODID + ":battery")
@@ -163,7 +169,7 @@ public class BlockRegistry {
     r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
     r.register(new BlockTrash(Block.Properties.create(Material.ROCK)).setRegistryName("trash"));
     r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
-    //      r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery_large"));
+    r.register(new BlockAnvilAuto(Block.Properties.create(Material.ANVIL)).setRegistryName("anvil"));
     r.register(new BlockCableEnergy(Block.Properties.create(Material.WOOL)).setRegistryName("energy_pipe"));
     //    r.register(new BlockCableItem(Block.Properties.create(Material.ROCK)).setRegistryName("item_pipe"));
     //    r.register(new BlockCableEnergy(Block.Properties.create(Material.ROCK)).setRegistryName("fluid_pipe"));
@@ -189,6 +195,7 @@ public class BlockRegistry {
     //    r.register(TileEntityType.Builder.create(TileCableItem::new, BlockRegistry.fluid_pipe).build(null).setRegistryName("fluid_pipe"));
     r.register(TileEntityType.Builder.create(TileHarvester::new, BlockRegistry.harvester)
         .build(null).setRegistryName("harvester"));
+    r.register(TileEntityType.Builder.create(TileAnvilAuto::new, BlockRegistry.anvil).build(null).setRegistryName("anvil"));
   }
 
   @SubscribeEvent

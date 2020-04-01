@@ -1,15 +1,12 @@
 package com.lothrazar.cyclic.block.cable.energy;
 
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
@@ -22,12 +19,9 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -35,12 +29,6 @@ public class BlockCableEnergy extends BlockBase {
 
   public BlockCableEnergy(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    //keep this to delete tooltip 
   }
   //
   //  public static BlockState cleanBlockState(BlockState state) {
@@ -114,11 +102,6 @@ public class BlockCableEnergy extends BlockBase {
       shape = VoxelShapes.combine(shape, AABB_SOUTH, IBooleanFunction.OR);
     }
     return shape;
-  }
-
-  @Override
-  public BlockRenderType getRenderType(BlockState bs) {
-    return BlockRenderType.MODEL;
   }
 
   @Override

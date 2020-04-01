@@ -1,0 +1,9 @@
+{
+   "parent": "cyclic:parent/anvil",
+   "textures": {
+        "particle": "minecraft:block/diamond_block",
+        "body": "minecraft:block/diamond_block",
+        "base": "minecraft:block/iron_block",
+        "pillar": "minecraft:block/iron_block"
+    }
+}

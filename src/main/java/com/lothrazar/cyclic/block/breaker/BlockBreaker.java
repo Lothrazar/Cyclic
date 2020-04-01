@@ -27,7 +27,6 @@ public class BlockBreaker extends BlockBase {
 
   public BlockBreaker(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
-    //    super.render
   }
 
   @Override

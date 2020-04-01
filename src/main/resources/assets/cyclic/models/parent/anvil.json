@@ -1,5 +1,5 @@
 {
-   "parent": "block/cube",
+   "parent": "minecraft:block/cube",
     "elements": [
         {   "__comment": "Anvil base",
             "from": [ 2, 0, 2 ],
