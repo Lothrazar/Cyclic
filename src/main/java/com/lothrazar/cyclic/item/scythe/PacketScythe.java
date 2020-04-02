@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.net;
+package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.scythe.ScytheType;
 import com.lothrazar.cyclic.util.UtilScythe;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;

@@ -1,15 +1,16 @@
-package com.lothrazar.cyclic.net;
+package com.lothrazar.cyclic.item.random;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.RandomizerItem;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -18,20 +19,25 @@ public class PacketRandomize {
 
   private BlockPos pos;
   private Direction side;
+  private Hand hand;
 
-  public PacketRandomize(BlockPos pos, Direction side) {
+  public PacketRandomize(BlockPos pos, Direction side, Hand h) {
     this.pos = pos;
     this.side = side;
+    hand = h;
   }
 
   public static PacketRandomize decode(PacketBuffer buf) {
-    PacketRandomize p = new PacketRandomize(buf.readBlockPos(), Direction.values()[buf.readInt()]);
+    PacketRandomize p = new PacketRandomize(buf.readBlockPos(),
+        Direction.values()[buf.readInt()],
+        Hand.values()[buf.readInt()]);
     return p;
   }
 
   public static void encode(PacketRandomize msg, PacketBuffer buf) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.side.ordinal());
+    buf.writeInt(msg.hand.ordinal());
   }
 
   public static void handle(PacketRandomize message, Supplier<NetworkEvent.Context> ctx) {
@@ -43,6 +49,7 @@ public class PacketRandomize {
       List<BlockState> rstates = new ArrayList<BlockState>();
       //
       BlockState stateHere = null;
+      boolean atLeastOne = false;
       for (BlockPos p : places) {
         stateHere = world.getBlockState(p);
         boolean canMove = RandomizerItem.canMove(stateHere, world, p);
@@ -64,8 +71,13 @@ public class PacketRandomize {
           swapState = rstates.get(i);
           world.destroyBlock(swapPos, false);
           //playing sound here in large areas causes ConcurrentModificationException
-          UtilPlaceBlocks.placeStateSafe(world, player, swapPos, swapState, false);
+          if (UtilPlaceBlocks.placeStateSafe(world, player, swapPos, swapState, false)) {
+            atLeastOne = true;
+          }
         }
+      }
+      if (atLeastOne) {
+        UtilItemStack.damageItem(player.getHeldItem(message.hand));
       }
     });
   }

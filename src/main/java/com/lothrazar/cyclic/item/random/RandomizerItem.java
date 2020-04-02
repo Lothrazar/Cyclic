@@ -1,14 +1,12 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.random;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.net.PacketRandomize;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -22,8 +20,7 @@ public class RandomizerItem extends ItemBase {
   private static final int COOLDOWN = 15;
 
   public RandomizerItem(Properties properties) {
-    super(properties.maxStackSize(1));
-    CatEntity x;
+    super(properties.maxStackSize(1).maxDamage(4096));
   }
 
   public static ItemStack getIfHeld(PlayerEntity player) {
@@ -48,7 +45,7 @@ public class RandomizerItem extends ItemBase {
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
     if (player.world.isRemote) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketRandomize(pos, side));
+      PacketRegistry.INSTANCE.sendToServer(new PacketRandomize(pos, side, context.getHand()));
     }
     UtilEntity.setCooldownItem(player, this, COOLDOWN);
     return super.onItemUse(context);

@@ -17,7 +17,7 @@ public class ItemTorchThrower extends ItemBase {
   private static final float VELOCITY_MAX = 1.5F;
 
   public ItemTorchThrower(Properties properties) {
-    super(properties);
+    super(properties.maxStackSize(1).maxDamage(256));
   }
 
   @Override

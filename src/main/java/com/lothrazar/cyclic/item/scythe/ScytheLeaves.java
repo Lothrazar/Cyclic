@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.net.PacketScythe;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;

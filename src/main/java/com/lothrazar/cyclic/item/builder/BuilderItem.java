@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.builder;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.net.PacketSwapBlock;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.block.BlockState;
@@ -36,7 +35,6 @@ public class BuilderItem extends ItemBase {
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     String msg = TextFormatting.GREEN + UtilChat.lang(BuilderActionType.getName(stack));
     tooltip.add(new TranslationTextComponent(msg));
-    //    String bname = ActionType.ge
     BlockState target = BuilderActionType.getBlockState(stack);
     String block = "scepter.cyclic.nothing";
     if (target != null) {

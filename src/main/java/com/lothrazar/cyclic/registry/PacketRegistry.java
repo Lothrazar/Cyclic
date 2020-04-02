@@ -1,14 +1,14 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.net.PacketChestSack;
+import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
+import com.lothrazar.cyclic.item.random.PacketRandomize;
+import com.lothrazar.cyclic.item.scythe.PacketScythe;
+import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.net.PacketItemToggle;
 import com.lothrazar.cyclic.net.PacketMoveBlock;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
-import com.lothrazar.cyclic.net.PacketRandomize;
-import com.lothrazar.cyclic.net.PacketScythe;
-import com.lothrazar.cyclic.net.PacketSwapBlock;
 import com.lothrazar.cyclic.net.PacketTileData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;

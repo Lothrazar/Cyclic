@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.net;
+package com.lothrazar.cyclic.item.builder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.builder.BuildStyle;
-import com.lothrazar.cyclic.item.builder.BuilderActionType;
-import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
@@ -28,7 +25,6 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketSwapBlock {
 
-  //  private ItemBuildSwapper.WandType wandType;
   private BlockPos pos;
   private BuilderActionType actionType;
   private Direction side;
@@ -73,7 +69,6 @@ public class PacketSwapBlock {
       synchronized (places) {
         for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
           curPos = i.next();
-          //          ModCyclic.LOGGER.info("EARLY y value of build " + curPos.getY());
           if (processed.containsKey(curPos) == false) {
             processed.put(curPos, 0);
           }
@@ -81,7 +76,6 @@ public class PacketSwapBlock {
             continue; //dont process the same location more than once per click
           }
           processed.put(curPos, processed.get(curPos) + 1);// ++
-          //  ItemStack stackBuildWith = ItemStack.EMPTY;
           int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
             //nothign found. is that ok?
@@ -108,7 +102,6 @@ public class PacketSwapBlock {
           if (UtilItemStack.getBlockHardness(replacedBlockState, world, curPos) < 0) {
             continue;//since we know -1 is unbreakable
           }
-          //          newToPlace = UtilPlayer.getBlockstateFromSlot(player, slot);
           //wait, do they match? are they the same? do not replace myself
           if (UtilWorld.doBlockStatesMatch(replacedBlockState, targetState)) {
             continue;
@@ -121,7 +114,6 @@ public class PacketSwapBlock {
           //place item block gets slabs in top instead of bottom. but tries to do facing stairs
           // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
           if (!success) {
-            //            ModCyclic.LOGGER.info("y value of build " + curPos.getY());
             success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, targetState);
           }
           if (success) {
@@ -188,8 +180,6 @@ public class PacketSwapBlock {
       }
       //we hit a horizontal side
       else if (side == Direction.EAST || side == Direction.WEST) {
-        //          WEST(4, 5, 1, "west", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.X, new Vec3i(-1, 0, 0)),
-        //          EAST(5, 4, 3, "east", EnumFacing.AxisDirection.POSITIVE, EnumFacing.Axis.X, new Vec3i(1, 0, 0));
         //now we go in a vertical plane
         zMin -= offsetH;
         zMax += offsetH;
