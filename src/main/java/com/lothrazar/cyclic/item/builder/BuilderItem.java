@@ -27,7 +27,7 @@ public class BuilderItem extends ItemBase {
   public BuildStyle style;
 
   public BuilderItem(Properties properties, BuildStyle t) {
-    super(properties.maxStackSize(1));
+    super(properties.maxStackSize(1).maxDamage(4096));
     style = t;
   }
 

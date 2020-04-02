@@ -64,14 +64,12 @@ public class PacketSwapBlock {
         return;
       }
       BuildStyle buildStyle = ((BuilderItem) itemStackHeld.getItem()).style;
-      //      BlockPos position = message.pos;
       World world = player.getEntityWorld();
       BlockState replacedBlockState;
-      //      BlockState newToPlace;
-      //      IBlockState matched = null; 
       List<BlockPos> places = getSelectedBlocks(world, message.pos, message.actionType, message.side, buildStyle);
       Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
       BlockPos curPos;
+      boolean atLeastOne = false;
       synchronized (places) {
         for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
           curPos = i.next();
@@ -83,33 +81,20 @@ public class PacketSwapBlock {
             continue; //dont process the same location more than once per click
           }
           processed.put(curPos, processed.get(curPos) + 1);// ++
-          ItemStack stackBuildWith = ItemStack.EMPTY;
+          //  ItemStack stackBuildWith = ItemStack.EMPTY;
           int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
             //nothign found. is that ok?
             if (!player.isCreative()) {
               UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
-              return;//you have no materials left
+              break;//you have no materials left
             }
           }
-          else {
-            //i am survival AND have a valid slot
-            stackBuildWith = player.inventory.getStackInSlot(slot);
-          }
-          //          if (stackBuildWith.isEmpty() || stackBuildWith.getCount() <= 0) {
-          //            if (!player.isCreative()) {
-          //              UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
-          //              return;//you have no materials left
-          //            }
-          //          }
           if (world.getTileEntity(curPos) != null) {
             continue;//ignore tile entities IE do not break chests / etc
           }
           replacedBlockState = world.getBlockState(curPos);
           Block replacedBlock = replacedBlockState.getBlock();
-          //          }
-          //TODO: CLEANUP/REFACTOR THIS
-          //          String itemName = UtilItemStack.getStringForBlock(replacedBlock);
           boolean isInBlacklist = false;
           //          for (String s : ItemBuildSwapper.swapBlacklist) {//dont use .contains on the list. must use .equals on string
           //            if (s != null && s.equals(itemName)) {
@@ -140,18 +125,16 @@ public class PacketSwapBlock {
             success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, targetState);
           }
           if (success) {
+            atLeastOne = true;
             UtilPlayer.decrStackSize(player, slot);
-          }
-          if (success) {
-            world.playEvent(2001, curPos, Block.getStateId(replacedBlockState));
+            world.playEvent(2001, curPos, Block.getStateId(targetState));
             //always break with PLAYER CONTEXT in mind
             replacedBlock.harvestBlock(world, player, curPos, replacedBlockState, null, itemStackHeld);
-            //            ItemStack held = player.getHeldItem(message.hand);
-            //            if (!held.isEmpty() && held.getItem() instanceof BuilderItem) {
-            //              //              UtilItemStack.damageItem(player, held);
-            //            }
           }
         } // close off the for loop   
+      }
+      if (atLeastOne) {
+        UtilItemStack.damageItem(itemStackHeld);
       }
     });
   }
