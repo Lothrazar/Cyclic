@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.item.BuilderItem;
 import com.lothrazar.cyclic.item.RandomizerItem;
+import com.lothrazar.cyclic.item.builder.BuildStyle;
+import com.lothrazar.cyclic.item.builder.BuilderActionType;
+import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.net.PacketSwapBlock;
+import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -70,7 +73,7 @@ public class EventRender {
     matrix.push();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;
-    builder = buffer.getBuffer(UtilRender.MyRenderType.TRANSPARENT_SOLID_COLOUR);
+    builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_SOLID_COLOUR);
     for (BlockPos e : coords) {
       matrix.push();
       matrix.translate(e.getX(), e.getY(), e.getZ());
@@ -84,13 +87,13 @@ public class EventRender {
     }
     matrix.pop();
     RenderSystem.disableDepthTest();
-    buffer.finish(UtilRender.MyRenderType.TRANSPARENT_SOLID_COLOUR);
+    buffer.finish(FakeBlockRenderTypes.TRANSPARENT_SOLID_COLOUR);
   }
 
   private void builderItemRender(RenderWorldLastEvent evt, PlayerEntity player, ItemStack stack) {
     World world = player.world;
-    BuilderItem.BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
-    BlockState renderBlockState = BuilderItem.ActionType.getBlockState(stack);
+    BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
+    BlockState renderBlockState = BuilderActionType.getBlockState(stack);
     if (renderBlockState == null) {
       return;
     }
@@ -110,7 +113,7 @@ public class EventRender {
     MatrixStack matrix = evt.getMatrixStack();
     Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    IVertexBuilder builder = buffer.getBuffer(UtilRender.MyRenderType.FAKE_BLOCK);//i guess?
+    IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);//i guess?
     BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
     matrix.push();
     Vec3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();

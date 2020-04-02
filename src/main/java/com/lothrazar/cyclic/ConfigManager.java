@@ -5,6 +5,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
 
@@ -15,6 +16,7 @@ public class ConfigManager {
   public static BooleanValue GEMGEAR;
   public static BooleanValue NETHERBRICK;
   public static BooleanValue ENCHANTMENTS;
+  public static IntValue ANVILPOWER;
   static {
     initConfig();
   }
@@ -26,6 +28,7 @@ public class ConfigManager {
     GEMGEAR = COMMON_BUILDER.comment("Disable these items").define("gemObsidianGear", true);
     NETHERBRICK = COMMON_BUILDER.comment("Disable these items").define("netherbrickGear", true);
     ENCHANTMENTS = COMMON_BUILDER.comment("Disable this feature").define("enchantments", true);
+    ANVILPOWER = COMMON_BUILDER.comment("Power to repair one tick of durability").defineInRange("energy.anvil.cost", 250, 1, 64000);
     COMMON_BUILDER.pop();
     COMMON_CONFIG = COMMON_BUILDER.build();
   }

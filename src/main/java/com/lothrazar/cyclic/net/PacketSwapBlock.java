@@ -6,8 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.BuilderItem;
-import com.lothrazar.cyclic.item.BuilderItem.ActionType;
+import com.lothrazar.cyclic.item.builder.BuildStyle;
+import com.lothrazar.cyclic.item.builder.BuilderActionType;
+import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
@@ -29,11 +30,11 @@ public class PacketSwapBlock {
 
   //  private ItemBuildSwapper.WandType wandType;
   private BlockPos pos;
-  private BuilderItem.ActionType actionType;
+  private BuilderActionType actionType;
   private Direction side;
   private Hand hand;
 
-  public PacketSwapBlock(BlockPos readBlockPos, BuilderItem.ActionType type, Direction dir, Hand h) {
+  public PacketSwapBlock(BlockPos readBlockPos, BuilderActionType type, Direction dir, Hand h) {
     pos = readBlockPos;
     actionType = type;
     side = dir;
@@ -42,7 +43,7 @@ public class PacketSwapBlock {
 
   public static PacketSwapBlock decode(PacketBuffer buf) {
     return new PacketSwapBlock(buf.readBlockPos(),
-        BuilderItem.ActionType.values()[buf.readInt()],
+        BuilderActionType.values()[buf.readInt()],
         Direction.values()[buf.readInt()],
         Hand.values()[buf.readInt()]);
   }
@@ -58,11 +59,11 @@ public class PacketSwapBlock {
     ctx.get().enqueueWork(() -> {
       ServerPlayerEntity player = ctx.get().getSender();
       ItemStack itemStackHeld = player.getHeldItem(message.hand);
-      BlockState targetState = BuilderItem.ActionType.getBlockState(itemStackHeld);
+      BlockState targetState = BuilderActionType.getBlockState(itemStackHeld);
       if (targetState == null || itemStackHeld.getItem() instanceof BuilderItem == false) {
         return;
       }
-      BuilderItem.BuildStyle buildStyle = ((BuilderItem) itemStackHeld.getItem()).style;
+      BuildStyle buildStyle = ((BuilderItem) itemStackHeld.getItem()).style;
       //      BlockPos position = message.pos;
       World world = player.getEntityWorld();
       BlockState replacedBlockState;
@@ -155,7 +156,7 @@ public class PacketSwapBlock {
     });
   }
 
-  public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, ActionType actionType, Direction side, BuilderItem.BuildStyle style) {
+  public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, BuilderActionType actionType, Direction side, BuildStyle style) {
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = pos.getX();
     int yMin = pos.getY();
@@ -194,7 +195,7 @@ public class PacketSwapBlock {
       default:
       break;
     }
-    if (actionType != ActionType.SINGLE) {
+    if (actionType != BuilderActionType.SINGLE) {
       if (isVertical) {
         //then we just go in all horizontal directions
         xMin -= offsetH;

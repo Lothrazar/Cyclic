@@ -14,11 +14,11 @@ import net.minecraft.util.ResourceLocation;
  * https://github.com/mekanism/Mekanism/blob/1.15x/LICENSE
  * 
  */
-public class CuboidRenderType extends RenderType {
+public class FluidTankRenderType extends RenderType {
 
   private static final AlphaState ALPHA = new RenderState.AlphaState(0.1F);
 
-  private CuboidRenderType(String nameIn, VertexFormat formatIn, int drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
+  private FluidTankRenderType(String nameIn, VertexFormat formatIn, int drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
   }
 

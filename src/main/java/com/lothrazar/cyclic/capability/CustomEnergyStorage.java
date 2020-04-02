@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.base;
+package com.lothrazar.cyclic.capability;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.capability;
 
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.base.CustomEnergyStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;

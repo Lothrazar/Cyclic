@@ -2,13 +2,16 @@ package com.lothrazar.cyclic.block.anvil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.base.CustomEnergyStorage;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -85,14 +88,25 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
-    if (this.isPowered() == false) {
-      //      setAnimation(false);
-      return;
-    }
+    //    if (this.isPowered() == false) {
+    //      return;
+    //    }
+    inventory.ifPresent(inv -> {
+      ItemStack stack = inv.getStackInSlot(0);
+      IEnergyStorage en = this.energy.orElse(null);
+      final int repair = ConfigManager.ANVILPOWER.get();
+      if (en != null &&
+          en.getEnergyStored() >= repair &&
+          !stack.isEmpty() && stack.isRepairable() &&
+          stack.getDamage() > 0) {
+        //we can repair so steal some power 
+        //ok drain power  
+        UtilItemStack.repairItem(stack);
+        en.extractEnergy(repair, false);
+      }
+    });
   }
 
   @Override
-  public void setField(int field, int value) {
-    // TODO Auto-generated method stub
-  }
+  public void setField(int field, int value) {}
 }

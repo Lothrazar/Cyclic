@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.generator;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.base.CustomEnergyStorage;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

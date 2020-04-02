@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.tank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.data.Model3D;
-import com.lothrazar.cyclic.render.CuboidRenderType;
+import com.lothrazar.cyclic.render.FluidTankRenderType;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import com.lothrazar.cyclic.util.UtilRender;
@@ -45,7 +45,7 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
     if (fluid.isEmpty()) {
       return;
     }
-    IVertexBuilder buffer = renderer.getBuffer(CuboidRenderType.resizableCuboid());
+    IVertexBuilder buffer = renderer.getBuffer(FluidTankRenderType.resizableCuboid());
     matrix.scale(1F, getScale(tankHere.tank), 1F);
     UtilRender.renderObject(getFluidModel(fluid, stages - 1), matrix, buffer, UtilRender.getColorARGB(fluid, 0.1F),
         UtilRender.calculateGlowLight(light, fluid));

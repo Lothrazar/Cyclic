@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
-import com.lothrazar.cyclic.item.BuilderItem;
-import com.lothrazar.cyclic.item.BuilderItem.ActionType;
 import com.lothrazar.cyclic.item.ItemEntityInteractable;
+import com.lothrazar.cyclic.item.builder.BuilderActionType;
+import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
@@ -71,26 +71,26 @@ public class ItemEvents {
       //        ModCyclic.logger.log("HIT" + hit.getBlock());
       //        return;
       //      }
-      if (ActionType.getTimeout(held) > 0) {
+      if (BuilderActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
         return;
       }
       World world = player.getEntityWorld();
-      ActionType.setTimeout(held);
+      BuilderActionType.setTimeout(held);
       event.setCanceled(true);
       //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
       if (player.isCrouching()) {
         //pick out target block
         BlockState target = world.getBlockState(event.getPos());
-        ActionType.setBlockState(held, target);
+        BuilderActionType.setBlockState(held, target);
         UtilChat.sendStatusMessage(player, target.getBlock().getNameTextComponent());
       }
       else {
         //change size
         if (!world.isRemote) {
-          ActionType.toggle(held);
+          BuilderActionType.toggle(held);
         }
-        UtilChat.sendStatusMessage(player, UtilChat.lang(ActionType.getName(held)));
+        UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
       }
     }
   }

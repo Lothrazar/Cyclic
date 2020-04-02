@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.builder;
 
 import java.util.List;
 import javax.annotation.Nullable;
@@ -12,8 +12,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -26,86 +24,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BuilderItem extends ItemBase {
 
-  public enum BuildStyle {
-
-    NORMAL, REPLACE, OFFSET;
-
-    public boolean isReplaceable() {
-      return this == REPLACE;
-    }
-
-    public boolean isOffset() {
-      return this == OFFSET;
-    }
-  }
-
-  public enum ActionType {
-
-    SINGLE, X3, X5, X7, X9, X91, X19;
-
-    private static final String NBTBLOCKSTATE = "blockstate";
-    private final static String NBT = "ActionType";
-    private final static String NBTTIMEOUT = "timeout";
-
-    public static int getTimeout(ItemStack wand) {
-      return wand.getOrCreateTag().getInt(NBTTIMEOUT);
-    }
-
-    public static void setTimeout(ItemStack wand) {
-      wand.getOrCreateTag().putInt(NBTTIMEOUT, 15);//less than one tick
-    }
-
-    public static void tickTimeout(ItemStack wand) {
-      CompoundNBT tags = wand.getOrCreateTag();
-      int t = tags.getInt(NBTTIMEOUT);
-      if (t > 0) {
-        wand.getOrCreateTag().putInt(NBTTIMEOUT, t - 1);
-      }
-    }
-
-    public static int get(ItemStack wand) {
-      if (wand.isEmpty()) {
-        return 0;
-      }
-      CompoundNBT tags = wand.getOrCreateTag();
-      return tags.getInt(NBT);
-    }
-
-    public static String getName(ItemStack wand) {
-      try {
-        CompoundNBT tags = wand.getOrCreateTag();
-        return "tool.action." + ActionType.values()[tags.getInt(NBT)].toString().toLowerCase();
-      }
-      catch (Exception e) {
-        return "tool.action." + SINGLE.toString().toLowerCase();
-      }
-    }
-
-    public static void toggle(ItemStack wand) {
-      CompoundNBT tags = wand.getOrCreateTag();
-      int type = tags.getInt(NBT);
-      type++;
-      if (type >= ActionType.values().length) {
-        type = SINGLE.ordinal();
-      }
-      tags.putInt(NBT, type);
-      wand.setTag(tags);
-    }
-
-    public static void setBlockState(ItemStack wand, BlockState target) {
-      CompoundNBT encoded = NBTUtil.writeBlockState(target);
-      wand.getOrCreateTag().put(NBTBLOCKSTATE, encoded);
-    }
-
-    @Nullable
-    public static BlockState getBlockState(ItemStack wand) {
-      if (!wand.getOrCreateTag().contains(NBTBLOCKSTATE)) {
-        return null;
-      }
-      return NBTUtil.readBlockState(wand.getOrCreateTag().getCompound(NBTBLOCKSTATE));
-    }
-  }
-
   public BuildStyle style;
 
   public BuilderItem(Properties properties, BuildStyle t) {
@@ -116,10 +34,10 @@ public class BuilderItem extends ItemBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    String msg = TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack));
+    String msg = TextFormatting.GREEN + UtilChat.lang(BuilderActionType.getName(stack));
     tooltip.add(new TranslationTextComponent(msg));
     //    String bname = ActionType.ge
-    BlockState target = ActionType.getBlockState(stack);
+    BlockState target = BuilderActionType.getBlockState(stack);
     String block = "scepter.cyclic.nothing";
     if (target != null) {
       block = target.getBlock().getTranslationKey();
@@ -130,7 +48,7 @@ public class BuilderItem extends ItemBase {
 
   @Override
   public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    ActionType.tickTimeout(stack);
+    BuilderActionType.tickTimeout(stack);
   }
 
   @Override
@@ -140,22 +58,22 @@ public class BuilderItem extends ItemBase {
     ItemStack stack = context.getItem();
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
-    BuilderItem.BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
+    BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
     //TODO: INSIDE building no offset
     // on top of selected = do offset
     if (side != null && buildStyle.isOffset()) {
       pos = pos.offset(side);
     }
     if (context.getWorld().isRemote) {
-      ActionType type = getActionType(stack);
+      BuilderActionType type = getActionType(stack);
       PacketSwapBlock message = new PacketSwapBlock(pos, type, side, context.getHand());
       PacketRegistry.INSTANCE.sendToServer(message);
     }
     return super.onItemUse(context);
   }
 
-  public static ActionType getActionType(ItemStack stack) {
-    ActionType type = ActionType.values()[ActionType.get(stack)];
+  public static BuilderActionType getActionType(ItemStack stack) {
+    BuilderActionType type = BuilderActionType.values()[BuilderActionType.get(stack)];
     return type;
   }
 
