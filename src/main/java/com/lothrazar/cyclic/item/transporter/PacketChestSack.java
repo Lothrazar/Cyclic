@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.item.transporter;
 
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -31,11 +32,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketChestSack {
+public class PacketChestSack extends PacketBase {
 
   private BlockPos pos;
-
-  public PacketChestSack() {}
 
   public PacketChestSack(BlockPos mouseover) {
     pos = mouseover;
@@ -57,5 +56,6 @@ public class PacketChestSack {
       TileEntity tile = world.getTileEntity(position);
       TileTransporterEmptyItem.gatherTileEntity(position, player, world, tile);
     });
+    message.done(ctx);
   }
 }

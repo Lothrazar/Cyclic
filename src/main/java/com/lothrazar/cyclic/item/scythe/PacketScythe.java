@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.util.UtilScythe;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -32,7 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketScythe {
+public class PacketScythe extends PacketBase {
 
   private BlockPos pos;
   private ScytheType type;
@@ -55,13 +56,11 @@ public class PacketScythe {
         UtilScythe.harvestSingle(world, player, posCurrent, message.type);
       }
     });
+    message.done(ctx);
   }
 
   public static PacketScythe decode(PacketBuffer buf) {
-    PacketScythe p = new PacketScythe();
-    p.radius = buf.readInt();
-    p.pos = buf.readBlockPos();
-    p.type = ScytheType.values()[buf.readInt()];
+    PacketScythe p = new PacketScythe(buf.readBlockPos(), ScytheType.values()[buf.readInt()], buf.readInt());
     return p;
   }
 

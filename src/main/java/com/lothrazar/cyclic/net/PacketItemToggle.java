@@ -2,17 +2,16 @@ package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.IHasClickToggle;
+import com.lothrazar.cyclic.base.PacketBase;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketItemToggle {
+public class PacketItemToggle extends PacketBase {
 
   private int slot;
-
-  public PacketItemToggle() {}
 
   public PacketItemToggle(int slot) {
     this.slot = slot;
@@ -41,11 +40,11 @@ public class PacketItemToggle {
         }
       }
     });
+    message.done(ctx);
   }
 
   public static PacketItemToggle decode(PacketBuffer buf) {
-    PacketItemToggle p = new PacketItemToggle();
-    p.slot = buf.readInt();
+    PacketItemToggle p = new PacketItemToggle(buf.readInt());
     return p;
   }
 

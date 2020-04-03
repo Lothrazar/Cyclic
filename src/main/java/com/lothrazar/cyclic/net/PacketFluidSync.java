@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -34,12 +35,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketFluidSync {
+public class PacketFluidSync extends PacketBase {
 
   private BlockPos pos;
-  public FluidStack fluid;
-
-  public PacketFluidSync() {}
+  private FluidStack fluid;
 
   public PacketFluidSync(BlockPos p, FluidStack fluid) {
     pos = p;
@@ -53,83 +52,22 @@ public class PacketFluidSync {
       if (te instanceof TileTank) {
         ((TileTank) te).setFluid(message.fluid);
       }
-      //      @Override
-      //      public IMessage onMessage(PacketFluidSync message, MessageContext ctx) {
-      //        if (ctx.side == Side.CLIENT) {
-      //          EntityPlayer p = ModCyclic.proxy.getPlayerEntity(ctx);
-      //          if (p != null) {
-      //            TileEntity te = p.world.getTileEntity(message.pos);
-      //            if (te instanceof TileEntityBaseMachineFluid) {
-      //              ((TileEntityBaseMachineFluid) te).updateFluidTo(message.fluid);
-      //            }
-      //          }
-      //        }
-      //        return null;
-      //      }
-      //      ServerPlayerEntity player = ctx.get().getSender();
-      //      if (player.openContainer == null) {
-      //        return;
-      //      }
-      //      int scount = player.openContainer.inventorySlots.size();
-      //      //this is an edge case but it DID happen: put charmin your hotbar and then open a creative inventory tab. avoid index OOB
-      //      if (message.slot >= scount) {
-      //        //will NOT work in creative mode. slots are messed up
-      //        return;
-      //      }
-      //      Slot slotObj = player.openContainer.getSlot(message.slot);
-      //      ModCyclic.LOGGER.error(message.slot + " slotObjslotObj stack" + slotObj.getStack());
-      //      if (slotObj != null
-      //          && !slotObj.getStack().isEmpty()) {
-      //        ModCyclic.LOGGER.error("packetde " + slotObj.getStack());
-      //        ItemStack maybeCharm = slotObj.getStack();
-      //        if (maybeCharm.getItem() instanceof IHasClickToggle) {
-      //          //example: is a charm or something
-      //          IHasClickToggle c = (IHasClickToggle) maybeCharm.getItem();
-      //          c.toggle(player, maybeCharm);
-      //        }
-      //      }
     });
+    message.done(ctx);
   }
 
   public static PacketFluidSync decode(PacketBuffer buf) {
-    PacketFluidSync msg = new PacketFluidSync();
-    CompoundNBT tags = buf.readCompoundTag();
-    msg.pos = new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z"));
-    tags = buf.readCompoundTag();
-    msg.fluid = FluidStack.loadFluidStackFromNBT(tags);
+    PacketFluidSync msg = new PacketFluidSync(buf.readBlockPos(),
+        FluidStack.loadFluidStackFromNBT(buf.readCompoundTag()));
     return msg;
   }
 
   public static void encode(PacketFluidSync msg, PacketBuffer buf) {
+    buf.writeBlockPos(msg.pos);
     CompoundNBT tags = new CompoundNBT();
-    tags.putInt("x", msg.pos.getX());
-    tags.putInt("y", msg.pos.getY());
-    tags.putInt("z", msg.pos.getZ());
-    buf.writeCompoundTag(tags);
-    tags = new CompoundNBT();
-    if (msg.fluid != null)
+    if (msg.fluid != null) {
       msg.fluid.writeToNBT(tags);
+    }
     buf.writeCompoundTag(tags);
   }
-  //  @Override
-  //  public void fromBytes(ByteBuf buf) {
-  //    NBTTagCompound tags = ByteBufUtils.readTag(buf);
-  //    int x = tags.getInteger("x");
-  //    int y = tags.getInteger("y");
-  //    int z = tags.getInteger("z");
-  //    pos = new BlockPos(x, y, z);
-  //    fluid = FluidStack.loadFluidStackFromNBT(tags);
-  //  }
-  //
-  //  @Override
-  //  public void toBytes(ByteBuf buf) {
-  //    NBTTagCompound tags = new NBTTagCompound();
-  //    tags.setInteger("x", pos.getX());
-  //    tags.setInteger("y", pos.getY());
-  //    tags.setInteger("z", pos.getZ());
-  //    if (fluid != null) {
-  //      fluid.writeToNBT(tags);
-  //    }
-  //    ByteBufUtils.writeTag(buf, tags);
-  //  }
 }

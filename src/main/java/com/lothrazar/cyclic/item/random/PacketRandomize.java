@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.block.BlockState;
@@ -15,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketRandomize {
+public class PacketRandomize extends PacketBase {
 
   private BlockPos pos;
   private Direction side;
@@ -80,5 +81,6 @@ public class PacketRandomize {
         UtilItemStack.damageItem(player.getHeldItem(message.hand));
       }
     });
+    message.done(ctx);
   }
 }

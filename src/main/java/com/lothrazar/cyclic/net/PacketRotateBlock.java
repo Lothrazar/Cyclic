@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -36,13 +37,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketRotateBlock {
+public class PacketRotateBlock extends PacketBase {
 
   private BlockPos pos;
   private Direction side;
   private Hand hand;
-
-  public PacketRotateBlock() {}
 
   public PacketRotateBlock(BlockPos mouseover, Direction s, Hand hand) {
     pos = mouseover;
@@ -75,5 +74,6 @@ public class PacketRotateBlock {
           UtilSound.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound());
       }
     });
+    message.done(ctx);
   }
 }

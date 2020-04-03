@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
@@ -23,7 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketSwapBlock {
+public class PacketSwapBlock extends PacketBase {
 
   private BlockPos pos;
   private BuilderActionType actionType;
@@ -129,6 +130,7 @@ public class PacketSwapBlock {
         UtilItemStack.damageItem(itemStackHeld);
       }
     });
+    message.done(ctx);
   }
 
   public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, BuilderActionType actionType, Direction side, BuildStyle style) {
