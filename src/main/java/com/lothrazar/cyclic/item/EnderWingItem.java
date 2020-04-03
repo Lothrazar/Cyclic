@@ -24,10 +24,16 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EnderWingItem extends ItemBase {
@@ -36,8 +42,7 @@ public class EnderWingItem extends ItemBase {
     super(properties);
   }
 
-  private static final int cooldown = 600;//ticks not seconds
-  private static final int durability = 16;
+  private static final int cooldown = 600;//ticks not seconds 
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -46,7 +51,21 @@ public class EnderWingItem extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(context);
     }
-    boolean success = UtilWorld.tryTpPlayerToBed(world, player);
+    if (player.dimension.getId() != Const.Dimension.overworld) {
+      UtilChat.sendStatusMessage(player, "command.home.overworld");
+    }
+    else {
+      BlockPos pos = player.getBedLocation(player.dimension);
+      if (pos == null) {
+        UtilChat.sendStatusMessage(player, "command.gethome.bed");
+      }
+      else {
+        UtilEntity.teleportWallSafe(player, world, pos);
+        UtilSound.playSound(player, SoundRegistry.warp_echo);
+        UtilItemStack.damageItem(context.getItem());
+        player.getCooldownTracker().setCooldown(this, cooldown);
+      }
+    }
     return super.onItemUse(context);
   }
 }

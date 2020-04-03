@@ -24,7 +24,10 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
@@ -36,8 +39,7 @@ public class EnderWingSp extends ItemBase {
     super(properties);
   }
 
-  private static final int cooldown = 600;//ticks not seconds
-  private static final int durability = 16;
+  private static final int cooldown = 600;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -47,6 +49,9 @@ public class EnderWingSp extends ItemBase {
       return super.onItemUse(context);
     }
     UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
+    UtilSound.playSound(player, SoundRegistry.warp_echo);
+    UtilItemStack.damageItem(context.getItem());
+    //    player.getCooldownTracker().setCooldown(this, cooldown);
     return super.onItemUse(context);
   }
 }

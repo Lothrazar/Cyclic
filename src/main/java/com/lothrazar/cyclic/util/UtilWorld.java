@@ -89,27 +89,6 @@ public class UtilWorld {
     return found;
   }
 
-  public static boolean tryTpPlayerToBed(World world, PlayerEntity player) {
-    if (world.isRemote) {
-      return false;
-    }
-    if (player.dimension.getId() != 0) {
-      //      UtilChat.addChatMessage(player, "command.home.overworld");
-      return false;
-    }
-    BlockPos pos = player.getBedLocation();
-    if (pos == null) {
-      // has not been sent in a bed
-      //      UtilChat.addChatMessage(player, "command.gethome.bed");
-      return false;
-    }
-    //  if player data says your bed location is set, then its set
-    //so now. if   spawn was set for any reason (bed/sleepingmat/other) then this TP works the same way as /kill
-    UtilEntity.teleportWallSafe(player, world, pos);
-    //    UtilSound.playSound(player, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
-    return true;
-  }
-
   public static void toggleLeverPowerState(World worldIn, BlockPos blockPos, BlockState blockState) {
     boolean hasPowerHere = blockState.get(LeverBlock.POWERED).booleanValue();//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
     BlockState stateNew = blockState.with(LeverBlock.POWERED, !hasPowerHere);
