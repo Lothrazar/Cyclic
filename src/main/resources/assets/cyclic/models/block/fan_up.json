@@ -1,12 +1,12 @@
 {
 	"textures": {
-		"body_front": "cyclic:blocks/fan_body_front",
-		"body_side": "cyclic:blocks/fan_body_side",
-		"body_up": "cyclic:blocks/fan_body_up",
-		"body_down": "cyclic:blocks/fan_body_down",
-		"misc": "cyclic:blocks/fan_misc",
-		"blades": "cyclic:blocks/fan_blades_off",
-		"particle": "cyclic:blocks/fan_body_side"
+		"body_front": "cyclic:blocks/fan/fan_body_front",
+		"body_side": "cyclic:blocks/fan/fan_body_side",
+		"body_up": "cyclic:blocks/fan/fan_body_up",
+		"body_down": "cyclic:blocks/fan/fan_body_down",
+		"misc": "cyclic:blocks/fan/fan_misc",
+		"blades": "cyclic:blocks/fan/fan_blades_off",
+		"particle": "cyclic:blocks/fan/fan_body_side"
 	},
 
 	"elements": [

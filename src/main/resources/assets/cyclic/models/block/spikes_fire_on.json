@@ -2,9 +2,9 @@
 	"parent": "cyclic:parent/spikes_on",
 
 	"textures": {
-		"side": "cyclic:blocks/spikes_fire_side",
-		"base_up": "cyclic:blocks/spikes_iron_base_up",
-		"down": "cyclic:blocks/spikes_iron_base_down",
-		"particle": "cyclic:blocks/spikes_iron_side"
+		"side": "cyclic:blocks/spike/spikes_fire_side",
+		"base_up": "cyclic:blocks/spike/spikes_iron_base_up",
+		"down": "cyclic:blocks/spike/spikes_iron_base_down",
+		"particle": "cyclic:blocks/spike/spikes_iron_side"
 	}
 }

@@ -2,7 +2,7 @@
 	"parent": "cyclic:block/fan_up",
 
 	"textures": {
-		"body_side": "cyclic:blocks/fan_body_side_on",
-		"blades": "cyclic:blocks/fan_blades_on"
+		"body_side": "cyclic:blocks/fan/fan_body_side_on",
+		"blades": "cyclic:blocks/fan/fan_blades_on"
 	}
 }
