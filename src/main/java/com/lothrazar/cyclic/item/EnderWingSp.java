@@ -51,7 +51,7 @@ public class EnderWingSp extends ItemBase {
     UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
     UtilSound.playSound(player, SoundRegistry.warp_echo);
     UtilItemStack.damageItem(context.getItem());
-    //    player.getCooldownTracker().setCooldown(this, cooldown);
+    player.getCooldownTracker().setCooldown(this, cooldown);
     return super.onItemUse(context);
   }
 }

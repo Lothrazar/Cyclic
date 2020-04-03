@@ -25,10 +25,12 @@ package com.lothrazar.cyclic.item;
 
 import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -39,72 +41,38 @@ public class IceWand extends ItemBase {
 
   public IceWand(Properties properties) {
     super(properties);
-    // TODO Auto-generated constructor stub
   }
 
-  private static final int DURABILITY = 256;
   private static final int RADIUS = 2;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
-    //
-    ItemStack stack = context.getItem();
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
     if (side != null) {
       pos = pos.offset(side);
     }
     if (spreadWaterFromCenter(context.getWorld(), pos.offset(side))) {
-      //      super.onUse(stack, player, world, hand);
+      //but the real sound
+      UtilSound.playSound(player, Blocks.PACKED_ICE.getDefaultState().getSoundType().getBreakSound());
+      UtilItemStack.damageItem(context.getItem());
     }
     return super.onItemUse(context);
   }
 
-  //  @Override
-  //  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-  //    ItemStack stack = player.getHeldItem(hand);
-  //    if (pos == null) {
-  //      return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
-  //    }
-  //    if (side != null) {
-  //      pos = pos.offset(side);
-  //    }
-  //    if (spreadWaterFromCenter(world, pos.offset(side))) {
-  //      super.onUse(stack, player, world, hand);
-  //    }
-  //    return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
-  //  }
-  //
-  //  @Override
-  //  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-  //    ItemStack stack = player.getHeldItem(hand);
-  //    if (spreadWaterFromCenter(world, player.getPosition().offset(player.getHorizontalFacing()))) {
-  //      super.onUse(stack, player, world, hand); //player.getCooldownTracker().setCooldown(this, COOLDOWN);
-  //    }
-  //    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-  //  }
-  //
   private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
     int count = 0;
     List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
-    //    water.addAll(UtilWorld.findBlocks(world, posCenter, Blocks.WATER_FLOWING, RADIUS));
     for (BlockPos pos : water) {
-      //      System.out.println("Itemicewand " + world.getBlockState(pos).getFluidState());
-      if (world.getBlockState(pos).getFluidState() != null &&
-          world.getBlockState(pos).getFluidState().getFluidState() != null &&
-          world.getBlockState(pos).getFluidState().getFluidState().getLevel() >= 8) {
+      IFluidState fluidState = world.getBlockState(pos).getFluidState();
+      if (fluidState != null &&
+          fluidState.getFluidState() != null &&
+          fluidState.getFluidState().getLevel() >= 8) {
         world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
       }
-      //       world.markChunkDirty(pos, null);
-      //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
-      //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
       count++;
     }
-    boolean success = count > 0;
-    if (success) {//particles are on each location, sound is just once
-      //      UtilSound.playSound(world, posCenter, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
-    }
-    return success;
+    return count > 0;
   }
 }

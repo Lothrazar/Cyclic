@@ -60,10 +60,12 @@ public class EnderWingItem extends ItemBase {
         UtilChat.sendStatusMessage(player, "command.gethome.bed");
       }
       else {
-        UtilEntity.teleportWallSafe(player, world, pos);
         UtilSound.playSound(player, SoundRegistry.warp_echo);
-        UtilItemStack.damageItem(context.getItem());
-        player.getCooldownTracker().setCooldown(this, cooldown);
+        if (!world.isRemote()) {
+          UtilItemStack.damageItem(context.getItem());
+          player.getCooldownTracker().setCooldown(this, cooldown);
+          UtilEntity.teleportWallSafe(player, world, pos);
+        }
       }
     }
     return super.onItemUse(context);
