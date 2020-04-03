@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.net.PacketItemToggle;
-import com.lothrazar.cyclic.net.PacketMoveBlock;
+import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.net.PacketTileData;
 import net.minecraft.util.ResourceLocation;
@@ -29,7 +29,7 @@ public class PacketRegistry {
     int id = 0;
     INSTANCE.registerMessage(id++, PacketPlayerFalldamage.class, PacketPlayerFalldamage::encode, PacketPlayerFalldamage::decode, PacketPlayerFalldamage::handle);
     INSTANCE.registerMessage(id++, PacketItemToggle.class, PacketItemToggle::encode, PacketItemToggle::decode, PacketItemToggle::handle);
-    INSTANCE.registerMessage(id++, PacketMoveBlock.class, PacketMoveBlock::encode, PacketMoveBlock::decode, PacketMoveBlock::handle);
+    INSTANCE.registerMessage(id++, PacketRotateBlock.class, PacketRotateBlock::encode, PacketRotateBlock::decode, PacketRotateBlock::handle);
     INSTANCE.registerMessage(id++, PacketScythe.class, PacketScythe::encode, PacketScythe::decode, PacketScythe::handle);
     INSTANCE.registerMessage(id++, PacketTileData.class, PacketTileData::encode, PacketTileData::decode, PacketTileData::handle);
     INSTANCE.registerMessage(id++, PacketFluidSync.class, PacketFluidSync::encode, PacketFluidSync::decode, PacketFluidSync::handle);

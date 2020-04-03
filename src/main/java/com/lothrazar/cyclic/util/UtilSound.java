@@ -21,10 +21,11 @@ public class UtilSound {
   }
 
   public static void playSoundFromServer(ServerPlayerEntity entityIn, SoundEvent soundIn) {
-    entityIn.connection.sendPacket(new SPlaySoundEffectPacket(
-        soundIn,
-        SoundCategory.BLOCKS,
-        entityIn.lastTickPosX, entityIn.lastTickPosY, entityIn.lastTickPosZ,
-        1.0f, 1.0f));
+    if (soundIn != null)
+      entityIn.connection.sendPacket(new SPlaySoundEffectPacket(
+          soundIn,
+          SoundCategory.BLOCKS,
+          entityIn.lastTickPosX, entityIn.lastTickPosY, entityIn.lastTickPosZ,
+          1.0f, 1.0f));
   }
 }

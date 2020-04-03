@@ -15,10 +15,10 @@ import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
 
-  public static void rotateBlockValidState(World worldObj, BlockPos pos, Direction side) {
+  public static boolean rotateBlockValidState(World worldObj, BlockPos pos, Direction side) {
     BlockState clicked = worldObj.getBlockState(pos);
     if (clicked.getBlock() == null) {
-      return;
+      return false;
     }
     Block clickedBlock = clicked.getBlock();
     BlockState newState = null;
@@ -64,8 +64,9 @@ public class UtilPlaceBlocks {
       }
     }
     if (newState != null) {
-      worldObj.setBlockState(pos, newState);
+      return worldObj.setBlockState(pos, newState);
     }
+    return false;
   }
 
   public static boolean placeStateSafe(World world, @Nullable PlayerEntity player,

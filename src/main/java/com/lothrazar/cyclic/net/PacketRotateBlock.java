@@ -24,48 +24,56 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
-import net.minecraft.nbt.CompoundNBT;
+import com.lothrazar.cyclic.util.UtilSound;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketMoveBlock {
+public class PacketRotateBlock {
 
   private BlockPos pos;
-  //  private ItemPistonWand.ActionType type;
   private Direction side;
+  private Hand hand;
 
-  public PacketMoveBlock() {}
+  public PacketRotateBlock() {}
 
-  public PacketMoveBlock(BlockPos mouseover, Direction s) {
+  public PacketRotateBlock(BlockPos mouseover, Direction s, Hand hand) {
     pos = mouseover;
-    //    type = t;
     side = s;
+    this.hand = hand;
   }
 
-  public static PacketMoveBlock decode(PacketBuffer buf) {
-    PacketMoveBlock p = new PacketMoveBlock();
-    CompoundNBT tags = buf.readCompoundTag();
-    p.pos = new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z"));
-    p.side = Direction.values()[tags.getInt("s")];
-    return p;
+  public static PacketRotateBlock decode(PacketBuffer buf) {
+    return new PacketRotateBlock(buf.readBlockPos(),
+        Direction.values()[buf.readInt()],
+        Hand.values()[buf.readInt()]);
   }
 
-  public static void encode(PacketMoveBlock msg, PacketBuffer buf) {
-    CompoundNBT tags = new CompoundNBT();
-    tags.putInt("x", msg.pos.getX());
-    tags.putInt("y", msg.pos.getY());
-    tags.putInt("z", msg.pos.getZ());
-    tags.putInt("s", msg.side.ordinal());
-    buf.writeCompoundTag(tags);
+  public static void encode(PacketRotateBlock msg, PacketBuffer buf) {
+    buf.writeBlockPos(msg.pos);
+    buf.writeInt(msg.side.ordinal());
+    buf.writeInt(msg.hand.ordinal());
   }
 
-  public static void handle(PacketMoveBlock message, Supplier<NetworkEvent.Context> ctx) {
+  public static void handle(PacketRotateBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      UtilPlaceBlocks.rotateBlockValidState(ctx.get().getSender().world, message.pos, message.side);
+      World world = ctx.get().getSender().world;
+      boolean succ = UtilPlaceBlocks.rotateBlockValidState(world, message.pos, message.side);
+      if (succ) {
+        ServerPlayerEntity player = ctx.get().getSender();
+        ItemStack itemStackHeld = player.getHeldItem(message.hand);
+        UtilItemStack.damageItem(itemStackHeld);
+        if (world.getBlockState(message.pos).getSoundType() != null)
+          UtilSound.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound());
+      }
     });
   }
 }
