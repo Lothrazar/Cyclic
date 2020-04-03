@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "cyclic:sleeping_mat",
+    "cyclic:torch_launcher",
+    "cyclic:charm_torch"
+  ]
+}

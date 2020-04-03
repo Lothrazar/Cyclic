@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.anvil;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -11,10 +12,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -28,6 +33,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  public static final Tag<Item> IMMUNE = new ItemTags.Wrapper(new ResourceLocation(ModCyclic.MODID, "anvil_immune"));
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -93,11 +99,14 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     //    }
     inventory.ifPresent(inv -> {
       ItemStack stack = inv.getStackInSlot(0);
+      if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
+        return;
+      }
       IEnergyStorage en = this.energy.orElse(null);
       final int repair = ConfigManager.ANVILPOWER.get();
       if (en != null &&
           en.getEnergyStored() >= repair &&
-          !stack.isEmpty() && stack.isRepairable() &&
+          stack.isRepairable() &&
           stack.getDamage() > 0) {
         //we can repair so steal some power 
         //ok drain power  
