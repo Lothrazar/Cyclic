@@ -24,7 +24,6 @@ public class SleepingMatItem extends ItemBase {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
     ItemStack itemstack = player.getHeldItem(handIn);
-    //    playerIn.setActiveHand(handIn);
     BlockPos pos = player.getPosition();
     if (!worldIn.isDaytime()) {
       trySleep(player, pos, itemstack).ifLeft((p) -> {

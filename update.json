@@ -10,6 +10,6 @@
   	,"0.1.10":"Fix main menu crash"
   	,"0.1.11":"Sleeping mat item ported.  Spawner Seeker item ported.  Fix log spam.  Fix Remote Lever message text.  Sack of holding now checks player-relative block hardness for compatibility (zero or less it will not pick up).  "
   	,"0.2.0":"Step Height enchantment added only for leggings.  Block Reach enchant ported.  Minimum forge_version 31.1.25.  Fluid tank rendering rebuilt, fixed blockstates and autodrain.  zh_cn.lang updated by sandtechnology.  Fixed game crash with Emerald Carrot, item now works as expected.  Fixed some language file issues.  Fixed Torch Launcher velocity and distance back up to 1.12 speeds.  Fixed Auto Torch going into negative durability.  Fixed boomerange dupe. "
-  	,"0.3.0":"Added anvil, building items, randomizer.  Many items now correctly consume durability and play sounds"
+  	,"0.3.0":"Added powered anvil, three building items, block randomizer, Anti-gravity ring.  Many items now correctly consume durability and play sounds"
   }
 }

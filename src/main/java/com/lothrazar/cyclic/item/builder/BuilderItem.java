@@ -41,7 +41,6 @@ public class BuilderItem extends ItemBase {
       block = target.getBlock().getTranslationKey();
     }
     tooltip.add(new TranslationTextComponent(TextFormatting.AQUA + UtilChat.lang(block)));
-    super.addInformation(stack, worldIn, tooltip, flagIn);
   }
 
   @Override
