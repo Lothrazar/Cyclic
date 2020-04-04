@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -10,6 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -48,6 +50,30 @@ public abstract class TileEntityBase extends TileEntity {
 
   public boolean requiresRedstone() {
     return this.needsRedstone == 1;
+  }
+
+  public void moveFluids(Direction myFacingDir, int TRANSFER_FLUID_PER_TICK, IFluidHandler tank) {
+    //    private void moveFluid(EnumFacing myFacingDir) {
+    Direction themFacingMe = myFacingDir.getOpposite();
+    if (tank.getFluidInTank(0).getAmount() <= 0) {
+      return;
+    }
+    int toFlow = TRANSFER_FLUID_PER_TICK;
+    //    if (hasAnyIncomingFluidFaces() && toFlow >= tank.getFluidAmount()) {
+    //      toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
+    //    }
+    BlockPos posTarget = pos.offset(myFacingDir);
+    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
+    //    if (outputSuccess) {
+    //      TileEntity tileTarget = world.getTileEntity(posTarget);
+    ////      if (tileTarget instanceof TileEntityCableBase) {
+    ////        //TODO: not so compatible with other fluid systems. itl do i guess
+    ////        TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
+    ////        if (cable.isFluidPipe()) {
+    ////          cable.updateIncomingFluidFace(themFacingMe);
+    ////        }
+    ////      }
+    //    }
   }
 
   public void moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {

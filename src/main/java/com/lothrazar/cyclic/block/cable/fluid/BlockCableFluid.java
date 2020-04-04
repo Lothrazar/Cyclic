@@ -1,11 +1,10 @@
-package com.lothrazar.cyclic.block.cable.item;
+package com.lothrazar.cyclic.block.cable.fluid;
 
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -24,12 +23,12 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class BlockCableItem extends BlockBase {
+public class BlockCableFluid extends BlockBase {
 
-  public BlockCableItem(Properties properties) {
+  public BlockCableFluid(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
   }
 
@@ -115,37 +114,23 @@ public class BlockCableItem extends BlockBase {
   public boolean hasTileEntity(BlockState state) {
     return true;
   }
-
-  @Override
-  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
-      TileEntity tileentity = worldIn.getTileEntity(pos);
-      for (Direction d : Direction.values()) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-        UtilItemStack.dropAll(items, worldIn, pos);
-      }
-      worldIn.updateComparatorOutputLevel(pos, this);
-      super.onReplaced(state, worldIn, pos, newState, isMoving);
-    }
-  }
-
-  @Override
-  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-    int calc = 0;
-    TileEntity tileentity = worldIn.getTileEntity(pos);
-    if (tileentity != null) {
-      for (Direction d : Direction.values()) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-        if (items != null) {
-          //ok 
-          if (items.getStackInSlot(0).isEmpty() == false) {
-            calc += 2;
-          }
-        }
-      }
-    }
-    return calc;
-  }
+  //  @Override
+  //  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+  //    int calc = 0;
+  //    TileEntity tileentity = worldIn.getTileEntity(pos);
+  //    if (tileentity != null) {
+  //      for (Direction d : Direction.values()) {
+  //        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
+  //        if (items != null) {
+  //          //ok 
+  //          if (items.getStackInSlot(0).isEmpty() == false) {
+  //            calc += 2;
+  //          }
+  //        }
+  //      }
+  //    }
+  //    return calc;
+  //  }
 
   @Override
   public boolean hasComparatorInputOverride(BlockState state) {
@@ -155,7 +140,7 @@ public class BlockCableItem extends BlockBase {
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileCableItem();
+    return new TileCableFluid();
   }
 
   @Override
@@ -168,7 +153,7 @@ public class BlockCableItem extends BlockBase {
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
-      IItemHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.CABLE);
         worldIn.setBlockState(pos, stateIn);
@@ -179,7 +164,7 @@ public class BlockCableItem extends BlockBase {
   @Override
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
-    if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
+    if (isFluid(stateIn, facing, facingState, world, currentPos, facingPos)) {
       return stateIn.with(property, EnumConnectType.CABLE);
     }
     else {

@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.nbt.CompoundNBT;
@@ -79,6 +80,9 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
     //drain below but only to one of myself
     TileEntity below = this.world.getTileEntity(this.pos.down());
     if (below != null && below instanceof TileTank) {
+      UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
+    } //TESTING ONLY  
+    if (below != null && below instanceof TileCableFluid) {
       UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
     }
   }
