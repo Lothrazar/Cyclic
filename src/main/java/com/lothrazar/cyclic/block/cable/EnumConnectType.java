@@ -7,24 +7,23 @@ public enum EnumConnectType implements IStringSerializable {
   NONE, CABLE, INVENTORY, BLOCKED;
 
   //none = nothing
-  //cable = will be for extractor
+  //cable = UNUSED
   //inventory normal connection, to another capability 
   //blocked = yellow block , NYI
   public boolean isHollow() {
     return this == NONE || this == BLOCKED;
   }
-
-  public boolean isExtractor() {
-    return this == CABLE;
-  }
-
-  public EnumConnectType toggleExtractor() {
-    if (this == CABLE)
-      return NONE;
-    if (this == INVENTORY || this == NONE)
-      return CABLE;
-    return this;//otherwise dont toggle 
-  }
+  //  public boolean isExtractor() {
+  //    return this == CABLE;
+  //  }
+  //
+  //  public EnumConnectType toggleExtractor() {
+  //    if (this == CABLE)
+  //      return NONE;
+  //    if (this == INVENTORY || this == NONE)
+  //      return CABLE;
+  //    return this;//otherwise dont toggle 
+  //  }
 
   @Override
   public String getName() {

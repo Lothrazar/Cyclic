@@ -76,8 +76,7 @@ public class BlockCableEnergy extends BlockBase {
   private static final VoxelShape AABB_EAST = Block.makeCuboidShape(sm, sm, sm, top, lg, lg);
 
   private boolean shapeConnects(BlockState state, EnumProperty<EnumConnectType> dirctionProperty) {
-    return state.get(dirctionProperty).equals(EnumConnectType.CABLE)
-        || state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
+    return state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
   }
 
   @Override

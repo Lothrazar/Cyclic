@@ -4,9 +4,9 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.cable.DirectionNullable;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
@@ -48,6 +48,7 @@ public class BlockCableFluid extends BlockBase {
     return state;
   }
 
+  private static final EnumProperty<DirectionNullable> EXTR = EnumProperty.create("extract", DirectionNullable.class);
   private static final EnumProperty<EnumConnectType> DOWN = EnumProperty.create("down", EnumConnectType.class);
   private static final EnumProperty<EnumConnectType> UP = EnumProperty.create("up", EnumConnectType.class);
   private static final EnumProperty<EnumConnectType> NORTH = EnumProperty.create("north", EnumConnectType.class);
@@ -82,8 +83,7 @@ public class BlockCableFluid extends BlockBase {
   private static final VoxelShape AABB_EAST = Block.makeCuboidShape(sm, sm, sm, top, lg, lg);
 
   private boolean shapeConnects(BlockState state, EnumProperty<EnumConnectType> dirctionProperty) {
-    return state.get(dirctionProperty).equals(EnumConnectType.CABLE)
-        || state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
+    return state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
   }
 
   @Override
@@ -109,11 +109,10 @@ public class BlockCableFluid extends BlockBase {
     }
     return shape;
   }
-
-  @Override
-  public BlockRenderType getRenderType(BlockState bs) {
-    return BlockRenderType.MODEL;
-  }
+  //  @Override
+  //  public BlockRenderType getRenderType(BlockState bs) {
+  //    return BlockRenderType.MODEL;
+  //  }
 
   @Override
   public boolean hasTileEntity(BlockState state) {
@@ -151,19 +150,20 @@ public class BlockCableFluid extends BlockBase {
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
     super.fillStateContainer(builder);
-    builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
+    builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST, EXTR);
   }
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
+    stateIn = stateIn.with(EXTR, DirectionNullable.NONE);
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
       IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
-        worldIn.setBlockState(pos, stateIn);
       }
     }
+    worldIn.setBlockState(pos, stateIn);
   }
 
   @Override
@@ -171,10 +171,13 @@ public class BlockCableFluid extends BlockBase {
     ItemStack held = player.getHeldItem(hand);
     if (held.getItem() == Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE.asItem()
         && hit != null && hit.getFace() != null) {
-      //do the thing
-      EnumProperty<EnumConnectType> prop = FACING_TO_PROPERTY_MAP.get(hit.getFace());
-      EnumConnectType current = world.getBlockState(pos).get(prop);
-      world.setBlockState(pos, state.with(prop, current.toggleExtractor()));
+      //do the thing 
+      DirectionNullable current = world.getBlockState(pos).get(EXTR);
+      //what is my current extractor
+      //if im extracting north, go none
+      //if north is none, then extract north 
+      DirectionNullable newextr = current.toggle(hit.getFace());
+      world.setBlockState(pos, state.with(EXTR, newextr));
       return ActionResultType.SUCCESS;
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);
