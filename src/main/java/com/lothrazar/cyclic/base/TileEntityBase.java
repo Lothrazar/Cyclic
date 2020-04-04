@@ -55,7 +55,7 @@ public abstract class TileEntityBase extends TileEntity {
   public void moveFluids(Direction myFacingDir, int TRANSFER_FLUID_PER_TICK, IFluidHandler tank) {
     //    private void moveFluid(EnumFacing myFacingDir) {
     Direction themFacingMe = myFacingDir.getOpposite();
-    if (tank.getFluidInTank(0).getAmount() <= 0) {
+    if (tank == null || tank.getFluidInTank(0).getAmount() <= 0) {
       return;
     }
     int toFlow = TRANSFER_FLUID_PER_TICK;
@@ -64,16 +64,6 @@ public abstract class TileEntityBase extends TileEntity {
     //    }
     BlockPos posTarget = pos.offset(myFacingDir);
     boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
-    //    if (outputSuccess) {
-    //      TileEntity tileTarget = world.getTileEntity(posTarget);
-    ////      if (tileTarget instanceof TileEntityCableBase) {
-    ////        //TODO: not so compatible with other fluid systems. itl do i guess
-    ////        TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-    ////        if (cable.isFluidPipe()) {
-    ////          cable.updateIncomingFluidFace(themFacingMe);
-    ////        }
-    ////      }
-    //    }
   }
 
   public void moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
@@ -111,11 +101,6 @@ public abstract class TileEntityBase extends TileEntity {
       int sizeAfter = sizeStarted - drain.getCount();
       if (sizeAfter > 0) {
         handlerHere.extractItem(SLOT, sizeAfter, false);
-        //flow direction
-        //        TileEntityCableBase cable = (TileEntityCableBase) tileTarget;
-        //        if (cable.isItemPipe()) {
-        //          cable.updateIncomingItemFace(themFacingMe);
-        //        }
       }
     }
   }

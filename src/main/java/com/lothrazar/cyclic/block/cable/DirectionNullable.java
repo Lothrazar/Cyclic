@@ -6,8 +6,6 @@ import net.minecraft.util.IStringSerializable;
 
 public enum DirectionNullable implements IStringSerializable {
 
-  //same order as 
-  // net.minecraft.util.Direction
   DOWN, UP, NORTH, SOUTH, WEST, EAST, NONE;
 
   @Override

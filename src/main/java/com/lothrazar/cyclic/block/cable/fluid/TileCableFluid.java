@@ -11,9 +11,11 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -49,6 +51,24 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void tick() {
+    tryExtract();
+    normalFlow();
+  }
+
+  private void tryExtract() {
+    Direction extractSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
+    if (extractSide == null) {
+      return;
+    }
+    //
+    BlockPos target = this.pos.offset(extractSide);
+    //  LazyOptional<IFluidHandler> theirTank = world.getTileEntity(target).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    UtilFluid.tryFillPositionFromTank(world, pos, extractSide,
+        UtilFluid.getTank(world, target, extractSide.getOpposite()), CAPACITY);
+    //
+  }
+
+  private void normalFlow() {
     IFluidHandler sideHandler;
     Direction outgoingSide;
     for (Direction incomingSide : Direction.values()) {

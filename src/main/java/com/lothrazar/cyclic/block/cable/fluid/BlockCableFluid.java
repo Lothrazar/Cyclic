@@ -48,7 +48,7 @@ public class BlockCableFluid extends BlockBase {
     return state;
   }
 
-  private static final EnumProperty<DirectionNullable> EXTR = EnumProperty.create("extract", DirectionNullable.class);
+  static final EnumProperty<DirectionNullable> EXTR = EnumProperty.create("extract", DirectionNullable.class);
   private static final EnumProperty<EnumConnectType> DOWN = EnumProperty.create("down", EnumConnectType.class);
   private static final EnumProperty<EnumConnectType> UP = EnumProperty.create("up", EnumConnectType.class);
   private static final EnumProperty<EnumConnectType> NORTH = EnumProperty.create("north", EnumConnectType.class);
@@ -109,10 +109,6 @@ public class BlockCableFluid extends BlockBase {
     }
     return shape;
   }
-  //  @Override
-  //  public BlockRenderType getRenderType(BlockState bs) {
-  //    return BlockRenderType.MODEL;
-  //  }
 
   @Override
   public boolean hasTileEntity(BlockState state) {
