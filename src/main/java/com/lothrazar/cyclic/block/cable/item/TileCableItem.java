@@ -21,83 +21,77 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCableItem extends TileEntityBase implements ITickableTileEntity {
 
-  private Map<Direction, IItemHandler> flow = Maps.newHashMap();
-  private static final int MAX = 8000;
-  private LazyOptional<IItemHandler> item = LazyOptional.of(this::createHandler);
+  private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
+  //  private LazyOptional<IItemHandler> item = LazyOptional.of(this::createHandler);
 
   public TileCableItem() {
     super(BlockRegistry.Tiles.item_pipeTile);
     for (Direction f : Direction.values()) {
-      flow.put(f, createHandler());
+      flow.put(f, LazyOptional.of(this::createHandler));
     }
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    ItemStackHandler h = new ItemStackHandler(1);
+    return h;
   }
+
+  List<Integer> rawList = IntStream.rangeClosed(
+      0,
+      5).boxed().collect(Collectors.toList());
 
   @Override
   public void tick() {
-    List<Integer> rawList = IntStream.rangeClosed(
-        0,
-        5).boxed().collect(Collectors.toList());
-    Collections.shuffle(rawList);
-    for (Integer i : rawList) {
-      Direction exportToSide = Direction.values()[i];
-      //      if (this.isIncomingFromFace(exportToSide) == false) {
-      //        moveItems(exportToSide, MAX);
-      //      }
+    IItemHandler sideHandler;
+    Direction outgoingSide;
+    for (Direction incomingSide : Direction.values()) {
+      sideHandler = flow.get(incomingSide).orElse(null);
+      //thise items came from that
+      Collections.shuffle(rawList);
+      for (Integer i : rawList) {
+        outgoingSide = Direction.values()[i];
+        if (outgoingSide == incomingSide) {
+          continue;
+        }
+        this.moveItems(outgoingSide, 64, sideHandler);
+      }
     }
   }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (side == null) {
-      //overflow
-    }
-    else {
-      //return inventory for THIS side 
-      //  
-    }
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return item.cast();
+    if (side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return flow.get(side).cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(CompoundNBT tag) {
+    LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
-      //      flow.put(f, tag.getInt(f.getName() + "_incitem"));
+      item = flow.get(f);
+      item.ifPresent(h -> {
+        CompoundNBT itemTag = tag.getCompound("item" + f.toString());
+        ((INBTSerializable<CompoundNBT>) h).deserializeNBT(itemTag);
+      });
     }
-    CompoundNBT itemTag = tag.getCompound("item");
-    item.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(itemTag));
     super.read(tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
-      //      tag.putInt(f.getName() + "_incitem", mapIncoming.get(f));
+      item = flow.get(f);
+      item.ifPresent(h -> {
+        CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+        tag.put("item" + f.toString(), compound);
+      });
     }
-    item.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("item", compound);
-    });
     return super.write(tag);
   }
 
-  private static final int TIMER_SIDE_INPUT = 15;
-  //  private boolean isIncomingFromFace(Direction face) {
-  //    return flow.get(face) > 0;
-  //  }
-
-  public void updateIncomingFace(Direction inputFrom) {
-    //    flow.put(inputFrom, TIMER_SIDE_INPUT);
-  }
-
   @Override
-  public void setField(int field, int value) {
-    // TODO Auto-generated method stub
-  }
+  public void setField(int field, int value) {}
 }

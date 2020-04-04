@@ -50,11 +50,10 @@ public abstract class TileEntityBase extends TileEntity {
     return this.needsRedstone == 1;
   }
 
-  public void moveItems(Direction myFacingDir, int max) {
+  public void moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
     if (this.world.isRemote()) {
       return;
     }
-    IItemHandler handlerHere = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, myFacingDir).orElse(null);
     if (handlerHere == null) {
       return;
     }
@@ -68,17 +67,12 @@ public abstract class TileEntityBase extends TileEntity {
     if (handlerOutput == null) {
       return;
     }
-    //    System.out.println("Bttery export " + myFacingDir);
-    if (handlerHere != null && handlerOutput != null
-    //        && handlerHere.canExtract() && handlerOutput.canReceive()
-    ) {
+    if (handlerHere != null && handlerOutput != null) {
       int SLOT = 0;
       //first simulate 
       ItemStack drain = handlerHere.getStackInSlot(SLOT).copy();
       int sizeStarted = drain.getCount();
-      if (!drain.isEmpty()
-      //          && handlerOutput.getEnergyStored() + drain <= handlerOutput.getMaxEnergyStored()
-      ) {
+      if (!drain.isEmpty()) {
         //now push it into output, but find out what was ACTUALLY taken
         for (int i = 0; i < handlerOutput.getSlots(); i++) {
           drain = handlerOutput.insertItem(i, drain, false);

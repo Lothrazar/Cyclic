@@ -96,10 +96,11 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     }
   }
 
+  private List<Integer> rawList = IntStream.rangeClosed(
+      0,
+      5).boxed().collect(Collectors.toList());
+
   private void tickCableFlow() {
-    List<Integer> rawList = IntStream.rangeClosed(
-        0,
-        5).boxed().collect(Collectors.toList());
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];

@@ -1,16 +1,18 @@
 package com.lothrazar.cyclic.block.cable.item;
 
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -22,12 +24,9 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -35,12 +34,6 @@ public class BlockCableItem extends BlockBase {
 
   public BlockCableItem(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    //keep this to delete tooltip 
   }
 
   public static BlockState cleanBlockState(BlockState state) {
@@ -124,6 +117,25 @@ public class BlockCableItem extends BlockBase {
   @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
+  }
+
+  @Override
+  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileEntity tileentity = worldIn.getTileEntity(pos);
+      ModCyclic.log("drop broken cable");
+      if (tileentity instanceof IInventory) {
+        InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
+        worldIn.updateComparatorOutputLevel(pos, this);
+      }
+      super.onReplaced(state, worldIn, pos, newState, isMoving);
+    }
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    //    for(Direction d :Direction.values())
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 
   @Nullable
