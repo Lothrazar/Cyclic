@@ -6,13 +6,11 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -123,19 +121,37 @@ public class BlockCableItem extends BlockBase {
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      ModCyclic.log("drop broken cable");
-      if (tileentity instanceof IInventory) {
-        InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-        worldIn.updateComparatorOutputLevel(pos, this);
+      for (Direction d : Direction.values()) {
+        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
+        UtilItemStack.dropAll(items, worldIn, pos);
       }
+      worldIn.updateComparatorOutputLevel(pos, this);
       super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
   }
 
   @Override
   public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-    //    for(Direction d :Direction.values())
-    return Container.calcRedstone(worldIn.getTileEntity(pos));
+    int calc = 0;
+    TileEntity tileentity = worldIn.getTileEntity(pos);
+    if (tileentity != null) {
+      for (Direction d : Direction.values()) {
+        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
+        if (items != null) {
+          //ok 
+          if (items.getStackInSlot(0).isEmpty() == false) {
+            calc += 2;
+          }
+        }
+      }
+    }
+    ModCyclic.log("comp" + calc);
+    return calc;
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
   }
 
   @Nullable
