@@ -14,6 +14,18 @@ public enum EnumConnectType implements IStringSerializable {
     return this == NONE || this == BLOCKED;
   }
 
+  public boolean isExtractor() {
+    return this == CABLE;
+  }
+
+  public EnumConnectType toggleExtractor() {
+    if (this == CABLE)
+      return NONE;
+    if (this == INVENTORY || this == NONE)
+      return CABLE;
+    return this;//otherwise dont toggle 
+  }
+
   @Override
   public String getName() {
     return name().toLowerCase();

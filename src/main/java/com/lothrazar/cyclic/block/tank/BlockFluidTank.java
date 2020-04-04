@@ -98,7 +98,6 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
-  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!world.isRemote) {
       TileEntity tankHere = world.getTileEntity(pos);

@@ -8,14 +8,19 @@ import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -159,6 +164,20 @@ public class BlockCableFluid extends BlockBase {
         worldIn.setBlockState(pos, stateIn);
       }
     }
+  }
+
+  @Override
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    ItemStack held = player.getHeldItem(hand);
+    if (held.getItem() == Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE.asItem()
+        && hit != null && hit.getFace() != null) {
+      //do the thing
+      EnumProperty<EnumConnectType> prop = FACING_TO_PROPERTY_MAP.get(hit.getFace());
+      EnumConnectType current = world.getBlockState(pos).get(prop);
+      world.setBlockState(pos, state.with(prop, current.toggleExtractor()));
+      return ActionResultType.SUCCESS;
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
   @Override
