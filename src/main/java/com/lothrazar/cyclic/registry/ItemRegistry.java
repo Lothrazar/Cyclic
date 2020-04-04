@@ -118,6 +118,7 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("placer"));
     r.register(new BlockItem(BlockRegistry.anvil, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("anvil"));
     r.register(new ItemScaffolding(BlockRegistry.scaffold_replace,
         new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("scaffold_replace"));

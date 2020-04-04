@@ -1,0 +1,11 @@
+{ 
+ 	"parent": "cyclic:parent/machine_south",
+    "textures": {
+        "0": "cyclic:blocks/placer/front",
+        "1": "cyclic:blocks/placer/side",
+        "2": "minecraft:block/cauldron_inner",
+        "3": "minecraft:block/andesite",
+        "4": "minecraft:block/quartz_block_bottom",
+        "particle": "cyclic:blocks/side"
+    }
+}

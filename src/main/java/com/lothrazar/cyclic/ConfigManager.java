@@ -17,6 +17,7 @@ public class ConfigManager {
   public static BooleanValue NETHERBRICK;
   public static BooleanValue ENCHANTMENTS;
   public static IntValue ANVILPOWER;
+  //  public static IntValue PLACERPOWER;
   static {
     initConfig();
   }

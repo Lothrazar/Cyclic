@@ -34,6 +34,9 @@ import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
 import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
+import com.lothrazar.cyclic.block.placer.BlockPlacer;
+import com.lothrazar.cyclic.block.placer.ContainerPlacer;
+import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
@@ -105,6 +108,8 @@ public class BlockRegistry {
   //  public static Block fluid_pipe;
   //  @ObjectHolder(ModCyclic.MODID + ":item_pipe")
   //  public static Block item_pipe;
+  @ObjectHolder(ModCyclic.MODID + ":placer")
+  public static Block placer;
 
   public static class Tiles {
 
@@ -134,10 +139,14 @@ public class BlockRegistry {
     public static TileEntityType<TileFan> fantile;
     @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
     public static TileEntityType<TileExpPylon> experience_pylontile;
+    @ObjectHolder(ModCyclic.MODID + ":placer")
+    public static TileEntityType<TilePlacer> placer;
   }
 
   public static class ContainerScreens {
 
+    @ObjectHolder(ModCyclic.MODID + ":placer")
+    public static ContainerType<ContainerPlacer> placer;
     @ObjectHolder(ModCyclic.MODID + ":anvil")
     public static ContainerType<ContainerAnvil> anvil;
     @ObjectHolder(ModCyclic.MODID + ":battery")
@@ -179,6 +188,7 @@ public class BlockRegistry {
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     r.register(new BlockHarvester(Block.Properties.create(Material.ROCK)).setRegistryName("harvester"));
+    r.register(new BlockPlacer(Block.Properties.create(Material.ROCK)).setRegistryName("placer"));
   }
 
   @SubscribeEvent
@@ -198,6 +208,7 @@ public class BlockRegistry {
     r.register(TileEntityType.Builder.create(TileHarvester::new, BlockRegistry.harvester)
         .build(null).setRegistryName("harvester"));
     r.register(TileEntityType.Builder.create(TileAnvilAuto::new, BlockRegistry.anvil).build(null).setRegistryName("anvil"));
+    r.register(TileEntityType.Builder.create(TilePlacer::new, BlockRegistry.placer).build(null).setRegistryName("placer"));
   }
 
   @SubscribeEvent
@@ -218,5 +229,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerAnvil(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("anvil"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPlacer(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("placer"));
   }
 }
