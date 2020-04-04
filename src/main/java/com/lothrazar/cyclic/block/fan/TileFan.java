@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -35,7 +36,10 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   }
 
   private void setAnimation(boolean lit) {
-    this.world.setBlockState(pos, this.world.getBlockState(pos).with(BlockFan.IS_LIT, lit));
+    BlockState st = this.world.getBlockState(pos);
+    boolean previous = st.get(BlockFan.IS_LIT);
+    if (previous != lit)
+      this.world.setBlockState(pos, st.with(BlockFan.IS_LIT, lit));
   }
 
   private static final int MIN_RANGE = 1;

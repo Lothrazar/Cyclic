@@ -1,5 +1,6 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/battery" }
+        "lit=false": { "model": "cyclic:block/battery" },
+        "lit=true": { "model": "cyclic:block/battery_on" }
     }
 }

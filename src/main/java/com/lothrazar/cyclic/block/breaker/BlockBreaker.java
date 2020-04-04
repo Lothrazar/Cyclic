@@ -10,7 +10,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -22,8 +21,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockBreaker extends BlockBase {
-
-  public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
 
   public BlockBreaker(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));

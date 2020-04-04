@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
@@ -14,7 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -31,8 +32,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockBattery extends BlockBase {
 
-  public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
-
   public BlockBattery(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
   }
@@ -41,6 +40,11 @@ public class BlockBattery extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ScreenManager.registerFactory(BlockRegistry.ContainerScreens.batteryCont, ScreenBattery::new);
+  }
+
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    builder.add(IS_LIT);
   }
 
   @Override

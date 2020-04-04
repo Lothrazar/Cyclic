@@ -12,7 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -27,8 +26,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockPlacer extends BlockBase {
-
-  public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
 
   public BlockPlacer(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));

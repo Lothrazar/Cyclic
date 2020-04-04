@@ -32,7 +32,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockAnvilAuto extends BlockBase {
 
-  //  public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
   //copy from anvilblock
   private static final VoxelShape PART_BASE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
   private static final VoxelShape PART_LOWER_X = Block.makeCuboidShape(3.0D, 4.0D, 4.0D, 13.0D, 5.0D, 12.0D);

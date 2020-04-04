@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -21,6 +22,8 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public abstract class BlockBase extends Block {
+
+  public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
 
   public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     if (facing == null) {

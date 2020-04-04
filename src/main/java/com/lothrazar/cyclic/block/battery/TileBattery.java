@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -38,11 +39,13 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   public TileBattery() {
     super(BlockRegistry.Tiles.batterytile);
   }
-  //  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-  //
-  //  private IItemHandler createHandler() {
-  //    return new ItemStackHandler(1);
-  //  }
+
+  private void setAnimation(boolean lit) {
+    BlockState st = this.world.getBlockState(pos);
+    boolean previous = st.get(BlockBattery.IS_LIT);
+    if (previous != lit)
+      this.world.setBlockState(pos, st.with(BlockBattery.IS_LIT, lit));
+  }
 
   private IEnergyStorage createEnergy() {
     return new CustomEnergyStorage(MAX, MAX / 4);
@@ -86,8 +89,11 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
-    if (this.getFlowing() == 1)
+    boolean isFlowing = this.getFlowing() == 1;
+    setAnimation(isFlowing);
+    if (isFlowing) {
       this.tickCableFlow();
+    }
   }
 
   private void tickCableFlow() {

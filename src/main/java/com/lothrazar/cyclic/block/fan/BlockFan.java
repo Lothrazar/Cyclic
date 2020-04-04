@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -16,8 +15,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BlockFan extends BlockBase {
-
-  public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
 
   public BlockFan(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).notSolid());

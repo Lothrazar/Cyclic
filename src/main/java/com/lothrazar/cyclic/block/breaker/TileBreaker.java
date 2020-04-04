@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.breaker;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -16,7 +15,10 @@ public class TileBreaker extends TileEntityBase implements ITickableTileEntity {
   }
 
   private void setAnimation(boolean lit) {
-    this.world.setBlockState(pos, this.world.getBlockState(pos).with(BlockFan.IS_LIT, lit));
+    BlockState st = this.world.getBlockState(pos);
+    boolean previous = st.get(BlockBreaker.IS_LIT);
+    if (previous != lit)
+      this.world.setBlockState(pos, st.with(BlockBreaker.IS_LIT, lit));
   }
 
   private Direction getCurrentFacing() {
