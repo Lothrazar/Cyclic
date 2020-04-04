@@ -6,6 +6,10 @@ public enum EnumConnectType implements IStringSerializable {
 
   NONE, CABLE, INVENTORY, BLOCKED;
 
+  //none = nothing
+  //cable = will be for extractor
+  //inventory normal connection, to another capability 
+  //blocked = yellow block , NYI
   public boolean isHollow() {
     return this == NONE || this == BLOCKED;
   }

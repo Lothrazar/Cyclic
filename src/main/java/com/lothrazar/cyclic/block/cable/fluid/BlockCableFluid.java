@@ -90,16 +90,16 @@ public class BlockCableFluid extends BlockBase {
     if (shapeConnects(state, DOWN)) {
       shape = VoxelShapes.combine(shape, AABB_DOWN, IBooleanFunction.OR);
     }
-    if (state.get(WEST).equals(EnumConnectType.CABLE)) {
+    if (state.get(WEST).equals(EnumConnectType.INVENTORY)) {
       shape = VoxelShapes.combine(shape, AABB_WEST, IBooleanFunction.OR);
     }
-    if (state.get(EAST).equals(EnumConnectType.CABLE)) {
+    if (state.get(EAST).equals(EnumConnectType.INVENTORY)) {
       shape = VoxelShapes.combine(shape, AABB_EAST, IBooleanFunction.OR);
     }
-    if (state.get(NORTH).equals(EnumConnectType.CABLE)) {
+    if (state.get(NORTH).equals(EnumConnectType.INVENTORY)) {
       shape = VoxelShapes.combine(shape, AABB_NORTH, IBooleanFunction.OR);
     }
-    if (state.get(SOUTH).equals(EnumConnectType.CABLE)) {
+    if (state.get(SOUTH).equals(EnumConnectType.INVENTORY)) {
       shape = VoxelShapes.combine(shape, AABB_SOUTH, IBooleanFunction.OR);
     }
     return shape;
@@ -155,7 +155,7 @@ public class BlockCableFluid extends BlockBase {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
       IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
       if (cap != null) {
-        stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.CABLE);
+        stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockState(pos, stateIn);
       }
     }
@@ -165,7 +165,7 @@ public class BlockCableFluid extends BlockBase {
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     if (isFluid(stateIn, facing, facingState, world, currentPos, facingPos)) {
-      return stateIn.with(property, EnumConnectType.CABLE);
+      return stateIn.with(property, EnumConnectType.INVENTORY);
     }
     else {
       return stateIn.with(property, EnumConnectType.NONE);
