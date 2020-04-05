@@ -7,11 +7,15 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -21,6 +25,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -108,7 +113,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(16);
+    return new ItemStackHandler(1);
   }
 
   @Override
@@ -205,10 +210,56 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    //        if (this.isPowered() == false) {
+    //          return;
+    //        }
+    //    
+    IItemHandler inv = this.inventory.orElse(null);
+    if (inv == null) {
+      return;
+    }
+    ItemStack stack = inv.getStackInSlot(0);
+    if (stack.isEmpty()) {
+      return;
+    }
+    Block stuff = Block.getBlockFromItem(stack.getItem());
+    if (stuff == null) {
+      return;
+    }
+    List<BlockPos> shape = this.getShape();
+    if (shape.size() == 0) {
+      return;
+    }
+    if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
+      this.shapeIndex = 0;
+    }
+    BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
+    for (int i = 0; i < spotsSkippablePerTrigger; i++) {
+      //TODO PAY POWER
+      //true means bounding box is null in the check. entit falling sand uses true
+      //used to be exact air world.isAirBlock(nextPos)
+      if (!World.isOutsideBuildHeight(nextPos)
+          && world.isAirBlock(nextPos)) { // check if this spot is even valid
+        BlockState placeState = stuff.getDefaultState();
+        if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+          //rotations if any
+          //          for (int j = 0; j < this.rotations; j++) {
+          //            UtilPlaceBlocks.rotateBlockValidState(world, null, nextPos, this.getCurrentFacing());
+          //          }
+          //build success
+          this.incrementPosition(shape);
+          stack.shrink(1);
+        }
+        break;//ok , target position is valid, we can build only into air
+      }
+      else {//cant build here. move up one
+        nextPos = shape.get(this.shapeIndex);
+        this.incrementPosition(shape);
+      } //but after inrementing once, we may not yet be valid so skip at most ten spots per tick
+    }
   }
+
+  private static final int spotsSkippablePerTrigger = 50;
 
   private void incrementPosition(List<BlockPos> shape) {
     if (shape == null || shape.size() == 0) {

@@ -8,7 +8,6 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
-  //  private ButtonMachine btnToggle;
   private EnergyBar energy;
 
   public ScreenAnvil(ContainerAnvil screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -22,11 +21,6 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
     super.init();
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
-    //    int x = guiLeft + 132, y = guiTop + 8;
-    //    btnToggle = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
-    //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-    //      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(0, container.tile.getFlowing(), container.tile.getPos()));
-    //    }));
   }
 
   @Override

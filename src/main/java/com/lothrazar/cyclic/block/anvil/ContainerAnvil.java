@@ -41,18 +41,6 @@ public class ContainerAnvil extends ContainerBase {
         tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
-    //    trackInt(new IntReferenceHolder() {
-    //
-    //      @Override
-    //      public int get() {
-    //        return getFlowing();
-    //      }
-    //
-    //      @Override
-    //      public void set(int value) {
-    //        tile.setFlowing(value);
-    //      }
-    //    });
   }
 
   public int getEnergy() {

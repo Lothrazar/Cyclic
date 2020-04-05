@@ -17,7 +17,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerStructure extends ContainerBase {
 
-  private TileStructure tile;
+  TileStructure tile;
 
   public ContainerStructure(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(BlockRegistry.ContainerScreens.structure, windowId);
@@ -62,5 +62,9 @@ public class ContainerStructure extends ContainerBase {
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
     return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.structure);
+  }
+
+  public int getNeedsRedstone() {
+    return tile.getNeedsRedstone();
   }
 }
