@@ -62,10 +62,8 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     }
     //
     BlockPos target = this.pos.offset(extractSide);
-    //  LazyOptional<IFluidHandler> theirTank = world.getTileEntity(target).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
     UtilFluid.tryFillPositionFromTank(world, pos, extractSide,
         UtilFluid.getTank(world, target, extractSide.getOpposite()), CAPACITY);
-    //
   }
 
   private void normalFlow() {

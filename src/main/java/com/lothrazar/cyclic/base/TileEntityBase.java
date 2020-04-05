@@ -97,7 +97,6 @@ public abstract class TileEntityBase extends TileEntity {
           }
         }
       }
-      //
       int sizeAfter = sizeStarted - drain.getCount();
       if (sizeAfter > 0) {
         handlerHere.extractItem(SLOT, sizeAfter, false);

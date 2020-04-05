@@ -8,10 +8,14 @@ import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -42,6 +46,45 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
+    tryExtract();
+    normalFlow();
+  }
+
+  private void tryExtract() {
+    Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
+    if (importFromSide == null) {
+      return;
+    }
+    IItemHandler sideHandler = flow.get(importFromSide).orElse(null);
+    if (importFromSide == null || !sideHandler.getStackInSlot(0).isEmpty()) {
+      return;
+    }
+    BlockPos posTarget = this.pos.offset(importFromSide);
+    TileEntity tile = world.getTileEntity(posTarget);
+    if (tile != null) {
+      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite()).orElse(null);
+      //
+      ItemStack itemTarget;
+      if (itemHandlerFrom != null) {
+        //ok go
+        for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
+          itemTarget = itemHandlerFrom.getStackInSlot(i);
+          if (itemTarget.isEmpty()) {
+            continue;
+          }
+          // and then pull 
+          if (itemTarget.isEmpty() == false) {
+            ItemStack result = sideHandler.insertItem(0, itemTarget.copy(), false);
+            itemTarget.setCount(result.getCount());
+            //            this.setInventorySlotContents(importFromSide.ordinal(), pulled.copy());
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  private void normalFlow() {
     IItemHandler sideHandler;
     Direction outgoingSide;
     for (Direction incomingSide : Direction.values()) {
