@@ -24,6 +24,8 @@
 	"item.cyclic.wrench.tooltip":"Rotates simple blocks",   
 	"item.cyclic.cable_wrench":"Cable Wrench",   
 	"item.cyclic.cable_wrench.tooltip":"Change settings on cyclic cables",  
+	"tool.cable_wrench.extract":"Extract mode",
+	"tool.cable_wrench.disable":"Disable mode",
 	"gui.cyclic.flowing0":"Storing Power",  
 	"gui.cyclic.flowing1":"Exporting Power",
     

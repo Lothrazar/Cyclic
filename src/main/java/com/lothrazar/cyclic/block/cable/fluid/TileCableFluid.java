@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.nbt.CompoundNBT;
@@ -86,7 +87,8 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (side != null && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return flow.get(side).cast();
+      if (CableBase.canConnectHere(this.getBlockState(), side))
+        return flow.get(side).cast();
     }
     return super.getCapability(cap, side);
   }

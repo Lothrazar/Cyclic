@@ -69,7 +69,7 @@ public class ItemEvents {
           world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
         }
       }
-      else if (type == WrenchActionType.BLOCK && state.getBlock() instanceof CableBase) {
+      else if (type == WrenchActionType.DISABLE && state.getBlock() instanceof CableBase) {
         //
         EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(event.getFace());
         EnumConnectType status = state.get(prop);

@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.nbt.CompoundNBT;
@@ -65,7 +66,8 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      if (CableBase.canConnectHere(this.getBlockState(), side))
+        return energy.cast();
     }
     return super.getCapability(cap, side);
   }

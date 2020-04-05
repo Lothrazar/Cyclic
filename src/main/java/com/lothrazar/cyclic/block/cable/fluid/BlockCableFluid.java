@@ -79,7 +79,7 @@ public class BlockCableFluid extends CableBase {
     stateIn = stateIn.with(EXTR, DirectionNullable.NONE);
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
-      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
+      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
       }
@@ -90,6 +90,9 @@ public class BlockCableFluid extends CableBase {
   @Override
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
+    if (stateIn.get(property).isBlocked()) {
+      return stateIn;
+    }
     if (isFluid(stateIn, facing, facingState, world, currentPos, facingPos)) {
       return stateIn.with(property, EnumConnectType.INVENTORY);
     }

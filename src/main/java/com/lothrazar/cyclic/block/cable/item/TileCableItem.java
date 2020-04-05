@@ -9,12 +9,10 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -107,9 +105,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      //but first am i blocked
-      EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(side);
-      if (this.getBlockState().get(property) != EnumConnectType.BLOCKED) {
+      if (CableBase.canConnectHere(this.getBlockState(), side)) {
         return flow.get(side).cast();
       }
     }

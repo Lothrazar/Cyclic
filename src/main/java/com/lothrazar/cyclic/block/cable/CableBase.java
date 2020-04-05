@@ -4,6 +4,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Util;
@@ -49,5 +50,13 @@ public abstract class CableBase extends BlockBase {
 
   public CableBase(Properties properties) {
     super(properties);
+  }
+
+  public static boolean canConnectHere(BlockState blockState, Direction side) {
+    if (side == null) {
+      return true;
+    }
+    EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(side);
+    return blockState.get(property).isUnBlocked();
   }
 }

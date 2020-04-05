@@ -115,7 +115,7 @@ public class BlockCableItem extends CableBase {
     stateIn = stateIn.with(EXTR, DirectionNullable.NONE);
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
-      IItemHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      IItemHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
       }
@@ -126,7 +126,7 @@ public class BlockCableItem extends CableBase {
   @Override
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
-    if (stateIn.get(property) == EnumConnectType.BLOCKED) {
+    if (stateIn.get(property).isBlocked()) {
       return stateIn;
     }
     if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {

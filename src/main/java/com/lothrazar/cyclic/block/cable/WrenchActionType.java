@@ -5,7 +5,7 @@ import net.minecraft.nbt.CompoundNBT;
 
 public enum WrenchActionType {
 
-  EXTRACT, BLOCK;
+  EXTRACT, DISABLE;
 
   private final static String NBT = "ActionType";
   private final static String NBTTIMEOUT = "timeout";

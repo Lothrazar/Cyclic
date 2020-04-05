@@ -77,7 +77,7 @@ public class BlockCableEnergy extends CableBase {
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
-      IEnergyStorage energy = facingTile == null ? null : facingTile.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+      IEnergyStorage energy = facingTile == null ? null : facingTile.getCapability(CapabilityEnergy.ENERGY, d.getOpposite()).orElse(null);
       if (energy != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockState(pos, stateIn);
@@ -88,6 +88,9 @@ public class BlockCableEnergy extends CableBase {
   @Override
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
+    if (stateIn.get(property).isBlocked()) {
+      return stateIn;
+    }
     if (isEnergy(stateIn, facing, facingState, world, currentPos, facingPos)) {
       return stateIn.with(property, EnumConnectType.INVENTORY);
     }
