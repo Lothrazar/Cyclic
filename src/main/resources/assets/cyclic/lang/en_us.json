@@ -22,6 +22,8 @@
     "block.cyclic.breaker": "Block Breaker",
 	"item.cyclic.wrench":"Wooden Wrench",   
 	"item.cyclic.wrench.tooltip":"Rotates simple blocks",   
+	"item.cyclic.cable_wrench":"Cable Wrench",   
+	"item.cyclic.cable_wrench.tooltip":"Change settings on cyclic cables",  
 	"gui.cyclic.flowing0":"Storing Power",  
 	"gui.cyclic.flowing1":"Exporting Power",
     

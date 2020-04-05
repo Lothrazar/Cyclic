@@ -1,9 +1,13 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.block.cable.DirectionNullable;
+import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.ItemEntityInteractable;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
+import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
@@ -40,21 +44,38 @@ public class ItemEvents {
     }
     if (event.getItemStack().getItem() instanceof ItemScaffolding
         && event.getPlayer().isCrouching()) {
-      ItemScaffolding item = (ItemScaffolding) event.getItemStack().getItem();
-      Direction opp = event.getFace().getOpposite();
-      BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, item.getBlock());
-      event.getWorld().setBlockState(dest, item.getBlock().getDefaultState());
-      ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
-      stac.shrink(1);
-      event.setCanceled(true);
+      scaffoldHit(event);
     }
+    if (event.getItemStack().getItem() == ItemRegistry.cable_wrench) {
+      BlockPos pos = event.getPos();
+      World world = event.getWorld();
+      BlockState state = world.getBlockState(pos);
+      if (state.getBlock() == BlockRegistry.fluid_pipe && event.getFace() != null) {
+        //TODO: cableBase class once all 3 support extracty
+        DirectionNullable current = world.getBlockState(pos).get(BlockCableFluid.EXTR);
+        Direction targetFace = event.getFace();
+        if (event.getPlayer().isCrouching()) {
+          targetFace = targetFace.getOpposite();
+        }
+        DirectionNullable newextr = current.toggle(targetFace);
+        world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
+      }
+    }
+  }
+
+  private void scaffoldHit(RightClickBlock event) {
+    ItemScaffolding item = (ItemScaffolding) event.getItemStack().getItem();
+    Direction opp = event.getFace().getOpposite();
+    BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, item.getBlock());
+    event.getWorld().setBlockState(dest, item.getBlock().getDefaultState());
+    ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
+    stac.shrink(1);
+    event.setCanceled(true);
   }
 
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
-    if (event.getItemStack().getItem() instanceof ItemEntityInteractable
-    //        && event.getTarget() instanceof HorseEntity
-    ) {
+    if (event.getItemStack().getItem() instanceof ItemEntityInteractable) {
       ItemEntityInteractable item = (ItemEntityInteractable) event.getItemStack().getItem();
       item.interactWith(event);
     }
