@@ -50,8 +50,6 @@ public class BuilderItem extends ItemBase {
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
-    //    PlayerEntity player = context.getPlayer();
-    //
     ItemStack stack = context.getItem();
     BlockPos pos = context.getPos();
     Direction side = context.getFace();

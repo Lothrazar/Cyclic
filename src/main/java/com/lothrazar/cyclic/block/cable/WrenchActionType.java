@@ -1,16 +1,12 @@
-package com.lothrazar.cyclic.item.builder;
+package com.lothrazar.cyclic.block.cable;
 
-import javax.annotation.Nullable;
-import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
 
-public enum BuilderActionType {
+public enum WrenchActionType {
 
-  SINGLE, X3, X5, X7, X9, X91, X19;
+  EXTRACT, BLOCK;
 
-  private static final String NBTBLOCKSTATE = "blockstate";
   private final static String NBT = "ActionType";
   private final static String NBTTIMEOUT = "timeout";
 
@@ -38,13 +34,16 @@ public enum BuilderActionType {
     return tags.getInt(NBT);
   }
 
+  public static WrenchActionType getType(ItemStack wand) {
+    return values()[get(wand)];
+  }
+
   public static String getName(ItemStack wand) {
     try {
-      CompoundNBT tags = wand.getOrCreateTag();
-      return "tool.action." + values()[tags.getInt(NBT)].toString().toLowerCase();
+      return "tool.cable_wrench." + getType(wand).toString().toLowerCase();
     }
     catch (Exception e) {
-      return "tool.action." + SINGLE.toString().toLowerCase();
+      return "tool.cable_wrench." + EXTRACT.toString().toLowerCase();
     }
   }
 
@@ -53,22 +52,9 @@ public enum BuilderActionType {
     int type = tags.getInt(NBT);
     type++;
     if (type >= values().length) {
-      type = SINGLE.ordinal();
+      type = EXTRACT.ordinal();
     }
     tags.putInt(NBT, type);
     wand.setTag(tags);
-  }
-
-  public static void setBlockState(ItemStack wand, BlockState target) {
-    CompoundNBT encoded = NBTUtil.writeBlockState(target);
-    wand.getOrCreateTag().put(NBTBLOCKSTATE, encoded);
-  }
-
-  @Nullable
-  public static BlockState getBlockState(ItemStack wand) {
-    if (!wand.getOrCreateTag().contains(NBTBLOCKSTATE)) {
-      return null;
-    }
-    return NBTUtil.readBlockState(wand.getOrCreateTag().getCompound(NBTBLOCKSTATE));
   }
 }

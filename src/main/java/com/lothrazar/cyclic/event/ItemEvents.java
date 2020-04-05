@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.cable.DirectionNullable;
+import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.ItemEntityInteractable;
@@ -86,18 +88,15 @@ public class ItemEvents {
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     PlayerEntity player = event.getPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
-    if (!held.isEmpty() && held.getItem() instanceof BuilderItem) {
-      //      if (event.getFace() != null && player.isSneaking()) {
-      //        //hita block
-      //        IBlockState hit = player.world.getBlockState(event.getPos());
-      //        ModCyclic.logger.log("HIT" + hit.getBlock());
-      //        return;
-      //      }
+    if (held.isEmpty()) {
+      return;
+    }
+    World world = player.getEntityWorld();
+    if (held.getItem() instanceof BuilderItem) {
       if (BuilderActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
         return;
       }
-      World world = player.getEntityWorld();
       BuilderActionType.setTimeout(held);
       event.setCanceled(true);
       //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
@@ -114,6 +113,14 @@ public class ItemEvents {
         }
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
       }
+    }
+    if (held.getItem() instanceof CableWrench) {
+      //mode 
+      if (!world.isRemote && WrenchActionType.getTimeout(held) == 0) {
+        WrenchActionType.toggle(held);
+      }
+      WrenchActionType.setTimeout(held);
+      UtilChat.sendStatusMessage(player, UtilChat.lang(WrenchActionType.getName(held)));
     }
   }
 }
