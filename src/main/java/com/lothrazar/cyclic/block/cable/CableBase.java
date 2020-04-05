@@ -3,12 +3,22 @@ package com.lothrazar.cyclic.block.cable;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
+import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.World;
 
 public abstract class CableBase extends BlockBase {
 
@@ -50,6 +60,78 @@ public abstract class CableBase extends BlockBase {
 
   public CableBase(Properties properties) {
     super(properties);
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  public ActionResultType onBlockActivated(BlockState state, World world,
+      BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    ItemStack stack = player.getHeldItem(handIn);
+    if (stack.getItem() != ItemRegistry.cable_wrench
+        || hit.getFace() == null) {
+      return super.onBlockActivated(state, world, pos, player, handIn, hit);
+    }
+    final float hitLimit = 0.28F;
+    //    BlockRayTraceResult hit = new BlockRayTraceResult(event.getPlayer().getLookVec(), event.getFace(), event.getPos(), false);
+    Direction sideToToggle = hit.getFace();
+    //hitX y and Z from old onBlockActivated 
+    double hitX = hit.getHitVec().x - pos.getX();
+    double hitY = hit.getHitVec().y - pos.getY();
+    double hitZ = hit.getHitVec().z - pos.getZ();
+    if (hitX < hitLimit) {
+      sideToToggle = Direction.WEST;
+    }
+    else if (hitX > 1 - hitLimit) {
+      sideToToggle = Direction.EAST;
+    }
+    else if (hitY < hitLimit) {
+      sideToToggle = Direction.DOWN;
+    }
+    else if (hitY > 1 - hitLimit) {
+      sideToToggle = Direction.UP;
+    }
+    else if (hitZ < hitLimit) {
+      sideToToggle = Direction.NORTH;
+    }
+    else if (hitZ > 1 - hitLimit) {
+      sideToToggle = Direction.SOUTH;
+    }
+    //now we have the same data that onBlockActivated used
+    WrenchActionType type = WrenchActionType.getType(stack);
+    if (type == WrenchActionType.EXTRACT) {
+      if (state.getBlock() == BlockRegistry.fluid_pipe
+          || state.getBlock() == BlockRegistry.item_pipe) {
+        //TODO: cableBase class once all 3 support extracty
+        DirectionNullable current = state.get(BlockCableFluid.EXTR);
+        //        if (event.getPlayer().isCrouching()) {
+        //          sideToToggle = sideToToggle.getOpposite();
+        //        }
+        DirectionNullable newextr = current.toggle(sideToToggle);
+        world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
+      }
+    }
+    else if (type == WrenchActionType.DISABLE && state.getBlock() instanceof CableBase) {
+      //
+      EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
+      EnumConnectType status = state.get(prop);
+      BlockState stateNone;
+      switch (status) {
+        case BLOCKED:
+          //unblock it
+          //then updatePostPlacement
+          stateNone = state.with(prop, EnumConnectType.NONE);
+          world.setBlockState(pos, stateNone);
+        //            CableBase cable = (CableBase) state.getBlock();
+        //            cable.updatePostPlacement(stateNone, facing, facingState, worldIn, currentPos, facingPos)
+        break;
+        case CABLE:
+        case INVENTORY:
+        case NONE:
+          world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
+        break;
+      }
+    }
+    return super.onBlockActivated(state, world, pos, player, handIn, hit);
   }
 
   public static boolean canConnectHere(BlockState blockState, Direction side) {
