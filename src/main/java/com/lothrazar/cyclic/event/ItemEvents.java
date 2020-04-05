@@ -27,9 +27,7 @@ public class ItemEvents {
   public void onBedCheck(SleepingLocationCheckEvent event) {
     if (event.getEntity() instanceof PlayerEntity) {
       PlayerEntity p = (PlayerEntity) event.getEntity();
-      //    final IPlayerExtendedProperties sleep = p.getCapability(ModCyclic.CAPABILITYSTORAGE, null);
       if (p.getPersistentData().getBoolean("cyclic_sleeping")) {
-        //          p.bedLocation = p.getPosition();
         event.setResult(Result.ALLOW);
       }
     }

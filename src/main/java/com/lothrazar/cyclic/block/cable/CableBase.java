@@ -72,7 +72,6 @@ public abstract class CableBase extends BlockBase {
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
     final float hitLimit = 0.28F;
-    //    BlockRayTraceResult hit = new BlockRayTraceResult(event.getPlayer().getLookVec(), event.getFace(), event.getPos(), false);
     Direction sideToToggle = hit.getFace();
     //hitX y and Z from old onBlockActivated 
     double hitX = hit.getHitVec().x - pos.getX();
@@ -101,11 +100,7 @@ public abstract class CableBase extends BlockBase {
     if (type == WrenchActionType.EXTRACT) {
       if (state.getBlock() == BlockRegistry.fluid_pipe
           || state.getBlock() == BlockRegistry.item_pipe) {
-        //TODO: cableBase class once all 3 support extracty
         DirectionNullable current = state.get(BlockCableFluid.EXTR);
-        //        if (event.getPlayer().isCrouching()) {
-        //          sideToToggle = sideToToggle.getOpposite();
-        //        }
         DirectionNullable newextr = current.toggle(sideToToggle);
         world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
       }
@@ -121,8 +116,6 @@ public abstract class CableBase extends BlockBase {
           //then updatePostPlacement
           stateNone = state.with(prop, EnumConnectType.NONE);
           world.setBlockState(pos, stateNone);
-        //            CableBase cable = (CableBase) state.getBlock();
-        //            cable.updatePostPlacement(stateNone, facing, facingState, worldIn, currentPos, facingPos)
         break;
         case CABLE:
         case INVENTORY:
