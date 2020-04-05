@@ -1,13 +1,10 @@
 package com.lothrazar.cyclic.block.cable.item;
 
-import java.util.Map;
 import javax.annotation.Nullable;
-import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -15,7 +12,6 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -27,55 +23,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockCableItem extends BlockBase {
+public class BlockCableItem extends CableBase {
 
   public BlockCableItem(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
   }
-
-  public static BlockState cleanBlockState(BlockState state) {
-    for (Direction d : Direction.values()) {
-      EnumProperty<EnumConnectType> prop = FACING_TO_PROPERTY_MAP.get(d);
-      if (state.get(prop) == EnumConnectType.INVENTORY) {
-        //dont replace cable types only inv types
-        state = state.with(prop, EnumConnectType.NONE);
-      }
-    }
-    return state;
-  }
-
-  private static final EnumProperty<EnumConnectType> DOWN = EnumProperty.create("down", EnumConnectType.class);
-  private static final EnumProperty<EnumConnectType> UP = EnumProperty.create("up", EnumConnectType.class);
-  private static final EnumProperty<EnumConnectType> NORTH = EnumProperty.create("north", EnumConnectType.class);
-  private static final EnumProperty<EnumConnectType> SOUTH = EnumProperty.create("south", EnumConnectType.class);
-  private static final EnumProperty<EnumConnectType> WEST = EnumProperty.create("west", EnumConnectType.class);
-  private static final EnumProperty<EnumConnectType> EAST = EnumProperty.create("east", EnumConnectType.class);
-  public static final Map<Direction, EnumProperty<EnumConnectType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (p) -> {
-    p.put(Direction.NORTH, NORTH);
-    p.put(Direction.EAST, EAST);
-    p.put(Direction.SOUTH, SOUTH);
-    p.put(Direction.WEST, WEST);
-    p.put(Direction.UP, UP);
-    p.put(Direction.DOWN, DOWN);
-  });
-  private static final double top = 16;
-  private static final double bot = 0;
-  private static final double C = 8;
-  private static final double w = 2;
-  private static final double sm = C - w;
-  private static final double lg = C + w;
-  //TODO PRE COMPUTE ALL POSSIBLE COMBINATIONS OF ALL 6 DIRS
-  //(double x1, double y1, double z1, double x2, double y2, double z2)
-  private static final VoxelShape AABB = Block.makeCuboidShape(sm, sm, sm, lg, lg, lg);
-  //Y for updown
-  private static final VoxelShape AABB_UP = Block.makeCuboidShape(sm, sm, sm, lg, top, lg);
-  private static final VoxelShape AABB_DOWN = Block.makeCuboidShape(sm, bot, sm, lg, lg, lg);
-  //Z for n-s
-  private static final VoxelShape AABB_NORTH = Block.makeCuboidShape(sm, sm, bot, lg, lg, lg);
-  private static final VoxelShape AABB_SOUTH = Block.makeCuboidShape(sm, sm, sm, lg, lg, top);
-  //X for e-w
-  private static final VoxelShape AABB_WEST = Block.makeCuboidShape(bot, sm, sm, lg, lg, lg);
-  private static final VoxelShape AABB_EAST = Block.makeCuboidShape(sm, sm, sm, top, lg, lg);
 
   private boolean shapeConnects(BlockState state, EnumProperty<EnumConnectType> dirctionProperty) {
     return state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
@@ -103,11 +55,6 @@ public class BlockCableItem extends BlockBase {
       shape = VoxelShapes.combine(shape, AABB_SOUTH, IBooleanFunction.OR);
     }
     return shape;
-  }
-
-  @Override
-  public BlockRenderType getRenderType(BlockState bs) {
-    return BlockRenderType.MODEL;
   }
 
   @Override
