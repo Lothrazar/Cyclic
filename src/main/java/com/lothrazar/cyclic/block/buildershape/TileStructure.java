@@ -44,9 +44,9 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-  private BuildStructureType buildType;
+  private BuildStructureType buildType = BuildStructureType.CUP;
   private int buildSize = 3;
-  private int height;
+  private int height = 2;
   private int shapeIndex = 0;// current index of shape array
   //  private int renderParticles = 1;
   private int rotations = 0;

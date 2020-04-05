@@ -23,6 +23,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockStructure extends BlockBase {
@@ -34,6 +35,7 @@ public class BlockStructure extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.structure, RenderStructure::new);
     ScreenManager.registerFactory(BlockRegistry.ContainerScreens.structure, ScreenStructure::new);
   }
 

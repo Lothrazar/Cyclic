@@ -61,7 +61,7 @@ public class EventRender {
   private void randomizerItemRender(RenderWorldLastEvent evt, PlayerEntity player, ItemStack stack) {
     World world = player.world;
     final Minecraft mc = Minecraft.getInstance();
-    IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+    IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
     int range = 5;
     BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, false);
     if (world.getBlockState(lookingAt.getPos()) == Blocks.AIR.getDefaultState()) {
