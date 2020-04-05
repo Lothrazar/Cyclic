@@ -13,9 +13,10 @@ public enum EnumConnectType implements IStringSerializable {
   public boolean isHollow() {
     return this == NONE || this == BLOCKED;
   }
-  //  public boolean isExtractor() {
-  //    return this == CABLE;
-  //  }
+
+  public boolean isBlocked() {
+    return this == BLOCKED;
+  }
   //
   //  public EnumConnectType toggleExtractor() {
   //    if (this == CABLE)
