@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.cable.DirectionNullable;
+import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
@@ -15,6 +17,7 @@ import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -52,16 +55,40 @@ public class ItemEvents {
       BlockPos pos = event.getPos();
       World world = event.getWorld();
       BlockState state = world.getBlockState(pos);
-      if (state.getBlock() == BlockRegistry.fluid_pipe
-          || state.getBlock() == BlockRegistry.item_pipe) {
-        //TODO: cableBase class once all 3 support extracty
-        DirectionNullable current = world.getBlockState(pos).get(BlockCableFluid.EXTR);
-        Direction targetFace = event.getFace();
-        if (event.getPlayer().isCrouching()) {
-          targetFace = targetFace.getOpposite();
+      WrenchActionType type = WrenchActionType.getType(event.getItemStack());
+      if (type == WrenchActionType.EXTRACT) {
+        if (state.getBlock() == BlockRegistry.fluid_pipe
+            || state.getBlock() == BlockRegistry.item_pipe) {
+          //TODO: cableBase class once all 3 support extracty
+          DirectionNullable current = state.get(BlockCableFluid.EXTR);
+          Direction targetFace = event.getFace();
+          if (event.getPlayer().isCrouching()) {
+            targetFace = targetFace.getOpposite();
+          }
+          DirectionNullable newextr = current.toggle(targetFace);
+          world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
         }
-        DirectionNullable newextr = current.toggle(targetFace);
-        world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
+      }
+      else if (type == WrenchActionType.BLOCK && state.getBlock() instanceof CableBase) {
+        //
+        EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(event.getFace());
+        EnumConnectType status = state.get(prop);
+        BlockState stateNone;
+        switch (status) {
+          case BLOCKED:
+            //unblock it
+            //then updatePostPlacement
+            stateNone = state.with(prop, EnumConnectType.NONE);
+            world.setBlockState(pos, stateNone);
+          //            CableBase cable = (CableBase) state.getBlock();
+          //            cable.updatePostPlacement(stateNone, facing, facingState, worldIn, currentPos, facingPos)
+          break;
+          case CABLE:
+          case INVENTORY:
+          case NONE:
+            world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
+          break;
+        }
       }
     }
   }
