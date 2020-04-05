@@ -72,6 +72,30 @@
         {
             "when": { "OR": [ { "east": "cable" }, { "east": "inventory" } ] },
             "apply": { "model": "cyclic:block/cable_side_item", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "extract": "east" },
+            "apply": { "model": "cyclic:block/cable_pump_fluid", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "extract": "down" },
+            "apply": { "model": "cyclic:block/cable_pump_fluid", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "extract": "up" },
+            "apply": { "model": "cyclic:block/cable_pump_fluid", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "extract": "north" },
+            "apply": { "model": "cyclic:block/cable_pump_fluid" }
+        },
+        {
+            "when": { "extract": "west" },
+            "apply": { "model": "cyclic:block/cable_pump_fluid", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "extract": "south" },
+            "apply": { "model": "cyclic:block/cable_pump_fluid", "y": 180, "uvlock": true }
         }
     ]
 }

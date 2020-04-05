@@ -61,28 +61,6 @@ public class BlockCableFluid extends CableBase {
   public boolean hasTileEntity(BlockState state) {
     return true;
   }
-  //  @Override
-  //  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-  //    int calc = 0;
-  //    TileEntity tileentity = worldIn.getTileEntity(pos);
-  //    if (tileentity != null) {
-  //      for (Direction d : Direction.values()) {
-  //        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-  //        if (items != null) {
-  //          //ok 
-  //          if (items.getStackInSlot(0).isEmpty() == false) {
-  //            calc += 2;
-  //          }
-  //        }
-  //      }
-  //    }
-  //    return calc;
-  //  }
-
-  @Override
-  public boolean hasComparatorInputOverride(BlockState state) {
-    return true;
-  }
 
   @Nullable
   @Override

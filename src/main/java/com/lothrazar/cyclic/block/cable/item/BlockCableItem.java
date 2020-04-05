@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.cable.item;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.block.cable.DirectionNullable;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
@@ -74,29 +75,28 @@ public class BlockCableItem extends CableBase {
       super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
   }
-
-  @Override
-  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-    int calc = 0;
-    TileEntity tileentity = worldIn.getTileEntity(pos);
-    if (tileentity != null) {
-      for (Direction d : Direction.values()) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-        if (items != null) {
-          //ok 
-          if (items.getStackInSlot(0).isEmpty() == false) {
-            calc += 2;
-          }
-        }
-      }
-    }
-    return calc;
-  }
-
-  @Override
-  public boolean hasComparatorInputOverride(BlockState state) {
-    return true;
-  }
+  //  @Override
+  //  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+  //    int calc = 0;
+  //    TileEntity tileentity = worldIn.getTileEntity(pos);
+  //    if (tileentity != null) {
+  //      for (Direction d : Direction.values()) {
+  //        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
+  //        if (items != null) {
+  //          //ok 
+  //          if (items.getStackInSlot(0).isEmpty() == false) {
+  //            calc += 2;
+  //          }
+  //        }
+  //      }
+  //    }
+  //    return calc;
+  //  }
+  //
+  //  @Override
+  //  public boolean hasComparatorInputOverride(BlockState state) {
+  //    return true;
+  //  }
 
   @Nullable
   @Override
@@ -107,19 +107,20 @@ public class BlockCableItem extends CableBase {
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
     super.fillStateContainer(builder);
-    builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
+    builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST, EXTR);
   }
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
+    stateIn = stateIn.with(EXTR, DirectionNullable.NONE);
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
       IItemHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
-        worldIn.setBlockState(pos, stateIn);
       }
     }
+    worldIn.setBlockState(pos, stateIn);
   }
 
   @Override

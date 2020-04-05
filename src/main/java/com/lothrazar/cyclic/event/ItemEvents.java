@@ -46,11 +46,12 @@ public class ItemEvents {
         && event.getPlayer().isCrouching()) {
       scaffoldHit(event);
     }
-    if (event.getItemStack().getItem() == ItemRegistry.cable_wrench) {
+    if (event.getItemStack().getItem() == ItemRegistry.cable_wrench && event.getFace() != null) {
       BlockPos pos = event.getPos();
       World world = event.getWorld();
       BlockState state = world.getBlockState(pos);
-      if (state.getBlock() == BlockRegistry.fluid_pipe && event.getFace() != null) {
+      if (state.getBlock() == BlockRegistry.fluid_pipe
+          || state.getBlock() == BlockRegistry.item_pipe) {
         //TODO: cableBase class once all 3 support extracty
         DirectionNullable current = world.getBlockState(pos).get(BlockCableFluid.EXTR);
         Direction targetFace = event.getFace();
