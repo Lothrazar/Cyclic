@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.block.shapecreate.ItemShapeData;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
 import com.lothrazar.cyclic.item.EnderBagItem;
 import com.lothrazar.cyclic.item.EnderWingItem;
@@ -243,5 +244,6 @@ public class ItemRegistry {
     r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("randomize_scepter"));
     r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024)).setRegistryName("antigravity"));
     r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cable_wrench"));
+    r.register(new ItemShapeData(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("shape_card"));
   }
 }

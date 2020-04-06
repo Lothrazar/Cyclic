@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.buildershape;
+package com.lothrazar.cyclic.block.shapebuilder;
 
 import java.awt.Color;
 import java.util.List;

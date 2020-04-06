@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.buildershape;
+package com.lothrazar.cyclic.block.shapebuilder;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;

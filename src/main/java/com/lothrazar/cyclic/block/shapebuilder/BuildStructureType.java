@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.buildershape;
+package com.lothrazar.cyclic.block.shapebuilder;
 
 public enum BuildStructureType {
 

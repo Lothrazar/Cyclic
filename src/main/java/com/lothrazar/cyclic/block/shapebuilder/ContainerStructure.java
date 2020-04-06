@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.buildershape;
+package com.lothrazar.cyclic.block.shapebuilder;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;

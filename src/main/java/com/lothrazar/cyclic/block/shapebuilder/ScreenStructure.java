@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.buildershape;
+package com.lothrazar.cyclic.block.shapebuilder;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;

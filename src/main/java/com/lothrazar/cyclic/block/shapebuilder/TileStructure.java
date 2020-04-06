@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.buildershape;
+package com.lothrazar.cyclic.block.shapebuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,17 +47,22 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   static final int MAX = 64000;
+  static final int SLOT_BUILD = 0;
+  static final int SLOT_SHAPE = 1;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  // START of build settings
   private BuildStructureType buildType = BuildStructureType.CUP;
   private int buildSize = 3;
   private int height = 2;
-  private int shapeIndex = 0;// current index of shape array
-  //  private int renderParticles = 1;
   private int rotations = 0;
+  // END of build settings
+  //machine settings
   private int offsetX = 0;
   private int offsetY = 0;
   private int offsetZ = 0;
+  private int shapeIndex = 0;// current index of shape array
+  //  private int renderParticles = 1;
   private int renderParticles;
   private int timer;
 
@@ -113,7 +118,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(2);
   }
 
   @Override
@@ -289,6 +294,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
+    // ITEMSTACK / CARD storing what shape and settings to use
     // only rebuild shapes if they are different
     switch (buildType) {
       case CIRCLE:
