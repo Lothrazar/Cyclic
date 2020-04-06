@@ -1,16 +1,18 @@
 package com.lothrazar.cyclic.block.shapecreate;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.Textbox;
+import com.lothrazar.cyclic.block.shapebuilder.BuildStructureType;
+import com.lothrazar.cyclic.gui.TextboxInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class ScreenShape extends ScreenBase<ContainerShape> {
 
-  private Textbox txtHeight;
-  private Textbox txtSize;
+  private TextboxInteger txtHeight;
+  private TextboxInteger txtSize;
+  ExtendedButton btnSaveit;
 
   public ScreenShape(ContainerShape screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -19,11 +21,17 @@ public class ScreenShape extends ScreenBase<ContainerShape> {
   @Override
   public void init() {
     super.init();
-    this.txtHeight = new Textbox(this.font, guiLeft + 150, guiTop + 20, 20, 20, I18n.format("x.search"));
-    this.txtHeight.setFocused2(true);
-    this.children.add(txtHeight);
-    this.txtSize = new Textbox(this.font, guiLeft + 150, guiTop + 45, 20, 20, I18n.format("x.search"));
-    this.children.add(txtSize);
+    //    this.txtHeight = new TextboxInteger(this.font, guiLeft + 150, guiTop + 20, 20);
+    //    this.txtHeight.setFocused2(true);
+    //    this.children.add(txtHeight);
+    //    this.txtSize = new TextboxInteger(this.font, guiLeft + 150, guiTop + 45, 20);
+    //    this.children.add(txtSize);
+    this.btnSaveit = new ExtendedButton(8, 8, 20, 20, "save", (p) -> {
+      //do the thing
+      ShapeData d = new ShapeData(BuildStructureType.CIRCLE, txtSize.getCurrent(), txtHeight.getCurrent());
+      //set to stack
+      //so new packet is needed
+    });
   }
 
   @Override
@@ -43,8 +51,8 @@ public class ScreenShape extends ScreenBase<ContainerShape> {
 
   @Override
   public void tick() {
-    this.txtHeight.tick();
-    this.txtSize.tick();
+    //    this.txtHeight.tick();
+    //    this.txtSize.tick();
   }
   //  @Override
   //  public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {

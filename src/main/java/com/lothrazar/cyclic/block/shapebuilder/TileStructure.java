@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -145,6 +146,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void setField(int field, int value) {
+    ModCyclic.log("sf {} {}", field, value);
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
@@ -184,6 +186,8 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         this.offsetZ = value;
       break;
     }
+    ModCyclic.log("height after {}", height);
+    ModCyclic.log("size after {}", this.buildSize);
   }
 
   @Override

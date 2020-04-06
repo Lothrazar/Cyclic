@@ -41,18 +41,30 @@ public class ContainerStructure extends ContainerBase {
         tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
-    //    trackInt(new IntReferenceHolder() {
-    //
-    //      @Override
-    //      public int get() {
-    //        return getFlowing();
-    //      }
-    //
-    //      @Override
-    //      public void set(int value) {
-    //        tile.setFlowing(value);
-    //      }
-    //    });
+    trackInt(new IntReferenceHolder() {
+
+      @Override
+      public int get() {
+        return tile.getField(TileStructure.Fields.SIZE.ordinal());
+      }
+
+      @Override
+      public void set(int value) {
+        tile.setField(TileStructure.Fields.SIZE.ordinal(), value);
+      }
+    });
+    trackInt(new IntReferenceHolder() {
+
+      @Override
+      public int get() {
+        return tile.getField(TileStructure.Fields.HEIGHT.ordinal());
+      }
+
+      @Override
+      public void set(int value) {
+        tile.setField(TileStructure.Fields.HEIGHT.ordinal(), value);
+      }
+    });
   }
 
   public int getEnergy() {
