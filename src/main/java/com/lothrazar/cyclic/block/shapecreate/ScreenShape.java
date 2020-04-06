@@ -1,11 +1,15 @@
 package com.lothrazar.cyclic.block.shapecreate;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.gui.Textbox;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenShape extends ScreenBase<ContainerShape> {
+
+  private Textbox heightTxt;
 
   public ScreenShape(ContainerShape screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -14,6 +18,19 @@ public class ScreenShape extends ScreenBase<ContainerShape> {
   @Override
   public void init() {
     super.init();
+    this.heightTxt = new Textbox(this.font, guiLeft + 20, guiTop + 20, 300, 20, I18n.format("x.search"));
+    this.heightTxt.setMaxStringLength(5);
+    this.heightTxt.setEnableBackgroundDrawing(false);
+    this.heightTxt.setVisible(true);
+    this.heightTxt.setTextColor(16777215);
+    this.heightTxt.setFocused2(true);
+    //    this.searchBar.setText(s);
+    this.children.add(heightTxt);
+  }
+
+  @Override
+  public void removed() {
+    this.heightTxt = null;
   }
 
   @Override
@@ -21,7 +38,28 @@ public class ScreenShape extends ScreenBase<ContainerShape> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
+    this.heightTxt.render(mouseX, mouseX, partialTicks);
   }
+
+  @Override
+  public void tick() {
+    this.heightTxt.tick();
+  }
+  //  @Override
+  //  public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+  //    if (this.heightTxt.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_)) {
+  //      return true;
+  //    }
+  //    return false;
+  //  }
+  //
+  //  @Override
+  //  public boolean charTyped(char p_charTyped_1_, int p_charTyped_2_) {
+  //    if (this.heightTxt.charTyped(p_charTyped_1_, p_charTyped_2_)) {
+  //      return true;
+  //    }
+  //    return false;
+  //  }
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
