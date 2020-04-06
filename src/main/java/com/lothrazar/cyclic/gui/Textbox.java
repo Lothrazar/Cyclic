@@ -7,6 +7,10 @@ public class Textbox extends TextFieldWidget {
 
   public Textbox(FontRenderer fontIn, int xIn, int yIn, int widthIn, int heightIn, String msg) {
     super(fontIn, xIn, yIn, widthIn, heightIn, msg);
+    this.setMaxStringLength(2);
+    this.setEnableBackgroundDrawing(true);
+    this.setVisible(true);
+    this.setTextColor(16777215);
   }
 
   @Override

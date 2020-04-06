@@ -9,7 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenShape extends ScreenBase<ContainerShape> {
 
-  private Textbox heightTxt;
+  private Textbox txtHeight;
+  private Textbox txtSize;
 
   public ScreenShape(ContainerShape screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -18,19 +19,17 @@ public class ScreenShape extends ScreenBase<ContainerShape> {
   @Override
   public void init() {
     super.init();
-    this.heightTxt = new Textbox(this.font, guiLeft + 20, guiTop + 20, 300, 20, I18n.format("x.search"));
-    this.heightTxt.setMaxStringLength(5);
-    this.heightTxt.setEnableBackgroundDrawing(false);
-    this.heightTxt.setVisible(true);
-    this.heightTxt.setTextColor(16777215);
-    this.heightTxt.setFocused2(true);
-    //    this.searchBar.setText(s);
-    this.children.add(heightTxt);
+    this.txtHeight = new Textbox(this.font, guiLeft + 150, guiTop + 20, 20, 20, I18n.format("x.search"));
+    this.txtHeight.setFocused2(true);
+    this.children.add(txtHeight);
+    this.txtSize = new Textbox(this.font, guiLeft + 150, guiTop + 45, 20, 20, I18n.format("x.search"));
+    this.children.add(txtSize);
   }
 
   @Override
   public void removed() {
-    this.heightTxt = null;
+    this.txtHeight = null;
+    this.txtSize = null;
   }
 
   @Override
@@ -38,12 +37,14 @@ public class ScreenShape extends ScreenBase<ContainerShape> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
-    this.heightTxt.render(mouseX, mouseX, partialTicks);
+    this.txtHeight.render(mouseX, mouseX, partialTicks);
+    this.txtSize.render(mouseX, mouseX, partialTicks);
   }
 
   @Override
   public void tick() {
-    this.heightTxt.tick();
+    this.txtHeight.tick();
+    this.txtSize.tick();
   }
   //  @Override
   //  public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
