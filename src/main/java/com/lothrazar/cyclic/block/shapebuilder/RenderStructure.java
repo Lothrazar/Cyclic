@@ -26,7 +26,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -65,7 +64,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
       IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);//i guess?
       BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
       matrix.push();
-      Vec3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+      BlockPos playerPos = te.getPos();//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
       matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
       for (BlockPos coordinate : te.getShape()) {
         float x = coordinate.getX();
@@ -112,16 +111,16 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
     //    World world = ModCyclic.proxy.getClientWorld();
     List<BlockPos> coords = te.getShape();
-    Vec3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.push();
+    BlockPos view = te.getPos();//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;
     builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_SOLID_COLOUR);
     for (BlockPos e : coords) {
       matrix.push();
       matrix.translate(e.getX(), e.getY(), e.getZ());
-      //      matrix.translate(-0.005f, -0.005f, -0.005f);
-      float scale = 0.999F;
+      matrix.translate(-0.005f, -0.005f, -0.005f);
+      float scale = 0.7F;
       matrix.scale(scale, scale, scale);
       matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
       Matrix4f positionMatrix = matrix.getLast().getMatrix();

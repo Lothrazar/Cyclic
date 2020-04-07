@@ -31,7 +31,7 @@ public class FakeBlockRenderTypes extends RenderType {
       DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256,
       RenderType.State.getBuilder()
           .layer(PROJECTION_LAYERING)
-          .transparency(TRANSLUCENT_TRANSPARENCY)
+          .transparency(ADDITIVE_TRANSPARENCY)
           .texture(NO_TEXTURE)
           .depthTest(DEPTH_LEQUAL)
           .cull(CULL_ENABLED)
