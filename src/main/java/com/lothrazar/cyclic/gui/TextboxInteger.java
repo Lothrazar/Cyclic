@@ -36,6 +36,15 @@ public class TextboxInteger extends TextFieldWidget {
   }
 
   private int tileFieldId;
+  private String tooltip;
+
+  public String getTooltip() {
+    return tooltip;
+  }
+
+  public void setTooltip(String tooltip) {
+    this.tooltip = tooltip;
+  }
   //  private int maxVal;
   //  private int minVal;
   //

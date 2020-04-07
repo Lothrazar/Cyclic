@@ -38,6 +38,8 @@
     "item.cyclic.randomize_scepter":"Block Randomizer",
     "item.cyclic.randomize_scepter.tooltip":"Randomly shuffle around the blocks in a 5x5x1 area around the target block",
     
+    "buildertype.height.tooltip":"Height",
+    "buildertype.size.tooltip":"Size",
     "builder.toggle": "Toggle",
     "buildertype.circle": "Circle",
     "buildertype.cup": "Cup",

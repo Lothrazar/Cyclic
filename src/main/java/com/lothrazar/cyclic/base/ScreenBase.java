@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.gui.ButtonMachine;
+import com.lothrazar.cyclic.gui.TextboxInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,6 +37,12 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
       if (btn instanceof ButtonMachine && btn.isMouseOver(mouseX, mouseY)) {
         btn.renderToolTip(mouseX, mouseY);
         this.renderTooltip(((ButtonMachine) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+      }
+    }
+    for (IGuiEventListener widget : this.children) {
+      if (widget instanceof TextboxInteger && widget.isMouseOver(mouseX, mouseY)) {
+        TextboxInteger txt = (TextboxInteger) widget;
+        this.renderTooltip(txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }
   }

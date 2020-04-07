@@ -6,6 +6,6 @@
         "2": "minecraft:block/cauldron_inner",
         "3": "minecraft:block/mossy_cobblestone",
         "4": "minecraft:block/quartz_block_bottom",
-        "particle": "cyclic:blocks/side"
+        "particle": "cyclic:blocks/breaker/side"
     }
 }

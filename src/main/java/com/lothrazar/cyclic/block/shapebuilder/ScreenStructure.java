@@ -40,15 +40,16 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
       container.tile.setNeedsRedstone((container.getNeedsRedstone() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileStructure.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
-    this.txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
+    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
         container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
-    //    this.txtHeight.setFocused2(true);
-    this.children.add(txtHeight);
-    this.txtSize = new TextboxInteger(this.font, guiLeft + 120, guiTop + 45, 20,
-        container.tile.getPos(), TileStructure.Fields.SIZE.ordinal());
-    this.children.add(txtSize);
     txtHeight.setText("" + container.tile.getField(TileStructure.Fields.HEIGHT.ordinal()));
+    txtHeight.setTooltip("buildertype.height.tooltip");
+    this.children.add(txtHeight);
+    txtSize = new TextboxInteger(this.font, guiLeft + 90, guiTop + 20, 20,
+        container.tile.getPos(), TileStructure.Fields.SIZE.ordinal());
+    txtSize.setTooltip("buildertype.size.tooltip");
     txtSize.setText("" + container.tile.getField(TileStructure.Fields.SIZE.ordinal()));
+    this.children.add(txtSize);
     TileStructure.Fields fld = TileStructure.Fields.BUILDTYPE;
     int numInRow = 0;
     x = this.guiLeft + 4;

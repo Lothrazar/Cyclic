@@ -75,6 +75,9 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
     BlockPos playerPos = te.getPos();//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
     for (BlockPos coordinate : te.getShape()) {
+      if (!world.isAirBlock(coordinate)) {
+        continue;
+      }
       float x = coordinate.getX();
       float y = coordinate.getY();
       float z = coordinate.getZ();
@@ -113,7 +116,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
     //    IRenderTypeBuffer.getImpl(ibuffer);
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    //    World world = ModCyclic.proxy.getClientWorld();
+    World world = ModCyclic.proxy.getClientWorld();
     List<BlockPos> coords = te.getShape();
     matrix.push();
     BlockPos view = te.getPos();//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
@@ -121,6 +124,9 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
     IVertexBuilder builder;
     builder = buffer.getBuffer(FakeBlockRenderTypes.SOLID_COLOUR);
     for (BlockPos e : coords) {
+      if (!world.isAirBlock(e)) {
+        continue;
+      }
       matrix.push();
       matrix.translate(e.getX(), e.getY(), e.getZ());
       matrix.translate(-0.005f, -0.005f, -0.005f);

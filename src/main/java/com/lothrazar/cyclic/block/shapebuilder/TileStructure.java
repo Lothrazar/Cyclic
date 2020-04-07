@@ -39,8 +39,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileStructure extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  public static int maxSize = 10;
-  public static int maxHeight = 10;
+  public static int maxSize = 99;
+  public static int maxHeight = 99;
 
   public static enum Fields {
     TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ;
@@ -52,7 +52,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   // START of build settings
-  private BuildStructureType buildType = BuildStructureType.CUP;
+  private BuildStructureType buildType = BuildStructureType.FACING;
   private int buildSize = 3;
   private int height = 2;
   private int rotations = 0;
@@ -213,10 +213,9 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
-    //        if (this.isPowered() == false) {
-    //          return;
-    //        }
-    //    
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
     IItemHandler inv = this.inventory.orElse(null);
     if (inv == null) {
       return;
