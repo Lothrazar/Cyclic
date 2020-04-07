@@ -107,7 +107,6 @@ public class EventRender {
     }
     BlockPos pos = lookingAt.getPos();
     if (buildStyle.isOffset() && lookingAt.getFace() != null) {
-      //
       pos = pos.offset(lookingAt.getFace());
     }
     MatrixStack matrix = evt.getMatrixStack();
@@ -118,20 +117,11 @@ public class EventRender {
     matrix.push();
     Vec3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
-    //    ModCyclic.LOGGER.info(" lookingAt.getPos() " + lookingAt.getPos());
     List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getFace(), buildStyle);
-    ///
-    //    builder.pos
-    //    int[] RGB = new int[] { 75, 0, 130 };
-    //    int r = RGB[0];
-    //    int g = RGB[1];
-    //    int b = RGB[2];
-    //    BuilderItem.get
     for (BlockPos coordinate : coordinates) {
       float x = coordinate.getX();
       float y = coordinate.getY();
       float z = coordinate.getZ();
-      //      ModCyclic.LOGGER.info("y value of build " + y);
       matrix.push();
       matrix.translate(x, y, z);
       //
@@ -139,7 +129,6 @@ public class EventRender {
       matrix.translate(-0.0005f, -0.0005f, -0.0005f);
       matrix.scale(1.001f, 1.001f, 1.001f);
       //
-      //      UtilWorld.OutlineRenderer.renderHighLightedBlocksOutline(builder, x, y, z, r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); // .02f
       IBakedModel ibakedmodel = dispatcher.getModelForState(renderBlockState);
       BlockColors blockColors = Minecraft.getInstance().getBlockColors();
       int color = blockColors.getColor(renderBlockState, player.world, coordinate, 0);
