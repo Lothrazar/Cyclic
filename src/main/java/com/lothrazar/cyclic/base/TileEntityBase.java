@@ -19,7 +19,8 @@ public abstract class TileEntityBase extends TileEntity {
 
   public static final int FUEL_WEAK = 256;
   public static final int MENERGY = 64 * 1000;
-  private int needsRedstone;
+  private int needsRedstone = 1;
+  private int renderParticles = 1;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);

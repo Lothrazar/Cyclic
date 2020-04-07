@@ -42,7 +42,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
       matrix.push();
       matrix.translate(e.getX(), e.getY(), e.getZ());
       //      matrix.translate(-0.005f, -0.005f, -0.005f);
-      float scale = 0.5F;
+      float scale = 0.999F;
       matrix.scale(scale, scale, scale);
       matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
       Matrix4f positionMatrix = matrix.getLast().getMatrix();

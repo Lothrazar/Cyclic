@@ -46,9 +46,6 @@ import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
 import com.lothrazar.cyclic.block.shapebuilder.ContainerStructure;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
-import com.lothrazar.cyclic.block.shapecreate.BlockShape;
-import com.lothrazar.cyclic.block.shapecreate.ContainerShape;
-import com.lothrazar.cyclic.block.shapecreate.TileShape;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
@@ -70,9 +67,6 @@ public class BlockRegistry {
 
   //not populated in the most ideal way 
   public static List<BlockBase> blocks = new ArrayList<>();
-  //now the auto binding
-  @ObjectHolder(ModCyclic.MODID + ":shape")
-  public static Block shape;
   @ObjectHolder(ModCyclic.MODID + ":structure")
   public static Block structure;
   @ObjectHolder(ModCyclic.MODID + ":anvil")
@@ -126,8 +120,6 @@ public class BlockRegistry {
 
   public static class Tiles {
 
-    @ObjectHolder(ModCyclic.MODID + ":shape")
-    public static TileEntityType<TileShape> shape;
     @ObjectHolder(ModCyclic.MODID + ":structure")
     public static TileEntityType<TileStructure> structure;
     @ObjectHolder(ModCyclic.MODID + ":anvil")
@@ -162,8 +154,6 @@ public class BlockRegistry {
 
   public static class ContainerScreens {
 
-    @ObjectHolder(ModCyclic.MODID + ":shape")
-    public static ContainerType<ContainerShape> shape;
     @ObjectHolder(ModCyclic.MODID + ":structure")
     public static ContainerType<ContainerStructure> structure;
     @ObjectHolder(ModCyclic.MODID + ":placer")
@@ -211,7 +201,6 @@ public class BlockRegistry {
     r.register(new BlockHarvester(Block.Properties.create(Material.ROCK)).setRegistryName("harvester"));
     r.register(new BlockPlacer(Block.Properties.create(Material.ROCK)).setRegistryName("placer"));
     r.register(new BlockStructure(Block.Properties.create(Material.ROCK)).setRegistryName("structure"));
-    r.register(new BlockShape(Block.Properties.create(Material.ROCK)).setRegistryName("shape"));
   }
 
   @SubscribeEvent
@@ -233,7 +222,6 @@ public class BlockRegistry {
     r.register(TileEntityType.Builder.create(TileAnvilAuto::new, BlockRegistry.anvil).build(null).setRegistryName("anvil"));
     r.register(TileEntityType.Builder.create(TilePlacer::new, BlockRegistry.placer).build(null).setRegistryName("placer"));
     r.register(TileEntityType.Builder.create(TileStructure::new, BlockRegistry.structure).build(null).setRegistryName("structure"));
-    r.register(TileEntityType.Builder.create(TileShape::new, BlockRegistry.shape).build(null).setRegistryName("shape"));
   }
 
   @SubscribeEvent
@@ -260,8 +248,5 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerStructure(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("structure"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerShape(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("shape"));
   }
 }

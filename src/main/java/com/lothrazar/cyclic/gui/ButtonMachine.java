@@ -7,6 +7,7 @@ import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class ButtonMachine extends ExtendedButton {
 
+  private int tileField;
   private TextureEnum textureId;
   private String tooltip;
 
@@ -40,5 +41,13 @@ public class ButtonMachine extends ExtendedButton {
 
   public void setTooltip(String tooltip) {
     this.tooltip = tooltip;
+  }
+
+  public int getTileField() {
+    return tileField;
+  }
+
+  public void setTileField(int tileField) {
+    this.tileField = tileField;
   }
 }

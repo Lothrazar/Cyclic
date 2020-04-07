@@ -63,7 +63,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private int offsetY = 0;
   private int offsetZ = 0;
   private int shapeIndex = 0;// current index of shape array
-  //  private int renderParticles = 1;
   private int renderParticles;
   private int timer;
 
@@ -146,13 +145,12 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void setField(int field, int value) {
-    ModCyclic.log("sf {} {}", field, value);
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
       break;
       case BUILDTYPE:
-        //??toggleSizeShape
+        ModCyclic.log("buildtype {} {}", field, value);
         if (value >= BuildStructureType.values().length) {
           value = 0;
         }
@@ -186,8 +184,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         this.offsetZ = value;
       break;
     }
-    ModCyclic.log("height after {}", height);
-    ModCyclic.log("size after {}", this.buildSize);
   }
 
   @Override
@@ -242,8 +238,16 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
       this.shapeIndex = 0;
     }
+    IEnergyStorage en = this.energy.orElse(null);
+    if (en == null) {
+      return;
+    }
+    final int repair = 10;
     BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
     for (int i = 0; i < spotsSkippablePerTrigger; i++) {
+      if (en.getEnergyStored() < repair) {
+        break;
+      }
       //TODO PAY POWER
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
@@ -258,6 +262,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
           //build success
           this.incrementPosition(shape);
           stack.shrink(1);
+          en.extractEnergy(repair, false);
         }
         break;//ok , target position is valid, we can build only into air
       }
