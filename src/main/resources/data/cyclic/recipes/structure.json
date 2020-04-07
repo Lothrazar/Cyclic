@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rlr",
+    "gqg",
+    "hhh"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:quartz"
+    },
+    "g": {
+      "item": "minecraft:dropper"
+    },
+    "r": {
+      "item": "minecraft:redstone_block"
+    },
+    "h": {
+      "item": "minecraft:observer"
+    },
+    "q": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "item": "cyclic:structure"
+  }
+}

@@ -1,0 +1,11 @@
+{
+ 	"parent": "cyclic:parent/machine_peat",
+    "textures": {
+        "0": "cyclic:blocks/plate",
+        "1": "minecraft:block/cauldron_inner",
+        "2": "cyclic:blocks/plate",
+        "3": "minecraft:block/redstone_block",
+        "4": "minecraft:block/quartz_block",
+        "particle": "cyclic:blocks/peat_unbaked"
+    }
+}

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -150,7 +149,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         this.timer = value;
       break;
       case BUILDTYPE:
-        ModCyclic.log("buildtype {} {}", field, value);
         if (value >= BuildStructureType.values().length) {
           value = 0;
         }

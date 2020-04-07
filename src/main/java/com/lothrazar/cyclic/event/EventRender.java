@@ -73,7 +73,7 @@ public class EventRender {
     matrix.push();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;
-    builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_SOLID_COLOUR);
+    builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
     for (BlockPos e : coords) {
       matrix.push();
       matrix.translate(e.getX(), e.getY(), e.getZ());
@@ -87,7 +87,7 @@ public class EventRender {
     }
     matrix.pop();
     RenderSystem.disableDepthTest();
-    buffer.finish(FakeBlockRenderTypes.TRANSPARENT_SOLID_COLOUR);
+    buffer.finish(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
   }
 
   private void builderItemRender(RenderWorldLastEvent evt, PlayerEntity player, ItemStack stack) {

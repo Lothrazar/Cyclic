@@ -48,61 +48,65 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
       return;
     }
     ItemStack stack = inv.getStackInSlot(0);
-    if (!stack.isEmpty()) {
-      World world = ModCyclic.proxy.getClientWorld();
-      BlockState renderBlockState = Block.getBlockFromItem(stack.getItem()).getDefaultState();
-      //render 
-      Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
-      //
-      double range = 6F;
-      BlockRayTraceResult lookingAt = (BlockRayTraceResult) ModCyclic.proxy.getClientPlayer().pick(range, 0F, false);
-      if (world.isAirBlock(lookingAt.getPos())) {
-        return;
-      }
-      Minecraft mc = Minecraft.getInstance();
-      IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-      IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);//i guess?
-      BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
-      matrix.push();
-      BlockPos playerPos = te.getPos();//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
-      matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
-      for (BlockPos coordinate : te.getShape()) {
-        float x = coordinate.getX();
-        float y = coordinate.getY();
-        float z = coordinate.getZ();
-        //      ModCyclic.LOGGER.info("y value of build " + y);
-        matrix.push();
-        matrix.translate(x, y, z);
-        //
-        //shrink it up
-        matrix.translate(-0.0005f, -0.0005f, -0.0005f);
-        matrix.scale(1.001f, 1.001f, 1.001f);
-        //
-        //      UtilWorld.OutlineRenderer.renderHighLightedBlocksOutline(builder, x, y, z, r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); // .02f
-        IBakedModel ibakedmodel = dispatcher.getModelForState(renderBlockState);
-        BlockColors blockColors = Minecraft.getInstance().getBlockColors();
-        int color = blockColors.getColor(renderBlockState, world, coordinate, 0);
-        float red = (color >> 16 & 255) / 255.0F;
-        float green = (color >> 8 & 255) / 255.0F;
-        float blue = (color & 255) / 255.0F;
-        float alpha = 0.7F;
-        if (renderBlockState.getRenderType() == BlockRenderType.MODEL) {
-          for (Direction direction : Direction.values()) {
-            UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
-                ibakedmodel.getQuads(renderBlockState, direction, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE), 15728640, 655360 / 2);
-          }
-          UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
-              ibakedmodel.getQuads(renderBlockState, null, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE),
-              15728640, 655360);
-        }
-        matrix.pop();
-      }
-      ///
-      matrix.pop();
+    if (stack.isEmpty()) {
+      renderOutline(te, matrix);
+    }
+    else {
+      renderBlank(te, matrix, stack);
+    }
+  }
+
+  private void renderBlank(TileStructure te, MatrixStack matrix, ItemStack stack) {
+    World world = ModCyclic.proxy.getClientWorld();
+    BlockState renderBlockState = Block.getBlockFromItem(stack.getItem()).getDefaultState();
+    //render 
+    Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+    //
+    double range = 6F;
+    BlockRayTraceResult lookingAt = (BlockRayTraceResult) ModCyclic.proxy.getClientPlayer().pick(range, 0F, false);
+    if (world.isAirBlock(lookingAt.getPos())) {
       return;
     }
-    // ok 
-    renderOutline(te, matrix);
+    Minecraft mc = Minecraft.getInstance();
+    IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
+    IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);//i guess?
+    BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
+    matrix.push();
+    BlockPos playerPos = te.getPos();//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+    matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
+    for (BlockPos coordinate : te.getShape()) {
+      float x = coordinate.getX();
+      float y = coordinate.getY();
+      float z = coordinate.getZ();
+      //      ModCyclic.LOGGER.info("y value of build " + y);
+      matrix.push();
+      matrix.translate(x, y, z);
+      //
+      //shrink it up
+      matrix.translate(-0.0005f, -0.0005f, -0.0005f);
+      matrix.scale(1.001f, 1.001f, 1.001f);
+      //
+      //      UtilWorld.OutlineRenderer.renderHighLightedBlocksOutline(builder, x, y, z, r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); // .02f
+      IBakedModel ibakedmodel = dispatcher.getModelForState(renderBlockState);
+      BlockColors blockColors = Minecraft.getInstance().getBlockColors();
+      int color = blockColors.getColor(renderBlockState, world, coordinate, 0);
+      float red = (color >> 16 & 255) / 255.0F;
+      float green = (color >> 8 & 255) / 255.0F;
+      float blue = (color & 255) / 255.0F;
+      float alpha = 0.7F;
+      if (renderBlockState.getRenderType() == BlockRenderType.MODEL) {
+        for (Direction direction : Direction.values()) {
+          UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
+              ibakedmodel.getQuads(renderBlockState, direction, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE), 15728640, 655360 / 2);
+        }
+        UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
+            ibakedmodel.getQuads(renderBlockState, null, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE),
+            15728640, 655360);
+      }
+      matrix.pop();
+    }
+    ///
+    matrix.pop();
   }
 
   private void renderOutline(TileStructure te, MatrixStack matrix) {
@@ -115,7 +119,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
     BlockPos view = te.getPos();//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;
-    builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_SOLID_COLOUR);
+    builder = buffer.getBuffer(FakeBlockRenderTypes.SOLID_COLOUR);
     for (BlockPos e : coords) {
       matrix.push();
       matrix.translate(e.getX(), e.getY(), e.getZ());
@@ -130,6 +134,6 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
     }
     matrix.pop();
     //    RenderSystem.disableDepthTest();
-    buffer.finish(FakeBlockRenderTypes.TRANSPARENT_SOLID_COLOUR);
+    buffer.finish(FakeBlockRenderTypes.SOLID_COLOUR);
   }
 }
