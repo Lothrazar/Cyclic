@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
@@ -33,7 +33,7 @@ public class BlockCollector extends BlockBase {
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlockState(pos, state.with(ChestBlock.FACING, UtilStuff.getFacingFromEntityHorizontal(pos, entity)), 2);
+      world.setBlockState(pos, state.with(HorizontalBlock.HORIZONTAL_FACING, UtilStuff.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
   }
 
@@ -55,7 +55,7 @@ public class BlockCollector extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(ChestBlock.FACING);
+    builder.add(HorizontalBlock.HORIZONTAL_FACING);
   }
 
   @Override

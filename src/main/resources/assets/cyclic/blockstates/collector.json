@@ -1,6 +1,6 @@
 {
     "variants": {
-          "facing=north": { "model": "cyclic:block/collector" },
+        "facing=north": { "model": "cyclic:block/collector" },
 		"facing=south": { "model": "cyclic:block/collector", "y": 180 },
 		"facing=west": { "model": "cyclic:block/collector", "y": 270 },
 		"facing=east": { "model": "cyclic:block/collector", "y": 90 }

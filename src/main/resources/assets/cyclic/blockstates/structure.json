@@ -1,5 +1,8 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/structure" }
+        "facing=north": { "model": "cyclic:block/structure" },
+		"facing=south": { "model": "cyclic:block/structure", "y": 180 },
+		"facing=west":  { "model": "cyclic:block/structure", "y": 270 },
+		"facing=east":  { "model": "cyclic:block/structure", "y": 90 }
     }
 }

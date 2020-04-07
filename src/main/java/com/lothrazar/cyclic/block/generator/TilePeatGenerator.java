@@ -44,6 +44,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   public TilePeatGenerator() {
     super(BlockRegistry.Tiles.peat_generatorTile);
+    this.setNeedsRedstone(0);
   }
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);

@@ -295,7 +295,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private Direction getCurrentFacing() {
-    return this.getBlockState().get(BlockStateProperties.FACING);
+    return this.getBlockState().get(BlockStateProperties.HORIZONTAL_FACING);
   }
 
   public List<BlockPos> getShape() {

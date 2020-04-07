@@ -43,11 +43,11 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
         container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
     txtHeight.setText("" + container.tile.getField(TileStructure.Fields.HEIGHT.ordinal()));
-    txtHeight.setTooltip("buildertype.height.tooltip");
+    txtHeight.setTooltip(UtilChat.lang("buildertype.height.tooltip"));
     this.children.add(txtHeight);
     txtSize = new TextboxInteger(this.font, guiLeft + 90, guiTop + 20, 20,
         container.tile.getPos(), TileStructure.Fields.SIZE.ordinal());
-    txtSize.setTooltip("buildertype.size.tooltip");
+    txtSize.setTooltip(UtilChat.lang("buildertype.size.tooltip"));
     txtSize.setText("" + container.tile.getField(TileStructure.Fields.SIZE.ordinal()));
     this.children.add(txtSize);
     TileStructure.Fields fld = TileStructure.Fields.BUILDTYPE;

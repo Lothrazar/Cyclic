@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import net.minecraft.block.ChestBlock;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -87,7 +87,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   }
 
   private Direction getCurrentFacing() {
-    return this.getBlockState().get(ChestBlock.FACING);
+    return this.getBlockState().get(HorizontalBlock.HORIZONTAL_FACING);
   }
 
   @Override

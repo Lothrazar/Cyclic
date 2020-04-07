@@ -1,7 +1,7 @@
 {
  	"parent": "cyclic:parent/machine_peat",
     "textures": {
-        "0": "cyclic:blocks/plate",
+        "0": "cyclic:blocks/plate_hole",
         "1": "minecraft:block/cauldron_inner",
         "2": "cyclic:blocks/plate",
         "3": "minecraft:block/quartz_block_bottom",
