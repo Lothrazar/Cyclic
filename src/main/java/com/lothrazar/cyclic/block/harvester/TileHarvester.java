@@ -93,21 +93,20 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, (TileEntity) null);
     List<ItemStack> seeds = Block.getDrops(blockState.getBlock().getDefaultState(),
         (ServerWorld) world, posCurrent, (TileEntity) null);
-    //if it droped more than one thing, and seeds exist
-    if (seeds.size() > 0 && drops.size() > 1) {
-      ItemStack seed = seeds.get(0);
-      //  if it dropped more than one ( seed and a thing)
-      for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
-        final ItemStack drop = iterator.next();
-        if (drop.getItem() == seed.getItem()) { // Remove exactly one seed (consume for replanting
-          drop.shrink(1);
-          //          ModCyclic.LOGGER.info("Harvester remove seed item " + drop);
-          //          iterator.remove();
-          //           break;
-        }
-        if (drop.getCount() > 0) {
-          UtilWorld.dropItemStackInWorld(world, posCurrent, drop);
-        }
+    boolean deleteSeed = drops.size() > 0;
+    ItemStack seed = seeds.get(0);
+    //  if it dropped more than one ( seed and a thing)
+    for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
+      final ItemStack drop = iterator.next();
+      if (deleteSeed && drop.getItem() == seed.getItem()
+          && drops.size() > 1) {
+        // Remove exactly one seed (consume for replanting)
+        drop.shrink(1);
+        //        ModCyclic.log("shrink a seed ok" + seed);
+        deleteSeed = false;
+      } //else dont remove a seed if theres only 1 to start with
+      if (drop.getCount() > 0) {
+        UtilWorld.dropItemStackInWorld(world, posCurrent, drop);
       }
     }
     world.setBlockState(posCurrent, blockState.with(propInt, minAge));
