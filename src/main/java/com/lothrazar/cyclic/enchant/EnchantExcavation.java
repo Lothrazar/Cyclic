@@ -47,6 +47,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantExcavation extends EnchantBase {
 
+  private static final int POWER_PER_LEVEL = 7;
+
   public EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
@@ -57,11 +59,8 @@ public class EnchantExcavation extends EnchantBase {
     return 5;
   }
 
-  int[] levelToMaxBreak = { 0, 8, 14, 36, 48, 60 };
-
   private int getHarvestMax(int level) {
-    int index = Math.max(level, levelToMaxBreak.length - 1);
-    return levelToMaxBreak[index];
+    return level * POWER_PER_LEVEL;
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
