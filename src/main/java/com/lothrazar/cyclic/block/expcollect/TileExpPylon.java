@@ -19,7 +19,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileExpPylon extends TileEntityBase implements ITickableTileEntity {
 
   private static final int RADIUS = 8;
-  private static final int MAX = 64 * 64;
+  private static final int MAX = Integer.MAX_VALUE - 1;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
   private int storedXp;
 
