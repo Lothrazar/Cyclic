@@ -9,7 +9,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class UtilParticle {
 
-  @OnlyIn(Dist.CLIENT)
   public static void spawnParticleBeam(World world, IParticleData sparkle, BlockPos start, BlockPos end, int count) {
     // thanks to http://www.minecraftforge.net/forum/index.php?topic=30567.0
     // and http://mathforum.org/library/drmath/view/65721.html
@@ -36,11 +35,21 @@ public class UtilParticle {
     return (world.rand.nextDouble() - 0.5D) * rando;
   }
 
-  @OnlyIn(Dist.CLIENT)
   public static void spawnParticle(World world, IParticleData sparkle, BlockPos pos, int count) {
-    spawnParticle(world, sparkle, pos.getX() + .5F, pos.getY() + .5F, pos.getZ() + .5F, count);
+    if (world.isRemote)
+      spawnParticle(world, sparkle, pos.getX() + .5F, pos.getY() + .5F, pos.getZ() + .5F, count);
   }
 
+  /**
+   * always check IS CLIENTSIDE before this
+   * 
+   * @param world
+   * @param sparkle
+   * @param x
+   * @param y
+   * @param z
+   * @param count
+   */
   @OnlyIn(Dist.CLIENT)
   private static void spawnParticle(World world, IParticleData sparkle, float x, float y, float z, int count) {
     for (int countparticles = 0; countparticles <= count; ++countparticles) {
