@@ -7,7 +7,6 @@ import net.minecraft.entity.item.EyeOfEnderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -36,8 +35,7 @@ public class ItemEnderEyeReuse extends ItemBase {
         double posX = player.getPosX();
         double posY = player.getPosY();
         double posZ = player.getPosZ();
-        EyeOfEnderEntity eyeofenderentity = new EyeOfEnderEntity(worldIn, posX, posY + player.getHeight() / 2.0F, posZ);
-        eyeofenderentity.func_213863_b(new ItemStack(Items.ENDER_EYE));
+        EyeOfEnderEntity eyeofenderentity = new EyeOfEnderEntityNodrop(worldIn, posX, posY + player.getHeight() / 2.0F, posZ);
         eyeofenderentity.moveTowards(blockpos);
         worldIn.addEntity(eyeofenderentity);
         if (player instanceof ServerPlayerEntity) {
@@ -47,12 +45,10 @@ public class ItemEnderEyeReuse extends ItemBase {
             0.4F / (random.nextFloat() * 0.4F + 0.8F));
         worldIn.playEvent((PlayerEntity) null, 1003, new BlockPos(player), 0);
         if (!player.abilities.isCreativeMode) {
-          //           stack.shrink(1);
           UtilItemStack.damageItem(stack);
         }
         player.addStat(Stats.ITEM_USED.get(this));
         player.getCooldownTracker().setCooldown(stack.getItem(), 10);
-        //         return new ActionResult<>(ActionResultType.SUCCESS, stack);
       }
     }
     return super.onItemRightClick(worldIn, player, hand);

@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
+import com.lothrazar.cyclic.item.endereye.EyeOfEnderEntityNodrop;
 import com.lothrazar.cyclic.item.findspawner.EntityDungeonEye;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.torchthrow.EntityTorchBolt;
@@ -37,6 +38,8 @@ public class EntityRegistry {
   public static EntityType<BoomerangEntity> boomerang_carry;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
   public static EntityType<BoomerangEntity> boomerang_damage;
+  @ObjectHolder(ModCyclic.MODID + ":eye")
+  public static EntityType<EyeOfEnderEntityNodrop> eye;
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -63,6 +66,7 @@ public class EntityRegistry {
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.netball, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dungeon, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.eye, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
 
   @SubscribeEvent
@@ -116,5 +120,13 @@ public class EntityRegistry {
             .size(.6f, .6f)
             .build("dungeon")
             .setRegistryName("dungeon"));
+    r.register(
+        EntityType.Builder.<EyeOfEnderEntityNodrop> create(EyeOfEnderEntityNodrop::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("eye")
+            .setRegistryName("eye"));
   }
 }
