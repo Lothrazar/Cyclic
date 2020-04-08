@@ -38,9 +38,11 @@ public class EntityTorchBolt extends ProjectileItemEntity {
     return Items.TORCH;
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onImpact(RayTraceResult result) {
+    if (this.world.isRemote) {
+      return;
+    }
     RayTraceResult.Type type = result.getType();
     if (type == RayTraceResult.Type.ENTITY) {
       //damage entity by zero
@@ -54,20 +56,41 @@ public class EntityTorchBolt extends ProjectileItemEntity {
     }
     else if (type == RayTraceResult.Type.BLOCK) {
       BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
-      BlockPos pos = this.getPosition();
+      Direction offset = bRayTrace.getFace();
+      BlockPos pos = bRayTrace.getPos().offset(offset);//NO BAD NOT THIS this.getPosition();
       boolean itPlaced = false;
       if (world.isAirBlock(pos)) {
-        Direction offset = bRayTrace.getFace();
         BlockState newstate = null;
-        if (offset == Direction.UP) {
+        if (offset == Direction.UP || offset == Direction.DOWN) {
           newstate = Blocks.TORCH.getDefaultState();
-          if (Blocks.TORCH.isValidPosition(newstate, world, pos)) {
+          if (newstate.isValidPosition(world, pos)) {
             itPlaced = world.setBlockState(pos, newstate);
+          }
+          else {
+            //HAX for making it feel better tu use, these almost never fire 
+            if (newstate.isValidPosition(world, pos.down())) {
+              itPlaced = world.setBlockState(pos.down(), newstate);
+            }
+            else {
+              if (newstate.isValidPosition(world, pos.up())) {
+                itPlaced = world.setBlockState(pos.up(), newstate);
+              }
+            }
           }
         }
         else {
-          newstate = Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, offset);
-          if (Blocks.WALL_TORCH.isValidPosition(newstate, world, pos)) {
+          BlockState testMeState = Blocks.WALL_TORCH.getDefaultState();
+          for (Direction direction : Direction.values()) {
+            if (direction.getAxis().isHorizontal()) {
+              Direction direction1 = direction.getOpposite();
+              testMeState = testMeState.with(WallTorchBlock.HORIZONTAL_FACING, direction1);
+              if (testMeState.isValidPosition(world, pos)) {
+                newstate = testMeState;
+              }
+            }
+          }
+          //          newstate = Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, offset);
+          if (newstate != null) {
             itPlaced = world.setBlockState(pos, newstate);
           }
         }
