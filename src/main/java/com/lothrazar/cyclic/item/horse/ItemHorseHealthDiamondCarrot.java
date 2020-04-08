@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.horse;
 
-import com.lothrazar.cyclic.item.ItemEntityInteractable;
+import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.horse.HorseEntity;

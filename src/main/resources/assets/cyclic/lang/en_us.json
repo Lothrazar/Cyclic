@@ -4,10 +4,10 @@
     "block.cyclic.trash": "Trash Void",
     "block.cyclic.trash.tooltip": "Deletes any item piped into it",
     "block.cyclic.experience_pylon": "Experience Pylon",
-    "block.cyclic.experience_pylon.tooltip": "Collects nearby XP orbs",
+    "block.cyclic.experience_pylon.tooltip": "Collects nearby XP orbs, use sugar or empty bottle on me",
 	"item.cyclic.experience_food": "Experience Confection",
 	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
-	"item.cyclic.experience_food.notenough": "Not enough stored",
+	"block.cyclic.experience_pylon.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.collector.tooltip": "Picks up nearby items",
     

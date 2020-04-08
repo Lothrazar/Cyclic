@@ -1,6 +1,5 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.base;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
 public abstract class ItemEntityInteractable extends ItemBase {

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
-import com.lothrazar.cyclic.item.ItemEntityInteractable;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.util.UtilChat;
