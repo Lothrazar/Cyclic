@@ -32,7 +32,6 @@ public class ItemTorchThrower extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
     if (!world.isRemote) {
       EntityTorchBolt ball = new EntityTorchBolt(player, world);
-      //      ball.shoot(player, player.rotationPitch, player.rotationYaw, 0, 0.5F, 1); 
       float velocityFactor = 1.5F;
       ball.shoot(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
       player.getHeldItem(hand).damageItem(1, player, (p) -> {

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.torchthrow;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.WallTorchBlock;
 import net.minecraft.entity.Entity;
@@ -37,6 +38,7 @@ public class EntityTorchBolt extends ProjectileItemEntity {
     return Items.TORCH;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void onImpact(RayTraceResult result) {
     RayTraceResult.Type type = result.getType();
@@ -49,24 +51,28 @@ public class EntityTorchBolt extends ProjectileItemEntity {
         target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
       }
       UtilItemStack.drop(world, target.getPosition(), new ItemStack(Items.TORCH));
-      //      UtilItemStack.drop(world, pos, new ItemStack(CyclicRegistry.Items.magic_net));
     }
     else if (type == RayTraceResult.Type.BLOCK) {
       BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
       BlockPos pos = this.getPosition();
+      boolean itPlaced = false;
       if (world.isAirBlock(pos)) {
         Direction offset = bRayTrace.getFace();
-        //      if (offset != null) {
-        //        pos = pos.offset(offset);
-        //      }
-        if (offset == Direction.UP)
-          world.setBlockState(pos, Blocks.TORCH.getDefaultState());
-        else if (offset == Direction.DOWN) //bottom of an UP block
-          UtilItemStack.drop(world, pos, new ItemStack(Items.TORCH));
-        else
-          world.setBlockState(pos, Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, offset));
+        BlockState newstate = null;
+        if (offset == Direction.UP) {
+          newstate = Blocks.TORCH.getDefaultState();
+          if (Blocks.TORCH.isValidPosition(newstate, world, pos)) {
+            itPlaced = world.setBlockState(pos, newstate);
+          }
+        }
+        else {
+          newstate = Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, offset);
+          if (Blocks.WALL_TORCH.isValidPosition(newstate, world, pos)) {
+            itPlaced = world.setBlockState(pos, newstate);
+          }
+        }
       }
-      else {
+      if (!itPlaced) {
         //we hit grass or a slab or something
         UtilItemStack.drop(world, this.getPosition(), new ItemStack(Items.TORCH));
       }

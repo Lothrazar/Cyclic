@@ -12,6 +12,6 @@
   	,"0.2.0":"Step Height enchantment added only for leggings.  Block Reach enchant ported.  Minimum forge_version 31.1.25.  Fluid tank rendering rebuilt, fixed blockstates and autodrain.  zh_cn.lang updated by sandtechnology.  Fixed game crash with Emerald Carrot, item now works as expected.  Fixed some language file issues.  Fixed Torch Launcher velocity and distance back up to 1.12 speeds.  Fixed Auto Torch going into negative durability.  Fixed boomerange dupe. "
   	,"0.3.0":"Added powered anvil, three building items, block randomizer, Anti-gravity ring.  Many items now correctly consume durability and play sounds"
   	,"0.3.1":"Added item pipes, added fluid pipes, New item Cable wrench, added structure builder, Changed some other things, this is an alpha build for testing but its pretty stable."
-  	,"0.3.2":"Fixed fire charm particles crashing serverside.  Fixed harvester not producing netherwart.  Fixed handheld item rendering. "
+  	,"0.3.2":"Fixed fire charm particles crashing serverside.  Fixed harvester not producing netherwart.  Fixed handheld item rendering.  Torch launcher is immensely less likely to place in invalid spots.   "
   }
 }
