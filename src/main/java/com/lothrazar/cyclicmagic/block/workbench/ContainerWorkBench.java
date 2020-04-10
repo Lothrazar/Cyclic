@@ -30,7 +30,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
@@ -48,12 +47,14 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   private InventoryWorkbench craftMatrix;
-  private InventoryCraftResult craftResult = new InventoryCraftResult();
+  private InventoryCraftResultMP craftResult;
   private World world;
   private final EntityPlayer player;
 
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
     super(te);
+    craftResult = new InventoryCraftResultMP();
+    craftResult.tile = te;
     craftMatrix = new InventoryWorkbench(this, te);
     this.world = inventoryPlayer.player.world;
     this.player = inventoryPlayer.player;
@@ -134,5 +135,14 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     if (player.inventoryContainer instanceof ContainerPlayer)
       ((ContainerPlayer) player.inventoryContainer).craftResult.clear(); //For whatever reason the workbench causes a desync that makes the last available recipe show in the 2x2 grid.
     super.onContainerClosed(player);
+  }
+
+  @Override
+  public boolean canInteractWith(EntityPlayer player) {
+    if (!super.canInteractWith(player)) {
+      return false;
+    }
+    //how many players are in here
+    return this.tile.isUsableByPlayer(player);
   }
 }

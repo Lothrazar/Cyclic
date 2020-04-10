@@ -23,7 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.workbench;
 
+import java.util.HashSet;
+import java.util.Set;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
@@ -31,6 +34,16 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
   public static final int ROWS = 3;
   public static final int COLS = 3;
   public static final int SIZE_GRID = 3 * 3;
+  //for multiplayer, keep a list of inventories being interacted with by the players
+  private Set<InventoryWorkbench> inventoriesInUse = new HashSet<>();
+
+  public void addInvo(InventoryWorkbench inv) {
+    this.inventoriesInUse.add(inv);
+  }
+
+  public void removeInvo(InventoryWorkbench inv) {
+    this.inventoriesInUse.remove(inv);
+  }
 
   public TileEntityWorkbench() {
     super(SIZE_GRID);//left and right side both have a tall rectangle. then 3x3 crafting 
@@ -40,6 +53,16 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
+    //trigger updates for anyone using it 
+    for (InventoryWorkbench invo : this.inventoriesInUse) {
+      invo.onCraftMatrixChanged();
+    }
+  }
+
+  @Override
+  public boolean isUsableByPlayer(EntityPlayer player) {
+    return getWorld().getTileEntity(pos) == this
+        && player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) <= 32;
   }
 
   @Override

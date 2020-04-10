@@ -23,18 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.workbench;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 
 //to save code just extend vanilla workbench instead of remake
 public class InventoryWorkbench extends InventoryCrafting {
 
-  private IInventory tileEntity;
+  private TileEntityWorkbench tileEntity;
   private Container container;
 
-  public InventoryWorkbench(Container eventHandlerIn, IInventory tileEntity) {
+  public InventoryWorkbench(Container eventHandlerIn, TileEntityWorkbench tileEntity) {
     super(eventHandlerIn, 3, 3);
     this.tileEntity = tileEntity;
     container = eventHandlerIn;
@@ -51,6 +51,13 @@ public class InventoryWorkbench extends InventoryCrafting {
   }
 
   /**
+   * Sync crafting table changes between multiple players in use
+   */
+  public void onCraftMatrixChanged() {
+    container.onCraftMatrixChanged(this);
+  }
+
+  /**
    * just like vanilla
    */
   @Override
@@ -62,7 +69,7 @@ public class InventoryWorkbench extends InventoryCrafting {
     if (this.getStackInSlot(index).getCount() <= count) {
       stack = this.getStackInSlot(index);
       this.setInventorySlotContents(index, ItemStack.EMPTY);
-      this.container.onCraftMatrixChanged(this);
+      this.onCraftMatrixChanged();
       return stack;
     }
     else {
@@ -70,7 +77,7 @@ public class InventoryWorkbench extends InventoryCrafting {
       if (this.getStackInSlot(index).getCount() == 0) {
         this.setInventorySlotContents(index, ItemStack.EMPTY);
       }
-      this.container.onCraftMatrixChanged(this);
+      this.onCraftMatrixChanged();
       return stack;
     }
   }
@@ -78,6 +85,18 @@ public class InventoryWorkbench extends InventoryCrafting {
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     this.tileEntity.setInventorySlotContents(index, stack);
-    this.container.onCraftMatrixChanged(this);
+    this.onCraftMatrixChanged();
+  }
+
+  @Override
+  public void openInventory(EntityPlayer player) {
+    super.openInventory(player);
+    tileEntity.addInvo(this);
+  }
+
+  @Override
+  public void closeInventory(EntityPlayer player) {
+    super.closeInventory(player);
+    tileEntity.removeInvo(this);
   }
 }
