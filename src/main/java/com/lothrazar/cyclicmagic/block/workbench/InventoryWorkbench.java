@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.workbench;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -40,7 +39,6 @@ public class InventoryWorkbench extends InventoryCrafting {
     super(eventHandlerIn, 3, 3);
     this.tileEntity = tileEntity;
     container = eventHandlerIn;
-    //    tileEntity.addInvo(this);
   }
 
   @Override
@@ -88,7 +86,6 @@ public class InventoryWorkbench extends InventoryCrafting {
   @Override
   public void openInventory(EntityPlayer player) {
     tileEntity.addInvo(this);
-    ModCyclic.logger.info("OOOPPPPEEEENNNNNN  " + tileEntity);
     super.openInventory(player);
   }
 

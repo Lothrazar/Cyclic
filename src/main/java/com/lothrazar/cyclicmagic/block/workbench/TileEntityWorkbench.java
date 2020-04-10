@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.workbench;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
@@ -45,7 +44,6 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
 
   public void addInvo(InventoryWorkbench inv) {
     this.inventoriesInUse.add(inv);
-    ModCyclic.logger.info("ADDDDD  " + this.inventoriesInUse.size());
   }
 
   public void removeInvo(InventoryWorkbench inv) {
@@ -64,8 +62,7 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
   }
 
   protected void syncAllCraftSlots() {
-    //trigger updates for anyone using it 
-    ModCyclic.logger.info("sync this many inventories " + this.inventoriesInUse.size());
+    //trigger updates for anyone using it  
     for (InventoryWorkbench invo : this.inventoriesInUse) {
       invo.onCraftMatrixChanged();
     }
@@ -78,13 +75,11 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
 
   @Override
   public ItemStack decrStackSize(int index, int count) {
-    ModCyclic.logger.info("gdecrStackSize" + this.inventoriesInUse.size());
     return ItemStackHelper.getAndSplit(inv, index, count);
   }
 
   @Override
   public ItemStack removeStackFromSlot(int index) {
-    ModCyclic.logger.info("removeStackFromSlot" + this.inventoriesInUse.size());
     return ItemStackHelper.getAndRemove(inv, index);
   }
 

@@ -46,13 +46,13 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   private InventoryWorkbench craftMatrix;
-  private InventoryCraftResultMP craftResult;
+  private InventoryCraftResultSync craftResult;
   private final EntityPlayer player;
 
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
     super(te);
     this.player = inventoryPlayer.player;
-    craftResult = new InventoryCraftResultMP();
+    craftResult = new InventoryCraftResultSync();
     craftResult.tile = te;
     craftMatrix = new InventoryWorkbench(this, te);
     craftMatrix.openInventory(this.player);

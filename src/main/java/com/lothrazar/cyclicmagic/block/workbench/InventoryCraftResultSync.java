@@ -3,7 +3,7 @@ package com.lothrazar.cyclicmagic.block.workbench;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryCraftResult;
 
-public class InventoryCraftResultMP extends InventoryCraftResult {
+public class InventoryCraftResultSync extends InventoryCraftResult {
 
   protected TileEntityWorkbench tile;
 
