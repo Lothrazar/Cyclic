@@ -33,7 +33,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 /**
  * FOR @runwyld https://www.twitch.tv/runwyld
@@ -48,16 +47,15 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   private InventoryWorkbench craftMatrix;
   private InventoryCraftResultMP craftResult;
-  private World world;
   private final EntityPlayer player;
 
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
     super(te);
+    this.player = inventoryPlayer.player;
     craftResult = new InventoryCraftResultMP();
     craftResult.tile = te;
     craftMatrix = new InventoryWorkbench(this, te);
-    this.world = inventoryPlayer.player.world;
-    this.player = inventoryPlayer.player;
+    craftMatrix.openInventory(this.player);
     this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 136, 35));
     int slot = 0;
     //inpt on left
@@ -79,6 +77,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
     this.onCraftMatrixChanged(this.craftMatrix);
+    te.syncAllCraftSlots();
   }
 
   @Override
@@ -86,7 +85,8 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     //i have to assume the recipe will safely validate itself
     //cant validate myself unless i restrict to vanilla-like recipes
     try {
-      this.slotChangedCraftingGrid(this.world, player, this.craftMatrix, this.craftResult);
+      this.slotChangedCraftingGrid(player.world, player, this.craftMatrix, this.craftResult);
+      //      ((TileEntityWorkbench) tile).syncAllCraftSlots();
     }
     catch (Exception e) {
       //if ingredients to not satisfy recipe, it should just silently do nothing and not craft
@@ -131,10 +131,11 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   }
 
   @Override
-  public void onContainerClosed(EntityPlayer player) {
-    if (player.inventoryContainer instanceof ContainerPlayer)
-      ((ContainerPlayer) player.inventoryContainer).craftResult.clear(); //For whatever reason the workbench causes a desync that makes the last available recipe show in the 2x2 grid.
-    super.onContainerClosed(player);
+  public void onContainerClosed(EntityPlayer playerIn) {
+    if (playerIn.inventoryContainer instanceof ContainerPlayer)
+      ((ContainerPlayer) playerIn.inventoryContainer).craftResult.clear(); //For whatever reason the workbench causes a desync that makes the last available recipe show in the 2x2 grid.
+    super.onContainerClosed(playerIn);
+    craftMatrix.closeInventory(playerIn);
   }
 
   @Override

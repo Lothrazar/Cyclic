@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.workbench;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -38,6 +40,7 @@ public class InventoryWorkbench extends InventoryCrafting {
     super(eventHandlerIn, 3, 3);
     this.tileEntity = tileEntity;
     container = eventHandlerIn;
+    //    tileEntity.addInvo(this);
   }
 
   @Override
@@ -62,36 +65,31 @@ public class InventoryWorkbench extends InventoryCrafting {
    */
   @Override
   public ItemStack decrStackSize(int index, int count) {
-    if (this.getStackInSlot(index).isEmpty()) {
-      return ItemStack.EMPTY;
+    ItemStack stackAfter = tileEntity.decrStackSize(index, count);
+    if (stackAfter != ItemStack.EMPTY) {
+      tileEntity.syncAllCraftSlots();
     }
-    ItemStack stack;
-    if (this.getStackInSlot(index).getCount() <= count) {
-      stack = this.getStackInSlot(index);
-      this.setInventorySlotContents(index, ItemStack.EMPTY);
-      this.onCraftMatrixChanged();
-      return stack;
-    }
-    else {
-      stack = this.getStackInSlot(index).splitStack(count);
-      if (this.getStackInSlot(index).getCount() == 0) {
-        this.setInventorySlotContents(index, ItemStack.EMPTY);
-      }
-      this.onCraftMatrixChanged();
-      return stack;
-    }
+    return stackAfter;
+  }
+
+  @Override
+  public void markDirty() {
+    tileEntity.markDirty();
+    IBlockState state = tileEntity.getWorld().getBlockState(tileEntity.getPos());
+    tileEntity.getWorld().notifyBlockUpdate(tileEntity.getPos(), state, state, 3);
   }
 
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     this.tileEntity.setInventorySlotContents(index, stack);
-    this.onCraftMatrixChanged();
+    tileEntity.syncAllCraftSlots();
   }
 
   @Override
   public void openInventory(EntityPlayer player) {
-    super.openInventory(player);
     tileEntity.addInvo(this);
+    ModCyclic.logger.info("OOOPPPPEEEENNNNNN  " + tileEntity);
+    super.openInventory(player);
   }
 
   @Override

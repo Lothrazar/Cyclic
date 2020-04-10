@@ -22,6 +22,7 @@ public class ContainerFastWorkbench extends ContainerFastBench {
     super(player, world, te.getPos());
     this.te = te;
     this.craftMatrix = new InventoryWorkbench(this, te);
+    craftMatrix.openInventory(player);
     int x = 0;
     replaceSlot(x++, new SlotCraftingSucks(this, player, this.craftMatrix, this.craftResult, 0, 124, 35));
     for (int i = 0; i < 3; ++i) {
@@ -51,5 +52,6 @@ public class ContainerFastWorkbench extends ContainerFastBench {
   public void onContainerClosed(EntityPlayer player) {
     ((ContainerPlayer) player.inventoryContainer).craftResult.clear(); //For whatever reason the workbench causes a desync that makes the last available recipe show in the 2x2 grid.
     super.onContainerClosed(player);
+    craftMatrix.closeInventory(player);
   }
 }
