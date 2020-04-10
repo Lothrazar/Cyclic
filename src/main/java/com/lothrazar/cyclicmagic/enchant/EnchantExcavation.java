@@ -31,6 +31,7 @@ import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -119,6 +120,10 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
     List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
     List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
     for (BlockPos targetPos : theFuture) {
+      if (UtilItemStack.isBroken(player.getHeldItem(player.swingingHand))) {
+        //starting to pass below zero  
+        break;
+      }
       IBlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
       if (world.isAirBlock(targetPos)
@@ -133,13 +138,12 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
       wasHarvested.add(targetPos);
       //damage but also respect the unbreaking chant
       player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
-      //      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
       totalBroken++;
     }
     //AFTER we harvest the close ones only THEN we branch out
     for (BlockPos targetPos : theFuture) {
-      if (totalBroken >= this.getHarvestMax(level)
-          || player.getHeldItem(player.swingingHand).isEmpty()) {
+      if (UtilItemStack.isBroken(player.getHeldItem(player.swingingHand))
+          || totalBroken >= this.getHarvestMax(level)) {
         break;
       }
       totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level, swingingHand);

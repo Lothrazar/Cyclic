@@ -277,7 +277,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         sendOutputItem(equip);
         this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
       } //otherwise we also make sure if its fullly damanged
-      if (equip.getItemDamage() >= equip.getMaxDamage()) {
+      if (UtilItemStack.isBroken(equip)) {
         this.setInventorySlotContents(SLOT_TOOL, ItemStack.EMPTY);
       }
     }

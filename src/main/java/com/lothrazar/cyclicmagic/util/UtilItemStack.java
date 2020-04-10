@@ -269,4 +269,15 @@ public class UtilItemStack {
     int tagHash = (itemStack.getTagCompound() == null) ? 0 : itemStack.getTagCompound().hashCode();
     return itemStack.getItem().hashCode() + itemStack.getCount() + tagHash;
   }
+
+  public static boolean isBroken(ItemStack stack) {
+    if (stack.isEmpty()) {
+      return true;
+    }
+    if (stack.isItemStackDamageable() &&
+        stack.getItemDamage() >= stack.getMaxDamage()) {
+      return true;
+    }
+    return false;
+  }
 }
