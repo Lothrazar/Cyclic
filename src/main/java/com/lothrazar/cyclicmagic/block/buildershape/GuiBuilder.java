@@ -212,5 +212,9 @@ public class GuiBuilder extends GuiBaseContainer {
     for (int k = 0; k < this.tile.getSizeInventory() - 1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    // the GPS slot
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + 25, this.guiTop + 28, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
 }
