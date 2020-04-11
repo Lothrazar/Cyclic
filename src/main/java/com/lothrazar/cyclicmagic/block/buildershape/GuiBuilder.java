@@ -88,7 +88,7 @@ public class GuiBuilder extends GuiBaseContainer {
     y = this.guiTop + 50;
     fld = TileEntityStructureBuilder.Fields.BUILDTYPE;
     int numInRow = 0;
-    for (StructureBuilderType shape : StructureBuilderType.values()) {
+    for (StructureBuilderType shape : StructureBuilderType.SORTED) {
       numInRow++;
       if (numInRow == 9) {
         //so just reset x back to left side and bump up the y
