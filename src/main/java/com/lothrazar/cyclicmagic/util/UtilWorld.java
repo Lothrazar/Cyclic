@@ -266,15 +266,12 @@ public class UtilWorld {
   }
 
   public static BlockPos nextAirInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
-    BlockPos posToPlaceAt = new BlockPos(posIn);
+    BlockPos posToPlaceAt = null;
     BlockPos posLoop = new BlockPos(posIn);
     for (int i = 0; i < max; i++) {
       if (world.isAirBlock(posLoop)) {
         posToPlaceAt = posLoop;
         break;
-      }
-      else {
-        posLoop = posLoop.offset(facing);
       }
     }
     return posToPlaceAt;

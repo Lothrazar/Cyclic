@@ -36,7 +36,6 @@ import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.ISpell;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild;
-import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild.PlaceType;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -142,11 +141,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent, IRende
       SpellRangeBuild build = (SpellRangeBuild) spellCurrent;
       RayTraceResult ray = ModCyclic.proxy.getRayTraceResult(SpellRangeBuild.maxRange);
       if (ray != null) {
-        BlockPos tpos = ray.getBlockPos();
-        if (build.getType() == PlaceType.PLACE && ray.sideHit != null) {
-          tpos = tpos.offset(ray.sideHit);//lil hack
-        }
-        p.add(PacketRangeBuild.getPosToPlaceAt(player, tpos, ray.sideHit, build.getType()));
+        BlockPos tpos = PacketRangeBuild.getPosToPlaceAt(player, ray.getBlockPos(), ray.sideHit, build.getType());
+        if (tpos != null)
+          p.add(tpos);
       }
     }
     return p;

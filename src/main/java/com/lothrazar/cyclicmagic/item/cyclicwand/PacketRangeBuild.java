@@ -178,18 +178,18 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
         }
       break;
       case PLACE:
+        facing = null;
+        if (sideMouseover != null)
+          posToPlaceAt = pos.offset(sideMouseover);
       break;
     }
-    if (facing == null) {
-      posToPlaceAt = pos;
-    }
-    else {
+    if (facing != null && posToPlaceAt == null) {
       posToPlaceAt = UtilWorld.nextAirInDirection(p.world, pos.offset(facing), facing, SpellRangeBuild.max, null);
     }
     return posToPlaceAt;
   }
 
-  public void castFromServer(BlockPos pos,
+  private void castFromServer(BlockPos pos,
       @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
@@ -210,10 +210,9 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
       }
     }
     BlockPos posToPlaceAt = getPosToPlaceAt(p, pos, sideMouseover, type);
-    if (UtilPlaceBlocks.buildStackAsPlayer(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec,
-        p.getAdjustedHorizontalFacing())) {
-      //      SpellRangeBuild.spawnParticle(world, p, pos);
-      //      SpellRangeBuild.playSound(world, p, world.getBlockState(posToPlaceAt).getBlock(), posToPlaceAt);
+    if (posToPlaceAt != null &&
+        UtilPlaceBlocks.buildStackAsPlayer(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec,
+            p.getAdjustedHorizontalFacing())) {
       UtilSound.playSoundPlaceBlock(p, posToPlaceAt, world.getBlockState(posToPlaceAt));
       if (!p.isCreative()) {
         InventoryWand.decrementSlot(heldWand, itemSlot);
