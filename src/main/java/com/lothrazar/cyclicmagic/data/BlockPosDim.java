@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 public class BlockPosDim {
 
@@ -13,6 +14,7 @@ public class BlockPosDim {
   public int id;
   private int dimension;
   private String display;
+  private Vec3d hitVec = Vec3d.ZERO;
   @Nullable
   private EnumFacing side = null;
 
@@ -68,11 +70,7 @@ public class BlockPosDim {
 
   @Override
   public String toString() {
-    String s = "[" + getDimension() + "] (" + (int) getX() + ", " + (int) getY() + ", " + (int) getZ() + ")";
-    if (side != null) {
-      s += " " + side.toString().toUpperCase();
-    }
-    return s;
+    return "[" + getDimension() + "] (" + (int) getX() + ", " + (int) getY() + ", " + (int) getZ() + ")";
   }
 
   public int getDimension() {
@@ -121,5 +119,13 @@ public class BlockPosDim {
 
   public void setSide(EnumFacing side) {
     this.side = side;
+  }
+
+  public Vec3d getHitVec() {
+    return hitVec;
+  }
+
+  public void setHitVec(Vec3d hitVec) {
+    this.hitVec = hitVec;
   }
 }

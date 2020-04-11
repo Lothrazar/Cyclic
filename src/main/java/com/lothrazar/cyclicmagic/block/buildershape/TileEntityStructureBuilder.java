@@ -23,25 +23,29 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.buildershape;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -55,63 +59,16 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int height;
   private int shapeIndex = 0;// current index of shape array
   private int renderParticles = 1;
-  private int rotations = 0;
   public static int maxSize;
   public static int maxHeight = 10;
-  private int offsetX = 0;
-  private int offsetY = 0;
-  private int offsetZ = 0;
+  public static final int SLOT_GPS = 9;
 
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ;
-  }
-
-  public enum BuildType {
-
-    FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;
-
-    public static BuildType getNextType(BuildType btype) {
-      int type = btype.ordinal();
-      type++;
-      if (type > SPHERE.ordinal()) {
-        type = FACING.ordinal();
-      }
-      return BuildType.values()[type];
-    }
-
-    public boolean hasHeight() {
-      if (this == SPHERE || this == DIAGONAL || this == DOME || this == CUP)
-        return false;
-      return true;
-    }
-
-    public String shortcode() {
-      switch (this) {
-        case CIRCLE:
-          return "CI";
-        case DIAGONAL:
-          return "DI";
-        case FACING:
-          return "FA";
-        case SOLID:
-          return "SO";
-        case SPHERE:
-          return "SP";
-        case SQUARE:
-          return "SQ";
-        case DOME:
-          return "DO";
-        case CUP:
-          return "CU";
-        case PYRAMID:
-          return "PY";
-      }
-      return "";
-    }
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES;
   }
 
   public TileEntityStructureBuilder() {
-    super(9);
+    super(9 + 1);
     this.initEnergy(new EnergyStore(MENERGY), BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
     this.needsRedstone = 0;
@@ -130,7 +87,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
 
   @Override
   public List<BlockPos> getShape() {
-    BuildType buildType = getBuildTypeEnum();
+    StructureBuilderType buildType = getBuildTypeEnum();
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // only rebuild shapes if they are different
     switch (buildType) {
@@ -170,7 +127,16 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
 
   private BlockPos getPosTarget() {
-    return this.getPos().add(this.offsetX, this.offsetY, this.offsetZ);
+    ItemStack gps = this.getStackInSlot(SLOT_GPS);
+    BlockPosDim target = ItemLocationGps.getPosition(gps);
+    BlockPos myTarget = null;
+    if (target == null) {
+      myTarget = this.getPos();
+    }
+    else {
+      myTarget = target.toBlockPos();
+    }
+    return myTarget;
   }
 
   public BlockPos getTargetFacing() {
@@ -180,7 +146,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
-    return Block.getBlockFromItem(stack.getItem()) != null;
+    if (index == SLOT_GPS) {
+      return stack.getItem() instanceof ItemLocationGps;
+    }
+    return true;//dont check for "is item block" stuff like dank null 
   }
 
   @Override
@@ -201,14 +170,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.needsRedstone;
         case RENDERPARTICLES:
           return this.renderParticles;
-        case ROTATIONS:
-          return this.rotations;
-        case OX:
-          return this.offsetX;
-        case OY:
-          return this.offsetY;
-        case OZ:
-          return this.offsetZ;
       }
     }
     return -1;
@@ -223,7 +184,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         break;
         case BUILDTYPE:
           //??toggleSizeShape
-          if (value >= BuildType.values().length) {
+          if (value >= StructureBuilderType.values().length) {
             value = 0;
           }
           this.buildType = value;
@@ -245,18 +206,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         break;
         case RENDERPARTICLES:
           this.renderParticles = value % 2;
-        break;
-        case ROTATIONS:
-          this.rotations = Math.max(0, value);
-        break;
-        case OX:
-          this.offsetX = value;
-        break;
-        case OY:
-          this.offsetY = value;
-        break;
-        case OZ:
-          this.offsetZ = value;
+          ModCyclic.logger.info("renderPart toggle" + this.renderParticles);
         break;
       }
     }
@@ -287,9 +237,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.setField(Fields.BUILDTYPE.ordinal(), value);
   }
 
-  public BuildType getBuildTypeEnum() {
-    int bt = Math.min(this.getBuildType(), BuildType.values().length - 1);
-    return BuildType.values()[bt];
+  public StructureBuilderType getBuildTypeEnum() {
+    int bt = Math.min(this.getBuildType(), StructureBuilderType.values().length - 1);
+    return StructureBuilderType.values()[bt];
   }
 
   public void setSize(int s) {
@@ -324,13 +274,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.buildType = tagCompound.getInteger(NBT_BUILDTYPE);
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
-    this.rotations = tagCompound.getInteger("rotations");
     this.setHeight(tagCompound.getInteger("buildHeight"));
-    //ModCyclic.logger.info("HEIGHT IS READ : " + this.getHeight());
-    // ModCyclic.logger.info("HEIGHT IS RAW : " + tagCompound.getInteger("buildHeight"));
-    this.offsetX = tagCompound.getInteger("ox");
-    this.offsetY = tagCompound.getInteger("oy");
-    this.offsetZ = tagCompound.getInteger("oz");
   }
 
   @Override
@@ -343,29 +287,38 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
     tagCompound.setInteger(NBT_SIZE, this.buildSize);
     tagCompound.setInteger(NBT_RENDER, renderParticles);
-    tagCompound.setInteger("rotations", rotations);
-    tagCompound.setInteger("ox", this.offsetX);
-    tagCompound.setInteger("oy", this.offsetY);
-    tagCompound.setInteger("oz", this.offsetZ);
-    // ModCyclic.logger.info("buildSize  : " + tagCompound.getInteger(NBT_SIZE) + "????" + buildSize);
     return super.writeToNBT(tagCompound);
   }
+
+  private void verifyFakePlayer(WorldServer w) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+    }
+    if (fakePlayer == null) {
+      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, this.getBlockType().getTranslationKey());
+      if (fakePlayer == null) {
+        ModCyclic.logger.error("Fake player failed to init ");
+      }
+    }
+  }
+
+  private WeakReference<FakePlayer> fakePlayer;
+  private UUID uuid;
 
   @Override
   public void update() {
     if (this.isRunning() == false || this.isInventoryEmpty()) {
       return;
     }
-    this.shiftAllUp();
+    if (world instanceof WorldServer) {
+      verifyFakePlayer((WorldServer) world);
+    }
+    this.shiftAllUp(1);
     if (this.updateEnergyIsBurning() == false) {
       return;
     }
     ItemStack stack = getStackInSlot(0);
     if (stack.isEmpty()) {
-      return;
-    }
-    Block stuff = Block.getBlockFromItem(stack.getItem());
-    if (stuff == null) {
       return;
     }
     List<BlockPos> shape = this.getShape();
@@ -379,16 +332,13 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     for (int i = 0; i < spotsSkippablePerTrigger; i++) {
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
-      if (stuff.canPlaceBlockAt(world, nextPos) && //sutf checks isReplaceable for us, all AIR checks removed
-          world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
-        IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
-        if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-          //rotations if any
-          for (int j = 0; j < this.rotations; j++) {
-            UtilPlaceBlocks.rotateBlockValidState(world, null, nextPos, this.getCurrentFacing());
-          }
-          //decrement and sound
-          this.decrStackSize(0, 1);
+      if (world.isAirBlock(nextPos)) { // check if this spot is even valid
+        ItemStack gps = this.getStackInSlot(SLOT_GPS);
+        BlockPosDim target = ItemLocationGps.getPosition(gps);
+        if (fakePlayer != null &&
+            UtilPlaceBlocks.buildStackAsPlayer(world, fakePlayer.get(),
+                nextPos, stack, target.getSide(), target.getHitVec())) {
+          stack.shrink(1); //          this.decrStackSize(0, 1);
         }
         break;//ok , target position is valid, we can build only into air
       }

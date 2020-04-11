@@ -25,12 +25,10 @@ package com.lothrazar.cyclicmagic.block.buildershape;
 
 import java.io.IOException;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.block.buildershape.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
-import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -50,9 +48,6 @@ public class GuiBuilder extends GuiBaseContainer {
   private int xControlsStart = 158;
   private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
-  private GuiSliderInteger sliderX;
-  private GuiSliderInteger sliderY;
-  private GuiSliderInteger sliderZ;
 
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
@@ -76,19 +71,6 @@ public class GuiBuilder extends GuiBaseContainer {
     int h = 10;
     int x = this.guiLeft + 24;
     int y = this.guiTop + 15;
-    sliderX = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OX.ordinal());
-    sliderX.setTooltip("X");
-    this.addButton(sliderX);
-    id++;
-    y += h + 1;
-    sliderY = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OY.ordinal());
-    sliderY.setTooltip("Y");
-    this.addButton(sliderY);
-    id++;
-    y += h + 1;
-    sliderZ = new GuiSliderInteger(tile, id, x, y, width, h, -1 * maxOffset, maxOffset, Fields.OZ.ordinal());
-    sliderZ.setTooltip("Z");
-    this.addButton(sliderZ);
     id++;
     x = this.guiLeft + Const.PAD + h;
     y = this.guiTop + yOffset + Const.PAD;
@@ -100,7 +82,7 @@ public class GuiBuilder extends GuiBaseContainer {
     y = this.guiTop + 50;
     fld = TileEntityStructureBuilder.Fields.BUILDTYPE;
     int numInRow = 0;
-    for (TileEntityStructureBuilder.BuildType shape : TileEntityStructureBuilder.BuildType.values()) {
+    for (StructureBuilderType shape : StructureBuilderType.values()) {
       numInRow++;
       if (numInRow == 7) {//only 6 per row fit on screen
         //so just reset x back to left side and bump up the y
@@ -170,28 +152,6 @@ public class GuiBuilder extends GuiBaseContainer {
     btnHeightDown.displayString = "-";
     this.addButton(btnHeightDown);
     this.registerButtonDisableTrigger(btnHeightDown, ButtonTriggerType.EQUAL, fld.ordinal(), 1);
-    //////////////////ROTATION BUTTONS
-    fld = TileEntityStructureBuilder.Fields.ROTATIONS;
-    x = this.guiLeft + xControlsStart - 2 * xControlsSpacing;
-    ButtonTileEntityField btnRotUp = new ButtonTileEntityField(id++,
-        x,
-        yTopRow,
-        tile.getPos(),
-        fld.ordinal(),
-        1, width, h);
-    btnRotUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
-    btnRotUp.displayString = "+";
-    this.addButton(btnRotUp);
-    ButtonTileEntityField btnRotDown = new ButtonTileEntityField(id++,
-        x,
-        yBottomRow,
-        tile.getPos(),
-        fld.ordinal(),
-        -1, width, h);
-    btnRotDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
-    btnRotDown.displayString = "-";
-    this.addButton(btnRotDown);
-    this.registerButtonDisableTrigger(btnRotDown, ButtonTriggerType.EQUAL, fld.ordinal(), 0);
   }
 
   @Override
@@ -202,17 +162,11 @@ public class GuiBuilder extends GuiBaseContainer {
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     super.keyTyped(typedChar, keyCode);
-    sliderX.keyTyped(typedChar, keyCode);
-    sliderY.keyTyped(typedChar, keyCode);
-    sliderZ.keyTyped(typedChar, keyCode);
   }
 
   @Override
   public void updateScreen() {
     super.updateScreen();
-    sliderX.updateScreen();
-    sliderY.updateScreen();
-    sliderZ.updateScreen();
   }
 
   @SideOnly(Side.CLIENT)
@@ -236,9 +190,9 @@ public class GuiBuilder extends GuiBaseContainer {
       this.drawStringCenteredCheckLength(display, x, y);
     }
     x = xControlsStart - 2 * xControlsSpacing + sp;
-    String display = "" + this.tile.getField(Fields.ROTATIONS.ordinal());
+    //    String display = "" + this.tile.getField(Fields.ROTATIONS.ordinal());
     //move it over if more than 1 digit 
-    this.drawStringCenteredCheckLength(display, x, y);
+    //    this.drawStringCenteredCheckLength(display, x, y);
     updateDisabledButtons();
   }
 
@@ -255,7 +209,7 @@ public class GuiBuilder extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
+    for (int k = 0; k < this.tile.getSizeInventory() - 1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }

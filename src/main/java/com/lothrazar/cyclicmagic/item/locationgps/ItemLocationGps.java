@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.locationgps;
 
 import java.util.List;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
@@ -16,11 +17,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,8 +38,43 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
 
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    savePosition(player, pos, hand, side);
+    ItemStack held = player.getHeldItem(hand);
+    player.swingArm(hand);
+    UtilNBT.setItemStackBlockPos(held, pos);
+    UtilNBT.setItemStackNBTVal(held, NBT_DIM, player.dimension);
+    UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
+    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
+        + UtilChat.blockPosToString(pos));
+    //
+    held.getTagCompound().setFloat("hitx", hitX);
+    held.getTagCompound().setFloat("hity", hitY);
+    held.getTagCompound().setFloat("hitz", hitZ);
     return EnumActionResult.SUCCESS;
+  }
+
+  public static BlockPosDim getPosition(ItemStack item) {
+    BlockPos p = UtilNBT.getItemStackBlockPos(item);
+    if (p == null) {
+      return null;
+    }
+    BlockPosDim dim = new BlockPosDim(0, p, UtilNBT.getItemStackNBTVal(item, NBT_DIM), "");
+    try {
+      if (item.getTagCompound().hasKey(NBT_SIDE)) {
+        dim.setSide(EnumFacing.values()[UtilNBT.getItemStackNBTVal(item, NBT_SIDE)]);
+      }
+      if (item.getTagCompound().hasKey("hitx")) {
+        NBTTagCompound tag = item.getTagCompound();
+        Vec3d vec = new Vec3d(
+            tag.getFloat("hitx"),
+            tag.getFloat("hity"),
+            tag.getFloat("hitz"));
+        dim.setHitVec(vec);
+      }
+    }
+    catch (Throwable e) {
+      ModCyclic.logger.error("SIde error in GPS", e);
+    }
+    return dim;
   }
 
   @Override
@@ -52,8 +91,19 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
     BlockPosDim dim = getPosition(stack);
     if (dim != null) {
       tooltip.add(dim.toString());
+      if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+        if (dim.getSide() != null) {
+          tooltip.add(TextFormatting.DARK_GRAY
+              + dim.getSide().toString().toUpperCase());
+        }
+        if (dim.getHitVec() != null) {
+          tooltip.add(TextFormatting.DARK_GRAY +
+              dim.getHitVec().toString());
+        }
+      }
     }
-    super.addInformation(stack, player, tooltip, advanced);
+    else
+      super.addInformation(stack, player, tooltip, advanced);
   }
 
   private void deletePosition(EntityPlayer player, EnumHand hand) {
@@ -61,33 +111,6 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
     held.setTagCompound(null);
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
         + "---");
-  }
-
-  private void savePosition(EntityPlayer player, BlockPos pos, EnumHand hand, EnumFacing side) {
-    ItemStack held = player.getHeldItem(hand);
-    player.swingArm(hand);
-    UtilNBT.setItemStackBlockPos(held, pos);
-    UtilNBT.setItemStackNBTVal(held, NBT_DIM, player.dimension);
-    UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
-    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
-        + UtilChat.blockPosToString(pos));
-  }
-
-  public static BlockPosDim getPosition(ItemStack item) {
-    BlockPos p = UtilNBT.getItemStackBlockPos(item);
-    if (p == null) {
-      return null;
-    }
-    BlockPosDim dim = new BlockPosDim(0, p, UtilNBT.getItemStackNBTVal(item, NBT_DIM), "");
-    try {
-      if (item.getTagCompound().hasKey(NBT_SIDE)) {
-        dim.setSide(EnumFacing.values()[UtilNBT.getItemStackNBTVal(item, NBT_SIDE)]);
-      }
-    }
-    catch (Throwable e) {
-      ModCyclic.logger.error("SIde error in GPS", e);
-    }
-    return dim;
   }
 
   @Override

@@ -36,7 +36,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
@@ -119,17 +118,14 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   }
 
   private void verifyFakePlayer(WorldServer w) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+    }
     if (fakePlayer == null) {
       fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, this.getBlockType().getTranslationKey());
       if (fakePlayer == null) {
         ModCyclic.logger.error("Fake player failed to init ");
       }
-    }
-  }
-
-  private void verifyUuid(World world) {
-    if (uuid == null) {
-      uuid = UUID.randomUUID();
     }
   }
 
@@ -143,7 +139,6 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       return;
     }
     if (world instanceof WorldServer) {
-      verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
     }
     ItemStack stack = getStackInSlot(0);

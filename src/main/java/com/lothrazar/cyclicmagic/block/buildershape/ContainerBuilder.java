@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.buildershape;
 
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -44,9 +45,17 @@ public class ContainerBuilder extends ContainerBaseMachine {
   public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder te) {
     super(te);
     this.setScreenSize(ScreenSize.LARGE);
-    for (int i = 0; i < tile.getSizeInventory(); i++) {
+    for (int i = 0; i < tile.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotOnlyBlocks(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
+    addSlotToContainer(new SlotCheckTileValid(te, TileEntityStructureBuilder.SLOT_GPS, 20, 20) {
+
+      //one per slot
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
     bindPlayerInventory(inventoryPlayer);
   }
 
