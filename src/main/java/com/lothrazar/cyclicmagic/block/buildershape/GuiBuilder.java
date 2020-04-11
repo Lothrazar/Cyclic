@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTileEntityField;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTriggerWrapper.ButtonTriggerType;
 import com.lothrazar.cyclicmagic.gui.component.EnergyBar;
+import com.lothrazar.cyclicmagic.gui.component.GuiSliderInteger;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -40,14 +41,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiBuilder extends GuiBaseContainer {
 
   private TileEntityStructureBuilder tile;
-  private ButtonTileEntityField btnSizeUp;
-  private ButtonTileEntityField btnSizeDown;
-  private ButtonTileEntityField btnHeightUp;
-  private ButtonTileEntityField btnHeightDown;
   private final static int yRowTextbox = 50;
-  private int xControlsStart = 158;
   private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
+  private GuiSliderInteger sliderHeight;
+  private GuiSliderInteger sliderSize;
 
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
@@ -66,11 +64,21 @@ public class GuiBuilder extends GuiBaseContainer {
     //first the main top left type button
     TileEntityStructureBuilder.Fields fld;
     int id = 1;
-    int maxOffset = 16;
     int width = 102;
     int h = 10;
-    int x = this.guiLeft + 24;
+    int x = this.guiLeft + 52;
     int y = this.guiTop + 15;
+    id++;
+    sliderHeight = new GuiSliderInteger(tile, id, x, y, width, h,
+        1, TileEntityStructureBuilder.maxHeight, TileEntityStructureBuilder.Fields.HEIGHT.ordinal());
+    sliderHeight.setTooltip("slider.height.tooltip");
+    this.addButton(sliderHeight);
+    id++;
+    y += 16;
+    sliderSize = new GuiSliderInteger(tile, id, x, y, width, h,
+        1, TileEntityStructureBuilder.maxSize, TileEntityStructureBuilder.Fields.SIZE.ordinal());
+    sliderSize.setTooltip("slider.size.tooltip");
+    this.addButton(sliderSize);
     id++;
     x = this.guiLeft + Const.PAD + h;
     y = this.guiTop + yOffset + Const.PAD;
@@ -84,7 +92,7 @@ public class GuiBuilder extends GuiBaseContainer {
     int numInRow = 0;
     for (StructureBuilderType shape : StructureBuilderType.values()) {
       numInRow++;
-      if (numInRow == 7) {//only 6 per row fit on screen
+      if (numInRow == 9) {
         //so just reset x back to left side and bump up the y
         x = this.guiLeft + Const.PAD / 2;
         y += h + Const.PAD / 2;
@@ -107,51 +115,6 @@ public class GuiBuilder extends GuiBaseContainer {
     int yTopRow = this.guiTop + yRowTextbox;
     int yBottomRow = this.guiTop + yRowTextbox + yOffset + Const.PAD;
     fld = TileEntityStructureBuilder.Fields.SIZE;
-    ////////// SIZE 
-    x = this.guiLeft + xControlsStart;
-    btnSizeUp = new ButtonTileEntityField(id++,
-        x,
-        yTopRow,
-        tile.getPos(),
-        fld.ordinal(),
-        1, width, h);
-    btnSizeUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
-    btnSizeUp.displayString = "+";
-    this.addButton(btnSizeUp);
-    this.registerButtonDisableTrigger(btnSizeUp, ButtonTriggerType.EQUAL, fld.ordinal(), TileEntityStructureBuilder.maxSize);
-    btnSizeDown = new ButtonTileEntityField(id++,
-        x,
-        yBottomRow,
-        tile.getPos(),
-        fld.ordinal(),
-        -1, width, h);
-    btnSizeDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
-    btnSizeDown.displayString = "-";
-    this.addButton(btnSizeDown);
-    this.registerButtonDisableTrigger(btnSizeDown, ButtonTriggerType.EQUAL, fld.ordinal(), 1);
-    //////////////HEIGHT BUTTONS
-    fld = TileEntityStructureBuilder.Fields.HEIGHT;
-    x = this.guiLeft + xControlsStart - xControlsSpacing;
-    btnHeightUp = new ButtonTileEntityField(id++,
-        x,
-        yTopRow,
-        tile.getPos(),
-        fld.ordinal(),
-        1, width, h);
-    btnHeightUp.setTooltip("button." + fld.name().toLowerCase() + "." + "up");
-    btnHeightUp.displayString = "+";
-    this.addButton(btnHeightUp);
-    this.registerButtonDisableTrigger(btnHeightUp, ButtonTriggerType.EQUAL, fld.ordinal(), TileEntityStructureBuilder.maxHeight);
-    btnHeightDown = new ButtonTileEntityField(id++,
-        x,
-        yBottomRow,
-        tile.getPos(),
-        fld.ordinal(),
-        -1, width, h);
-    btnHeightDown.setTooltip("button." + fld.name().toLowerCase() + "." + "down");
-    btnHeightDown.displayString = "-";
-    this.addButton(btnHeightDown);
-    this.registerButtonDisableTrigger(btnHeightDown, ButtonTriggerType.EQUAL, fld.ordinal(), 1);
   }
 
   @Override
@@ -162,11 +125,15 @@ public class GuiBuilder extends GuiBaseContainer {
   @Override
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     super.keyTyped(typedChar, keyCode);
+    sliderHeight.keyTyped(typedChar, keyCode);
+    sliderSize.keyTyped(typedChar, keyCode);
   }
 
   @Override
   public void updateScreen() {
     super.updateScreen();
+    sliderHeight.updateScreen();
+    sliderSize.updateScreen();
   }
 
   @SideOnly(Side.CLIENT)
@@ -175,33 +142,6 @@ public class GuiBuilder extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String label = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
     this.drawString(label, 66, 76);
-    int sp = Const.PAD / 2;
-    int x = xControlsStart + sp;
-    int y = yRowTextbox + yOffset - sp;
-    if (this.tile.getSize() > 0) {
-      String display = "" + this.tile.getSize();
-      //move it over if more than 1 digit 
-      this.drawStringCenteredCheckLength(display, x, y);
-    }
-    x = xControlsStart - xControlsSpacing + sp;
-    if (this.tile.getHeight() > 0 && this.tile.getBuildTypeEnum().hasHeight()) {
-      String display = "" + this.tile.getHeight();
-      //move it over if more than 1 digit 
-      this.drawStringCenteredCheckLength(display, x, y);
-    }
-    x = xControlsStart - 2 * xControlsSpacing + sp;
-    //    String display = "" + this.tile.getField(Fields.ROTATIONS.ordinal());
-    //move it over if more than 1 digit 
-    //    this.drawStringCenteredCheckLength(display, x, y);
-    updateDisabledButtons();
-  }
-
-  private void updateDisabledButtons() {
-    //a semi hack to hide btns
-    if (btnHeightDown != null)
-      this.btnHeightDown.visible = this.tile.getBuildTypeEnum().hasHeight();
-    if (btnHeightUp != null)
-      this.btnHeightUp.visible = this.tile.getBuildTypeEnum().hasHeight();
   }
 
   @Override

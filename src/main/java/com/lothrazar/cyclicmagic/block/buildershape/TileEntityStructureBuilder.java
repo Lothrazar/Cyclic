@@ -70,7 +70,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     super(9 + 1);
     this.initEnergy(new EnergyStore(MENERGY), BlockStructureBuilder.FUEL_COST);
     this.setSlotsForInsert(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-    this.needsRedstone = 0;
+    this.needsRedstone = 1;
+    this.renderParticles = 1;
   }
 
   @Override
