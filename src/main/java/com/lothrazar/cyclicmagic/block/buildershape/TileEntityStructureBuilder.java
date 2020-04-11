@@ -125,6 +125,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       case PYRAMID:
         shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
       break;
+      case CIRCLEVERTICAL:
+        shape = UtilShape.circleVertical(this.getPosTarget(), this.getSize() * 2);
+        shape = UtilShape.repeatShapeByFacing(shape, height, this.getCurrentFacing().rotateAround(EnumFacing.Axis.Y));
+      break;
     }
     return shape;
   }

@@ -1,8 +1,7 @@
 package com.lothrazar.cyclicmagic.block.buildershape;
-
 public enum StructureBuilderType {
 
-  FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;
+  FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID, CIRCLEVERTICAL;
 
   public static StructureBuilderType getNextType(StructureBuilderType btype) {
     int type = btype.ordinal();
