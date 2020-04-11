@@ -462,7 +462,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (uuid != null) {
       compound.setString(NBTPLAYERID, uuid.toString());
     }
-    compound.setInteger(NBT_REDST, needsRedstone);
     compound.setInteger(NBT_LR, rightClickIfZero);
     compound.setInteger(NBT_SIZE, size);
     compound.setInteger("yoff", yOffset);
@@ -477,10 +476,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (compound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(compound.getString(NBTPLAYERID));
     }
-    needsRedstone = compound.getInteger(NBT_REDST);
     rightClickIfZero = compound.getInteger(NBT_LR);
     size = compound.getInteger(NBT_SIZE);
-    renderParticles = compound.getInteger(NBT_RENDER);
     yOffset = compound.getInteger("yoff");
     tickDelay = compound.getInteger("tickDelay");
   }

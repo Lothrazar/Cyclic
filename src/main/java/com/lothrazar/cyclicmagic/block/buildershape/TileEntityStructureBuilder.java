@@ -58,7 +58,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int buildSize = 3;
   private int height;
   private int shapeIndex = 0;// current index of shape array
-  private int renderParticles = 1;
   public static int maxSize;
   public static int maxHeight = 10;
   public static final int SLOT_GPS = 9;
@@ -205,6 +204,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.needsRedstone = value;
         break;
         case RENDERPARTICLES:
+          ModCyclic.logger.info("OLD VALUE " + this.renderParticles);
           this.renderParticles = value % 2;
           ModCyclic.logger.info("renderPart toggle" + this.renderParticles);
         break;
@@ -268,25 +268,18 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    timer = tagCompound.getInteger(NBT_TIMER);
     shapeIndex = tagCompound.getInteger(NBT_SHAPEINDEX);
     this.buildType = tagCompound.getInteger(NBT_BUILDTYPE);
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
-    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
     this.setHeight(tagCompound.getInteger("buildHeight"));
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger("buildHeight", height);
-    //  ModCyclic.logger.info("HEIGHT IS WRITTEN : " + tagCompound.getInteger("buildHeight") + "????" + this.getHeight());
-    tagCompound.setInteger(NBT_TIMER, timer);
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
     tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
     tagCompound.setInteger(NBT_SIZE, this.buildSize);
-    tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
 
@@ -370,6 +363,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
 
   @Override
   public boolean isPreviewVisible() {
-    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
+    return this.renderParticles == 1;
   }
 }
