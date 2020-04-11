@@ -41,9 +41,11 @@ import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -326,12 +328,13 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     for (int i = 0; i < spotsSkippablePerTrigger; i++) {
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
-      if (world.isAirBlock(nextPos)) { // check if this spot is even valid
+      if (world.isAirBlock(nextPos) && fakePlayer != null) { // check if this spot is even valid
         ItemStack gps = this.getStackInSlot(SLOT_GPS);
         BlockPosDim target = ItemLocationGps.getPosition(gps);
-        if (fakePlayer != null &&
-            UtilPlaceBlocks.buildStackAsPlayer(world, fakePlayer.get(),
-                nextPos, stack, target.getSide(), target.getHitVec())) {
+        EnumFacing targetSide = (target == null) ? EnumFacing.UP : target.getSide();
+        Vec3d tarVec = (target == null) ? Vec3d.ZERO : target.getHitVec();
+        if (UtilPlaceBlocks.buildStackAsPlayer(world, fakePlayer.get(),
+            nextPos, stack, targetSide, tarVec)) {
           stack.shrink(1); //          this.decrStackSize(0, 1);
         }
         break;//ok , target position is valid, we can build only into air
