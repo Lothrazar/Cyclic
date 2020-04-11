@@ -39,7 +39,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -53,16 +52,51 @@ import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
 
-  public static boolean placeStateDestroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
-    if (world.destroyBlock(placePos, dropBlock)) {
-      return placeStateSafe(world, player, placePos, placeState);
+  public static class BuildPlayer extends EntityPlayer {
+
+    private ItemStack holding;
+
+    public BuildPlayer(World worldIn, GameProfile gameProfileIn, ItemStack holding) {
+      super(worldIn, gameProfileIn);
+      this.holding = holding;
     }
-    return false;
+
+    @Override
+    public ItemStack getHeldItem(EnumHand hand) {
+      return holding;
+    }
+
+    @Override
+    public boolean isSpectator() {
+      return false;
+    }
+
+    @Override
+    public boolean isCreative() {
+      return false;
+    }
   }
 
-  /* TODO: SHOULD every call to this be in a scheduled task? https://github.com/PrinceOfAmber/Cyclic/issues/143 */
-  public static boolean placeStateOverwrite(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
-    if (world.setBlockToAir(placePos)) {
+  public static boolean buildStackAsPlayer(World world, EntityPlayer player,
+      BlockPos placePos, ItemStack stack) {
+    return buildStackAsPlayer(world, player, placePos, stack, EnumFacing.UP, new Vec3d(0, 0, 0));
+  }
+
+  public static boolean buildStackAsPlayer(World world, EntityPlayer player,
+      BlockPos placePos, ItemStack stack, EnumFacing sideMouseover,
+      Vec3d hitVec) {
+    if (PermissionRegistry.hasPermissionHere(player, placePos) == false) {
+      return false;
+    }
+    ItemBlock x;
+    BuildPlayer builder = new BuildPlayer(world, player.getGameProfile(), stack);
+    boolean result = EnumActionResult.SUCCESS == stack.getItem().onItemUse(builder, world, placePos,
+        EnumHand.MAIN_HAND, sideMouseover, (float) hitVec.x, (float) hitVec.y, (float) hitVec.z);
+    return result;
+  }
+
+  public static boolean placeStateDestroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
+    if (world.destroyBlock(placePos, dropBlock)) {
       return placeStateSafe(world, player, placePos, placeState);
     }
     return false;
@@ -121,42 +155,6 @@ public class UtilPlaceBlocks {
     return false;
   }
 
-  public static class BuildPlayer extends EntityPlayer {
-
-    private ItemStack holding;
-
-    public BuildPlayer(World worldIn, GameProfile gameProfileIn, ItemStack holding) {
-      super(worldIn, gameProfileIn);
-      this.holding = holding;
-    }
-
-    @Override
-    public ItemStack getHeldItem(EnumHand hand) {
-      return holding;
-    }
-
-    @Override
-    public boolean isSpectator() {
-      return false;
-    }
-
-    @Override
-    public boolean isCreative() {
-      return false;
-    }
-  }
-
-  public static boolean placeStateSafeTEST(World world, EntityPlayer player,
-      BlockPos placePos, ItemStack stack, EnumFacing sideMouseover,
-      Vec3d hitVec) {
-    ItemBlock x;
-    ItemSlab y;
-    BuildPlayer builder = new BuildPlayer(world, player.getGameProfile(), stack);
-    boolean result = EnumActionResult.SUCCESS == stack.getItem().onItemUse(builder, world, placePos,
-        EnumHand.MAIN_HAND, sideMouseover, (float) hitVec.x, (float) hitVec.y, (float) hitVec.z);
-    return result;
-  }
-
   /**
    * This will return true only if world.setBlockState(..) returns true or if the block here is already identical
    * 
@@ -167,7 +165,8 @@ public class UtilPlaceBlocks {
    * @param playSound
    * @return
    */
-  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean playSound) {
+  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player,
+      BlockPos placePos, IBlockState placeState, boolean playSound) {
     if (placePos == null) {
       return false;
     }
@@ -346,6 +345,14 @@ public class UtilPlaceBlocks {
     else {
       return null;
     }
+  }
+
+  /* TODO: SHOULD every call to this be in a scheduled task? https://github.com/PrinceOfAmber/Cyclic/issues/143 */
+  public static boolean placeStateOverwrite(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
+    if (world.setBlockToAir(placePos)) {
+      return placeStateSafe(world, player, placePos, placeState);
+    }
+    return false;
   }
 
   //(worldObj, player, message.pos, message.side);

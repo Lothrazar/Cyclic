@@ -209,7 +209,7 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
       }
     }
     BlockPos posToPlaceAt = getPosToPlaceAt(p, pos, sideMouseover);
-    if (UtilPlaceBlocks.placeStateSafeTEST(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec)) {
+    if (UtilPlaceBlocks.buildStackAsPlayer(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec)) {
       //      SpellRangeBuild.spawnParticle(world, p, pos);
       //      SpellRangeBuild.playSound(world, p, world.getBlockState(posToPlaceAt).getBlock(), posToPlaceAt);
       UtilSound.playSoundPlaceBlock(p, posToPlaceAt, world.getBlockState(posToPlaceAt));

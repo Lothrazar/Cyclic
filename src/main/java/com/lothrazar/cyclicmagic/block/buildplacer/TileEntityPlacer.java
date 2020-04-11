@@ -30,11 +30,8 @@ import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -162,26 +159,12 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
       }
     }
     if (trigger) {
-      if (stack.getItem() instanceof ItemBlock && fakePlayer != null) {
+      if (fakePlayer != null && !stack.isEmpty()) {
         UtilEntity.setEntityFacing(fakePlayer.get(), this.getCurrentFacing());
-        try {
-          BlockPos placePos = pos.offset(this.getCurrentFacing());
-          if (world.isAirBlock(placePos)) {
-            UtilPlaceBlocks.placeItemblock(world, placePos, stack, fakePlayer.get());
-          }
-        }
-        catch (Throwable e) {
-          ModCyclic.logger.error("Block could be not be placed : " + stack.getItem().getRegistryName(), e);
-        }
-      }
-      else {
-        Block stuff = Block.getBlockFromItem(stack.getItem());
-        if (stuff != null && stuff != Blocks.AIR) {
-          //
-          if (UtilPlaceBlocks.placeStateSafe(getWorld(), null, pos.offset(this.getCurrentFacing()),
-              UtilItemStack.getStateFromMeta(stuff, stack.getMetadata()))) {
-            this.decrStackSize(0, 1);
-          }
+        BlockPos placePos = pos.offset(this.getCurrentFacing());
+        if (world.isAirBlock(placePos)) {
+          UtilPlaceBlocks.buildStackAsPlayer(world, fakePlayer.get(),
+              placePos, stack);
         }
       }
     }
