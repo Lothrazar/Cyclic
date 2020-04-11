@@ -64,7 +64,8 @@ public class ItemAutoTorch extends BaseCharm implements IHasRecipe, IContent {
         && player.isSpectator() == false
         && world.isSideSolid(pos.down(), EnumFacing.UP)
         && world.isAirBlock(pos)) { // dont overwrite liquids 
-      if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
+      if (//UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())
+      UtilPlaceBlocks.buildStackAsPlayer(world, player, pos, new ItemStack(Blocks.TORCH))) {
         super.damageCharm(player, stack);
       }
     }

@@ -95,13 +95,6 @@ public class UtilPlaceBlocks {
     return result;
   }
 
-  public static boolean placeStateDestroy(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean dropBlock) {
-    if (world.destroyBlock(placePos, dropBlock)) {
-      return placeStateSafe(world, player, placePos, placeState);
-    }
-    return false;
-  }
-
   /**
    * overloaded version to disable sound
    */
