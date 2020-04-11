@@ -45,7 +45,8 @@ public abstract class BaseSpellRange extends BaseSpell {
 
   @Override
   public void playSound(World world, EntityPlayer player, Block block, BlockPos pos) {
-    UtilSound.playSoundPlaceBlock(player, pos, block);
+    if (block != null)
+      UtilSound.playSoundPlaceBlock(player, pos, block);
   }
 
   @Override

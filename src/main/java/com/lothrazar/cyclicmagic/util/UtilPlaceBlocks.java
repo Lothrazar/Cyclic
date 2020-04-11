@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStone;
@@ -41,6 +42,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
@@ -115,6 +117,38 @@ public class UtilPlaceBlocks {
       }
     }
     return false;
+  }
+
+  public static class BuildPlayer extends EntityPlayer {
+
+    private ItemStack holding;
+
+    public BuildPlayer(World worldIn, GameProfile gameProfileIn, ItemStack holding) {
+      super(worldIn, gameProfileIn);
+      this.holding = holding;
+    }
+
+    @Override
+    public ItemStack getHeldItem(EnumHand hand) {
+      return holding;
+    }
+
+    @Override
+    public boolean isSpectator() {
+      return false;
+    }
+
+    @Override
+    public boolean isCreative() {
+      return false;
+    }
+  }
+
+  public static boolean placeStateSafeTEST(World world, EntityPlayer player,
+      BlockPos placePos, ItemStack stack, EnumFacing sideMouseover) {
+    BuildPlayer builder = new BuildPlayer(world, player.getGameProfile(), stack);
+    boolean result = EnumActionResult.SUCCESS == stack.getItem().onItemUse(builder, world, placePos, EnumHand.MAIN_HAND, sideMouseover, 0, 0, 0);
+    return result;
   }
 
   /**

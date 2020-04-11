@@ -44,8 +44,13 @@ public class UtilSound {
   public static final boolean distanceDelay = false;
   public static final int RANGE_DEFAULT = 18;
 
+  public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, IBlockState block) {
+    if (block != null)
+      playSoundPlaceBlock(player, pos, block.getBlock());
+  }
+
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
-    if (player == null) {
+    if (player == null || block == null) {
       return;
     }
     BlockPos here = (pos == null) ? player.getPosition() : pos;

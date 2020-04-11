@@ -29,7 +29,7 @@ import com.lothrazar.cyclicmagic.block.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.block.vector.PacketTileVector;
 import com.lothrazar.cyclicmagic.item.cannon.MessageGolemLaserFX;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellBuildSize;
-import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellFromServer;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketRangeBuild;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketWandGui;
@@ -88,7 +88,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSpellShiftLeft.class, PacketSpellShiftLeft.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellShiftRight.class, PacketSpellShiftRight.class, packetID++, Side.SERVER);
     network.registerMessage(PacketParticleAtPosition.class, PacketParticleAtPosition.class, packetID++, Side.CLIENT);
-    network.registerMessage(PacketSpellFromServer.class, PacketSpellFromServer.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketRangeBuild.class, PacketRangeBuild.class, packetID++, Side.SERVER);
     network.registerMessage(PacketWandGui.class, PacketWandGui.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMovePlayerColumn.class, PacketMovePlayerColumn.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMovePlayerHotbar.class, PacketMovePlayerHotbar.class, packetID++, Side.SERVER);

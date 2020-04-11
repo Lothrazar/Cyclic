@@ -82,16 +82,6 @@ public class UtilSpellCaster {
     }
   }
 
-  //	public static void castSuccess(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
-  //
-  //		// succes should do things like: drain resources, play sounds
-  //		// and particles
-  ////		spell.payCost(world, player, pos);
-  ////
-  ////		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player),  world.getTotalWorldTime());
-  ////
-  ////		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player), spell.getCastCooldown());
-  //	}
   public static void shiftLeft(EntityPlayer player) {
     ItemStack wand = getPlayerWandIfHeld(player);
     if (wand.isEmpty()) {
@@ -119,20 +109,5 @@ public class UtilSpellCaster {
       current = SpellRegistry.getSpellbook(wand).get(0);
     }
     return current;
-  }
-
-  public static void rechargeWithExp(EntityPlayer player) {
-    /* ItemStack wand = getPlayerWandIfHeld(player);
-     * 
-     * 
-     * int MAX = ItemCyclicWand.Energy.getMaximum(wand);
-     * 
-     * if(player.capabilities.isCreativeMode){ // always set full ItemCyclicWand.Energy.setCurrent(wand, MAX); } else if(Energy.RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) &&
-     * ItemCyclicWand.Energy.getCurrent(wand) + Energy.RECHARGE_MANA_AMT <= MAX){
-     * 
-     * ItemCyclicWand.Energy.rechargeBy(wand, Energy.RECHARGE_MANA_AMT);
-     * 
-     * UtilExperience.drainExp(player, Energy.RECHARGE_EXP_COST); UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.fill); } else{ UtilSound.playSound(player.worldObj,
-     * player.getPosition(), UtilSound.Own.buzzp); } */
   }
 }
