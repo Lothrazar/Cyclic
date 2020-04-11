@@ -119,7 +119,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         shape = UtilShape.sphereCup(this.getPosTarget().up(this.getSize()), this.getSize());
       break;
       case DIAGONAL:
-        shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getSize() * 2, true);
+        shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getHeight(),
+            this.getSize(), true);
       break;
       case PYRAMID:
         shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
@@ -207,9 +208,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           this.needsRedstone = value;
         break;
         case RENDERPARTICLES:
-          ModCyclic.logger.info("OLD VALUE " + this.renderParticles);
           this.renderParticles = value % 2;
-          ModCyclic.logger.info("renderPart toggle" + this.renderParticles);
         break;
       }
     }
@@ -332,9 +331,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         ItemStack gps = this.getStackInSlot(SLOT_GPS);
         BlockPosDim target = ItemLocationGps.getPosition(gps);
         EnumFacing targetSide = (target == null) ? EnumFacing.UP : target.getSide();
+        EnumFacing facingSide = (target == null) ? EnumFacing.NORTH : target.getSidePlayerFacing();
         Vec3d tarVec = (target == null) ? Vec3d.ZERO : target.getHitVec();
         if (UtilPlaceBlocks.buildStackAsPlayer(world, fakePlayer.get(),
-            nextPos, stack, targetSide, tarVec)) {
+            nextPos, stack, targetSide, tarVec, facingSide)) {
           stack.shrink(1); //          this.decrStackSize(0, 1);
         }
         break;//ok , target position is valid, we can build only into air

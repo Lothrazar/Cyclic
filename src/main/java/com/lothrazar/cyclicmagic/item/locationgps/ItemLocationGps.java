@@ -43,6 +43,7 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
     UtilNBT.setItemStackBlockPos(held, pos);
     UtilNBT.setItemStackNBTVal(held, NBT_DIM, player.dimension);
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
+    UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getHorizontalFacing().ordinal());
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
         + UtilChat.blockPosToString(pos));
     //
@@ -59,6 +60,9 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
     }
     BlockPosDim dim = new BlockPosDim(0, p, UtilNBT.getItemStackNBTVal(item, NBT_DIM), "");
     try {
+      if (item.getTagCompound().hasKey(NBT_SIDE + "facing")) {
+        dim.setSidePlayerFacing(EnumFacing.values()[UtilNBT.getItemStackNBTVal(item, NBT_SIDE + "facing")]);
+      }
       if (item.getTagCompound().hasKey(NBT_SIDE)) {
         dim.setSide(EnumFacing.values()[UtilNBT.getItemStackNBTVal(item, NBT_SIDE)]);
       }
@@ -93,12 +97,18 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
       tooltip.add(dim.toString());
       if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
         if (dim.getSide() != null) {
+          String side = "S: " + dim.getSide().toString().toUpperCase();
           tooltip.add(TextFormatting.DARK_GRAY
-              + dim.getSide().toString().toUpperCase());
+              + side);
+        }
+        if (dim.getSidePlayerFacing() != null) {
+          String side = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
+          tooltip.add(TextFormatting.DARK_GRAY
+              + side);
         }
         if (dim.getHitVec() != null) {
           tooltip.add(TextFormatting.DARK_GRAY +
-              dim.getHitVec().toString());
+              "H: " + dim.getHitVec().toString());
         }
       }
     }

@@ -17,6 +17,7 @@ public class BlockPosDim {
   private Vec3d hitVec = Vec3d.ZERO;
   @Nullable
   private EnumFacing side = null;
+  private EnumFacing sidePlayerFacing = null;
 
   public BlockPosDim(int idx, BlockPos pos, int dimension, String d) {
     setX(pos.getX());
@@ -127,5 +128,13 @@ public class BlockPosDim {
 
   public void setHitVec(Vec3d hitVec) {
     this.hitVec = hitVec;
+  }
+
+  public EnumFacing getSidePlayerFacing() {
+    return sidePlayerFacing;
+  }
+
+  public void setSidePlayerFacing(EnumFacing sidePlayerFacing) {
+    this.sidePlayerFacing = sidePlayerFacing;
   }
 }

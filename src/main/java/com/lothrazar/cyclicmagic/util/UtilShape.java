@@ -44,6 +44,17 @@ public class UtilShape {
     return newShape;
   }
 
+  public static List<BlockPos> repeatShapeByFacing(List<BlockPos> shape, final int height,
+      final EnumFacing offset) {
+    List<BlockPos> newShape = new ArrayList<BlockPos>();
+    newShape.addAll(shape);//copy it
+    for (int i = 1; i <= height; i++)
+      for (BlockPos p : shape) {
+        newShape.add(p.offset(offset, i));
+      }
+    return newShape;
+  }
+
   //TODO: SHARE MORE CODE BTW CIRCLE horiz and vert
   public static List<BlockPos> circleVertical(BlockPos pos, int diameter) {
     int centerX = pos.getX();
@@ -303,9 +314,10 @@ public class UtilShape {
     return shape;
   }
 
-  public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
+  public static List<BlockPos> diagonal(BlockPos posCurrent, EnumFacing pfacing, int height,
+      int size, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    for (int i = 1; i < want + 1; i++) {
+    for (int i = 1; i < height + 1; i++) {
       if (isLookingUp)
         posCurrent = posCurrent.up();
       else
@@ -314,6 +326,8 @@ public class UtilShape {
       posCurrent = posCurrent.offset(pfacing);
       shape.add(posCurrent);
     }
+    EnumFacing across = pfacing.rotateAround(EnumFacing.Axis.Y);
+    shape = UtilShape.repeatShapeByFacing(shape, size, across);
     return shape;
   }
 

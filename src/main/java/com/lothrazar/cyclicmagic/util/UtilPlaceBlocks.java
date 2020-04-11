@@ -54,10 +54,17 @@ public class UtilPlaceBlocks {
   public static class BuildPlayer extends EntityPlayer {
 
     private ItemStack holding;
+    private EnumFacing facing;
 
-    public BuildPlayer(World worldIn, GameProfile gameProfileIn, ItemStack holding) {
+    public BuildPlayer(World worldIn, GameProfile gameProfileIn, ItemStack holding, EnumFacing facing) {
       super(worldIn, gameProfileIn);
       this.holding = holding;
+      this.facing = facing;
+    }
+
+    @Override
+    public EnumFacing getHorizontalFacing() {
+      return facing == null ? EnumFacing.NORTH : facing;
     }
 
     @Override
@@ -78,16 +85,26 @@ public class UtilPlaceBlocks {
 
   public static boolean buildStackAsPlayer(World world, EntityPlayer player,
       BlockPos placePos, ItemStack stack) {
-    return buildStackAsPlayer(world, player, placePos, stack, EnumFacing.UP, new Vec3d(0, 0, 0));
+    return buildStackAsPlayer(world, player, placePos, stack, null, null, null);
   }
 
   public static boolean buildStackAsPlayer(World world, EntityPlayer player,
       BlockPos placePos, ItemStack stack, EnumFacing sideMouseover,
-      Vec3d hitVec) {
+      Vec3d hitVec, EnumFacing playerFacing) {
     if (PermissionRegistry.hasPermissionHere(player, placePos) == false) {
       return false;
     }
-    BuildPlayer builder = new BuildPlayer(world, player.getGameProfile(), stack);
+    if (sideMouseover == null) {
+      sideMouseover = EnumFacing.UP;
+    }
+    if (playerFacing == null) {
+      playerFacing = EnumFacing.NORTH;
+    }
+    if (hitVec == null) {
+      hitVec = Vec3d.ZERO;
+    }
+    //    ItemBlock reference;
+    BuildPlayer builder = new BuildPlayer(world, player.getGameProfile(), stack, playerFacing);
     boolean result = EnumActionResult.SUCCESS == stack.getItem().onItemUse(builder, world, placePos,
         EnumHand.MAIN_HAND, sideMouseover, (float) hitVec.x, (float) hitVec.y, (float) hitVec.z);
     return result;

@@ -41,8 +41,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiBuilder extends GuiBaseContainer {
 
   private TileEntityStructureBuilder tile;
-  private final static int yRowTextbox = 50;
-  private final static int xControlsSpacing = 14;
   private int yOffset = 10 + Const.PAD;
   private GuiSliderInteger sliderHeight;
   private GuiSliderInteger sliderSize;
@@ -109,12 +107,6 @@ public class GuiBuilder extends GuiBaseContainer {
       x += width + 2;
       this.registerButtonDisableTrigger(btnShape, ButtonTriggerType.EQUAL, fld.ordinal(), shape.ordinal());
     }
-    //////// all the control groups
-    width = xControlsSpacing - 2;
-    h = width;
-    int yTopRow = this.guiTop + yRowTextbox;
-    int yBottomRow = this.guiTop + yRowTextbox + yOffset + Const.PAD;
-    fld = TileEntityStructureBuilder.Fields.SIZE;
   }
 
   @Override
