@@ -23,15 +23,20 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.cyclicwand;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IRenderOutline;
 import com.lothrazar.cyclicmagic.event.EventRender;
 import com.lothrazar.cyclicmagic.event.EventRender.RenderLoc;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.ISpell;
+import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild;
+import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild.PlaceType;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -53,13 +58,14 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
+public class ItemCyclicWand extends Item implements IHasRecipe, IContent, IRenderOutline {
 
   private static final String NBT_SPELLCURRENT = "spell_id";
   private List<ISpell> spellbook;
@@ -106,6 +112,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
     else {
       tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.shift"));
     }
+    tooltip.add(TextFormatting.GRAY + UtilChat.lang("item.cyclic_wand_build.tooltip"));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
 
@@ -124,6 +131,25 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
     // so if this casts and succeeds, the right click is cancelled
     boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, pos, side, stack, hand);
     return success ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+  }
+
+  @Override
+  public Set<BlockPos> renderOutline(World world, ItemStack heldItem, RayTraceResult mouseOver) {
+    Set<BlockPos> p = new HashSet<BlockPos>();
+    EntityPlayer player = ModCyclic.proxy.getClientPlayer();
+    ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
+    if (spellCurrent instanceof SpellRangeBuild) {
+      SpellRangeBuild build = (SpellRangeBuild) spellCurrent;
+      RayTraceResult ray = ModCyclic.proxy.getRayTraceResult(SpellRangeBuild.maxRange);
+      if (ray != null) {
+        BlockPos tpos = ray.getBlockPos();
+        if (build.getType() == PlaceType.PLACE && ray.sideHit != null) {
+          tpos = tpos.offset(ray.sideHit);//lil hack
+        }
+        p.add(PacketRangeBuild.getPosToPlaceAt(player, tpos, ray.sideHit, build.getType()));
+      }
+    }
+    return p;
   }
 
   @Override
@@ -306,5 +332,10 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent {
         'g', "gemQuartz",
         'o', "obsidian",
         's', Blocks.BONE_BLOCK);
+  }
+
+  @Override
+  public int[] getRgb() {
+    return new int[] { 120, 0, 90 };
   }
 }

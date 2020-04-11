@@ -120,7 +120,8 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
     });
   }
 
-  private BlockPos getPosToPlaceAt(EntityPlayer p, BlockPos pos, EnumFacing sideMouseover) {
+  public static BlockPos getPosToPlaceAt(EntityPlayer p, BlockPos pos, EnumFacing sideMouseover,
+      PlaceType type) {
     BlockPos posToPlaceAt = null;
     EnumFacing facing = null;
     EnumFacing playerFacing = p.getHorizontalFacing();
@@ -208,7 +209,7 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
         return;
       }
     }
-    BlockPos posToPlaceAt = getPosToPlaceAt(p, pos, sideMouseover);
+    BlockPos posToPlaceAt = getPosToPlaceAt(p, pos, sideMouseover, type);
     if (UtilPlaceBlocks.buildStackAsPlayer(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec,
         p.getAdjustedHorizontalFacing())) {
       //      SpellRangeBuild.spawnParticle(world, p, pos);

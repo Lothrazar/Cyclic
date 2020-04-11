@@ -43,7 +43,7 @@ public class SpellRangeBuild extends BaseSpellRange {
 
   public SpellRangeBuild(int id, String n, PlaceType t) {
     super.init(id, n);
-    this.type = t;
+    this.setType(t);
   }
 
   @Override
@@ -52,7 +52,7 @@ public class SpellRangeBuild extends BaseSpellRange {
       // only client side can call this method. mouseover does not exist on server
       RayTraceResult ray = ModCyclic.proxy.getRayTraceResult(maxRange);
       if (ray != null && ray.getBlockPos() != null) {
-        ModCyclic.network.sendToServer(new PacketRangeBuild(ray, this.getID(), type));
+        ModCyclic.network.sendToServer(new PacketRangeBuild(ray, this.getID(), getType()));
       }
       //      ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
       //      if (!heldWand.isEmpty()) {
@@ -64,5 +64,13 @@ public class SpellRangeBuild extends BaseSpellRange {
       //      }
     }
     return true;
+  }
+
+  public PlaceType getType() {
+    return type;
+  }
+
+  public void setType(PlaceType type) {
+    this.type = type;
   }
 }
