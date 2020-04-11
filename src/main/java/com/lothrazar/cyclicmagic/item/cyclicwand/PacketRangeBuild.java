@@ -25,10 +25,8 @@ package com.lothrazar.cyclicmagic.item.cyclicwand;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.playerupgrade.spell.ISpell;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild.PlaceType;
-import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -42,7 +40,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -52,35 +52,33 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBuild, IMessage> {
 
   private BlockPos pos;
-  private BlockPos posOffset;
   private @Nullable EnumFacing face;
-  private int spellID;
   private PlaceType type;
+  private Vec3d hitVec;
 
   public PacketRangeBuild() {}
 
   public PacketRangeBuild(RayTraceResult ray, int spellid, PlaceType type) {
     this.pos = ray.getBlockPos();
-    spellID = spellid;
     face = ray.sideHit;
-    if (pos != null && face != null) {
-      posOffset = pos.offset(face);
-    }
+    this.hitVec = new Vec3d(ray.hitVec.x - MathHelper.fastFloor(ray.hitVec.x),
+        ray.hitVec.y - MathHelper.fastFloor(ray.hitVec.y),
+        ray.hitVec.z - MathHelper.fastFloor(ray.hitVec.z));
+    //    ModCyclic.logger.info("Test" + this.hitVec);
     this.type = type;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
+    this.hitVec = new Vec3d(
+        tags.getDouble("hitx"),
+        tags.getDouble("hity"),
+        tags.getDouble("hitz"));
     int x = tags.getInteger("x");
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
-    x = tags.getInteger("ox");
-    y = tags.getInteger("oy");
-    z = tags.getInteger("oz");
-    posOffset = new BlockPos(x, y, z);
-    spellID = tags.getInteger("spell");
     if (tags.hasKey("face"))
       face = EnumFacing.values()[tags.getInteger("face")];
     int t = tags.getInteger("placetype");
@@ -90,14 +88,13 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
+    tags.setDouble("hitx", hitVec.x);
+    tags.setDouble("hity", hitVec.y);
+    tags.setDouble("hitz", hitVec.z);
     tags.setInteger("placetype", type.ordinal());
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
-    tags.setInteger("ox", posOffset.getX());
-    tags.setInteger("oy", posOffset.getY());
-    tags.setInteger("oz", posOffset.getZ());
-    tags.setInteger("spell", spellID);
     if (face != null)
       tags.setInteger("face", face.ordinal());
     ByteBufUtils.writeTag(buf, tags);
@@ -117,19 +114,13 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
       public void run() {
         if (ctx.side.isServer() && message != null && message.pos != null) {
           EntityPlayer p = ctx.getServerHandler().player;
-          ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
-          if (spell != null && spell instanceof SpellRangeBuild) {
-            message.castFromServer(message.pos, message.posOffset, message.face, p);
-          }
-          else {
-            ModCyclic.logger.error("WARNING: Message from server: spell not found" + message.spellID);
-          }
+          message.castFromServer(message.pos, message.face, p);
         }
       }
     });
   }
 
-  private BlockPos getPosToPlaceAt(EntityPlayer p, BlockPos pos, BlockPos posOffset, EnumFacing sideMouseover) {
+  private BlockPos getPosToPlaceAt(EntityPlayer p, BlockPos pos, EnumFacing sideMouseover) {
     BlockPos posToPlaceAt = null;
     EnumFacing facing = null;
     EnumFacing playerFacing = p.getHorizontalFacing();
@@ -192,12 +183,12 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
       posToPlaceAt = pos;
     }
     else {
-      posToPlaceAt = UtilWorld.nextAirInDirection(p.world, posOffset, facing, SpellRangeBuild.max, null);
+      posToPlaceAt = UtilWorld.nextAirInDirection(p.world, pos.offset(facing), facing, SpellRangeBuild.max, null);
     }
     return posToPlaceAt;
   }
 
-  public void castFromServer(BlockPos pos, BlockPos posOffset,
+  public void castFromServer(BlockPos pos,
       @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
@@ -217,9 +208,8 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
         return;
       }
     }
-    BlockPos posToPlaceAt = getPosToPlaceAt(p, posOffset, pos, sideMouseover);
-    if (UtilPlaceBlocks.placeStateSafeTEST(world, p, posToPlaceAt, TEST, sideMouseover)) {
-      System.out.println("yep the test worked");
+    BlockPos posToPlaceAt = getPosToPlaceAt(p, pos, sideMouseover);
+    if (UtilPlaceBlocks.placeStateSafeTEST(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec)) {
       //      SpellRangeBuild.spawnParticle(world, p, pos);
       //      SpellRangeBuild.playSound(world, p, world.getBlockState(posToPlaceAt).getBlock(), posToPlaceAt);
       UtilSound.playSoundPlaceBlock(p, posToPlaceAt, world.getBlockState(posToPlaceAt));

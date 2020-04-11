@@ -39,6 +39,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -47,6 +48,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
@@ -145,9 +147,13 @@ public class UtilPlaceBlocks {
   }
 
   public static boolean placeStateSafeTEST(World world, EntityPlayer player,
-      BlockPos placePos, ItemStack stack, EnumFacing sideMouseover) {
+      BlockPos placePos, ItemStack stack, EnumFacing sideMouseover,
+      Vec3d hitVec) {
+    ItemBlock x;
+    ItemSlab y;
     BuildPlayer builder = new BuildPlayer(world, player.getGameProfile(), stack);
-    boolean result = EnumActionResult.SUCCESS == stack.getItem().onItemUse(builder, world, placePos, EnumHand.MAIN_HAND, sideMouseover, 0, 0, 0);
+    boolean result = EnumActionResult.SUCCESS == stack.getItem().onItemUse(builder, world, placePos,
+        EnumHand.MAIN_HAND, sideMouseover, (float) hitVec.x, (float) hitVec.y, (float) hitVec.z);
     return result;
   }
 
