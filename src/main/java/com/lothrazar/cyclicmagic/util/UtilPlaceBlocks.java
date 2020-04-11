@@ -38,7 +38,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -88,7 +87,6 @@ public class UtilPlaceBlocks {
     if (PermissionRegistry.hasPermissionHere(player, placePos) == false) {
       return false;
     }
-    ItemBlock x;
     BuildPlayer builder = new BuildPlayer(world, player.getGameProfile(), stack);
     boolean result = EnumActionResult.SUCCESS == stack.getItem().onItemUse(builder, world, placePos,
         EnumHand.MAIN_HAND, sideMouseover, (float) hitVec.x, (float) hitVec.y, (float) hitVec.z);
@@ -101,51 +99,6 @@ public class UtilPlaceBlocks {
   public static boolean placeStateSafe(World world, @Nullable EntityPlayer player,
       BlockPos placePos, IBlockState placeState) {
     return placeStateSafe(world, player, placePos, placeState, false);
-  }
-
-  /**
-   * Thanks ot ItemBlock inspiration and reminder from betterwithmods https://github.com/BetterWithMods/BetterWithMods/issues/940
-   * 
-   * TODO: down the road we want to re-use this with fake-player blocks.
-   * 
-   * also non integer x/y/z implementations are possible
-   * 
-   * 
-   * @param world
-   * @param placePos
-   * @param stack
-   * @return
-   */
-  @SuppressWarnings("deprecation")
-  public static boolean placeItemblock(World world, BlockPos placePos, final ItemStack stack, EntityPlayer fake) {
-    if (stack.getItem() instanceof ItemBlock == false) {
-      return false;
-    }
-    ItemBlock itemblock = (ItemBlock) stack.getItem();
-    Block block = itemblock.getBlock();
-    IBlockState state = null;
-    if (block.canPlaceBlockAt(world, placePos)) {
-      if (stack.getMetadata() > 0) {
-        //fixes blocks that dont override their own custom getStateForPlacement
-        //example; primal core without this removes metadata from wood planks, converting it
-        state = block.getStateFromMeta(stack.getMetadata());
-      }
-      else {
-        //it might not have metadata, and it might have some crazy own way of doing this (chisels&bits/NBT data)
-        EnumFacing facing = (fake == null) ? EnumFacing.UP : fake.getHorizontalFacing();
-        state = block.getStateForPlacement(world, placePos, facing,
-            placePos.getX() + .5f,
-            placePos.getY() + .5f,
-            placePos.getZ() + .5f,
-            stack.getMetadata(), fake, EnumHand.MAIN_HAND);
-      }
-      if (itemblock.placeBlockAt(stack, fake, world, placePos, EnumFacing.UP, placePos.getX(), placePos.getY(), placePos.getZ(), state)) {
-        world.playSound(null, placePos, state.getBlock().getSoundType(state, world, placePos, fake).getPlaceSound(), SoundCategory.BLOCKS, 0.7F, 1.0F);
-        stack.shrink(1);
-        return true;// stack.isEmpty() ? ItemStack.EMPTY : stack;
-      }
-    }
-    return false;
   }
 
   /**

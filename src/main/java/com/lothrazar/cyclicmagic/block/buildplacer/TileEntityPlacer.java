@@ -47,12 +47,11 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private WeakReference<FakePlayer> fakePlayer;
+  private UUID uuid;
 
   public static enum Fields {
     TIMER, REDSTONE;
   }
-
-  private UUID uuid;
 
   public TileEntityPlacer() {
     super(9);

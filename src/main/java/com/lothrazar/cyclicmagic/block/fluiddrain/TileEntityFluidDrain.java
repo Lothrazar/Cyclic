@@ -23,13 +23,17 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.fluiddrain;
 
+import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -40,6 +44,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -51,6 +58,8 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
   private int depth = 4;
   private int shapePtr = 0;
   private List<BlockPos> shape = null;
+  private WeakReference<FakePlayer> fakePlayer;
+  private UUID uuid;
 
   public static enum Fields {
     REDSTONE, RENDERPARTICLES;
@@ -75,6 +84,21 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
     return getFieldOrdinals().length;
   }
 
+  private void verifyFakePlayer(WorldServer w) {
+    if (fakePlayer == null) {
+      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, this.getBlockType().getTranslationKey());
+      if (fakePlayer == null) {
+        ModCyclic.logger.error("Fake player failed to init ");
+      }
+    }
+  }
+
+  private void verifyUuid(World world) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+    }
+  }
+
   @Override
   public void update() {
     this.shiftAllUp();
@@ -82,6 +106,10 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
         || this.tank.isFull()
         || this.getStackInSlot(0).getItem() instanceof ItemBlock == false) {
       return;
+    }
+    if (world instanceof WorldServer) {
+      verifyUuid(world);
+      verifyFakePlayer((WorldServer) world);
     }
     if (shape == null) {
       shape = this.getShape();
@@ -97,7 +125,6 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
     if (currentState.getMaterial().isLiquid()
         && this.updateEnergyIsBurning()) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_BUBBLE, current);
-  
       IFluidHandler handle = FluidUtil.getFluidHandler(world, current, EnumFacing.UP);
       FluidStack fs = handle.getTankProperties()[0].getContents();
       if (fs == null || tank.canFillFluidType(fs) == false) {
@@ -105,8 +132,12 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
         return;
       }
       //make sure that placing the block actually works to delete the in-world-fluid, BEFORE filling the tank
-      if (UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null)) {
+      if (fakePlayer != null && UtilPlaceBlocks.buildStackAsPlayer(world, fakePlayer.get(),
+          current, this.getStackInSlot(0))
+      //UtilPlaceBlocks.placeItemblock(world, current, this.getStackInSlot(0), null)
+      ) {
         this.tank.fill(fs, true);
+        this.getStackInSlot(0).shrink(1);
       }
     }
   }
