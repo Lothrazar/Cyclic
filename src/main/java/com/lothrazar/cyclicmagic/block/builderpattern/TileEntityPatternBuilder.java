@@ -234,22 +234,26 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
-    ItemStack gpsTarget = this.getStackInSlot(SLOT_TARGET);
-    BlockPosDim target = ItemLocationGps.getPosition(gpsTarget);
-    if (target == null)
-      return new BlockPos(posSrc);//just copy
-    BlockPos centerSrc = target.toBlockPos();
-    int xOffset = posSrc.getX() - centerSrc.getX();
-    int yOffset = posSrc.getY() - centerSrc.getY();
-    int zOffset = posSrc.getZ() - centerSrc.getZ();
-    return posSrc.add(xOffset, yOffset, zOffset);
+    BlockPos newOrigin = getGpsTargetPos(SLOT_TARGET);
+    BlockPos targetA = getGpsTargetPos(SLOT_SRCA);
+    BlockPos targetB = getGpsTargetPos(SLOT_SRCB);
+    if (newOrigin == null || targetA == null || targetB == null) {
+      return null;
+    }
+    int xOffset = Math.abs(posSrc.getX() - targetA.getX());
+    int yOffset = Math.abs(posSrc.getY() - targetA.getY());
+    int zOffset = Math.abs(posSrc.getZ() - targetA.getZ());
+    return newOrigin.add(xOffset, yOffset, zOffset);
   }
 
   public List<BlockPos> getTargetShape() {
     List<BlockPos> shapeSrc = getSourceShape();
     List<BlockPos> shapeTarget = new ArrayList<BlockPos>();
     for (BlockPos p : shapeSrc) {
-      shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
+      BlockPos conv = this.convertPosSrcToTarget(new BlockPos(p));
+      if (conv != null) {
+        shapeTarget.add(conv);
+      }
     }
     //rotate 
     //TODO: ROTATION AND FLIP DISABLED

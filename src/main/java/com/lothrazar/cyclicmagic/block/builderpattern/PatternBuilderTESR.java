@@ -57,10 +57,12 @@ public class PatternBuilderTESR extends BaseMachineTESR<TileEntityPatternBuilder
       return;
     }
     List<BlockPos> targetShape = tile.getTargetShape();
+    if (render != RenderType.OFF) {
+      UtilWorld.RenderShadow.renderBlockPos(tile.getGpsTargetPos(TileEntityPatternBuilder.SLOT_SRCA), te.getPos(), x, y, z, 0.5F, 0F, 0F);
+      UtilWorld.RenderShadow.renderBlockPos(tile.getGpsTargetPos(TileEntityPatternBuilder.SLOT_SRCB), te.getPos(), x, y, z, 0.5F, 0, 0);
+      UtilWorld.RenderShadow.renderBlockPos(tile.getGpsTargetPos(TileEntityPatternBuilder.SLOT_TARGET), te.getPos(), x, y, z, 0F, 0, 0.5F);
+    }
     if (render == RenderType.OUTLINE) {
-      UtilWorld.RenderShadow.renderBlockPos(tile.getGpsTargetPos(TileEntityPatternBuilder.SLOT_SRCA), te.getPos(), x, y, z, 0F, 0F, 0.5F);
-      UtilWorld.RenderShadow.renderBlockPos(tile.getGpsTargetPos(TileEntityPatternBuilder.SLOT_SRCB), te.getPos(), x, y, z, .5F, 0, 0);
-      //      UtilWorld.RenderShadow.renderBlockList(tile.getSourceFrameOutline(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
       //      //then do target outline
       //      UtilWorld.RenderShadow.renderBlockList(tile.getTargetFrameOutline(), te.getPos(), x, y, z, 1F, 1F, 1F);
       UtilWorld.RenderShadow.renderBlockList(targetShape, te.getPos(), x, y, z, .1F, .1F, .1F);
