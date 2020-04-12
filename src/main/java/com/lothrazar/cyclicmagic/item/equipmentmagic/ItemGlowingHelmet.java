@@ -59,17 +59,16 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
   @Override
   public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
     boolean isTurnedOn = this.isOn(itemStack);
-    setGlowing(player, isTurnedOn);
+    removeNightVision(player, isTurnedOn);
     if (isTurnedOn)
-      setNightVision(player);
+      addNightVision(player);
   }
 
-  private void setNightVision(EntityPlayer player) {
+  private void addNightVision(EntityPlayer player) {
     player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
   }
 
-  public static void setGlowing(EntityPlayer player, boolean hidden) {
-    player.setGlowing(hidden);//hidden means dont render
+  public static void removeNightVision(EntityPlayer player, boolean hidden) {
     //flag it so we know the purple glow was from this item, not something else
     player.getEntityData().setBoolean(NBT_GLOW, hidden);
     player.removeActivePotionEffect(MobEffects.NIGHT_VISION);
@@ -115,7 +114,7 @@ public class ItemGlowingHelmet extends ItemArmor implements IHasRecipe, IHasClic
     if (player.getEntityData().getBoolean(ItemGlowingHelmet.NBT_GLOW) &&
         itemInSlot == this) {
       //turn it off once, from the message
-      setGlowing(player, false);
+      removeNightVision(player, false);
     }
   }
 
