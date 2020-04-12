@@ -78,9 +78,8 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
-    //    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidDrain.class, new BaseMachineTESR());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidDrain.class, new BaseMachineTESR<TileEntityFluidDrain>());
   }
 
   @Override
