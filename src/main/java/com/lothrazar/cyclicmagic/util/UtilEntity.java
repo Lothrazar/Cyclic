@@ -319,8 +319,16 @@ public class UtilEntity {
 
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos, float speed) {
     AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
-    List<EntityLivingBase> nonPlayer = getLivingHostile(world, range);
-    return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed);
+    List<EntityLivingBase> hostileMobs = getLivingHostile(world, range);
+    List<EntityLivingBase> mounts = new ArrayList<>();
+    for (EntityLivingBase ent : hostileMobs) {
+      if (ent.getRidingEntity() != null
+          && ent.getRidingEntity() instanceof EntityLivingBase) {
+        mounts.add((EntityLivingBase) ent.getRidingEntity());
+      }
+    }
+    hostileMobs.addAll(mounts);
+    return pullEntityList(x, y, z, towardsPos, hostileMobs, speed, speed);
   }
 
   public static List<EntityLivingBase> getLivingHostile(World world, AxisAlignedBB range) {
