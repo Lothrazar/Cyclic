@@ -17,13 +17,11 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -35,7 +33,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -139,16 +136,7 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
           success = true;
           break;
         }
-        //        te.setInventorySlotContents(slot, ItemStack.EMPTY);
-        //        UtilItemStack.dropItemStackInWorld(world, pos, te.getStackInSlot(slot));
-        //        break;
       }
-      //      int slot = 1;
-      //      if (te.getStackInSlot(slot).isEmpty()) {
-      //        te.setInventorySlotContents(slot, held);
-      //        player.setHeldItem(hand, ItemStack.EMPTY);
-      //        success = true;
-      //      }
     }
     return success || super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
   }
@@ -156,8 +144,6 @@ public class BlockImbue extends BlockBaseHasTile implements IBlockHasTESR, IHasR
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
-    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    // Bind our TESR to our tile entity
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityImbue.class, new ImbueTESR());
   }
 
