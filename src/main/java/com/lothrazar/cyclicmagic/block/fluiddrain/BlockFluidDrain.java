@@ -24,7 +24,10 @@
 package com.lothrazar.cyclicmagic.block.fluiddrain;
 
 import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.block.core.MachineTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -41,8 +44,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasRecipe {
+public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasRecipe, IBlockHasTESR {
 
   public static int FUEL_COST = 0;
 
@@ -68,6 +74,14 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
         'g', Blocks.IRON_BLOCK,
         's', Blocks.DROPPER,
         'r', Blocks.PISTON);
+  }
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void initModel() {
+    //    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    // Bind our TESR to our tile entity
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUser.class, new MachineTESR(this));
   }
 
   @Override

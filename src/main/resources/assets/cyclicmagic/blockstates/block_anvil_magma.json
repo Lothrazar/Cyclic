@@ -4,6 +4,6 @@
         "facing=east":  { "model": "cyclicmagic:block_anvil_magma","y":270},
         "facing=south": { "model": "cyclicmagic:block_anvil_magma"},
         "facing=west":  { "model": "cyclicmagic:block_anvil_magma","y":90},
-        "inventory": { "model": "cyclicmagic:block_anvil_magma" }
+        "normal": { "model": "cyclicmagic:block_anvil_magma" }
     }
 }
