@@ -34,9 +34,7 @@ import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,7 +44,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -55,7 +52,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle, ITileRedstoneToggle {
 
   private final static int MAXIMUM = 32;
-  private static final String NBT_REDST = "redstone";
   private static final int TIMER_FULL = 20;
   private static final int TIMER_SKIP = 1;
   private int height = 5;
@@ -67,13 +63,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int offsetSourceZ = 1;
   private int sizeRadius = 4;
   private int timer = 1;
-  private int needsRedstone = 1;
-  private int renderParticles = 1;
   private int flipX = 0;
   private int flipY = 0;
   private int flipZ = 0;
   private int rotation = 0;//enum value of Rotation
   private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
+  private static final String NBT_SHAPEINDEX = "shapeindex";
+  private int shapeIndex;
 
   enum RenderType {
     OFF, OUTLINE, PHANTOM, SOLID;
@@ -192,10 +188,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       if (shapeSrc.size() <= 0) {
         return;
       }
-      int pTarget = world.rand.nextInt(shapeSrc.size());
-      BlockPos posSrc = shapeSrc.get(pTarget);
-      BlockPos posTarget = shapeTarget.get(pTarget);
-      if (this.renderParticles == 1) {
+      if (this.shapeIndex < 0 || this.shapeIndex >= shapeSrc.size()) {
+        this.shapeIndex = 0;
+      }
+      //      shapeIndex = world.rand.nextInt(shapeSrc.size());
+      BlockPos posSrc = shapeSrc.get(shapeIndex);
+      BlockPos posTarget = shapeTarget.get(shapeIndex);
+      if (this.renderParticles != 0) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
       }
@@ -205,20 +204,19 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         stateToMatch = world.getBlockState(posSrc);
         slot = this.findSlotForMatch(stateToMatch);
         if (slot < 0) {
+          //cant build this item, skip ahead
+          shapeIndex++;//going off end handled above
           return;
         } //EMPTY
         timer = TIMER_FULL;//now start over
         world.setBlockState(posTarget, stateToMatch);
+        //build complete, move to next location 
+        shapeIndex++;//going off end handled above
         this.decrStackSize(slot, 1);
-        SoundType type = UtilSound.getSoundFromBlockstate(stateToMatch, world, posTarget);
-        if (type != null && type.getPlaceSound() != null) {
-          int dim = this.getDimension();
-          int range = 18;
-          UtilSound.playSoundFromServer(type.getPlaceSound(), SoundCategory.BLOCKS, posTarget, dim, range);
-        }
       }
       else { //src IS air, so skip ahead
         timer = TIMER_SKIP;
+        shapeIndex++;//going off end handled above
       }
     }
   }
@@ -291,6 +289,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
+    shapeIndex = compound.getInteger(NBT_SHAPEINDEX);
     this.offsetTargetX = compound.getInteger("ox");
     this.offsetTargetY = compound.getInteger("oy");
     this.offsetTargetZ = compound.getInteger("oz");
@@ -299,13 +298,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.offsetSourceZ = compound.getInteger("sz");
     this.sizeRadius = compound.getInteger("r");
     this.height = compound.getInteger("height");
-    this.timer = compound.getInteger("timer");
-    this.renderParticles = compound.getInteger("render");
-    this.needsRedstone = compound.getInteger(NBT_REDST);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
     compound.setInteger("ox", offsetTargetX);
     compound.setInteger("oy", offsetTargetY);
     compound.setInteger("oz", offsetTargetZ);
@@ -314,9 +311,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     compound.setInteger("sz", offsetSourceZ);
     compound.setInteger("r", sizeRadius);
     compound.setInteger("height", height);
-    compound.setInteger("timer", timer);
-    compound.setInteger("render", renderParticles);
-    compound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(compound);
   }
 
