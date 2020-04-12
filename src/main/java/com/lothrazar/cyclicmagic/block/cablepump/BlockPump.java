@@ -66,6 +66,11 @@ public abstract class BlockPump extends BlockBaseFacingOmni {
   }
 
   @Override
+  public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+    return true;//allow empty hand
+  }
+
+  @Override
   public boolean isFullCube(IBlockState state) {
     return false;
   }

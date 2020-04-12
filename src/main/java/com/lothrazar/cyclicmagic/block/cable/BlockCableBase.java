@@ -113,9 +113,14 @@ public abstract class BlockCableBase extends BlockBaseHasTile {
     super(Material.ROCK);
     setSoundType(SoundType.CLOTH);
     setDefaultState(getDefaultState());
-    setHardness(0.7F);
+    setHardness(0.5F);
     setResistance(4.5F);
     setLightOpacity(0);
+  }
+
+  @Override
+  public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+    return true;//allow empty hand
   }
 
   @Override
