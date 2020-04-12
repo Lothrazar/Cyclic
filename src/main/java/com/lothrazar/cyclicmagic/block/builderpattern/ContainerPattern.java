@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.builderpattern;
 
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.slot.SlotCheckTileValid;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,12 +46,33 @@ public class ContainerPattern extends ContainerBaseMachine {
     setScreenSize(ScreenSize.LARGE);
     int s = 0;
     int row = 0, col = 0;
-    for (int i = 0; i < tile.getSizeInventory(); i++) { //so going from 0-9
+    for (int i = 0; i < tile.getSizeInventory() - 3; i++) { //so going from 0-9
       row = i / GuiPattern.GUI_ROWS;// /3 will go 000, 111, 222
       col = i % GuiPattern.GUI_ROWS; // and %3 will go 012 012 012
       addSlotToContainer(new Slot(tile, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
       s++;
     }
+    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_SRCA, 26, 43) {
+
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
+    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_SRCB, 46, 43) {
+
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
+    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_TARGET, 121, 43) {
+
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

@@ -31,6 +31,7 @@ import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -70,6 +71,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int shapeIndex;
+  public static final int SLOT_SRCA = 18;
+  public static final int SLOT_SRCB = 19;
+  public static final int SLOT_TARGET = 20;
 
   enum RenderType {
     OFF, OUTLINE, PHANTOM, SOLID;
@@ -80,7 +84,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   public TileEntityPatternBuilder() {
-    super(9 + 9);
+    super(9 + 9 + 3);
     this.initEnergy(new EnergyStore(MENERGY), BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
     syncBlockItemMap();
@@ -112,6 +116,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index >= 18) {
+      return stack.getItem() instanceof ItemLocationGps;
+    }
+    return true;//dont check for "is item block" stuff like dank null 
+  }
+
+  @Override
   public int getFieldCount() {
     return Fields.values().length;
   }
@@ -132,7 +144,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     String blockKey, itemKey, itemInSlot;
     ItemStack is;
     Item itemFromState;
-    for (int i = 0; i < this.getSizeInventory(); i++) {
+    for (int i = 0; i < this.getSizeInventory() - 3; i++) {
       is = this.getStackInSlot(i);
       if (UtilItemStack.isEmpty(is)) {
         continue;
@@ -191,7 +203,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       if (this.shapeIndex < 0 || this.shapeIndex >= shapeSrc.size()) {
         this.shapeIndex = 0;
       }
-      //      shapeIndex = world.rand.nextInt(shapeSrc.size());
       BlockPos posSrc = shapeSrc.get(shapeIndex);
       BlockPos posTarget = shapeTarget.get(shapeIndex);
       if (this.renderParticles != 0) {
