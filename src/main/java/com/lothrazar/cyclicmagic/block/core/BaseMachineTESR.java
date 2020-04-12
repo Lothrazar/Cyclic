@@ -23,18 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.core;
 
-import javax.annotation.Nonnull;
-import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -45,8 +37,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> extends BaseTESR<T> {
+public class BaseMachineTESR<T extends TileEntityBaseMachineInvo> extends BaseTESR<T> {
 
+  float red = 0.7F;
+  float green = 0F;
+  float blue = 1F;
   protected int itemSlotAbove = -1;
 
   public BaseMachineTESR(Block res, int slot) {
@@ -67,7 +62,9 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
    * 
    * @param te
    */
-  public abstract void renderBasic(TileEntityBaseMachineInvo te);
+  public void renderBasic(TileEntityBaseMachineInvo te) {
+    //    ModCyclic.logger.error("Override renderBasic() in TESR");
+  }
 
   @Override
   public void render(TileEntityBaseMachineInvo te, double x, double y, double z,
@@ -84,60 +81,11 @@ public abstract class BaseMachineTESR<T extends TileEntityBaseMachineInvo> exten
     }
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
-  }
-
-  protected void renderAnimation(@Nonnull TileEntityBaseMachineInvo te) {
-    if (Minecraft.getMinecraft() == null
-        || Minecraft.getMinecraft().getBlockRendererDispatcher() == null
-        || Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer() == null
-        || getBakedModel() == null) {
-      ModCyclic.logger.error("TESR render animation caught by null check");
-      return;
+    if (te instanceof ITilePreviewToggle) {
+      ITilePreviewToggle tilePreview = (ITilePreviewToggle) te;
+      if (tilePreview.isPreviewVisible()) {
+        UtilWorld.RenderShadow.renderBlockList(tilePreview.getShape(), te.getPos(), x, y, z, red, green, blue);
+      }
     }
-    GlStateManager.pushMatrix();
-    EnumFacing facing = te.getCurrentFacing();
-    if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
-      GlStateManager.rotate(90, 0, 1, 0);
-      GlStateManager.translate(-1, 0, 0);//fix position and such
-    }
-    ////do the sliding across animation
-    double currTenthOfSec = System.currentTimeMillis() / 100;//move speed
-    double ratio = (currTenthOfSec % 8) / 10.00;//this is dong modulo 0.8 since there are 8 locations to move over
-    GlStateManager.translate(0, 0, -1 * ratio);
-    RenderHelper.disableStandardItemLighting();
-    this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-    if (Minecraft.isAmbientOcclusionEnabled()) {
-      GlStateManager.shadeModel(GL11.GL_SMOOTH);
-    }
-    else {
-      GlStateManager.shadeModel(GL11.GL_FLAT);
-    }
-    World world = te.getWorld();
-    // Translate back to local view coordinates so that we can do the acual rendering here
-    try {
-      GlStateManager.translate(-te.getPos().getX(), -te.getPos().getY(), -te.getPos().getZ());
-      Tessellator tessellator = Tessellator.getInstance();
-      //if buffer had an "isDrawing" here, i would halt if that is true
-      tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-      //crash on line below, NPE, not sure why. very rare I guess?
-      Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
-          world,
-          getBakedModel(),
-          world.getBlockState(te.getPos()),
-          te.getPos(),
-          Tessellator.getInstance().getBuffer(), false);
-      tessellator.draw();
-    }
-    catch (IllegalStateException alreadyBuilding) {
-      ModCyclic.logger.info("Already building!  BufferBuilder:isDrawing == true I suppose: " + alreadyBuilding.getMessage());
-      //BufferBuilder has a private flag "isDrawing", and if its true it throws this exceptoin
-      //problem: there is no GET method or way to detect "is this drawing" before I start.
-      //instead I catch and ignore this exception/
-    }
-    catch (Exception e) {
-      ModCyclic.logger.error("TESR render baked model exception", e);
-    }
-    RenderHelper.enableStandardItemLighting();
-    GlStateManager.popMatrix();
   }
 }

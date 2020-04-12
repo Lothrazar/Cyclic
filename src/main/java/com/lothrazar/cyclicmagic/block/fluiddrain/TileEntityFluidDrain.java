@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.fluiddrain;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +45,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidStack;
@@ -72,6 +72,7 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
     tank.setTileEntity(this);
     this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY),
         BlockFluidDrain.FUEL_COST);
+    this.renderParticles = 1;
   }
 
   @Override
@@ -85,17 +86,14 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
   }
 
   private void verifyFakePlayer(WorldServer w) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+    }
     if (fakePlayer == null) {
       fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid, this.getBlockType().getTranslationKey());
       if (fakePlayer == null) {
         ModCyclic.logger.error("Fake player failed to init ");
       }
-    }
-  }
-
-  private void verifyUuid(World world) {
-    if (uuid == null) {
-      uuid = UUID.randomUUID();
     }
   }
 
@@ -108,11 +106,10 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
       return;
     }
     if (world instanceof WorldServer) {
-      verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
     }
     if (shape == null) {
-      shape = this.getShape();
+      shape = this.getEntireShape();
     }
     //look for fluid 
     if (this.shapePtr >= shape.size()) {
@@ -200,10 +197,18 @@ public class TileEntityFluidDrain extends TileEntityBaseMachineFluid implements 
     return renderParticles == 1;
   }
 
+  public List<BlockPos> getEntireShape() {
+    List<BlockPos> circle = UtilShape.cubeFilled(pos.down(depth + 1), radius, depth);
+    Collections.reverse(circle);
+    return circle;
+  }
+
   @Override
   public List<BlockPos> getShape() {
-    List<BlockPos> circle = UtilShape.cubeFilled(pos.down(depth), radius, depth);
-    Collections.reverse(circle);
+    List<BlockPos> circle = new ArrayList<>();
+    if (shape != null && shapePtr < shape.size()) {
+      circle.add(shape.get(shapePtr));
+    }
     return circle;
   }
 }

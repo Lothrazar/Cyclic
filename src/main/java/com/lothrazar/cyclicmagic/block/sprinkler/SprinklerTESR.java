@@ -23,18 +23,26 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.sprinkler;
 
+import java.util.function.Function;
+import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BaseTESR;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.common.model.TRSRTransformation;
 
 public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
 
@@ -95,5 +103,38 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
     tessellator.draw();
     RenderHelper.enableStandardItemLighting();
     GlStateManager.popMatrix();
+  }
+
+  /**
+   * TODO fix/remake
+   * 
+   * 
+   * clone of MachineTESR currently
+   * 
+   * @return
+   */
+  @Nullable
+  protected IBakedModel getBakedModel() {
+    // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
+    if (bakedModel == null && resource != null) {
+      try {
+        model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, resource));
+      }
+      catch (Exception e) {
+        //should always exist, resources baked into mod
+        //possibly unloaded chunk error? I have no idea?
+        ModCyclic.logger.error("Error trying to obtain baked model", e);
+        return null;
+      }
+      bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
+          new Function<ResourceLocation, TextureAtlasSprite>() {
+
+            @Override
+            public TextureAtlasSprite apply(ResourceLocation location) {
+              return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
+            }
+          });
+    }
+    return bakedModel;
   }
 }

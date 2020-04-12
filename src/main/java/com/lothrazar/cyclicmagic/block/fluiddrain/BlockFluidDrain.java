@@ -24,10 +24,9 @@
 package com.lothrazar.cyclicmagic.block.fluiddrain;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.block.autouser.TileEntityUser;
+import com.lothrazar.cyclicmagic.block.core.BaseMachineTESR;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.core.MachineTESR;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -81,7 +80,7 @@ public class BlockFluidDrain extends BlockBaseHasTile implements IContent, IHasR
   public void initModel() {
     //    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUser.class, new MachineTESR(this));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluidDrain.class, new BaseMachineTESR());
   }
 
   @Override

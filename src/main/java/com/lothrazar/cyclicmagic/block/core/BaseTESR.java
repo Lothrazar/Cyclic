@@ -23,10 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.core;
 
-import java.util.function.Function;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -34,16 +31,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.model.TRSRTransformation;
 
 public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRenderer<T> {
 
@@ -55,31 +47,6 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
   public BaseTESR(@Nullable Block block) {
     if (block != null)
       resource = "tesr/" + block.getTranslationKey().replace("tile.", "").replace(".name", "");
-  }
-
-  @Nullable
-  protected IBakedModel getBakedModel() {
-    // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
-    if (bakedModel == null && resource != null) {
-      try {
-        model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, resource));
-      }
-      catch (Exception e) {
-        //should always exist, resources baked into mod
-        //possibly unloaded chunk error? I have no idea?
-        ModCyclic.logger.error("Error trying to obtain baked model", e);
-        return null;
-      }
-      bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM,
-          new Function<ResourceLocation, TextureAtlasSprite>() {
-
-            @Override
-            public TextureAtlasSprite apply(ResourceLocation location) {
-              return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-            }
-          });
-    }
-    return bakedModel;
   }
 
   protected void renderItem(TileEntity te, ItemStack stack, float itemHeight) {

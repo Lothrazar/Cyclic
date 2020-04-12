@@ -40,6 +40,7 @@ public class GuiDrain extends GuiBaseContainer {
   public GuiDrain(InventoryPlayer inventoryPlayer, TileEntityFluidDrain tileEntity) {
     super(new ContainerDrain(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityFluidDrain.Fields.REDSTONE.ordinal();
+    this.fieldPreviewBtn = TileEntityFluidDrain.Fields.RENDERPARTICLES.ordinal();
     this.energyBar = new EnergyBar(this);
     energyBar.setX(152).setY(18).setWidth(14);
     this.fluidBar = new FluidBar(this, 126, 18);
@@ -49,6 +50,8 @@ public class GuiDrain extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    this.previewBtn.x = this.guiLeft + Const.PAD / 2 + 20;
+    this.previewBtn.y = this.guiTop + Const.PAD / 2;
   }
 
   @SideOnly(Side.CLIENT)
