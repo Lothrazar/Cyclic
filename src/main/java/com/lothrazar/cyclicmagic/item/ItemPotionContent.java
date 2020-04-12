@@ -157,7 +157,8 @@ public class ItemPotionContent implements IContent {
       potionTypeBlindness.setBase(PotionTypes.INVISIBILITY);
     }
     if (ItemPotionContent.enableSaturation) {
-      potionTypeSat = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.SATURATION, NORMAL), "saturation", Items.CAKE);
+      //      REGISTRY.register(23, new ResourceLocation("saturation"), (new PotionHealth(false, 16262179)).setPotionName("effect.saturation").setBeneficial());
+      potionTypeSat = PotionTypeRegistry.addPotionType(new PotionEffect(PotionEffectRegistry.SATURATION, NORMAL), "saturation", Items.CAKE);
       potionTypeSat.setBase(PotionTypes.HEALING);
       PotionTypeCyclic potionTypeHunger = PotionTypeRegistry.addPotionType(new PotionEffect(MobEffects.HUNGER, NORMAL), "hunger", Items.FERMENTED_SPIDER_EYE);
       potionTypeHunger.setBase(potionTypeSat);

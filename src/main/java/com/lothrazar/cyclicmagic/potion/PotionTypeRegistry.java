@@ -52,31 +52,5 @@ public class PotionTypeRegistry {
       event.getRegistry().register(pt);
       pt.addMix();
     }
-    //    //    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE,PotionTypes.THICK);
-    //    PotionHelper.addMix(PotionTypes.AWKWARD, Items.APPLE, potionTypeSlowfall);
-    //    RecipeRegistry.addShapedOreRecipe(
-    //
-    //        BrewingRecipeRegistry.addRecipe(
-    //            PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), 
-    //            new ItemStack(Items.APPLE), 
-    //            PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypeRegistry.potionTypeSlowfall))
-    //        
-    //        );
   }
-  //  @SubscribeEvent
-  //  public static void onDrink(LivingEntityUseItemEvent.Finish event) {
-  //    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(event.getItem());
-  //    Item item = event.getItem().getItem();
-  //    //cant double up because vanilla addpotioneffect just merges times, does not add them
-  //    //WHAT DOES THIS FIX? Well, when i create a custom PotionType, it works with vanilla potions but not mine
-  //    //so. lol. yep. brute force it is then eh? yup.
-  //    if (item instanceof ItemPotion) {
-  //      for (PotionEffect effect : effects) {
-  //        ResourceLocation potionReg = effect.getPotion().getRegistryName();
-  //        if (potionReg != null && potionReg.getResourceDomain().equals(Const.MODID)) {
-  //          event.getEntityLiving().addPotionEffect(new PotionEffect(effect));
-  //        }
-  //      }
-  //    }
-  //  }
 }

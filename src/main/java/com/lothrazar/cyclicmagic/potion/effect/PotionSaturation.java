@@ -21,56 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.potion.effect;
 
-import java.util.List;
-import com.lothrazar.cyclicmagic.item.ItemPotionContent;
-import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.init.PotionTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionHelper;
-import net.minecraft.potion.PotionType;
-import net.minecraft.util.ResourceLocation;
 
-public class PotionTypeCyclic extends PotionType {
+public class PotionSaturation extends PotionBase {
 
-  ItemStack recipeStack;
-  private PotionType base;
-
-  public PotionTypeCyclic(String name, PotionEffect[] potionEffects, ItemStack ingredient) {
-    super(name, potionEffects);
-    this.setRegistryName(new ResourceLocation(Const.MODID, name));
-    recipeStack = ingredient;
-    setBase(PotionTypes.AWKWARD);
+  public PotionSaturation() {
+    super("saturation", true, 0x5D4033);
   }
 
   @Override
-  public boolean hasInstantEffect() {
-    if (this == ItemPotionContent.potionTypeSat) {
-      System.out.println("saturation has instant");
-      return false;
+  public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier) {
+    super.performEffect(entityLivingBaseIn, amplifier);
+    if (!entityLivingBaseIn.world.isRemote) {
+      ((EntityPlayer) entityLivingBaseIn).getFoodStats().addStats(amplifier + 1, 1.0F);
     }
-    return super.hasInstantEffect();
   }
 
+  //
   @Override
-  public List<PotionEffect> getEffects() {
-    //    System.out.println("???  getEffects " + super.getEffects());
-    return super.getEffects();
-  }
-
-  public void addMix() {
-    PotionHelper.addMix(getBase(), Ingredient.fromStacks(recipeStack), this);
-  }
-
-  public PotionType getBase() {
-    return base;
-  }
-
-  public void setBase(PotionType base) {
-    if (base != null)
-      this.base = base;
+  public void tick(EntityLivingBase entity) {
+    if (!entity.world.isRemote
+        && entity.world.rand.nextDouble() < 0.03) {
+      PotionEffect pot = entity.getActivePotionEffect(this);
+      int amp = pot.getAmplifier() + 1;
+      ((EntityPlayer) entity).getFoodStats().addStats(amp, 0.5F);
+    }
   }
 }
