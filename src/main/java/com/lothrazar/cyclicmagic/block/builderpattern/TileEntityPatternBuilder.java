@@ -42,6 +42,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.Rotation;
@@ -233,6 +234,22 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     //    return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
   }
 
+  private BlockPos getCenterSource() {
+    BlockPos targetA = getGpsTargetPos(SLOT_SRCA);
+    BlockPos targetB = getGpsTargetPos(SLOT_SRCB);
+    return new BlockPos(
+        (targetA.getX() + targetB.getX()) / 2,
+        (targetA.getY() + targetB.getY()) / 2,
+        (targetA.getZ() + targetB.getZ()) / 2);
+  }
+
+  private BlockPos getCenterTarget() {
+    BlockPos otherCenter = getCenterSource();
+    if (otherCenter == null)
+      return null;
+    return this.convertPosSrcToTarget(otherCenter);
+  }
+
   private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
     BlockPos newOrigin = getGpsTargetPos(SLOT_TARGET);
     BlockPos targetA = getGpsTargetPos(SLOT_SRCA);
@@ -255,21 +272,20 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         shapeTarget.add(conv);
       }
     }
+    BlockPos trueCenter = this.getCenterTarget();
     //rotate 
     //TODO: ROTATION AND FLIP DISABLED
-    //     shapeTarget = UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
+    shapeTarget = UtilShape.rotateShape(trueCenter, shapeTarget, this.getRotation());
     //    //flip
-    //    BlockPos trueCenter = this.getCenterTarget().up(getHeight() / 2);
-    //    if (getField(Fields.FLIPX) == 1) {
-    //      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.X);
-    //    }
-    //    if (getField(Fields.FLIPY) == 1) {
-    //      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Y);
-    //    }
-    //    if (getField(Fields.FLIPZ) == 1) {
-    //      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Z);
-    //    }
-    // 
+    if (getField(Fields.FLIPX) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.X);
+    }
+    if (getField(Fields.FLIPY) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Y);
+    }
+    if (getField(Fields.FLIPZ) == 1) {
+      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Z);
+    }
     return shapeTarget;
   }
 
