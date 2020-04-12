@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.item.locationgps;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
+import com.lothrazar.cyclicmagic.data.IRenderOutline;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItem;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -23,6 +26,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -30,7 +34,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
+public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent, IRenderOutline {
 
   private static final String NBT_SIDE = "side";
   private static final String NBT_DIM = "dim";
@@ -150,5 +154,21 @@ public class ItemLocationGps extends BaseItem implements IHasRecipe, IContent {
   @Override
   public boolean enabled() {
     return enabled;
+  }
+
+  @Override
+  public int[] getRgb() {
+    return new int[] { 0, 30, 150 };
+  }
+
+  @Override
+  public Set<BlockPos> renderOutline(World world, ItemStack heldItem, RayTraceResult mouseOver) {
+    Set<BlockPos> set = new HashSet<>();
+    BlockPosDim dim = getPosition(heldItem);
+    if (dim != null && dim.toBlockPos() != null
+        && world.provider.getDimension() == dim.getDimension()) {
+      set.add(dim.toBlockPos());
+    }
+    return set;
   }
 }
