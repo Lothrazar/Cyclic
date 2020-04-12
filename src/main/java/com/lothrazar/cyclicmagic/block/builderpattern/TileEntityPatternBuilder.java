@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
+import com.lothrazar.cyclicmagic.data.BlockPosDim;
 import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
@@ -41,7 +42,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.Rotation;
@@ -55,20 +55,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private final static int MAXIMUM = 32;
   private static final int TIMER_FULL = 20;
   private static final int TIMER_SKIP = 1;
-  private int height = 5;
-  private int offsetTargetX = -5;
-  private int offsetTargetY = 0;
-  private int offsetTargetZ = 1;
-  private int offsetSourceX = 5;
-  private int offsetSourceY = 0;
-  private int offsetSourceZ = 1;
-  private int sizeRadius = 4;
   private int timer = 1;
   private int flipX = 0;
   private int flipY = 0;
   private int flipZ = 0;
   private int rotation = 0;//enum value of Rotation
-  private Map<String, String> blockToItemOverrides = new HashMap<String, String>();
+  private static Map<String, String> blockToItemOverrides = new HashMap<String, String>();
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int shapeIndex;
   public static final int SLOT_SRCA = 18;
@@ -80,7 +72,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
 
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
+    TIMER, REDSTONE, RENDERPARTICLES, ROTATION, FLIPX, FLIPY, FLIPZ;
   }
 
   public TileEntityPatternBuilder() {
@@ -126,14 +118,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public int getFieldCount() {
     return Fields.values().length;
-  }
-
-  private BlockPos getCenterTarget() {
-    return this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-  }
-
-  private BlockPos getCenterSrc() {
-    return this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
   }
 
   private int findSlotForMatch(IBlockState stateToMatch) {
@@ -232,36 +216,57 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
   }
 
-  public BlockPos getSourceCenter() {
-    return this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
-  }
-
-  public BlockPos getTargetCenter() {
-    return this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-  }
-
-  public List<BlockPos> getSourceFrameOutline() {
-    BlockPos centerSrc = getSourceCenter();
-    List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
-    return shapeSrc;
-  }
-
-  public List<BlockPos> getTargetFrameOutline() {
-    return UtilShape.cubeFrame(getTargetCenter(), this.sizeRadius, this.height);
-  }
-
-  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
-    BlockPos centerSrc = this.getCenterSrc();
-    int xOffset = posSrc.getX() - centerSrc.getX();
-    int yOffset = posSrc.getY() - centerSrc.getY();
-    int zOffset = posSrc.getZ() - centerSrc.getZ();
-    BlockPos centerTarget = this.getCenterTarget();
-    return centerTarget.add(xOffset, yOffset, zOffset);
+  public BlockPos getGpsTargetPos(int slot) {
+    ItemStack gpsA = this.getStackInSlot(slot);
+    BlockPosDim targetA = ItemLocationGps.getPosition(gpsA);
+    return targetA == null ? null : targetA.toBlockPos();
   }
 
   public List<BlockPos> getSourceShape() {
-    BlockPos centerSrc = this.getSourceCenter();
-    return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+    BlockPos targetA = getGpsTargetPos(SLOT_SRCA);
+    BlockPos targetB = getGpsTargetPos(SLOT_SRCB);
+    //
+    if (targetA == null || targetB == null) {
+      return new ArrayList<>();
+    }
+    return UtilShape.cubeFilledSolid(world, targetA, targetB);
+    //    return UtilShape.readAllSolid(world, centerSrc, this.sizeRadius, this.height);
+  }
+
+  private BlockPos convertPosSrcToTarget(BlockPos posSrc) {
+    ItemStack gpsTarget = this.getStackInSlot(SLOT_TARGET);
+    BlockPosDim target = ItemLocationGps.getPosition(gpsTarget);
+    if (target == null)
+      return new BlockPos(posSrc);//just copy
+    BlockPos centerSrc = target.toBlockPos();
+    int xOffset = posSrc.getX() - centerSrc.getX();
+    int yOffset = posSrc.getY() - centerSrc.getY();
+    int zOffset = posSrc.getZ() - centerSrc.getZ();
+    return posSrc.add(xOffset, yOffset, zOffset);
+  }
+
+  public List<BlockPos> getTargetShape() {
+    List<BlockPos> shapeSrc = getSourceShape();
+    List<BlockPos> shapeTarget = new ArrayList<BlockPos>();
+    for (BlockPos p : shapeSrc) {
+      shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
+    }
+    //rotate 
+    //TODO: ROTATION AND FLIP DISABLED
+    //     shapeTarget = UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
+    //    //flip
+    //    BlockPos trueCenter = this.getCenterTarget().up(getHeight() / 2);
+    //    if (getField(Fields.FLIPX) == 1) {
+    //      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.X);
+    //    }
+    //    if (getField(Fields.FLIPY) == 1) {
+    //      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Y);
+    //    }
+    //    if (getField(Fields.FLIPZ) == 1) {
+    //      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Z);
+    //    }
+    // 
+    return shapeTarget;
   }
 
   public Map<BlockPos, IBlockState> getShapeFancy(List<BlockPos> sourceShape, List<BlockPos> targetShape) {
@@ -275,58 +280,16 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     return map;
   }
 
-  public List<BlockPos> getTargetShape() {
-    List<BlockPos> shapeSrc = getSourceShape();
-    List<BlockPos> shapeTarget = new ArrayList<BlockPos>();
-    for (BlockPos p : shapeSrc) {
-      shapeTarget.add(this.convertPosSrcToTarget(new BlockPos(p)));
-    }
-    //rotate 
-    shapeTarget = UtilShape.rotateShape(this.getCenterTarget(), shapeTarget, this.getRotation());
-    //flip
-    BlockPos trueCenter = this.getCenterTarget().up(getHeight() / 2);
-    if (getField(Fields.FLIPX) == 1) {
-      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.X);
-    }
-    if (getField(Fields.FLIPY) == 1) {
-      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Y);
-    }
-    if (getField(Fields.FLIPZ) == 1) {
-      shapeTarget = UtilShape.flipShape(trueCenter, shapeTarget, EnumFacing.Axis.Z);
-    }
-    return shapeTarget;
-  }
-
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     shapeIndex = compound.getInteger(NBT_SHAPEINDEX);
-    this.offsetTargetX = compound.getInteger("ox");
-    this.offsetTargetY = compound.getInteger("oy");
-    this.offsetTargetZ = compound.getInteger("oz");
-    this.offsetSourceX = compound.getInteger("sx");
-    this.offsetSourceY = compound.getInteger("sy");
-    this.offsetSourceZ = compound.getInteger("sz");
-    this.sizeRadius = compound.getInteger("r");
-    this.height = compound.getInteger("height");
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
-    compound.setInteger("ox", offsetTargetX);
-    compound.setInteger("oy", offsetTargetY);
-    compound.setInteger("oz", offsetTargetZ);
-    compound.setInteger("sx", offsetSourceX);
-    compound.setInteger("sy", offsetSourceY);
-    compound.setInteger("sz", offsetSourceZ);
-    compound.setInteger("r", sizeRadius);
-    compound.setInteger("height", height);
     return super.writeToNBT(compound);
-  }
-
-  public int getHeight() {
-    return height;
   }
 
   public Rotation getRotation() {
@@ -349,22 +312,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
 
   public int getField(Fields f) {
     switch (f) {
-      case OFFTARGX:
-        return this.offsetTargetX;
-      case OFFTARGY:
-        return this.offsetTargetY;
-      case OFFTARGZ:
-        return this.offsetTargetZ;
-      case SIZER:
-        return this.sizeRadius;
-      case OFFSRCX:
-        return this.offsetSourceX;
-      case OFFSRCY:
-        return this.offsetSourceY;
-      case OFFSRCZ:
-        return this.offsetSourceZ;
-      case HEIGHT:
-        return this.getHeight();
       case TIMER:
         return this.timer;
       case REDSTONE:
@@ -389,30 +336,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       value = MAXIMUM;
     }
     switch (f) {
-      case OFFTARGX:
-        this.offsetTargetX = value;
-      break;
-      case OFFTARGY:
-        this.offsetTargetY = value;
-      break;
-      case OFFTARGZ:
-        this.offsetTargetZ = value;
-      break;
-      case SIZER:
-        this.sizeRadius = value;
-      break;
-      case OFFSRCX:
-        this.offsetSourceX = value;
-      break;
-      case OFFSRCY:
-        this.offsetSourceY = value;
-      break;
-      case OFFSRCZ:
-        this.offsetSourceZ = value;
-      break;
-      case HEIGHT:
-        this.height = value;
-      break;
       case TIMER:
         this.timer = value;
       break;
@@ -449,18 +372,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public void setField(int id, int value) {
     setField(Fields.values()[id], value);
-  }
-
-  public void swapTargetSource() {
-    int srcX = this.offsetSourceX;
-    int srcY = this.offsetSourceY;
-    int srcZ = this.offsetSourceZ;
-    this.offsetSourceX = this.offsetTargetX;
-    this.offsetSourceY = this.offsetTargetY;
-    this.offsetSourceZ = this.offsetTargetZ;
-    this.offsetTargetX = srcX;
-    this.offsetTargetY = srcY;
-    this.offsetTargetZ = srcZ;
   }
 
   @Override

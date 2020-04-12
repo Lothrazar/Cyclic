@@ -387,6 +387,9 @@ public class UtilWorld {
   public static class RenderShadow {
 
     public static void renderBlockPos(BlockPos p, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {
+      if (p == null) {
+        return;
+      }
       UtilWorld.RenderShadow.renderBlockList(new ArrayList<BlockPos>() {
 
         {

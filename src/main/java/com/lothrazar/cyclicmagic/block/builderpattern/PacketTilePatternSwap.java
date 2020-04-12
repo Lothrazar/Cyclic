@@ -74,8 +74,8 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     World world = ModCyclic.proxy.getPlayerEntity(ctx).getEntityWorld();
     TileEntityPatternBuilder tile = (TileEntityPatternBuilder) world.getTileEntity(message.pos);
     if (tile != null) {
-      if (message.type == SwapType.POSITION.ordinal())
-        tile.swapTargetSource();
+      //      if (message.type == SwapType.POSITION.ordinal())
+      //        tile.swapTargetSource();
       //      else if (message.type == SwapType.RENDER.ordinal())
       //        tile.swapShowRender();
     }

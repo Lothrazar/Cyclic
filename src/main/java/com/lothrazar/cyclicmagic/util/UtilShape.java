@@ -206,6 +206,31 @@ public class UtilShape {
     return shape;
   }
 
+  public static List<BlockPos> cubeFilledSolid(World world, final BlockPos cornerA, final BlockPos cornerB) {
+    List<BlockPos> shape = new ArrayList<>();//squareHorizontalFull(botCenter, radius);
+    int xMin = Math.min(cornerA.getX(), cornerB.getX());
+    int xMax = Math.max(cornerA.getX(), cornerB.getX());
+    int zMin = Math.min(cornerA.getZ(), cornerB.getZ());
+    int zMax = Math.max(cornerA.getZ(), cornerB.getZ());
+    int yBottom = Math.min(cornerA.getY(), cornerB.getY());
+    int yHeight = Math.max(cornerA.getY(), cornerB.getY());
+    //make an XZ flat cube
+    for (int y = yBottom; y <= yHeight; y++)
+      for (int x = xMin; x <= xMax; x++) {
+        for (int z = zMin; z <= zMax; z++) {
+          BlockPos p = new BlockPos(x, y, z);
+          if (world.isAirBlock(p) == false)
+            shape.add(p);
+        }
+      }
+    //    BlockPos botCurrent;
+    //    for (int i = 1; i <= height; i++) {
+    //      botCurrent = botCenter.add(0, i, 0);
+    //      cube.addAll(squareHorizontalFull(botCurrent, radius));
+    //    }
+    return shape;
+  }
+
   public static List<BlockPos> cubeFilled(final BlockPos posCenter, final int radius, final int height) {
     BlockPos botCenter = posCenter;
     List<BlockPos> cube = squareHorizontalFull(botCenter, radius);
