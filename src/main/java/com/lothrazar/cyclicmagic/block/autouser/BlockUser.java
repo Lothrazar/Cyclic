@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.autouser;
 
 import com.lothrazar.cyclicmagic.IContent;
-import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.core.MachineTESR;
@@ -36,7 +35,6 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
@@ -53,7 +51,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR, IContent {
 
-  public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST = 0;
   public static int maxAttackPer;
 

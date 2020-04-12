@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.core;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -36,7 +37,7 @@ import net.minecraft.world.World;
 
 public abstract class BlockBaseFacing extends BlockBaseHasTile {
 
-  public static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+  public static final PropertyDirection PROPERTYFACING = BlockHorizontal.FACING;//PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
   public BlockBaseFacing(Material materialIn) {
     super(materialIn);

@@ -1,5 +1,9 @@
 {
     "variants": {
-        "normal": { "model": "cyclicmagic:block_anvil" }
+	
+        "facing=north": { "model": "cyclicmagic:block_anvil","y":180},
+        "facing=east":  { "model": "cyclicmagic:block_anvil","y":270},
+        "facing=south": { "model": "cyclicmagic:block_anvil"},
+        "facing=west":  { "model": "cyclicmagic:block_anvil","y":90}
     }
 }

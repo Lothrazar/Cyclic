@@ -26,7 +26,7 @@ package com.lothrazar.cyclicmagic.block.anvilmagma;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclicmagic.block.anvil.UtilRepairItem;
-import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -34,9 +34,11 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -51,7 +53,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
 
-public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasRecipe {
+public class BlockAnvilMagma extends BlockBaseFacing implements IContent, IHasRecipe {
 
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilMagma() {
@@ -63,13 +65,19 @@ public class BlockAnvilMagma extends BlockBaseHasTile implements IContent, IHasR
   }
 
   @Override
-  public String getContentName() {
-    return "block_anvil_magma";
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    EnumFacing enumfacing = state.getValue(BlockHorizontal.FACING);
+    return enumfacing.getAxis() == EnumFacing.Axis.X ? BlockAnvilAuto.X_AXIS_AABB : BlockAnvilAuto.Z_AXIS_AABB;
   }
 
   @Override
-  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return BlockAnvilAuto.Z_AXIS_AABB;
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(BlockHorizontal.FACING, placer.getHorizontalFacing().rotateY());
+  }
+
+  @Override
+  public String getContentName() {
+    return "block_anvil_magma";
   }
 
   @Override
