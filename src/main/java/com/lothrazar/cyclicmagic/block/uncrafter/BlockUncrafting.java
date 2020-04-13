@@ -124,9 +124,12 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
         "progressiveautomation:WitherWood",
         "techreborn:uumatter",
         "spectrite:spectrite_arrow",
-        "spectrite:spectrite_arrow_special"
+        "spectrite:spectrite_arrow_special",
+        "cyclicmagic:crystallized_amber",
+        "cyclicmagic:crystallized_obsidian"
     };
-    String[] blacklist = config.getStringList("BlacklistInput", category, deflist, "Items that cannot be uncrafted.  ");
+    String[] blacklist = config.getStringList("BlacklistInput", category, deflist,
+        "Items that cannot be uncrafted.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.INPUT);
     //OUTPUT
     deflist = new String[] {
