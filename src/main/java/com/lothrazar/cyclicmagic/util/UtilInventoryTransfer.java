@@ -28,8 +28,12 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.item.storagesack.BagDepositReturn;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class UtilInventoryTransfer {
 
@@ -71,7 +75,42 @@ public class UtilInventoryTransfer {
     return dumpToIInventory(stacks, inventory, startingSlot, inventory.getSizeInventory());
   }
 
-  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, NonNullList<ItemStack> stacks, boolean onlyMatchingItems) {
+  public static BagDepositReturn dumpFromListToCapability(World world, TileEntity tile,
+      EnumFacing side,
+      NonNullList<ItemStack> stacks, boolean onlyMatchingItems) {
+    int itemsMoved = 0;
+    if (tile == null ||
+        tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side) == false) {
+      return new BagDepositReturn(itemsMoved, stacks);
+    }
+    ItemStack bagItem;
+    //  final  ItemStack chestItem;
+    IItemHandler chest = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
+    for (int islotStacks = 0; islotStacks < stacks.size(); islotStacks++) {
+      bagItem = stacks.get(islotStacks);
+      if (bagItem.isEmpty() || bagItem.getCount() == 0) {
+        continue;
+      }
+      for (int islotChest = 0; islotChest < chest.getSlots(); islotChest++) {
+        //
+        //        chestItem = chest.getStackInSlot(islotChest);
+        //we have a space in the inventory thats empty. are we allowed
+        if (onlyMatchingItems == false
+            || UtilItemStack.canMerge(bagItem, chest.getStackInSlot(islotChest))) {
+          //just plain deposit
+          int before = bagItem.getCount();
+          bagItem = chest.insertItem(islotChest, bagItem, false);
+          stacks.set(islotStacks, bagItem);
+          //
+          itemsMoved += (before - bagItem.getCount());
+        }
+      }
+    }
+    return new BagDepositReturn(itemsMoved, stacks);
+  }
+
+  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest,
+      NonNullList<ItemStack> stacks, boolean onlyMatchingItems) {
     ItemStack chestItem;
     ItemStack bagItem;
     int room;

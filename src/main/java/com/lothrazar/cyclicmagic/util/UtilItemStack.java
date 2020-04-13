@@ -79,7 +79,7 @@ public class UtilItemStack {
    * @param bagItem
    * @return
    */
-  public static boolean canMerge(ItemStack chestItem, ItemStack bagItem) {
+  public static boolean canMerge(final ItemStack chestItem, final ItemStack bagItem) {
     if (chestItem.isEmpty() || bagItem.isEmpty()) {
       return false;
     }

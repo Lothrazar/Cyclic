@@ -38,7 +38,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -149,7 +148,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     if (held != null && held.getItem() == this) {
       World world = event.getWorld();
       TileEntity tile = world.getTileEntity(event.getPos());
-      if (tile != null && tile instanceof IInventory) {
+      if (tile != null) {
         int depositType = StorageActionType.get(held);
         if (depositType == StorageActionType.NOTHING.ordinal()) {
           if (world.isRemote) {
@@ -159,14 +158,19 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         }
         else {
           if (world.isRemote == false) {
+            //IInv is trash 
+            //            CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
             NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(held);
-            BagDepositReturn ret = null;
-            if (depositType == StorageActionType.DEPOSIT.ordinal()) {
-              ret = UtilInventoryTransfer.dumpFromListToIInventory(world, (IInventory) tile, inv, false);
-            }
-            else if (depositType == StorageActionType.MERGE.ordinal()) {
-              ret = UtilInventoryTransfer.dumpFromListToIInventory(world, (IInventory) tile, inv, true);
-            }
+            boolean onlyMatchingItems = depositType == StorageActionType.MERGE.ordinal();
+            //          
+            BagDepositReturn ret = UtilInventoryTransfer.dumpFromListToCapability(world, tile, event.getFace(),
+                inv, onlyMatchingItems);
+            //            if (depositType == StorageActionType.DEPOSIT.ordinal()) {
+            //              ret = UtilInventoryTransfer.dumpFromListToIInventory(world, (IInventory) tile, inv, false);
+            //            }
+            //            else if (depositType == StorageActionType.MERGE.ordinal()) {
+            //              ret = UtilInventoryTransfer.dumpFromListToIInventory(world, (IInventory) tile, inv, true);
+            //            }
             if (ret != null && ret.moved > 0) {
               InventoryStorage.writeToNBT(held, ret.stacks);
               UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + ret.moved);
