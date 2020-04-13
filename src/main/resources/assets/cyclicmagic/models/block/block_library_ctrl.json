@@ -4,9 +4,9 @@
         "particle": "blocks/anvil_base",
         "down": "cyclicmagic:blocks/library_top",
         "up": "cyclicmagic:blocks/library_top",
-        "north": "cyclicmagic:blocks/library_base",
-        "east": "cyclicmagic:blocks/library_base",
-        "south": "cyclicmagic:blocks/library_base",
-        "west": "cyclicmagic:blocks/library_base"
+        "north": "cyclicmagic:blocks/library_ctrl",
+        "east": "cyclicmagic:blocks/library_ctrl",
+        "south": "cyclicmagic:blocks/library_ctrl",
+        "west": "cyclicmagic:blocks/library_ctrl"
     }
 }
