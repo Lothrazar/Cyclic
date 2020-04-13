@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.item.storagesack;
 
 import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.slot.SlotItemRestrictedInverse;
-import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StorageActionType;
 import com.lothrazar.cyclicmagic.module.MultiContent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;

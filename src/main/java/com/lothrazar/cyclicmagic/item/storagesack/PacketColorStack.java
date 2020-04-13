@@ -61,7 +61,7 @@ public class PacketColorStack implements IMessage, IMessageHandler<PacketColorSt
     ItemStack stack = player.getHeldItemMainhand();
     if (!stack.isEmpty() && stack.getItem() instanceof ItemStorageBag) {
       //
-      ItemStorageBag.StorageActionType.setColour(stack, message.colour);
+      StorageActionType.setColour(stack, message.colour);
     }
     return null;
   }

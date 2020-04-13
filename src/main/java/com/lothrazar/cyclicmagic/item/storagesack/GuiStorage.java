@@ -28,8 +28,6 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonTooltip;
-import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StorageActionType;
-import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag.StoragePickupType;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -58,11 +56,9 @@ public class GuiStorage extends GuiBaseContainer {
     int x = this.guiLeft + 194;
     int id = 75, size = Const.SQ;
     buttonToggle = new GuiButtonTexture(id++, x, y, size, size);
-    //    buttonToggle.setTooltip("item.storage_bag.toggle");
     this.addButton(buttonToggle);
     y += 20;
     buttonTogglePickup = new GuiButtonTexture(id++, x, y, size, size);
-    //    buttonTogglePickup.setTooltip("item.storage_bag.togglepickup");
     this.addButton(buttonTogglePickup);
     int i = 0;
     size = 12;
@@ -81,8 +77,8 @@ public class GuiStorage extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    buttonToggle.setTextureIndex(11 + ItemStorageBag.StorageActionType.get(player.getHeldItemMainhand()));
-    buttonTogglePickup.setTextureIndex(11 + ItemStorageBag.StoragePickupType.get(player.getHeldItemMainhand()));
+    buttonToggle.setTextureIndex(11 + StorageActionType.get(player.getHeldItemMainhand()));
+    buttonTogglePickup.setTextureIndex(11 + StoragePickupType.get(player.getHeldItemMainhand()));
     buttonTogglePickup.setTooltip(StoragePickupType.getName(player.getHeldItemMainhand()));
     //    
     buttonToggle.setTooltip(
@@ -100,7 +96,7 @@ public class GuiStorage extends GuiBaseContainer {
       ModCyclic.network.sendToServer(new PacketStorageBag(1));
     }
     else {
-      ItemStorageBag.StorageActionType.setColour(player.getHeldItemMainhand(), button.id);
+      StorageActionType.setColour(player.getHeldItemMainhand(), button.id);
       ModCyclic.network.sendToServer(new PacketColorStack(button.id));
     }
   }

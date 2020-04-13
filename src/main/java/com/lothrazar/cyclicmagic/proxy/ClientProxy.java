@@ -58,7 +58,7 @@ import com.lothrazar.cyclicmagic.item.shears.EntityShearingBolt.FactoryShear;
 import com.lothrazar.cyclicmagic.item.slingshot.EntitySlingshot;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.item.snowmagic.EntitySnowballBolt.FactorySnow;
-import com.lothrazar.cyclicmagic.item.storagesack.ItemStorageBag;
+import com.lothrazar.cyclicmagic.item.storagesack.StorageActionType;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.torchmagic.EntityTorchBolt.FactoryTorch;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
@@ -341,7 +341,7 @@ public class ClientProxy extends CommonProxy {
               return 0xFFFFFFFF;
             }
             //layer 1 is overlay 
-            return ItemStorageBag.StorageActionType.getColour(stack);//.getColorValue();
+            return StorageActionType.getColour(stack);//.getColorValue();
           }, MultiContent.storage_bag);
     }
   }
