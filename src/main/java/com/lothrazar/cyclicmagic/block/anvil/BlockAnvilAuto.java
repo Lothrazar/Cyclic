@@ -35,7 +35,6 @@ import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -61,10 +60,8 @@ public class BlockAnvilAuto extends BlockBaseFacing implements IContent, IHasRec
   public static int FUEL_COST = 0;
   private Block center;
 
-  //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockAnvilAuto(@Nonnull Block center) {
     super(Material.ANVIL);
-    BlockAnvil test;
     this.setSoundType(SoundType.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ANVIL);
     this.setHardness(3.0F).setResistance(3.0F);
