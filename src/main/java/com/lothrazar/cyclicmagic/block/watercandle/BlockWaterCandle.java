@@ -145,18 +145,17 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     float z = pos.getZ() + MathHelper.getInt(rand, -1 * RADIUS, RADIUS);
     BlockPos posTarget = new BlockPos(x, y, z);
     EntityLiving monster = findMonsterToSpawn(world, posTarget, rand);
-    if (monster == null) {
-      return;
+    if (monster == null || !world.isAirBlock(posTarget)) {
+      return;//not air block
     }
     monster.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
     //null means not from a spawner 
     Event.Result canSpawn = ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null);
     if (canSpawn == Event.Result.DENY || monster.getCanSpawnHere() == false) {
-      afterSpawnFailure(world, posTarget);
+      afterSpawnFailure(world, pos);
     }
     else if (world.spawnEntity(monster)) {
-      ModCyclic.logger.log("[CANDLE] spawn " + monster.getName() + " - " + world.isAirBlock(posTarget) + posTarget);
-      afterSpawnSuccess(monster, world, posTarget, rand);
+      afterSpawnSuccess(monster, world, pos, rand);
     }
   }
 
@@ -178,7 +177,7 @@ public class BlockWaterCandle extends BlockBase implements IHasRecipe, IContent 
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS);
     UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
     UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
-    world.setBlockState(pos, getDefaultState().withProperty(IS_LIT, false));
+    world.setBlockState(pos, world.getBlockState(pos).withProperty(IS_LIT, false));
   }
 
   private EntityLiving findMonsterToSpawn(World world, BlockPos pos, Random rand) {
