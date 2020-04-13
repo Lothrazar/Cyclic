@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
@@ -37,11 +38,14 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.BlockSnow;
+import net.minecraft.block.state.BlockPistonStructureHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -89,29 +93,27 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
       }
     }
 
-    public static int get(ItemStack wand) {
+    public static ActionType get(ItemStack wand) {
       if (wand == null) {
-        return 0;
+        return ActionType.PUSH;
       }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
-      return tags.getInteger(NBT);
+      int get = tags.getInteger(NBT);
+      if (get >= ActionType.values().length) {
+        return ActionType.PUSH;
+      }
+      return ActionType.values()[get];
     }
 
     public static String getName(ItemStack wand) {
-      try {
-        NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
-        return "tool.action." + ActionType.values()[tags.getInteger(NBT)].toString().toLowerCase();
-      }
-      catch (Exception e) {
-        return "tool.action." + PUSH.toString().toLowerCase();
-      }
+      return "tool.action." + ActionType.get(wand).toString().toLowerCase();
     }
 
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
       type++;
-      if (type > ROTATE.ordinal()) {
+      if (type > PULL.ordinal()) {
         type = PUSH.ordinal();
       }
       tags.setInteger(NBT, type);
@@ -163,23 +165,64 @@ public class ItemPistonWand extends BaseTool implements IHasRecipe, IContent {
   }
 
   @Override
-  public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
-    //if we only run this on server, clients dont get the udpate
-    //so run it only on client, let packet run the server
-    if (worldObj.isRemote) {
-      ActionType action = ActionType.values()[ActionType.get(stack)];
-      ModCyclic.network.sendToServer(new PacketMoveBlock(pos, action, side));
+    //    TileEntityPiston x;
+    ActionType action = ActionType.get(stack);
+    switch (action) {
+      case PUSH:
+        UtilSound.playSound(player, SoundEvents.BLOCK_PISTON_EXTEND);
+        EnumFacing direction = side.getOpposite();
+        boolean extending = true;
+        BlockPistonStructureHelper blockpistonstructurehelper = new BlockPistonStructureHelper(
+            worldIn, pos.offset(side), direction, extending);
+        if (blockpistonstructurehelper.canMove()) {
+          //
+          List<BlockPos> blocksToMove = blockpistonstructurehelper.getBlocksToMove();
+          List<IBlockState> copyStates = Lists.<IBlockState> newArrayList();
+          for (int i = 0; i < blocksToMove.size(); ++i) {
+            BlockPos blockpos = blocksToMove.get(i);
+            copyStates.add(worldIn.getBlockState(blockpos).getActualState(worldIn, blockpos));
+          }
+          List<BlockPos> toDestroy = blockpistonstructurehelper.getBlocksToDestroy();///new ArrayList(list);// 
+          int k = blocksToMove.size() + toDestroy.size();
+          IBlockState[] aiblockstate = new IBlockState[k];
+          EnumFacing enumfacing = extending ? direction : direction.getOpposite();
+          for (int j = toDestroy.size() - 1; j >= 0; --j) {
+            BlockPos blockpos1 = toDestroy.get(j);
+            IBlockState iblockstate = worldIn.getBlockState(blockpos1);
+            // Forge: With our change to how snowballs are dropped this needs to disallow to mimic vanilla behavior.
+            float chance = iblockstate.getBlock() instanceof BlockSnow ? -1.0f : 1.0f;
+            iblockstate.getBlock().dropBlockAsItemWithChance(worldIn, blockpos1, iblockstate, chance, 0);
+            worldIn.setBlockState(blockpos1, Blocks.AIR.getDefaultState(), 4);
+            --k;
+            aiblockstate[k] = iblockstate;
+          }
+          for (int l = blocksToMove.size() - 1; l >= 0; --l) {
+            BlockPos blockpos3 = blocksToMove.get(l);
+            IBlockState iblockstate2 = worldIn.getBlockState(blockpos3);
+            worldIn.setBlockState(blockpos3, Blocks.AIR.getDefaultState(), 2);
+            blockpos3 = blockpos3.offset(enumfacing);
+            if (!player.canPlayerEdit(blockpos3, side, ItemStack.EMPTY)) {
+              ModCyclic.logger.log("piston scepter: cannot edit");
+            }
+            else
+              worldIn.setBlockState(blockpos3, iblockstate2, 4);
+            //            worldIn.setTileEntity(blockpos3, BlockPistonMoving.createTilePiston(list1.get(l), direction, extending, false));
+            //            --k;
+            //            aiblockstate[k] = iblockstate2;
+          }
+        }
+      break;
+      case PULL:
+        UtilSound.playSound(player, SoundEvents.BLOCK_PISTON_EXTEND);
+        ModCyclic.network.sendToServer(new PacketMoveBlock(pos, action, side));
+      break;
+      default:
+      break;
     }
-    //hack the sound back in
-    IBlockState placeState = worldObj.getBlockState(pos);
-    if (placeState.getBlock() != null) {
-      UtilSound.playSoundPlaceBlock(player, pos, placeState.getBlock());
-    }
-    onUse(stack, player, worldObj, hand);
+    onUse(stack, player, worldIn, hand);
     return EnumActionResult.SUCCESS;
-    //lock as success for https://github.com/PrinceOfAmber/Cyclic/issues/180
-    //    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
 
   @Override
