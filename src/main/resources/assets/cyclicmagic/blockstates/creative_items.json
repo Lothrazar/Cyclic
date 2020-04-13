@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:creative_items" },
+        "inventory": { "model": "cyclicmagic:creative_items" }
+    }
+}

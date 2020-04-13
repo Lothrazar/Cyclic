@@ -1,5 +1,5 @@
 {
 	"variants": {
-		"normal": { "model": "cyclicmagic:scaffold_replaceable" }
+		"normal": { "model": "cyclicmagic:block_fragile_weak" }
 	}
 }
