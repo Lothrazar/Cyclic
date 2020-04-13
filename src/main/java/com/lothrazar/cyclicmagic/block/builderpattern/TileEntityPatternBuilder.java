@@ -273,8 +273,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
     }
     BlockPos trueCenter = this.getCenterTarget();
-    //rotate 
-    //TODO: ROTATION AND FLIP DISABLED
     shapeTarget = UtilShape.rotateShape(trueCenter, shapeTarget, this.getRotation());
     //    //flip
     if (getField(Fields.FLIPX) == 1) {
