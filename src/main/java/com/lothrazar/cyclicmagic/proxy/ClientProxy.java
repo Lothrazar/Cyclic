@@ -87,12 +87,9 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-//@Mod.EventBusSubscriber(modid = Const.MODID, value = Side.CLIENT)
-@SuppressWarnings("deprecation")
 public class ClientProxy extends CommonProxy {
 
   public static ParticleRenderer particleRenderer = new ParticleRenderer();
@@ -306,37 +303,9 @@ public class ClientProxy extends CommonProxy {
 
   public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };
 
-  /**
-   * INSPIRED by universallp
-   * 
-   * This function was is part of VanillaAutomation which is licenced under the MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/ github.com/UniversalLP/VanillaAutomation
-   */
   @Override
   public void setPlayerReach(EntityPlayer player, int currentReach) {
     super.setPlayerReach(player, currentReach);
-    Minecraft mc = Minecraft.getMinecraft();
-    try {
-      if (player == mc.player) {
-        if (mc.playerController instanceof ReachPlayerController) {
-          ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
-        }
-        else {
-          NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
-          //copy values from existing controller to custom one. since there is no setReachDistance in vanilla
-          ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
-          controller.setGameType(mc.playerController.getCurrentGameType());
-          player.capabilities.isFlying = player.capabilities.isFlying;
-          player.capabilities.allowFlying = player.capabilities.allowFlying;
-          mc.playerController = controller;
-          controller.setReachDistance(currentReach);
-        }
-      }
-    }
-    catch (Exception e) {
-      //sometimes it crashes just AS the world is loading, but then it works after everythings set up
-      //does not affect functionality, its working before the player can ever make use of this.
-      ModCyclic.logger.error("Error setting reach : ", e);
-    }
   }
 
   /**
