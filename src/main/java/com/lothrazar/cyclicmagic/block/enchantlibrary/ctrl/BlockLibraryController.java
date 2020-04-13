@@ -92,7 +92,6 @@ public class BlockLibraryController extends BlockBaseHasTile implements IHasReci
       world.markChunkDirty(target.library.getPos(), target.library);
       return true;
     }
-    // UtilChat.sendStatusMessage(player,UtilChat.lang("enchantment_stack.empty"));
     return false;
   }
 
