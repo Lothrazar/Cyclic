@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.enchantlibrary.shelf;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
@@ -45,12 +47,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -65,7 +70,7 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
 
   @Override
   public void register() {
-    BlockRegistry.registerBlock(this, getContentName(), GuideCategory.BLOCK);
+    BlockRegistry.registerBlock(this, new ItemBlockLibrary(this), getContentName(), GuideCategory.BLOCK);
     BlockRegistry.registerTileEntity(TileEntityLibrary.class, Const.MODID + "library_te");
     BlockRegistry.registerTileEntity(TileEntityLibraryCtrl.class, Const.MODID + "library_ctrl_te");
     BlockLibraryController lc = new BlockLibraryController();
@@ -137,7 +142,6 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
       onSuccess(player);
       library.markDirty();
       return true;
-      //      }
     }
     else if (playerHeld.getItem().equals(Items.BOOK)
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
@@ -190,5 +194,48 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
         'g', Blocks.BOOKSHELF,
         's', Blocks.PURPUR_BLOCK,
         'r', "obsidian");
+  }
+
+  //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
+  @Override
+  public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    if (willHarvest) {
+      return true;
+    } //If it will harvest, delay deletion of the block until after getDrops
+    return super.removedByPlayer(state, world, pos, player, willHarvest);
+  }
+
+  @Override
+  public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack tool) {
+    super.harvestBlock(world, player, pos, state, te, tool);
+    world.setBlockToAir(pos);
+  }
+  //end of fixing getdrops
+
+  @Override
+  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    List<ItemStack> ret = new ArrayList<ItemStack>();
+    Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
+    TileEntity ent = world.getTileEntity(pos);
+    ItemStack stack = new ItemStack(item);
+    if (ent instanceof TileEntityLibrary) {
+      TileEntityLibrary lib = (TileEntityLibrary) ent;
+      NBTTagCompound newtag = lib.writeToNBTenchants(new NBTTagCompound(), true);
+      if (newtag != null) {
+        //it returns null if nothing saved
+        stack.setTagCompound(newtag);
+      }
+    }
+    ret.add(stack);
+    return ret;
+  }
+
+  @Override
+  public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    if (stack.getTagCompound() != null && world.getTileEntity(pos) instanceof TileEntityLibrary) {
+      NBTTagCompound tags = stack.getTagCompound();
+      TileEntityLibrary container = (TileEntityLibrary) world.getTileEntity(pos);
+      container.readFromNBTenchants(tags);
+    }
   }
 }

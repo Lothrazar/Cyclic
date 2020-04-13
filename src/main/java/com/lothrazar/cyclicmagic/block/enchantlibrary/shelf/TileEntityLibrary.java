@@ -135,6 +135,10 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
     this.timer = tags.getInteger("t");
     if (tags.hasKey(NBT_CLICKED))
       this.lastClicked = QuadrantEnum.values()[tags.getInteger(NBT_CLICKED)];
+    readFromNBTenchants(tags);
+  }
+
+  public void readFromNBTenchants(NBTTagCompound tags) {
     for (QuadrantEnum q : QuadrantEnum.values()) {
       EnchantStack s = new EnchantStack();
       s.readFromNBT(tags, q.name());
@@ -144,14 +148,28 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-    for (QuadrantEnum q : QuadrantEnum.values()) {
-      tags.setTag(q.name(), getEnchantStack(q).writeToNBT());
-    }
+    writeToNBTenchants(tags, false);
     if (lastClicked != null) {
       tags.setInteger(NBT_CLICKED, lastClicked.ordinal());
     }
     tags.setInteger("t", timer);
     return super.writeToNBT(tags);
+  }
+
+  public NBTTagCompound writeToNBTenchants(NBTTagCompound tags, boolean ignoreBlank) {
+    int countQuads = 0;
+    for (QuadrantEnum q : QuadrantEnum.values()) {
+      EnchantStack st = getEnchantStack(q);
+      if (ignoreBlank && st.getCount() == 0) {
+        continue;//skip this blank
+      }
+      tags.setTag(q.name(), st.writeToNBT());
+      countQuads++;
+    }
+    if (countQuads == 0 && ignoreBlank) {
+      return null;
+    }
+    return tags;
   }
 
   public void setLastClicked(QuadrantEnum segment) {

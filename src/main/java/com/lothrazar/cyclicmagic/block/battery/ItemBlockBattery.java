@@ -49,7 +49,7 @@ public class ItemBlockBattery extends ItemBlock {
 
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack stack, World player, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+  public void addInformation(ItemStack stack, World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
     tooltip.add(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
     tooltip.add(UtilChat.lang("tile.battery.tooltip"));

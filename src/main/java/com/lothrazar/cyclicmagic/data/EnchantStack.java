@@ -69,6 +69,9 @@ public class EnchantStack {
   }
 
   public void readFromNBT(NBTTagCompound tags, String key) {
+    if (tags.getTag(key) == null) {
+      return;
+    }
     NBTTagCompound t = (NBTTagCompound) tags.getTag(key);
     this.count = t.getInteger(NBT_COUNT);
     this.level = t.getInteger(NBT_LEVEL);
