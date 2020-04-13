@@ -131,7 +131,6 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, ICont
 
   @SubscribeEvent
   public void chatEvent(ServerChatEvent event) {
-    World world = event.getPlayer().getEntityWorld();
     //for each loop hits a // oops : java.util.ConcurrentModificationException, so we need iterator
     Iterator<TileEntityPassword> iterator = TileEntityPassword.listeningBlocks.iterator();
     List<TileEntityPassword> toRemove = new ArrayList<TileEntityPassword>();
@@ -149,7 +148,7 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe, ICont
             isAllowed = !current.isClaimedBySomeone() || current.isClaimedBy(event.getPlayer());//nobody || me
           }
           if (isAllowed) {
-            current.onCorrectPassword(world);
+            current.onCorrectPassword();
             wasFound++;
           }
           //          else {

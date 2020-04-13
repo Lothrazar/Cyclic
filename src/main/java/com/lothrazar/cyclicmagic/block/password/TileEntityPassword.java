@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.password;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
@@ -33,7 +34,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITickable, IPlayerClaimed {
@@ -178,7 +178,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   }
 
   @SuppressWarnings("deprecation")
-  public void onCorrectPassword(World world) {
+  public void onCorrectPassword() {
     Block me = this.getBlockType();
     IBlockState blockState = world.getBlockState(this.getPos());
     switch (this.type) {
@@ -200,8 +200,12 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     if (this.powerTimeout > 0) {
       this.powerTimeout--;
       if (this.powerTimeout == 0) {
-        World world = this.getWorld();
-        world.setBlockState(this.getPos(), this.getBlockType().getDefaultState().withProperty(BlockPassword.POWERED, false));
+        if (this.getState() != null && this.getState().getBlock() == this.getBlockType()) {
+          world.setBlockState(pos, this.getState().withProperty(BlockPassword.POWERED, false));
+        }
+        else {
+          ModCyclic.logger.error("PasswordBlock not found on trigger {} {}", pos, this);
+        }
       }
     }
   }
