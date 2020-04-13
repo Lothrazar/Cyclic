@@ -39,7 +39,6 @@ import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.playerupgrade.PacketOpenGuiOnServer;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.playerupgrade.skill.GuiSkillWheel;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -49,7 +48,6 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
@@ -145,17 +143,6 @@ public class EventKeyInput {
       if (!data.getChorusOn()) {//treat it like spectator
         if (data.hasInventoryExtended()) {
           ModCyclic.network.sendToServer(new PacketOpenGuiOnServer(ForgeGuiHandler.GUI_INDEX_TOOLSWAPPER));
-        }
-        else {
-          UtilChat.sendStatusMessage(thePlayer, "locked.extended");
-        }
-      }
-    }
-    else if (ClientProxy.keySkills != null && ClientProxy.keySkills.isPressed()) {
-      final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if (!data.getChorusOn()) {//treat it like spectator
-        if (data.hasInventoryExtended()) {
-          Minecraft.getMinecraft().displayGuiScreen(new GuiSkillWheel(thePlayer));
         }
         else {
           UtilChat.sendStatusMessage(thePlayer, "locked.extended");
