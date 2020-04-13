@@ -77,13 +77,10 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
 
   @Override
   public void onLoad() {
-    //it does save to server. on world save and reload, it DOes save. problem is, 
-    //clientside does not KNOW about it
     if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
-      if (listeningBlocksHash.contains(this.pos.toString()) == false) {
-        listeningBlocks.add(this);
-        listeningBlocksHash.add(this.pos.toString());
-      }
+      String key = this.pos.toString() + this.world.provider.getDimension();
+      listeningBlocks.add(this);
+      listeningBlocksHash.add(key);
     }
   }
 
