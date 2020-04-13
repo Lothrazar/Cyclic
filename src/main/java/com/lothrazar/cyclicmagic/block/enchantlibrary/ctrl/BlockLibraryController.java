@@ -31,6 +31,7 @@ import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.data.QuadrantEnum;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -65,6 +66,14 @@ public class BlockLibraryController extends BlockBaseHasTile implements IHasReci
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack playerHeld = player.getHeldItem(hand);
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
+      return false;
+    }
+    //HAX
+    playerHeld.setCount(2);
+    //it must be an enchanted book
+    if (playerHeld.getCount() != 1) {
+      if (world.isRemote)
+        UtilChat.addChatMessage(player, "block_library.stacksize");
       return false;
     }
     //first look for the same enchant and level

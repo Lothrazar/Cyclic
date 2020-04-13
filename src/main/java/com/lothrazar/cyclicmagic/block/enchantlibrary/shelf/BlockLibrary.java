@@ -131,6 +131,11 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
     ItemStack playerHeld = player.getHeldItem(hand);
     // Enchantment enchToRemove = null;
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK)) {
+      if (playerHeld.getCount() != 1) {
+        if (world.isRemote)
+          UtilChat.addChatMessage(player, this.getRawName() + ".stacksize");
+        return false;
+      }
       ItemStack theThing = library.addEnchantmentToQuadrant(playerHeld, segment);
       player.setHeldItem(hand, ItemStack.EMPTY);
       if (theThing.isEmpty() == false) {
@@ -143,22 +148,22 @@ public class BlockLibrary extends BlockBaseFacing implements IBlockHasTESR, IHas
       library.markDirty();
       return true;
     }
-    else if (playerHeld.getItem().equals(Items.BOOK)
+    if (playerHeld.getItem().equals(Items.BOOK)
         && player.getCooldownTracker().hasCooldown(Items.BOOK) == false) {
-          EnchantStack es = library.getEnchantStack(segment);
-          if (es.isEmpty() == false) {
-            //also let them know what youre withdrawing. without the counter
-            UtilChat.sendStatusMessage(player, UtilChat.lang(es.getEnch().getName()) + " " + es.levelName());
-            this.dropEnchantedBookOnPlayer(es, player, pos);
-            playerHeld.shrink(1);
-            library.removeEnchantment(segment);
-            onSuccess(player);
-            library.markDirty();
-            return true;
-          }
-        }
+      EnchantStack es = library.getEnchantStack(segment);
+      if (es.isEmpty() == false) {
+        //also let them know what youre withdrawing. without the counter
+        UtilChat.sendStatusMessage(player, UtilChat.lang(es.getEnch().getName()) + " " + es.levelName());
+        this.dropEnchantedBookOnPlayer(es, player, pos);
+        playerHeld.shrink(1);
+        library.removeEnchantment(segment);
+        onSuccess(player);
+        library.markDirty();
+        return true;
+      }
+    }
     //display information about whats inside ??maybe?? if sneaking
-    else if (player.isSneaking() == false && !player.world.isRemote) {
+    else if (player.isSneaking() == false && !player.world.isRemote && !playerHeld.isEmpty()) {
       EnchantStack es = library.getEnchantStack(segment);
       UtilChat.sendStatusMessage(player, es.toString());
       library.markDirty();

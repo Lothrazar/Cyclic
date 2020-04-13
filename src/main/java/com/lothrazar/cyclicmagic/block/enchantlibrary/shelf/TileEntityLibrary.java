@@ -41,8 +41,8 @@ public class TileEntityLibrary extends TileEntityBaseMachine implements ITickabl
   public static final int MAX_COUNT = 999999;
   private static final int HEADER_TIMER = 10;
   private static final String NBT_CLICKED = "lastClicked";
-  EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];
-  QuadrantEnum lastClicked = null;
+  private EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];
+  private QuadrantEnum lastClicked = null;
   private int timer = 0;
 
   public TileEntityLibrary() {

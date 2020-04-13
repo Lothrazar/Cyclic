@@ -691,6 +691,7 @@ tile.block_workbench.guide=A crafting table that also keeps its inventory saved.
 tile.block_workbench.name=Workbench
 tile.block_workbench.tooltip=A Crafting table that keeps its inventory
 enchantment_stack.empty=Empty; use an enchanted book to store
+block_library.stacksize=Enchanted books must be stack size 1 to store
 tile.block_screen.name=Text Projector
 tile.block_screen.tooltip=Projects text with control of font size, padding, and colour
 tile.block_screen.guide=Like a slightly advanced computerized sign
