@@ -38,12 +38,6 @@ public class GuiPattern extends GuiBaseContainer {
 
   static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
-  private int leftColX;
-  private int[] yRows = new int[3];
-  private int rightColX;
-  private int sizeY;
-  private int sizeColX;
-  private int heightColX;
   private ButtonTileEntityField btnRotation;
   private ButtonTileEntityField btnFlipZ;
   private ButtonTileEntityField btnFlipY;
@@ -99,10 +93,6 @@ public class GuiPattern extends GuiBaseContainer {
     this.addButton(btnFlipZ);
   }
 
-  private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
-    this.drawFieldAt(x, y, f.ordinal());
-  }
-
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -119,8 +109,8 @@ public class GuiPattern extends GuiBaseContainer {
     btnFlipX.displayString = ((tile.getField(Fields.FLIPX) == 1) ? "^" : "") + "X";
     btnFlipY.displayString = ((tile.getField(Fields.FLIPY) == 1) ? "^" : "") + "Y";
     btnFlipZ.displayString = ((tile.getField(Fields.FLIPZ) == 1) ? "^" : "") + "Z";
-    this.drawString("tile.builder_pattern.source_gps_label", 30, 32);
-    this.drawString("tile.builder_pattern.target_gps_label", 110, 32);
+    this.drawString("tile.builder_pattern.source_gps_label", 30, 40);
+    this.drawString("tile.builder_pattern.target_gps_label", 110, 40);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 
@@ -136,9 +126,9 @@ public class GuiPattern extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_START - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_START - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT_GPS);
-    int hgt = 42;
+    int hgt = 50;
     Gui.drawModalRectWithCustomSizedTexture(
-        this.guiLeft + 25, this.guiTop + hgt + 9, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+        this.guiLeft + 25, this.guiTop + hgt + 15, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     Gui.drawModalRectWithCustomSizedTexture(
         this.guiLeft + 45, this.guiTop + hgt, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     Gui.drawModalRectWithCustomSizedTexture(

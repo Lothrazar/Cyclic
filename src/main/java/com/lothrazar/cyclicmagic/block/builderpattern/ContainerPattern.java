@@ -52,21 +52,21 @@ public class ContainerPattern extends ContainerBaseMachine {
       addSlotToContainer(new Slot(tile, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
       s++;
     }
-    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_SRCA, 26, 43) {
+    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_SRCA, 26, 66) {
 
       @Override
       public int getSlotStackLimit() {
         return 1;
       }
     });
-    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_SRCB, 46, 43) {
+    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_SRCB, 46, 51) {
 
       @Override
       public int getSlotStackLimit() {
         return 1;
       }
     });
-    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_TARGET, 121, 43) {
+    addSlotToContainer(new SlotCheckTileValid(te, TileEntityPatternBuilder.SLOT_TARGET, 121, 51) {
 
       @Override
       public int getSlotStackLimit() {

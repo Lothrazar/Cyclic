@@ -23,13 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.block.builderpattern.PacketTilePatternSwap;
 import com.lothrazar.cyclicmagic.block.exppylon.PacketTilePylon;
 import com.lothrazar.cyclicmagic.block.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.block.vector.PacketTileVector;
 import com.lothrazar.cyclicmagic.item.cannon.MessageGolemLaserFX;
-import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketRangeBuild;
+import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.item.cyclicwand.PacketWandGui;
@@ -117,7 +116,7 @@ public class PacketRegistry {
     packetID++;//
     network.registerMessage(PacketTileIncrementField.class, PacketTileIncrementField.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileClientToServer.class, PacketTileClientToServer.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
+    packetID++;//deleted packet
     network.registerMessage(PacketEntitySyncToClient.class, PacketEntitySyncToClient.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileVector.class, PacketTileVector.class, packetID++, Side.SERVER);
     network.registerMessage(PacketPlayerFalldamage.class, PacketPlayerFalldamage.class, packetID++, Side.SERVER);
