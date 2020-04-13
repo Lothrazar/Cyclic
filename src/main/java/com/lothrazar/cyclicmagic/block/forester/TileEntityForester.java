@@ -160,6 +160,7 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     else { // no valid target, back out
       isCurrentlyMining = false;
       updateTargetPos();
+      skipSomeAirBlocks();
       resetProgress(targetPos);
     }
     //currentlyMining may have changed, and we are still turned on:
@@ -178,6 +179,15 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
       }
     }
     return false;
+  }
+
+  private void skipSomeAirBlocks() {
+    int skipping = MAX_HEIGHT - 2;
+    int i = 0;
+    while (world.isAirBlock(targetPos) && i < skipping) {
+      updateTargetPos();
+      i++;
+    }
   }
 
   private void tryEquipItem() {
@@ -210,6 +220,15 @@ public class TileEntityForester extends TileEntityBaseMachineInvo implements ITi
     }
     IBlockState targetState = world.getBlockState(targetPos);
     Block target = targetState.getBlock();
+    ItemStack modsThatUseMetaAreDumb = new ItemStack(targetState.getBlock(), 1, targetState.getBlock().getMetaFromState(targetState));
+    List<String> oreDictList = UtilOreDictionary.getOreDictList(modsThatUseMetaAreDumb, true);
+    for (String ore : oreDictList) {
+      for (String str : validTargetsOreDict) {
+        if (str.equals(ore)) {
+          return true;
+        }
+      }
+    }
     return UtilOreDictionary.doesMatchOreDict(new ItemStack(target), validTargetsOreDict);
   }
 

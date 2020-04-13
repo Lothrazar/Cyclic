@@ -35,9 +35,12 @@ public class UtilOreDictionary {
   }
 
   public static boolean doesMatchOreDict(final ItemStack stack, final String oreId, boolean strict) {
+    //    System.out.println("better not be air " + stack);
     if (OreDictionary.doesOreNameExist(oreId)) {
       for (ItemStack stackCurrent : OreDictionary.getOres(oreId)) {
-        if (OreDictionary.itemMatches(stackCurrent, stack, strict)) {
+        boolean match = OreDictionary.itemMatches(stackCurrent, stack, strict);
+        //        System.out.println(match + " for " + stack);
+        if (match) {
           return true;
         }
       }
