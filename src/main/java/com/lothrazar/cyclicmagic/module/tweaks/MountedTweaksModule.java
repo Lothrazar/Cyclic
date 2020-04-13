@@ -41,32 +41,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
 
-  // private static final String KEY_LOCKMOUNT = "LOCKMOUNT";
   private static final String KEY_MOUNTENTITY = "CYCLIC_ENTITYID";
   private boolean showHungerMounted;
-  // private boolean disableHurtMount;
   private boolean mountedPearl;
 
-  //  @SubscribeEvent
-  //  public void onLivingHurtEvent(LivingHurtEvent event) {
-  //    if (disableHurtMount == false) { return;//this is always off. it seems like in vanilla minecraft this just never happens
-  //    // at least in 1.9.4, i cannot hurt the horse im riding with a sword or bow shot
-  //    //so no point in having feature.
-  //    }
-  //    DamageSource source = event.getSource();
-  //    if (source.getSourceOfDamage() == null) { return; }
-  //    Entity sourceOfDamage = source.getEntity();
-  //    EntityLivingBase entity = event.getEntityLiving();
-  //    if (entity == null) { return; }
-  //    List<Entity> getPassengers = entity.getPassengers();
-  //    for (Entity p : getPassengers) {
-  //      if (p != null && sourceOfDamage instanceof EntityPlayer
-  //          && (p.getUniqueID() == sourceOfDamage.getUniqueID() || p == sourceOfDamage)) {
-  //        //with arrows/sword/etc
-  //        event.setCanceled(true);
-  //      }
-  //    }
-  //  }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRenderOverlay(RenderGameOverlayEvent event) {
@@ -79,9 +57,9 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.player;
-    showHungerMounted = config.getBoolean("Show Hunger Mounted", category, true, "Force the players hunger bar to show even when mounted");
+    showHungerMounted = config.getBoolean("Show Hunger Mounted", category, false, "Force the players hunger bar to show even when mounted");
     //TODO:disableHurtMount
-    mountedPearl = config.getBoolean("Pearls On Horseback", category, true,
+    mountedPearl = config.getBoolean("Pearls On Horseback", category, false,
         "Enderpearls work on a horse, bringing it with you");
   }
 
