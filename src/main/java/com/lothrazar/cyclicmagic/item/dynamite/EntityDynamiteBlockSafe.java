@@ -28,6 +28,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 
 public class EntityDynamiteBlockSafe extends EntityThrowableDispensable {
 
@@ -58,8 +59,10 @@ public class EntityDynamiteBlockSafe extends EntityThrowableDispensable {
   protected void processImpact(RayTraceResult mop) {
     if (this.inWater == false) {
       ExplosionBlockSafe explosion = new ExplosionBlockSafe(this.getEntityWorld(), this.getThrower(), posX, posY, posZ, explosionLevel, false, true);
-      explosion.doExplosionA();
-      explosion.doExplosionB(false);
+      if (!ForgeEventFactory.onExplosionStart(this.world, explosion)) {
+        explosion.doExplosionA();
+        explosion.doExplosionB(false);
+      }
     }
     this.setDead();
   }

@@ -98,6 +98,7 @@ public class ExplosionBlockSafe extends Explosion {
   /**
    * Does the first part of the explosion (destroy blocks)
    */
+  @Override
   public void doExplosionA() {
     Set<BlockPos> set = Sets.<BlockPos> newHashSet();
     int i = 16;
@@ -105,9 +106,9 @@ public class ExplosionBlockSafe extends Explosion {
       for (int k = 0; k < 16; ++k) {
         for (int l = 0; l < 16; ++l) {
           if (j == 0 || j == 15 || k == 0 || k == 15 || l == 0 || l == 15) {
-            double d0 = (double) ((float) j / 15.0F * 2.0F - 1.0F);
-            double d1 = (double) ((float) k / 15.0F * 2.0F - 1.0F);
-            double d2 = (double) ((float) l / 15.0F * 2.0F - 1.0F);
+            double d0 = j / 15.0F * 2.0F - 1.0F;
+            double d1 = k / 15.0F * 2.0F - 1.0F;
+            double d2 = l / 15.0F * 2.0F - 1.0F;
             double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
             d0 = d0 / d3;
             d1 = d1 / d3;
@@ -136,32 +137,32 @@ public class ExplosionBlockSafe extends Explosion {
     }
     this.affectedBlockPositions.addAll(set);//ONLY THIS line is different. dont affect blocks
     float f3 = this.explosionSize * 2.0F;
-    int k1 = MathHelper.floor(this.explosionX - (double) f3 - 1.0D);
-    int l1 = MathHelper.floor(this.explosionX + (double) f3 + 1.0D);
-    int i2 = MathHelper.floor(this.explosionY - (double) f3 - 1.0D);
-    int i1 = MathHelper.floor(this.explosionY + (double) f3 + 1.0D);
-    int j2 = MathHelper.floor(this.explosionZ - (double) f3 - 1.0D);
-    int j1 = MathHelper.floor(this.explosionZ + (double) f3 + 1.0D);
-    List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this.exploder, new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+    int k1 = MathHelper.floor(this.explosionX - f3 - 1.0D);
+    int l1 = MathHelper.floor(this.explosionX + f3 + 1.0D);
+    int i2 = MathHelper.floor(this.explosionY - f3 - 1.0D);
+    int i1 = MathHelper.floor(this.explosionY + f3 + 1.0D);
+    int j2 = MathHelper.floor(this.explosionZ - f3 - 1.0D);
+    int j1 = MathHelper.floor(this.explosionZ + f3 + 1.0D);
+    List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this.exploder, new AxisAlignedBB(k1, i2, j2, l1, i1, j1));
     net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.world, this, list, f3);
     Vec3d vec3d = new Vec3d(this.explosionX, this.explosionY, this.explosionZ);
     for (int k2 = 0; k2 < list.size(); ++k2) {
-      Entity entity = (Entity) list.get(k2);
+      Entity entity = list.get(k2);
       if (!entity.isImmuneToExplosions()) {
-        double d12 = entity.getDistance(this.explosionX, this.explosionY, this.explosionZ) / (double) f3;
+        double d12 = entity.getDistance(this.explosionX, this.explosionY, this.explosionZ) / f3;
         if (d12 <= 1.0D) {
           double d5 = entity.posX - this.explosionX;
-          double d7 = entity.posY + (double) entity.getEyeHeight() - this.explosionY;
+          double d7 = entity.posY + entity.getEyeHeight() - this.explosionY;
           double d9 = entity.posZ - this.explosionZ;
-          double d13 = (double) MathHelper.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
+          double d13 = MathHelper.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
           if (d13 != 0.0D) {
             d5 = d5 / d13;
             d7 = d7 / d13;
             d9 = d9 / d13;
-            double d14 = (double) this.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
+            double d14 = this.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
             double d10 = (1.0D - d12) * d14;
             if (entity instanceof EntityPlayer == false) {//special: do not harm players at all
-              entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) f3 + 1.0D)));
+              entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * f3 + 1.0D)));
             }
             double d11 = d10;
             if (entity instanceof EntityLivingBase) {
@@ -185,6 +186,7 @@ public class ExplosionBlockSafe extends Explosion {
   /**
    * Does the second part of the explosion (sound, particles, drop spawn)
    */
+  @Override
   public void doExplosionB(boolean spawnParticles) {
     this.world.playSound((EntityPlayer) null, this.explosionX, this.explosionY, this.explosionZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
     if (this.explosionSize >= 2.0F && this.isSmoking) {
@@ -198,18 +200,18 @@ public class ExplosionBlockSafe extends Explosion {
         IBlockState iblockstate = this.world.getBlockState(blockpos);
         Block block = iblockstate.getBlock();
         if (spawnParticles) {
-          double d0 = (double) ((float) blockpos.getX() + this.world.rand.nextFloat());
-          double d1 = (double) ((float) blockpos.getY() + this.world.rand.nextFloat());
-          double d2 = (double) ((float) blockpos.getZ() + this.world.rand.nextFloat());
+          double d0 = blockpos.getX() + this.world.rand.nextFloat();
+          double d1 = blockpos.getY() + this.world.rand.nextFloat();
+          double d2 = blockpos.getZ() + this.world.rand.nextFloat();
           double d3 = d0 - this.explosionX;
           double d4 = d1 - this.explosionY;
           double d5 = d2 - this.explosionZ;
-          double d6 = (double) MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
+          double d6 = MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
           d3 = d3 / d6;
           d4 = d4 / d6;
           d5 = d5 / d6;
-          double d7 = 0.5D / (d6 / (double) this.explosionSize + 0.1D);
-          d7 = d7 * (double) (this.world.rand.nextFloat() * this.world.rand.nextFloat() + 0.3F);
+          double d7 = 0.5D / (d6 / this.explosionSize + 0.1D);
+          d7 = d7 * (this.world.rand.nextFloat() * this.world.rand.nextFloat() + 0.3F);
           d3 = d3 * d7;
           d4 = d4 * d7;
           d5 = d5 * d7;
@@ -238,5 +240,9 @@ public class ExplosionBlockSafe extends Explosion {
     //              }
     //          }
     //      }
+  }
+
+  public Entity getExploder() {
+    return exploder;
   }
 }
