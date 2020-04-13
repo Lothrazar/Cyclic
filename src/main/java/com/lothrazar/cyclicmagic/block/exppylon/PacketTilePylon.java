@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.exppylon;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
@@ -109,6 +110,12 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
           // so DRAIN FROM PYLON, add to PLAYER. BUT only if PYLON has enough
           int expToAdd = message.value * -1;
           int fluidToDrain = expToAdd * TileEntityXpPylon.FLUID_PER_EXP;
+          if (fluidToDrain > fluidPylonHasFluid && fluidPylonHasFluid > 0) {
+            ModCyclic.logger.info("pulling out more than is there " + fluidToDrain);
+            ModCyclic.logger.info("fluidPylonHasFluidt" + fluidPylonHasFluid);
+            fluidToDrain = fluidPylonHasFluid;
+            expToAdd = fluidToDrain / TileEntityXpPylon.FLUID_PER_EXP;
+          }
           if (fluidPylonHasFluid >= fluidToDrain) {
             //if I have 40 exp, that is 2 fluid units
             tile.setField(message.type.ordinal(), fluidPylonHasFluid - fluidToDrain);
