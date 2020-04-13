@@ -200,7 +200,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
     if (this.powerTimeout > 0) {
       this.powerTimeout--;
       if (this.powerTimeout == 0) {
-        if (this.getState() != null && this.getState().getBlock() == this.getBlockType()) {
+        if (this.getState() != null && this.getState().getBlock() instanceof BlockPassword) {
           world.setBlockState(pos, this.getState().withProperty(BlockPassword.POWERED, false));
         }
         else {
