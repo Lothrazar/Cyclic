@@ -38,7 +38,7 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityLibrary extends TileEntityBaseMachine implements ITickable {
 
-  public static final int MAX_COUNT = 64;
+  public static final int MAX_COUNT = 999999;
   private static final int HEADER_TIMER = 10;
   private static final String NBT_CLICKED = "lastClicked";
   EnchantStack[] storage = new EnchantStack[QuadrantEnum.values().length];

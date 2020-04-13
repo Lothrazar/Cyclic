@@ -90,7 +90,8 @@ public class LibraryTESR<T extends TileEntityLibrary> extends BaseTESR<T> {
       break;
     }
     float bookY = startY, bookX = startX;
-    int max = (int) Math.ceil((stack.getCount()) / 8.0F);
+    int max = (int) Math.ceil((stack.getCount()) / 16.0F);
+    max = Math.min(max, 8);//dont display overflow
     for (int i = 0; i < max; i++) {
       bookX += scaleFactor;
       if (i % 8 == 0) {
