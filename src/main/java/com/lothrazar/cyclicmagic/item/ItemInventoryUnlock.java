@@ -105,6 +105,9 @@ public class ItemInventoryUnlock extends ItemFoodCreative implements IHasRecipe,
     enabled = config.getBoolean("InventoryUpgrade(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     String category = Const.ConfigCategory.inventory;
     EventExtendedInventory.keepOnDeath = config.getBoolean("InventoryUpgradeKeepOnDeath", category, true, "If true, you always keep these extended storage items on death (similar to an ender chest).  If false, you will drop these items on death (depending on the keepInventory game rule)");
+    //new x y locations
+    EventExtendedInventory.xOffset = config.getInt("xOffsetButton", category, 44, 0, 200, "Location of the buttons on inventory");
+    EventExtendedInventory.yOffset = config.getInt("yOffsetButton", category, 0, 0, 200, "Location of the buttons on inventory");
   }
 
   @Override

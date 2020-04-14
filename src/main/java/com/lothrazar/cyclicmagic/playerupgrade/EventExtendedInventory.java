@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.capability.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.ButtonTabToggleCrafting;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.ButtonTabToggleInventory;
@@ -51,6 +52,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EventExtendedInventory {
 
   public static boolean keepOnDeath;
+  public static int xOffset = 44;
+  public static int yOffset = 0;
 
   @SideOnly(value = Side.CLIENT)
   @SubscribeEvent
@@ -61,14 +64,14 @@ public class EventExtendedInventory {
     if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
         || gui instanceof GuiPlayerExtWorkbench
         || gui instanceof GuiScreenHorseInventory
-        || gui.getClass().getName().equals("com.lothrazar.cyclicmagic.compat.fastbench.GuiFastPlayerBench")) {
+        || gui instanceof GuiFastPlayerBench) {
       // gui left and top are private, so are the sizes
       int xSize = 176;
       int ySize = 166;
       int guiLeft = (gui.width - xSize) / 2;
       int guiTop = (gui.height - ySize) / 2;
-      int x = 44 + guiLeft;
-      int y = guiTop;
+      int x = xOffset + guiLeft;
+      int y = yOffset + guiTop;
       EntityPlayer player = ModCyclic.proxy.getClientPlayer();
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
       showInvToggle = data.hasInventoryExtended() && CyclicContent.invfood.enabled();
