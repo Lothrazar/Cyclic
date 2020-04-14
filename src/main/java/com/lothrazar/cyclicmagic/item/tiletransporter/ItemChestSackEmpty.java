@@ -172,7 +172,11 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
         "extracells:fluidcrafter",
         "extracells:ecbaseblock",
         "extracells:fluidfiller",
+        "refinedstorage:disk_manipulator",
         "refinedstorage:disk_drive",
+        "refinedstorage:crafter",
+        "refinedstorage:crafter_manager",
+        "refinedstorage:grid",
         "parabox:parabox",
         "immersivengineering:metal_device1"
     };
