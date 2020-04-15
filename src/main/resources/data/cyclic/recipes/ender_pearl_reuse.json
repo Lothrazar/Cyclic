@@ -1,25 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ffq",
-    "ggf",
-    "egf"
+    "eee",
+    " s ",
+    " r "
   ],
   "key": {
-    "f": {
-      "item": "minecraft:feather"
-    },
-    "g": {
-      "item": "minecraft:gold_ingot"
-    },
     "e": {
-      "item": "minecraft:ender_eye"
+      "item": "minecraft:ender_pearl"
     },
-    "q": {
+    "r": {
+      "item": "minecraft:lapis_block"
+    },
+    "s": {
       "item": "cyclic:gem_amber"
     }
   },
   "result": {
-    "item": "cyclic:ender_pearl_reuse"
+    "item": "cyclic:ender_pearl_reuse",
+    "count": 1
   }
 }
