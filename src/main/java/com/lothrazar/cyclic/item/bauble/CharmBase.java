@@ -29,9 +29,7 @@ public abstract class CharmBase extends ItemBase {
   }
 
   private boolean canUse(ItemStack stack) {
-    boolean hasDur = stack.getDamage() > 0;
-    //is on nbt?
-    return hasDur;
+    return stack.getDamage() < stack.getMaxDamage();
   }
 
   @Override
