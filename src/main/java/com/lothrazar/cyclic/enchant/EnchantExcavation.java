@@ -30,6 +30,7 @@ import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -46,103 +47,111 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantExcavation extends EnchantBase {
 
-  public EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
-    super(rarityIn, typeIn, slots);
-  }
+	public EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+		super(rarityIn, typeIn, slots);
+	}
 
-  @Override
-  public int getMaxLevel() {
-    return 3;
-  }
+	@Override
+	public int getMaxLevel() {
+		return 3;
+	}
 
-  int[] levelToMaxBreak = { 0, 8, 14, 36 };
+	int[] levelToMaxBreak = { 0, 8, 14, 36 };
 
-  private int getHarvestMax(int level) {
-    return levelToMaxBreak[level];
-  }
+	private int getHarvestMax(int level) {
+		return levelToMaxBreak[level];
+	}
 
-  @SubscribeEvent(priority = EventPriority.LOWEST)
-  public void onBreakEvent(BreakEvent event) {
-    IWorld world = event.getWorld();
-    PlayerEntity player = event.getPlayer();
-    if (player.swingingHand == null) {
-      return;
-    }
-    BlockPos pos = event.getPos();
-    Block block = event.getState().getBlock();
-    //is this item stack enchanted with ME?
-    ItemStack stackHarvestingWith = player.getHeldItem(player.swingingHand);
-    int level = this.getCurrentLevelTool(stackHarvestingWith);
-    if (level <= 0) {
-      return;
-    }
-    // if I am using an axe on stone or dirt, doesn't trigger
-    boolean isAnySingleOk = false;//if i am a tool valid on 2 things, and both of 2 blocks are present, we are just ok
-    for (ToolType type : stackHarvestingWith.getItem().getToolTypes(stackHarvestingWith)) {
-      if (block.isToolEffective(world.getBlockState(pos), type)) {
-        isAnySingleOk = true;
-      }
-    }
-    //starts at 1 for current one
-    if (isAnySingleOk) {
-      this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
-    }
-  }
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onBreakEvent(BreakEvent event) {
+		IWorld world = event.getWorld();
+		PlayerEntity player = event.getPlayer();
+		if (player.swingingHand == null) {
+			return;
+		}
+		BlockPos pos = event.getPos();
+		Block block = event.getState().getBlock();
+		// is this item stack enchanted with ME?
+		ItemStack stackHarvestingWith = player.getHeldItem(player.swingingHand);
+		int level = this.getCurrentLevelTool(stackHarvestingWith);
+		if (level <= 0) {
+			return;
+		}
+		// if I am using an axe on stone or dirt, doesn't trigger
+		boolean isAnySingleOk = false;// if i am a tool valid on 2 things, and both of 2 blocks are present, we are
+										// just ok
+		for (ToolType type : stackHarvestingWith.getItem().getToolTypes(stackHarvestingWith)) {
+			if (block.isToolEffective(world.getBlockState(pos), type)) {
+				isAnySingleOk = true;
+			}
+		}
+		// starts at 1 for current one
+		if (isAnySingleOk) {
+			this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
+		}
+	}
 
-  /**
-   * WARNING: RECURSIVE function to break all blocks connected up to the maximum total
-   *
-   * @param swingingHand
-   */
-  private int harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn, final Block block, int totalBroken, final int level,
-      Hand swingingHand) {
-    if (totalBroken >= this.getHarvestMax(level)
-        || player.getHeldItem(player.swingingHand).isEmpty()) {
-      return totalBroken;
-    }
-    //    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
-    List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
-    //    ModCyclic.LOGGER.info("theFuture harvest " + theFuture.size());
-    List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
-    for (BlockPos targetPos : theFuture) {
-      BlockState targetState = world.getBlockState(targetPos);
-      //check canHarvest every time -> permission or any other hooks
-      if (world.isAirBlock(targetPos)
-          || player.canHarvestBlock(targetState) == false
-          || totalBroken >= this.getHarvestMax(level)
-          || player.getHeldItem(player.swingingHand).isEmpty()) {
-        continue;
-      }
-      block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(swingingHand));
-      //      block.dropXpOnBlockBreak(world, targetPos, block.getExpDrop(targetState, world, targetPos, fortuneXp));
-      world.destroyBlock(targetPos, false);
-      wasHarvested.add(targetPos);
-      //damage but also respect the unbreaking chant
-      player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
-      //      UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
-      totalBroken++;
-    }
-    //AFTER we harvest the close ones only THEN we branch out
-    for (BlockPos targetPos : theFuture) {
-      if (totalBroken >= this.getHarvestMax(level)
-          || player.getHeldItem(player.swingingHand).isEmpty()) {
-        break;
-      }
-      totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level, swingingHand);
-    }
-    return totalBroken;
-  }
+	/**
+	 * WARNING: RECURSIVE function to break all blocks connected up to the maximum
+	 * total
+	 *
+	 * @param swingingHand
+	 */
+	private int harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn,
+			final Block block, int totalBroken, final int level, Hand swingingHand) {
+		if (totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
+			return totalBroken;
+		}
+		// int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
+		List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
+		// ModCyclic.LOGGER.info("theFuture harvest " + theFuture.size());
+		List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
+		for (BlockPos targetPos : theFuture) {
+			BlockState targetState = world.getBlockState(targetPos);
+			// check canHarvest every time -> permission or any other hooks
+			if (world.isAirBlock(targetPos) || player.canHarvestBlock(targetState) == false
+					|| totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
+				continue;
+			}
+			block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(swingingHand));
+			// block.dropXpOnBlockBreak(world, targetPos, block.getExpDrop(targetState,
+			// world, targetPos, fortuneXp));
+			world.destroyBlock(targetPos, false);
+			wasHarvested.add(targetPos);
+			// damage but also respect the unbreaking chant
+			player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.rand, null);
+			// UtilItemStack.damageItem(player, player.getHeldItem(player.swingingHand) );
+			totalBroken++;
+		}
+		// AFTER we harvest the close ones only THEN we branch out
+		for (BlockPos targetPos : theFuture) {
+			if (totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
+				break;
+			}
+			totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level, swingingHand);
+		}
+		return totalBroken;
+	}
 
-  private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
-    List<BlockPos> list = new ArrayList<BlockPos>();
-    // TODO: DIAGONAL!
-    List<Direction> targetFaces = Arrays.asList(Direction.values());
-    Collections.shuffle(targetFaces);
-    for (Direction fac : targetFaces) {
-      if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
-        list.add(start.offset(fac));
-      }
-    }
-    return list;
-  }
+	private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
+		List<BlockPos> list = new ArrayList<BlockPos>();
+	 
+		List<Direction> targetFaces = Arrays.asList(Direction.values());
+		Collections.shuffle(targetFaces);
+		for (Direction fac : targetFaces) {
+			BlockPos target = start.offset(fac);
+			if (World.isOutsideBuildHeight(target)) {
+				continue;
+			}
+			BlockState state = world.getBlockState(target);
+
+			if (state == null || state.getBlock() == Blocks.AIR) {
+				continue;
+			}
+			if (state.getBlock() == blockIn) {
+				list.add(target);
+			}
+		}
+		return list;
+	}
 }
