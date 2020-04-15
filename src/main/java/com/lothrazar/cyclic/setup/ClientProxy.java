@@ -3,10 +3,8 @@ package com.lothrazar.cyclic.setup;
 import com.lothrazar.cyclic.CyclicRegistry;
 import com.lothrazar.cyclic.block.battery.ScreenBattery;
 import com.lothrazar.cyclic.block.generator.ScreenGenerator;
-import com.lothrazar.cyclic.block.harvester.RenderHarvester;
 import com.lothrazar.cyclic.block.harvester.ScreenHarvester;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
-import com.lothrazar.cyclic.block.itemcollect.ScreenCollector;
+ import com.lothrazar.cyclic.block.itemcollect.ScreenCollector;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import net.minecraft.client.Minecraft;
@@ -26,7 +24,6 @@ public class ClientProxy implements IProxy {
     ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.collectortileContainer, ScreenCollector::new);
     ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.generatorCont, ScreenGenerator::new);
     ScreenManager.registerFactory(CyclicRegistry.ContainerScreens.batteryCont, ScreenBattery::new);
-    ClientRegistry.bindTileEntitySpecialRenderer(TileHarvester.class, new RenderHarvester());
     ClientRegistry.bindTileEntitySpecialRenderer(TileTank.class, new RenderTank());
   }
 
