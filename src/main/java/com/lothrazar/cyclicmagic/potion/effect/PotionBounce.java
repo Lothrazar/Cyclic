@@ -84,12 +84,15 @@ public class PotionBounce extends PotionBase {
   @SubscribeEvent
   public void rebounceTick(TickEvent.PlayerTickEvent event) {
     //catch a rebounce that was postponed from last tick
-    if (event.player.isPotionActive(this) && event.player.isElytraFlying() == false) {
-      EntityPlayer player = event.player;
-      if (player.isElytraFlying() || event.phase != TickEvent.Phase.END) {
-        return;
-      }
-      float motionY = (player.getEntityData().getInteger(NBT_MOTIONY)) / 100f;
+    if (event.player == null || event.player.isDead) {
+      return;
+    }
+    EntityPlayer player = event.player;
+    if (player.isPotionActive(this) && player.isElytraFlying() == false
+        && event.phase == TickEvent.Phase.END && !player.isElytraFlying()) {
+      // now rebounce
+      int old = (player.getEntityData() == null) ? 1 : player.getEntityData().getInteger(NBT_MOTIONY);
+      float motionY = old / 100F;
       if (player.getEntityData().getInteger(NBT_TICK) == player.ticksExisted && motionY > 0) {
         player.getEntityData().setInteger(NBT_TICK, -1);
         player.motionY = motionY;
