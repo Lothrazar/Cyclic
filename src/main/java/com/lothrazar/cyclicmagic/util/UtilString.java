@@ -35,6 +35,17 @@ public class UtilString {
    */
   public static final boolean matchWildcard = true;
 
+  public static boolean hasOverlap(final List<String> list, final List<String> other) {
+    for (String s : list) {
+      for (String o : other) {
+        if (s.equals(o)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   /**
    * If the list has "hc:*_sapling" and input is "hc:whatever_sapling" then match is true
    * 

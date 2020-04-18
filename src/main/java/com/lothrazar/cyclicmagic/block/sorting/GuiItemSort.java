@@ -93,6 +93,9 @@ public class GuiItemSort extends GuiBaseContainer {
         int lockValue = te.getField(f.ordinal() + EnumFacing.values().length);
         btn.setTooltip("button.filter.ignoredamage" + lockValue + ".tooltip");
         btn.displayString = (lockValue == 1) ? "I" : "N";
+        if (lockValue == 2) {
+          btn.displayString = "O";//lazy hack
+        }
       }
     }
   }
@@ -103,24 +106,26 @@ public class GuiItemSort extends GuiBaseContainer {
     int id = 2;
     ButtonTileEntityField btn;
     for (EnumFacing f : EnumFacing.values()) {
+      // RIGHT column of buttons with lock symbol
       btn = new ButtonTileEntityField(
           id++,
-          this.guiLeft + Const.PAD,
+          this.guiLeft + Const.PAD + 1,
           this.guiTop + f.ordinal() * Const.SQ + 17,
           tile.getPos(), f.ordinal(), 1,
-          Const.SQ, Const.SQ);
+          Const.SQ - 1, Const.SQ);
       this.addButton(btn);
       btnMapLock.put(f, btn);
     }
     int offset = EnumFacing.values().length;
     for (EnumFacing f : EnumFacing.values()) {
+      //left colun the match type
       id++;
       btn = new ButtonTileEntityField(
           id++,
           this.guiLeft + 1,
           this.guiTop + f.ordinal() * Const.SQ + 17,
           tile.getPos(), f.ordinal() + offset, 1,
-          8, Const.SQ);
+          9, Const.SQ);
       this.addButton(btn);
       btnMapDamageIgnore.put(f, btn);
     }

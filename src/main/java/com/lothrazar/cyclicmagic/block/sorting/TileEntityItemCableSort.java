@@ -36,6 +36,8 @@ import com.lothrazar.cyclicmagic.data.ITileStackWrapper;
 import com.lothrazar.cyclicmagic.data.StackWrapper;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilOreDictionary;
+import com.lothrazar.cyclicmagic.util.UtilString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -43,7 +45,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implements ITileStackWrapper, ITickable {
 
@@ -59,6 +60,10 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
     public String nameLower() {
       return UtilChat.lang("tile.item_pipe_sort." + this.name().toLowerCase());
     }
+  }
+
+  public static enum FilterType {
+    NORMAL, IGNORE, OREDICT;
   }
 
   private Map<EnumFacing, Integer> mapIncoming = Maps.newHashMap();
@@ -80,6 +85,10 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
 
   public LockType getLockType(EnumFacing f) {
     return LockType.values()[allowEverything.get(f)];
+  }
+
+  public FilterType getFilterType(EnumFacing f) {
+    return FilterType.values()[ignoreDamageIfOne.get(f)];
   }
 
   private List<ItemStack> getFilterForSide(EnumFacing f) {
@@ -157,14 +166,13 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   private List<EnumFacing> getValidSidesForStack(ItemStack stackToExport) {
     List<EnumFacing> faces = new ArrayList<EnumFacing>();
     for (EnumFacing f : EnumFacing.values()) {
-      //      getFilterForSide(f);
       if (this.isIncomingFromFace(f)) {
         continue;
       }
       if (this.getLockType(f) == LockType.FILTER) {
         List<ItemStack> inventoryContents = getFilterForSide(f);
-        if (this.ignoreDamageIfOne.get(f) == 1) {
-          //ignore damage, only check that items are equal
+        if (this.getFilterType(f) == FilterType.IGNORE) {
+          //ignore damage AND nbt, only check that items are equal
           for (ItemStack inFilter : inventoryContents) {
             if (inFilter.getItem().equals(stackToExport.getItem())) {
               faces.add(f);
@@ -172,12 +180,24 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
             }
           }
         }
-        else {
+        else if (this.getFilterType(f) == FilterType.OREDICT) {
           //use normal ore-dict matching
-          if (OreDictionary.containsMatch(true,
-              NonNullList.<ItemStack> from(ItemStack.EMPTY, inventoryContents.toArray(new ItemStack[0])),
-              stackToExport)) {
-            faces.add(f);
+          List<String> oreDictList = UtilOreDictionary.getOreDictList(stackToExport, false);
+          for (ItemStack inFilter : inventoryContents) {
+            List<String> inFilterList = UtilOreDictionary.getOreDictList(inFilter, false);
+            if (UtilString.hasOverlap(inFilterList, oreDictList)) {
+              faces.add(f);
+              break;
+            }
+          }
+        }
+        else if (this.getFilterType(f) == FilterType.NORMAL) {
+          for (ItemStack inFilter : inventoryContents) {
+            //both NBT and damage matches
+            if (UtilItemStack.canMerge(inFilter, stackToExport)) {
+              faces.add(f);
+              break;
+            }
           }
         }
       }
@@ -336,14 +356,15 @@ public class TileEntityItemCableSort extends TileEntityBaseMachineInvo implement
   @Override
   public void setField(int id, int value) {
     if (id < EnumFacing.values().length) {
-      //ignore area
+      //lock/unlock/anything goes 
       EnumFacing enumID = EnumFacing.values()[id];
       allowEverything.put(enumID, value % LockType.values().length);
     }
     else {
+      // this is the normal/ignore types 
       //lock area
       EnumFacing enumID = EnumFacing.values()[id % EnumFacing.values().length];
-      ignoreDamageIfOne.put(enumID, value % 2);
+      ignoreDamageIfOne.put(enumID, value % FilterType.values().length);
       // ModCyclic.logger.log("ignoreDamageIfOne SET as" + ignoreDamageIfOne.get(enumID) + "VS getrfield " + this.getField(id));
     }
   }
