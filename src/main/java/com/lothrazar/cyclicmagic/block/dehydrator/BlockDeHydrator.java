@@ -87,7 +87,7 @@ public class BlockDeHydrator extends BlockBaseFacing implements IContent, IHasRe
         "ooo",
         'l', Blocks.CLAY,
         'o', "logWood",
-        'g', Blocks.IRON_BLOCK,
+        'g', "blockIron",
         'r', "dustRedstone");
   }
 

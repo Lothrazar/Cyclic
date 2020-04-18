@@ -81,7 +81,7 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
         "ooo",
         'l', Blocks.CLAY,
         'o', Blocks.HARDENED_CLAY,
-        'g', Blocks.IRON_BLOCK,
+        'g', "blockIron",
         's', Blocks.DROPPER,
         'r', Items.WATER_BUCKET);
   }
