@@ -6,7 +6,9 @@ import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -77,7 +79,6 @@ public class ItemEvents {
       }
       BuilderActionType.setTimeout(held);
       event.setCanceled(true);
-      //      UtilSound.playSound(player, SoundRegistry.tool_mode);
       if (player.isCrouching()) {
         //pick out target block
         BlockState target = world.getBlockState(event.getPos());
@@ -89,14 +90,16 @@ public class ItemEvents {
         if (!world.isRemote) {
           BuilderActionType.toggle(held);
         }
+        UtilSound.playSound(player, SoundRegistry.tool_mode);
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
       }
     }
-    if (held.getItem() instanceof CableWrench) {
+    if (held.getItem() instanceof CableWrench && WrenchActionType.getTimeout(held) == 0) {
       //mode 
-      if (!world.isRemote && WrenchActionType.getTimeout(held) == 0) {
+      if (!world.isRemote) {
         WrenchActionType.toggle(held);
       }
+      UtilSound.playSound(player, SoundRegistry.tool_mode);
       WrenchActionType.setTimeout(held);
       UtilChat.sendStatusMessage(player, UtilChat.lang(WrenchActionType.getName(held)));
     }
