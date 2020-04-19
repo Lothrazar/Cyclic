@@ -25,6 +25,7 @@ public class ConfigManager {
 
   private static void initConfig() {
     COMMON_BUILDER.comment("Feature toggles").push(ModCyclic.MODID);
+    //    EMERALD = COMMON_BUILDER.comment("Disable these items").define("cables", true);
     EMERALD = COMMON_BUILDER.comment("Disable these items").define("emeraldGear", true);
     SANDSTONE = COMMON_BUILDER.comment("Disable these items").define("sandstoneGear", true);
     GEMGEAR = COMMON_BUILDER.comment("Disable these items").define("gemObsidianGear", true);
