@@ -1,0 +1,28 @@
+
+#Feature toggles
+[cyclic]
+	#Disable these items
+	sandstoneGear = true
+	#Disable these items
+	gemObsidianGear = true
+	#Disable these items
+	cables = true
+	#Disable these items
+	emeraldGear = true
+	#Disable these items
+	netherbrickGear = true
+	#Disable this feature
+	enchantments = true
+
+	[cyclic.peat]
+		#Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)
+		#Range: 0.0010000000474974513 ~ 1.0
+		conversionChance = 0.07999999821186066
+
+	[cyclic.energy]
+
+		[cyclic.energy.anvil]
+			#Power to repair one tick of durability
+			#Range: 1 ~ 64000
+			cost = 250
+
