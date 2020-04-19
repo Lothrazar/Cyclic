@@ -30,7 +30,9 @@ import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -39,6 +41,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
@@ -114,13 +118,22 @@ public class EnchantExcavation extends EnchantBase {
       BlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
       if (world.isAirBlock(targetPos)
+          || !player.isAllowEdit()
           || player.canHarvestBlock(targetState) == false
           || totalBroken >= this.getHarvestMax(level)
-          || player.getHeldItem(player.swingingHand).isEmpty()) {
+          || player.getHeldItem(player.swingingHand).isEmpty()
+          || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)) {
         continue;
       }
-      block.harvestBlock(world, player, targetPos, targetState, null, player.getHeldItem(swingingHand));
-      //      block.dropXpOnBlockBreak(world, targetPos, block.getExpDrop(targetState, world, targetPos, fortuneXp));
+      if (world instanceof ServerWorld) {
+        Block.spawnDrops(targetState, world, targetPos, world.getTileEntity(targetPos));
+      }
+      int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
+      int silklevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());
+      int exp = targetState.getExpDrop(world, targetPos, bonusLevel, silklevel);
+      if (exp > 0) {
+        block.dropXpOnBlockBreak(world, targetPos, exp);
+      }
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
       totalBroken++;
