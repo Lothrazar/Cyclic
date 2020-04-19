@@ -5,6 +5,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
@@ -17,7 +18,7 @@ public class ConfigManager {
   public static BooleanValue NETHERBRICK;
   public static BooleanValue ENCHANTMENTS;
   public static IntValue ANVILPOWER;
-  //  public static IntValue PLACERPOWER;
+  public static DoubleValue PEATCHANCE;
   static {
     initConfig();
   }
@@ -30,6 +31,9 @@ public class ConfigManager {
     NETHERBRICK = COMMON_BUILDER.comment("Disable these items").define("netherbrickGear", true);
     ENCHANTMENTS = COMMON_BUILDER.comment("Disable this feature").define("enchantments", true);
     ANVILPOWER = COMMON_BUILDER.comment("Power to repair one tick of durability").defineInRange("energy.anvil.cost", 250, 1, 64000);
+    PEATCHANCE = COMMON_BUILDER.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)").defineInRange("peat.conversionChance",
+        0.08000000000000F,
+        0.0010000000000F, 1F);
     COMMON_BUILDER.pop();
     COMMON_CONFIG = COMMON_BUILDER.build();
   }

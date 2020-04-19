@@ -46,12 +46,14 @@ public abstract class BlockBase extends Block {
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-      if (items != null) {
-        for (int i = 0; i < items.getSlots(); ++i) {
-          InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
+      if (tileentity != null) {
+        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        if (items != null) {
+          for (int i = 0; i < items.getSlots(); ++i) {
+            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
+          }
+          worldIn.updateComparatorOutputLevel(pos, this);
         }
-        worldIn.updateComparatorOutputLevel(pos, this);
       }
       super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
