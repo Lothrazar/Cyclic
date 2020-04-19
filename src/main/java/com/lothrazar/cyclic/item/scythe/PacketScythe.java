@@ -65,8 +65,8 @@ public class PacketScythe extends PacketBase {
   }
 
   public static void encode(PacketScythe msg, PacketBuffer buf) {
-    buf.writeInt(msg.radius);
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.type.ordinal());
+    buf.writeInt(msg.radius);
   }
 }
