@@ -43,8 +43,6 @@ public class EnchantRegistry {
   public static EnchantReach reach;
   @ObjectHolder(ModCyclic.MODID + ":venom")
   public static EnchantVenom venom;
-  @ObjectHolder(ModCyclic.MODID + ":lava_walking")
-  public static Enchantment lava_walking;
 
   @SubscribeEvent
   public static void onEnchantRegister(final RegistryEvent.Register<Enchantment> event) {

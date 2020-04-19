@@ -17,11 +17,6 @@ public class WrenchItem extends ItemBase {
     if (context.getWorld().isRemote) {
       PacketRegistry.INSTANCE.sendToServer(new PacketRotateBlock(context.getPos(), context.getFace(), context.getHand()));
     }
-    //hack the sound back in
-    //    IBlockState placeState = con.getBlockState(pos);
-    //    if (placeState != null && placeState.getBlock() != null) {
-    //    }
-    //    onUse(stack, player, worldObj, hand);
-    return super.onItemUse(context);// ActionResultType.PASS;
+    return super.onItemUse(context);
   }
 }

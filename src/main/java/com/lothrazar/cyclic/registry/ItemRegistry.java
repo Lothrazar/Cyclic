@@ -103,7 +103,7 @@ public class ItemRegistry {
   public static ItemScaffolding item_scaffold_responsive;
   @ObjectHolder(ModCyclic.MODID + ":mob_container")
   public static ItemMobContainer mob_container;
-  @ObjectHolder(ModCyclic.MODID + ":wooden_wrench")
+  @ObjectHolder(ModCyclic.MODID + ":wrench")
   public static WrenchItem wrench;
   @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
   public static PeatItem peat_fuel;
