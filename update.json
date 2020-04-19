@@ -1,8 +1,8 @@
 {
   "homepage": "http://minecraft.curseforge.com/projects/cyclic",
   "promos": {
-    "1.15.2-latest": "0.3.2",
-    "1.15.2-recommended": "0.3.2"
+    "1.15.2-latest": "0.3.3",
+    "1.15.2-recommended": "0.3.3"
   },
   "1.15.2": {
   	"0.1.8":"Fixed server crash"
@@ -13,5 +13,6 @@
   	,"0.3.0":"Added powered anvil, three building items, block randomizer, Anti-gravity ring.  Many items now correctly consume durability and play sounds"
   	,"0.3.1":"Added item pipes, added fluid pipes, New item Cable wrench, added structure builder, Changed some other things, this is an alpha build for testing but its pretty stable."
   	,"0.3.2":"Fixed fire charm particles crashing serverside.  Fixed harvester not producing netherwart.  Fixed handheld item rendering.  Torch launcher is immensely less likely to place in invalid spots.  Experience pylon gives more information when using it, and now works with empty bottles. When Ender Eye Reuse is used, the entity will Always shatter and never drop an item.  Experience pylon now has much higher capacity. "
+  	,"0.3.3":"Fix a server crash when picking a block with one of the building scepters"
   }
 }

@@ -77,12 +77,12 @@ public class ItemEvents {
       }
       BuilderActionType.setTimeout(held);
       event.setCanceled(true);
-      //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.tool_mode, SoundCategory.PLAYERS);
+      //      UtilSound.playSound(player, SoundRegistry.tool_mode);
       if (player.isCrouching()) {
         //pick out target block
         BlockState target = world.getBlockState(event.getPos());
         BuilderActionType.setBlockState(held, target);
-        UtilChat.sendStatusMessage(player, target.getBlock().getNameTextComponent());
+        UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
       }
       else {
         //change size

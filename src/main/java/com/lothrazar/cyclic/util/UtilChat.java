@@ -18,9 +18,7 @@ public class UtilChat {
   }
 
   public static void sendStatusMessage(PlayerEntity player, String message) {
-    //    if (player.world.isRemote) {
     player.sendStatusMessage(new TranslationTextComponent(message), true);
-    //    }
   }
 
   public static void sendStatusMessage(PlayerEntity player, ITextComponent nameTextComponent) {
