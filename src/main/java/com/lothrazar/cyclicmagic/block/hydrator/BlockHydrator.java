@@ -98,14 +98,12 @@ public class BlockHydrator extends BlockBaseHasTile implements IContent, IHasRec
 
   /**
    * with thanks and gratitude @KnightMiner https://github.com/KnightMiner/Ceramics/blob/1.11/src/main/java/knightminer/ceramics/blocks/BlockBarrel.java
-   * 
-   * 
+   *
    */
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     // check the TE
     TileEntityHydrator te = (TileEntityHydrator) world.getTileEntity(pos);
-    //    FluidStack bucket = FluidUtil.getFluidContained(player.getHeldItem(hand));
     boolean success = false;
     success = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
     if (te != null) {

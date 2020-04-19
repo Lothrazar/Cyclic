@@ -94,7 +94,6 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
       }
     }
     if (countFull != this.size) {
-      //      ModCyclic.logger.info("hydrate recipe shortcut " + countNonEmpty + "_" + size);
       return false;
     }
     boolean match0 = recipeSlotMatches(inv.getStackInSlot(0), recipeInput.get(0));
@@ -102,9 +101,6 @@ public class RecipeHydrate extends IForgeRegistryEntry.Impl<IRecipe> implements 
     boolean match2 = recipeSlotMatches(inv.getStackInSlot(2), recipeInput.get(2));
     boolean match3 = recipeSlotMatches(inv.getStackInSlot(3), recipeInput.get(3));
     boolean all = match0 && match1 && match2 && match3;
-    //    if (all) {
-    //      ModCyclic.logger.info("MATCH" + this.getRecipeOutput() + this.size + "___" + countFull);
-    //    }
     return all;
   }
 
