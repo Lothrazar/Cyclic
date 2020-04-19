@@ -150,9 +150,12 @@ public class ItemRegistry {
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(64)).setRegistryName("shears_flint"));
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("experience_food"));
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("experience_pylon"));
-    r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("energy_pipe"));
-    r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_pipe"));
-    r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fluid_pipe"));
+    if (ConfigManager.CABLES.get()) {
+      r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cable_wrench"));
+      r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("energy_pipe"));
+      r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_pipe"));
+      r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fluid_pipe"));
+    }
     r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("glove_climb"));
     r.register(new BlockItem(BlockRegistry.fan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fan"));
     r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_generator"));
@@ -242,6 +245,5 @@ public class ItemRegistry {
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.OFFSET).setRegistryName("offset_scepter"));
     r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("randomize_scepter"));
     r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024)).setRegistryName("antigravity"));
-    r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cable_wrench"));
   }
 }
