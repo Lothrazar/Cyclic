@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.fluid;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.registry.MaterialRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
@@ -8,7 +9,6 @@ import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,7 +30,7 @@ public class FluidAmberHolder {
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
       () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
-      () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ItemGroup.MISC)));
+      () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemGroup)));
   private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
       STILL,
       FLOWING,
