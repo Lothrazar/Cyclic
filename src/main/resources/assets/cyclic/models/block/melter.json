@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+    "textures": {
+        "down": "minecraft:block/cauldron_inner",
+        "up": "minecraft:block/cauldron_inner",
+        "north": "cyclic:blocks/melter",
+        "south": "cyclic:blocks/melter",
+        "east": "cyclic:blocks/melter",
+        "west": "cyclic:blocks/melter",
+        "particle": "cyclic:blocks/block_disenchanter"
+    }
+}

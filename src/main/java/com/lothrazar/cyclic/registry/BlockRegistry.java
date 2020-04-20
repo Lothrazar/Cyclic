@@ -38,6 +38,8 @@ import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
 import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
+import com.lothrazar.cyclic.block.melter.BlockMelter;
+import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
@@ -68,6 +70,8 @@ public class BlockRegistry {
 
   //not populated in the most ideal way 
   public static List<BlockBase> blocks = new ArrayList<>();
+  @ObjectHolder(ModCyclic.MODID + ":melter")
+  public static Block melter;
   @ObjectHolder(ModCyclic.MODID + ":structure")
   public static Block structure;
   @ObjectHolder(ModCyclic.MODID + ":anvil")
@@ -121,6 +125,8 @@ public class BlockRegistry {
 
   public static class Tiles {
 
+    @ObjectHolder(ModCyclic.MODID + ":melter")
+    public static TileEntityType<TileMelter> melter;
     @ObjectHolder(ModCyclic.MODID + ":structure")
     public static TileEntityType<TileStructure> structure;
     @ObjectHolder(ModCyclic.MODID + ":anvil")
@@ -174,6 +180,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
     r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
     r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true)
         .setRegistryName("scaffold_fragile"));
@@ -209,6 +216,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileMelter::new, BlockRegistry.melter).build(null).setRegistryName("melter"));
     r.register(TileEntityType.Builder.create(TileTank::new, BlockRegistry.tank).build(null).setRegistryName("tank"));
     r.register(TileEntityType.Builder.create(TileBreaker::new, BlockRegistry.breaker).build(null).setRegistryName("breaker"));
     r.register(TileEntityType.Builder.create(TileCollector::new, BlockRegistry.collector).build(null).setRegistryName("collector"));

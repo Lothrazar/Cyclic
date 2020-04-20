@@ -1255,9 +1255,8 @@
     "block.fluid_drain.guide": "Drain fluid that is nearby and below, filling it with blocks",
     "block.fluid_drain.tooltip": "Drain fluid that is nearby and below, filling it with blocks",
 
-    "block.melter": "Melter",
-    "block.melter.guide": "Melt items into liquid, with JEI support and Crafttweaker zenscript support.",
-    "block.melter.tooltip": "Place over lava to melt items",
+    "block.cyclic.melter": "Melter",
+    "block.cyclic.melter.tooltip": "Liquify certain items",
 
     "button.fan.sound.tooltip": "Enable or disable sound",
     "block.heat.level": "Heat",
