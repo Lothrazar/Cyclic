@@ -29,13 +29,12 @@ public class ModCyclic {
   public static final String MODID = "cyclic";
   public static final Logger LOGGER = LogManager.getLogger();
   public static ConfigManager config;
-  public static FluidRegistry fluids;
 
   public ModCyclic() {
     // Register the setup method for modloading
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     config = new ConfigManager(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
-    fluids = new FluidRegistry();
+    FluidRegistry.setup();
   }
 
   private void setup(final FMLCommonSetupEvent event) {
@@ -48,7 +47,6 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
-    //    MinecraftForge.EVENT_BUS.register(new FluidRegistry());
   }
 
   public static void error(String s, Object... list) {
