@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
 import com.lothrazar.cyclic.registry.CuriosRegistry;
+import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
@@ -28,11 +29,13 @@ public class ModCyclic {
   public static final String MODID = "cyclic";
   public static final Logger LOGGER = LogManager.getLogger();
   public static ConfigManager config;
+  public static FluidRegistry fluids;
 
   public ModCyclic() {
     // Register the setup method for modloading
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     config = new ConfigManager(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
+    fluids = new FluidRegistry();
   }
 
   private void setup(final FMLCommonSetupEvent event) {
@@ -45,6 +48,7 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
+    //    MinecraftForge.EVENT_BUS.register(new FluidRegistry());
   }
 
   public static void error(String s, Object... list) {
