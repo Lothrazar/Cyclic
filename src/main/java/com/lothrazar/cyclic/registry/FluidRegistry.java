@@ -1,21 +1,24 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.fluid.FluidAmberHolder;
+import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidCrystalHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
-import net.minecraft.block.Block;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class FluidRegistry {
 
-  public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, ModCyclic.MODID);
-  public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, ModCyclic.MODID);
-  public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, ModCyclic.MODID);
   public static FluidXpJuiceHolder xpjuice;
+  public static FluidAmberHolder amber;
+  public static FluidCrystalHolder crystal;
+  public static FluidBiomassHolder biomass;
 
   public static void setup() {
-    xpjuice = new FluidXpJuiceHolder();
+    IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    xpjuice = new FluidXpJuiceHolder(modEventBus);
+    amber = new FluidAmberHolder(modEventBus);
+    crystal = new FluidCrystalHolder(modEventBus);
+    biomass = new FluidBiomassHolder(modEventBus);
   }
 }

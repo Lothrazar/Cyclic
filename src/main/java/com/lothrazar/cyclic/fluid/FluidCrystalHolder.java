@@ -19,14 +19,14 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java
-public class FluidXpJuiceHolder {
+public class FluidCrystalHolder {
 
   private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, ModCyclic.MODID);
   private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, ModCyclic.MODID);
   private static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, ModCyclic.MODID);
-  private static final String id = "xpjuice";
-  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidXpJuiceHolder.properties));
-  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidXpJuiceHolder.properties));
+  private static final String id = "crystal_obsidian";
+  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidCrystalHolder.properties));
+  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidCrystalHolder.properties));
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
       () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
@@ -39,7 +39,7 @@ public class FluidXpJuiceHolder {
           new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flowing")))
               .bucket(BUCKET).block(BLOCK);
 
-  public FluidXpJuiceHolder(IEventBus modEventBus) {
+  public FluidCrystalHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);
     ITEMS.register(modEventBus);
     FLUIDS.register(modEventBus);
