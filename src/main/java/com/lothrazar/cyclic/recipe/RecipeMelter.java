@@ -76,6 +76,9 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   public static void initAllRecipes() {
+    RecipeMelter.addRecipe("c", new ItemStack(Blocks.BLACK_CONCRETE),
+        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10),
+        new ItemStack(Blocks.BLACK_CONCRETE_POWDER));
     RecipeMelter.addRecipe("snowwater", new ItemStack(Blocks.SNOW_BLOCK),
         new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10), ItemStack.EMPTY);
     RecipeMelter.addRecipe("icetowater", new ItemStack(Blocks.ICE),

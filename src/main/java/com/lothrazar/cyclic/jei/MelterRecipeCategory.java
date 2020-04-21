@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.jei;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Const;
@@ -55,9 +56,13 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   @Override
   public void setIngredients(RecipeMelter recipe, IIngredients ingredients) {
-    //    recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ - 2, Const.SQ - 2, Fluid.BUCKET_VOLUME, false,
-    //        null);
-    //    recipeLayout.getFluidStacks().set(0, recipe.getOutputFluid());
+    List<List<ItemStack>> in = new ArrayList<>();
+    List<ItemStack> stuff = new ArrayList<>();
+    stuff.add(recipe.getRecipeInput());
+    in.add(stuff);
+    ingredients.setInputLists(VanillaTypes.ITEM, in);
+    if (!recipe.getRecipeOutput().isEmpty())
+      ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
 
   @Override
@@ -65,7 +70,10 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     int x = 3, y = 18;
     int s = Const.SQ;
-    guiItemStacks.init(0, true, x, y);
+    guiItemStacks.init(0, true, 3, 18);
+    guiItemStacks.init(1, true, 139, 18);
+    if (!recipe.getRecipeOutput().isEmpty())
+      guiItemStacks.set(1, recipe.getRecipeOutput());
     ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
     //    //getname is the same   
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
@@ -77,6 +85,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
       }
     }
     //
+    x = 90;
     try {
       ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
       //getname is the same   
