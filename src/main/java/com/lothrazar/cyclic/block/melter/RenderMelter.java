@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.tank;
+package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.render.FluidTankRenderType;
 import com.lothrazar.cyclic.util.UtilFluid;
@@ -15,16 +15,16 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderTank extends TileEntityRenderer<TileTank> {
+public class RenderMelter extends TileEntityRenderer<TileMelter> {
 
   public static boolean ENABLED = true;
 
-  public RenderTank(TileEntityRendererDispatcher d) {
+  public RenderMelter(TileEntityRendererDispatcher d) {
     super(d);
   }
 
   @Override
-  public void render(TileTank tankHere, float v, MatrixStack matrix,
+  public void render(TileMelter tankHere, float v, MatrixStack matrix,
       IRenderTypeBuffer renderer, int light, int overlayLight) {
     if (!ENABLED) {
       return;

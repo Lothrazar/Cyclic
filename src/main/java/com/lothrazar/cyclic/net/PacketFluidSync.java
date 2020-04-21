@@ -26,7 +26,7 @@ package com.lothrazar.cyclic.net;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.block.tank.TileTank;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
@@ -49,8 +49,8 @@ public class PacketFluidSync extends PacketBase {
     ctx.get().enqueueWork(() -> {
       PlayerEntity player = ModCyclic.proxy.getClientPlayer();
       TileEntity te = player.world.getTileEntity(message.pos);
-      if (te instanceof TileTank) {
-        ((TileTank) te).setFluid(message.fluid);
+      if (te instanceof TileEntityBase) {
+        ((TileEntityBase) te).setFluid(message.fluid);
       }
     });
     message.done(ctx);

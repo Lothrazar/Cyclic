@@ -1,6 +1,12 @@
 package com.lothrazar.cyclic.util;
 
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.Model3D;
+import com.lothrazar.cyclic.render.FluidRenderMap;
+import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -10,8 +16,49 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class UtilFluid {
+
+  public static final FluidRenderMap<Int2ObjectMap<Model3D>> cachedCenterFluids = new FluidRenderMap<>();
+  public static final int stages = 1400;
+
+  public static Model3D getFluidModel(@Nonnull FluidStack fluid, int stage) {
+    if (cachedCenterFluids.containsKey(fluid) && cachedCenterFluids.get(fluid).containsKey(stage)) {
+      return cachedCenterFluids.get(fluid).get(stage);
+    }
+    Model3D model = new Model3D();
+    model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidType.STILL));
+    if (fluid.getFluid().getAttributes().getStillTexture(fluid) != null) {
+      double sideSpacing = 0.00625;
+      double belowSpacing = 0.0625 / 4;
+      double topSpacing = belowSpacing;
+      model.minX = sideSpacing;
+      model.minY = belowSpacing;
+      model.minZ = sideSpacing;
+      model.maxX = 1 - sideSpacing;
+      model.maxY = 1 - topSpacing;
+      model.maxZ = 1 - sideSpacing;
+    }
+    if (cachedCenterFluids.containsKey(fluid)) {
+      cachedCenterFluids.get(fluid).put(stage, model);
+    }
+    else {
+      Int2ObjectMap<Model3D> map = new Int2ObjectOpenHashMap<>();
+      map.put(stage, model);
+      cachedCenterFluids.put(fluid, map);
+    }
+    return model;
+  }
+
+  public static float getScale(FluidTank tank) {
+    return getScale(tank.getFluidAmount(), tank.getCapacity(), tank.isEmpty());
+  }
+
+  public static float getScale(int stored, int capacity, boolean empty) {
+    float targetScale = (float) stored / capacity;
+    return targetScale;
+  }
 
   public static IFluidHandler getTank(World world, BlockPos pos, Direction side) {
     TileEntity tile = world.getTileEntity(pos);

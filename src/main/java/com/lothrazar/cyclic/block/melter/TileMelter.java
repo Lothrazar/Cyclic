@@ -104,6 +104,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity {
     return CAPACITY;
   }
 
+  @Override
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
   }

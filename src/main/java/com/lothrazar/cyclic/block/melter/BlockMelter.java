@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
@@ -23,6 +24,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockMelter extends BlockBase {
 
@@ -91,6 +93,6 @@ public class BlockMelter extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    //    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.melter, RenderTank::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.melter, RenderMelter::new);
   }
 }

@@ -82,9 +82,7 @@ public class BlockFluidTank extends BlockBase {
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-    //    TileEntity tileEntity = reader.getTileEntity(pos);
-    //    TankBlockEntity tankEntity = (tileEntity != null) ? (TankBlockEntity)tileEntity : null;
-    return true;// (tankEntity == null || tankEntity.getFillLevel() == 0);
+    return true;
   }
 
   @Override

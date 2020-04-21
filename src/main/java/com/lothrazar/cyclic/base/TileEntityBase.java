@@ -11,6 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -166,4 +167,6 @@ public abstract class TileEntityBase extends TileEntity {
   public void setNeedsRedstone(int needsRedstone) {
     this.needsRedstone = needsRedstone;
   }
+
+  public void setFluid(FluidStack fluid) {}
 }
