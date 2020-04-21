@@ -39,6 +39,7 @@ import com.lothrazar.cyclic.block.itemcollect.BlockCollector;
 import com.lothrazar.cyclic.block.itemcollect.ContainerCollector;
 import com.lothrazar.cyclic.block.itemcollect.TileCollector;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
+import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
@@ -161,6 +162,8 @@ public class BlockRegistry {
 
   public static class ContainerScreens {
 
+    @ObjectHolder(ModCyclic.MODID + ":melter")
+    public static ContainerType<ContainerMelter> melter;
     @ObjectHolder(ModCyclic.MODID + ":structure")
     public static ContainerType<ContainerStructure> structure;
     @ObjectHolder(ModCyclic.MODID + ":placer")
@@ -261,5 +264,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerStructure(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("structure"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerMelter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("melter"));
   }
 }

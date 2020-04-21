@@ -4,10 +4,12 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -25,6 +27,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockMelter extends BlockBase {
 
@@ -67,7 +70,6 @@ public class BlockMelter extends BlockBase {
       if (tankHere != null) {
         IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getFace()).orElse(null);
         if (handler != null) {
-          //          FluidStack tankFluidBefore = tankHere.getFluid().copy();
           if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
             //success so display new amount
             if (handler.getFluidInTank(0) != null) {
@@ -79,6 +81,16 @@ public class BlockMelter extends BlockBase {
             if (player instanceof ServerPlayerEntity) {
               UtilSound.playSoundFromServer((ServerPlayerEntity) player, SoundEvents.ITEM_BUCKET_FILL);
             }
+          }
+          else {
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if (tileEntity instanceof INamedContainerProvider) {
+              NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+            }
+            else {
+              throw new IllegalStateException("Our named container provider is missing!");
+            }
+            return ActionResultType.SUCCESS;
           }
         }
       }
@@ -93,6 +105,7 @@ public class BlockMelter extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.melter, ScreenMelter::new);
     ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.melter, RenderMelter::new);
   }
 }

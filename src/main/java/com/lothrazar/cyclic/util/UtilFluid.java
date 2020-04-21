@@ -7,8 +7,13 @@ import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -22,6 +27,28 @@ public class UtilFluid {
 
   public static final FluidRenderMap<Int2ObjectMap<Model3D>> cachedCenterFluids = new FluidRenderMap<>();
   public static final int stages = 1400;
+
+  /**
+   * Thank you Mekanism which is MIT License https://github.com/mekanism/Mekanism
+   * 
+   * @param fluid
+   * @param type
+   * @return
+   */
+  public static TextureAtlasSprite getBaseFluidTexture(@Nonnull Fluid fluid, @Nonnull FluidType type) {
+    ResourceLocation spriteLocation;
+    if (type == FluidType.STILL) {
+      spriteLocation = fluid.getAttributes().getStillTexture();
+    }
+    else {
+      spriteLocation = fluid.getAttributes().getFlowingTexture();
+    }
+    return getSprite(spriteLocation);
+  }
+
+  public static TextureAtlasSprite getSprite(ResourceLocation spriteLocation) {
+    return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(spriteLocation);
+  }
 
   public static Model3D getFluidModel(@Nonnull FluidStack fluid, int stage) {
     if (cachedCenterFluids.containsKey(fluid) && cachedCenterFluids.get(fluid).containsKey(stage)) {

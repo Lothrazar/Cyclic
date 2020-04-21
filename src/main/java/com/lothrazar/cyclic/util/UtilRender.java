@@ -20,7 +20,10 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldVertexBufferUploader;
 import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -31,6 +34,71 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 
 public class UtilRender {
+
+  /**
+   * Thanks to Mekanism https://github.com/mekanism/Mekanism which uses compatible MIT License
+   * 
+   * @param xPosition
+   * @param yPosition
+   * @param yOffset
+   * @param desiredWidth
+   * @param desiredHeight
+   * @param sprite
+   * @param textureWidth
+   * @param textureHeight
+   * @param zLevel
+   */
+  public static void drawTiledSprite(int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite, int textureWidth,
+      int textureHeight, int zLevel) {
+    if (desiredWidth == 0 || desiredHeight == 0 || textureWidth == 0 || textureHeight == 0) {
+      return;
+    }
+    Minecraft.getInstance().textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+    int xTileCount = desiredWidth / textureWidth;
+    int xRemainder = desiredWidth - (xTileCount * textureWidth);
+    int yTileCount = desiredHeight / textureHeight;
+    int yRemainder = desiredHeight - (yTileCount * textureHeight);
+    int yStart = yPosition + yOffset;
+    float uMin = sprite.getMinU();
+    float uMax = sprite.getMaxU();
+    float vMin = sprite.getMinV();
+    float vMax = sprite.getMaxV();
+    float uDif = uMax - uMin;
+    float vDif = vMax - vMin;
+    RenderSystem.enableBlend();
+    RenderSystem.enableAlphaTest();
+    BufferBuilder vertexBuffer = Tessellator.getInstance().getBuffer();
+    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+    for (int xTile = 0; xTile <= xTileCount; xTile++) {
+      int width = (xTile == xTileCount) ? xRemainder : textureWidth;
+      if (width == 0) {
+        break;
+      }
+      int x = xPosition + (xTile * textureWidth);
+      int maskRight = textureWidth - width;
+      int shiftedX = x + textureWidth - maskRight;
+      float uMaxLocal = uMax - (uDif * maskRight / textureWidth);
+      for (int yTile = 0; yTile <= yTileCount; yTile++) {
+        int height = (yTile == yTileCount) ? yRemainder : textureHeight;
+        if (height == 0) {
+          //Note: We don't want to fully break out because our height will be zero if we are looking to
+          // draw the remainder, but there is no remainder as it divided evenly
+          break;
+        }
+        int y = yStart - ((yTile + 1) * textureHeight);
+        int maskTop = textureHeight - height;
+        float vMaxLocal = vMax - (vDif * maskTop / textureHeight);
+        vertexBuffer.pos(x, y + textureHeight, zLevel).tex(uMin, vMaxLocal).endVertex();
+        vertexBuffer.pos(shiftedX, y + textureHeight, zLevel).tex(uMaxLocal, vMaxLocal).endVertex();
+        vertexBuffer.pos(shiftedX, y + maskTop, zLevel).tex(uMaxLocal, vMin).endVertex();
+        vertexBuffer.pos(x, y + maskTop, zLevel).tex(uMin, vMin).endVertex();
+      }
+    }
+    vertexBuffer.finishDrawing();
+    WorldVertexBufferUploader.draw(vertexBuffer);
+    RenderSystem.disableAlphaTest();
+    RenderSystem.disableBlend();
+  }
 
   public static void renderCube(Matrix4f matrix, IVertexBuilder builder, BlockPos pos, Color color) {
     float red = color.getRed() / 255f, green = color.getGreen() / 255f, blue = color.getBlue() / 255f, alpha = .125f;
