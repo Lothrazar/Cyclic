@@ -121,8 +121,8 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
-    r.register(new BlockItem(BlockRegistry.melter,
-        new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("melter"));
+    r.register(new BlockItem(BlockRegistry.solidifier, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("solidifier"));
+    r.register(new BlockItem(BlockRegistry.melter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("melter"));
     r.register(new BlockItem(BlockRegistry.structure, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure"));
     r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("placer"));
     r.register(new BlockItem(BlockRegistry.anvil, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("anvil"));

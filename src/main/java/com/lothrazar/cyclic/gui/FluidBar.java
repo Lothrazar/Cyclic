@@ -72,7 +72,7 @@ public class FluidBar {
 
   public void renderHoveredToolTip(int mouseX, int mouseY, FluidStack current) {
     if (this.isMouseover(mouseX, mouseY) && current != null) {
-      parent.renderTooltip(current.getAmount() + "/" + getCapacity(), mouseX, mouseY);
+      parent.renderTooltip(current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getFormattedText(), mouseX, mouseY);
     }
   }
 

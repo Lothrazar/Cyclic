@@ -17,8 +17,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 @OnlyIn(Dist.CLIENT)
 public class RenderTank extends TileEntityRenderer<TileTank> {
 
-  public static boolean ENABLED = true;
-
   public RenderTank(TileEntityRendererDispatcher d) {
     super(d);
   }
@@ -26,9 +24,6 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
   @Override
   public void render(TileTank tankHere, float v, MatrixStack matrix,
       IRenderTypeBuffer renderer, int light, int overlayLight) {
-    if (!ENABLED) {
-      return;
-    }
     IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;

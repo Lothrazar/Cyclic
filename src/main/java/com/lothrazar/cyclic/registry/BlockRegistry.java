@@ -50,6 +50,9 @@ import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
 import com.lothrazar.cyclic.block.shapebuilder.ContainerStructure;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
+import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
+import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
+import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
@@ -71,6 +74,8 @@ public class BlockRegistry {
 
   //not populated in the most ideal way 
   public static List<BlockBase> blocks = new ArrayList<>();
+  @ObjectHolder(ModCyclic.MODID + ":solidifier")
+  public static Block solidifier;
   @ObjectHolder(ModCyclic.MODID + ":melter")
   public static Block melter;
   @ObjectHolder(ModCyclic.MODID + ":structure")
@@ -126,6 +131,8 @@ public class BlockRegistry {
 
   public static class Tiles {
 
+    @ObjectHolder(ModCyclic.MODID + ":solidifier")
+    public static TileEntityType<TileSolidifier> solidifier;
     @ObjectHolder(ModCyclic.MODID + ":melter")
     public static TileEntityType<TileMelter> melter;
     @ObjectHolder(ModCyclic.MODID + ":structure")
@@ -162,6 +169,8 @@ public class BlockRegistry {
 
   public static class ContainerScreens {
 
+    @ObjectHolder(ModCyclic.MODID + ":solidifier")
+    public static ContainerType<ContainerSolidifier> solidifier;
     @ObjectHolder(ModCyclic.MODID + ":melter")
     public static ContainerType<ContainerMelter> melter;
     @ObjectHolder(ModCyclic.MODID + ":structure")
@@ -183,6 +192,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
     r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
     r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true)
@@ -219,6 +229,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileSolidifier::new, BlockRegistry.solidifier).build(null).setRegistryName("solidifier"));
     r.register(TileEntityType.Builder.create(TileMelter::new, BlockRegistry.melter).build(null).setRegistryName("melter"));
     r.register(TileEntityType.Builder.create(TileTank::new, BlockRegistry.tank).build(null).setRegistryName("tank"));
     r.register(TileEntityType.Builder.create(TileBreaker::new, BlockRegistry.breaker).build(null).setRegistryName("breaker"));
@@ -267,5 +278,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerMelter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("melter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerSolidifier(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("solidifier"));
   }
 }

@@ -4,9 +4,9 @@ import javax.annotation.Nonnull;
 import it.unimi.dsi.fastutil.Hash;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenCustomHashMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -17,6 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
  * 
  * Map which uses FluidStacks as keys, ignoring amount. Primary use: caching FluidStack aware fluid rendering (NBT, yay)
  */
+@SuppressWarnings("serial")
 public class FluidRenderMap<V> extends Object2ObjectOpenCustomHashMap<FluidStack, V> {
 
   public enum FluidType {
@@ -40,7 +41,7 @@ public class FluidRenderMap<V> extends Object2ObjectOpenCustomHashMap<FluidStack
   }
 
   public static TextureAtlasSprite getSprite(ResourceLocation spriteLocation) {
-    return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(spriteLocation);
+    return Minecraft.getInstance().getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(spriteLocation);
   }
 
   /**

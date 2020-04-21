@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+    "textures": {
+        "down": "cyclic:blocks/solidifier_top",
+        "up": "cyclic:blocks/solidifier_top",
+        "north": "cyclic:blocks/solidifier",
+        "south": "cyclic:blocks/solidifier",
+        "east": "cyclic:blocks/solidifier",
+        "west": "cyclic:blocks/solidifier",
+        "particle": "cyclic:blocks/block_disenchanter"
+    }
+}

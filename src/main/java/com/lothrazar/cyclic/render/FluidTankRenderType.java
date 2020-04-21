@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.render;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.renderer.RenderState;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -31,7 +31,7 @@ public class FluidTankRenderType extends RenderType {
   }
 
   public static RenderType resizableCuboid() {
-    RenderType.State.Builder stateBuilder = preset(AtlasTexture.LOCATION_BLOCKS_TEXTURE).alpha(ALPHA);
+    RenderType.State.Builder stateBuilder = preset(PlayerContainer.LOCATION_BLOCKS_TEXTURE).alpha(ALPHA);
     return makeType("resizable_cuboid", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, GL11.GL_QUADS, 256, true, false,
         stateBuilder.build(true));
   }

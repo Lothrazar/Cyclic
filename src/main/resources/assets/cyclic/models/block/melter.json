@@ -1,8 +1,8 @@
 {
 	"parent": "block/cube",
     "textures": {
-        "down": "minecraft:block/cauldron_inner",
-        "up": "minecraft:block/cauldron_inner",
+        "down": "cyclic:blocks/melter_top",
+        "up": "cyclic:blocks/melter_top",
         "north": "cyclic:blocks/melter",
         "south": "cyclic:blocks/melter",
         "east": "cyclic:blocks/melter",
