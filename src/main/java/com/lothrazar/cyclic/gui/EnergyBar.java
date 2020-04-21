@@ -6,25 +6,25 @@ import net.minecraft.client.gui.screen.Screen;
 public class EnergyBar {
 
   private Screen parent;
-  public int max;
-  public int guiLeft;
-  public int guiTop;
   private int x = 154;
   private int y = 8;
+  public int capacity;
   private int width = 16;
   private int height = 78;
+  public int guiLeft;
+  public int guiTop;
 
-  public EnergyBar(Screen parent) {
+  public EnergyBar(Screen parent, int cap) {
     this.parent = parent;
+    this.capacity = cap;
   }
 
-  //TODO: base widget
   public boolean isMouseover(int mouseX, int mouseY) {
     return guiLeft + x < mouseX && mouseX < guiLeft + x + width
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
   }
 
-  public void renderEnergy(float energ) {
+  public void draw(float energ) {
     int relX;
     int relY;
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_CTR);
@@ -34,14 +34,13 @@ public class EnergyBar {
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_INNER);
     relX = relX + 1;
     relY = relY + 1;
-    float pct = Math.min(energ / max, 1.0F);
+    float pct = Math.min(energ / capacity, 1.0F);
     Screen.blit(relX, relY, 0, 0, 14, (int) (64 * pct), 14, 64);
   }
 
   public void renderHoveredToolTip(int mouseX, int mouseY, int energ) {
     if (this.isMouseover(mouseX, mouseY)) {
-      String tips = "" + energ + "/" + this.max;
-      parent.renderTooltip(tips, mouseX, mouseY);
+      parent.renderTooltip(energ + "/" + this.capacity, mouseX, mouseY);
     }
   }
 }

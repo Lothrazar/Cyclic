@@ -24,8 +24,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
   public ScreenStructure(ContainerStructure screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this);
-    energy.max = TileStructure.MAX;
+    this.energy = new EnergyBar(this, TileStructure.MAX);
   }
 
   @Override
@@ -119,6 +118,6 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.GUI);
     this.drawSlot(60, 20);
-    energy.renderEnergy(container.getEnergy());
+    energy.draw(container.getEnergy());
   }
 }

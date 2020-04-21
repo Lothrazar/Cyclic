@@ -10,21 +10,19 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenMelter extends ScreenBase<ContainerMelter> {
 
   private EnergyBar energy;
-  private FluidBar fluidBar;
+  private FluidBar fluid;
 
   public ScreenMelter(ContainerMelter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this);
-    energy.max = TileMelter.MAX;
-    fluidBar = new FluidBar(this, this.xSize / 2 - 8 - 1, 16);
-    fluidBar.setCapacity(TileMelter.CAPACITY);
+    this.energy = new EnergyBar(this, TileMelter.MAX);
+    fluid = new FluidBar(this, 8, 8, TileMelter.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
-    fluidBar.guiLeft = energy.guiLeft = guiLeft;
-    fluidBar.guiTop = energy.guiTop = guiTop;
+    fluid.guiLeft = energy.guiLeft = guiLeft;
+    fluid.guiTop = energy.guiTop = guiTop;
   }
 
   @Override
@@ -33,6 +31,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
     energy.renderHoveredToolTip(mouseX, mouseY, container.getEnergy());
+    fluid.renderHoveredToolTip(mouseX, mouseY, container.tile.getFluid());
   }
 
   @Override
@@ -43,8 +42,9 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.GUI);
-    //    this.drawSlot(60, 20);
-    energy.renderEnergy(container.getEnergy());
-    fluidBar.draw(this.container.tile.getFluid());
+    this.drawSlot(36, 30);
+    this.drawSlot(126, 30);
+    energy.draw(container.getEnergy());
+    fluid.draw(this.container.tile.getFluid());
   }
 }

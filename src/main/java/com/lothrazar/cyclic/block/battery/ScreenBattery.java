@@ -18,8 +18,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
 
   public ScreenBattery(ContainerBattery screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this);
-    energy.max = TileBattery.MAX;
+    this.energy = new EnergyBar(this, TileBattery.MAX);
   }
 
   @Override
@@ -53,6 +52,6 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.GUI);
     //    this.drawSlot(60, 20);
-    energy.renderEnergy(container.getEnergy());
+    energy.draw(container.getEnergy());
   }
 }

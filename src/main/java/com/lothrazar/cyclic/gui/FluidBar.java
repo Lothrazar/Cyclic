@@ -19,10 +19,11 @@ public class FluidBar {
   public int guiLeft;
   public int guiTop;
 
-  public FluidBar(Screen p, int x, int y) {
+  public FluidBar(Screen p, int x, int y, int cap) {
     parent = p;
-    this.setX(x);
-    this.setY(y);
+    this.x = x;
+    this.y = y;
+    this.capacity = cap;
   }
 
   public int getHeight() {
@@ -64,54 +65,26 @@ public class FluidBar {
     UtilRender.drawTiledSprite(xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, 16, 16, parent.getBlitOffset());
   }
 
-  /**
-   * Thanks to Tiffiter123 on forums http://www.minecraftforge.net/forum/topic/39651-solved-194-render-fluid-in-gui/
-   * 
-   * @param x
-   * @param y
-   * @param icon
-   * @param width
-   * @param height
-   */
-  //  private void drawFluid(int x, int y, TextureAtlasSprite icon, int width, int height) {
-  //    int size = width;
-  //    int drawHeight = 0;
-  //    int drawWidth = 0;
-  //    for (int i = 0; i < width; i += size) {
-  //      for (int j = 0; j < height; j += size) {
-  //        drawWidth = Math.min(width - i, size);
-  //        drawHeight = Math.min(height - j, size);
-  //        //        Screen.blit(x + i, y + j, icon, drawWidth, drawHeight);
-  //      }
-  //    }
-  //  }
-  //TODO: base widget
   public boolean isMouseover(int mouseX, int mouseY) {
     return guiLeft + x < mouseX && mouseX < guiLeft + x + width
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
+  }
+
+  public void renderHoveredToolTip(int mouseX, int mouseY, FluidStack current) {
+    if (this.isMouseover(mouseX, mouseY) && current != null) {
+      parent.renderTooltip(current.getAmount() + "/" + getCapacity(), mouseX, mouseY);
+    }
   }
 
   public int getX() {
     return x;
   }
 
-  public void setX(int x) {
-    this.x = x;
-  }
-
   public int getY() {
     return y;
   }
 
-  public void setY(int y) {
-    this.y = y;
-  }
-
   public int getCapacity() {
     return capacity;
-  }
-
-  public void setCapacity(int capacity) {
-    this.capacity = capacity;
   }
 }

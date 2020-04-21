@@ -12,8 +12,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
   public ScreenAnvil(ContainerAnvil screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this);
-    energy.max = TileAnvilAuto.MAX;
+    this.energy = new EnergyBar(this, TileAnvilAuto.MAX);
   }
 
   @Override
@@ -42,6 +41,6 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.GUI);
     this.drawSlot(60, 20);
-    energy.renderEnergy(container.getEnergy());
+    energy.draw(container.getEnergy());
   }
 }

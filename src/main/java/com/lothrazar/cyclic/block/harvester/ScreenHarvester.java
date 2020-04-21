@@ -18,8 +18,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
 
   public ScreenHarvester(ContainerHarvester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this);
-    energy.max = TileHarvester.MAX;
+    this.energy = new EnergyBar(this, TileHarvester.MAX);
   }
 
   @Override
@@ -56,6 +55,6 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     //    GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.drawBackground(TextureRegistry.GUI);
     //energy
-    energy.renderEnergy(container.getEnergy());
+    energy.draw(container.getEnergy());
   }
 }
