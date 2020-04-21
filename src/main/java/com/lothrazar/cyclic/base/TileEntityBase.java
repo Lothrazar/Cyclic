@@ -123,7 +123,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (handlerOutput == null) {
       return;
     }
-    //    System.out.println("Bttery export " + myFacingDir);
     if (handlerHere != null && handlerOutput != null
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
       //first simulate

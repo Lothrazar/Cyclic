@@ -5,12 +5,8 @@ import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class UtilStuff {
@@ -29,39 +25,6 @@ public class UtilStuff {
     if (worldIn.isRemote && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
       PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
     }
-  }
-
-  public static void playSound(PlayerEntity player, SoundEvent thunk) {
-    playSound(player, player.getPosition(), thunk);
-  }
-
-  public static void playSound(PlayerEntity player, BlockPos pos, SoundEvent thunk) {
-    BlockPos here = (pos == null) ? player.getPosition() : pos;
-    playSound(player, here, thunk, player.getSoundCategory());
-  }
-
-  public static final float VOLUME = 1.0F;
-  public static final float PITCH = 1.0F;
-
-  public static void playSound(PlayerEntity player, BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
-    if (player == null) {
-      return;
-    }
-    BlockPos here = (pos == null) ? player.getPosition() : pos;
-    player.getEntityWorld().playSound(player, here, soundIn, cat, VOLUME, PITCH);
-  }
-
-  public static String lang(String message) {
-    TranslationTextComponent t = new TranslationTextComponent(message);
-    return t.getFormattedText();
-  }
-
-  public static void messageChat(PlayerEntity player, String message) {
-    player.sendMessage(new TranslationTextComponent(message));
-  }
-
-  public static void messageStatus(PlayerEntity player, String message) {
-    player.sendStatusMessage(new TranslationTextComponent(message), true);
   }
 
   public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {

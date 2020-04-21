@@ -27,8 +27,9 @@ import java.util.ArrayList;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
 
@@ -37,11 +38,6 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
 
   protected CyclicRecipe(ResourceLocation id) {
     this.id = id;
-  }
-
-  @Override
-  public boolean matches(TileEntityBase inv, World worldIn) {
-    return true;
   }
 
   @Override
@@ -59,8 +55,17 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
     return ItemStack.EMPTY;
   }
 
+  public FluidStack getRecipeFluidOutput() {
+    return FluidStack.EMPTY;
+  }
+
   @Override
   public ResourceLocation getId() {
     return id;
+  }
+
+  @Override
+  public IRecipeSerializer<?> getSerializer() {
+    return null;
   }
 }

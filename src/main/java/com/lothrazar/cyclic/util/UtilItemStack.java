@@ -35,4 +35,9 @@ public class UtilItemStack {
   public static float getBlockHardness(BlockState state, World world, BlockPos pos) {
     return state.getBlock().getBlockHardness(state, world, pos);
   }
+
+  public static boolean matches(ItemStack current, ItemStack in) {
+    return ItemStack.areItemsEqualIgnoreDurability(current, in)
+        && ItemStack.areItemStackTagsEqual(current, in);
+  }
 }

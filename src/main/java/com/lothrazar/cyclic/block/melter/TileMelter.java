@@ -6,11 +6,14 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.recipe.RecipeMelter;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -24,6 +27,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -38,6 +42,9 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   public FluidTankBase tank;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private RecipeMelter currentRecipe;
+  private int timer = 0;
+  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 8;
 
   public TileMelter() {
     super(BlockRegistry.Tiles.melter);
@@ -73,6 +80,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     tank.readFromNBT(fluid);
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    timer = tag.getInt("timer");
     super.read(tag);
   }
 
@@ -89,6 +97,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
     });
+    tag.putInt("timer", timer);
     return super.write(tag);
   }
 
@@ -126,8 +135,46 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
   }
-  //  public ItemStack 
+
+  public ItemStack getStackInputSlot() {
+    IItemHandler inv = inventory.orElse(null);
+    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(SLOT_INPUT);
+  }
+
+  private void findMatchingRecipe() {
+    for (RecipeMelter rec : RecipeMelter.RECIPES) {
+      if (rec.matches(this, world)) {
+        currentRecipe = rec;
+      }
+    }
+  }
+
+  public boolean tryProcessRecipe() {
+    if (currentRecipe != null) {
+      int test = tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.SIMULATE);
+      if (test == this.currentRecipe.getRecipeFluidOutput().getAmount()) {
+        //ok it has room for all the fluid none will be wasted
+        this.getStackInputSlot().shrink(this.currentRecipe.getRecipeInput().getCount());
+        tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.EXECUTE);
+        return true;
+      }
+    }
+    return false;
+  }
 
   @Override
-  public void tick() {}
+  public void tick() {
+    //TODO: do i have enough power
+    // TODO: then drain power
+    this.timer--;
+    if (timer < 0) {
+      timer = 0;
+    }
+    //look for a match
+    this.findMatchingRecipe();
+    if (timer == 0 && this.tryProcessRecipe()) {
+      //reset timer
+      this.timer = TIMER_FULL;
+    }
+  }
 }

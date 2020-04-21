@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.registry.CuriosRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
+import com.lothrazar.cyclic.registry.RecipeRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.IProxy;
 import com.lothrazar.cyclic.setup.ServerProxy;
@@ -42,6 +43,7 @@ public class ModCyclic {
     CuriosRegistry.setup(event);
     PotionRegistry.setup(event);
     PacketRegistry.setup();
+    RecipeRegistry.setup();
     proxy.setup();
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new PotionEvents());

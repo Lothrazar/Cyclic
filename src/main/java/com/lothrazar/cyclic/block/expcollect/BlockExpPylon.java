@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -45,7 +44,7 @@ public class BlockExpPylon extends BlockBase {
       ItemStack held = player.getHeldItem(hand);
       if (held.isEmpty() || player.isCrouching()) {
         TileExpPylon tile = (TileExpPylon) world.getTileEntity(pos);
-        UtilStuff.messageStatus(player, "" + tile.getStoredXp());
+        UtilChat.sendStatusMessage(player, "" + tile.getStoredXp());
         return ActionResultType.SUCCESS;
       }
       if (held.getItem() == Items.SUGAR) {
@@ -58,7 +57,7 @@ public class BlockExpPylon extends BlockBase {
           return ActionResultType.SUCCESS;
         }
         else {
-          UtilStuff.messageStatus(player, UtilChat.lang(getTranslationKey() + ".notenough") + " " + tile.getStoredXp() + "/" + ExpItemGain.EXP_PER_FOOD);
+          UtilChat.sendStatusMessage(player, UtilChat.lang(getTranslationKey() + ".notenough") + " " + tile.getStoredXp() + "/" + ExpItemGain.EXP_PER_FOOD);
         }
       }
       else if (held.getItem() == Items.GLASS_BOTTLE) {
@@ -71,7 +70,7 @@ public class BlockExpPylon extends BlockBase {
           return ActionResultType.SUCCESS;
         }
         else {
-          UtilStuff.messageStatus(player, UtilChat.lang(getTranslationKey() + ".notenough") + " " + tile.getStoredXp() + "/" + EXP_PER_BOTTLE);
+          UtilChat.sendStatusMessage(player, UtilChat.lang(getTranslationKey() + ".notenough") + " " + tile.getStoredXp() + "/" + EXP_PER_BOTTLE);
         }
       }
     }

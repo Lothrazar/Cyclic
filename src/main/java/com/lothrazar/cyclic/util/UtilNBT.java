@@ -58,8 +58,4 @@ public class UtilNBT {
     }
     item.getOrCreateTag().putInt(prop, value);
   }
-
-  public static void setItemStackNBTVal(ItemStack stack, String prop, String value) {
-    stack.getOrCreateTag().putString(prop, value);
-  }
 }
