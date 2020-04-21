@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.melter;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -32,6 +33,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+@SuppressWarnings("rawtypes")
 public class TileMelter extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   public static int SLOT_INPUT = 0;
@@ -142,6 +144,10 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private void findMatchingRecipe() {
+    if (currentRecipe != null && currentRecipe.matches(this, world)) {
+      return;// its valid
+    }
+    currentRecipe = null;
     for (RecipeMelter rec : RecipeMelter.RECIPES) {
       if (rec.matches(this, world)) {
         currentRecipe = rec;
@@ -149,32 +155,40 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     }
   }
 
-  public boolean tryProcessRecipe() {
-    if (currentRecipe != null) {
-      int test = tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.SIMULATE);
-      if (test == this.currentRecipe.getRecipeFluidOutput().getAmount()) {
-        //ok it has room for all the fluid none will be wasted
-        this.getStackInputSlot().shrink(this.currentRecipe.getRecipeInput().getCount());
-        tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.EXECUTE);
-        return true;
-      }
-    }
-    return false;
-  }
-
   @Override
   public void tick() {
-    //TODO: do i have enough power
-    // TODO: then drain power
+    IEnergyStorage en = this.energy.orElse(null);
+    if (en == null) {
+      return;
+    }
+    this.findMatchingRecipe();
+    if (currentRecipe == null) {
+      return;
+    }
+    //recipe is valid, pay power
+    final int cost = ConfigManager.MELTERPOWER.get();
+    if (en.getEnergyStored() < cost) {
+      return;//broke
+    }
+    en.extractEnergy(cost, false);//drain each tick
     this.timer--;
     if (timer < 0) {
       timer = 0;
     }
-    //look for a match
-    this.findMatchingRecipe();
     if (timer == 0 && this.tryProcessRecipe()) {
       //reset timer
       this.timer = TIMER_FULL;
     }
+  }
+
+  private boolean tryProcessRecipe() {
+    int test = tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.SIMULATE);
+    if (test == this.currentRecipe.getRecipeFluidOutput().getAmount()) {
+      //ok it has room for all the fluid none will be wasted
+      this.getStackInputSlot().shrink(this.currentRecipe.getRecipeInput().getCount());
+      tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.EXECUTE);
+      return true;
+    }
+    return false;
   }
 }
