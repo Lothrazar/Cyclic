@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.util.UtilFluid;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -16,7 +18,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class TileEntityBase extends TileEntity {
+public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static final int FUEL_WEAK = 256;
   public static final int MENERGY = 64 * 1000;
@@ -169,4 +171,49 @@ public abstract class TileEntityBase extends TileEntity {
   }
 
   public void setFluid(FluidStack fluid) {}
+
+  /************************** IInventory needed for IRecipe **********************************/
+  @Deprecated
+  @Override
+  public int getSizeInventory() {
+    return 0;
+  }
+
+  @Deprecated
+  @Override
+  public boolean isEmpty() {
+    return true;
+  }
+
+  @Deprecated
+  @Override
+  public ItemStack getStackInSlot(int index) {
+    return ItemStack.EMPTY;
+  }
+
+  @Deprecated
+  @Override
+  public ItemStack decrStackSize(int index, int count) {
+    return ItemStack.EMPTY;
+  }
+
+  @Deprecated
+  @Override
+  public ItemStack removeStackFromSlot(int index) {
+    return ItemStack.EMPTY;
+  }
+
+  @Deprecated
+  @Override
+  public void setInventorySlotContents(int index, ItemStack stack) {}
+
+  @Deprecated
+  @Override
+  public boolean isUsableByPlayer(PlayerEntity player) {
+    return false;
+  }
+
+  @Deprecated
+  @Override
+  public void clear() {}
 }

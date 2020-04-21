@@ -114,18 +114,19 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   @Override
   public void setField(int field, int value) {}
 
-  public FluidStack getFluid() {
-    return tank.getFluid();
-  }
-
   public float getCapacity() {
     return CAPACITY;
+  }
+
+  public FluidStack getFluid() {
+    return tank.getFluid();
   }
 
   @Override
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
   }
+  //  public ItemStack 
 
   @Override
   public void tick() {}
