@@ -14,11 +14,6 @@ public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
   @Override
   public void init() {
     super.init();
-    //    int x = guiLeft + 132, y = guiTop + 8;
-    //    btnToggle = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
-    //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-    //      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(0, container.tile.getFlowing(), container.tile.getPos()));
-    //    }));
   }
 
   @Override
@@ -30,9 +25,8 @@ public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    //    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
-    //    btnToggle.setTextureId(container.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
     this.drawButtonTooltips(mouseX, mouseY);
+    this.drawName(this.title.getFormattedText());
   }
 
   @Override

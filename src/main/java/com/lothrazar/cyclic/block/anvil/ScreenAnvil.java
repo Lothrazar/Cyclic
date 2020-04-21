@@ -32,9 +32,8 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    //    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
-    //    btnToggle.setTextureId(container.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
     this.drawButtonTooltips(mouseX, mouseY);
+    this.drawName(this.title.getFormattedText());
   }
 
   @Override

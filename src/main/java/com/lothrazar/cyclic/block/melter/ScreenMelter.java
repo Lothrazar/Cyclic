@@ -37,6 +37,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     this.drawButtonTooltips(mouseX, mouseY);
+    this.drawName(this.title.getFormattedText());
   }
 
   @Override

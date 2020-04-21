@@ -48,13 +48,12 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.getNeedsRedstone()));
     btnRedstone.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
     this.drawButtonTooltips(mouseX, mouseY);
+    this.drawName(this.title.getFormattedText());
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    //    GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.drawBackground(TextureRegistry.GUI);
-    //energy
     energy.draw(container.getEnergy());
   }
 }

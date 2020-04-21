@@ -1014,12 +1014,10 @@
     "item.cyclic.biomass": "Biomass",
     "item.cyclic.peat_fuel": "Peat",
     "item.cyclic.peat_fuel.tooltip": "Smelted peat.  Use in a generator.",
-    "item.cyclic.peat_fuel.guide": "Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks.",
 
     "item.cyclic.peat_fuel_enriched": "Enriched Peat",
-    "item.cyclic.peat_fuel_enriched.tooltip": "Create energy in a Peat-fired Generator",
-    "item.cyclic.peat_fuel_enriched.guide": "Burn to create energy in the Peat-fired Generator.  This drops from Peat Deposit when harvested.  It burns for 200 ticks.",
-
+    "item.cyclic.peat_fuel_enriched.tooltip": "Create energy in a Peat Generator",
+ 
     "block.cyclic.peat_unbaked": "Dry Peat Bog",
     "block.cyclic.peat_unbaked.tooltip": "Slowly turns into a Peat Deposit when sitting in water",
     "block.cyclic.peat_unbaked.guide": "Let sit in water to turn into Solid Peat.  Then harvest the Peat Deposit to obtain Peat Fuel",
@@ -1028,7 +1026,7 @@
     "block.cyclic.peat_baked.tooltip": "Wet peat ready to be harvested and smelted",
     "block.cyclic.peat_baked.guide": "After the Peat Bog soaks in water, it turns into a Peat Deposit and can be harvested to get Peat Fuel",
 
-    "block.cyclic.peat_generator": "Peat-fired Generator",
+    "block.cyclic.peat_generator": "Peat Generator",
     "block.cyclic.peat_generator.tooltip": "Generate power",
     "block.cyclic.peat_generator.guide": "Burn peat to create Energy.  Create Peat Fuel using Biomass, Peat Bog, and Carbon Catalyst.",
 
@@ -1261,7 +1259,6 @@
     "button.fan.sound.tooltip": "Enable or disable sound",
     "block.heat.level": "Heat",
 
-    "block.solidifier": "Solidifier",
-    "block.solidifier.guide": "Cool fluid into solid items, with JEI support and Crafttweaker zenscript support.",
-    "block.solidifier.tooltip": "Convert fluid into items"
+    "block.cyclic.solidifier": "Solidifier",
+    "block.cyclic.solidifier.tooltip": "Convert fluid into items"
 }

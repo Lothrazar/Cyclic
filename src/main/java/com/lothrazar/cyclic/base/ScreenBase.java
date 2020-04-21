@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.base;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.TextboxInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
@@ -30,6 +32,18 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     int relY = guiTop + y;
     int size = 18;
     blit(relX, relY, 0, 0, size, size, size, size);
+  }
+
+  /**
+   * Translate the block name; and draw it in the top center
+   * 
+   * @param name
+   */
+  protected void drawName(String name) {
+    name = UtilChat.lang("block." + ModCyclic.MODID + "." + name);
+    this.font.drawString(name,
+        (this.getXSize() - this.font.getStringWidth(name)) / 2,
+        6.0F, 4210752);
   }
 
   public void drawButtonTooltips(int mouseX, int mouseY) {

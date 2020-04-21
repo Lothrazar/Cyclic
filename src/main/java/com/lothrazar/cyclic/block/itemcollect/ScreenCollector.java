@@ -42,6 +42,7 @@ public class ScreenCollector extends ScreenBase<ContainerCollector> {
     btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.getNeedsRedstone()));
     btnRedstone.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
     this.drawButtonTooltips(mouseX, mouseY);
+    this.drawName(this.title.getFormattedText());
   }
 
   @Override
