@@ -7,6 +7,6 @@
         "south": "cyclic:blocks/solidifier",
         "east": "cyclic:blocks/solidifier",
         "west": "cyclic:blocks/solidifier",
-        "particle": "cyclic:blocks/block_disenchanter"
+        "particle": "cyclic:blocks/solidifier"
     }
 }

@@ -4,8 +4,10 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilRender;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.fluid.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidBar {
@@ -58,7 +60,14 @@ public class FluidBar {
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
     TextureAtlasSprite icon = UtilFluid.getBaseFluidTexture(fluid.getFluid(), FluidType.STILL);
+    if (fluid.getFluid() == Fluids.WATER) {
+      //hack in the blue because water is grey and is filled in by the biome when in-world
+      RenderSystem.color3f(0, 0, 1);
+    }
     drawTiledSprite(x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
+    if (fluid.getFluid() == Fluids.WATER) {
+      RenderSystem.color4f(1, 1, 1, 1);
+    }
   }
 
   protected void drawTiledSprite(int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
