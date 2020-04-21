@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.TileMelter;
+import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -80,6 +82,22 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), ItemStack.EMPTY);
     RecipeMelter.addRecipe("obsidianlava", new ItemStack(Blocks.OBSIDIAN),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), ItemStack.EMPTY);
+    RecipeMelter.addBiomass("bioseed", new ItemStack(Items.WHEAT_SEEDS));
+    RecipeMelter.addBiomass("biocact", new ItemStack(Items.CACTUS));
+    RecipeMelter.addBiomass("biobeet", new ItemStack(Items.BEETROOT_SEEDS));
+    RecipeMelter.addBiomass("biomel", new ItemStack(Items.MELON_SEEDS));
+    RecipeMelter.addBiomass("biopump", new ItemStack(Items.PUMPKIN_SEEDS));
+    RecipeMelter.addBiomass("bioapp", new ItemStack(Items.APPLE));
+    RecipeMelter.addBiomass("biolily", new ItemStack(Blocks.LILY_PAD));
+    RecipeMelter.addBiomass("biostallg", new ItemStack(Blocks.TALL_GRASS));
+    RecipeMelter.addBiomass("biossea", new ItemStack(Blocks.TALL_SEAGRASS));
+    RecipeMelter.addBiomass("biostallsea", new ItemStack(Blocks.SEAGRASS));
+    RecipeMelter.addBiomass("biovine", new ItemStack(Items.VINE));
+  }
+
+  private static void addBiomass(String name, ItemStack itemStack) {
+    RecipeMelter.addRecipe(name, itemStack,
+        new FluidStack(FluidBiomassHolder.STILL.get(), 10), ItemStack.EMPTY);
   }
 
   private static void addRecipe(String name, ItemStack itemStack, FluidStack fluidStack,
