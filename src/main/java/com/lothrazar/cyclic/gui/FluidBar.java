@@ -62,7 +62,7 @@ public class FluidBar {
   }
 
   protected void drawTiledSprite(int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-    UtilRender.drawTiledSprite(xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, 16, 16, parent.getBlitOffset());
+    UtilRender.drawTiledSprite(xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {
@@ -71,7 +71,8 @@ public class FluidBar {
   }
 
   public void renderHoveredToolTip(int mouseX, int mouseY, FluidStack current) {
-    if (this.isMouseover(mouseX, mouseY) && current != null) {
+    if (this.isMouseover(mouseX, mouseY) && current != null
+        && !current.isEmpty()) {
       parent.renderTooltip(current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getFormattedText(), mouseX, mouseY);
     }
   }

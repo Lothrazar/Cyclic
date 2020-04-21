@@ -14,8 +14,8 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
 
   public ScreenMelter(ContainerMelter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileMelter.MAX);
-    fluid = new FluidBar(this, 8, 8, TileMelter.CAPACITY);
+    energy = new EnergyBar(this, TileMelter.MAX);
+    fluid = new FluidBar(this, 132, 8, TileMelter.CAPACITY);
   }
 
   @Override
@@ -44,7 +44,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.GUI);
     this.drawSlot(36, 30);
-    this.drawSlot(126, 30);
+    this.drawSlot(108, 30);
     energy.draw(container.getEnergy());
     fluid.draw(this.container.tile.getFluid());
   }

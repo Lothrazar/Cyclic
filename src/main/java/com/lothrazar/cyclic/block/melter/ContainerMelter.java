@@ -27,7 +27,7 @@ public class ContainerMelter extends ContainerBase {
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 37, 31));
-      addSlot(new SlotItemHandler(h, 1, 127, 31));
+      addSlot(new SlotItemHandler(h, 1, 109, 31));
     });
     layoutPlayerInventorySlots(8, 84);
     trackInt(new IntReferenceHolder() {

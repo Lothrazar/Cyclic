@@ -10,7 +10,7 @@ public class EnergyBar {
   private int y = 8;
   public int capacity;
   private int width = 16;
-  private int height = 78;
+  private int height = 62;
   public int guiLeft;
   public int guiTop;
 
@@ -30,12 +30,12 @@ public class EnergyBar {
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_CTR);
     relX = guiLeft + x;
     relY = guiTop + y;
-    Screen.blit(relX, relY, 0, 0, 16, 66, width, height);
+    Screen.blit(relX, relY, 0, 0, width, height, width, height);
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_INNER);
     relX = relX + 1;
     relY = relY + 1;
     float pct = Math.min(energ / capacity, 1.0F);
-    Screen.blit(relX, relY, 0, 0, 14, (int) (64 * pct), 14, 64);
+    Screen.blit(relX, relY, 0, 0, width - 2, (int) ((height - 2) * pct), width - 2, height - 2);
   }
 
   public void renderHoveredToolTip(int mouseX, int mouseY, int energ) {
