@@ -1,10 +1,12 @@
 package com.lothrazar.cyclic.jei;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.melter.RecipeMelter;
+import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.recipe.RecipeMelter;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import mezz.jei.api.constants.VanillaTypes;
@@ -25,7 +27,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   private IDrawable icon;
 
   public MelterRecipeCategory(IGuiHelper helper) {
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/gui/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
+    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/melter.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
   }
 
@@ -58,24 +60,16 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   public void setIngredients(RecipeMelter recipe, IIngredients ingredients) {
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
-    stuff.add(recipe.getRecipeInput());
+    Collections.addAll(stuff, recipe.getRecipeInputs());
     in.add(stuff);
     ingredients.setInputLists(VanillaTypes.ITEM, in);
-    if (!recipe.getRecipeOutput().isEmpty())
-      ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, RecipeMelter recipe, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    int x = 3, y = 18;
-    int s = Const.SQ;
-    guiItemStacks.init(0, true, 3, 18);
-    guiItemStacks.init(1, true, 139, 18);
-    if (!recipe.getRecipeOutput().isEmpty())
-      guiItemStacks.set(1, recipe.getRecipeOutput());
+    guiItemStacks.init(TileMelter.SLOT_INPUT, true, 3, Const.SQ);
     ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
-    //    //getname is the same   
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
@@ -85,17 +79,11 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
       }
     }
     //
-    x = 90;
-    try {
-      ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
-      //getname is the same   
-      recipeLayout.getFluidStacks().init(0, true, x, y, Const.SQ - 2, Const.SQ - 2,
-          FluidAttributes.BUCKET_VOLUME, false,
-          null);
-      recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluidOutput());
-    }
-    catch (Exception e) {
-      //
-    }
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
+    //getname is the same   
+    recipeLayout.getFluidStacks().init(0, true, 140, Const.SQ + 1, Const.SQ - 2, Const.SQ - 2,
+        FluidAttributes.BUCKET_VOLUME, false,
+        null);
+    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluidOutput());
   }
 }

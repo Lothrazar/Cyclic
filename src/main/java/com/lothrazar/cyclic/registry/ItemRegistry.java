@@ -69,6 +69,10 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  @ObjectHolder(ModCyclic.MODID + ":gem_amber")
+  public static Item gem_amber;
+  @ObjectHolder(ModCyclic.MODID + ":biomass")
+  public static Item biomass;
   @ObjectHolder(ModCyclic.MODID + ":cable_wrench")
   public static CableWrench cable_wrench;
   @ObjectHolder(ModCyclic.MODID + ":antigravity")

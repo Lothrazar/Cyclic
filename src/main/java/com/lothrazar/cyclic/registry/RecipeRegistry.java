@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.recipe.RecipeMelter;
+import com.lothrazar.cyclic.block.melter.RecipeMelter;
 
 public class RecipeRegistry {
 

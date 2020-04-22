@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
+import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
-import com.lothrazar.cyclic.recipe.RecipeMelter;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;

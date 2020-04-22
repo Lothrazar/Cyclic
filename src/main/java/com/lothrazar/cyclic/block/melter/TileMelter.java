@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.recipe.RecipeMelter;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -206,7 +205,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
         //        }
       }
       //ok it has room for all the fluid none will be wasted
-      this.getStackInputSlot().shrink(this.currentRecipe.getRecipeInput().getCount());
+      this.getStackInputSlot().shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.EXECUTE);
       itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), false);
       return true;

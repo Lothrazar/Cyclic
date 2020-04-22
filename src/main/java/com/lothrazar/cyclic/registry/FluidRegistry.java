@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.fluid.FluidAmberHolder;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidCrystalHolder;
+import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -13,6 +14,7 @@ public class FluidRegistry {
   public static FluidAmberHolder amber;
   public static FluidCrystalHolder crystal;
   public static FluidBiomassHolder biomass;
+  public static FluidHoneyHolder honey;
 
   public static void setup() {
     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -20,5 +22,6 @@ public class FluidRegistry {
     amber = new FluidAmberHolder(modEventBus);
     crystal = new FluidCrystalHolder(modEventBus);
     biomass = new FluidBiomassHolder(modEventBus);
+    honey = new FluidHoneyHolder(modEventBus);
   }
 }
