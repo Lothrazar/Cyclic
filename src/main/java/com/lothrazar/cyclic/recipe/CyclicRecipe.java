@@ -55,7 +55,7 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
     return ItemStack.EMPTY;
   }
 
-  public FluidStack getRecipeFluidOutput() {
+  public FluidStack getRecipeFluid() {
     return FluidStack.EMPTY;
   }
 

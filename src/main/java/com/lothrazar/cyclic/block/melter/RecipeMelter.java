@@ -71,7 +71,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public FluidStack getRecipeFluidOutput() {
+  public FluidStack getRecipeFluid() {
     return outFluid.copy();
   }
 

@@ -187,8 +187,8 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
 
   private boolean tryProcessRecipe() {
     IItemHandler itemsHere = this.inventory.orElse(null);
-    int test = tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.SIMULATE);
-    if (test == this.currentRecipe.getRecipeFluidOutput().getAmount()) {
+    int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
+    if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
       if (!currentRecipe.getRecipeOutput().isEmpty()) {
         //        if (!UtilItemStack.matches(this.getStackOutputSlot(), currentRecipe.getRecipeOutput())) {
@@ -206,7 +206,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       }
       //ok it has room for all the fluid none will be wasted
       this.getStackInputSlot().shrink(1);
-      tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.EXECUTE);
+      tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
       itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), false);
       return true;
     }

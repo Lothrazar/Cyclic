@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
-  static ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "jei");
+  static ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "melter_jei");
   private IDrawable gui;
   private IDrawable icon;
 
@@ -69,7 +69,6 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   public void setRecipe(IRecipeLayout recipeLayout, RecipeMelter recipe, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     guiItemStacks.init(TileMelter.SLOT_INPUT, true, 3, Const.SQ);
-    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     for (int i = 0; i < inputs.size(); i++) {
       List<ItemStack> input = inputs.get(i);
@@ -79,11 +78,12 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
       }
     }
     //
-    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
+    //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     //getname is the same   
     recipeLayout.getFluidStacks().init(0, true, 140, Const.SQ + 1, Const.SQ - 2, Const.SQ - 2,
         FluidAttributes.BUCKET_VOLUME, false,
         null);
-    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluidOutput());
+    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
   }
 }
