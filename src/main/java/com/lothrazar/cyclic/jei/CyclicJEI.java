@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
 import com.lothrazar.cyclic.recipe.RecipeMelter;
 import mezz.jei.api.IModPlugin;
@@ -40,7 +41,7 @@ public class CyclicJEI implements IModPlugin {
 
   @Override
   public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
-    //    registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.id,
-    //        75, 0, 40, 26);
+    registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.id,
+        0, 1, 1, 4 * 9);
   }
 }

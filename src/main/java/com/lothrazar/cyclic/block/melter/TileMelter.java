@@ -37,7 +37,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileMelter extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   public static int SLOT_INPUT = 0;
-  public static int SLOT_OUT = 0;
+  public static int SLOT_OUTPUT = 1;
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
@@ -143,6 +143,11 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(SLOT_INPUT);
   }
 
+  public ItemStack getStackOutputSlot() {
+    IItemHandler inv = inventory.orElse(null);
+    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(SLOT_OUTPUT);
+  }
+
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, world)) {
       return;// its valid
@@ -182,11 +187,28 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private boolean tryProcessRecipe() {
+    IItemHandler itemsHere = this.inventory.orElse(null);
     int test = tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluidOutput().getAmount()) {
+      //wait is output slot compatible
+      if (!currentRecipe.getRecipeOutput().isEmpty()) {
+        //        if (!UtilItemStack.matches(this.getStackOutputSlot(), currentRecipe.getRecipeOutput())) {
+        //          return false;//no more room in output
+        //        }
+        if (itemsHere == null ||
+            !itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), true).isEmpty()) {
+          System.out.println("not enoug room");
+          return false;//there was non-empty left after this, so no room for all
+        }
+        //        if (this.getStackOutputSlot().getCount() +
+        //            currentRecipe.getRecipeOutput().getCount() > 64) {
+        //          return false;//no room output
+        //        }
+      }
       //ok it has room for all the fluid none will be wasted
       this.getStackInputSlot().shrink(this.currentRecipe.getRecipeInput().getCount());
       tank.fill(this.currentRecipe.getRecipeFluidOutput(), FluidAction.EXECUTE);
+      itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), false);
       return true;
     }
     return false;
