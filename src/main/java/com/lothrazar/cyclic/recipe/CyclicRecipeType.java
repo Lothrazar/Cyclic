@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class CyclicRecipeType<RECIPE_TYPE extends CyclicRecipe> implements IRecipeType<RECIPE_TYPE> {
 
+  public static final CyclicRecipeType<RecipeMelter<TileEntityBase>> SOLID = create("solidifier");
   public static final CyclicRecipeType<RecipeMelter<TileEntityBase>> MELTER = create("melter");
   private static final List<CyclicRecipeType<? extends CyclicRecipe>> types = new ArrayList<>();
 

@@ -3,8 +3,12 @@ package com.lothrazar.cyclic.block.solidifier;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.fluid.FluidAmberHolder;
+import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidCrystalHolder;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -62,26 +66,20 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   @Override
   public IRecipeType<?> getType() {
-    return CyclicRecipeType.MELTER;
+    return CyclicRecipeType.SOLID;
   }
 
   public static void initAllRecipes() {
     RecipeSolidifier.addRecipe("freezeice", new ItemStack(Blocks.ICE),
         new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME));
-    //    RecipeSolidifier.addRecipe("picetowater", new ItemStack(Blocks.PACKED_ICE),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9));
-    //    RecipeSolidifier.addRecipe("bicetowater", new ItemStack(Blocks.BLUE_ICE),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9 * 9));
-    //    //
-    //    RecipeSolidifier.addRecipe("fbio", new ItemStack(ItemRegistry.biomass),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    //
-    //    RecipeSolidifier.addRecipe("obsidianlava", new ItemStack(Blocks.OBSIDIAN),
-    //        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
-    //    RecipeSolidifier.addRecipe("fgem_amber", new ItemStack(ItemRegistry.gem_amber),
-    //        new FluidStack(FluidAmberHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeSolidifier.addRecipe("fgem_obsidian", new ItemStack(ItemRegistry.gem_obsidian),
-    //        new FluidStack(FluidCrystalHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeSolidifier.addRecipe("fbio", new ItemStack(ItemRegistry.biomass),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeSolidifier.addRecipe("obsidianlava", new ItemStack(Blocks.OBSIDIAN),
+        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
+    RecipeSolidifier.addRecipe("fgem_amber", new ItemStack(ItemRegistry.gem_amber),
+        new FluidStack(FluidAmberHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeSolidifier.addRecipe("fgem_obsidian", new ItemStack(ItemRegistry.gem_obsidian),
+        new FluidStack(FluidCrystalHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
     //    //
     //    RecipeSolidifier.addRecipe("fexperience_food", new ItemStack(ItemRegistry.experience_food),
     //        new FluidStack(FluidXpJuiceHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
