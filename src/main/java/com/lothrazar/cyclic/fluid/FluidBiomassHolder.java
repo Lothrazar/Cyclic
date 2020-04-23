@@ -35,9 +35,9 @@ public class FluidBiomassHolder {
       STILL,
       FLOWING,
       FluidAttributes.builder(
-          new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_base"),
-          new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flowing")))
-              .bucket(BUCKET).block(BLOCK);
+          new ResourceLocation("minecraft:block/water_still"),
+          new ResourceLocation("minecraft:block/water_flow"))
+          .color(0x00BBBB22)).bucket(BUCKET).block(BLOCK);
 
   public FluidBiomassHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);

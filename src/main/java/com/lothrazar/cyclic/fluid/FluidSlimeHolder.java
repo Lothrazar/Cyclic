@@ -19,14 +19,14 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java
-public class FluidCrystalHolder {
+public class FluidSlimeHolder {
 
   private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, ModCyclic.MODID);
   private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, ModCyclic.MODID);
   private static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, ModCyclic.MODID);
-  private static final String id = "crystal_obsidian";
-  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidCrystalHolder.properties));
-  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidCrystalHolder.properties));
+  private static final String id = "slime";
+  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidSlimeHolder.properties));
+  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidSlimeHolder.properties));
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
       () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
@@ -35,11 +35,11 @@ public class FluidCrystalHolder {
       STILL,
       FLOWING,
       FluidAttributes.builder(
-          new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_base"),
-          new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flowing")))
+          new ResourceLocation("minecraft:block/slime_block"),
+          new ResourceLocation("minecraft:block/slime_block")))
               .bucket(BUCKET).block(BLOCK);
 
-  public FluidCrystalHolder(IEventBus modEventBus) {
+  public FluidSlimeHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);
     ITEMS.register(modEventBus);
     FLUIDS.register(modEventBus);

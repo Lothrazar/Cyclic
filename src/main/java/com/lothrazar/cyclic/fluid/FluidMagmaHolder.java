@@ -19,27 +19,27 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java
-public class FluidAmberHolder {
+public class FluidMagmaHolder {
 
   private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, ModCyclic.MODID);
   private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, ModCyclic.MODID);
   private static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, ModCyclic.MODID);
-  private static final String id = "amber";
-  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidAmberHolder.properties));
-  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidAmberHolder.properties));
+  private static final String id = "magma";
+  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidMagmaHolder.properties));
+  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidMagmaHolder.properties));
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
-      () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
+      () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
       () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemGroup)));
   private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
       STILL,
       FLOWING,
       FluidAttributes.builder(
-          new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_base"),
-          new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flowing")))
+          new ResourceLocation("minecraft:block/magma"),
+          new ResourceLocation("minecraft:block/magma")))
               .bucket(BUCKET).block(BLOCK);
 
-  public FluidAmberHolder(IEventBus modEventBus) {
+  public FluidMagmaHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);
     ITEMS.register(modEventBus);
     FLUIDS.register(modEventBus);

@@ -3,9 +3,8 @@ package com.lothrazar.cyclic.block.solidifier;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.fluid.FluidAmberHolder;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
-import com.lothrazar.cyclic.fluid.FluidCrystalHolder;
+import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -77,9 +76,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     RecipeSolidifier.addRecipe("obsidianlava", new ItemStack(Blocks.OBSIDIAN),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
     RecipeSolidifier.addRecipe("fgem_amber", new ItemStack(ItemRegistry.gem_amber),
-        new FluidStack(FluidAmberHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    RecipeSolidifier.addRecipe("fgem_obsidian", new ItemStack(ItemRegistry.gem_obsidian),
-        new FluidStack(FluidCrystalHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+        new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
     //    //
     //    RecipeSolidifier.addRecipe("fexperience_food", new ItemStack(ItemRegistry.experience_food),
     //        new FluidStack(FluidXpJuiceHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
