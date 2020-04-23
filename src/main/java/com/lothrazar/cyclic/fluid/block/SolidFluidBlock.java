@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.fluid;
+package com.lothrazar.cyclic.fluid.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -10,12 +10,13 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 
-public class SolidFluid extends FlowingFluidBlock {
+public class SolidFluidBlock extends FlowingFluidBlock {
 
   VoxelShape shapes[] = new VoxelShape[16];
 
-  public SolidFluid(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
+  public SolidFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
     super(supplier, props);
     int max = 15; //max of the property LEVEL.getAllowedValues()
     float offset = 0.875F;
@@ -34,5 +35,10 @@ public class SolidFluid extends FlowingFluidBlock {
   @Deprecated
   public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return shapes[state.get(LEVEL).intValue()];
+  }
+
+  @Override
+  public int tickRate(IWorldReader worldIn) {
+    return super.tickRate(worldIn) / 2 + 1;
   }
 }

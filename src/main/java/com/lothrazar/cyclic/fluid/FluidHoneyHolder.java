@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.fluid;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.fluid.block.HoneyFluidBlock;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
@@ -28,7 +29,7 @@ public class FluidHoneyHolder {
   public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidHoneyHolder.properties));
   public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidHoneyHolder.properties));
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
-      () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
+      () -> new HoneyFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
       () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemGroup)));
   private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
