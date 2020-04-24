@@ -37,7 +37,7 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     this.drawButtonTooltips(mouseX, mouseY);
-    this.drawName(this.title.getFormattedText());
+    //    this.drawName(this.title.getFormattedText());
   }
 
   @Override

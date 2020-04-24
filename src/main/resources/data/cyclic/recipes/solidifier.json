@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rlr",
+    "gqg",
+    "hhh"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:quartz"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "r": {
+      "item": "minecraft:lapis_block"
+    },
+    "h": {
+      "item": "minecraft:obsidian"
+    },
+    "q": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "cyclic:solidifier"
+  }
+}
