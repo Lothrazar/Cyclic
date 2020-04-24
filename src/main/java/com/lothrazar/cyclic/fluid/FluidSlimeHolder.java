@@ -38,7 +38,7 @@ public class FluidSlimeHolder {
       FluidAttributes.builder(
           new ResourceLocation("minecraft:block/slime_block"),
           new ResourceLocation("minecraft:block/slime_block")))
-              .bucket(BUCKET).block(BLOCK).levelDecreasePerBlock(1);
+              .bucket(BUCKET).block(BLOCK);
 
   public FluidSlimeHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);

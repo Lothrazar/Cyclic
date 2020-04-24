@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "cyclic:blocks/magma_fluid" }
+        "": { "model": "cyclic:block/magma_fluid" }
     }
 }

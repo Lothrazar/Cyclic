@@ -58,9 +58,9 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
   public SlimeFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
     super(supplier, props);
     int max = 15; //max of the property LEVEL.getAllowedValues()
-    float offset = 0.125F;
+    float offset = 0.875F;
     for (int i = 0; i <= max; i++) { //x and z go from [0,1] 
-      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset, 1));
+      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset - i / 8F, 1));
     }
   }
 
