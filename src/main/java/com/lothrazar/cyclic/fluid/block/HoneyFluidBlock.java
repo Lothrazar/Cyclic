@@ -31,12 +31,7 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
   }
 
   @Override
-  public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
-    super.onEntityWalk(worldIn, pos, entityIn);
-  }
-
-  @Override
   public int tickRate(IWorldReader worldIn) {
-    return super.tickRate(worldIn) / 2 + 1;
+    return super.tickRate(worldIn) * 2;
   }
 }
