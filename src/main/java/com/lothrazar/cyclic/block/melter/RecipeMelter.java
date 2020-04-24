@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.block.melter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
@@ -191,13 +193,20 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.MAGMA_BLOCK),
         new ItemStack(Blocks.NETHER_BRICKS),
         new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    RecipeMelter.addRecipe("magmar",
+    RecipeMelter.addRecipe("magmamelt",
         new ItemStack(Blocks.MAGMA_BLOCK),
         new ItemStack(Blocks.NETHERRACK),
         new FluidStack(FluidMagmaHolder.STILL.get(), 600));
+    ModCyclic.LOGGER.info("Melter Recipes added " + RECIPES.size());
   }
 
+  private static Set<String> hashes = new HashSet<>();
+
   private static void addRecipe(String name, ItemStack itemStack, ItemStack secnd, FluidStack fluidStack) {
+    ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "melter_" + name);
+    if (hashes.contains(id.toString())) {
+      ModCyclic.LOGGER.error("Duplicate melter recipe id " + id.toString());
+    }
     RECIPES.add(new RecipeMelter(
         new ResourceLocation(ModCyclic.MODID, name),
         itemStack,

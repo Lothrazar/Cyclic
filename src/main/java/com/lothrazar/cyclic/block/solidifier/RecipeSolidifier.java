@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.block.solidifier;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
@@ -299,11 +301,11 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.COBBLESTONE),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME),
         new ItemStack(Blocks.OBSIDIAN));
-    RecipeSolidifier.addRecipe("obsidian",
+    RecipeSolidifier.addRecipe("obsidian2",
         new ItemStack(Blocks.COBBLESTONE),
         new ItemStack(Items.BLAZE_POWDER),
         new ItemStack(Blocks.COBBLESTONE),
-        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
         new ItemStack(Blocks.OBSIDIAN));
     //
     RecipeSolidifier.addRecipe("biograss",
@@ -399,6 +401,13 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.SLIME_BALL),
         new FluidStack(FluidSlimeHolder.STILL.get(), 600),
         new ItemStack(Items.SLIME_BALL, 9));
+    //create magma cream deal
+    RecipeSolidifier.addRecipe("slimemagmacream",
+        new ItemStack(Items.SLIME_BALL),
+        new ItemStack(Items.SLIME_BALL),
+        new ItemStack(Items.SLIME_BALL),
+        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+        new ItemStack(Items.MAGMA_CREAM, 6));
     //
     //
     RecipeSolidifier rec = new RecipeSolidifier(
@@ -450,12 +459,19 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.SUGAR),
         new FluidStack(FluidXpJuiceHolder.STILL.get(), ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD),
         new ItemStack(ItemRegistry.experience_food));
+    ModCyclic.LOGGER.info("Solidifier Recipes added " + RECIPES.size());
   }
+
+  private static Set<String> hashes = new HashSet<>();
 
   private static void addRecipe(String name, ItemStack a, ItemStack b, ItemStack c, FluidStack fluidStack,
       ItemStack res) {
+    ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "solidifier_" + name);
+    if (hashes.contains(id.toString())) {
+      ModCyclic.LOGGER.error("Duplicate solidifier recipe id " + id.toString());
+    }
     RECIPES.add(new RecipeSolidifier(
-        new ResourceLocation(ModCyclic.MODID, "solid_" + name),
+        id,
         a, b, c,
         fluidStack, res));
   }
