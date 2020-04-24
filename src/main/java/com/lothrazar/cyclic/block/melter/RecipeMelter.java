@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -28,9 +29,10 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
 
-  protected RecipeMelter(ResourceLocation id, ItemStack in, FluidStack out) {
+  protected RecipeMelter(ResourceLocation id, ItemStack in, ItemStack inSecond, FluidStack out) {
     super(id);
     ingredients.add(Ingredient.fromStacks(in));
+    ingredients.add(Ingredient.fromStacks(inSecond));
     this.outFluid = out;
   }
 
@@ -38,9 +40,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileMelter tile = (TileMelter) inv;
-      ItemStack current = tile.getStackInputSlot();
-      if (UtilItemStack.matches(current, getRecipeInput())
-          && current.getCount() >= getRecipeInput().getCount()) {
+      if (matches(tile, 0) && matches(tile, 1)) {
         return true;
       }
       return false;
@@ -50,18 +50,26 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     }
   }
 
+  public boolean matches(TileMelter tile, int slot) {
+    ItemStack current = tile.getStackInputSlot(slot);//get slot thing
+    Ingredient ing = ingredients.get(slot);
+    for (ItemStack test : ing.getMatchingStacks()) {
+      if (UtilItemStack.matches(current, test)) {
+        return true;
+      }
+    }
+    return false;
+    //  ingredients.get(0).getMatchingStacks()
+  }
+
+  public ItemStack[] ingredientAt(int slot) {
+    Ingredient ing = ingredients.get(slot);
+    return ing.getMatchingStacks();
+  }
+
   @Override
   public NonNullList<Ingredient> getIngredients() {
     return ingredients;
-  }
-
-  public ItemStack getRecipeInput() {
-    ItemStack[] matches = ingredients.get(0).getMatchingStacks();
-    return matches.length == 0 ? ItemStack.EMPTY : matches[0];
-  }
-
-  public ItemStack[] getRecipeInputs() {
-    return ingredients.get(0).getMatchingStacks();
   }
 
   @Override
@@ -84,30 +92,44 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10),
     //        new ItemStack(Blocks.BLACK_CONCRETE_POWDER));
     //
-    RecipeMelter.addRecipe("snowwater", new ItemStack(Blocks.SNOW_BLOCK),
-        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10));
-    RecipeMelter.addRecipe("icetowater", new ItemStack(Blocks.ICE),
-        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME));
-    RecipeMelter.addRecipe("picetowater", new ItemStack(Blocks.PACKED_ICE),
-        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9));
-    RecipeMelter.addRecipe("bicetowater", new ItemStack(Blocks.BLUE_ICE),
-        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9 * 9));
+    RecipeMelter.addRecipe("snowwater",
+        new ItemStack(Blocks.SNOW_BLOCK),
+        new ItemStack(Blocks.SNOW_BLOCK),
+        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 5));
+    RecipeMelter.addRecipe("icetowater",
+        new ItemStack(Blocks.ICE),
+        new ItemStack(Blocks.ICE),
+        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 2));
+    //    RecipeMelter.addRecipe("picetowater", 
+    //        new ItemStack(Blocks.PACKED_ICE),
+    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9));
+    //    RecipeMelter.addRecipe("bicetowater", new ItemStack(Blocks.BLUE_ICE),
+    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9 * 9));
     //
-    RecipeMelter.addRecipe("fbio", new ItemStack(ItemRegistry.biomass),
+    RecipeMelter.addRecipe("fbio",
+        new ItemStack(ItemRegistry.biomass),
+        new ItemStack(ItemRegistry.biomass),
         new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
     //
-    RecipeMelter.addRecipe("obsidianlava", new ItemStack(Blocks.OBSIDIAN),
+    RecipeMelter.addRecipe("obsidianlava",
+        new ItemStack(Blocks.OBSIDIAN),
+        new ItemStack(Blocks.COBBLESTONE),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
-    RecipeMelter.addRecipe("fgem_amber", new ItemStack(ItemRegistry.gem_amber),
+    RecipeMelter.addRecipe("fgem_slime",
+        new ItemStack(Items.SLIME_BALL),
+        new ItemStack(Items.SLIME_BALL),
         new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    RecipeMelter.addRecipe("fexperience_food", new ItemStack(ItemRegistry.experience_food),
+    RecipeMelter.addRecipe("fexperience_food",
+        new ItemStack(ItemRegistry.experience_food),
+        new ItemStack(ItemRegistry.experience_food),
         new FluidStack(FluidXpJuiceHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
   }
 
-  private static void addRecipe(String name, ItemStack itemStack, FluidStack fluidStack) {
+  private static void addRecipe(String name, ItemStack itemStack, ItemStack secnd, FluidStack fluidStack) {
     RECIPES.add(new RecipeMelter(
         new ResourceLocation(ModCyclic.MODID, name),
         itemStack,
+        secnd,
         fluidStack));
   }
 }

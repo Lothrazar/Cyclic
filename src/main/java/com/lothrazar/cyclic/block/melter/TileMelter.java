@@ -35,8 +35,7 @@ import net.minecraftforge.items.ItemStackHandler;
 @SuppressWarnings("rawtypes")
 public class TileMelter extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static int SLOT_INPUT = 0;
-  public static int SLOT_OUTPUT = 1;
+  public static int SLOT_OUTPUT = 2;
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
@@ -57,7 +56,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(2);
+    return new ItemStackHandler(3);
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -137,9 +136,9 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     tank.setFluid(fluid);
   }
 
-  public ItemStack getStackInputSlot() {
+  public ItemStack getStackInputSlot(int slot) {
     IItemHandler inv = inventory.orElse(null);
-    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(SLOT_INPUT);
+    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
   }
 
   public ItemStack getStackOutputSlot() {
@@ -196,7 +195,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
         //        }
         if (itemsHere == null ||
             !itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), true).isEmpty()) {
-          System.out.println("not enoug room");
           return false;//there was non-empty left after this, so no room for all
         }
         //        if (this.getStackOutputSlot().getCount() +
@@ -205,7 +203,8 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
         //        }
       }
       //ok it has room for all the fluid none will be wasted
-      this.getStackInputSlot().shrink(1);
+      this.getStackInputSlot(0).shrink(1);
+      this.getStackInputSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
       itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), false);
       return true;

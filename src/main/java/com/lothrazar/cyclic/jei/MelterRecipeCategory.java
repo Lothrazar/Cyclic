@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
-import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -20,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 
+@SuppressWarnings("rawtypes")
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   static ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "melter_jei");
@@ -60,24 +60,29 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   public void setIngredients(RecipeMelter recipe, IIngredients ingredients) {
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
-    Collections.addAll(stuff, recipe.getRecipeInputs());
+    Collections.addAll(stuff, recipe.ingredientAt(0));
+    in.add(stuff);
+    stuff = new ArrayList<>();
+    Collections.addAll(stuff, recipe.ingredientAt(1));
     in.add(stuff);
     ingredients.setInputLists(VanillaTypes.ITEM, in);
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
   }
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, RecipeMelter recipe, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    guiItemStacks.init(TileMelter.SLOT_INPUT, true, 3, Const.SQ);
+    guiItemStacks.init(0, true, 3, Const.SQ);
+    guiItemStacks.init(1, true, 21, Const.SQ);
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
-    for (int i = 0; i < inputs.size(); i++) {
-      List<ItemStack> input = inputs.get(i);
-      if (input != null && input.isEmpty() == false) {
-        //ok so
-        guiItemStacks.set(i, input.get(0));
-      }
+    List<ItemStack> input = inputs.get(0);
+    if (input != null && input.isEmpty() == false) {
+      guiItemStacks.set(0, input);
     }
-    //
+    input = inputs.get(1);
+    if (input != null && input.isEmpty() == false) {
+      guiItemStacks.set(1, input);
+    }
     //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     //getname is the same   

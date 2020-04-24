@@ -15,6 +15,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 
+@SuppressWarnings("rawtypes")
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
 
   static ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "solid_jei");
@@ -54,6 +55,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   @Override
   public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {
     ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
 
   @Override
