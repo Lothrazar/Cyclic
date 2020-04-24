@@ -22,8 +22,43 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class MagmaFluidBlock extends FlowingFluidBlock {
+
+  public static class Flowing extends ForgeFlowingFluid.Flowing {
+
+    public Flowing(Properties properties) {
+      super(properties);
+    }
+
+    @Override
+    public int getSlopeFindDistance(IWorldReader worldIn) {
+      return 7;// worldIn.getDimension().doesWaterVaporize() ? 4 : 2 + 2;
+    }
+
+    @Override
+    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+      return 7;// worldIn.getDimension().doesWaterVaporize() ? 1 : 2;
+    }
+  }
+
+  public static class Source extends ForgeFlowingFluid.Source {
+
+    public Source(Properties properties) {
+      super(properties);
+    }
+
+    @Override
+    public int getSlopeFindDistance(IWorldReader worldIn) {
+      return 9;//worldIn.getDimension().doesWaterVaporize() ? 4 : 2;
+    }
+
+    @Override
+    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+      return 1;// worldIn.getDimension().doesWaterVaporize() ? 1 : 2;
+    }
+  }
 
   VoxelShape shapes[] = new VoxelShape[16];
 
@@ -32,7 +67,7 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     int max = 15; //max of the property LEVEL.getAllowedValues()
     float offset = 0.875F;
     for (int i = 0; i <= max; i++) { //x and z go from [0,1] 
-      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset - i / 16F, 1));
+      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset - i / 8F, 1));
     }
   }
 
@@ -54,10 +89,6 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     return ParticleTypes.DRIPPING_LAVA;
   }
 
-  public int getLevelDecreasePerBlock(IWorldReader worldIn) {
-    return 1;// worldIn.getDimension().doesWaterVaporize() ? 1 : 2;
-  }
-
   @Override
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
     if (entityIn instanceof LivingEntity) {
@@ -75,6 +106,6 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
 
   @Override
   public int tickRate(IWorldReader worldIn) {
-    return super.tickRate(worldIn) * 8;
+    return super.tickRate(worldIn) * 4;
   }
 }
