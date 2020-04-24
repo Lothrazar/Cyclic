@@ -3,8 +3,10 @@ package com.lothrazar.cyclic.block.melter;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
+import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
@@ -93,6 +95,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10),
     //        new ItemStack(Blocks.BLACK_CONCRETE_POWDER));
     //
+    // WATER
     RecipeMelter.addRecipe("snowwater",
         new ItemStack(Blocks.SNOW_BLOCK),
         new ItemStack(Blocks.SNOW_BLOCK),
@@ -101,21 +104,47 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.ICE),
         new ItemStack(Blocks.ICE),
         new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 2));
-    //    RecipeMelter.addRecipe("picetowater", 
-    //        new ItemStack(Blocks.PACKED_ICE),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9));
-    //    RecipeMelter.addRecipe("bicetowater", new ItemStack(Blocks.BLUE_ICE),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 9 * 9));
-    //
     RecipeMelter.addRecipe("fbio",
         new ItemStack(ItemRegistry.biomass),
         new ItemStack(ItemRegistry.biomass),
         new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //
+    RecipeMelter.addRecipe("bambooskelp",
+        new ItemStack(ItemRegistry.biomass),
+        new ItemStack(Items.BAMBOO),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("wheatkelp",
+        new ItemStack(ItemRegistry.biomass),
+        new ItemStack(Items.WHEAT_SEEDS),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("beetrootkelp",
+        new ItemStack(ItemRegistry.biomass),
+        new ItemStack(Items.BEETROOT_SEEDS),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("melonkelp",
+        new ItemStack(ItemRegistry.biomass),
+        new ItemStack(Items.MELON_SEEDS),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("pumpskelp",
+        new ItemStack(ItemRegistry.biomass),
+        new ItemStack(Items.PUMPKIN_SEEDS),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("pumpsasdfkelp",
+        new ItemStack(ItemRegistry.biomass),
+        new ItemStack(Items.KELP),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    // 
     RecipeMelter.addRecipe("obsidianlava",
         new ItemStack(Blocks.OBSIDIAN),
         new ItemStack(Blocks.COBBLESTONE),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("obsidianlava",
+        new ItemStack(Blocks.OBSIDIAN),
+        new ItemStack(Blocks.GRAVEL),
+        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("slimemagmaball",
+        new ItemStack(Items.MAGMA_CREAM),
+        new ItemStack(Items.MAGMA_CREAM),
+        new FluidStack(FluidSlimeHolder.STILL.get(), 200));
     RecipeMelter.addRecipe("slimeball",
         new ItemStack(Items.SLIME_BALL),
         new ItemStack(Items.SLIME_BALL),
@@ -124,10 +153,23 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.SLIME_BLOCK),
         new ItemStack(Blocks.SLIME_BLOCK),
         new FluidStack(FluidSlimeHolder.STILL.get(), 1800));
+    //    
     RecipeMelter.addRecipe("fexperience_food",
         new ItemStack(ItemRegistry.experience_food),
         new ItemStack(ItemRegistry.experience_food),
-        new FluidStack(FluidXpJuiceHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+        new FluidStack(FluidXpJuiceHolder.STILL.get(), 2 * ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
+    RecipeMelter.addRecipe("fexperience_food",
+        new ItemStack(ItemRegistry.experience_food),
+        new ItemStack(Items.GHAST_TEAR),
+        new FluidStack(FluidXpJuiceHolder.STILL.get(), 100 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
+    RecipeMelter.addRecipe("fexperience_food",
+        new ItemStack(ItemRegistry.experience_food),
+        new ItemStack(Items.BLAZE_ROD),
+        new FluidStack(FluidXpJuiceHolder.STILL.get(), 100 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
+    RecipeMelter.addRecipe("fexperience_food",
+        new ItemStack(ItemRegistry.experience_food),
+        new ItemStack(Items.ROTTEN_FLESH),
+        new FluidStack(FluidXpJuiceHolder.STILL.get(), 20 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
     RecipeMelter.addRecipe("honey",
         new ItemStack(Items.HONEY_BLOCK),
         new ItemStack(Items.HONEY_BLOCK),
@@ -136,6 +178,23 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.HONEY_BOTTLE),
         new ItemStack(Items.HONEY_BOTTLE),
         new FluidStack(FluidHoneyHolder.STILL.get(), 500));
+    RecipeMelter.addRecipe("honeyc",
+        new ItemStack(Items.HONEYCOMB_BLOCK),
+        new ItemStack(Items.HONEY_BLOCK),
+        new FluidStack(FluidHoneyHolder.STILL.get(), 5000));
+    //
+    RecipeMelter.addRecipe("magma",
+        new ItemStack(Blocks.MAGMA_BLOCK),
+        new ItemStack(Blocks.MAGMA_BLOCK),
+        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("magmar",
+        new ItemStack(Blocks.MAGMA_BLOCK),
+        new ItemStack(Blocks.NETHER_BRICKS),
+        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("magmar",
+        new ItemStack(Blocks.MAGMA_BLOCK),
+        new ItemStack(Blocks.NETHERRACK),
+        new FluidStack(FluidMagmaHolder.STILL.get(), 600));
   }
 
   private static void addRecipe(String name, ItemStack itemStack, ItemStack secnd, FluidStack fluidStack) {

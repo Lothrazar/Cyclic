@@ -8,6 +8,8 @@ import net.minecraft.util.SoundEvents;
 
 public class ExpItemGain extends ItemBase {
 
+  //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
+  public static final int FLUID_PER_EXP = 20;
   public static final int EXP_PER_FOOD = 50;
 
   public ExpItemGain(Properties properties) {
