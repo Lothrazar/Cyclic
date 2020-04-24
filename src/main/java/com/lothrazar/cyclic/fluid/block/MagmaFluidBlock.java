@@ -34,12 +34,12 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
 
     @Override
     public int getSlopeFindDistance(IWorldReader worldIn) {
-      return 2;// worldIn.getDimension().doesWaterVaporize() ? 4 : 2 + 2;
+      return 2;
     }
 
     @Override
     public int getLevelDecreasePerBlock(IWorldReader worldIn) {
-      return 7;// worldIn.getDimension().doesWaterVaporize() ? 1 : 2;
+      return 7;
     }
   }
 
@@ -51,12 +51,12 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
 
     @Override
     public int getSlopeFindDistance(IWorldReader worldIn) {
-      return 2;//worldIn.getDimension().doesWaterVaporize() ? 4 : 2;
+      return 2;
     }
 
     @Override
     public int getLevelDecreasePerBlock(IWorldReader worldIn) {
-      return 1;// worldIn.getDimension().doesWaterVaporize() ? 1 : 2;
+      return 1;
     }
   }
 

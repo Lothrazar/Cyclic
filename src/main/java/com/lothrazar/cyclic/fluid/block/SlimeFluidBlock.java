@@ -15,17 +15,52 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class SlimeFluidBlock extends FlowingFluidBlock {
+
+  public static class Flowing extends ForgeFlowingFluid.Flowing {
+
+    public Flowing(Properties properties) {
+      super(properties);
+    }
+
+    @Override
+    public int getSlopeFindDistance(IWorldReader worldIn) {
+      return 1;
+    }
+
+    @Override
+    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+      return 2;
+    }
+  }
+
+  public static class Source extends ForgeFlowingFluid.Source {
+
+    public Source(Properties properties) {
+      super(properties);
+    }
+
+    @Override
+    public int getSlopeFindDistance(IWorldReader worldIn) {
+      return 1;
+    }
+
+    @Override
+    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+      return 6;
+    }
+  }
 
   VoxelShape shapes[] = new VoxelShape[16];
 
   public SlimeFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
     super(supplier, props);
     int max = 15; //max of the property LEVEL.getAllowedValues()
-    float offset = 0.875F;
+    float offset = 0.125F;
     for (int i = 0; i <= max; i++) { //x and z go from [0,1] 
-      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset - i / 8F, 1));
+      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset, 1));
     }
   }
 
@@ -76,6 +111,6 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
 
   @Override
   public int tickRate(IWorldReader worldIn) {
-    return super.tickRate(worldIn) * 4;
+    return super.tickRate(worldIn) * 3;
   }
 }

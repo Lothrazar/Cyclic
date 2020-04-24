@@ -26,8 +26,8 @@ public class FluidSlimeHolder {
   private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, ModCyclic.MODID);
   private static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, ModCyclic.MODID);
   private static final String id = "slime";
-  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidSlimeHolder.properties));
-  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidSlimeHolder.properties));
+  public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new SlimeFluidBlock.Source(FluidSlimeHolder.properties));
+  public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new SlimeFluidBlock.Flowing(FluidSlimeHolder.properties));
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
       () -> new SlimeFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
