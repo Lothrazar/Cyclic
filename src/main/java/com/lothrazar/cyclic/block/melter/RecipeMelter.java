@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
@@ -115,14 +116,26 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.OBSIDIAN),
         new ItemStack(Blocks.COBBLESTONE),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
-    RecipeMelter.addRecipe("fgem_slime",
+    RecipeMelter.addRecipe("slimeball",
         new ItemStack(Items.SLIME_BALL),
         new ItemStack(Items.SLIME_BALL),
-        new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+        new FluidStack(FluidSlimeHolder.STILL.get(), 200));
+    RecipeMelter.addRecipe("slimeblock",
+        new ItemStack(Blocks.SLIME_BLOCK),
+        new ItemStack(Blocks.SLIME_BLOCK),
+        new FluidStack(FluidSlimeHolder.STILL.get(), 1800));
     RecipeMelter.addRecipe("fexperience_food",
         new ItemStack(ItemRegistry.experience_food),
         new ItemStack(ItemRegistry.experience_food),
         new FluidStack(FluidXpJuiceHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("honey",
+        new ItemStack(Items.HONEY_BLOCK),
+        new ItemStack(Items.HONEY_BLOCK),
+        new FluidStack(FluidHoneyHolder.STILL.get(), 2000));
+    RecipeMelter.addRecipe("honeyb",
+        new ItemStack(Items.HONEY_BOTTLE),
+        new ItemStack(Items.HONEY_BOTTLE),
+        new FluidStack(FluidHoneyHolder.STILL.get(), 500));
   }
 
   private static void addRecipe(String name, ItemStack itemStack, ItemStack secnd, FluidStack fluidStack) {
