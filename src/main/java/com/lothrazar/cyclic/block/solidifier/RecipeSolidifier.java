@@ -120,7 +120,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.DEAD_FIRE_CORAL_BLOCK),
         new FluidStack(Fluids.WATER, 100),
         new ItemStack(Blocks.FIRE_CORAL_BLOCK, 3));
-    RecipeSolidifier.addRecipe("bfirecoral",
+    RecipeSolidifier.addRecipe("bhorncoral",
         new ItemStack(Blocks.DEAD_HORN_CORAL_BLOCK),
         new ItemStack(Blocks.HORN_CORAL_BLOCK),
         new ItemStack(Blocks.DEAD_HORN_CORAL_BLOCK),
@@ -183,7 +183,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.DEAD_FIRE_CORAL_FAN),
         new FluidStack(Fluids.WATER, 100),
         new ItemStack(Blocks.FIRE_CORAL_FAN, 3));
-    RecipeSolidifier.addRecipe("firecoralfann",
+    RecipeSolidifier.addRecipe("horncoralfann",
         new ItemStack(Blocks.DEAD_HORN_CORAL_FAN),
         new ItemStack(Blocks.HORN_CORAL_FAN),
         new ItemStack(Blocks.DEAD_HORN_CORAL_FAN),
@@ -346,7 +346,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.MELON_SLICE),
         new FluidStack(FluidHoneyHolder.STILL.get(), 50),
         new ItemStack(Items.GLISTERING_MELON_SLICE, 2));
-    RecipeSolidifier.addRecipe("honeymelon",
+    RecipeSolidifier.addRecipe("honeycarrot",
         new ItemStack(Items.CARROT),
         new ItemStack(Items.GOLD_NUGGET),
         new ItemStack(Items.CARROT),
@@ -408,6 +408,25 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.SLIME_BALL),
         new FluidStack(FluidMagmaHolder.STILL.get(), 100),
         new ItemStack(Items.MAGMA_CREAM, 6));
+    //bricks
+    RecipeSolidifier.addRecipe("magmabricks",
+        new ItemStack(Items.NETHER_BRICK),
+        new ItemStack(Items.NETHER_BRICK),
+        new ItemStack(Items.NETHER_BRICK),
+        new FluidStack(FluidMagmaHolder.STILL.get(), 10),
+        new ItemStack(Blocks.NETHER_BRICKS));
+    RecipeSolidifier.addRecipe("slimebricks",
+        new ItemStack(Items.NETHER_BRICK),
+        new ItemStack(Items.NETHER_BRICK),
+        new ItemStack(Items.NETHER_BRICK),
+        new FluidStack(FluidSlimeHolder.STILL.get(), 10),
+        new ItemStack(Blocks.NETHER_BRICKS));
+    RecipeSolidifier.addRecipe("rednetherbricks",
+        new ItemStack(Items.NETHER_BRICK),
+        new ItemStack(Items.NETHER_WART),
+        new ItemStack(Items.NETHER_BRICK),
+        new FluidStack(FluidSlimeHolder.STILL.get(), 10),
+        new ItemStack(Blocks.RED_NETHER_BRICKS));
     //
     //
     RecipeSolidifier rec = new RecipeSolidifier(
@@ -445,6 +464,32 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.CHORUS_FRUIT),
         new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
         new ItemStack(ItemRegistry.gem_obsidian));
+    RecipeSolidifier.addRecipe("purpflower",
+        new ItemStack(Blocks.OBSIDIAN),
+        new ItemStack(ItemRegistry.gem_amber),
+        new ItemStack(Items.WITHER_ROSE),
+        new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+        new ItemStack(ItemRegistry.gem_obsidian));
+    //
+    //
+    RecipeSolidifier.addRecipe("gravelmelt",
+        new ItemStack(Blocks.DIRT),
+        new ItemStack(Blocks.DIRT),
+        new ItemStack(Blocks.DIRT),
+        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+        new ItemStack(Blocks.GRAVEL, 9));
+    RecipeSolidifier.addRecipe("sandmelt",
+        new ItemStack(Blocks.GLASS),
+        new ItemStack(Blocks.GLASS),
+        new ItemStack(Blocks.GLASS),
+        new FluidStack(FluidMagmaHolder.STILL.get(), 10),
+        new ItemStack(Blocks.SAND, 3));
+    RecipeSolidifier.addRecipe("gunpowder",
+        new ItemStack(Blocks.RED_SAND),
+        new ItemStack(Items.BLAZE_POWDER),
+        new ItemStack(Items.BONE_MEAL),
+        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+        new ItemStack(Items.GUNPOWDER, 2));
     //xp
     // 
     RecipeSolidifier.addRecipe("expglass",
@@ -474,5 +519,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         id,
         a, b, c,
         fluidStack, res));
+    hashes.add(id.toString());
   }
 }

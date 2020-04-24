@@ -135,11 +135,15 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.KELP),
         new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
     // 
-    RecipeMelter.addRecipe("obsidianlava",
+    RecipeMelter.addRecipe("obsidiansmstonelava",
+        new ItemStack(Blocks.OBSIDIAN),
+        new ItemStack(Blocks.SMOOTH_STONE),
+        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
+    RecipeMelter.addRecipe("obsidiancobblelava",
         new ItemStack(Blocks.OBSIDIAN),
         new ItemStack(Blocks.COBBLESTONE),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
-    RecipeMelter.addRecipe("obsidianlava",
+    RecipeMelter.addRecipe("obsidiangravellava",
         new ItemStack(Blocks.OBSIDIAN),
         new ItemStack(Blocks.GRAVEL),
         new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
@@ -156,21 +160,29 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.SLIME_BLOCK),
         new FluidStack(FluidSlimeHolder.STILL.get(), 1800));
     //    
-    RecipeMelter.addRecipe("fexperience_food",
+    RecipeMelter.addRecipe("doubleexperience_food",
         new ItemStack(ItemRegistry.experience_food),
         new ItemStack(ItemRegistry.experience_food),
         new FluidStack(FluidXpJuiceHolder.STILL.get(), 2 * ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
     RecipeMelter.addRecipe("fexperience_food",
         new ItemStack(ItemRegistry.experience_food),
         new ItemStack(Items.GHAST_TEAR),
-        new FluidStack(FluidXpJuiceHolder.STILL.get(), 100 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    RecipeMelter.addRecipe("fexperience_food",
+        new FluidStack(FluidXpJuiceHolder.STILL.get(), 200 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
+    RecipeMelter.addRecipe("blazeexperience_food",
         new ItemStack(ItemRegistry.experience_food),
         new ItemStack(Items.BLAZE_ROD),
         new FluidStack(FluidXpJuiceHolder.STILL.get(), 100 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    RecipeMelter.addRecipe("fexperience_food",
+    RecipeMelter.addRecipe("witherroseexperience_food",
+        new ItemStack(ItemRegistry.experience_food),
+        new ItemStack(Items.WITHER_ROSE),
+        new FluidStack(FluidXpJuiceHolder.STILL.get(), 150 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
+    RecipeMelter.addRecipe("fleshexperience_food",
         new ItemStack(ItemRegistry.experience_food),
         new ItemStack(Items.ROTTEN_FLESH),
+        new FluidStack(FluidXpJuiceHolder.STILL.get(), 50 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
+    RecipeMelter.addRecipe("boneexperience_food",
+        new ItemStack(ItemRegistry.experience_food),
+        new ItemStack(Items.BONE),
         new FluidStack(FluidXpJuiceHolder.STILL.get(), 20 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
     RecipeMelter.addRecipe("honey",
         new ItemStack(Items.HONEY_BLOCK),
@@ -212,5 +224,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         itemStack,
         secnd,
         fluidStack));
+    hashes.add(id.toString());
   }
 }

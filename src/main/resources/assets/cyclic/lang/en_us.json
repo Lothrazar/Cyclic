@@ -1253,12 +1253,12 @@
     "block.fluid_drain.guide": "Drain fluid that is nearby and below, filling it with blocks",
     "block.fluid_drain.tooltip": "Drain fluid that is nearby and below, filling it with blocks",
 
-    "block.cyclic.melter": "Melter",
-    "block.cyclic.melter.tooltip": "Liquify certain items",
+    "block.cyclic.melter": "Melting Chamber",
+    "block.cyclic.melter.tooltip": "Melt certain items into fluid",
 
     "button.fan.sound.tooltip": "Enable or disable sound",
     "block.heat.level": "Heat",
 
-    "block.cyclic.solidifier": "Solidifier",
-    "block.cyclic.solidifier.tooltip": "Convert fluid into items"
+    "block.cyclic.solidifier": "Crystallization Chamber",
+    "block.cyclic.solidifier.tooltip": "Craft fluid into items"
 }
