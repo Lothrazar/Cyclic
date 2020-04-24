@@ -42,10 +42,12 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.GUI);
+    this.drawBackground(TextureRegistry.INVENTORY);
+    this.drawSlot(36, 12);
     this.drawSlot(36, 30);
-    this.drawSlot(126, 30);
+    this.drawSlot(36, 48);
     energy.draw(container.getEnergy());
     fluid.draw(this.container.tile.getFluid());
+    drawSlotLarge(116, 26);
   }
 }

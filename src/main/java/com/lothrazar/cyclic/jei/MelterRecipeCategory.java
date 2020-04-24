@@ -74,6 +74,8 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     guiItemStacks.init(0, true, 3, Const.SQ);
     guiItemStacks.init(1, true, 21, Const.SQ);
+    guiItemStacks.init(2, true, 41, Const.SQ);
+    guiItemStacks.init(3, true, 3, 120);
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     List<ItemStack> input = inputs.get(0);
     if (input != null && input.isEmpty() == false) {

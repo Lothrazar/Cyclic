@@ -31,7 +31,7 @@ public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.GUI);
+    this.drawBackground(TextureRegistry.INVENTORY);
     this.drawSlot(60, 20);
   }
 }

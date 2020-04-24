@@ -42,9 +42,9 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.GUI);
-    this.drawSlot(36, 30);
-    this.drawSlot(108, 30);
+    this.drawBackground(TextureRegistry.INVENTORY);
+    this.drawSlot(16, 30);
+    this.drawSlot(34, 30);
     energy.draw(container.getEnergy());
     fluid.draw(this.container.tile.getFluid());
   }

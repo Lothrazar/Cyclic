@@ -47,6 +47,7 @@ public class CyclicJEI implements IModPlugin {
   @Override
   public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
     registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.id,
-        0, 1, 1, 4 * 9);
+        0, 2,
+        2, 4 * 9);
   }
 }

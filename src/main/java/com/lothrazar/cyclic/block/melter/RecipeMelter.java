@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
   public static List<RecipeMelter> RECIPES = new ArrayList<>();
-  NonNullList<Ingredient> ingredients = NonNullList.create();
+  private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
 
   protected RecipeMelter(ResourceLocation id, ItemStack in, ItemStack inSecond, FluidStack out) {

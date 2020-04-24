@@ -53,7 +53,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.GUI);
+    this.drawBackground(TextureRegistry.INVENTORY);
     energy.draw(container.getEnergy());
   }
 }

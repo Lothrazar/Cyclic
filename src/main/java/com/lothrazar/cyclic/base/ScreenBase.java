@@ -34,6 +34,14 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     blit(relX, relY, 0, 0, size, size, size, size);
   }
 
+  protected void drawSlotLarge(int x, int y) {
+    this.minecraft.getTextureManager().bindTexture(TextureRegistry.SLOT_LARGE);
+    int relX = guiLeft + x;
+    int relY = guiTop + y;
+    int size = 26;
+    blit(relX, relY, 0, 0, size, size, size, size);
+  }
+
   /**
    * Translate the block name; and draw it in the top center
    * 

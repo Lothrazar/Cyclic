@@ -5,11 +5,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class TextureRegistry {
 
-  public static final ResourceLocation GUIINVENTORY = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_wand.png");
-  public static final ResourceLocation GUI = new ResourceLocation(ModCyclic.MODID, "textures/gui/peat_generator.png");
-  public static final ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_slot.png");
+  public static final ResourceLocation PROGRESS = new ResourceLocation(ModCyclic.MODID, "textures/gui/progress.png");
+  public static final ResourceLocation PROGRESS_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/progress_ctr.png");
+  public static final ResourceLocation INVENTORY = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory.png");
+  public static final ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot.png");
+  public static final ResourceLocation SLOT_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_large.png");
   public static final ResourceLocation ENERGY_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_ctr.png");
   public static final ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
   public static final ResourceLocation WIDGETS = new ResourceLocation(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");
-  public static final ResourceLocation FLUID_BACKGROUND = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
+  public static final ResourceLocation FLUID_WIDGET = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
 }

@@ -30,8 +30,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static int SLOT_INPUT = 0;
-  public static int SLOT_OUT = 0;
+  public static int SLOT_OUTPUT = 3;
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
@@ -49,7 +48,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(2);
+    return new ItemStackHandler(4);
   }
 
   public Predicate<FluidStack> isFluidValid() {

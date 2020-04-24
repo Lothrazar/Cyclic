@@ -46,7 +46,7 @@ public class FluidBar {
 
   public void draw(FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
-    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.FLUID_BACKGROUND);
+    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.FLUID_WIDGET);
     Screen.blit(
         x, y, u, v,
         width, height,

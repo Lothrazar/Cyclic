@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.itemcollect;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
@@ -47,6 +48,10 @@ public class ScreenCollector extends ScreenBase<ContainerCollector> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.GUIINVENTORY);
+    this.drawBackground(TextureRegistry.INVENTORY);
+    for (int i = 0; i < 9; i++) {
+      this.drawSlot(7 + i * Const.SQ, 34);
+      this.drawSlot(7 + i * Const.SQ, 34 + Const.SQ);
+    }
   }
 }

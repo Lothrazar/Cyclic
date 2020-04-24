@@ -1,7 +1,11 @@
 package com.lothrazar.cyclic.jei;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
+import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -12,6 +16,7 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 
@@ -55,19 +60,34 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   @Override
   public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {
     ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    List<List<ItemStack>> in = new ArrayList<>();
+    List<ItemStack> stuff = new ArrayList<>();
+    for (int i = 0; i <= 2; i++) {
+      Collections.addAll(stuff, recipe.ingredientAt(i));
+      in.add(stuff);
+      ingredients.setInputLists(VanillaTypes.ITEM, in);
+      stuff = new ArrayList<>();
+    }
     ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, RecipeSolidifier recipe, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    guiItemStacks.init(0, true, 139, Const.SQ);
-    guiItemStacks.set(0, recipe.getRecipeOutput());
-    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
-    //
-    //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluidOutput());
-    //getname is the same   
-    recipeLayout.getFluidStacks().init(0, true, 4, Const.SQ + 1, Const.SQ - 2, Const.SQ - 2,
+    guiItemStacks.init(0, true, 33, 6);
+    guiItemStacks.init(1, true, 33, 6 + Const.SQ);
+    guiItemStacks.init(2, true, 33, 6 + 2 * Const.SQ);
+    guiItemStacks.init(TileSolidifier.SLOT_OUTPUT, true, 104, 6 + Const.SQ);
+    guiItemStacks.set(TileSolidifier.SLOT_OUTPUT, recipe.getRecipeOutput());
+    List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
+    List<ItemStack> input = null;
+    for (int i = 0; i <= 2; i++) {
+      input = inputs.get(i);
+      if (input != null && input.isEmpty() == false) {
+        guiItemStacks.set(i, input);
+      }
+    } //getname is the same   
+    recipeLayout.getFluidStacks().init(0, true, 4, 25, Const.SQ - 2, Const.SQ - 2,
         FluidAttributes.BUCKET_VOLUME, false,
         null);
     recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());

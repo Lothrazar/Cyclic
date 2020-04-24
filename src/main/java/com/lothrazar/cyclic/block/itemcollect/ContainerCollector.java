@@ -32,7 +32,7 @@ public class ContainerCollector extends ContainerBase {
         }
       }
     });
-    layoutPlayerInventorySlots(8, 74);
+    layoutPlayerInventorySlots(8, 84);
   }
 
   public int getNeedsRedstone() {

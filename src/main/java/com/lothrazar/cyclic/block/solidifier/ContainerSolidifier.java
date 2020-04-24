@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.solidifier;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,8 +27,10 @@ public class ContainerSolidifier extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 37, 31));
-      addSlot(new SlotItemHandler(h, 1, 127, 31));
+      addSlot(new SlotItemHandler(h, 0, 37, 13));
+      addSlot(new SlotItemHandler(h, 0, 37, 13 + Const.SQ));
+      addSlot(new SlotItemHandler(h, 0, 37, 13 + 2 * Const.SQ));
+      addSlot(new SlotItemHandler(h, 1, 121, 31));
     });
     layoutPlayerInventorySlots(8, 84);
     trackInt(new IntReferenceHolder() {
