@@ -23,10 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -64,7 +65,10 @@ public class EnchantExcavation extends EnchantBase {
   }
 
   private int getHarvestMax(int level) {
-    return level * POWER_PER_LEVEL;
+    if (level <= 5)
+      return level * POWER_PER_LEVEL;
+    //reduce power if ench is past level 5
+    return 5 * POWER_PER_LEVEL + level * 2;
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -111,9 +115,8 @@ public class EnchantExcavation extends EnchantBase {
       return totalBroken;
     }
     //    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
-    List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
-    //    ModCyclic.LOGGER.info("theFuture harvest " + theFuture.size());
-    List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
+    Set<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
+    Set<BlockPos> wasHarvested = new HashSet<BlockPos>();
     for (BlockPos targetPos : theFuture) {
       BlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
@@ -149,10 +152,12 @@ public class EnchantExcavation extends EnchantBase {
     return totalBroken;
   }
 
-  private List<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
-    List<BlockPos> list = new ArrayList<BlockPos>();
+  private static final Direction[] VALUES = Direction.values();
+
+  private Set<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
+    Set<BlockPos> list = new HashSet<BlockPos>();
     // TODO: DIAGONAL!
-    List<Direction> targetFaces = Arrays.asList(Direction.values());
+    List<Direction> targetFaces = Arrays.asList(VALUES);
     Collections.shuffle(targetFaces);
     for (Direction fac : targetFaces) {
       if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
