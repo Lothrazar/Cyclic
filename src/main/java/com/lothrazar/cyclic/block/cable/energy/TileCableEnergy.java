@@ -66,7 +66,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
-      if (CableBase.canConnectHere(this.getBlockState(), side))
+      if (!CableBase.isCableBlocked(this.getBlockState(), side))
         return energy.cast();
     }
     return super.getCapability(cap, side);

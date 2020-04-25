@@ -127,11 +127,20 @@ public abstract class CableBase extends BlockBase {
     return super.onBlockActivated(state, world, pos, player, handIn, hit);
   }
 
-  public static boolean canConnectHere(BlockState blockState, Direction side) {
+  /**
+   * True means cable is blocked. false means its not a cable at all, or its unblocked
+   * 
+   * @param blockState
+   * @param side
+   * @return
+   */
+  public static boolean isCableBlocked(BlockState blockState, Direction side) {
     if (side == null) {
-      return true;
+      return false;
     }
     EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(side);
-    return blockState.get(property).isUnBlocked();
+    return blockState.getBlock() instanceof CableBase
+        && blockState.has(property)
+        && blockState.get(property).isUnBlocked() == false;
   }
 }

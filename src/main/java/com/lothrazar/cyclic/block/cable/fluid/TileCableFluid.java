@@ -87,7 +87,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (side != null && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      if (CableBase.canConnectHere(this.getBlockState(), side))
+      if (!CableBase.isCableBlocked(this.getBlockState(), side))
         return flow.get(side).cast();
     }
     return super.getCapability(cap, side);

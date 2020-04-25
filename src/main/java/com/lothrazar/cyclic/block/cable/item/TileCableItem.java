@@ -105,7 +105,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      if (CableBase.canConnectHere(this.getBlockState(), side)) {
+      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
         return flow.get(side).cast();
       }
     }
