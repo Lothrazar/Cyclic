@@ -112,7 +112,8 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   @SuppressWarnings("unchecked")
   public static void initAllRecipes() {
     //water
-    RecipeSolidifier.addRecipe("btubecoral",
+    hashes = new HashSet<>();
+    RecipeSolidifier.addRecipe("btube_coral",
         new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
         new ItemStack(Blocks.TUBE_CORAL_BLOCK),
         new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
@@ -355,6 +356,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new FluidStack(FluidBiomassHolder.STILL.get(), 100),
         new ItemStack(Items.CHARCOAL, 4));
     //
+    RecipeSolidifier.addRecipe("enrichfuel",
+        new ItemStack(ItemRegistry.peat_fuel),
+        new ItemStack(ItemRegistry.peat_fuel),
+        new ItemStack(ItemRegistry.peat_fuel),
+        new FluidStack(FluidBiomassHolder.STILL.get(), 500),
+        new ItemStack(ItemRegistry.peat_fuel_enriched, 3));
     //
     RecipeSolidifier.addRecipe("honeymelon",
         new ItemStack(Items.MELON_SLICE),

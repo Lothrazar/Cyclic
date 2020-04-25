@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ngn",
+    "nsn",
+    " o "
+  ],
+  "key": {
+    "g": {
+      "item": "cyclic:gem_obsidian"
+    },
+    "o": {
+      "item": "minecraft:glowstone"
+    },
+    "n": {
+      "item": "minecraft:ender_pearl"
+    },
+    "s": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "cyclic:lightning_scepter"
+  }
+}

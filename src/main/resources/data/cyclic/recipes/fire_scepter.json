@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ngn",
+    "nsn",
+    " o "
+  ],
+  "key": {
+    "g": {
+      "item": "cyclic:gem_amber"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "n": {
+      "item": "minecraft:gold_block"
+    },
+    "s": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "cyclic:fire_scepter"
+  }
+}

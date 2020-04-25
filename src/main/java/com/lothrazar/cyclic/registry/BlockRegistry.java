@@ -154,7 +154,7 @@ public class BlockRegistry {
     @ObjectHolder(ModCyclic.MODID + ":trash")
     public static TileEntityType<TileTrash> trashtile;
     @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-    public static TileEntityType<TilePeatGenerator> peat_generatorTile;
+    public static TileEntityType<TilePeatGenerator> peat_generator;
     @ObjectHolder(ModCyclic.MODID + ":harvester")
     public static TileEntityType<TileHarvester> harvesterTile;
     @ObjectHolder(ModCyclic.MODID + ":breaker")

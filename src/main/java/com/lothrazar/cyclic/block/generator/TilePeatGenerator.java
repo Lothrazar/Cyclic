@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -31,30 +32,28 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePeatGenerator extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  private static final int BURNTIME = 40;
-
   public static enum Fields {
-    FLOWING, REDSTONE;
+    FLOWING, REDSTONE, RENDER;
   }
 
-  private int fuelRate = 10;
+  private static final int BURNTIME = 40;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private int burnTime;
   private int flowing = 1;
+  private int fuelRate = 0;
 
   public TilePeatGenerator() {
-    super(BlockRegistry.Tiles.peat_generatorTile);
+    super(BlockRegistry.Tiles.peat_generator);
     this.setNeedsRedstone(0);
   }
-
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   private IItemHandler createHandler() {
     return new ItemStackHandler(1);
   }
 
   private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MENERGY, FUEL_WEAK);
+    return new CustomEnergyStorage(MENERGY, MENERGY / 2);
   }
 
   @Override
@@ -67,9 +66,6 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     }
     return super.getCapability(cap, side);
   }
-  //  private void setAnimation(boolean lit) {
-  //    this.world.setBlockState(pos, this.world.getBlockState(pos).with(BlockFan.IS_LIT, lit));
-  //  }
 
   @Override
   public void read(CompoundNBT tag) {
@@ -84,8 +80,8 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("flowing", getFlowing());
-    tag.putInt("fuelRate", fuelRate);
     tag.putInt("burnTime", burnTime);
+    tag.putInt("fuelRate", fuelRate);
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
@@ -109,14 +105,18 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     if (this.isBurning() && !this.isFull()) {
       --this.burnTime;
       this.addEnergy(fuelRate);
+      return;
     }
+    fuelRate = 0;
+    //burnTime is zero grab another
     inventory.ifPresent(h -> {
       ItemStack stack = h.getStackInSlot(0);
-      if (stack.getItem() == ItemRegistry.peat_fuel &&
-          this.isBurning() == false) {
-        fuelRate = FUEL_WEAK;//for peat_fuel item
-        //other types of fuel in the future
-        //burn time
+      int hackyFuel = stack.getItem() == ItemRegistry.peat_fuel ? ConfigManager.PEATPOWER.get() : 0;
+      if (stack.getItem() == ItemRegistry.peat_fuel_enriched) {
+        hackyFuel = ConfigManager.PEATERICHPOWER.get();
+      }
+      if (hackyFuel > 0) {
+        fuelRate = hackyFuel;
         h.extractItem(0, 1, false);
         this.burnTime = BURNTIME;
       }
@@ -132,7 +132,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
-      moveEnergy(exportToSide, FUEL_WEAK);
+      moveEnergy(exportToSide, MENERGY / 2);
     }
   }
 
@@ -180,6 +180,9 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       break;
       case REDSTONE:
         setNeedsRedstone(value);
+      break;
+      case RENDER:
+        renderParticles = value % 2;
       break;
     }
   }

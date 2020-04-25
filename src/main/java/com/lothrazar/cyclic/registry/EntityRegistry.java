@@ -1,6 +1,9 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.item.FireEntity;
+import com.lothrazar.cyclic.item.LightningEntity;
+import com.lothrazar.cyclic.item.SnowEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
@@ -32,6 +35,10 @@ public class EntityRegistry {
   public static EntityType<EntityMagicNetEmpty> netball;
   @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
   public static EntityType<EntityTorchBolt> torchbolt;
+  @ObjectHolder(ModCyclic.MODID + ":lightning_bolt")
+  public static EntityType<LightningEntity> lightningbolt;
+  @ObjectHolder(ModCyclic.MODID + ":snow_bolt")
+  public static EntityType<SnowEntity> snowbolt;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_stun")
   public static EntityType<BoomerangEntity> boomerang_stun;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_carry")
@@ -40,6 +47,8 @@ public class EntityRegistry {
   public static EntityType<BoomerangEntity> boomerang_damage;
   @ObjectHolder(ModCyclic.MODID + ":eye")
   public static EntityType<EyeOfEnderEntityNodrop> eye;
+  @ObjectHolder(ModCyclic.MODID + ":fire_bolt")
+  public static EntityType<FireEntity> fire_bolt;
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -59,7 +68,9 @@ public class EntityRegistry {
     //TODO: loop here
     //TODO: loop here
     //TODO: loop here
-    //TODO: loop here
+    //TODO: loop here 
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.snowbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lightningbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_stun, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_carry, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_damage, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
@@ -67,6 +78,7 @@ public class EntityRegistry {
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dungeon, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.eye, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.fire_bolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
 
   @SubscribeEvent
@@ -128,5 +140,29 @@ public class EntityRegistry {
             .size(.6f, .6f)
             .build("eye")
             .setRegistryName("eye"));
+    r.register(
+        EntityType.Builder.<LightningEntity> create(LightningEntity::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("lightning_bolt")
+            .setRegistryName("lightning_bolt"));
+    r.register(
+        EntityType.Builder.<SnowEntity> create(SnowEntity::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("snow_bolt")
+            .setRegistryName("snow_bolt"));
+    r.register(
+        EntityType.Builder.<FireEntity> create(FireEntity::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .size(.6f, .6f)
+            .build("fire_bolt")
+            .setRegistryName("fire_bolt"));
   }
 }

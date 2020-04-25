@@ -90,10 +90,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   public static void initAllRecipes() {
-    //    RecipeMelter.addRecipe("c", new ItemStack(Blocks.BLACK_CONCRETE),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10),
-    //        new ItemStack(Blocks.BLACK_CONCRETE_POWDER));
-    //
+    hashes = new HashSet<>();
     // WATER
     RecipeMelter.addRecipe("snowwater",
         new ItemStack(Blocks.SNOW_BLOCK),

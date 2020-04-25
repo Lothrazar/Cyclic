@@ -77,6 +77,18 @@ public class ContainerStructure extends ContainerBase {
         tile.setField(TileStructure.Fields.BUILDTYPE.ordinal(), value);
       }
     });
+    trackInt(new IntReferenceHolder() {
+
+      @Override
+      public int get() {
+        return tile.getField(TileStructure.Fields.RENDER.ordinal());
+      }
+
+      @Override
+      public void set(int value) {
+        tile.setField(TileStructure.Fields.RENDER.ordinal(), value);
+      }
+    });
   }
 
   public int getEnergy() {

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cdc",
+    "csc",
+    " i "
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:ice"
+    },
+    "d": {
+      "item": "cyclic:gem_amber"
+    },
+    "s": {
+      "item": "minecraft:redstone"
+    },
+    "i": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "result": {
+    "item": "cyclic:ice_scepter"
+  }
+}

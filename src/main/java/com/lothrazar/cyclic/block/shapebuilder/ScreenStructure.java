@@ -21,6 +21,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   private EnergyBar energy;
   private ButtonMachine btnRedstone;
   private List<ButtonMachine> shapeBtuns;
+  private ButtonMachine btnRender;
 
   public ScreenStructure(ContainerStructure screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -38,6 +39,10 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
       container.tile.setNeedsRedstone((container.getNeedsRedstone() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileStructure.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
+    }));
+    btnRender = addButton(new ButtonMachine(x + 20, y, 20, 20, "", (p) -> {
+      container.tile.setNeedsRedstone((container.tile.getField(TileStructure.Fields.RENDER.ordinal()) + 1) % 2);
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileStructure.Fields.RENDER.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
     txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
         container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
@@ -103,6 +108,8 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.getNeedsRedstone()));
     btnRedstone.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
+    btnRender.setTooltip(UtilChat.lang("gui.cyclic.render" + container.getNeedsRedstone()));
+    btnRender.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.RENDER_SHOW : TextureEnum.RENDER_HIDE);
     this.drawButtonTooltips(mouseX, mouseY);
     this.drawName(this.title.getFormattedText());
     updateDisabledButtons();

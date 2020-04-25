@@ -22,6 +22,8 @@ public class ConfigManager {
   public static IntValue SOLIDIFIERPOWER;
   public static DoubleValue PEATCHANCE;
   public static BooleanValue CABLES;
+  public static IntValue PEATERICHPOWER;
+  public static IntValue PEATPOWER;
   static {
     initConfig();
   }
@@ -34,12 +36,16 @@ public class ConfigManager {
     GEMGEAR = COMMON_BUILDER.comment("Disable these items").define("gemObsidianGear", true);
     NETHERBRICK = COMMON_BUILDER.comment("Disable these items").define("netherbrickGear", true);
     ENCHANTMENTS = COMMON_BUILDER.comment("Disable this feature").define("enchantments", true);
-    ANVILPOWER = COMMON_BUILDER.comment("Power to repair one tick of durability")
-        .defineInRange("energy.anvil.cost", 250, 1, 64000);
+    PEATPOWER = COMMON_BUILDER.comment("Power to repair one tick of durability")
+        .defineInRange("energy.fuel.peat_fuel", 256, 1, 64000);
+    PEATERICHPOWER = COMMON_BUILDER.comment("Power gained burning one of this")
+        .defineInRange("energy.fuel.peat_fuel_enriched", 256 * 4, 1, 64000);
+    ANVILPOWER = COMMON_BUILDER.comment("Power gained burning one of this")
+        .defineInRange("energy.cost.anvil", 250, 1, 64000);
     MELTERPOWER = COMMON_BUILDER.comment("Power per recipe")
-        .defineInRange("energy.melter.cost", 5000, 1, 64000);
+        .defineInRange("energy.cost.melter", 5000, 1, 64000);
     SOLIDIFIERPOWER = COMMON_BUILDER.comment("Power per recipe")
-        .defineInRange("energy.solidifier.cost", 5000, 1, 64000);
+        .defineInRange("energy.cost.solidifier", 5000, 1, 64000);
     PEATCHANCE = COMMON_BUILDER.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)").defineInRange("peat.conversionChance",
         0.08000000000000F,
         0.0010000000000F, 1F);

@@ -11,13 +11,16 @@ import com.lothrazar.cyclic.item.EnderBagItem;
 import com.lothrazar.cyclic.item.EnderWingItem;
 import com.lothrazar.cyclic.item.EnderWingSp;
 import com.lothrazar.cyclic.item.EvokerFangItem;
+import com.lothrazar.cyclic.item.FireScepter;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.IceWand;
 import com.lothrazar.cyclic.item.LeverRemote;
+import com.lothrazar.cyclic.item.LightningScepter;
 import com.lothrazar.cyclic.item.MattockItem;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.ShearsMaterial;
 import com.lothrazar.cyclic.item.SleepingMatItem;
+import com.lothrazar.cyclic.item.SnowScepter;
 import com.lothrazar.cyclic.item.StirrupsItem;
 import com.lothrazar.cyclic.item.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.WrenchItem;
@@ -111,6 +114,8 @@ public class ItemRegistry {
   public static WrenchItem wrench;
   @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
   public static PeatItem peat_fuel;
+  @ObjectHolder(ModCyclic.MODID + ":peat_fuel_enriched")
+  public static PeatItem peat_fuel_enriched;
   @ObjectHolder(ModCyclic.MODID + ":experience_food")
   public static Item experience_food;
   @ObjectHolder(ModCyclic.MODID + ":magic_net")
@@ -185,6 +190,7 @@ public class ItemRegistry {
     r.register(new StirrupsItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("stirrups"));
     r.register(new WaterSpreaderItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_water"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_fuel"));
+    r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("biomass"));
     r.register(new EvokerFangItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("evoker_fang"));
     r.register(new EnderPearlReuse(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
@@ -241,9 +247,6 @@ public class ItemRegistry {
       r.register(new HoeItem(MaterialRegistry.ToolMats.NETHERBRICK, 0.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_hoe"));
       r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_shovel"));
     }
-    //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_snow"));
-    //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_blaze"));
-    //    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_lightning"));
     r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("spawner_seeker"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.NORMAL).setRegistryName("build_scepter"));
@@ -251,5 +254,8 @@ public class ItemRegistry {
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.OFFSET).setRegistryName("offset_scepter"));
     r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("randomize_scepter"));
     r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024)).setRegistryName("antigravity"));
+    r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("ice_scepter"));
+    r.register(new FireScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("fire_scepter"));
+    r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("lightning_scepter"));
   }
 }

@@ -20,10 +20,9 @@ import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityBase extends TileEntity implements IInventory {
 
-  public static final int FUEL_WEAK = 256;
   public static final int MENERGY = 64 * 1000;
   private int needsRedstone = 1;
-  private int renderParticles = 1;
+  protected int renderParticles = 1;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
@@ -146,12 +145,14 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   @Override
   public void read(CompoundNBT tag) {
     needsRedstone = tag.getInt("needsRedstone");
+    renderParticles = tag.getInt("renderParticles");
     super.read(tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("needsRedstone", needsRedstone);
+    tag.putInt("renderParticles", renderParticles);
     return super.write(tag);
   }
 

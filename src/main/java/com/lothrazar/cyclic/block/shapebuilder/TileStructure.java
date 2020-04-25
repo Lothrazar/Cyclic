@@ -43,7 +43,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   public static int maxHeight = 99;
 
   public static enum Fields {
-    TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES, ROTATIONS, OX, OY, OZ;
+    TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDER, ROTATIONS, OX, OY, OZ;
   }
 
   static final int MAX = 64000;
@@ -62,7 +62,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private int offsetY = 0;
   private int offsetZ = 0;
   private int shapeIndex = 0;// current index of shape array
-  private int renderParticles;
   private int timer;
 
   public TileStructure() {
@@ -166,7 +165,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       case REDSTONE:
         this.setNeedsRedstone(value);
       break;
-      case RENDERPARTICLES:
+      case RENDER:
         this.renderParticles = value % 2;
       break;
       case ROTATIONS:
@@ -197,7 +196,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         return this.height;
       case REDSTONE:
         return this.getNeedsRedstone();
-      case RENDERPARTICLES:
+      case RENDER:
         return this.renderParticles;
       case ROTATIONS:
         return this.rotations;
