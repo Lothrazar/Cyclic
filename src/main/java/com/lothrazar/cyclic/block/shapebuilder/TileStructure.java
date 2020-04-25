@@ -116,7 +116,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(2);
+    return new ItemStackHandler(1);
   }
 
   @Override
