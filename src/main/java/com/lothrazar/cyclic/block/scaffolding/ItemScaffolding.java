@@ -23,6 +23,7 @@ public class ItemScaffolding extends BlockItem {
     if (player.isCrouching()) {// || worldIn.getBlockState(context.getPos()).isAir() == false) {
       return super.onItemRightClick(worldIn, player, hand);
     }
+    //NOT crouchign so this is the MID AIR PLACEMENT section
     //skip if sneaking
     BlockPos pos = player.getPosition().up();// at eye level
     int direction = MathHelper.floor((player.rotationYaw * 4F) / 360F + 0.5D) & 3;
@@ -77,9 +78,10 @@ public class ItemScaffolding extends BlockItem {
       }
     }
     if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) {
-      worldIn.setBlockState(pos, Block.getBlockFromItem(this).getDefaultState());
       ItemStack stac = player.getHeldItem(hand);
-      stac.shrink(1);
+      if (worldIn.setBlockState(pos, Block.getBlockFromItem(this).getDefaultState())) {
+        stac.shrink(1);
+      }
       return new ActionResult<>(ActionResultType.SUCCESS, stac);
     }
     return super.onItemRightClick(worldIn, player, hand);

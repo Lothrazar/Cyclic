@@ -49,7 +49,8 @@ public class BlockScaffoldingReplace extends BlockScaffolding {
       return ActionResultType.SUCCESS;
     }
     Block b = Block.getBlockFromItem(heldItem.getItem());
-    if (b != null && b != Blocks.AIR && !(b instanceof BlockScaffolding)) {
+    if (b != null && b != Blocks.AIR && !(b instanceof BlockScaffolding)
+        && world.getBlockState(pos).getBlock() == this) {
       world.destroyBlock(pos, true);
       ItemUseContext context = new ItemUseContext(player, hand, hit);
       heldItem.onItemUse(context);
