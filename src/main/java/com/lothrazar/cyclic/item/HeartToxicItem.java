@@ -2,13 +2,13 @@ package com.lothrazar.cyclic.item;
 
 import java.util.UUID;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundEvents;
 
 public class HeartToxicItem extends ItemBase {
 
@@ -31,8 +31,7 @@ public class HeartToxicItem extends ItemBase {
       healthAttribute.setBaseValue(healthAttribute.getBaseValue() - 2);
       player.getCooldownTracker().setCooldown(this, 100);
       player.getHeldItem(context.getHand()).shrink(1);
-      UtilSound.playSound(player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-      System.out.println("p" + player.getMaxHealth());
+      UtilSound.playSound(player, SoundRegistry.fill);
     }
     return super.onItemUse(context);
   }

@@ -22,6 +22,7 @@ public class SoundRegistry {
   public static SoundEvent spikes_off = make("spikes_off");
   public static SoundEvent warp_echo = make("warp_echo");
   public static SoundEvent tool_mode = make("tool_mode");
+  public static SoundEvent fill = make("fill");
   public static SoundType SCAFFOLD = new SoundType(1.0F, 1.0F, block_scaffolding_0, block_scaffolding_1, block_scaffolding_0, block_scaffolding_1, block_scaffolding_1);
 
   private static SoundEvent make(String s) {

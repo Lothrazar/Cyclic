@@ -108,19 +108,23 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       return;
     }
     fuelRate = 0;
-    //burnTime is zero grab another
-    inventory.ifPresent(h -> {
-      ItemStack stack = h.getStackInSlot(0);
-      int hackyFuel = stack.getItem() == ItemRegistry.peat_fuel ? ConfigManager.PEATPOWER.get() : 0;
-      if (stack.getItem() == ItemRegistry.peat_fuel_enriched) {
-        hackyFuel = ConfigManager.PEATERICHPOWER.get();
-      }
-      if (hackyFuel > 0) {
-        fuelRate = hackyFuel;
-        h.extractItem(0, 1, false);
-        this.burnTime = BURNTIME;
-      }
-    });
+    if (this.energy.isPresent() &&
+        energy.orElse(null).getMaxEnergyStored() - energy.orElse(null).getEnergyStored() > 1000) {
+      //now we can add power
+      //burnTime is zero grab another
+      inventory.ifPresent(h -> {
+        ItemStack stack = h.getStackInSlot(0);
+        int hackyFuel = stack.getItem() == ItemRegistry.peat_fuel ? ConfigManager.PEATPOWER.get() : 0;
+        if (stack.getItem() == ItemRegistry.peat_fuel_enriched) {
+          hackyFuel = ConfigManager.PEATERICHPOWER.get();
+        }
+        if (hackyFuel > 0) {
+          fuelRate = hackyFuel;
+          h.extractItem(0, 1, false);
+          this.burnTime = BURNTIME;
+        }
+      });
+    }
     if (this.getFlowing() == 1)
       this.tickCableFlow();
   }
