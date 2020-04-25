@@ -14,9 +14,9 @@ public enum TextureEnum {
       case POWER_STOP:
         return 46;
       case RENDER_HIDE:
-        return 500;
+        return 622;
       case RENDER_SHOW:
-        return 540;
+        return 622;
     }
     return 0;
   }
@@ -32,8 +32,9 @@ public enum TextureEnum {
       case POWER_STOP:
         return 110;
       case RENDER_HIDE:
-        return 150;
+        return 126;
       case RENDER_SHOW:
+        return 110;
     }
     return 0;
   }

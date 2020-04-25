@@ -48,12 +48,14 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
       return;
     }
     boolean doRender = 1 == te.getField(TileStructure.Fields.RENDER.ordinal());
-    ItemStack stack = inv.getStackInSlot(0);
-    if (stack.isEmpty()) {
-      renderOutline(te, matrix);
-    }
-    else {
-      renderBlank(te, matrix, stack);
+    if (doRender) {
+      ItemStack stack = inv.getStackInSlot(0);
+      if (stack.isEmpty()) {
+        renderOutline(te, matrix);
+      }
+      else {
+        renderBlank(te, matrix, stack);
+      }
     }
   }
 
