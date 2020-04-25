@@ -3,9 +3,6 @@ package com.lothrazar.cyclic.item;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,9 +14,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -48,11 +45,12 @@ public class SnowEntity extends ProjectileItemEntity {
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive() && target instanceof LivingEntity) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 3);
+        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), MathHelper.nextInt(world.rand, 2, 5));
+        target.attackEntityFrom(DamageSource.DRYOUT, MathHelper.nextInt(world.rand, 2, 3));
         LivingEntity living = (LivingEntity) target;
-        living.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, 40, 1));
-        if (world.isAirBlock(living.getPosition()))
-          this.world.setBlockState(living.getPosition(), Blocks.SNOW.getDefaultState());
+        living.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, 60, 1));
+        //        if (world.isAirBlock(living.getPosition()))
+        //          this.world.setBlockState(living.getPosition(), Blocks.SNOW.getDefaultState());
       }
       UtilItemStack.drop(world, target.getPosition(), new ItemStack(Items.TORCH));
     }
@@ -61,22 +59,25 @@ public class SnowEntity extends ProjectileItemEntity {
       if (ray.getPos() == null || ray.getFace() == null) {
         return;
       }
-      BlockPos pos = ray.getPos().offset(ray.getFace());
-      if (world.isAirBlock(pos))
-        this.world.setBlockState(pos, Blocks.SNOW.getDefaultState());
-      else {
-        BlockState here = world.getBlockState(ray.getPos());
-        if (here.getBlock() == Blocks.SNOW) {
-          //inc
-          int newy = here.get(SnowBlock.LAYERS).intValue() + 1;
-          world.setBlockState(ray.getPos(), here.with(SnowBlock.LAYERS, newy));
-          //
-        }
-        here = world.getBlockState(pos);
-        if (here.getBlock() == Blocks.WATER) {
-          world.setBlockState(pos, Blocks.BLUE_ICE.getDefaultState());
-        }
-      }
+      //      BlockPos pos = ray.getPos().offset(ray.getFace());
+      //      if (world.isAirBlock(pos))
+      //        this.world.setBlockState(pos, Blocks.SNOW.getDefaultState());
+      //      else {
+      //        BlockState here = world.getBlockState(ray.getPos());
+      //        if (here.getBlock() == Blocks.SNOW) {
+      //          //inc
+      //          int newy = here.get(SnowBlock.LAYERS).intValue() + 1;
+      //          world.setBlockState(ray.getPos(), here.with(SnowBlock.LAYERS, newy));
+      //          //
+      //        }
+      //        here = world.getBlockState(pos);
+      //        if (here.getBlock() == Blocks.WATER) {
+      //          if (world.rand.nextDouble() < 0.25)
+      //            world.setBlockState(pos, Blocks.BLUE_ICE.getDefaultState());
+      //          else
+      //            world.setBlockState(pos, Blocks.PACKED_ICE.getDefaultState());
+      //        }
+      //      }
     }
     this.remove();
   }

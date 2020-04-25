@@ -256,12 +256,12 @@ public class ItemRegistry {
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.REPLACE).setRegistryName("replace_scepter"));
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.OFFSET).setRegistryName("offset_scepter"));
     r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("randomize_scepter"));
-    r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024)).setRegistryName("antigravity"));
-    r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("ice_scepter"));
-    r.register(new FireScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("fire_scepter"));
-    r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("lightning_scepter"));
+    r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024 * 4)).setRegistryName("antigravity"));
+    r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("ice_scepter"));
+    r.register(new FireScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("fire_scepter"));
+    r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("lightning_scepter"));
     r.register(new HeartItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(16)).setRegistryName("heart"));
     r.register(new HeartToxicItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(16)).setRegistryName("heart_empty"));
-    r.register(new ItemCaveFinder(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(1)).setRegistryName("spelunker"));
+    r.register(new ItemCaveFinder(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("spelunker"));
   }
 }

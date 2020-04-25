@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
+import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -7,10 +8,13 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AirAntiGravity extends ItemBase {
+public class AirAntiGravity extends ItemBase implements IHasClickToggle {
 
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final double DOWNWARD_SPEED_SNEAKING = -0.32;
@@ -26,6 +30,9 @@ public class AirAntiGravity extends ItemBase {
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
     if (!this.canUse(stack)) {
+      return;
+    }
+    if (!this.isOn(stack)) {
       return;
     }
     if (entity instanceof PlayerEntity == false) {
@@ -50,5 +57,26 @@ public class AirAntiGravity extends ItemBase {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
       }
     }
+  }
+
+  @Override
+  public void toggle(PlayerEntity player, ItemStack held) {
+    CompoundNBT tag = held.getTag();
+    if (tag == null) {
+      tag = new CompoundNBT();
+    }
+    tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
+    held.setTag(tag);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return isOn(stack);
+  }
+
+  @Override
+  public boolean isOn(ItemStack held) {
+    return held.getOrCreateTag().getInt(NBT_STATUS) == 0;
   }
 }

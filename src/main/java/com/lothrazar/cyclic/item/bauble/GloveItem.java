@@ -15,7 +15,6 @@ public class GloveItem extends ItemBase implements IHasClickToggle {
 
   public static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final double CLIMB_SPEED = 0.288D;
-  private final static String NBT_STATUS = "onoff";
 
   public GloveItem(Properties properties) {
     super(properties.maxStackSize(1));

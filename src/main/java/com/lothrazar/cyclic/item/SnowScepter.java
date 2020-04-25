@@ -21,7 +21,15 @@ public class SnowScepter extends ItemBase {
       return super.onItemRightClick(worldIn, player, handIn);
     }
     SnowEntity ent = new SnowEntity(player, worldIn);
-    ent.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+    ent.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 0.5F);
+    worldIn.addEntity(ent);
+    ent = new SnowEntity(player, worldIn);
+    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 1, ent.getPosZ());
+    ent.shoot(player, player.rotationPitch, player.rotationYaw - 0.2F, 0.0F, 1.5F, 1.0F);
+    worldIn.addEntity(ent);
+    ent = new SnowEntity(player, worldIn);
+    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 2, ent.getPosZ());
+    ent.shoot(player, player.rotationPitch, player.rotationYaw - 0.5F, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
     player.getCooldownTracker().setCooldown(stack.getItem(), 2);
     UtilItemStack.damageItem(player, stack);
