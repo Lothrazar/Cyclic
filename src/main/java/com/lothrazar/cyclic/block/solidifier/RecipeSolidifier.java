@@ -15,6 +15,7 @@ import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -59,13 +60,25 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       TileSolidifier tile = (TileSolidifier) inv;
       if (tile.getFluid() != null && tile.getFluid().getFluid() == this.fluidInput.getFluid()
           && this.fluidInput.getAmount() >= tile.getFluid().getAmount()) {
-        return true;
+        return matches(tile, 0) && matches(tile, 1) && matches(tile, 2);
       }
       return false;
     }
     catch (ClassCastException e) {
       return false;
     }
+  }
+
+  public boolean matches(TileSolidifier tile, int slot) {
+    ItemStack current = tile.getStackInputSlot(slot);//get slot thing
+    Ingredient ing = ingredients.get(slot);
+    for (ItemStack test : ing.getMatchingStacks()) {
+      if (UtilItemStack.matches(current, test)) {
+        return true;
+      }
+    }
+    return false;
+    //  ingredients.get(0).getMatchingStacks()
   }
 
   @Override

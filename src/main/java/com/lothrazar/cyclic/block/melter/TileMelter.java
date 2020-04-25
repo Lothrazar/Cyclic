@@ -35,7 +35,6 @@ import net.minecraftforge.items.ItemStackHandler;
 @SuppressWarnings("rawtypes")
 public class TileMelter extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static int SLOT_OUTPUT = 2;
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
@@ -44,7 +43,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private RecipeMelter currentRecipe;
   private int timer = 0;
-  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 8;
+  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 4;
 
   public TileMelter() {
     super(BlockRegistry.Tiles.melter);
@@ -56,7 +55,8 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(3);
+    ItemStackHandler h = new ItemStackHandler(2);
+    return h;
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -141,11 +141,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
   }
 
-  public ItemStack getStackOutputSlot() {
-    IItemHandler inv = inventory.orElse(null);
-    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(SLOT_OUTPUT);
-  }
-
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, world)) {
       return;// its valid
@@ -168,19 +163,17 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     if (currentRecipe == null) {
       return;
     }
-    //recipe is valid, pay power
-    final int cost = ConfigManager.MELTERPOWER.get();
-    if (en.getEnergyStored() < cost) {
-      return;//broke
-    }
-    en.extractEnergy(cost, false);//drain each tick
     this.timer--;
     if (timer < 0) {
       timer = 0;
     }
+    final int cost = ConfigManager.MELTERPOWER.get();
+    if (en.getEnergyStored() < cost) {
+      return;//broke
+    }
     if (timer == 0 && this.tryProcessRecipe()) {
-      //reset timer
       this.timer = TIMER_FULL;
+      en.extractEnergy(cost, false);
     }
   }
 
@@ -188,25 +181,10 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     IItemHandler itemsHere = this.inventory.orElse(null);
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
-      //wait is output slot compatible
-      if (!currentRecipe.getRecipeOutput().isEmpty()) {
-        //        if (!UtilItemStack.matches(this.getStackOutputSlot(), currentRecipe.getRecipeOutput())) {
-        //          return false;//no more room in output
-        //        }
-        if (itemsHere == null ||
-            !itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), true).isEmpty()) {
-          return false;//there was non-empty left after this, so no room for all
-        }
-        //        if (this.getStackOutputSlot().getCount() +
-        //            currentRecipe.getRecipeOutput().getCount() > 64) {
-        //          return false;//no room output
-        //        }
-      }
       //ok it has room for all the fluid none will be wasted
       this.getStackInputSlot(0).shrink(1);
       this.getStackInputSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
-      itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), false);
       return true;
     }
     return false;

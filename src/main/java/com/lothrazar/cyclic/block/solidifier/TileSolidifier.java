@@ -3,14 +3,17 @@ package com.lothrazar.cyclic.block.solidifier;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -24,12 +27,15 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+@SuppressWarnings("rawtypes")
 public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 6;
   public static int SLOT_OUTPUT = 3;
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
@@ -37,6 +43,8 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public FluidTankBase tank;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  RecipeSolidifier currentRecipe;
+  private int timer = 0;
 
   public TileSolidifier() {
     super(BlockRegistry.Tiles.solidifier);
@@ -48,7 +56,13 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(4);
+    return new ItemStackHandler(SLOT_OUTPUT + 1) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return slot < SLOT_OUTPUT;
+      }
+    };
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -127,5 +141,65 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public void tick() {}
+  public void tick() {
+    IEnergyStorage en = this.energy.orElse(null);
+    if (en == null) {
+      return;
+    }
+    this.findMatchingRecipe();
+    if (currentRecipe == null) {
+      return;
+    }
+    this.timer--;
+    if (timer < 0) {
+      timer = 0;
+    }
+    final int cost = ConfigManager.SOLIDIFIERPOWER.get();
+    if (en.getEnergyStored() < cost) {
+      return;//broke
+    }
+    if (timer == 0 && this.tryProcessRecipe()) {
+      this.timer = TIMER_FULL;
+      en.extractEnergy(cost, false);
+    }
+  }
+
+  private void findMatchingRecipe() {
+    if (currentRecipe != null && currentRecipe.matches(this, world)) {
+      return;// its valid
+    }
+    currentRecipe = null;
+    for (RecipeSolidifier rec : RecipeSolidifier.RECIPES) {
+      if (rec.matches(this, world)) {
+        currentRecipe = rec;
+      }
+    }
+  }
+
+  private boolean tryProcessRecipe() {
+    IItemHandler itemsHere = this.inventory.orElse(null);
+    int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
+    if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
+      //wait is output slot compatible
+      if (!currentRecipe.getRecipeOutput().isEmpty()) {
+        if (itemsHere == null ||
+            !itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), true).isEmpty()) {
+          return false;//there was non-empty left after this, so no room for all
+        }
+      }
+      //ok it has room for all the fluid none will be wasted 
+      this.inventory.orElse(null).getStackInSlot(0).shrink(1);
+      this.inventory.orElse(null).getStackInSlot(1).shrink(1);
+      this.inventory.orElse(null).getStackInSlot(2).shrink(1);
+      tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
+      itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), false);
+      return true;
+    }
+    return false;
+  }
+
+  public ItemStack getStackInputSlot(int slot) {
+    IItemHandler inv = inventory.orElse(null);
+    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
+  }
 }

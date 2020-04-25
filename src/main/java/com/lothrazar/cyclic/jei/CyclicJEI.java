@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
+import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
 import mezz.jei.api.IModPlugin;
@@ -40,14 +41,19 @@ public class CyclicJEI implements IModPlugin {
 
   @Override
   public void registerGuiHandlers(IGuiHandlerRegistration registry) {
-    registry.addRecipeClickArea(ScreenMelter.class, 75, 0, 40, 26, MelterRecipeCategory.id);
-    registry.addRecipeClickArea(ScreenSolidifier.class, 75, 0, 40, 26, SolidifierRecipeCategory.id);
+    registry.addRecipeClickArea(ScreenMelter.class, 75, 20,
+        40, 26, MelterRecipeCategory.id);
+    registry.addRecipeClickArea(ScreenSolidifier.class, 75, 20,
+        40, 26, SolidifierRecipeCategory.id);
   }
 
   @Override
   public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
     registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.id,
-        0, 2,
-        2, 4 * 9);
+        0, 2, //recipeSLotStart, recipeSlotCount
+        2, 4 * 9);// inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.id,
+        0, 3, //recipeSLotStart, recipeSlotCount
+        4, 4 * 9);// inventorySlotStart, inventorySlotCount
   }
 }

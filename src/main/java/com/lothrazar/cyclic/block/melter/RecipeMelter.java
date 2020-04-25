@@ -45,10 +45,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileMelter tile = (TileMelter) inv;
-      if (matches(tile, 0) && matches(tile, 1)) {
-        return true;
-      }
-      return false;
+      return matches(tile, 0) && matches(tile, 1);
     }
     catch (ClassCastException e) {
       return false;
