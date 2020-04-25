@@ -197,7 +197,7 @@ public class BlockRegistry {
     r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
     r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true)
         .setRegistryName("scaffold_fragile"));
-    r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), true)
+    r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), false)
         .setRegistryName("scaffold_responsive"));
     r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD))
         .setRegistryName("scaffold_replace"));

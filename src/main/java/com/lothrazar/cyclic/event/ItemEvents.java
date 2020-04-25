@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
@@ -50,10 +51,12 @@ public class ItemEvents {
     ItemScaffolding item = (ItemScaffolding) event.getItemStack().getItem();
     Direction opp = event.getFace().getOpposite();
     BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, item.getBlock());
-    event.getWorld().setBlockState(dest, item.getBlock().getDefaultState());
-    ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
-    stac.shrink(1);
-    event.setCanceled(true);
+    if (event.getWorld().isAirBlock(dest)) {
+      event.getWorld().setBlockState(dest, item.getBlock().getDefaultState());
+      ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
+      UtilItemStack.shrink(event.getPlayer(), stac);
+      event.setCanceled(true);
+    }
   }
 
   @SubscribeEvent

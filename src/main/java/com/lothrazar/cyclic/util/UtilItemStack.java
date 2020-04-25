@@ -56,4 +56,9 @@ public class UtilItemStack {
     return ItemStack.areItemsEqualIgnoreDurability(current, in)
         && ItemStack.areItemStackTagsEqual(current, in);
   }
+
+  public static void shrink(PlayerEntity player, ItemStack stac) {
+    if (!player.isCreative())
+      stac.shrink(1);
+  }
 }

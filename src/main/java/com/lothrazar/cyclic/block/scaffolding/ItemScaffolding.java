@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -80,7 +81,7 @@ public class ItemScaffolding extends BlockItem {
     if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) {
       ItemStack stac = player.getHeldItem(hand);
       if (worldIn.setBlockState(pos, Block.getBlockFromItem(this).getDefaultState())) {
-        stac.shrink(1);
+        UtilItemStack.shrink(player, stac);
       }
       return new ActionResult<>(ActionResultType.SUCCESS, stac);
     }
