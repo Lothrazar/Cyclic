@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ab",
+    "cd"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:pumpkin_pie"
+    },
+    "b": {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    "c": {
+      "item": "minecraft:beetroot"
+    },
+    "d": {
+      "item": "minecraft:cookie"
+    }
+  },
+  "result": {
+    "item": "cyclic:heart_empty"
+  }
+}

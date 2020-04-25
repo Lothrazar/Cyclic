@@ -13,6 +13,8 @@ import com.lothrazar.cyclic.item.EnderWingSp;
 import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.FireScepter;
 import com.lothrazar.cyclic.item.GemstoneItem;
+import com.lothrazar.cyclic.item.HeartItem;
+import com.lothrazar.cyclic.item.HeartToxicItem;
 import com.lothrazar.cyclic.item.IceWand;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.LightningScepter;
@@ -257,5 +259,7 @@ public class ItemRegistry {
     r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("ice_scepter"));
     r.register(new FireScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("fire_scepter"));
     r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("lightning_scepter"));
+    r.register(new HeartItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(16)).setRegistryName("heart"));
+    r.register(new HeartToxicItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(16)).setRegistryName("heart_empty"));
   }
 }

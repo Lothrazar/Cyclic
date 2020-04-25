@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    "def",
+    "ghi"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:rabbit_stew"
+    },
+    "b": {
+      "item": "minecraft:lily_pad"
+    },
+    "c": {
+      "item": "minecraft:diamond"
+    },
+    "d": {
+      "item": "minecraft:cake"
+    },
+    "e": {
+      "item": "cyclic:gem_obsidian"
+    },
+    "f": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "g": {
+      "item": "minecraft:emerald_block"
+    },
+    "h": {
+      "item": "minecraft:poisonous_potato"
+    },
+    "i": {
+      "item": "minecraft:cooked_salmon"
+    }
+  },
+  "result": {
+    "item": "cyclic:heart"
+  }
+}
