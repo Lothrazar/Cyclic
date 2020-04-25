@@ -2,13 +2,11 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -52,7 +50,6 @@ public class SnowEntity extends ProjectileItemEntity {
         //        if (world.isAirBlock(living.getPosition()))
         //          this.world.setBlockState(living.getPosition(), Blocks.SNOW.getDefaultState());
       }
-      UtilItemStack.drop(world, target.getPosition(), new ItemStack(Items.TORCH));
     }
     else if (type == RayTraceResult.Type.BLOCK) {
       BlockRayTraceResult ray = (BlockRayTraceResult) result;

@@ -1,14 +1,12 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -38,7 +36,6 @@ public class LightningEntity extends ProjectileItemEntity {
     RayTraceResult.Type type = result.getType();
     if (type == RayTraceResult.Type.ENTITY) {
       //damage entity by zero
-      //drop torch
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
@@ -46,7 +43,6 @@ public class LightningEntity extends ProjectileItemEntity {
         LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, target.getPosX(), target.getPosY(), target.getPosZ(), false);
         world.addEntity(lightningboltentity);
       }
-      UtilItemStack.drop(world, target.getPosition(), new ItemStack(Items.TORCH));
     }
     else if (type == RayTraceResult.Type.BLOCK) {
       //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
