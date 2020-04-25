@@ -113,6 +113,24 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public static void initAllRecipes() {
     //water
     hashes = new HashSet<>();
+    RecipeSolidifier.addRecipe("clay",
+        new ItemStack(Blocks.TERRACOTTA),
+        new ItemStack(Blocks.TERRACOTTA),
+        new ItemStack(Blocks.TERRACOTTA),
+        new FluidStack(Fluids.WATER, 50),
+        new ItemStack(Blocks.CLAY, 2));
+    RecipeSolidifier.addRecipe("patn",
+        new ItemStack(Blocks.GRASS_BLOCK),
+        new ItemStack(Blocks.GRASS_BLOCK),
+        new ItemStack(Blocks.GRASS_BLOCK),
+        new FluidStack(Fluids.WATER, 10),
+        new ItemStack(Blocks.GRASS_PATH, 2));
+    RecipeSolidifier.addRecipe("bush",
+        new ItemStack(Blocks.FERN),
+        new ItemStack(Blocks.FERN),
+        new ItemStack(Blocks.FERN),
+        new FluidStack(Fluids.WATER, 10),
+        new ItemStack(Blocks.DEAD_BUSH, 3));
     RecipeSolidifier.addRecipe("btube_coral",
         new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
         new ItemStack(Blocks.TUBE_CORAL_BLOCK),
@@ -150,13 +168,13 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.TUBE_CORAL),
         new ItemStack(Blocks.DEAD_TUBE_CORAL),
         new FluidStack(Fluids.WATER, 100),
-        new ItemStack(Blocks.TUBE_CORAL_BLOCK, 3));
+        new ItemStack(Blocks.TUBE_CORAL, 3));
     RecipeSolidifier.addRecipe("braincoral",
         new ItemStack(Blocks.DEAD_BRAIN_CORAL),
         new ItemStack(Blocks.BRAIN_CORAL),
         new ItemStack(Blocks.DEAD_BRAIN_CORAL),
         new FluidStack(Fluids.WATER, 100),
-        new ItemStack(Blocks.BRAIN_CORAL_BLOCK, 3));
+        new ItemStack(Blocks.BRAIN_CORAL, 3));
     RecipeSolidifier.addRecipe("bubblecoral",
         new ItemStack(Blocks.DEAD_BUBBLE_CORAL),
         new ItemStack(Blocks.BUBBLE_CORAL),
@@ -343,6 +361,24 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Blocks.GRASS_BLOCK),
         new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
         new ItemStack(Blocks.PODZOL, 2));
+    RecipeSolidifier.addRecipe("mossybrick",
+        new ItemStack(Blocks.STONE_BRICKS),
+        new ItemStack(Blocks.STONE_BRICKS),
+        new ItemStack(Blocks.STONE_BRICKS),
+        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
+        new ItemStack(Blocks.MOSSY_STONE_BRICKS, 3));
+    RecipeSolidifier.addRecipe("mossystone",
+        new ItemStack(Blocks.COBBLESTONE),
+        new ItemStack(Blocks.COBBLESTONE),
+        new ItemStack(Blocks.COBBLESTONE),
+        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
+        new ItemStack(Blocks.MOSSY_COBBLESTONE, 3));
+    RecipeSolidifier.addRecipe("biomycelium",
+        new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
+        new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
+        new ItemStack(Blocks.FARMLAND),
+        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+        new ItemStack(Blocks.MYCELIUM));
     RecipeSolidifier.addRecipe("biochar",
         new ItemStack(ItemRegistry.biomass),
         new ItemStack(Blocks.DIRT),
@@ -424,6 +460,13 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ItemStack(Items.SLIME_BALL),
         new FluidStack(FluidSlimeHolder.STILL.get(), 600),
         new ItemStack(Items.SLIME_BALL, 9));
+    //cr l
+    RecipeSolidifier.addRecipe("magmaglow",
+        new ItemStack(Items.PRISMARINE),
+        new ItemStack(Items.GLOWSTONE_DUST),
+        new ItemStack(Items.PRISMARINE),
+        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+        new ItemStack(Items.PRISMARINE_CRYSTALS));
     //create magma cream deal
     RecipeSolidifier.addRecipe("slimemagmacream",
         new ItemStack(Items.SLIME_BALL),
