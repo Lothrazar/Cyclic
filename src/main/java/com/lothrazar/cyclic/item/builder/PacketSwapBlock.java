@@ -127,7 +127,7 @@ public class PacketSwapBlock extends PacketBase {
         } // close off the for loop   
       }
       if (atLeastOne) {
-        UtilItemStack.damageItem(itemStackHeld);
+        UtilItemStack.damageItem(player, itemStackHeld);
       }
     });
     message.done(ctx);

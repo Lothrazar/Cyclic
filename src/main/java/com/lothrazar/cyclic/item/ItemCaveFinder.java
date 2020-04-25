@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- *
+ * 
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,56 +23,68 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
-import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class IceWand extends ItemBase {
+public class ItemCaveFinder extends ItemBase {
 
-  public IceWand(Properties properties) {
-    super(properties);
+  public ItemCaveFinder(Properties properties) {
+    super(properties.maxDamage(10));
   }
 
-  private static final int RADIUS = 2;
+  private static final int DURABILITY = 2000;
+  private static final int COOLDOWN = 12;
+  private static int range = 48;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
+    //
+    ItemStack stack = context.getItem();
     BlockPos pos = context.getPos();
-    Direction side = context.getFace();
-    if (side != null) {
-      pos = pos.offset(side);
+    Direction direction = context.getFace();
+    if (direction == null) {
+      return super.onItemUse(context);
     }
-    if (spreadWaterFromCenter(context.getWorld(), pos.offset(side))) {
-      //but the real sound
-      UtilSound.playSound(player, Blocks.PACKED_ICE.getDefaultState().getSoundType().getBreakSound());
-      UtilItemStack.damageItem(player, context.getItem());
-    }
-    return super.onItemUse(context);
-  }
-
-  private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
-    int count = 0;
-    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
-    for (BlockPos pos : water) {
-      IFluidState fluidState = world.getBlockState(pos).getFluidState();
-      if (fluidState != null &&
-          fluidState.getFluidState() != null &&
-          fluidState.getFluidState().getLevel() >= 8) {
-        world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
+    World worldObj = context.getWorld();
+    //    boolean showOdds = player.isSneaking();
+    boolean found = false;
+    //    if (!worldObj.isRemote) {
+    BlockPos current = pos;
+    for (int i = 1; i <= range; i++) {
+      current = current.offset(direction.getOpposite());
+      if (context.getWorld().isAirBlock(current)) {
+        UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.cave") + i);
+        found = true;
       }
-      count++;
+      else if (worldObj.getBlockState(current) == Blocks.WATER.getDefaultState()) {
+        UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.water") + i);
+        found = true;
+      }
+      else if (worldObj.getBlockState(current) == Blocks.LAVA.getDefaultState()) {
+        UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.lava") + i);
+        found = true;
+      }
+      if (found) {
+        break;//stop looping
+      }
     }
-    return count > 0;
+    if (found == false) {
+      UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.none") + range);
+    }
+    //    }
+    UtilItemStack.damageItem(player, stack);
+    UtilEntity.setCooldownItem(player, this, COOLDOWN);
+    return super.onItemUse(context);
   }
 }

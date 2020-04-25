@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sgs",
+    " bg",
+    "b s"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "minecraft:flint"
+    },
+    "g": {
+      "item": "minecraft:light_blue_dye"
+    }
+  },
+  "result": {
+    "item": "cyclic:spelunker"
+  }
+}

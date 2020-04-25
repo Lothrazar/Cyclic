@@ -1,17 +1,17 @@
 package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.base.IHasClickToggle;
+import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class GloveItem extends Item implements IHasClickToggle {
+public class GloveItem extends ItemBase implements IHasClickToggle {
 
   public static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final double CLIMB_SPEED = 0.288D;

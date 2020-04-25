@@ -18,7 +18,7 @@ public class EvokerFangItem extends ItemBase {
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
     this.summonFangRay(player.getPosition().getX(), player.getPosition().getZ(), player, context.getHitVec().getX(), context.getHitVec().getY(), context.getHitVec().getZ());
-    UtilItemStack.damageItem(context.getItem());
+    UtilItemStack.damageItem(player, context.getItem());
     return super.onItemUse(context);
   }
 

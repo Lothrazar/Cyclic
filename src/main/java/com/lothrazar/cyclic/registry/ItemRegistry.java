@@ -16,6 +16,7 @@ import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.HeartItem;
 import com.lothrazar.cyclic.item.HeartToxicItem;
 import com.lothrazar.cyclic.item.IceWand;
+import com.lothrazar.cyclic.item.ItemCaveFinder;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.LightningScepter;
 import com.lothrazar.cyclic.item.MattockItem;
@@ -261,5 +262,6 @@ public class ItemRegistry {
     r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(10)).setRegistryName("lightning_scepter"));
     r.register(new HeartItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(16)).setRegistryName("heart"));
     r.register(new HeartToxicItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(16)).setRegistryName("heart_empty"));
+    r.register(new ItemCaveFinder(new Item.Properties().group(MaterialRegistry.itemGroup).maxStackSize(1)).setRegistryName("spelunker"));
   }
 }

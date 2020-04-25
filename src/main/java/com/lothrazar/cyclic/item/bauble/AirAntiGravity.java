@@ -44,7 +44,7 @@ public class AirAntiGravity extends ItemBase {
       player.onGround = true;// (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
       if (player.getEntityWorld().rand.nextDouble() < 0.1) {
         //        super.damageCharm(player, stack);
-        UtilItemStack.damageItem(stack);
+        UtilItemStack.damageItem(player, stack);
       }
       if (world.isRemote && player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());

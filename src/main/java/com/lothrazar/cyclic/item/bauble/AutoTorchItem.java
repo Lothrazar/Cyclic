@@ -58,8 +58,7 @@ public class AutoTorchItem extends ItemBase {
         && world.getBlockState(pos.down()).isSolid()
         && world.isAirBlock(pos)) { // dont overwrite liquids
       if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
-        //        super.damageCharm(player, stack);
-        UtilItemStack.damageItem(stack);
+        UtilItemStack.damageItem(player, stack);
       }
     }
     else {

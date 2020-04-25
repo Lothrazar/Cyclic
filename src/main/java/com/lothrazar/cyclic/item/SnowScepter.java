@@ -15,13 +15,16 @@ public class SnowScepter extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    ItemStack stack = playerIn.getHeldItem(handIn);
-    SnowEntity ent = new SnowEntity(playerIn, worldIn);
-    ent.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
+    ItemStack stack = player.getHeldItem(handIn);
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return super.onItemRightClick(worldIn, player, handIn);
+    }
+    SnowEntity ent = new SnowEntity(player, worldIn);
+    ent.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
-    playerIn.getCooldownTracker().setCooldown(stack.getItem(), 2);
-    UtilItemStack.damageItem(stack);
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    player.getCooldownTracker().setCooldown(stack.getItem(), 2);
+    UtilItemStack.damageItem(player, stack);
+    return super.onItemRightClick(worldIn, player, handIn);
   }
 }

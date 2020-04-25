@@ -44,9 +44,7 @@ public class ItemEnderEyeReuse extends ItemBase {
         worldIn.playSound((PlayerEntity) null, posX, posY, posZ, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.NEUTRAL, 0.5F,
             0.4F / (random.nextFloat() * 0.4F + 0.8F));
         worldIn.playEvent((PlayerEntity) null, 1003, new BlockPos(player), 0);
-        if (!player.abilities.isCreativeMode) {
-          UtilItemStack.damageItem(stack);
-        }
+        UtilItemStack.damageItem(player, stack);
         player.addStat(Stats.ITEM_USED.get(this));
         player.getCooldownTracker().setCooldown(stack.getItem(), 10);
       }

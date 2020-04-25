@@ -78,7 +78,7 @@ public class PacketRandomize extends PacketBase {
         }
       }
       if (atLeastOne) {
-        UtilItemStack.damageItem(player.getHeldItem(message.hand));
+        UtilItemStack.damageItem(player, player.getHeldItem(message.hand));
       }
     });
     message.done(ctx);

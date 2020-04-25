@@ -1,9 +1,12 @@
 package com.lothrazar.cyclic.util;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
@@ -23,8 +26,21 @@ public class UtilItemStack {
     s.setDamage(s.getDamage() - 1);
   }
 
-  public static void damageItem(ItemStack s) {
-    s.setDamage(s.getDamage() + 1);
+  public static void damageItem(LivingEntity player, ItemStack stack) {
+    stack.damageItem(1, player, (p) -> {
+      p.sendBreakAnimation(Hand.MAIN_HAND);
+    });
+  }
+
+  public static void damageItem(PlayerEntity player, ItemStack stack) {
+    if (!player.isCreative())
+      stack.damageItem(1, player, (p) -> {
+        p.sendBreakAnimation(Hand.MAIN_HAND);
+      });
+    if (stack.getDamage() >= stack.getMaxDamage()) {
+      stack.setCount(0);
+      stack = ItemStack.EMPTY;
+    }
   }
 
   public static void drop(World world, BlockPos pos, ItemStack drop) {

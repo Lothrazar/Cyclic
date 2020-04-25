@@ -54,7 +54,7 @@ public abstract class CharmBase extends ItemBase {
       //      World worldIn = living.getEntityWorld();
       living.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, fireProtSeconds * Const.TICKS_PER_SEC, Const.Potions.I));
       //      super.damageCharm(living, stack);
-      UtilItemStack.damageItem(stack);
+      UtilItemStack.damageItem(living, stack);
       UtilSound.playSound(living, living.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
       UtilParticle.spawnParticle(living.world, ParticleTypes.DRIPPING_WATER, living.getPosition(), 9);
       //      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition().up());
@@ -64,7 +64,7 @@ public abstract class CharmBase extends ItemBase {
   private void tryWitherTick(ItemStack stack, Entity entityIn, LivingEntity living) {
     if (this.witherProt && living.isPotionActive(Effects.WITHER)) {
       living.removeActivePotionEffect(Effects.WITHER);
-      UtilItemStack.damageItem(stack);
+      UtilItemStack.damageItem(living, stack);
       UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_GENERIC_DRINK);
     }
   }
@@ -72,7 +72,7 @@ public abstract class CharmBase extends ItemBase {
   private void tryPoisonTick(ItemStack stack, Entity entityIn, LivingEntity living) {
     if (this.poisonProt && living.isPotionActive(Effects.POISON)) {
       living.removeActivePotionEffect(Effects.POISON);
-      UtilItemStack.damageItem(stack);
+      UtilItemStack.damageItem(living, stack);
       UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_GENERIC_DRINK);
     }
   }
@@ -81,7 +81,8 @@ public abstract class CharmBase extends ItemBase {
     if (this.voidProt && entityIn.getPosition().getY() < yLowest) {
       UtilEntity.teleportWallSafe(entityIn, worldIn,
           new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
-      UtilItemStack.damageItem(stack);
+      if (entityIn instanceof LivingEntity)
+        UtilItemStack.damageItem((LivingEntity) entityIn, stack);
       UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT);
       // UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL,
       // living.getPosition());

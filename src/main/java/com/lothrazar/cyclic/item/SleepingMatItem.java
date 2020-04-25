@@ -60,7 +60,7 @@ public class SleepingMatItem extends ItemBase {
     if (player.world instanceof ServerWorld) {
       ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
     }
-    UtilItemStack.damageItem(itemstack);
+    UtilItemStack.damageItem(player, itemstack);
     return Either.right(Unit.INSTANCE);
   }
 }

@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.EnderChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EnderChestInventory;
@@ -33,7 +34,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
@@ -51,11 +51,10 @@ public class EnderBagItem extends ItemBase {
       return ChestContainer.createGeneric9X3(p_220114_1_, p_220114_2_, enderchestinventory);
     }, EnderChestBlock.field_220115_d));
     player.addStat(Stats.OPEN_ENDERCHEST);
-    world.playSound(player, player.getPosition(), SoundEvents.BLOCK_ENDER_CHEST_OPEN, SoundCategory.BLOCKS, 0.3F, 1);
-    //    if (world.rand.nextDouble() > 0.5)
-    //      UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_OPEN);
-    //    else
-    //      UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_CLOSE);
+    if (world.rand.nextDouble() > 0.5)
+      UtilSound.playSound(player, SoundEvents.BLOCK_ENDER_CHEST_CLOSE);
+    else
+      UtilSound.playSound(player, SoundEvents.BLOCK_ENDER_CHEST_OPEN);
     return super.onItemRightClick(world, player, hand);
   }
 }

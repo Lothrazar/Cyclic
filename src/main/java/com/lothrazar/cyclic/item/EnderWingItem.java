@@ -62,7 +62,7 @@ public class EnderWingItem extends ItemBase {
       else {
         UtilSound.playSound(player, SoundRegistry.warp_echo);
         if (!world.isRemote()) {
-          UtilItemStack.damageItem(context.getItem());
+          UtilItemStack.damageItem(player, context.getItem());
           player.getCooldownTracker().setCooldown(this, cooldown);
           UtilEntity.teleportWallSafe(player, world, pos);
         }
