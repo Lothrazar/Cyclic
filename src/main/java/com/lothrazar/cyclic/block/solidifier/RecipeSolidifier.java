@@ -59,10 +59,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
       if (tile.getFluid() != null && tile.getFluid().getFluid() == this.fluidInput.getFluid()
-          && this.fluidInput.getAmount() >= tile.getFluid().getAmount()) {
+      //          && this.fluidInput.getAmount() >= tile.getFluid().getAmount()
+      ) {
         return matches(tile, 0) && matches(tile, 1) && matches(tile, 2);
       }
-      return false;
+      else
+        return false;
     }
     catch (ClassCastException e) {
       return false;
@@ -74,6 +76,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     Ingredient ing = ingredients.get(slot);
     for (ItemStack test : ing.getMatchingStacks()) {
       if (UtilItemStack.matches(current, test)) {
+        // System.out.println(slot + " match " + current + " test " + test);
         return true;
       }
     }

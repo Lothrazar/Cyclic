@@ -54,6 +54,6 @@ public class CyclicJEI implements IModPlugin {
         2, 4 * 9);// inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.id,
         0, 3, //recipeSLotStart, recipeSlotCount
-        4, 4 * 9);// inventorySlotStart, inventorySlotCount
+        3, 4 * 9);// inventorySlotStart, inventorySlotCount
   }
 }

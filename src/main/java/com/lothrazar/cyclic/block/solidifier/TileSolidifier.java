@@ -57,11 +57,10 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   private IItemHandler createHandler() {
     return new ItemStackHandler(SLOT_OUTPUT + 1) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return slot < SLOT_OUTPUT;
-      }
+      //      @Override
+      //      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      //        return slot < SLOT_OUTPUT;
+      //      }
     };
   }
 
@@ -172,6 +171,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     for (RecipeSolidifier rec : RecipeSolidifier.RECIPES) {
       if (rec.matches(this, world)) {
         currentRecipe = rec;
+        break;
       }
     }
   }
@@ -181,11 +181,9 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
-      if (!currentRecipe.getRecipeOutput().isEmpty()) {
-        if (itemsHere == null ||
-            !itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), true).isEmpty()) {
-          return false;//there was non-empty left after this, so no room for all
-        }
+      if (itemsHere == null ||
+          !itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), true).isEmpty()) {
+        return false;//there was non-empty left after this, so no room for all
       }
       //ok it has room for all the fluid none will be wasted 
       this.inventory.orElse(null).getStackInSlot(0).shrink(1);
