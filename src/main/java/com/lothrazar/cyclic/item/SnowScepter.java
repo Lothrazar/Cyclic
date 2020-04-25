@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -31,8 +33,9 @@ public class SnowScepter extends ItemBase {
     ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 2, ent.getPosZ());
     ent.shoot(player, player.rotationPitch, player.rotationYaw - 0.5F, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
-    player.getCooldownTracker().setCooldown(stack.getItem(), 2);
+    player.getCooldownTracker().setCooldown(stack.getItem(), 6);
     UtilItemStack.damageItem(player, stack);
+    UtilSound.playSound(player, SoundRegistry.frost_staff_launch);
     return super.onItemRightClick(worldIn, player, handIn);
   }
 }

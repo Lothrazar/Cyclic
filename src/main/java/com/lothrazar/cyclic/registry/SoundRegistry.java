@@ -15,6 +15,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class SoundRegistry {
 
   private static List<SoundEvent> sounds = new ArrayList<>();
+  public static SoundEvent frost_staff_launch = make("frost_staff_launch");
+  public static SoundEvent lightning_staff_launch = make("lightning_staff_launch");
+  public static SoundEvent fireball_staff_launch = make("fireball_staff_launch");
   public static SoundEvent block_scaffolding_0 = make("block_scaffolding_0");
   public static SoundEvent block_scaffolding_1 = make("block_scaffolding_1");
   public static SoundEvent dungeonfinder = make("dungeonfinder");

@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -15,25 +17,26 @@ public class FireScepter extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    ItemStack stack = playerIn.getHeldItem(handIn);
-    FireEntity ent = new FireEntity(playerIn, worldIn);
-    ent.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
+    ItemStack stack = player.getHeldItem(handIn);
+    FireEntity ent = new FireEntity(player, worldIn);
+    ent.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
-    ent = new FireEntity(playerIn, worldIn);
-    ent.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw - 0.1F, 0.0F, 1.5F, 1.0F);
+    ent = new FireEntity(player, worldIn);
+    ent.shoot(player, player.rotationPitch, player.rotationYaw - 0.1F, 0.0F, 1.5F, 1.0F);
     ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 1, ent.getPosZ());
     worldIn.addEntity(ent);
-    ent = new FireEntity(playerIn, worldIn);
-    ent.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw - 0.2F, 0.0F, 1.5F, 1.0F);
+    ent = new FireEntity(player, worldIn);
+    ent.shoot(player, player.rotationPitch, player.rotationYaw - 0.2F, 0.0F, 1.5F, 1.0F);
     ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 2, ent.getPosZ());
     worldIn.addEntity(ent);
-    ent = new FireEntity(playerIn, worldIn);
-    ent.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw - 0.5F, 0.0F, 1.5F, 1.0F);
+    ent = new FireEntity(player, worldIn);
+    ent.shoot(player, player.rotationPitch, player.rotationYaw - 0.5F, 0.0F, 1.5F, 1.0F);
     ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 3, ent.getPosZ());
     worldIn.addEntity(ent);
-    playerIn.getCooldownTracker().setCooldown(stack.getItem(), 10);
-    UtilItemStack.damageItem(playerIn, stack);
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    player.getCooldownTracker().setCooldown(stack.getItem(), 16);
+    UtilItemStack.damageItem(player, stack);
+    UtilSound.playSound(player, SoundRegistry.fireball_staff_launch);
+    return super.onItemRightClick(worldIn, player, handIn);
   }
 }
