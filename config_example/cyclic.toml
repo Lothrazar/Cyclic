@@ -1,17 +1,23 @@
 
-#Feature toggles
+#Feature toggles; each of these will disable the registration of some content (items/enchants)
 [cyclic]
-	#Disable these items
+	#Disable 5 sandstone tools
 	sandstoneGear = true
-	#Disable these items
+	#Disable the endgame gear
 	gemObsidianGear = true
-	#Disable these items
-	cables = true
-	#Disable these items
+	#Disable 9 items, emerald armor and tools
 	emeraldGear = true
-	#Disable these items
+	#Disable 5 netherbrick tools
 	netherbrickGear = true
-	#Disable this feature
+	#Disable the completely balanced climbing glove
+	glove = true
+	#Disable 2 heart items that increase and decrease max health
+	hearts = true
+	#Disable the 5 carrot items that upgrade horses
+	carrots = true
+	#Disable 6 charms (four basic, the ultimate, and the anti-gravity)
+	charms = true
+	#Disable all 11 enchantments
 	enchantments = true
 
 	[cyclic.peat]
@@ -21,8 +27,22 @@
 
 	[cyclic.energy]
 
-		[cyclic.energy.anvil]
+		[cyclic.energy.cost]
+			#Power gained burning one of this
+			#Range: 1 ~ 64000
+			anvil = 250
+			#Power per recipe
+			#Range: 1 ~ 64000
+			solidifier = 5000
+			#Power per recipe
+			#Range: 1 ~ 64000
+			melter = 5000
+
+		[cyclic.energy.fuel]
+			#Power gained burning one of this
+			#Range: 1 ~ 64000
+			peat_fuel_enriched = 1024
 			#Power to repair one tick of durability
 			#Range: 1 ~ 64000
-			cost = 250
+			peat_fuel = 256
 
