@@ -16,7 +16,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -54,7 +53,6 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public TileSolidifier() {
     super(BlockRegistry.Tiles.solidifier);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-    FurnaceTileEntity test;
     inputSlots = new ItemStackHandlerSided(3);
     outputSlot = new ItemStackHandlerSided(1);
   }
