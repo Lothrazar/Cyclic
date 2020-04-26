@@ -21,7 +21,6 @@ public class ConfigManager {
   public static IntValue MELTERPOWER;
   public static IntValue SOLIDIFIERPOWER;
   public static DoubleValue PEATCHANCE;
-  public static BooleanValue CABLES;
   public static IntValue PEATERICHPOWER;
   public static IntValue PEATPOWER;
   public static BooleanValue CHARMS;
@@ -33,12 +32,11 @@ public class ConfigManager {
   }
 
   private static void initConfig() {
-    COMMON_BUILDER.comment("Feature toggles; each of these will disable the registration of some content (items/blocks/enchants/etc)").push(ModCyclic.MODID);
+    COMMON_BUILDER.comment("Feature toggles; each of these will disable the registration of some content (items/enchants)").push(ModCyclic.MODID);
     CARROTS = COMMON_BUILDER.comment("Disable the 5 carrot items that upgrade horses").define("carrots", true);
     HEARTS = COMMON_BUILDER.comment("Disable 2 heart items that increase and decrease max health").define("hearts", true);
     GLOVE = COMMON_BUILDER.comment("Disable the completely balanced climbing glove").define("glove", true);
     CHARMS = COMMON_BUILDER.comment("Disable 6 charms (four basic, the ultimate, and the anti-gravity)").define("charms", true);
-    CABLES = COMMON_BUILDER.comment("Disable 4 total items; three cables and the cable wrench").define("cables", true);
     EMERALD = COMMON_BUILDER.comment("Disable 9 items, emerald armor and tools").define("emeraldGear", true);
     SANDSTONE = COMMON_BUILDER.comment("Disable 5 sandstone tools").define("sandstoneGear", true);
     GEMGEAR = COMMON_BUILDER.comment("Disable the endgame gear").define("gemObsidianGear", true);

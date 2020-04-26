@@ -211,12 +211,10 @@ public class ItemRegistry {
     r.register(new TileTransporterEmptyItem(new Item.Properties().group(MaterialRegistry.itemGroup))
         .setRegistryName("tile_transporter_empty"));
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
-    if (ConfigManager.CABLES.get()) {
-      r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cable_wrench"));
-      r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("energy_pipe"));
-      r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_pipe"));
-      r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fluid_pipe"));
-    }
+    r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cable_wrench"));
+    r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("energy_pipe"));
+    r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_pipe"));
+    r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fluid_pipe"));
     if (ConfigManager.GLOVE.get()) {
       r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("glove_climb"));
     }
