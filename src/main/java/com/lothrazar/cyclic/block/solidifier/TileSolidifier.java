@@ -50,6 +50,10 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   private final LazyOptional<IItemHandler> outputSlotWrapper = LazyOptional.of(() -> outputSlot);
   //  private final LazyOptional<IItemHandler> everything = LazyOptional.of(() -> new CombinedInvWrapper(inputSlots, outputSlot));
 
+  public static enum Fields {
+    REDSTONE, TIMER, RENDER;
+  }
+
   public TileSolidifier() {
     super(BlockRegistry.Tiles.solidifier);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
@@ -63,6 +67,34 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   public Predicate<FluidStack> isFluidValid() {
     return p -> true;
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case TIMER:
+        this.timer = value;
+      break;
+      case REDSTONE:
+        this.setNeedsRedstone(value);
+      break;
+      case RENDER:
+        this.renderParticles = value % 2;
+      break;
+    }
+  }
+
+  @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        return this.getNeedsRedstone();
+      case RENDER:
+        return this.renderParticles;
+    }
+    return super.getField(field);
   }
 
   @Override
@@ -127,11 +159,8 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     return super.getCapability(cap, side);
   }
 
-  @Override
-  public void setField(int field, int value) {}
-
   public FluidStack getFluid() {
-    return tank.getFluid();
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
   public float getCapacity() {

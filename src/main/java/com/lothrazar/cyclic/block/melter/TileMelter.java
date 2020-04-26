@@ -45,9 +45,41 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   private int timer = 0;
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 4;
 
+  public static enum Fields {
+    REDSTONE, TIMER, RENDER;
+  }
+
   public TileMelter() {
     super(BlockRegistry.Tiles.melter);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case TIMER:
+        this.timer = value;
+      break;
+      case REDSTONE:
+        this.setNeedsRedstone(value);
+      break;
+      case RENDER:
+        this.renderParticles = value % 2;
+      break;
+    }
+  }
+
+  @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        return this.getNeedsRedstone();
+      case RENDER:
+        return this.renderParticles;
+    }
+    return super.getField(field);
   }
 
   private IEnergyStorage createEnergy() {
@@ -120,15 +152,12 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     return super.getCapability(cap, side);
   }
 
-  @Override
-  public void setField(int field, int value) {}
-
   public float getCapacity() {
     return CAPACITY;
   }
 
   public FluidStack getFluid() {
-    return tank.getFluid();
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
   @Override
@@ -178,7 +207,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private boolean tryProcessRecipe() {
-    IItemHandler itemsHere = this.inventory.orElse(null);
+    //    IItemHandler itemsHere = this.inventory.orElse(null);
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
       //ok it has room for all the fluid none will be wasted
