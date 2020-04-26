@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
-import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -77,8 +76,8 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     guiItemStacks.init(0, true, 33, 6);
     guiItemStacks.init(1, true, 33, 6 + Const.SQ);
     guiItemStacks.init(2, true, 33, 6 + 2 * Const.SQ);
-    guiItemStacks.init(TileSolidifier.SLOT_OUTPUT, true, 104, 6 + Const.SQ);
-    guiItemStacks.set(TileSolidifier.SLOT_OUTPUT, recipe.getRecipeOutput());
+    guiItemStacks.init(3, true, 104, 6 + Const.SQ);
+    guiItemStacks.set(3, recipe.getRecipeOutput());
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     List<ItemStack> input = null;
     for (int i = 0; i <= 2; i++) {

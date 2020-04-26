@@ -37,39 +37,30 @@ import net.minecraftforge.items.IItemHandler;
 public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 6;
-  public static int SLOT_OUTPUT = 3;
-  static final int MAX = 64000;
+  public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
-  public FluidTankBase tank;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-  RecipeSolidifier currentRecipe;
+  private RecipeSolidifier currentRecipe;
   private int timer = 0;
+  FluidTankBase tank;
+  private ItemStackHandlerSided inputSlots;
+  private ItemStackHandlerSided outputSlot;
+  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
+  private final LazyOptional<IEnergyStorage> energyWrapper = LazyOptional.of(this::createEnergy);
+  private final LazyOptional<IItemHandler> inputsSlotWrapper = LazyOptional.of(() -> inputSlots);
+  private final LazyOptional<IItemHandler> outputSlotWrapper = LazyOptional.of(() -> outputSlot);
+  //  private final LazyOptional<IItemHandler> everything = LazyOptional.of(() -> new CombinedInvWrapper(inputSlots, outputSlot));
 
   public TileSolidifier() {
     super(BlockRegistry.Tiles.solidifier);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     FurnaceTileEntity test;
+    inputSlots = new ItemStackHandlerSided(3);
+    outputSlot = new ItemStackHandlerSided(1);
   }
 
   private IEnergyStorage createEnergy() {
     return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandlerSided(SLOT_OUTPUT + 1) {};
-  }
-
-  /**
-   * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
-   */
-  @Override
-  public boolean isItemValidForSlot(int index, ItemStack stack) {
-    if (index == SLOT_OUTPUT) {
-      return false;
-    }
-    return true;
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -91,8 +82,9 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public void read(CompoundNBT tag) {
     CompoundNBT fluid = tag.getCompound("fluid");
     tank.readFromNBT(fluid);
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energyWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    inputsSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    outputSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("invoutput")));
     super.read(tag);
   }
 
@@ -101,13 +93,17 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
-    energy.ifPresent(h -> {
+    energyWrapper.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
     });
-    inventory.ifPresent(h -> {
+    inputsSlotWrapper.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
+    });
+    outputSlotWrapper.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("invoutput", compound);
     });
     return super.write(tag);
   }
@@ -120,13 +116,15 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return tankWrapper.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      return energyWrapper.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      if (side == Direction.DOWN)
+        return outputSlotWrapper.cast();
+      return inputsSlotWrapper.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -149,7 +147,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void tick() {
-    IEnergyStorage en = this.energy.orElse(null);
+    IEnergyStorage en = this.energyWrapper.orElse(null);
     if (en == null) {
       return;
     }
@@ -185,27 +183,24 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   private boolean tryProcessRecipe() {
-    IItemHandler itemsHere = this.inventory.orElse(null);
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
-      if (itemsHere == null ||
-          !itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), true).isEmpty()) {
+      if (!outputSlot.insertItem(0, currentRecipe.getRecipeOutput(), true).isEmpty()) {
         return false;//there was non-empty left after this, so no room for all
       }
       //ok it has room for all the fluid none will be wasted 
-      this.inventory.orElse(null).getStackInSlot(0).shrink(1);
-      this.inventory.orElse(null).getStackInSlot(1).shrink(1);
-      this.inventory.orElse(null).getStackInSlot(2).shrink(1);
+      inputSlots.getStackInSlot(0).shrink(1);
+      inputSlots.getStackInSlot(1).shrink(1);
+      inputSlots.getStackInSlot(2).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
-      itemsHere.insertItem(SLOT_OUTPUT, currentRecipe.getRecipeOutput(), false);
+      outputSlot.insertItem(0, currentRecipe.getRecipeOutput(), false);
       return true;
     }
     return false;
   }
 
   public ItemStack getStackInputSlot(int slot) {
-    IItemHandler inv = inventory.orElse(null);
-    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
+    return inputSlots.getStackInSlot(slot);
   }
 }

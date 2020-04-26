@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +31,9 @@ public class ContainerSolidifier extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 37, 13));
       addSlot(new SlotItemHandler(h, 1, 37, 13 + Const.SQ));
       addSlot(new SlotItemHandler(h, 2, 37, 13 + 2 * Const.SQ));
-      addSlot(new SlotItemHandler(h, 3, 121, 31));
+    });
+    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
+      addSlot(new SlotItemHandler(h, 0, 121, 31));
     });
     layoutPlayerInventorySlots(8, 84);
     trackInt(new IntReferenceHolder() {
