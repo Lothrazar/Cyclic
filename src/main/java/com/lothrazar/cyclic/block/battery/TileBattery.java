@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.block.battery;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
@@ -29,14 +31,31 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   static final int MAX = 6400000;
 
   public static enum Fields {
-    FLOWING;
+    FLOWING, N, E, S, W, U, D;
   }
 
+  private Map<Direction, Boolean> poweredSides;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private int flowing = 0;
 
   public TileBattery() {
     super(CyclicRegistry.Tiles.batterytile);
+    poweredSides = new HashMap<Direction, Boolean>();
+    for (Direction f : Direction.values()) {
+      poweredSides.put(f, false);
+    }
+  }
+
+  public boolean getSideHasPower(Direction side) {
+    return this.poweredSides.get(side);
+  }
+
+  public int getSideField(Direction side) {
+    return this.getSideHasPower(side) ? 1 : 0;
+  }
+
+  public void setSideField(Direction side, int pow) {
+    this.poweredSides.put(side, (pow == 1));
   }
 
   private IEnergyStorage createEnergy() {
@@ -54,6 +73,9 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   @Override
   public void read(CompoundNBT tag) {
     setFlowing(tag.getInt("flowing"));
+    for (Direction f : Direction.values()) {
+      poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
+    }
     CompoundNBT energyTag = tag.getCompound("energy");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
     super.read(tag);
@@ -61,6 +83,9 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    for (Direction f : Direction.values()) {
+      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
+    }
     tag.putInt("flowing", getFlowing());
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
@@ -93,7 +118,9 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
-      moveEnergy(exportToSide, MAX / 4);
+
+      if (this.poweredSides.get(exportToSide))
+        moveEnergy(exportToSide, MAX / 4);
     }
   }
 
@@ -110,7 +137,44 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     switch (Fields.values()[field]) {
       case FLOWING:
         flowing = value;
+      break;      case D:
+        this.setSideField(Direction.DOWN, value % 2);
+      break;
+      case E:
+        this.setSideField(Direction.EAST, value % 2);
+      break;
+      case N:
+        this.setSideField(Direction.NORTH, value % 2);
+      break;
+      case S:
+        this.setSideField(Direction.SOUTH, value % 2);
+      break;
+      case U:
+        this.setSideField(Direction.UP, value % 2);
+      break;
+      case W:
+        this.setSideField(Direction.WEST, value % 2);
       break;
     }
+  }
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case D:
+        return this.getSideField(Direction.DOWN);
+      case E:
+        return this.getSideField(Direction.EAST);
+      case N:
+        return this.getSideField(Direction.NORTH);
+      case S:
+        return this.getSideField(Direction.SOUTH);
+      case U:
+        return this.getSideField(Direction.UP);
+      case W:
+        return this.getSideField(Direction.WEST);
+      case FLOWING:
+        return flowing;
+    }
+    return -1;
   }
 }

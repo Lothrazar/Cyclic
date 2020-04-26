@@ -29,7 +29,7 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     int x = guiLeft + 132, y = guiTop + 8;
-    btnToggle = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
+    btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       container.tile.setFlowing((container.getFlowing() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TilePeatGenerator.Fields.FLOWING.ordinal(), container.tile.getFlowing(), container.tile.getPos()));
     }));

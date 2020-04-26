@@ -104,4 +104,8 @@ public abstract class TileEntityBase extends TileEntity {
   public void setNeedsRedstone(int needsRedstone) {
     this.needsRedstone = needsRedstone;
   }
+
+  public int getField(int id) { 
+    return 0;
+  }
 }

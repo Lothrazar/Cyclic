@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.battery;
 
+import java.util.Map;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;

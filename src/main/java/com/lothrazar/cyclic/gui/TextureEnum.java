@@ -10,9 +10,9 @@ public enum TextureEnum {
       case REDSTONE_ON:
         return 78;
       case POWER_MOVING:
-        return -2;
+        return 1;
       case POWER_STOP:
-        return 46;
+        return 49;
     }
     return 0;
   }
@@ -24,9 +24,9 @@ public enum TextureEnum {
       case REDSTONE_ON:
         return 478;
       case POWER_MOVING:
-        return 110;
+        return 113;
       case POWER_STOP:
-        return 110;
+        return 113;
     }
     return 0;
   }
