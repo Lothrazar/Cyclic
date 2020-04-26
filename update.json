@@ -1,8 +1,8 @@
 {
   "homepage": "http://minecraft.curseforge.com/projects/cyclic",
   "promos": {
-    "1.15.2-latest": "0.3.4",
-    "1.15.2-recommended": "0.3.4"
+    "1.15.2-latest": "0.4.0",
+    "1.15.2-recommended": "0.4.0"
   },
   "1.15.2": {
   	"0.1.8":"Fixed server crash"
