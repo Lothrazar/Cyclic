@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.block.melter.TileMelter.Fields;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
+import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -12,18 +13,20 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
 
   private EnergyBar energy;
   private FluidBar fluid;
+  private TimerBar timer;
 
   public ScreenMelter(ContainerMelter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     energy = new EnergyBar(this, TileMelter.MAX);
     fluid = new FluidBar(this, 132, 8, TileMelter.CAPACITY);
+    timer = new TimerBar(this, 88, 37, TileMelter.TIMER_FULL);
   }
 
   @Override
   public void init() {
     super.init();
-    fluid.guiLeft = energy.guiLeft = guiLeft;
-    fluid.guiTop = energy.guiTop = guiTop;
+    timer.guiLeft = fluid.guiLeft = energy.guiLeft = guiLeft;
+    timer.guiTop = fluid.guiTop = energy.guiTop = guiTop;
   }
 
   @Override
@@ -51,7 +54,8 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     this.drawBackground(TextureRegistry.INVENTORY);
     this.drawSlot(16, 30);
     this.drawSlot(34, 30);
+    timer.draw(container.tile.getField(Fields.TIMER.ordinal()));
     energy.draw(container.getEnergy());
-    fluid.draw(this.container.tile.getFluid());
+    fluid.draw(container.tile.getFluid());
   }
 }

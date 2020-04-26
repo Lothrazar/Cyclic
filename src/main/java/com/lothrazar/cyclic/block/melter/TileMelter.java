@@ -43,7 +43,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private RecipeMelter currentRecipe;
   private int timer = 0;
-  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 4;
+  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 3;
 
   public static enum Fields {
     REDSTONE, TIMER, RENDER;

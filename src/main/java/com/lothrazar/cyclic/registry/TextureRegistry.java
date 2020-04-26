@@ -14,4 +14,5 @@ public class TextureRegistry {
   public static final ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
   public static final ResourceLocation WIDGETS = new ResourceLocation(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");
   public static final ResourceLocation FLUID_WIDGET = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
+  public static final ResourceLocation TIMER = new ResourceLocation(ModCyclic.MODID, "textures/gui/timer_melter.png");
 }

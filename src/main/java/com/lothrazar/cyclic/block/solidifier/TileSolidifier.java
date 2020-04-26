@@ -35,7 +35,7 @@ import net.minecraftforge.items.IItemHandler;
 @SuppressWarnings("rawtypes")
 public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 6;
+  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 5;
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
