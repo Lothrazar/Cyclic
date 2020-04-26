@@ -43,24 +43,19 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   public static int maxHeight = 99;
 
   public static enum Fields {
-    TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDER, ROTATIONS, OX, OY, OZ;
+    TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDER;
   }
 
   static final int MAX = 64000;
   static final int SLOT_BUILD = 0;
-  static final int SLOT_SHAPE = 1;
+  //  static final int SLOT_SHAPE = 1;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   // START of build settings
   private BuildStructureType buildType = BuildStructureType.FACING;
   private int buildSize = 3;
   private int height = 2;
-  private int rotations = 0;
-  // END of build settings
   //machine settings
-  private int offsetX = 0;
-  private int offsetY = 0;
-  private int offsetZ = 0;
   private int shapeIndex = 0;// current index of shape array
   private int timer;
 
@@ -77,10 +72,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     buildSize = tag.getInt("buildSize");
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
-    rotations = tag.getInt("rotations");
-    offsetX = tag.getInt("offsetX");
-    offsetY = tag.getInt("offsetY");
-    offsetZ = tag.getInt("offsetZ");
     super.read(tag);
   }
 
@@ -90,10 +81,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     tag.putInt("buildSize", buildSize);
     tag.putInt("height", height);
     tag.putInt("shapeIndex", shapeIndex);
-    tag.putInt("rotations", rotations);
-    tag.putInt("offsetX", offsetX);
-    tag.putInt("offsetY", offsetY);
-    tag.putInt("offsetZ", offsetZ);
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
@@ -168,18 +155,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       case RENDER:
         this.renderParticles = value % 2;
       break;
-      case ROTATIONS:
-        this.rotations = Math.max(0, value);
-      break;
-      case OX:
-        this.offsetX = value;
-      break;
-      case OY:
-        this.offsetY = value;
-      break;
-      case OZ:
-        this.offsetZ = value;
-      break;
     }
   }
 
@@ -198,14 +173,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         return this.getNeedsRedstone();
       case RENDER:
         return this.renderParticles;
-      case ROTATIONS:
-        return this.rotations;
-      case OX:
-        return this.offsetX;
-      case OY:
-        return this.offsetY;
-      case OZ:
-        return this.offsetZ;
     }
     return super.getField(field);
   }
@@ -285,7 +252,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private BlockPos getPosTarget() {
-    return this.getPos().add(this.offsetX, this.offsetY, this.offsetZ);
+    return this.getPos();//.add(this.offsetX, this.offsetY, this.offsetZ);
   }
 
   public BlockPos getTargetFacing() {

@@ -15,6 +15,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -49,6 +50,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public TileSolidifier() {
     super(BlockRegistry.Tiles.solidifier);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+    FurnaceTileEntity test;
   }
 
   private IEnergyStorage createEnergy() {
@@ -62,6 +64,17 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       //        return slot < SLOT_OUTPUT;
       //      }
     };
+  }
+
+  /**
+   * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+   */
+  @Override
+  public boolean isItemValidForSlot(int index, ItemStack stack) {
+    if (index == SLOT_OUTPUT) {
+      return false;
+    }
+    return true;
   }
 
   public Predicate<FluidStack> isFluidValid() {

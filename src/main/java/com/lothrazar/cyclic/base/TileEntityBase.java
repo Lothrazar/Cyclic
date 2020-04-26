@@ -82,6 +82,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (tileTarget == null) {
       return;
     }
+    IInventory inv = null;
+    if (tileTarget instanceof IInventory) {
+      //is there a validation way
+      inv = (IInventory) tileTarget;
+    }
     IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return;
@@ -93,10 +98,16 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       int sizeStarted = drain.getCount();
       if (!drain.isEmpty()) {
         //now push it into output, but find out what was ACTUALLY taken
-        for (int i = 0; i < handlerOutput.getSlots(); i++) {
-          drain = handlerOutput.insertItem(i, drain, false);
-          if (drain.isEmpty()) {
-            break;//done draining
+        for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
+          if (inv != null
+              && inv.isItemValidForSlot(slot, drain) == false) {
+            //            System.out.println("not valid");
+          }
+          else {
+            drain = handlerOutput.insertItem(slot, drain, false);
+            if (drain.isEmpty()) {
+              break;//done draining
+            }
           }
         }
       }
