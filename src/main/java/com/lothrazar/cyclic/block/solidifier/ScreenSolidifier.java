@@ -38,6 +38,11 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     this.drawButtonTooltips(mouseX, mouseY);
     //    this.drawName(this.title.getFormattedText());
+    int timer = container.tile.getField(TileSolidifier.Fields.TIMER.ordinal());
+    if (timer > 0)
+      this.font.drawString("[" + timer + "]",
+          (this.getXSize()) / 2 - 16,
+          40.0F, 4209792);
   }
 
   @Override
