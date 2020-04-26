@@ -26,7 +26,7 @@ public class ContainerGenerator extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 61, 21));
+      addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
     trackInt(new IntReferenceHolder() {

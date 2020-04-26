@@ -28,7 +28,12 @@
 	"tool.cable_wrench.disable":"Disable mode",
 	"gui.cyclic.flowing0":"Storing Power",  
 	"gui.cyclic.flowing1":"Exporting Power",
-    
+	"gui.cyclic.flowing.up":"Up",
+	"gui.cyclic.flowing.down":"Down",
+	"gui.cyclic.flowing.north":"North",
+	"gui.cyclic.flowing.south":"South",
+	"gui.cyclic.flowing.east":"East",
+	"gui.cyclic.flowing.west":"West",
     
     "item.cyclic.build_scepter":"Building Scepter (fill)",
     "item.cyclic.offset_scepter":"Building Scepter (place)",
