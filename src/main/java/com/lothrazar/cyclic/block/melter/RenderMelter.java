@@ -36,17 +36,15 @@ public class RenderMelter extends TileEntityRenderer<TileMelter> {
       ItemStack stack = itemHandler.getStackInSlot(0);
       if (!stack.isEmpty()) {
         matrixStack.push();
-        //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.5, 0.60, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderItem(stack, TransformType.GROUND, 255, 0, matrixStack, buffer);
+        Minecraft.getInstance().getItemRenderer().renderItem(stack, TransformType.GROUND, 0x111111, 200, matrixStack, buffer);
         matrixStack.pop();
       }
       stack = itemHandler.getStackInSlot(1);
       if (!stack.isEmpty()) {
         matrixStack.push();
-        //        matrixStack.scale(0.5f, 0.5f, 0.5f);
-        matrixStack.translate(0.5, 0.20, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderItem(stack, TransformType.GROUND, 255, 0, matrixStack, buffer);
+        matrixStack.translate(0.5, 0.10, 0.5);
+        Minecraft.getInstance().getItemRenderer().renderItem(stack, TransformType.GROUND, 0x999999, 0, matrixStack, buffer);
         matrixStack.pop();
       }
     }
@@ -59,10 +57,11 @@ public class RenderMelter extends TileEntityRenderer<TileMelter> {
       return;
     }
     IVertexBuilder vertexBuffer = buffer.getBuffer(FluidTankRenderType.resizableCuboid());
+    matrixStack.push();
     matrixStack.scale(1F, UtilFluid.getScale(tankHere.tank), 1F);
     UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.stages - 1),
         matrixStack, vertexBuffer, UtilRender.getColorARGB(fluid, 0.1F),
         UtilRender.calculateGlowLight(light, fluid));
-    //render item 
+    matrixStack.pop();
   }
 }
