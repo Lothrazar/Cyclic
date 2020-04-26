@@ -69,12 +69,13 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
       if (itemHandlerFrom != null) {
         //ok go
         for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
-          itemTarget = itemHandlerFrom.getStackInSlot(i);
+          itemTarget = itemHandlerFrom.extractItem(i, 64, true);
           if (itemTarget.isEmpty()) {
             continue;
           }
           // and then pull 
           if (itemTarget.isEmpty() == false) {
+            itemTarget = itemHandlerFrom.extractItem(i, 64, false);
             ItemStack result = sideHandler.insertItem(0, itemTarget.copy(), false);
             itemTarget.setCount(result.getCount());
             //            this.setInventorySlotContents(importFromSide.ordinal(), pulled.copy());

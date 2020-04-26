@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.capability.ItemStackHandlerSided;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,7 +32,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
 public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
@@ -58,12 +58,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(SLOT_OUTPUT + 1) {
-      //      @Override
-      //      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-      //        return slot < SLOT_OUTPUT;
-      //      }
-    };
+    return new ItemStackHandlerSided(SLOT_OUTPUT + 1) {};
   }
 
   /**
