@@ -30,6 +30,10 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public static enum Fields {
+    REDSTONE;
+  }
+
   public TilePlacer() {
     super(BlockRegistry.Tiles.placer);
   }
@@ -74,9 +78,9 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public void tick() {
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
     inventory.ifPresent(inv -> {
       ItemStack stack = inv.getStackInSlot(0);
       if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
@@ -93,5 +97,20 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        this.setNeedsRedstone(value);
+      break;
+    }
+  }
+
+  @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        return this.getNeedsRedstone();
+    }
+    return 0;
+  }
 }

@@ -1,6 +1,7 @@
-package com.lothrazar.cyclic.block.placer;
+package com.lothrazar.cyclic.block.breaker;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
@@ -10,11 +11,11 @@ import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
-public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
+public class ScreenBreaker extends ScreenBase<ContainerBreaker> {
 
   private ButtonMachine btnRedstone;
 
-  public ScreenPlacer(ContainerPlacer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenBreaker(ContainerBreaker screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
   }
 
@@ -48,6 +49,5 @@ public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
-    this.drawSlot(xSize / 2 - 9, 28);
   }
 }

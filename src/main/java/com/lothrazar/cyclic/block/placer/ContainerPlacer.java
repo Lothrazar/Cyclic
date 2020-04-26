@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.placer;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,15 +8,13 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerPlacer extends ContainerBase {
 
-  private TilePlacer tile;
+  protected TilePlacer tile;
 
   public ContainerPlacer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(BlockRegistry.ContainerScreens.placer, windowId);
@@ -26,25 +23,21 @@ public class ContainerPlacer extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 61, 21));
+      addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
     trackInt(new IntReferenceHolder() {
 
       @Override
       public int get() {
-        return getEnergy();
+        return tile.getField(TilePlacer.Fields.REDSTONE.ordinal());
       }
 
       @Override
       public void set(int value) {
-        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        tile.setField(TilePlacer.Fields.REDSTONE.ordinal(), value);
       }
     });
-  }
-
-  public int getEnergy() {
-    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override

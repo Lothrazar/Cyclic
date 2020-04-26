@@ -1,14 +1,25 @@
 package com.lothrazar.cyclic.block.breaker;
 
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
-public class TileBreaker extends TileEntityBase implements ITickableTileEntity {
+public class TileBreaker extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+
+  public static enum Fields {
+    REDSTONE;
+  }
 
   public TileBreaker() {
     super(BlockRegistry.Tiles.breakerTile);
@@ -26,8 +37,19 @@ public class TileBreaker extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerBreaker(i, world, pos, playerInventory, playerEntity);
+  }
+
+  @Override
   public void tick() {
-    if (this.isPowered() == false) {
+    if (this.requiresRedstone() && !this.isPowered()) {
       setAnimation(false);
       return;
     }
@@ -44,6 +66,19 @@ public class TileBreaker extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void setField(int field, int value) {
-    // TODO Auto-generated method stub
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        this.setNeedsRedstone(value);
+      break;
+    }
+  }
+
+  @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        return this.getNeedsRedstone();
+    }
+    return 0;
   }
 }

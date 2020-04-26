@@ -18,6 +18,7 @@ import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
+import com.lothrazar.cyclic.block.breaker.ContainerBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.cable.energy.BlockCableEnergy;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
@@ -169,6 +170,8 @@ public class BlockRegistry {
 
   public static class ContainerScreens {
 
+    @ObjectHolder(ModCyclic.MODID + ":breaker")
+    public static ContainerType<ContainerBreaker> breaker;
     @ObjectHolder(ModCyclic.MODID + ":solidifier")
     public static ContainerType<ContainerSolidifier> solidifier;
     @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -281,5 +284,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerSolidifier(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("solidifier"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerBreaker(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("breaker"));
   }
 }
