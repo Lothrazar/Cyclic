@@ -32,18 +32,18 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EnchantReach extends EnchantBase {
+public class EnchantStep extends EnchantBase {
 
-  public EnchantReach(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  private static final String NBT_ON = ModCyclic.MODID + "_stepenchant";
+
+  public EnchantStep(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
+    MinecraftForge.EVENT_BUS.register(this);
   }
-
-  private static final String NBT_REACH_ON = "reachon";
-  private static final int REACH_VANILLA = 5;
-  private static final int REACH_BOOST = 16; 
 
   @Override
   public int getMaxLevel() {
@@ -54,25 +54,14 @@ public class EnchantReach extends EnchantBase {
   public boolean canApply(ItemStack stack) {
     //anything that goes on your feet
     boolean yes = stack.getItem() == Items.BOOK ||
-        stack.getItem() == Items.ELYTRA ||
         (stack.getItem() instanceof ArmorItem)
-            && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.CHEST;
+            && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
     return yes;
   }
 
   @Override
   public boolean canApplyAtEnchantingTable(ItemStack stack) {
     return this.canApply(stack);
-  }
-
-  private void turnReachOff(PlayerEntity player) {
-    player.getPersistentData().putBoolean(NBT_REACH_ON, false);
-    ModCyclic.proxy.setPlayerReach(player, REACH_VANILLA);
-  }
-
-  private void turnReachOn(PlayerEntity player) {
-    player.getPersistentData().putBoolean(NBT_REACH_ON, true);//.setInteger(NBT_REACH_ON, 1);
-    ModCyclic.proxy.setPlayerReach(player, REACH_BOOST);
   }
 
   @SubscribeEvent
@@ -83,7 +72,7 @@ public class EnchantReach extends EnchantBase {
     }
     PlayerEntity player = (PlayerEntity) event.getEntityLiving();
     //Ticking
-    ItemStack armor = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+    ItemStack armor = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
     int level = 0;
     if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
         && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
@@ -91,13 +80,31 @@ public class EnchantReach extends EnchantBase {
       level = EnchantmentHelper.getEnchantments(armor).get(this);
     }
     if (level > 0) {
-      turnReachOn(player);
+      turnOn(player, armor);
     }
     else {
-      //was it on before, do we need to do an off hit
-      if (player.getPersistentData().contains(NBT_REACH_ON) && player.getPersistentData().getBoolean(NBT_REACH_ON)) {
-        turnReachOff(player);
-      }
+      //      ModCyclic.log(" level " + level + " and " + armor.getOrCreateTag().getBoolean(NBT_ON));
+      turnOff(player, armor);
+    }
+  }
+
+  private void turnOn(PlayerEntity player, ItemStack armor) {
+    player.getPersistentData().putBoolean(NBT_ON, true);
+    if (player.isSneaking()) {
+      //make sure that, when sneaking, dont fall off!!
+      player.stepHeight = 0.9F;
+    }
+    else {
+      player.stepHeight = 1.0F + (1F / 16F);//PATH BLOCKS etc are 1/16th downif MY feature turns this on, then do it
+    }
+    //    ModCyclic.log("ON " + player.getPersistentData().getBoolean(NBT_ON));
+  }
+
+  private void turnOff(PlayerEntity player, ItemStack armor) {
+    //was it on before, do we need to do an off hit
+    if (player.getPersistentData().contains(NBT_ON) && player.getPersistentData().getBoolean(NBT_ON)) {
+      player.stepHeight = 0.6F;// LivingEntity.class constructor defaults to this
+      player.getPersistentData().putBoolean(NBT_ON, false);
     }
   }
 }

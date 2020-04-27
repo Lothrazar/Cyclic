@@ -37,7 +37,7 @@ import net.minecraft.util.Hand;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
- 
+
 public class EnchantQuickdraw extends EnchantBase {
 
   public EnchantQuickdraw(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
@@ -52,7 +52,7 @@ public class EnchantQuickdraw extends EnchantBase {
 
   @Override
   public int getMaxLevel() {
-    return 1;
+    return 3;
   }
 
   @SubscribeEvent
@@ -66,13 +66,14 @@ public class EnchantQuickdraw extends EnchantBase {
       if (heldItem.getItem() instanceof BowItem == false) {
         return;
       }
-      if (getCurrentLevelTool(player) <= 0) {
+      int level = getCurrentLevelTool(player);
+      if (level <= 0) {
         return;
       }
-      if (player.isHandActive()) {
-        this.tickHeldBow(player);
-        this.tickHeldBow(player);
-      }
+//      if (player.isHandActive()) {
+        for (int i = 0; i < level; i++)
+          this.tickHeldBow(player);
+//      }
     }
   }
 
@@ -81,7 +82,6 @@ public class EnchantQuickdraw extends EnchantBase {
       Method m = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_184608_ct");// "updateActiveHand");
       //      Method m = PlayerEntity.class.getDeclaredMethod("updateActiveHand");
       m.setAccessible(true);
-      m.invoke(player);
       m.invoke(player);
     }
     catch (Exception e) {

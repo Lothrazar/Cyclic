@@ -41,10 +41,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.LootContext.Builder;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -66,6 +62,7 @@ public class EnchantExcavation extends EnchantBase {
   private int getHarvestMax(int level) {
     return level * POWER_PER_LEVEL;
   }
+
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onBreakEvent(BreakEvent event) {
     IWorld world = event.getWorld();
@@ -120,7 +117,7 @@ public class EnchantExcavation extends EnchantBase {
         //this is important to get real drops to consider blockstate and tile entity
         //example: shulkers to keep contents
         Block.spawnDrops(targetState, world, targetPos, world.getTileEntity(targetPos));
-      } 
+      }
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
       // damage but also respect the unbreaking chant

@@ -64,6 +64,7 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.multishot);//y
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.quickshot);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.launch);
+    MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.step);
     MinecraftForge.EVENT_BUS.register(CyclicRegistry.Enchants.venom);//y
     MinecraftForge.EVENT_BUS.register(this);
     scaffoldingListen = new ItemScaffolding[] { CyclicRegistry.Items.item_scaffold_fragile, CyclicRegistry.Items.item_scaffold_responsive, CyclicRegistry.Items.item_scaffold_replace };
