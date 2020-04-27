@@ -23,8 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import java.lang.reflect.Method;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
@@ -33,8 +36,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-@Deprecated
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+ 
 public class EnchantQuickdraw extends EnchantBase {
 
   public EnchantQuickdraw(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
@@ -74,8 +77,15 @@ public class EnchantQuickdraw extends EnchantBase {
   }
 
   private void tickHeldBow(PlayerEntity player) {
-    //     player.updateActiveHand();//BUT its protected bahhhh
-    //    player.updateActiveHand();
-    //    UtilReflection.callPrivateMethod(EntityLivingBase.class, player, "updateActiveHand", "func_184608_ct");
+    try {
+      Method m = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_184608_ct");// "updateActiveHand");
+      //      Method m = PlayerEntity.class.getDeclaredMethod("updateActiveHand");
+      m.setAccessible(true);
+      m.invoke(player);
+      m.invoke(player);
+    }
+    catch (Exception e) {
+      ModCyclic.LOGGER.error("Player quickdraw error", e);
+    }
   }
 }

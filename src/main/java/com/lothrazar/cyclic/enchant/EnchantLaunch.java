@@ -25,7 +25,14 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilNBT;
+import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -37,8 +44,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-@Deprecated
+ 
 public class EnchantLaunch extends EnchantBase {
 
   public EnchantLaunch(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
@@ -79,53 +85,53 @@ public class EnchantLaunch extends EnchantBase {
         return;
       }
       //if you are on the ground (or not airborne, should be same thing
-      //      if ((p.isAirBorne == false || p.onGround) &&
-      //          UtilNBT.getItemStackNBTVal(armorStack, NBT_USES) > 0) {
-      //        //you have landed on the ground, dont count previous jumps
-      //        UtilNBT.setItemStackNBTVal(armorStack, NBT_USES, 0);
-      //      }
+      if ((p.isAirBorne == false || p.onGround) &&
+          armorStack.getOrCreateTag().getInt(NBT_USES) > 0) {
+        //you have landed on the ground, dont count previous jumps
+        UtilNBT.setItemStackNBTVal(armorStack, NBT_USES, 0);
+      }
     }
   }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public void onKeyInput(KeyInputEvent event) {
-    PlayerEntity player = ModCyclic.proxy.getClientPlayer();
-    //    if (player.isRiding() && player.getRidingEntity() instanceof EntityBoat) {
-    //      return;
-    //    }
-    //    ItemStack feet = getFirstArmorStackWithEnchant(player);
-    //    if (feet == null || feet.isEmpty() || player.isSneaking()) {
-    //      return;
-    //    } //sneak to not double jump
-    //    if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) {
-    //      return;
-    //    }
-    //    if (player.getCooldownTracker().hasCooldown(feet.getItem())) {
-    //      return;
-    //    }
-    //    if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
-    //        && player.posY < player.lastTickPosY && player.isAirBorne && player.isInWater() == false) {
-    //      //JUMP IS pressed and you are moving down
-    //      int level = EnchantmentHelper.getEnchantments(feet).get(this);
-    //      int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
-    //      player.fallDistance = 0;
-    //      float angle = (player.motionX == 0 && player.motionZ == 0) ? 90 : ROTATIONPITCH;
-    //      UtilEntity.launch(player, angle, LAUNCH_POWER);
-    //      UtilParticle.spawnParticle(player.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, player.getPosition());
+  public void onKeyInput(KeyInputEvent event) {    PlayerEntity player = ModCyclic.proxy.getClientPlayer();
+  if (player == null || player.getRidingEntity() instanceof BoatEntity) {
+    return;
+  }
+  ItemStack feet = getFirstArmorStackWithEnchant(player);
+  if (feet.isEmpty() || player.isSneaking()) {
+    return;
+  } //sneak to not double jump
+  if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) {
+    return;
+  }
+  if (player.getCooldownTracker().hasCooldown(feet.getItem())) {
+    return;
+  }
+  if (Minecraft.getInstance().gameSettings.keyBindJump.isKeyDown()
+      && player.posY < player.lastTickPosY && player.isAirBorne && player.isInWater() == false) {
+    //JUMP IS pressed and you are moving down
+    int level = EnchantmentHelper.getEnchantments(feet).get(this);
+    int uses = feet.getOrCreateTag().getInt(NBT_USES);//UtilNBT.getItemStackNBTVal(feet, NBT_USES);
+    player.fallDistance = 0;
+    float angle = (player.getMotion().x == 0 && player.getMotion().z == 0) ? 90 : ROTATIONPITCH;
+    UtilEntity.launch(player, angle, LAUNCH_POWER);
+//    UtilParticle.spawnParticle(player.getEntityWorld(), ParticleTypes.CRIT, player.getPosition(), 7);
     //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.enchant_launch, SoundCategory.PLAYERS, 0.04F);
     //      UtilItemStack.damageItem(player, feet);
-    //      uses++;
-    //      if (uses >= level) { // level is maxuses
-    //        //now block useage for a while
-    //        if (!feet.isEmpty()) {
-    //          UtilEntity.setCooldownItem(player, feet.getItem(), COOLDOWN);
-    //        }
-    //        uses = 0;
-    //      }
-    //      UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
-    //      player.fallDistance = 0;
-    //      ModCyclic.network.sendToServer(new PacketPlayerFalldamage());//reset at bottom of jump
-    //    }
+    uses++;
+    if (uses >= level) { // level is maxuses
+      //now block useage for a while
+      if (!feet.isEmpty()) {
+        UtilEntity.setCooldownItem(player, feet.getItem(), COOLDOWN);
+      }
+      uses = 0;
+    }
+    UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
+    player.fallDistance = 0;
+    //
+    PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());//reset at bottom of jump
+  }
   }
 }
