@@ -70,6 +70,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   private void normalFlow() {
     IFluidHandler sideHandler;
     Direction outgoingSide;
+    Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
     for (Direction incomingSide : Direction.values()) {
       sideHandler = flow.get(incomingSide).orElse(null);
       //thise items came from that
@@ -77,6 +78,9 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
       for (Integer i : rawList) {
         outgoingSide = Direction.values()[i];
         if (outgoingSide == incomingSide) {
+          continue;
+        }
+        if (importFromSide != null && importFromSide == outgoingSide) {
           continue;
         }
         this.moveFluids(outgoingSide, CAPACITY, sideHandler);

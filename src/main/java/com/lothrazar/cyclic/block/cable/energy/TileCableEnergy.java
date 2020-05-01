@@ -45,9 +45,9 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
         5).boxed().collect(Collectors.toList());
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
-      Direction exportToSide = Direction.values()[i];
-      if (this.isEnergyIncomingFromFace(exportToSide) == false) {
-        moveEnergy(exportToSide, MAX);
+      Direction outgoingSide = Direction.values()[i];
+      if (this.isEnergyIncomingFromFace(outgoingSide) == false) {
+        moveEnergy(outgoingSide, MAX);
       }
     }
   }

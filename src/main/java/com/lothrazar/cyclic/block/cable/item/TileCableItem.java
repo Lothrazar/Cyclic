@@ -27,7 +27,6 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileCableItem extends TileEntityBase implements ITickableTileEntity {
 
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
-  //  private LazyOptional<IItemHandler> item = LazyOptional.of(this::createHandler);
 
   public TileCableItem() {
     super(BlockRegistry.Tiles.item_pipeTile);
@@ -89,6 +88,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   private void normalFlow() {
     IItemHandler sideHandler;
     Direction outgoingSide;
+    Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
     for (Direction incomingSide : Direction.values()) {
       sideHandler = flow.get(incomingSide).orElse(null);
       //thise items came from that
@@ -96,6 +96,9 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
       for (Integer i : rawList) {
         outgoingSide = Direction.values()[i];
         if (outgoingSide == incomingSide) {
+          continue;
+        }
+        if (importFromSide != null && importFromSide == outgoingSide) {
           continue;
         }
         this.moveItems(outgoingSide, 64, sideHandler);
