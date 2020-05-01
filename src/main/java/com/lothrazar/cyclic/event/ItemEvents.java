@@ -8,15 +8,20 @@ import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -25,6 +30,19 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemEvents {
+
+  @SubscribeEvent
+  public void onPlayerCloneDeath(PlayerEvent.Clone event) {
+    IAttributeInstance original = event.getOriginal().getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    if (original != null) {
+      UtilEntity.setMaxHealth(event.getPlayer(), original.getValue());
+    }
+  }
+
+  @SubscribeEvent
+  public void onLivingDeathEvent(LivingDeathEvent event) {
+    //
+  }
 
   @SubscribeEvent
   public void onBedCheck(SleepingLocationCheckEvent event) {

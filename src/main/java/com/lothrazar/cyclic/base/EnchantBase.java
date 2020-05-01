@@ -19,6 +19,16 @@ public class EnchantBase extends Enchantment {
     return -1;
   }
 
+  protected int getCurrentArmorLevelSlot(LivingEntity player, EquipmentSlotType type) {
+    ItemStack armor = player.getItemStackFromSlot(type);
+    int level = 0;
+    if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
+        && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
+      level = EnchantmentHelper.getEnchantments(armor).get(this);
+    }
+    return level;
+  }
+
   protected int getCurrentArmorLevel(LivingEntity player) {
     EquipmentSlotType[] armors = new EquipmentSlotType[] {
         EquipmentSlotType.CHEST, EquipmentSlotType.FEET, EquipmentSlotType.HEAD, EquipmentSlotType.LEGS

@@ -117,20 +117,21 @@ public class UtilEntity {
       entity.setPositionAndUpdate(entity.prevPosX, entity.prevPosY + 1.0D, entity.prevPosZ);
     }
   }
+
   //
-  //  public static void setMaxHealth(LivingEntity living, double max) {
-  //    //    living.getAttribute(attribute)
-  //    IAttributeInstance healthAttribute = living.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
-  //    double amount = max - healthAttribute.getBaseValue();
-  //    AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
-  //    // Need to remove modifier to apply a new one
-  //    if (modifier != null) {
-  //      healthAttribute.removeModifier(modifier);
-  //    }
-  //    // Operation 0 is a flat increase
-  //    modifier = new AttributeModifier(HEALTH_MODIFIER_ID, HEALTH_MODIFIER_NAME, amount, 0);
-  //    healthAttribute.applyModifier(modifier);
-  //  }
+  public static void setMaxHealth(LivingEntity living, double max) {
+    IAttributeInstance healthAttribute = living.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    double amount = max - healthAttribute.getBaseValue();
+    AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
+    // Need to remove modifier to apply a new one
+    if (modifier != null) {
+      healthAttribute.removeModifier(modifier);
+    }
+    // Operation 0 is a flat increase
+    modifier = new AttributeModifier(HEALTH_MODIFIER_ID, HEALTH_MODIFIER_NAME, amount,
+        AttributeModifier.Operation.ADDITION);
+    healthAttribute.applyModifier(modifier);
+  }
 
   public static double getMaxHealth(LivingEntity living) {
     IAttributeInstance healthAttribute = living.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
@@ -142,11 +143,12 @@ public class UtilEntity {
     return maxHealth;
   }
 
-  //  public static int incrementMaxHealth(LivingEntity living, int by) {
-  //    int newVal = (int) getMaxHealth(living) + by;
-  //    setMaxHealth(living, newVal);
-  //    return newVal;
-  //  }
+  public static int incrementMaxHealth(LivingEntity living, int by) {
+    int newVal = (int) getMaxHealth(living) + by;
+    setMaxHealth(living, newVal);
+    return newVal;
+  }
+
   public static Direction getFacing(LivingEntity entity) {
     int yaw = (int) entity.rotationYaw;
     if (yaw < 0) // due to the yaw running a -360 to positive 360
