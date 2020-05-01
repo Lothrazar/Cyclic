@@ -51,13 +51,10 @@ public abstract class CharmBase extends ItemBase {
 
   private void tryFireTick(ItemStack stack, LivingEntity living) {
     if (this.fireProt && living.isBurning() && !living.isPotionActive(Effects.FIRE_RESISTANCE)) { // do nothing if you already have
-      //      World worldIn = living.getEntityWorld();
       living.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, fireProtSeconds * Const.TICKS_PER_SEC, Const.Potions.I));
-      //      super.damageCharm(living, stack);
       UtilItemStack.damageItem(living, stack);
       UtilSound.playSound(living, living.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
       UtilParticle.spawnParticle(living.world, ParticleTypes.DRIPPING_WATER, living.getPosition(), 9);
-      //      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition().up());
     }
   }
 
@@ -84,8 +81,6 @@ public abstract class CharmBase extends ItemBase {
       if (entityIn instanceof LivingEntity)
         UtilItemStack.damageItem((LivingEntity) entityIn, stack);
       UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT);
-      // UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL,
-      // living.getPosition());
     }
   }
 }
