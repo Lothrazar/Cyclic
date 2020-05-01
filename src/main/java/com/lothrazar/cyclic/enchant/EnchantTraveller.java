@@ -23,7 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
+import java.util.Arrays;
+import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -38,6 +39,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantTraveller extends EnchantBase {
 
+  public static final List<String> PROTS = Arrays.asList(new String[] {
+      "sting", DamageSource.FLY_INTO_WALL.damageType,
+      DamageSource.CACTUS.damageType,
+      DamageSource.SWEET_BERRY_BUSH.damageType
+  });
+
   public EnchantTraveller(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
@@ -50,7 +57,6 @@ public class EnchantTraveller extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    //anything that goes on your feet
     boolean yes = stack.getItem() == Items.BOOK ||
         (stack.getItem() instanceof ArmorItem)
             && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
@@ -65,29 +71,15 @@ public class EnchantTraveller extends EnchantBase {
   @SubscribeEvent
   public void onEnderTeleportEvent(EnderTeleportEvent event) {
     int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlotType.LEGS);
-    if (level == 0) {
-      return;
-    }
-    event.setAttackDamage(0);
-    ModCyclic.log("ender teleport safe");
+    if (level > 0)
+      event.setAttackDamage(0.1F);
   }
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent event) {
     int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlotType.LEGS);
-    if (level == 0) {
-      return;
-    }
-    if (event.getSource() == DamageSource.FLY_INTO_WALL) {
-      ModCyclic.log("cancel fly into wall");
-      event.setCanceled(true);
-      return;
-    }
-    ModCyclic.log(" wat  " + event.getSource().damageType);
-    ModCyclic.log(" isElytraFlying  " + event.getEntityLiving().isElytraFlying());
-    if (event.getEntityLiving().isElytraFlying()) {
-      ModCyclic.log("cancel fly into wall elytra flyuing " + event.getSource().damageType);
-      event.setCanceled(true);
+    if (level > 0 && PROTS.contains(event.getSource().damageType)) {
+      event.setAmount(0.1F);
     }
   }
 }

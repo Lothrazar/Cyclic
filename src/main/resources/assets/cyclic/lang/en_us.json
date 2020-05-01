@@ -168,7 +168,7 @@
     "enchantment.cyclic.step": "Step Height",
     "enchantment.cyclic.step.desc": "Increases your step height to a full block similar to horses",
     "enchantment.cyclic.traveller": "Traveller",
-    "enchantment.cyclic.traveller.desc": "Protects against elytra and ender pearl damage",
+    "enchantment.cyclic.traveller.desc": "Protects against elytra wall crashes; ender pearls; cacti; bee stings.",
     "enchantment.cyclic.venom": "Venom",
     "enchantment.cyclic.venom.desc": "Inflicts the poison status effect on the target",
     "entity.Villager.druid": "Druid",
