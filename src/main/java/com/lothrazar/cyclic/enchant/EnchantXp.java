@@ -1,9 +1,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,11 +57,6 @@ public class EnchantXp extends EnchantBase {
       return true;//override even though digger type 
     }
     return super.canApply(stack);
-  }
-
-  @Override
-  public boolean canApplyTogether(Enchantment ench) {
-    return super.canApplyTogether(ench) && ench != Enchantments.LOOTING;
   }
 
   /**
