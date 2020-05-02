@@ -210,8 +210,8 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   private boolean tryProcessRecipe() {
-    int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
-    if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
+    FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
+    if (test.getAmount() == this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
       if (!outputSlot.insertItem(0, currentRecipe.getRecipeOutput(), true).isEmpty()) {
         return false;//there was non-empty left after this, so no room for all
@@ -220,7 +220,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
-      tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
+      tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
       outputSlot.insertItem(0, currentRecipe.getRecipeOutput(), false);
       return true;
     }

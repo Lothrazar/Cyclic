@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class CableWrench extends ItemBase {
 
   public CableWrench(Properties properties) {
-    super(properties);
+    super(properties.maxStackSize(1));
   }
 
   @Override
