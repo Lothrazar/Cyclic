@@ -29,6 +29,7 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.DamageSource;
@@ -80,6 +81,17 @@ public class EnchantTraveller extends EnchantBase {
     int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlotType.LEGS);
     if (level > 0 && PROTS.contains(event.getSource().damageType)) {
       event.setAmount(0.1F);
+    }
+    if (level > 0 && event.getSource().damageType.equalsIgnoreCase("fall")) {
+      //are you elytra flying
+      if (event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() instanceof ElytraItem) { //== Items.ELYTRA
+        //make sure you dont die
+        if (event.getAmount() > event.getEntityLiving().getHealth() - 0.5F) {
+          //then 
+          //ModCyclic.log("fall damage equiped with elytra avoided death");
+          event.setAmount(event.getEntityLiving().getHealth() - 1F);
+        }
+      }
     }
   }
 }
