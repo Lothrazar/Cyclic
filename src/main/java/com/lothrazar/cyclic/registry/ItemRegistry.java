@@ -162,6 +162,11 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("experience_pylon"));
     r.register(new BlockItem(BlockRegistry.harvester,
         new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("harvester"));
+    r.register(new BlockItem(BlockRegistry.trash, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("trash"));
+    r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("energy_pipe"));
+    r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_pipe"));
+    r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fluid_pipe"));
+    r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cable_wrench"));
     // resources
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("experience_food"));
     r.register(new GemstoneItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("gem_obsidian"));
@@ -172,10 +177,9 @@ public class ItemRegistry {
     // basic tools
     r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(9000)).setRegistryName("mattock"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
-    r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256 * 2)).setRegistryName("shears_obsidian"));
+    r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024 * 1024)).setRegistryName("shears_obsidian"));
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(64)).setRegistryName("shears_flint"));
     r.register(new WrenchItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("wrench"));
-    r.register(new BlockItem(BlockRegistry.trash, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("trash"));
     r.register(new ScytheBrush(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_brush"));
     r.register(new ScytheForage(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_forage"));
     r.register(new ScytheLeaves(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("scythe_leaves"));
@@ -185,14 +189,13 @@ public class ItemRegistry {
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.REPLACE).setRegistryName("replace_scepter"));
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.OFFSET).setRegistryName("offset_scepter"));
     r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("randomize_scepter"));
-    // magic weapons
-    r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("ice_scepter"));
-    r.register(new FireScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("fire_scepter"));
-    r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("lightning_scepter"));
     r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_stun"));
     r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_carry"));
     r.register(new BoomerangItem(Boomer.DAMAGE, new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("boomerang_damage"));
     // magic tools
+    r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("ice_scepter"));
+    r.register(new FireScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("fire_scepter"));
+    r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("lightning_scepter"));
     r.register(new EnderBagItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_bag"));
     r.register(new WaterSpreaderItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_water"));
     r.register(new IceWand(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("spell_ice"));
@@ -208,13 +211,8 @@ public class ItemRegistry {
     r.register(new ItemCaveFinder(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("spelunker"));
     r.register(new ItemMagicNet(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("magic_net"));
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1)).setRegistryName("mob_container"));
-    r.register(new TileTransporterEmptyItem(new Item.Properties().group(MaterialRegistry.itemGroup))
-        .setRegistryName("tile_transporter_empty"));
+    r.register(new TileTransporterEmptyItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("tile_transporter_empty"));
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
-    r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cable_wrench"));
-    r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("energy_pipe"));
-    r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_pipe"));
-    r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fluid_pipe"));
     if (ConfigManager.GLOVE.get()) {
       r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("glove_climb"));
     }
