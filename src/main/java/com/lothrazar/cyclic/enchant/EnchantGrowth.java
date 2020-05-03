@@ -76,12 +76,12 @@ public class EnchantGrowth extends EnchantBase {
     //Ticking
     int level = getCurrentLevelTool(entity.getHeldItem(Hand.MAIN_HAND));
     if (level > 0 && !entity.world.isRemote) {
-      if (entity.world.rand.nextDouble() > 0.09 / level) {
+      if (entity.world.rand.nextDouble() > 0.03 / level) {
         return;//slow the dice down
       }
       final int growthLimit = level + 1;
       int grown = 0;
-      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level);
+      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level + 1);
       shape = UtilShape.repeatShapeByHeight(shape, 2);
       Collections.shuffle(shape);
       for (int i = 0; i < shape.size(); i++) {
