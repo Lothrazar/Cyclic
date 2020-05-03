@@ -23,11 +23,23 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import java.util.Collections;
+import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilShape;
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,20 +56,57 @@ public class EnchantGrowth extends EnchantBase {
     return 3;
   }
 
+  @Override
+  public boolean canApply(ItemStack stack) {
+    //anything that goes on your feet
+    boolean yes = stack.getItem() == Items.BOOK ||
+        stack.getItem() instanceof HoeItem;
+    return yes;
+  }
+
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     LivingEntity entity = event.getEntityLiving();
     if (entity instanceof PlayerEntity) {
       PlayerEntity p = (PlayerEntity) entity;
-      if (p.isSpectator()) {
+      if (p.isSpectator() || !p.isAlive()) {
         return;
       }
     }
     //Ticking
-    int level = getLevelAll(entity);
-    if (level > 0) {
-      //TODO: crop growth
-      //      UtilEntity.moveEntityItemsInRegion(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
+    int level = getCurrentLevelTool(entity.getHeldItem(Hand.MAIN_HAND));
+    if (level > 0 && !entity.world.isRemote) {
+      if (entity.world.rand.nextDouble() > 0.09 / level) {
+        return;//slow the dice down
+      }
+      final int growthLimit = level + 1;
+      int grown = 0;
+      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level);
+      shape = UtilShape.repeatShapeByHeight(shape, 2);
+      Collections.shuffle(shape);
+      for (int i = 0; i < shape.size(); i++) {
+        if (grown >= growthLimit) {
+          break;
+        }
+        //do one
+        BlockPos pos = shape.get(i);
+        BlockState target = entity.world.getBlockState(pos);
+        IntegerProperty propAge = TileHarvester.getAgeProp(target);
+        if (propAge == null) {
+          continue;
+        }
+        int maxAge = Collections.max(propAge.getAllowedValues());
+        Integer currentAge = target.get(propAge);
+        if (currentAge < maxAge) {
+          if (entity.world.setBlockState(pos,
+              target.with(propAge, currentAge + 1))) {
+            grown++;
+          }
+        }
+      }
+      if (grown > 0) {
+        UtilItemStack.damageItem(entity, entity.getHeldItem(Hand.MAIN_HAND));
+      }
     }
   }
 }

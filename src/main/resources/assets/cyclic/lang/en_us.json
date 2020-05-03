@@ -155,6 +155,8 @@
     "enchantment.cyclic.beheading.desc": "This gives a chance for getting a mob head or a player head.  Creatures from other mods can be added in the config file, and need a players skin as a head.",
     "enchantment.cyclic.experience_boost": "Experience Boost",
     "enchantment.cyclic.experience_boost.desc": "Increases experience drops from killing and mining",
+    "enchantment.cyclic.growth": "Growth",
+    "enchantment.cyclic.growth.desc": "Grow nearby crops while held",
     "enchantment.cyclic.launch": "Multi-Jump",
     "enchantment.cyclic.launch.desc": "Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that cooldown kicks in, sneak to jump normally.",
     "enchantment.cyclic.life_leech": "Life Leech",

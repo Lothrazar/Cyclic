@@ -122,7 +122,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     return true;
   }
 
-  private IntegerProperty getAgeProp(BlockState blockState) {
+  public static IntegerProperty getAgeProp(BlockState blockState) {
     for (IProperty<?> p : blockState.getProperties()) {
       //
       if (p != null && p.getName() != null

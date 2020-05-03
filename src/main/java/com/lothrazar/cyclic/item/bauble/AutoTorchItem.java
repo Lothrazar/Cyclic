@@ -46,11 +46,14 @@ public class AutoTorchItem extends ItemBase {
     if (entityIn instanceof PlayerEntity == false) {
       return;
     }
+    PlayerEntity player = (PlayerEntity) entityIn;
+    if (player.isSpectator()) {
+      return;
+    }
     if (stack.getDamage() >= stack.getMaxDamage()) {
       stack.setDamage(stack.getMaxDamage());
       return;
     }
-    PlayerEntity player = (PlayerEntity) entityIn;
     BlockPos pos = entityIn.getPosition();
     if (world.getLight(pos) <= lightLimit
         //            && player.isSpectator() == false
