@@ -79,7 +79,8 @@ public class EnchantGrowth extends EnchantBase {
       if (entity.world.rand.nextDouble() > 0.03 / level) {
         return;//slow the dice down
       }
-      final int growthLimit = level + 1;
+      final int growthLimit = level +
+          (entity.world.isRaining() ? 3 : 1);
       int grown = 0;
       List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level + 1);
       shape = UtilShape.repeatShapeByHeight(shape, 2);
