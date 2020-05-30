@@ -1,0 +1,2 @@
+
+./gradlew cleanJar build

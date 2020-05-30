@@ -49,7 +49,7 @@ public class SleepingMatItem extends ItemBase {
         return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_HERE);
       }
       if (!net.minecraftforge.event.ForgeEventFactory.fireSleepingTimeCheck(player, optAt)) {
-        player.func_226560_a_(at, false, true);
+        player.setSpawnPoint(at, false, true, player.dimension);// setRespawnPosition
         return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
       }
     }
