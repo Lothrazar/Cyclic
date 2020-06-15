@@ -141,8 +141,13 @@ public class EntityGolemLaser extends Entity {
         if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK && hitByTrace.getBlock() == Blocks.PORTAL) {
           this.setPortal(raytraceresult.getBlockPos());
         }
-        else if (raytraceresult.sideHit == null || hitByTrace.isSideSolid(world, pos, raytraceresult.sideHit)) {
-          getEntityWorld().removeEntity(this);
+        else if (raytraceresult.sideHit == null) {
+          world.removeEntity(this);
+          this.setDead();
+          return;
+        }
+        else if (hitByTrace.isSideSolid(world, pos, raytraceresult.sideHit)) {
+          world.removeEntity(this);
           this.setDead();
           return;
         }
