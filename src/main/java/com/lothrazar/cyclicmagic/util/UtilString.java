@@ -54,7 +54,7 @@ public class UtilString {
    * @return
    */
   public static boolean isInList(final List<String> list, ResourceLocation toMatch) {
-    if (toMatch == null) {
+    if (toMatch == null || list == null) {
       return false;
     }
     String id = toMatch.getNamespace();
