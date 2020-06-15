@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
 
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.config.Configuration;
@@ -43,17 +42,16 @@ public class UtilRepairItem {
       return false;
     }
     if (inputStack.isItemDamaged() == false) {
-      ModCyclic.logger.info("not damaged ");
+      //      ModCyclic.logger.info("not damaged ");
       return false;
     }
     if (UtilRepairItem.isBlockAllowed(inputStack) == false) {
-      ModCyclic.logger.info("not allowed ");
+      //      ModCyclic.logger.info("not allowed ");
       return false;//its either in blacklist, or its not even damaged
     }
     if (UtilRepairItem.doNonRepairable) {
       return true;//ignore what the item itself says below
     }
-    ModCyclic.logger.info("config false " + UtilRepairItem.doNonRepairable);
     //you can repair only if the item says its allowed to be repaired
     return inputStack.getItem().isRepairable();
   }
