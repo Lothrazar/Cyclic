@@ -339,7 +339,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         Vec3d tarVec = (target == null) ? Vec3d.ZERO : target.getHitVec();
         if (UtilPlaceBlocks.buildStackAsPlayer(world, fakePlayer.get(),
             nextPos, stack, targetSide, tarVec, facingSide)) {
-          stack.shrink(1); //          this.decrStackSize(0, 1);
+          //ok it worked. there used to be something here
         }
         break;//ok , target position is valid, we can build only into air
       }
