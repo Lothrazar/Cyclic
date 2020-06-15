@@ -66,6 +66,10 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
 
   @SubscribeEvent
   public void onLootTableLoad(LootTableLoadEvent event) {
+    if (event == null || event.getTable() == null) {
+      ModCyclic.logger.error("Null loot table, cannot add loot", event);
+      return;
+    }
     LootPool main = event.getTable().getPool(LOOTPOOLNAME);
     if (main == null) {
       //create my own.  EX: mobs that have no drops (bats) also have empty loot table, so i have to inject an entry in the table before I fill it
