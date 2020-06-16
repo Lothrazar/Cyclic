@@ -51,8 +51,7 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
   }
 
   public TileEntityWorkbench() {
-    super(SIZE_GRID);//left and right side both have a tall rectangle. then 3x3 crafting 
-    this.setSlotsForBoth();
+    super(SIZE_GRID);//left and right side both have a tall rectangle. then 3x3 crafting  
   }
 
   @Override
