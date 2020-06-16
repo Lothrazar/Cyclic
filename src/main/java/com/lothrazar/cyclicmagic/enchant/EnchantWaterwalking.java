@@ -103,9 +103,13 @@ public class EnchantWaterwalking extends BaseEnchant {
 
   private void setLiquidWalk(EntityPlayer player) {
     BlockPos belowPos = player.getPosition().down();
-    if (player.world.containsAnyLiquid(new AxisAlignedBB(belowPos)) && player.world.isAirBlock(player.getPosition()) && player.motionY < 0
+    //am i already inside the liquid?
+    // for example Biomes o plenty has some fluids with a top level not at 1 full block, like hotspring, honey, quicksand (muddy brown stuff is quicksand)
+    boolean hasLiquid = player.world.containsAnyLiquid(new AxisAlignedBB(player.getPosition())) ||
+        player.world.containsAnyLiquid(new AxisAlignedBB(belowPos));
+    if (hasLiquid && player.world.isAirBlock(player.getPosition()) && player.motionY < 0
         && !player.isSneaking()) {// let them slip down into it when sneaking
-      double diff = player.posY - (player.getPosition().getY());
+      double diff = player.posY - player.getPosition().getY();
       if (diff < 0.1) {
         player.motionY = 0;// stop falling
         player.onGround = true; // act as if on solid ground
