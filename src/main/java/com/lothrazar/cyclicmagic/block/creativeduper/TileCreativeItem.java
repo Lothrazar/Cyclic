@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.creativeduper;
 
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 
 public class TileCreativeItem extends TileEntityBaseMachineInvo implements ITickable {
@@ -40,6 +41,8 @@ public class TileCreativeItem extends TileEntityBaseMachineInvo implements ITick
       return;
     }
     //copy from 0 to 1
-    this.setInventorySlotContents(1, this.getStackInSlot(0).copy());
+    ItemStack copy = this.getStackInSlot(0).copy();
+    copy.setCount(64);//copy with max size
+    this.setInventorySlotContents(1, copy);
   }
 }
