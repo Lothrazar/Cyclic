@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "cyclicmagic:blocks/battery_infinite"
+        "all": "cyclicmagic:blocks/creative_items"
     }
 }

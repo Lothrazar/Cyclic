@@ -1211,7 +1211,8 @@ tile.battery_infinite.name=Infinite Battery
 tile.battery_infinite.tooltip=Creative energy source
 tile.battery_infinite.guide=Creative mode infinite energy source (for cheating and testing)
 
-
+tile.creative_items.name=Creative Item Duplicator
+tile.creative_items.tooltip=Duplicates items given
 
 tile.zinc_nether_ore.name=Nether Zinc Ore
 tile.zinc_end_ore.name=End Zinc Ore
