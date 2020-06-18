@@ -68,12 +68,10 @@ public class BlockLibraryController extends BlockBaseHasTile implements IHasReci
     if (playerHeld.getItem().equals(Items.ENCHANTED_BOOK) == false) {
       return false;
     }
-    //HAX
-    playerHeld.setCount(2);
-    //it must be an enchanted book
     if (playerHeld.getCount() != 1) {
-      if (world.isRemote)
+      if (world.isRemote) {
         UtilChat.addChatMessage(player, "block_library.stacksize");
+      }
       return false;
     }
     //first look for the same enchant and level
