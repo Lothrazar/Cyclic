@@ -79,9 +79,9 @@ repositories {
     	name = "Progwml6 maven"
         url "http://dvs1.progwml6.com/files/maven"
     }
-    maven { //Guide API
-		url "http://tehnut.info/maven/"
-	}
+   // maven { //Guide API
+	//	url "http://tehnut.info/maven/"
+	//}
 	maven {
 	    // location of a maven mirror for JEI files, as a fallback
 	    name = "ModMaven"
@@ -100,7 +100,7 @@ dependencies {
   deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${crt_version}"
   deobfCompile "baubles:Baubles:1.12:${baubles_version}"
   deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"
-  deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+  //deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
 
   // https://maven.mcmoddev.com/net/darkhax/enchdesc/EnchantmentDescriptions-1.12.2/1.1.9/
   // deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-${mc_version}-${ench_descr_version}:+"
