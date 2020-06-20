@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -39,7 +38,7 @@ public class ContainerMelter extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
   }

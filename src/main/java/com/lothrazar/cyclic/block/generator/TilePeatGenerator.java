@@ -102,14 +102,22 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    if (this.isBurning() && !this.isFull()) {
+    if (this.isBurning() && !this.isFull() && fuelRate > 0) {
       --this.burnTime;
       this.addEnergy(fuelRate);
       return;
     }
     fuelRate = 0;
-    if (this.energy.isPresent() &&
-        energy.orElse(null).getMaxEnergyStored() - energy.orElse(null).getEnergyStored() > 1000) {
+    IEnergyStorage energyActual = energy.orElse(null);
+    if (this.energy.isPresent() && energyActual != null) {
+      if (energyActual.getEnergyStored() < 0) {
+        //fix legacy bad data
+        //        CustomEnergyStorage fix = (CustomEnergyStorage) energyActual;
+        //        fix.setEnergy(0);
+      }
+      if (world.isRemote == false) {
+        //server side
+      }
       //now we can add power
       //burnTime is zero grab another
       inventory.ifPresent(h -> {

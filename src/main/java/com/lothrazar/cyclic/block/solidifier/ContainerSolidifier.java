@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.solidifier;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +44,7 @@ public class ContainerSolidifier extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
   }

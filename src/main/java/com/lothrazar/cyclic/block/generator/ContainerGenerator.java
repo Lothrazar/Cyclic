@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.generator;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -38,7 +37,9 @@ public class ContainerGenerator extends ContainerBase {
 
       @Override
       public void set(int value) {
-        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        //this was from mcjty 1.14 tutorial. but in 1.15 this is BAD and broken. causes client GUI reload to override server values to either 0 or -1024. why? IDK
+        //ref https://wiki.mcjty.eu/modding/index.php?title=Tut14_Ep5
+        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
     trackInt(new IntReferenceHolder() {
