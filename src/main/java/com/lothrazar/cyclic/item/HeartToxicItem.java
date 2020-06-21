@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item;
 
-import java.util.UUID;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -12,7 +12,8 @@ import net.minecraft.util.ActionResultType;
 
 public class HeartToxicItem extends ItemBase {
 
-  static UUID id = UUID.randomUUID();
+  private static final int COOLDOWN = 100;
+  private static final int EXP = 500;
 
   public HeartToxicItem(Properties properties) {
     super(properties);
@@ -27,9 +28,9 @@ public class HeartToxicItem extends ItemBase {
     IAttributeInstance healthAttribute = player.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
     if (healthAttribute != null && healthAttribute.getBaseValue() > 2) {
       player.getFoodStats().addStats(3, 1);
-      player.giveExperiencePoints(500);
-      healthAttribute.setBaseValue(healthAttribute.getBaseValue() - 2);
-      player.getCooldownTracker().setCooldown(this, 100);
+      player.giveExperiencePoints(EXP);
+      UtilEntity.incrementMaxHealth(player, -2);
+      player.getCooldownTracker().setCooldown(this, COOLDOWN);
       player.getHeldItem(context.getHand()).shrink(1);
       UtilSound.playSound(player, SoundRegistry.fill);
     }
