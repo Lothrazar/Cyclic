@@ -68,11 +68,13 @@ public class EntityTorchBolt extends ProjectileItemEntity {
           }
           else {
             //HAX for making it feel better tu use, these almost never fire 
-            if (newstate.isValidPosition(world, pos.down())) {
+            if (newstate.isValidPosition(world, pos.down())
+                && world.isAirBlock(pos.down())) {
               itPlaced = world.setBlockState(pos.down(), newstate);
             }
             else {
-              if (newstate.isValidPosition(world, pos.up())) {
+              if (newstate.isValidPosition(world, pos.up())
+                  && world.isAirBlock(pos.up())) {
                 itPlaced = world.setBlockState(pos.up(), newstate);
               }
             }
@@ -90,7 +92,7 @@ public class EntityTorchBolt extends ProjectileItemEntity {
             }
           }
           //          newstate = Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, offset);
-          if (newstate != null) {
+          if (newstate != null && world.isAirBlock(pos)) {
             itPlaced = world.setBlockState(pos, newstate);
           }
         }
