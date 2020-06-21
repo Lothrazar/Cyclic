@@ -28,7 +28,7 @@ public class HeartItem extends ItemBase {
     }
     player.getFoodStats().addStats(1, 4);
     IAttributeInstance healthAttribute = player.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
-    if (healthAttribute.getBaseValue() < MAX) {
+    if (healthAttribute.getValue() < MAX) {
       UtilEntity.incrementMaxHealth(player, 2);
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
       player.getHeldItem(context.getHand()).shrink(1);

@@ -121,7 +121,7 @@ public class UtilEntity {
   //
   public static void setMaxHealth(LivingEntity living, double max) {
     IAttributeInstance healthAttribute = living.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
-    double amount = max - healthAttribute.getBaseValue();
+    double amount = max - healthAttribute.getValue();
     AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
     // Need to remove modifier to apply a new one
     if (modifier != null) {
@@ -135,7 +135,7 @@ public class UtilEntity {
 
   public static double getMaxHealth(LivingEntity living) {
     IAttributeInstance healthAttribute = living.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
-    double maxHealth = healthAttribute.getBaseValue();
+    double maxHealth = healthAttribute.getValue();
     AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
     if (modifier != null) {
       maxHealth += modifier.getAmount();
