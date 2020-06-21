@@ -21,7 +21,7 @@ public class EnchantXp extends EnchantBase {
 
   @Override
   public int getMinEnchantability(int enchantmentLevel) {
-    return 11 + (enchantmentLevel - 1) * 20;
+    return 11 + enchantmentLevel * 20;
   }
 
   @SubscribeEvent
@@ -37,13 +37,12 @@ public class EnchantXp extends EnchantBase {
   public void onEntityDamaged(LivingEntity user, Entity target, int level) {
     super.onEntityDamaged(user, target, level);
     if (user instanceof PlayerEntity && target != null && !target.isAlive()) {
-      PlayerEntity p = (PlayerEntity) user;
-      giveRandomExp(level, p);
+      giveRandomExp(level, (PlayerEntity) user);
     }
   }
 
   private void giveRandomExp(int level, PlayerEntity p) {
-    p.giveExperiencePoints(p.world.rand.nextInt(3) * (level + 1));
+    p.giveExperiencePoints(p.world.rand.nextInt(getMaxLevel()) * (level + 1));
   }
 
   @Override
