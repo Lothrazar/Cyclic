@@ -5,9 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -20,9 +22,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -35,6 +39,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  private static final BlockTags.Wrapper HARVEST_BREAK = new BlockTags.Wrapper(new ResourceLocation(ModCyclic.MODID, "harvester_break"));
   private static final int ENERGY_COST = 250;
   private static final int RADIUS = 9;
   private static final int ATTEMPTS_PERTICK = 16;
@@ -78,7 +83,12 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   private boolean tryHarvestSingle(BlockPos posCurrent) {
     BlockState blockState = world.getBlockState(posCurrent);
-    IntegerProperty propInt = this.getAgeProp(blockState);
+    if (TileHarvester.simpleBreakDrop(blockState)) {
+      UtilItemStack.drop(world, posCurrent, blockState.getBlock());
+      world.destroyBlock(posCurrent, false);
+      return true;
+    }
+    IntegerProperty propInt = TileHarvester.getAgeProp(blockState);
     if (propInt == null || !(world instanceof ServerWorld)) {
       return false;
     }
@@ -106,7 +116,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
           && drops.size() > 1) {
         // Remove exactly one seed (consume for replanting)
         drop.shrink(1);
-        //        ModCyclic.log("shrink a seed ok" + seed);
         deleteSeed = false;
       } //else dont remove a seed if theres only 1 to start with
       if (drop.getCount() > 0) {
@@ -122,9 +131,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     return true;
   }
 
+  private static boolean simpleBreakDrop(BlockState blockState) {
+    boolean breakit = blockState.getBlock().isIn(HARVEST_BREAK);
+    // the list tells all
+    return breakit;
+  }
+
   public static IntegerProperty getAgeProp(BlockState blockState) {
     for (IProperty<?> p : blockState.getProperties()) {
-      //
       if (p != null && p.getName() != null
           && p instanceof IntegerProperty &&
           p.getName().equalsIgnoreCase("age")) {

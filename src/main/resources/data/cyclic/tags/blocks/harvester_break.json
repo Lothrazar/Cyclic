@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:melon",
+    "minecraft:pumpkin",
+    "minecraft:sugar_cane",
+    "minecraft:cactus",
+    "minecraft:bamboo",
+	"minecraft:vine"
+  ]
+}

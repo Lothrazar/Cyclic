@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -41,6 +42,12 @@ public class UtilItemStack {
       stack.setCount(0);
       stack = ItemStack.EMPTY;
     }
+  }
+
+  public static void drop(World world, BlockPos pos, Block drop) {
+    if (!world.isRemote)
+      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
+          new ItemStack(drop.asItem())));
   }
 
   public static void drop(World world, BlockPos pos, ItemStack drop) {
