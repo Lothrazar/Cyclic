@@ -100,29 +100,33 @@ public abstract class CableBase extends BlockBase {
     if (type == WrenchActionType.EXTRACT) {
       if (state.getBlock() == BlockRegistry.fluid_pipe
           || state.getBlock() == BlockRegistry.item_pipe) {
-        DirectionNullable current = state.get(BlockCableFluid.EXTR);
-        DirectionNullable newextr = current.toggle(sideToToggle);
-        world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
+        if (state.has(BlockCableFluid.EXTR)) {
+          DirectionNullable current = state.get(BlockCableFluid.EXTR);
+          DirectionNullable newextr = current.toggle(sideToToggle);
+          world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
+        }
       }
     }
     else if (type == WrenchActionType.DISABLE && state.getBlock() instanceof CableBase) {
-      //
       EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
-      EnumConnectType status = state.get(prop);
-      BlockState stateNone;
-      switch (status) {
-        case BLOCKED:
-          //unblock it
-          //then updatePostPlacement
-          stateNone = state.with(prop, EnumConnectType.NONE);
-          world.setBlockState(pos, stateNone);
-        break;
-        case CABLE:
-        case INVENTORY:
-        case NONE:
-          world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
-        break;
+      if (state.has(prop)) {
+        EnumConnectType status = state.get(prop);
+        BlockState stateNone;
+        switch (status) {
+          case BLOCKED:
+            //unblock it
+            //then updatePostPlacement
+            stateNone = state.with(prop, EnumConnectType.NONE);
+            world.setBlockState(pos, stateNone);
+          break;
+          case CABLE:
+          case INVENTORY:
+          case NONE:
+            world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
+          break;
+        }
       }
+      //else state does not have prop . ttreat it teh same as (getBlock is not a CableBase)
     }
     return super.onBlockActivated(state, world, pos, player, handIn, hit);
   }
