@@ -6,6 +6,7 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public class EnchantBase extends Enchantment {
 
@@ -14,8 +15,10 @@ public class EnchantBase extends Enchantment {
   }
 
   protected int getCurrentLevelTool(ItemStack stack) {
-    if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this))
+    if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this)
+        && stack.getItem() != Items.ENCHANTED_BOOK) {
       return EnchantmentHelper.getEnchantments(stack).get(this);
+    }
     return -1;
   }
 
