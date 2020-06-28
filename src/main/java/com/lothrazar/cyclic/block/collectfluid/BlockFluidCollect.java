@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.fluidcollect;
+package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.base.BlockBase;
 

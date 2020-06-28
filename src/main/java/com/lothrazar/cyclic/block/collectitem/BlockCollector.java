@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.itemcollect;
+package com.lothrazar.cyclic.block.collectitem;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;

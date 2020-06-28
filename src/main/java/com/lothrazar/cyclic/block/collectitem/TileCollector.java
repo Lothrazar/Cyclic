@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.itemcollect;
+package com.lothrazar.cyclic.block.collectitem;
 
 import java.util.List;
 import javax.annotation.Nonnull;

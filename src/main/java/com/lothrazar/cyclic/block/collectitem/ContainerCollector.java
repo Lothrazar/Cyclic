@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.itemcollect;
+package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;

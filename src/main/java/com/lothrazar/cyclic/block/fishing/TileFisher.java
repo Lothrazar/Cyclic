@@ -36,7 +36,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileFisher extends TileEntityBase implements ITickableTileEntity {
 
-  private static final int RADIUS = 8;
+  private static final int RADIUS = 12;
   public static final Tag<Item> RODS = new ItemTags.Wrapper(new ResourceLocation(ModCyclic.MODID, "fishing_rods"));
   private static final double CHANCE = 0.1;
   LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -46,19 +46,14 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity {
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(1) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return stack.getItem().isIn(RODS);
+      }
+    };
   }
-  //INamedContainerProvider
-  //  @Override
-  //  public ITextComponent getDisplayName() {
-  //    return new StringTextComponent(getType().getRegistryName().getPath());
-  //  }
-  //
-  //  @Nullable
-  //  @Override
-  //  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-  //    return new ContainerAnvil(i, world, pos, playerInventory, playerEntity);
-  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {

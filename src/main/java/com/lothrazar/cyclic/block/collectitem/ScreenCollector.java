@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.itemcollect;
+package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
