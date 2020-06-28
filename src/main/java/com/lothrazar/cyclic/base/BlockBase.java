@@ -6,12 +6,18 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -23,6 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -40,6 +47,28 @@ public abstract class BlockBase extends Block {
       return true;
     }
     return false;
+  }
+
+  private boolean hasGui;
+
+  protected void setHasGui() {
+    this.hasGui = true;
+  }
+
+  @Override
+  @Deprecated
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+    if (this.hasGui && !world.isRemote) {
+      TileEntity tileEntity = world.getTileEntity(pos);
+      if (tileEntity instanceof INamedContainerProvider) {
+        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+      }
+      else {
+        throw new IllegalStateException("Our named container provider is missing!");
+      }
+      return ActionResultType.SUCCESS;
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, result);
   }
 
   @Override

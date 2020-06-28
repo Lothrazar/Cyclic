@@ -26,6 +26,7 @@ import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.block.cable.item.BlockCableItem;
 import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
+import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fan.TileFan;
@@ -189,6 +190,8 @@ public class BlockRegistry {
     public static ContainerType<ContainerGenerator> generatorCont;
     @ObjectHolder(ModCyclic.MODID + ":harvester")
     public static ContainerType<ContainerHarvester> harvester;
+    @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
+    public static ContainerType<ContainerExpPylon> experience_pylon;
   }
 
   @SubscribeEvent
@@ -282,5 +285,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerBreaker(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("breaker"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerExpPylon(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("experience_pylon"));
   }
 }

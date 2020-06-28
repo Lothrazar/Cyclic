@@ -129,6 +129,8 @@ public class ItemRegistry {
   public static Item tile_transporterempty;
   @ObjectHolder(ModCyclic.MODID + ":toxic_carrot")
   public static Item toxic_carrot;
+  @ObjectHolder(ModCyclic.MODID + ":xpjuice_bucket")
+  public static Item bucket_expjuice;
 
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {

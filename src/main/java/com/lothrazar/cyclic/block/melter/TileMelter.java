@@ -108,8 +108,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
 
   @Override
   public void read(CompoundNBT tag) {
-    CompoundNBT fluid = tag.getCompound("fluid");
-    tank.readFromNBT(fluid);
+    tank.readFromNBT(tag.getCompound("fluid"));
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     timer = tag.getInt("timer");
