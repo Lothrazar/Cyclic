@@ -2,7 +2,7 @@
   "homepage": "http://minecraft.curseforge.com/projects/cyclic",
   "promos": {
     "1.15.2-latest": "0.5.0",
-    "1.15.2-recommended": "0.4.2"
+    "1.15.2-recommended": "0.5.0"
   },
   "1.15.2": {
   	"0.1.8":"Fixed server crash"
@@ -18,6 +18,6 @@
   	,"0.4.0":"Added 5 liquids (biomass, honey, magma, slime, experience).  Improved Battery GUI.  Added enriched peat.  Added machines Melter and Crystallizer, each with recipes.  Added 4 magic tools.  Some recipes changed.  Added hearts.  Added Config file updates.  "
   	,"0.4.1":"Auto torch blocked in spectator mode.  New enchantment growth for Hoe tools.  Crystalizer fix.  Hearts system uses attributes now to be more compatible.  Hearts now save through death.  Traveller enchantment added (protects against elytra and ender pearl damage).  Cables will no longer deposit into a direction with an 'Extraction Mode' setting, it is treated as one-way.  "
  	,"0.4.2":"Fixed energy GUI bars showing negative values (usually only bugs out on servers).  Enchantments no longer trigger effects when only on an enchanted book.  Fixed torch launcher overwriting and replacing some semi-solid blocks such as chests.  Harvester now gathers melon, pumpkin, sugar cane, cactus, bamboo, and vines (using block data tag cyclic:harvester_break, modpacks can add more).  Heart containers compatibility fix. "
-  	,"0.5.0":"Experience Pylon is now collects fluid and has a GUI. "
+  	,"0.5.0":"Experience Pylon is now collects fluid and has a GUI.  Added a few more config options.   "
   }
 }

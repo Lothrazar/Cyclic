@@ -12,6 +12,7 @@ public class ConfigManager {
 
   private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
+  public static BooleanValue SCAFFOLD = null;
   public static BooleanValue EMERALD;
   public static BooleanValue SANDSTONE;
   public static BooleanValue GEMGEAR;
@@ -27,12 +28,19 @@ public class ConfigManager {
   public static BooleanValue GLOVE;
   public static BooleanValue HEARTS;
   public static BooleanValue CARROTS;
+  public static BooleanValue SPIKES;
+  public static BooleanValue BOOMERANGS;
+  public static BooleanValue CABLES;
   static {
     initConfig();
   }
 
   private static void initConfig() {
     COMMON_BUILDER.comment("Feature toggles; each of these will disable the registration of some content (items/enchants)").push(ModCyclic.MODID);
+    CABLES = COMMON_BUILDER.comment("Disable the cables aka pipes").define("cables", true);
+    BOOMERANGS = COMMON_BUILDER.comment("Disable the 3 boomerang items").define("boomerangs", true);
+    SPIKES = COMMON_BUILDER.comment("Disable the 3 spike blocks").define("spikes", true);
+    SCAFFOLD = COMMON_BUILDER.comment("Disable the 3 scaffolding blocks").define("scaffolding", true);
     CARROTS = COMMON_BUILDER.comment("Disable the 5 carrot items that upgrade horses").define("carrots", true);
     HEARTS = COMMON_BUILDER.comment("Disable 2 heart items that increase and decrease max health").define("hearts", true);
     GLOVE = COMMON_BUILDER.comment("Disable the completely balanced climbing glove").define("glove", true);
