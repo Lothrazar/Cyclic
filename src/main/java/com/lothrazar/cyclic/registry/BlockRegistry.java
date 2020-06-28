@@ -33,6 +33,7 @@ import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
+import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.fluidcollect.BlockFluidCollect;
 import com.lothrazar.cyclic.block.generator.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.generator.ContainerGenerator;
@@ -178,6 +179,8 @@ public class BlockRegistry {
     public static TileEntityType<TileExpPylon> experience_pylontile;
     @ObjectHolder(ModCyclic.MODID + ":placer")
     public static TileEntityType<TilePlacer> placer;
+    @ObjectHolder(ModCyclic.MODID + ":fisher")
+    public static TileEntityType<TileFisher> fisher;
   }
 
   public static class ContainerScreens {
@@ -266,6 +269,7 @@ public class BlockRegistry {
     r.register(TileEntityType.Builder.create(TileAnvilAuto::new, BlockRegistry.anvil).build(null).setRegistryName("anvil"));
     r.register(TileEntityType.Builder.create(TilePlacer::new, BlockRegistry.placer).build(null).setRegistryName("placer"));
     r.register(TileEntityType.Builder.create(TileStructure::new, BlockRegistry.structure).build(null).setRegistryName("structure"));
+    r.register(TileEntityType.Builder.create(TileFisher::new, BlockRegistry.fisher).build(null).setRegistryName("fisher"));
   }
 
   @SubscribeEvent

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"pwp",
+	"wfw",
+	"pwp"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:web"
+    },
+    "p": {
+      "item": "minecraft:trapped_chest"
+    },
+    "f": {
+      "item": "minecraft:fishing_rod"
+    }
+  },
+  "result": {
+    "item": "cyclic:fisher",
+    "count":1
+  }
+}

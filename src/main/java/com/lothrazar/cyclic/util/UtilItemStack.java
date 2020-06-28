@@ -27,6 +27,13 @@ public class UtilItemStack {
     s.setDamage(s.getDamage() - 1);
   }
 
+  public static void damageItem(ItemStack s) {
+    s.setDamage(s.getDamage() + 1);
+    if (s.getDamage() >= s.getMaxDamage()) {
+      s.shrink(1);
+    }
+  }
+
   public static void damageItem(LivingEntity player, ItemStack stack) {
     stack.damageItem(1, player, (p) -> {
       p.sendBreakAnimation(Hand.MAIN_HAND);
