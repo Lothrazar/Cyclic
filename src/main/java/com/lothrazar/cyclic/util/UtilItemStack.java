@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -74,5 +75,11 @@ public class UtilItemStack {
   public static void shrink(PlayerEntity player, ItemStack stac) {
     if (!player.isCreative())
       stac.shrink(1);
+  }
+
+  public static void drop(World world, BlockPos center, List<ItemStack> lootDrops) {
+    for (ItemStack dropMe : lootDrops) {
+      UtilItemStack.drop(world, center, dropMe);
+    }
   }
 }

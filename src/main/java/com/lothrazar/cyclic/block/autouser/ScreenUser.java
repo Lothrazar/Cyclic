@@ -54,6 +54,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
+    this.drawSlot(xSize / 2 - 9, 28);
     energy.draw(container.getEnergy());
   }
 }

@@ -42,7 +42,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private RecipeMelter currentRecipe;
-  private int timer = 0;
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 3;
 
   public static enum Fields {
@@ -87,8 +86,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private IItemHandler createHandler() {
-    ItemStackHandler h = new ItemStackHandler(2);
-    return h;
+    return new ItemStackHandler(2);
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -111,7 +109,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     tank.readFromNBT(tag.getCompound("fluid"));
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    timer = tag.getInt("timer");
     super.read(tag);
   }
 
@@ -128,7 +125,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
     });
-    tag.putInt("timer", timer);
     return super.write(tag);
   }
 

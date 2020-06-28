@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.autouser;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -10,10 +11,12 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -31,6 +34,9 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TileUser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
@@ -41,6 +47,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   }
 
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timerDelay = 20;
@@ -71,12 +78,17 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     setupBeforeTrigger((ServerWorld) world);
     //k is zero
     try {
+      tryEquipItem();
       ActionResultType result = this.rightClickBlock(this.pos.offset(this.getCurrentFacing()));
       ModCyclic.LOGGER.info("user result " + result);
+      if (result == ActionResultType.SUCCESS) {
+        // DRAIN POWER
+      }
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Fake player failed to init ", e);
     }
+    tryDumpFakePlayerInvo(false);
     //    for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
     //      BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), RADIUS);
     //      if (this.tryHarvestSingle(target)) {
@@ -87,7 +99,22 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     //    }
   }
 
+  private void tryDumpFakePlayerInvo(boolean includeMainHand) {
+    int start = (includeMainHand) ? 0 : 1;//main hand is 1
+    ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
+    for (int i = start; i < fakePlayer.get().inventory.mainInventory.size(); i++) {
+      ItemStack s = fakePlayer.get().inventory.mainInventory.get(i);
+      if (s.isEmpty() == false) {
+        toDrop.add(s.copy());
+        fakePlayer.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
+      }
+    }
+    UtilItemStack.drop(world, this.pos.up(), toDrop);
+  }
+
   private ActionResultType rightClickBlock(BlockPos targetPos) throws Exception {
+    //do i have enough power?
+    //if not return fail
     ModCyclic.LOGGER.info("interact START " + targetPos);
     Hand hand = Hand.MAIN_HAND;
     BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(), targetPos, false);
@@ -97,7 +124,6 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   }
 
   private void setupBeforeTrigger(ServerWorld sw) {
-    //    verifyUuid(world);
     if (fakePlayer == null) {
       this.uuid = UUID.randomUUID();
       fakePlayer = UtilFakePlayer.initFakePlayer(sw, this.uuid, "block_user");
@@ -105,10 +131,24 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
         ModCyclic.LOGGER.error("Fake player failed to init ");
         return;
       }
+      //fake player facing the same direction as tile. for throwables
+      fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());//seems to help interact() mob drops like milk
+      fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
     }
-    //fake player facing the same direction as tile. for throwables
-    fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
-    //    tryEquipItem();
+  }
+
+  private void tryEquipItem() {
+    inventory.ifPresent(inv -> {
+      ItemStack maybeTool = inv.getStackInSlot(0);
+      if (!maybeTool.isEmpty()) {
+        if (maybeTool.getCount() <= 0) {
+          maybeTool = ItemStack.EMPTY;
+        }
+      }
+      if (!maybeTool.equals(fakePlayer.get().getHeldItem(Hand.MAIN_HAND))) {
+        fakePlayer.get().setHeldItem(Hand.MAIN_HAND, maybeTool);
+      }
+    });
   }
 
   private Direction getCurrentFacing() {
@@ -146,10 +186,17 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     return new CustomEnergyStorage(MAX, MAX / 4);
   }
 
+  private IItemHandler createHandler() {
+    return new ItemStackHandler(1);
+  }
+
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
       return energy.cast();
+    }
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return inventory.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -158,6 +205,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   public void read(CompoundNBT tag) {
     CompoundNBT energyTag = tag.getCompound("energy");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
+    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     super.read(tag);
   }
 
@@ -166,6 +214,10 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
+    });
+    inventory.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("inv", compound);
     });
     return super.write(tag);
   }
