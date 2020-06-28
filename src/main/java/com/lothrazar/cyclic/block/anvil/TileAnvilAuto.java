@@ -94,6 +94,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
+    //        .withLuck(1).with; 
     //    if (this.isPowered() == false) {
     //      return;
     //    }

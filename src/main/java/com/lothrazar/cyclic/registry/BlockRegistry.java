@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
+import com.lothrazar.cyclic.block.autouser.BlockUser;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -25,11 +26,14 @@ import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.block.cable.item.BlockCableItem;
 import com.lothrazar.cyclic.block.cable.item.TileCableItem;
+import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fan.TileFan;
+import com.lothrazar.cyclic.block.fishing.BlockFisher;
+import com.lothrazar.cyclic.block.fluidcollect.BlockFluidCollect;
 import com.lothrazar.cyclic.block.generator.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.generator.ContainerGenerator;
 import com.lothrazar.cyclic.block.generator.TilePeatGenerator;
@@ -129,6 +133,14 @@ public class BlockRegistry {
   public static Block item_pipe;
   @ObjectHolder(ModCyclic.MODID + ":placer")
   public static Block placer;
+  @ObjectHolder(ModCyclic.MODID + ":user")
+  public static Block user;
+  @ObjectHolder(ModCyclic.MODID + ":fisher")
+  public static Block fisher;
+  @ObjectHolder(ModCyclic.MODID + ":disenchanter")
+  public static Block disenchanter;
+  @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
+  public static Block collector_fluid;
 
   public static class Tiles {
 
@@ -197,6 +209,10 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockUser(Block.Properties.create(Material.ROCK)).setRegistryName("user"));
+    r.register(new BlockFisher(Block.Properties.create(Material.ROCK)).setRegistryName("fisher"));
+    r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
+    r.register(new BlockDisenchant(Block.Properties.create(Material.ROCK)).setRegistryName("disenchanter"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
     r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));

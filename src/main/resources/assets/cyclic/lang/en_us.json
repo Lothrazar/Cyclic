@@ -547,7 +547,6 @@
     "block.cyclic.disenchanter.guide": "This will strip off enchantments one by one, with a cost.  Feed in your enchantments in the top and books into the middle.  It will consume one of each ingredient for each enchantment removed, and put each one on a book.  There is no way to pick which enchantment is removed, so if it removes the wrong one you just have to keep removing, and then re-add the ones you want back on the normal way (anvil).  Can be automated with cables/hoppers and controlled with redstone.",
     "block.cyclic.disenchanter": "Unchant Pylon",
     "block.cyclic.disenchanter.tooltip": "Remove enchantments for a price",
-    "block.cyclic.fishing.guide": "Place down surrounded by water.  Fishes faster more sides are covered in water, minimum 4 of 6.  Then give it a fishing rod and it fishes for you.  It uses whatever is in the fishing loot table, so it works with regular fish, treasure, junk, and modded items that were added.  The frequency indicates how often it will attempt to fish.  You can increase this number by surrounding it with more still or flowing water, so you can use cables and hoppers to automate fishing even further, but the frequency will be slightly lower.",
     "block.cyclic.anvil": "Powered Diamond Anvil",
     "block.cyclic.anvil.tooltip": "Repair using Energy",
     "block.cyclic.anvil_magma": "Magma Anvil",
@@ -556,14 +555,14 @@
     "block.cyclic.enchanter": "Powered Enchanter",
     "block.cyclic.enchanter.tooltip": "Add enchantments using experience fluid and energy",
     "block.cyclic.enchanter.guide": "Feed in experience as a fluid, and then add any enchantable item. Can be automated with pipes & hoppers.",
-    "block.cyclic.fishing.invalidequip": "Requires a fishing rod",
-    "block.cyclic.fishing.invalidpos.gui1": "Water",
-    "block.cyclic.fishing.invalidpos.gui2": "not",
-    "block.cyclic.fishing.invalidpos.gui3": "found",
-    "block.cyclic.fishing.invalidpos": "Requires water on at least four sides.",
-    "block.cyclic.fishing": "Automatic Fishing Net",
-    "block.cyclic.fishing.progress": "Fishing...",
-    "block.cyclic.fishing.tooltip": "Place in water and give it a fishing rod",
+    "block.cyclic.fisher.invalidequip": "Requires a fishing rod",
+    "block.cyclic.fisher.invalidpos.gui1": "Water",
+    "block.cyclic.fisher.invalidpos.gui2": "not",
+    "block.cyclic.fisher.invalidpos.gui3": "found",
+    "block.cyclic.fisher.invalidpos": "Requires water on at least four sides.",
+    "block.cyclic.fisher": "Automatic Fishing Net",
+    "block.cyclic.fisher.progress": "Fishing...",
+    "block.cyclic.fisher.tooltip": "Place in water and give it a fishing rod",
     "block.cyclic.forester": "Forester",
     "block.cyclic.forester.tooltip": "Plants saplings and harvests logs",
     "block.cyclic.forester.guide": "Plants saplings on any grass-like block nearby.  Harvests logs from the bottom up.  Uses coal or power.",
@@ -1207,7 +1206,6 @@
  
     "item.cyclic.boomerang_stun": "Magic Boomerang",
     "item.cyclic.boomerang_stun.tooltip": "Gathers items and stun your enemies",
-
  
     "item.cyclic.boomerang_damage": "Sharpened Boomerang",
     "item.cyclic.boomerang_damage.tooltip": "Gathers items and attacks your enemies",
@@ -1234,10 +1232,9 @@
     "item.cyclic.crystal_axe": "Crystal Axe",
     "item.cyclic.crystal_hoe": "Crystal Hoe",
 
-
-    "block.fluid_drain": "Fluid Collector",
-    "block.fluid_drain.guide": "Drain fluid that is nearby and below, filling it with blocks",
-    "block.fluid_drain.tooltip": "Drain fluid that is nearby and below, filling it with blocks",
+    "block.cyclic.collector_fluid": "Fluid Collector",
+    "block.cyclic.collector_fluid.guide": "Drain fluid that is nearby and below, filling it with blocks",
+    "block.cyclic.collector_fluid.tooltip": "Drain fluid that is nearby and below, filling it with blocks",
 
     "block.cyclic.melter": "Melting Chamber",
     "block.cyclic.melter.tooltip": "Melt certain items into fluid",

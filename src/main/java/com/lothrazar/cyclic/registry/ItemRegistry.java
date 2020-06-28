@@ -136,6 +136,10 @@ public class ItemRegistry {
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
     // machine blocks
+    r.register(new BlockItem(BlockRegistry.fisher, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fisher"));
+    r.register(new BlockItem(BlockRegistry.user, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("user"));
+    r.register(new BlockItem(BlockRegistry.disenchanter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("disenchanter"));
+    r.register(new BlockItem(BlockRegistry.collector_fluid, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("collector_fluid"));
     r.register(new BlockItem(BlockRegistry.fan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fan"));
     r.register(new BlockItem(BlockRegistry.soundproofing, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("soundproofing"));
     r.register(new BlockItem(BlockRegistry.solidifier, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("solidifier"));
