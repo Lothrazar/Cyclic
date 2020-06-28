@@ -1,0 +1,10 @@
+{
+ 	"parent": "cyclic:parent/machine_vertical",
+	"textures":{
+        "1": "cyclic:blocks/breaker/front",
+        "0": "cyclic:blocks/breaker/side",
+        "2": "minecraft:block/gold_block",
+        "3": "cyclic:blocks/breaker/side",
+        "particle": "cyclic:blocks/breaker/side"
+	}
+}

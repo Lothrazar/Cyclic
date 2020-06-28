@@ -23,6 +23,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public static final int MENERGY = 64 * 1000;
   private int needsRedstone = 1;
   protected int renderParticles = 1;
+  protected int timer;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
@@ -157,6 +158,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public void read(CompoundNBT tag) {
     needsRedstone = tag.getInt("needsRedstone");
     renderParticles = tag.getInt("renderParticles");
+    timer = tag.getInt("timer");
     super.read(tag);
   }
 
@@ -164,6 +166,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", renderParticles);
+    tag.putInt("timer", timer);
     return super.write(tag);
   }
 

@@ -7,13 +7,13 @@
   ],
   "key": {
     "w": {
-      "item": "minecraft:web"
+      "item": "minecraft:cobweb"
     },
     "p": {
       "item": "minecraft:trapped_chest"
     },
     "f": {
-      "item": "minecraft:fishing_rod"
+      "tag": "forge:gems/emerald"
     }
   },
   "result": {

@@ -14,6 +14,8 @@ import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.autouser.BlockUser;
+import com.lothrazar.cyclic.block.autouser.ContainerUser;
+import com.lothrazar.cyclic.block.autouser.TileUser;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -181,6 +183,8 @@ public class BlockRegistry {
     public static TileEntityType<TilePlacer> placer;
     @ObjectHolder(ModCyclic.MODID + ":fisher")
     public static TileEntityType<TileFisher> fisher;
+    @ObjectHolder(ModCyclic.MODID + ":user")
+    public static TileEntityType<TileUser> user;
   }
 
   public static class ContainerScreens {
@@ -207,6 +211,8 @@ public class BlockRegistry {
     public static ContainerType<ContainerHarvester> harvester;
     @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
     public static ContainerType<ContainerExpPylon> experience_pylon;
+    @ObjectHolder(ModCyclic.MODID + ":user")
+    public static ContainerType<ContainerUser> user;
   }
 
   @SubscribeEvent
@@ -219,12 +225,9 @@ public class BlockRegistry {
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
     r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
-    r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true)
-        .setRegistryName("scaffold_fragile"));
-    r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), false)
-        .setRegistryName("scaffold_responsive"));
-    r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD))
-        .setRegistryName("scaffold_replace"));
+    r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true).setRegistryName("scaffold_fragile"));
+    r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), false).setRegistryName("scaffold_responsive"));
+    r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD)).setRegistryName("scaffold_replace"));
     r.register(new BlockFluidTank(Block.Properties.create(Material.ROCK)).setRegistryName("tank"));
     r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
     r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
@@ -264,12 +267,12 @@ public class BlockRegistry {
     r.register(TileEntityType.Builder.create(TileCableEnergy::new, BlockRegistry.energy_pipe).build(null).setRegistryName("energy_pipe"));
     r.register(TileEntityType.Builder.create(TileCableItem::new, BlockRegistry.item_pipe).build(null).setRegistryName("item_pipe"));
     r.register(TileEntityType.Builder.create(TileCableFluid::new, BlockRegistry.fluid_pipe).build(null).setRegistryName("fluid_pipe"));
-    r.register(TileEntityType.Builder.create(TileHarvester::new, BlockRegistry.harvester)
-        .build(null).setRegistryName("harvester"));
+    r.register(TileEntityType.Builder.create(TileHarvester::new, BlockRegistry.harvester).build(null).setRegistryName("harvester"));
     r.register(TileEntityType.Builder.create(TileAnvilAuto::new, BlockRegistry.anvil).build(null).setRegistryName("anvil"));
     r.register(TileEntityType.Builder.create(TilePlacer::new, BlockRegistry.placer).build(null).setRegistryName("placer"));
     r.register(TileEntityType.Builder.create(TileStructure::new, BlockRegistry.structure).build(null).setRegistryName("structure"));
     r.register(TileEntityType.Builder.create(TileFisher::new, BlockRegistry.fisher).build(null).setRegistryName("fisher"));
+    r.register(TileEntityType.Builder.create(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
   }
 
   @SubscribeEvent
@@ -308,5 +311,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerExpPylon(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("experience_pylon"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerUser(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("user"));
   }
 }

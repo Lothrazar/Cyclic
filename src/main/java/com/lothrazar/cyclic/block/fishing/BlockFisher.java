@@ -19,11 +19,6 @@ public class BlockFisher extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     TileFisher tile = (TileFisher) world.getTileEntity(pos);
     tile.inventory.ifPresent(handler -> {
@@ -46,6 +41,11 @@ public class BlockFisher extends BlockBase {
       }
     });
     return ActionResultType.PASS;
+  }
+
+  @Override
+  public boolean hasTileEntity(BlockState state) {
+    return true;
   }
 
   @Override
