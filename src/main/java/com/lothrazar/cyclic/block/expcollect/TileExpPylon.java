@@ -60,8 +60,6 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * 20));
     }
-    //    setStoredXp(tag.getInt("storedXp"));
-    CompoundNBT invTag = tag.getCompound("inv");
     super.read(tag);
   }
 
@@ -76,46 +74,8 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
 
   @Override
   public void tick() {
-    //    if (!world.isRemote) {
     collectLocalExperience();
-    //    }
-    //    inventory.ifPresent(h -> {
-    //      this.processItems(h);
-    //    });
   }
-  //  private void processItems(IItemHandler items) {
-  //    ItemStack held = items.getStackInSlot(0);
-  //    ItemStack target = items.getStackInSlot(1);
-  //    if (held.getItem() == Items.SUGAR
-  //        && items.insertItem(1, new ItemStack(ItemRegistry.experience_food), true).isEmpty()) {
-  //      if (this.drainStoredXp(ExpItemGain.EXP_PER_FOOD)) {
-  //        //do it
-  //        held.shrink(1);
-  //        items.insertItem(1, new ItemStack(ItemRegistry.experience_food), false);
-  //        UtilSound.playSound(world, this.pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-  //      }
-  //    }
-  //    if (held.getItem() == Items.GLASS_BOTTLE
-  //        && items.insertItem(1, new ItemStack(Items.EXPERIENCE_BOTTLE), true).isEmpty()) {
-  //      //do we have enough exp
-  //      if (this.drainStoredXp(EXP_PER_BOTTLE)) {
-  //        //do it
-  //        held.shrink(1);
-  //        items.insertItem(1, new ItemStack(Items.EXPERIENCE_BOTTLE), false);
-  //        UtilSound.playSound(world, this.pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-  //      }
-  //    }
-  //    if (held.getItem() == Items.BUCKET
-  //        && target.isEmpty()) {
-  //      //do we have enough exp
-  //      if (this.drainStoredXp(FluidAttributes.BUCKET_VOLUME * FLUID_PER_EXP)) {
-  //        //do it
-  //        held.shrink(1);
-  //        items.insertItem(1, new ItemStack(ItemRegistry.bucket_expjuice), false);
-  //        UtilSound.playSound(world, this.pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-  //      }
-  //    }
-  //  }
 
   private void collectLocalExperience() {
     List<ExperienceOrbEntity> list = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(
