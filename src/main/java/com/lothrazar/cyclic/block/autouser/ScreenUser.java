@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.autouser;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.TextboxInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -13,26 +13,36 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
-  private EnergyBar energy;
+  private TextboxInteger txtHeight;
   private ButtonMachine btnRedstone;
 
   public ScreenUser(ContainerUser screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileUser.MAX);
   }
 
   @Override
   public void init() {
     super.init();
     int x, y;
-    energy.guiLeft = guiLeft;
-    energy.guiTop = guiTop;
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
       container.tile.setNeedsRedstone((container.getNeedsRedstone() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileUser.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
+    //
+    x = guiLeft + 120;
+    y = guiTop + 28;
+    txtHeight = new TextboxInteger(this.font, x, y, 20,
+        container.tile.getPos(), TileUser.Fields.TIMERDEL.ordinal());
+    txtHeight.setText("" + container.tile.getField(TileUser.Fields.TIMERDEL.ordinal()));
+    txtHeight.setTooltip(UtilChat.lang("block.cyclic.user.delay"));
+    this.children.add(txtHeight);
+  }
+
+  @Override
+  public void removed() {
+    this.txtHeight = null;
   }
 
   @Override
@@ -40,7 +50,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
-    energy.renderHoveredToolTip(mouseX, mouseY, container.getEnergy());
+    this.txtHeight.render(mouseX, mouseX, partialTicks);
   }
 
   @Override
@@ -55,6 +65,5 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
     this.drawSlot(xSize / 2 - 9, 28);
-    energy.draw(container.getEnergy());
   }
 }

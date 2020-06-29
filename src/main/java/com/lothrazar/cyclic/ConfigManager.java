@@ -18,12 +18,6 @@ public class ConfigManager {
   public static BooleanValue GEMGEAR;
   public static BooleanValue NETHERBRICK;
   public static BooleanValue ENCHANTMENTS;
-  public static IntValue ANVILPOWER;
-  public static IntValue MELTERPOWER;
-  public static IntValue SOLIDIFIERPOWER;
-  public static DoubleValue PEATCHANCE;
-  public static IntValue PEATERICHPOWER;
-  public static IntValue PEATPOWER;
   public static BooleanValue CHARMS;
   public static BooleanValue GLOVE;
   public static BooleanValue HEARTS;
@@ -31,6 +25,13 @@ public class ConfigManager {
   public static BooleanValue SPIKES;
   public static BooleanValue BOOMERANGS;
   public static BooleanValue CABLES;
+  public static IntValue ANVILPOWER;
+  public static IntValue MELTERPOWER;
+  public static IntValue SOLIDIFIERPOWER;
+  public static IntValue PEATERICHPOWER;
+  public static IntValue PEATPOWER;
+  public static IntValue HARVESTERPOWER;
+  public static DoubleValue PEATCHANCE;
   static {
     initConfig();
   }
@@ -60,6 +61,8 @@ public class ConfigManager {
         .defineInRange("energy.cost.melter", 5000, 1, 64000);
     SOLIDIFIERPOWER = COMMON_BUILDER.comment("Power per recipe")
         .defineInRange("energy.cost.solidifier", 5000, 1, 64000);
+    HARVESTERPOWER = COMMON_BUILDER.comment("Power per use")
+        .defineInRange("energy.cost.harvester", 250, 1, 64000);
     PEATCHANCE = COMMON_BUILDER.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)").defineInRange("peat.conversionChance",
         0.08000000000000F,
         0.0010000000000F, 1F);

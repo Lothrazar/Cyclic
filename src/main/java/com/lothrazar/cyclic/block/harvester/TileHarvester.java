@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -40,7 +41,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final BlockTags.Wrapper HARVEST_BREAK = new BlockTags.Wrapper(new ResourceLocation(ModCyclic.MODID, "harvester_break"));
-  private static final int ENERGY_COST = 250;
   private static final int RADIUS = 9;
   private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
@@ -70,12 +70,17 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (this.laserTimer > 0) {
       laserTimer--;
     }
-    //k is zero
+    IEnergyStorage cap = this.energy.orElse(null);
+    if (cap == null) {
+      return;
+    }
     for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
       BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), RADIUS);
+      if (cap.getEnergyStored() < ConfigManager.HARVESTERPOWER.get()) {
+        break;//too broke
+      }
       if (this.tryHarvestSingle(target)) {
-        IEnergyStorage cap = this.energy.orElse(null);
-        cap.extractEnergy(ENERGY_COST, true);
+        cap.extractEnergy(ConfigManager.HARVESTERPOWER.get(), true);
         break;
       }
     }

@@ -8,8 +8,6 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -44,22 +42,18 @@ public class ContainerUser extends ContainerBase {
 
       @Override
       public int get() {
-        return getEnergy();
+        return tile.getField(TileUser.Fields.TIMERDEL.ordinal());
       }
 
       @Override
       public void set(int value) {
-        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        tile.setField(TileUser.Fields.TIMERDEL.ordinal(), value);
       }
     });
   }
 
   public int getNeedsRedstone() {
     return tile.getNeedsRedstone();
-  }
-
-  public int getEnergy() {
-    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override
