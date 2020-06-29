@@ -7,13 +7,13 @@
   ],
   "key": {
     "l": {
-      "item": "minecraft:lapis_block"
+      "tag": "forge:storage_blocks/lapis"
     },
     "g": {
       "item": "minecraft:bucket"
     },
     "r": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:storage_blocks/iron"
     },
     "h": {
       "item": "minecraft:hopper"

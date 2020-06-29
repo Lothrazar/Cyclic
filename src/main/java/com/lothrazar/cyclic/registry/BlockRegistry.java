@@ -13,7 +13,6 @@ import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
-import com.lothrazar.cyclic.block.autouser.BlockUser;
 import com.lothrazar.cyclic.block.autouser.ContainerUser;
 import com.lothrazar.cyclic.block.autouser.TileUser;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
@@ -32,6 +31,7 @@ import com.lothrazar.cyclic.block.collectfluid.BlockFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.BlockCollector;
 import com.lothrazar.cyclic.block.collectitem.ContainerCollector;
 import com.lothrazar.cyclic.block.collectitem.TileCollector;
+import com.lothrazar.cyclic.block.detector.BlockDetector;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
@@ -144,6 +144,8 @@ public class BlockRegistry {
   public static Block disenchanter;
   @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
   public static Block collector_fluid;
+  @ObjectHolder(ModCyclic.MODID + ":detector_entity")
+  public static Block detector_entity;
 
   public static class Tiles {
 
@@ -218,7 +220,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
-    r.register(new BlockUser(Block.Properties.create(Material.ROCK)).setRegistryName("user"));
+    r.register(new BlockDetector(Block.Properties.create(Material.ROCK)).setRegistryName("detector_entity"));
     r.register(new BlockFisher(Block.Properties.create(Material.ROCK)).setRegistryName("fisher"));
     r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
     r.register(new BlockDisenchant(Block.Properties.create(Material.ROCK)).setRegistryName("disenchanter"));

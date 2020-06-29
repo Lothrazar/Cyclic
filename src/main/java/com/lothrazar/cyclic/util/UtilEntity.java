@@ -84,25 +84,6 @@ public class UtilEntity {
       totalExp = (int) (4.5 * level * level - 162.5 * level + 2220);
     return totalExp;
   }
-  //
-  //  public static double getExpTotal(PlayerEntity player) {
-  //    int level = player.experienceLevel;
-  //    // numeric reference:
-  //    // http://minecraft.gamepedia.com/Experience#Leveling_up
-  //    double levelTotal = 0;
-  //    if (level <= 16) {
-  //      levelTotal = level * level + 6 * level;
-  //    }
-  //    else if (level <= 31) {
-  //      levelTotal = 2.5 * level * level - 40.5 * level + 360;
-  //    }
-  //    else {
-  //      levelTotal = 4.5 * level * level - 162.5 * level + 2220;
-  //    }
-  //    //takes 7 xp to get to level 1
-  //    
-  //    return levelTotal;
-  //  }
 
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
   private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
