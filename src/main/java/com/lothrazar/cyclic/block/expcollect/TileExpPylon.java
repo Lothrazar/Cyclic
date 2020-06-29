@@ -8,6 +8,8 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,6 +18,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -30,11 +33,11 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
 
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
   public static final int FLUID_PER_EXP = 20;
+  public static final int DRAIN_PLAYER_EXP = 20;
   public static final int EXP_PER_BOTTLE = 11;
   private static final int RADIUS = 16;
-  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
+  public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
-  private static final int MAX = Integer.MAX_VALUE - 1;
 
   public TileExpPylon() {
     super(BlockRegistry.Tiles.experience_pylontile);
@@ -75,6 +78,29 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   @Override
   public void tick() {
     collectLocalExperience();
+    if (world.isRemote)
+      collectPlayerExperience();
+  }
+
+  private void collectPlayerExperience() {
+    List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class,
+        new AxisAlignedBB(this.getPos().up()));
+    for (PlayerEntity p : players) {
+      double myTotal = UtilEntity.getExpTotal(p);
+      if (p.isCrouching() && myTotal > 0) {
+        //  ModCyclic.LOGGER.info("total = " + myTotal);
+        //go
+        int addMeXp = 1;
+        int addMeFluid = addMeXp * FLUID_PER_EXP;
+        if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
+          p.giveExperiencePoints(-1 * addMeXp);
+          tank.fill(new FluidStack(
+              FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
+          //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
+          UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+        }
+      }
+    }
   }
 
   private void collectLocalExperience() {
@@ -86,7 +112,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     if (list.size() > 0) {
       ExperienceOrbEntity myOrb = list.get(world.rand.nextInt(list.size()));
       int addMeXp = myOrb.getXpValue();
-      if (getStoredXp() + addMeXp <= MAX) {
+      if (getStoredXp() + addMeXp <= tank.getCapacity()) {
         myOrb.xpValue = 0;
         // myOrb.setPosition(this.pos.getX(), this.pos.getY(), this.pos.getZ());
         myOrb.remove();
