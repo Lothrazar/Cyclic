@@ -39,6 +39,10 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
 
+  public static enum Fields {
+    REDSTONE;
+  }
+
   public TileExpPylon() {
     super(BlockRegistry.Tiles.experience_pylontile);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
@@ -77,8 +81,11 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
 
   @Override
   public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
     collectLocalExperience();
-    if (world.isRemote)
+    if (!world.isRemote)
       collectPlayerExperience();
   }
 
@@ -88,7 +95,6 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     for (PlayerEntity p : players) {
       double myTotal = UtilEntity.getExpTotal(p);
       if (p.isCrouching() && myTotal > 0) {
-        //  ModCyclic.LOGGER.info("total = " + myTotal);
         //go
         int addMeXp = 1;
         int addMeFluid = addMeXp * FLUID_PER_EXP;
@@ -98,6 +104,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
               FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
           //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
           UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+          this.markDirty();
         }
       }
     }
@@ -123,12 +130,35 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     }
   }
 
+  /**
+   * for server->client sync. so technically client only
+   */
+  @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
   public int getStoredXp() {
     return tank.getFluidAmount() / FLUID_PER_EXP;
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        this.setNeedsRedstone(value);
+      break;
+    }
+  }
+
+  @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        return this.getNeedsRedstone();
+    }
+    return 0;
+  }
 
   @Nullable
   @Override

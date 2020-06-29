@@ -73,7 +73,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       tryEquipItem();
       ActionResultType result = this.rightClickBlock(this.pos.offset(this.getCurrentFacing()));
       if (result == ActionResultType.SUCCESS) {
-        ModCyclic.LOGGER.info("user result " + result);
+        //        ModCyclic.LOGGER.info("user result " + result);
         //        this.markDirty();
       }
     }
