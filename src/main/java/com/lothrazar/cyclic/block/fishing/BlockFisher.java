@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.block.fishing;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -11,11 +13,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockFisher extends BlockBase {
 
   public BlockFisher(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.8F).notSolid());
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
   }
 
   @Override

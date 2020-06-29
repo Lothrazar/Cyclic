@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "lml",
+    "ooo"
+  ],
+  "key": {
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "l": {
+      "item": "minecraft:tripwire_hook"
+    },
+    "m": {
+      "item": "minecraft:magma_block"
+    },
+    "r": {
+      "tag": "forge:storage_blocks/gold"
+    }
+  },
+  "result": {
+    "item": "cyclic:user",
+    "count": 1
+  }
+}

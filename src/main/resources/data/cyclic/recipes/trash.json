@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "cyclic:trash"
+    "item": "cyclic:trash",
+    "count": 1
   }
 }

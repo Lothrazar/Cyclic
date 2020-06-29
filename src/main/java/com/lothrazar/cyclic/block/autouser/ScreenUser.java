@@ -13,7 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
-  private TextboxInteger txtHeight;
+  private TextboxInteger txtBox;
   private ButtonMachine btnRedstone;
 
   public ScreenUser(ContainerUser screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -33,16 +33,17 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     //
     x = guiLeft + 120;
     y = guiTop + 28;
-    txtHeight = new TextboxInteger(this.font, x, y, 20,
+    txtBox = new TextboxInteger(this.font, x, y, 30,
         container.tile.getPos(), TileUser.Fields.TIMERDEL.ordinal());
-    txtHeight.setText("" + container.tile.getField(TileUser.Fields.TIMERDEL.ordinal()));
-    txtHeight.setTooltip(UtilChat.lang("block.cyclic.user.delay"));
-    this.children.add(txtHeight);
+    txtBox.setMaxStringLength(3);
+    txtBox.setText("" + container.tile.getField(TileUser.Fields.TIMERDEL.ordinal()));
+    txtBox.setTooltip(UtilChat.lang("block.cyclic.user.delay"));
+    this.children.add(txtBox);
   }
 
   @Override
   public void removed() {
-    this.txtHeight = null;
+    this.txtBox = null;
   }
 
   @Override
@@ -50,7 +51,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
-    this.txtHeight.render(mouseX, mouseX, partialTicks);
+    this.txtBox.render(mouseX, mouseX, partialTicks);
   }
 
   @Override
