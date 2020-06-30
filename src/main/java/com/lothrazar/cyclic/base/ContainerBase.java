@@ -5,6 +5,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IntReferenceHolder;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -18,6 +19,21 @@ public abstract class ContainerBase extends Container {
 
   protected ContainerBase(ContainerType<?> type, int id) {
     super(type, id);
+  }
+
+  protected void trackIntField(TileEntityBase tile, int fieldOrdinal) {
+    trackInt(new IntReferenceHolder() {
+
+      @Override
+      public int get() {
+        return tile.getField(fieldOrdinal);
+      }
+
+      @Override
+      public void set(int value) {
+        tile.setField(fieldOrdinal, value);
+      }
+    });
   }
 
   @Override

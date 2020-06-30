@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BlockUser extends BlockBase {
 
   public BlockUser(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
   }
 

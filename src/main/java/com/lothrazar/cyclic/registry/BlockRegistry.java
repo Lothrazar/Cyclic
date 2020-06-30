@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
+import com.lothrazar.cyclic.block.autouser.BlockUser;
 import com.lothrazar.cyclic.block.autouser.ContainerUser;
 import com.lothrazar.cyclic.block.autouser.TileUser;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
@@ -32,7 +33,14 @@ import com.lothrazar.cyclic.block.collectitem.BlockCollector;
 import com.lothrazar.cyclic.block.collectitem.ContainerCollector;
 import com.lothrazar.cyclic.block.collectitem.TileCollector;
 import com.lothrazar.cyclic.block.detector.BlockDetector;
+import com.lothrazar.cyclic.block.detector.ContainerDetector;
+import com.lothrazar.cyclic.block.detector.TileDetector;
+import com.lothrazar.cyclic.block.detectoritem.BlockDetectorItem;
+import com.lothrazar.cyclic.block.detectoritem.ContainerDetectorItem;
+import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
+import com.lothrazar.cyclic.block.disenchant.ContainerDisenchant;
+import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
@@ -146,9 +154,15 @@ public class BlockRegistry {
   public static Block collector_fluid;
   @ObjectHolder(ModCyclic.MODID + ":detector_entity")
   public static Block detector_entity;
+  @ObjectHolder(ModCyclic.MODID + ":detector_item")
+  public static Block detector_item;
 
   public static class Tiles {
 
+    @ObjectHolder(ModCyclic.MODID + ":detector_item")
+    public static TileEntityType<TileDetectorItem> detector_item;
+    @ObjectHolder(ModCyclic.MODID + ":detector_entity")
+    public static TileEntityType<TileDetector> detector_entity;
     @ObjectHolder(ModCyclic.MODID + ":solidifier")
     public static TileEntityType<TileSolidifier> solidifier;
     @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -187,6 +201,8 @@ public class BlockRegistry {
     public static TileEntityType<TileFisher> fisher;
     @ObjectHolder(ModCyclic.MODID + ":user")
     public static TileEntityType<TileUser> user;
+    @ObjectHolder(ModCyclic.MODID + ":disenchanter")
+    public static TileEntityType<TileDisenchant> disenchanter;
   }
 
   public static class ContainerScreens {
@@ -215,12 +231,20 @@ public class BlockRegistry {
     public static ContainerType<ContainerExpPylon> experience_pylon;
     @ObjectHolder(ModCyclic.MODID + ":user")
     public static ContainerType<ContainerUser> user;
+    @ObjectHolder(ModCyclic.MODID + ":detector_entity")
+    public static ContainerType<ContainerDetector> detector_entity;
+    @ObjectHolder(ModCyclic.MODID + ":detector_item")
+    public static ContainerType<ContainerDetectorItem> detector_item;
+    @ObjectHolder(ModCyclic.MODID + ":disenchanter")
+    public static ContainerType<ContainerDisenchant> disenchanter;
   }
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockDetectorItem(Block.Properties.create(Material.ROCK)).setRegistryName("detector_item"));
     r.register(new BlockDetector(Block.Properties.create(Material.ROCK)).setRegistryName("detector_entity"));
+    r.register(new BlockUser(Block.Properties.create(Material.ROCK)).setRegistryName("user"));
     r.register(new BlockFisher(Block.Properties.create(Material.ROCK)).setRegistryName("fisher"));
     r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
     r.register(new BlockDisenchant(Block.Properties.create(Material.ROCK)).setRegistryName("disenchanter"));
@@ -256,6 +280,9 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileDetectorItem::new, BlockRegistry.disenchanter).build(null).setRegistryName("disenchanter"));
+    r.register(TileEntityType.Builder.create(TileDetectorItem::new, BlockRegistry.detector_item).build(null).setRegistryName("detector_item"));
+    r.register(TileEntityType.Builder.create(TileDetector::new, BlockRegistry.detector_entity).build(null).setRegistryName("detector_entity"));
     r.register(TileEntityType.Builder.create(TileSolidifier::new, BlockRegistry.solidifier).build(null).setRegistryName("solidifier"));
     r.register(TileEntityType.Builder.create(TileMelter::new, BlockRegistry.melter).build(null).setRegistryName("melter"));
     r.register(TileEntityType.Builder.create(TileTank::new, BlockRegistry.tank).build(null).setRegistryName("tank"));
@@ -316,5 +343,14 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerUser(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("user"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDetector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("detector_entity"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDetectorItem(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("detector_item"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDisenchant(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("disenchanter"));
   }
 }

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dcd",
+    " q ",
+    "r r"
+  ],
+  "key": {
+    "r": {
+      "tag": "forge:dusts/redstone"
+    },
+    "q": {
+      "tag": "forge:gems/quartz"
+    },
+    "c": {
+      "item": "minecraft:observer"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "cyclic:detector_entity",
+    "count": 1
+  }
+}

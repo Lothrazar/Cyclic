@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.detector;
+package com.lothrazar.cyclic.block.detectoritem;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -13,9 +13,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockDetector extends BlockBase {
+public class BlockDetectorItem extends BlockBase {
 
-  public BlockDetector(Properties properties) {
+  public BlockDetectorItem(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).notSolid());
     this.setHasGui();
   }
@@ -24,13 +24,13 @@ public class BlockDetector extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.detector_entity, ScreenDetector::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.detector_item, ScreenDetectorItem::new);
   }
 
   @Override
   @Deprecated
   public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    TileDetector te = (TileDetector) blockAccess.getTileEntity(pos);
+    TileDetectorItem te = (TileDetectorItem) blockAccess.getTileEntity(pos);
     if (te == null) {
       return 0;
     }
@@ -49,6 +49,6 @@ public class BlockDetector extends BlockBase {
 
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileDetector();
+    return new TileDetectorItem();
   }
 }
