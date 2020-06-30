@@ -1,22 +1,26 @@
 package com.lothrazar.cyclic.block.disenchant;
 
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import com.lothrazar.cyclic.util.UtilSound;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -28,6 +32,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileDisenchant extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int SLOT_INPUT = 0;
+  private static final int SLOT_BOOK = 1;
+  private static final int SLOT_OUT = 2;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public static enum Fields {
@@ -39,7 +46,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(3);
   }
 
   @Override
@@ -81,17 +88,56 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
+    //TODO: has power
     inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
+      ItemStack input = inv.getStackInSlot(SLOT_INPUT);
+      ItemStack book = inv.getStackInSlot(SLOT_BOOK);
+      if (book.getItem() != Items.BOOK
+          || inv.getStackInSlot(SLOT_OUT).isEmpty() == false
+          || input.getCount() != 1) {
         return;
       }
-      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
-      BlockPos offset = pos.offset(dir);
-      BlockState state = Block.getBlockFromItem(stack.getItem()).getDefaultState();
-      if (world.isAirBlock(offset) &&
-          world.setBlockState(offset, state)) {
-        stack.shrink(1);
+      //input is size 1, at least one book exists, and output IS empty
+      Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer> newLinkedHashMap();
+      Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(input);
+      Enchantment keyMoved = null;
+      for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+        keyMoved = entry.getKey();
+        outEnchants.put(keyMoved, entry.getValue());
+        break;
+      }
+      if (outEnchants.size() == 0 || keyMoved == null) {
+        return;
+      }
+      //and input has at least one enchantment 
+      //success happened
+      UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+      enchants.remove(keyMoved);
+      ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
+      EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
+      //replace book with enchanted
+      inv.extractItem(SLOT_BOOK, 1, false);
+      inv.insertItem(SLOT_OUT, eBook, false);
+      //do i replace input with a book?
+      if (input.getItem() == Items.ENCHANTED_BOOK && enchants.size() == 0) {
+        inv.extractItem(SLOT_INPUT, 64, false);//delete input
+        inv.insertItem(SLOT_INPUT, new ItemStack(Items.BOOK), false);
+      }
+      else {
+        //was a normal item, so ok to set its ench list to empty
+        if (input.getItem() == Items.ENCHANTED_BOOK) {//hotfix workaround for book: so it dont try to merge eh
+          ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
+          EnchantmentHelper.setEnchantments(enchants, inputCopy);//set as remove
+          inv.extractItem(SLOT_INPUT, 64, false);//delete input
+          inv.insertItem(SLOT_INPUT, inputCopy, false);
+        }
+        else {
+          ModCyclic.LOGGER.info("remaining overwrite enchants  " + enchants.size());
+          EnchantmentHelper.setEnchantments(enchants, input);//set as removed
+          //          inv.extractItem(SLOT_INPUT, 64, false);//delete input
+          //          inv.insertItem(SLOT_INPUT, input, false);
+        }
+        //        }
       }
     });
   }

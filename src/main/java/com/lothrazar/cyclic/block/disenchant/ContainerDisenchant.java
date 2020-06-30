@@ -16,13 +16,15 @@ public class ContainerDisenchant extends ContainerBase {
   protected TileDisenchant tile;
 
   public ContainerDisenchant(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.placer, windowId);
+    super(BlockRegistry.ContainerScreens.disenchanter, windowId);
     tile = (TileDisenchant) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 80, 29));
+      addSlot(new SlotItemHandler(h, 0, 70, 29));
+      addSlot(new SlotItemHandler(h, 1, 100, 29));
+      addSlot(new SlotItemHandler(h, 2, 120, 29));
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackIntField(tile, TileDisenchant.Fields.REDSTONE.ordinal());
