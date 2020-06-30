@@ -27,7 +27,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
-      container.tile.setNeedsRedstone((container.getNeedsRedstone() + 1) % 2);
+      container.tile.setNeedsRedstone((container.tile.getNeedsRedstone() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileUser.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
     //
@@ -56,8 +56,8 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.getNeedsRedstone()));
-    btnRedstone.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
+    btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.tile.getNeedsRedstone()));
+    btnRedstone.setTextureId(container.tile.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
     this.drawButtonTooltips(mouseX, mouseY);
     this.drawName(this.title.getFormattedText());
   }

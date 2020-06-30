@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -26,34 +25,8 @@ public class ContainerUser extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getField(TileUser.Fields.REDSTONE.ordinal());
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setField(TileUser.Fields.REDSTONE.ordinal(), value);
-      }
-    });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getField(TileUser.Fields.TIMERDEL.ordinal());
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setField(TileUser.Fields.TIMERDEL.ordinal(), value);
-      }
-    });
-  }
-
-  public int getNeedsRedstone() {
-    return tile.getNeedsRedstone();
+    this.trackIntField(tile, TileUser.Fields.REDSTONE.ordinal());
+    this.trackIntField(tile, TileUser.Fields.TIMERDEL.ordinal());
   }
 
   @Override

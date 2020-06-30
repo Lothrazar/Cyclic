@@ -25,18 +25,7 @@ public class ContainerDisenchant extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
-    //    trackInt(new IntReferenceHolder() {
-    //
-    //      @Override
-    //      public int get() {
-    //        return tile.getField(TilePlacer.Fields.REDSTONE.ordinal());
-    //      }
-    //
-    //      @Override
-    //      public void set(int value) {
-    //        tile.setField(TilePlacer.Fields.REDSTONE.ordinal(), value);
-    //      }
-    //    });
+    this.trackIntField(tile, TileDisenchant.Fields.REDSTONE.ordinal());
   }
 
   @Override

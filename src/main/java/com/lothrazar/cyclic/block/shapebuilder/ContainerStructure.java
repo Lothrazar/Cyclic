@@ -40,54 +40,10 @@ public class ContainerStructure extends ContainerBase {
         //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getField(TileStructure.Fields.SIZE.ordinal());
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setField(TileStructure.Fields.SIZE.ordinal(), value);
-      }
-    });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getField(TileStructure.Fields.HEIGHT.ordinal());
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setField(TileStructure.Fields.HEIGHT.ordinal(), value);
-      }
-    });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getField(TileStructure.Fields.BUILDTYPE.ordinal());
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setField(TileStructure.Fields.BUILDTYPE.ordinal(), value);
-      }
-    });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getField(TileStructure.Fields.RENDER.ordinal());
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setField(TileStructure.Fields.RENDER.ordinal(), value);
-      }
-    });
+    this.trackIntField(tile, TileStructure.Fields.SIZE.ordinal());
+    this.trackIntField(tile, TileStructure.Fields.HEIGHT.ordinal());
+    this.trackIntField(tile, TileStructure.Fields.BUILDTYPE.ordinal());
+    this.trackIntField(tile, TileStructure.Fields.RENDER.ordinal());
   }
 
   public int getEnergy() {
