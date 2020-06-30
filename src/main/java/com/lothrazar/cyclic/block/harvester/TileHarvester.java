@@ -178,8 +178,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public void read(CompoundNBT tag) {
     this.laserTarget = UtilNBT.getBlockPos(tag);
     laserTimer = tag.getInt("lt");
-    CompoundNBT energyTag = tag.getCompound("energy");
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
+    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     super.read(tag);
   }
 

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.disenchant;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
+import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -12,15 +13,19 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
 
+  private EnergyBar energy;
   private ButtonMachine btnRedstone;
 
   public ScreenDisenchant(ContainerDisenchant screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
+    this.energy = new EnergyBar(this, TileDisenchant.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    energy.guiLeft = guiLeft;
+    energy.guiTop = guiTop;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
@@ -35,6 +40,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
+    energy.renderHoveredToolTip(mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
@@ -49,5 +55,6 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
     this.drawSlot(xSize / 2 - 9, 28);
+    energy.draw(container.tile.getEnergy());
   }
 }

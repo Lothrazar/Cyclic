@@ -31,6 +31,7 @@ public class ConfigManager {
   public static IntValue PEATERICHPOWER;
   public static IntValue PEATPOWER;
   public static IntValue HARVESTERPOWER;
+  public static IntValue DISENCHANTERPOWER;
   public static DoubleValue PEATCHANCE;
   static {
     initConfig();
@@ -55,8 +56,8 @@ public class ConfigManager {
         .defineInRange("energy.fuel.peat_fuel", 256, 1, 64000);
     PEATERICHPOWER = COMMON_BUILDER.comment("Power gained burning one of this")
         .defineInRange("energy.fuel.peat_fuel_enriched", 256 * 4, 1, 64000);
-    ANVILPOWER = COMMON_BUILDER.comment("Power gained burning one of this")
-        .defineInRange("energy.cost.anvil", 250, 1, 64000);
+    DISENCHANTERPOWER = COMMON_BUILDER.comment("Power gained burning one of this").defineInRange("energy.cost.disenchanter", 1500, 1, 64000);
+    ANVILPOWER = COMMON_BUILDER.comment("Power gained burning one of this").defineInRange("energy.cost.anvil", 250, 1, 64000);
     MELTERPOWER = COMMON_BUILDER.comment("Power per recipe")
         .defineInRange("energy.cost.melter", 5000, 1, 64000);
     SOLIDIFIERPOWER = COMMON_BUILDER.comment("Power per recipe")
