@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block;
 
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
@@ -19,10 +19,12 @@ public class BlockLaunch extends BlockBase {
 
   private final static float ANGLE = 90;
   protected static final VoxelShape PRESSED_AABB = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
+  boolean sneakPlayerAvoid = true;
+  boolean doRedstone;
 
-  public BlockLaunch(Properties properties) {
+  public BlockLaunch(Properties properties, boolean doRedstone) {
     super(properties.doesNotBlockMovement().hardnessAndResistance(0.5F));
-    PressurePlateBlock x;
+    this.doRedstone = doRedstone;
   }
 
   @Override
@@ -31,31 +33,46 @@ public class BlockLaunch extends BlockBase {
   }
 
   @Override
+  public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
+    return false;
+  }
+
+  @Override
   public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
     BlockPos blockpos = pos.down();
     return hasSolidSideOnTop(worldIn, blockpos) || hasEnoughSolidSide(worldIn, blockpos, Direction.UP);
   }
-
-  boolean sneakPlayerAvoid = true;
 
   @Override
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
     if (sneakPlayerAvoid && entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
       return;
     }
-    if (!worldIn.isRemote) {
-      UtilEntity.launch(entity, ANGLE, getPower());
-      if (entity instanceof PlayerEntity) {
-        //        ((EntityPlayer) entity).addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, 300, 0));
-      }
-      //      int i = this.getRedstoneStrength(state);
-      //      if (i == 0) {
-      //        this.updateState(worldIn, pos, state, i);
-      //      }
+    if (worldIn.isRemote) {
+      UtilEntity.launch(entity, ANGLE, getPower(worldIn, pos));
+    }
+    else if (entity instanceof PlayerEntity) {
+      //          ((EntityPlayer) entity).addPotionEffect(new PotionEffect(PotionEffects.BOUNCE, 300, 0));
     }
   }
 
-  private float getPower() {
-    return 1.8F;
+  private float getPower(World world, BlockPos pos) {
+    if (this.doRedstone == false) {
+      return 1.6F;
+    }
+    int power = 0;
+    for (Direction direction : Direction.values()) {
+      if (direction == Direction.UP) {
+        continue;
+      }
+      int localPow = world.getRedstonePower(pos.offset(direction), direction);
+      if (localPow > power) {
+        power = localPow;
+      }
+    }
+    //    int power = world.getRedstonePowerFromNeighbors(pos);// this.getStrongPower(state, worldIn, pos, Direction.UP);
+    float ratio = ((power + 2) / 16F);
+    //    System.out.println(power + "=!power ; ratio" + ratio + "?? " + world.getStrongPower(pos));
+    return 2.4F * ratio;
   }
 }

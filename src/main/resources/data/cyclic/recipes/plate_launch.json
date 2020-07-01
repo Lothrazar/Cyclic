@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "ggg",
+    "iii"
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:slimeballs"
+    },
+    "g": {
+      "tag": "forge:ingots/iron"
+    },
+    "i": {
+      "tag": "forge:leather"
+    }
+  },
+  "result": {
+    "item": "cyclic:plate_launch",
+    "count": 8
+  }
+}

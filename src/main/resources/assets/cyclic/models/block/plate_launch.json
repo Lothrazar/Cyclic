@@ -1,0 +1,6 @@
+{
+    "parent": "cyclic:parent/plate_horizontal",
+    "textures": {
+        "0": "cyclic:blocks/plate_launch"
+    }
+} 

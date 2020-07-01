@@ -159,6 +159,8 @@ public class BlockRegistry {
   public static Block detector_item;
   @ObjectHolder(ModCyclic.MODID + ":plate_launch")
   public static Block plate_launch;
+  @ObjectHolder(ModCyclic.MODID + ":plate_launch_redstone")
+  public static Block plate_launch_redstone;
 
   public static class Tiles {
 
@@ -247,7 +249,8 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
-    r.register(new BlockLaunch(Block.Properties.create(Material.ROCK)).setRegistryName("plate_launch"));
+    r.register(new BlockLaunch(Block.Properties.create(Material.ROCK), false).setRegistryName("plate_launch"));
+    r.register(new BlockLaunch(Block.Properties.create(Material.ROCK), true).setRegistryName("plate_launch_redstone"));
     r.register(new BlockDetectorItem(Block.Properties.create(Material.ROCK)).setRegistryName("detector_item"));
     r.register(new BlockDetector(Block.Properties.create(Material.ROCK)).setRegistryName("detector_entity"));
     r.register(new BlockUser(Block.Properties.create(Material.ROCK)).setRegistryName("user"));
