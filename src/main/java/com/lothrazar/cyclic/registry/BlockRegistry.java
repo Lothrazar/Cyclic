@@ -5,6 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.BlockDarkGlass;
+import com.lothrazar.cyclic.block.BlockLaunch;
 import com.lothrazar.cyclic.block.BlockPeat;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
 import com.lothrazar.cyclic.block.BlockSound;
@@ -28,7 +29,7 @@ import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.block.cable.item.BlockCableItem;
 import com.lothrazar.cyclic.block.cable.item.TileCableItem;
-import com.lothrazar.cyclic.block.collectfluid.BlockFluidCollect;
+import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.BlockCollector;
 import com.lothrazar.cyclic.block.collectitem.ContainerCollector;
 import com.lothrazar.cyclic.block.collectitem.TileCollector;
@@ -156,6 +157,8 @@ public class BlockRegistry {
   public static Block detector_entity;
   @ObjectHolder(ModCyclic.MODID + ":detector_item")
   public static Block detector_item;
+  @ObjectHolder(ModCyclic.MODID + ":plate_launch")
+  public static Block plate_launch;
 
   public static class Tiles {
 
@@ -203,6 +206,8 @@ public class BlockRegistry {
     public static TileEntityType<TileUser> user;
     @ObjectHolder(ModCyclic.MODID + ":disenchanter")
     public static TileEntityType<TileDisenchant> disenchanter;
+    @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
+    public static TileEntityType<TileFluidCollect> collector_fluid;
   }
 
   public static class ContainerScreens {
@@ -242,11 +247,12 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockLaunch(Block.Properties.create(Material.ROCK)).setRegistryName("plate_launch"));
     r.register(new BlockDetectorItem(Block.Properties.create(Material.ROCK)).setRegistryName("detector_item"));
     r.register(new BlockDetector(Block.Properties.create(Material.ROCK)).setRegistryName("detector_entity"));
     r.register(new BlockUser(Block.Properties.create(Material.ROCK)).setRegistryName("user"));
     r.register(new BlockFisher(Block.Properties.create(Material.ROCK)).setRegistryName("fisher"));
-    r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
+    //    r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
     r.register(new BlockDisenchant(Block.Properties.create(Material.ROCK)).setRegistryName("disenchanter"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
@@ -280,6 +286,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    //    r.register(TileEntityType.Builder.create(TileFluidCollect::new, BlockRegistry.collector_fluid).build(null).setRegistryName("collector_fluid"));
     r.register(TileEntityType.Builder.create(TileDisenchant::new, BlockRegistry.disenchanter).build(null).setRegistryName("disenchanter"));
     r.register(TileEntityType.Builder.create(TileDetectorItem::new, BlockRegistry.detector_item).build(null).setRegistryName("detector_item"));
     r.register(TileEntityType.Builder.create(TileDetector::new, BlockRegistry.detector_entity).build(null).setRegistryName("detector_entity"));

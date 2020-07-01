@@ -26,20 +26,17 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
   }
 
+  protected void drawSlot(int x, int y, ResourceLocation texture, int size) {
+    this.minecraft.getTextureManager().bindTexture(texture);
+    blit(guiLeft + x, guiTop + y, 0, 0, size, size, size, size);
+  }
+
   protected void drawSlot(int x, int y) {
-    this.minecraft.getTextureManager().bindTexture(TextureRegistry.SLOT);
-    int relX = guiLeft + x;
-    int relY = guiTop + y;
-    int size = 18;
-    blit(relX, relY, 0, 0, size, size, size, size);
+    drawSlot(x, y, TextureRegistry.SLOT, 18);
   }
 
   protected void drawSlotLarge(int x, int y) {
-    this.minecraft.getTextureManager().bindTexture(TextureRegistry.SLOT_LARGE);
-    int relX = guiLeft + x;
-    int relY = guiTop + y;
-    int size = 26;
-    blit(relX, relY, 0, 0, size, size, size, size);
+    drawSlot(x, y, TextureRegistry.SLOT_LARGE, 26);
   }
 
   /**

@@ -23,9 +23,9 @@ public class ContainerDisenchant extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 70, 29));
-      addSlot(new SlotItemHandler(h, 1, 100, 29));
-      addSlot(new SlotItemHandler(h, 2, 120, 29));
+      addSlot(new SlotItemHandler(h, 0, 24, 40));
+      addSlot(new SlotItemHandler(h, 1, 48, 40));
+      addSlot(new SlotItemHandler(h, 2, 124, 40));
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackIntField(tile, TileDisenchant.Fields.REDSTONE.ordinal());

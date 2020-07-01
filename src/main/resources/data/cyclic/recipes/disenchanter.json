@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "eee",
+    "ete",
+    "ooo"
+  ],
+  "key": {
+    "e": {
+      "tag": "forge:gems/emerald"
+    },
+    "t": {
+      "item": "minecraft:enchanting_table"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    }
+  },
+  "result": {
+    "item": "cyclic:disenchanter",
+    "count": 1
+  }
+}

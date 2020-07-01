@@ -40,6 +40,10 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
           container.tile.getField(f) + 1, container.tile.getPos()));
     }));
+    //    slider = new GuiSliderInteger(container.tile, x, y,
+    //        164, 60,
+    //        1, 30, //min max
+    //        TileDetector.Fields.GREATERTHAN.ordinal(), "pump.rate");
     //x 
     x = guiLeft + 8;
     y = guiTop + 18;

@@ -35,12 +35,12 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileDisenchant extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   static final int MAX = 640000;
   private static final int SLOT_INPUT = 0;
   private static final int SLOT_BOOK = 1;
   private static final int SLOT_OUT = 2;
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public static enum Fields {
     REDSTONE;
@@ -51,7 +51,20 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(3);
+    return new ItemStackHandler(3) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        if (slot == SLOT_BOOK) {
+          return stack.getItem() == Items.BOOK;
+        }
+        else if (slot == SLOT_INPUT) {
+          Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+          return enchants != null && enchants.size() > 0;
+        }
+        return stack.getItem() == Items.ENCHANTED_BOOK;
+      }
+    };
   }
 
   private IEnergyStorage createEnergy() {

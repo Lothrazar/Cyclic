@@ -54,7 +54,11 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
-    this.drawSlot(xSize / 2 - 9, 28);
+    int x = 23;
+    int y = 39;
+    this.drawSlot(x, y);
+    this.drawSlot(x + 24, y, TextureRegistry.SLOT_BOOK, 18);
+    this.drawSlotLarge(119, y - 4);
     energy.draw(container.tile.getEnergy());
   }
 }
