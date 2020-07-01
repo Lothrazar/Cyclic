@@ -74,6 +74,11 @@ import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
+import com.lothrazar.cyclic.block.wireless.BlockWirelessRec;
+import com.lothrazar.cyclic.block.wireless.BlockWirelessTransmit;
+import com.lothrazar.cyclic.block.wireless.ContainerTransmit;
+import com.lothrazar.cyclic.block.wireless.TileWirelessRec;
+import com.lothrazar.cyclic.block.wireless.TileWirelessTransmit;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -161,9 +166,17 @@ public class BlockRegistry {
   public static Block plate_launch;
   @ObjectHolder(ModCyclic.MODID + ":plate_launch_redstone")
   public static Block plate_launch_redstone;
+  @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
+  public static Block wireless_transmitter;
+  @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
+  public static Block wireless_receiver;
 
   public static class Tiles {
 
+    @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
+    public static TileEntityType<TileWirelessRec> wireless_receiver;
+    @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
+    public static TileEntityType<TileWirelessTransmit> wireless_transmitter;
     @ObjectHolder(ModCyclic.MODID + ":detector_item")
     public static TileEntityType<TileDetectorItem> detector_item;
     @ObjectHolder(ModCyclic.MODID + ":detector_entity")
@@ -244,11 +257,15 @@ public class BlockRegistry {
     public static ContainerType<ContainerDetectorItem> detector_item;
     @ObjectHolder(ModCyclic.MODID + ":disenchanter")
     public static ContainerType<ContainerDisenchant> disenchanter;
+    @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
+    public static ContainerType<ContainerTransmit> wireless_transmitter;
   }
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockWirelessRec(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_receiver"));
+    r.register(new BlockWirelessTransmit(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_transmitter"));
     r.register(new BlockLaunch(Block.Properties.create(Material.ROCK), false).setRegistryName("plate_launch"));
     r.register(new BlockLaunch(Block.Properties.create(Material.ROCK), true).setRegistryName("plate_launch_redstone"));
     r.register(new BlockDetectorItem(Block.Properties.create(Material.ROCK)).setRegistryName("detector_item"));
@@ -289,6 +306,8 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileWirelessRec::new, BlockRegistry.wireless_receiver).build(null).setRegistryName("wireless_receiver"));
+    r.register(TileEntityType.Builder.create(TileWirelessTransmit::new, BlockRegistry.wireless_transmitter).build(null).setRegistryName("wireless_transmitter"));
     //    r.register(TileEntityType.Builder.create(TileFluidCollect::new, BlockRegistry.collector_fluid).build(null).setRegistryName("collector_fluid"));
     r.register(TileEntityType.Builder.create(TileDisenchant::new, BlockRegistry.disenchanter).build(null).setRegistryName("disenchanter"));
     r.register(TileEntityType.Builder.create(TileDetectorItem::new, BlockRegistry.detector_item).build(null).setRegistryName("detector_item"));
@@ -362,5 +381,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerDisenchant(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("disenchanter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerTransmit(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("wireless_transmitter"));
   }
 }

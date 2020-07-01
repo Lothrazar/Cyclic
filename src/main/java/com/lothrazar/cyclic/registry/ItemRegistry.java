@@ -135,6 +135,8 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.wireless_transmitter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("wireless_transmitter"));
+    r.register(new BlockItem(BlockRegistry.wireless_receiver, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("wireless_receiver"));
     // machine blocks   
     r.register(new BlockItem(BlockRegistry.plate_launch_redstone, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("plate_launch_redstone"));
     r.register(new BlockItem(BlockRegistry.plate_launch, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("plate_launch"));
