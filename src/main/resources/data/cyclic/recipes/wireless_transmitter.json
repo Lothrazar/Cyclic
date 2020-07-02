@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "isi",
+    "sqs",
+    "isi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:bone_block"
+    },
+    "q": {
+      "item": "cyclic:gem_amber"
+    },
+    "s": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "result": {
+    "item": "cyclic:wireless_transmitter",
+    "count": 1
+  }
+}

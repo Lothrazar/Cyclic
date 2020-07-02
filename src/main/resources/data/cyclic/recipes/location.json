@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " o ",
+    " s ",
+    " r "
+  ],
+  "key": {
+    "o": {
+      "tag": "forge:dyes/blue"
+    },
+    "s": {
+      "item": "minecraft:paper"
+    },
+    "r": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "result": {
+    "item": "cyclic:location",
+    "count": 1
+  }
+}

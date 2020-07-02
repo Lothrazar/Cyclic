@@ -3,13 +3,17 @@ package com.lothrazar.cyclic.block.wireless;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.item.ItemLocationGps;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +35,13 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(9);
+    return new ItemStackHandler(9) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return stack.getItem() instanceof ItemLocationGps;
+      }
+    };
   }
 
   @Override
@@ -68,24 +78,35 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     return super.write(tag);
   }
 
-  @Override
-  public void tick() {
-    BlockPos targetPos = new BlockPos(65, 68, -130);
-    if (targetPos == null) {
-      return;
-    }
+  private void toggleTarget(BlockPos targetPos) {
     BlockState target = world.getBlockState(targetPos);
-    if (world.getTileEntity(targetPos) instanceof TileWirelessRec
-        && target.getBlock() instanceof BlockWirelessRec) {
-      boolean targetPowered = target.get(BlockWirelessRec.POWERED);
+    if (target.has(BlockStateProperties.POWERED)) {
+      //        world.getTileEntity(targetPos) instanceof TileWirelessRec
+      //        && target.getBlock() instanceof BlockWirelessRec
+      boolean targetPowered = target.get(BlockStateProperties.POWERED);
       //update target based on my state
       boolean isPowered = world.isBlockPowered(pos);
       if (targetPowered != isPowered) {
-        world.setBlockState(targetPos, target.with(BlockWirelessRec.POWERED, isPowered));
+        world.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
         //and update myself too   
-        world.setBlockState(pos, world.getBlockState(pos).with(BlockWirelessRec.POWERED, isPowered));
+        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
       }
     }
+  }
+
+  @Override
+  public void tick() {
+    inventory.ifPresent(inv -> {
+      for (int s = 0; s < inv.getSlots(); s++) {
+        ItemStack stack = inv.getStackInSlot(s);
+        BlockPosDim targetPos = ItemLocationGps.getPosition(stack);
+        if (targetPos == null || targetPos.getDimension() != world.dimension.getType().getId()) {
+          return;
+        }
+        toggleTarget(targetPos.getPos());
+      }
+    });
+    //    BlockPos targetPos = new BlockPos(65, 68, -130);
     //    if (this.requiresRedstone() && !this.isPowered()) {
     //      return;
     //    }

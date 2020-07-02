@@ -17,6 +17,7 @@ import com.lothrazar.cyclic.item.HeartItem;
 import com.lothrazar.cyclic.item.HeartToxicItem;
 import com.lothrazar.cyclic.item.IceWand;
 import com.lothrazar.cyclic.item.ItemCaveFinder;
+import com.lothrazar.cyclic.item.ItemLocationGps;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.LightningScepter;
 import com.lothrazar.cyclic.item.MattockItem;
@@ -174,6 +175,7 @@ public class ItemRegistry {
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("biomass"));
     // basic tools
+    r.register(new ItemLocationGps(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("location"));
     r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(9000)).setRegistryName("mattock"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024 * 1024)).setRegistryName("shears_obsidian"));

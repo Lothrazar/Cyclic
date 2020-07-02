@@ -11,6 +11,7 @@ public class TextureRegistry {
   public static final ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot.png");
   public static final ResourceLocation SLOT_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_large.png");
   public static final ResourceLocation SLOT_BOOK = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_book.png");
+  public static final ResourceLocation SLOT_GPS = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_gps.png");
   public static final ResourceLocation ENERGY_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_ctr.png");
   public static final ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
   public static final ResourceLocation WIDGETS = new ResourceLocation(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");

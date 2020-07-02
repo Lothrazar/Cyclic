@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "isi",
+    "sqs",
+    "isi"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "q": {
+      "item": "minecraft:bone_block"
+    },
+    "s": {
+      "tag": "forge:dusts/redstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:wireless_receiver",
+    "count": 4
+  }
+}
