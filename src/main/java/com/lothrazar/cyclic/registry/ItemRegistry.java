@@ -136,11 +136,14 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    //redstone
+    r.register(new BlockItem(BlockRegistry.clock, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("clock"));
     r.register(new BlockItem(BlockRegistry.wireless_transmitter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("wireless_transmitter"));
     r.register(new BlockItem(BlockRegistry.wireless_receiver, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("wireless_receiver"));
-    // machine blocks   
+    //fun
     r.register(new BlockItem(BlockRegistry.plate_launch_redstone, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("plate_launch_redstone"));
     r.register(new BlockItem(BlockRegistry.plate_launch, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("plate_launch"));
+    // machine blocks   
     r.register(new BlockItem(BlockRegistry.detector_item, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("detector_item"));
     r.register(new BlockItem(BlockRegistry.detector_entity, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("detector_entity"));
     r.register(new BlockItem(BlockRegistry.fisher, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("fisher"));

@@ -81,8 +81,6 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   private void toggleTarget(BlockPos targetPos) {
     BlockState target = world.getBlockState(targetPos);
     if (target.has(BlockStateProperties.POWERED)) {
-      //        world.getTileEntity(targetPos) instanceof TileWirelessRec
-      //        && target.getBlock() instanceof BlockWirelessRec
       boolean targetPowered = target.get(BlockStateProperties.POWERED);
       //update target based on my state
       boolean isPowered = world.isBlockPowered(pos);
@@ -90,6 +88,9 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
         world.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
         //and update myself too   
         world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
+        //TODO: send exact 1-16 power level
+        //        world.getTileEntity(targetPos) instanceof TileWirelessRec
+        //        && target.getBlock() instanceof BlockWirelessRec
       }
     }
   }

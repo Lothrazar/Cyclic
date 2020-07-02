@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iri",
+    "rqr",
+    "iri"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "r": {
+      "tag": "forge:dusts/redstone"
+    },
+    "q": {
+      "item": "minecraft:comparator"
+    }
+  },
+  "result": {
+    "item": "cyclic:clock",
+    "count": 1
+  }
+}

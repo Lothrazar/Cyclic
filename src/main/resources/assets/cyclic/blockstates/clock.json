@@ -1,0 +1,70 @@
+{
+  "forge_marker": 1,
+    "defaults": {
+        "textures": {
+			"particle": "cyclic:block/clock_off",
+			"down" : "cyclic:block/clock_off",
+			"up"   : "cyclic:block/clock_off",
+			"north": "cyclic:block/clock_off",
+			"south": "cyclic:block/clock_off",
+			"west" : "cyclic:block/clock_off",
+			"east" : "cyclic:block/clock_off"
+        },
+        "model": "cube",
+        "uvlock": true
+    },
+    "variants": {
+		"is_lit":{
+			"true":{}, 
+			"false":{}
+		},
+		"d":{
+			"true":{
+				"textures": {
+					"down"   : "cyclic:block/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"u":{
+			"true":{
+				"textures": {
+					"up"   : "cyclic:block/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"n":{
+			"true":{
+				"textures": {
+					"north"   : "cyclic:block/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"s":{
+			"true":{
+				"textures": {
+					"south"   : "cyclic:block/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"w":{
+			"true":{
+				"textures": {
+					"west"   : "cyclic:block/clock_on"
+				}
+			},
+			"false": {}
+		},
+		"e":{
+			"true":{
+				"textures": {
+					"east"   : "cyclic:block/clock_on"
+				}
+			},
+			"false": {}
+		}
+    }
+}

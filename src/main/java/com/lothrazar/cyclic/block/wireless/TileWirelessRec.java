@@ -7,6 +7,8 @@ import net.minecraft.tileentity.ITickableTileEntity;
 
 public class TileWirelessRec extends TileEntityBase implements ITickableTileEntity {
 
+  private int power = 15;//TODO: transmit this
+
   public TileWirelessRec() {
     super(BlockRegistry.Tiles.wireless_receiver);
   }
