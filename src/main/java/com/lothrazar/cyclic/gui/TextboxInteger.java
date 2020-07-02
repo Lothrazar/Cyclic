@@ -8,6 +8,8 @@ import net.minecraft.util.math.BlockPos;
 
 public class TextboxInteger extends TextFieldWidget {
 
+  private static final int KEY_DELETE = 261;
+  private static final int KEY_BACKSPACE = 259;
   private BlockPos pos;
 
   public TextboxInteger(FontRenderer fontIn, int xIn, int yIn, int widthIn,
@@ -22,15 +24,32 @@ public class TextboxInteger extends TextFieldWidget {
   }
 
   @Override
+  protected void onFocusedChanged(boolean p_onFocusedChanged_1_) {
+    super.onFocusedChanged(p_onFocusedChanged_1_);
+    saveValue();
+  }
+
+  @Override
+  public boolean keyPressed(int key, int p_keyPressed_2_, int p_keyPressed_3_) {
+    if (key == KEY_BACKSPACE || key == KEY_DELETE) {
+      saveValue();
+    }
+    return super.keyPressed(key, p_keyPressed_2_, p_keyPressed_3_);
+  }
+
+  private void saveValue() {
+    PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.tileFieldId, this.getCurrent(), pos));
+  }
+
+  @Override
   public boolean charTyped(char chr, int p) {
+    System.out.println(chr + "?" + p);
     if (!Character.isDigit(chr)) {
       return false;
     }
     boolean worked = super.charTyped(chr, p);
     if (worked) {
-      // save to machine
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.tileFieldId,
-          this.getCurrent(), pos));
+      saveValue();
     }
     return worked;
   }

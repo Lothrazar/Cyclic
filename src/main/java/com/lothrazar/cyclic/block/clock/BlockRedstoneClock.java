@@ -32,10 +32,8 @@ public class BlockRedstoneClock extends BlockBase {
   }
 
   private int getPower(IBlockReader world, BlockPos pos, Direction side) {
-    if (world.getTileEntity(pos) instanceof TileRedstoneClock) {
-      return 15;
-    }
-    return 0;
+    TileRedstoneClock tile = (TileRedstoneClock) world.getTileEntity(pos);
+    return tile.getPower();
   }
 
   @Override

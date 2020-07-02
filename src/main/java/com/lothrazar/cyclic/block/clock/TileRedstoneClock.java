@@ -20,19 +20,19 @@ import net.minecraft.util.text.StringTextComponent;
 public class TileRedstoneClock extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   public static enum Fields {
-    TIMER, TOFF, TON, POWER, REDSTONE, N, E, S, W, U, D;
+    TIMER, DELAY, DURATION, POWER, REDSTONE, N, E, S, W, U, D;
   }
 
-  private int timeOff;//dont let these times be zero !!!
-  private int timeOn;
+  private int delay;//dont let these times be zero !!!
+  private int duration;
   private int power;
   private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
 
   public TileRedstoneClock() {
     super(BlockRegistry.Tiles.clock);
     timer = 0;
-    timeOff = 60;
-    timeOn = 60;
+    delay = 60;
+    duration = 60;
     power = 15;
     needsRedstone = 0;
     this.facingResetAllOn();
@@ -87,32 +87,28 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
-  public void read(CompoundNBT compound) {
-    timeOff = compound.getInt("off");
-    timeOn = compound.getInt("on");
-    power = compound.getInt("power");
+  public void read(CompoundNBT tag) {
+    delay = tag.getInt("redstone_delay");
+    duration = tag.getInt("redstone_duration");
+    power = tag.getInt("redstone_power");
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, compound.getBoolean(f.getName()));
+      poweredSides.put(f, tag.getBoolean(f.getName()));
     }
     if (this.detectAllOff()) {
       this.facingResetAllOn();//fix legacy data for one
     }
-    super.read(compound);
+    super.read(tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT compound) {
-    compound.putInt("off", timeOff);
-    compound.putInt("on", timeOn);
-    compound.putInt("power", power);
+  public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("redstone_delay", delay);
+    tag.putInt("redstone_duration", duration);
+    tag.putInt("redstone_power", power);
     for (Direction f : Direction.values()) {
-      compound.putBoolean(f.getName(), poweredSides.get(f));
+      tag.putBoolean(f.getName(), poweredSides.get(f));
     }
-    //    inventory.ifPresent(h -> { 
-    //      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-    //      tag.put("inv", compound);
-    //    });
-    return super.write(compound);
+    return super.write(tag);
   }
 
   @Override
@@ -148,10 +144,10 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
     this.timer++;
     boolean powered;
     boolean prevPowered = blockState.get(BlockRedstoneClock.IS_LIT);
-    if (timer < timeOff) {
+    if (timer < delay) {
       powered = false;
     }
-    else if (timer < timeOff + timeOn) {
+    else if (timer < delay + duration) {
       //we are in the ON section
       powered = true;
     }
@@ -174,10 +170,10 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
         return power;
       case TIMER:
         return timer;
-      case TOFF:
-        return timeOff;
-      case TON:
-        return timeOn;
+      case DELAY:
+        return delay;
+      case DURATION:
+        return duration;
       case REDSTONE:
         return this.needsRedstone;
       case D:
@@ -211,11 +207,11 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
       case TIMER:
         timer = value;
       break;
-      case TOFF:
-        timeOff = Math.max(value, 1);
+      case DELAY:
+        delay = Math.max(value, 1);
       break;
-      case TON:
-        timeOn = Math.max(value, 1);
+      case DURATION:
+        duration = Math.max(value, 1);
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;
