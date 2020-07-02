@@ -51,7 +51,6 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
-    this.txtBox.render(mouseX, mouseX, partialTicks);
   }
 
   @Override
@@ -66,5 +65,6 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
     this.drawSlot(xSize / 2 - 9, 28);
+    this.txtBox.render(mouseX, mouseX, partialTicks);
   }
 }

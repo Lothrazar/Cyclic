@@ -56,9 +56,6 @@ public class ScreenClock extends ScreenBase<ContainerClock> {
   public void render(int mouseX, int mouseY, float partialTicks) {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
-    this.txtDuration.render(mouseX, mouseX, partialTicks);
-    this.txtDelay.render(mouseX, mouseX, partialTicks);
-    this.txtPower.render(mouseX, mouseX, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
   }
 
@@ -71,5 +68,8 @@ public class ScreenClock extends ScreenBase<ContainerClock> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
+    this.txtDuration.render(mouseX, mouseX, partialTicks);
+    this.txtDelay.render(mouseX, mouseX, partialTicks);
+    this.txtPower.render(mouseX, mouseX, partialTicks);
   }
 }

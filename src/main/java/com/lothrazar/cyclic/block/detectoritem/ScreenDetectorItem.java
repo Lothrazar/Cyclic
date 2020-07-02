@@ -81,10 +81,6 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
   public void render(int mouseX, int mouseY, float partialTicks) {
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
-    this.txtX.render(mouseX, mouseX, partialTicks);
-    this.txtY.render(mouseX, mouseX, partialTicks);
-    this.txtZ.render(mouseX, mouseX, partialTicks);
-    this.txtLimit.render(mouseX, mouseX, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
   }
 
@@ -103,5 +99,9 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
+    this.txtX.render(mouseX, mouseX, partialTicks);
+    this.txtY.render(mouseX, mouseX, partialTicks);
+    this.txtZ.render(mouseX, mouseX, partialTicks);
+    this.txtLimit.render(mouseX, mouseX, partialTicks);
   }
 }

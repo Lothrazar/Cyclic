@@ -95,8 +95,6 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
     energy.renderHoveredToolTip(mouseX, mouseY, container.getEnergy());
-    this.txtHeight.render(mouseX, mouseX, partialTicks);
-    this.txtSize.render(mouseX, mouseX, partialTicks);
   }
 
   @Override
@@ -129,5 +127,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     this.drawBackground(TextureRegistry.INVENTORY);
     this.drawSlot(60, 20);
     energy.draw(container.getEnergy());
+    this.txtHeight.render(mouseX, mouseX, partialTicks);
+    this.txtSize.render(mouseX, mouseX, partialTicks);
   }
 }
