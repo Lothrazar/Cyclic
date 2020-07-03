@@ -68,8 +68,7 @@ public class ItemLocationGps extends ItemBase {
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getHorizontalFacing().ordinal());
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
         + UtilChat.blockPosToString(pos));
-    //
-    System.out.println("the hit " + context.getHitVec());
+    // fl
     Vec3d vec = context.getHitVec();
     held.getOrCreateTag().putDouble("hitx", vec.x - pos.getX());
     held.getOrCreateTag().putDouble("hity", vec.y - pos.getY());

@@ -1,9 +1,13 @@
 package com.lothrazar.cyclic.event;
 
 import java.awt.Color;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.item.ItemLocationGps;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
@@ -54,34 +58,51 @@ public class EventRender {
     }
     stack = RandomizerItem.getIfHeld(player);
     if (stack.getItem() instanceof RandomizerItem) {
-      randomizerItemRender(evt, player, stack);
+      int range = 5;
+      BlockRayTraceResult lookingAt = getLookingAt(player, range);
+      if (player.world.getBlockState(lookingAt.getPos()) == Blocks.AIR.getDefaultState()) {
+        return;
+      }
+      List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getPos(), lookingAt.getFace());
+      Map<BlockPos, Color> mappos = new HashMap<>();
+      for (BlockPos e : coords) {
+        mappos.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? Color.GREEN : Color.RED);
+      }
+      renderColourCubes(evt, player, mappos);
+    }
+    stack = player.getHeldItemMainhand();
+    if (stack.getItem() instanceof ItemLocationGps) {
+      //
+      BlockPosDim loc = ItemLocationGps.getPosition(stack);
+      if (loc != null && loc.getDimension() == player.dimension.getId()) {
+        Map<BlockPos, Color> mappos = new HashMap<>();
+        mappos.put(loc.getPos(), Color.BLUE);
+        renderColourCubes(evt, player, mappos);
+      }
     }
   }
 
-  private void randomizerItemRender(RenderWorldLastEvent evt, PlayerEntity player, ItemStack stack) {
-    World world = player.world;
+  private BlockRayTraceResult getLookingAt(PlayerEntity player, int range) {
+    return (BlockRayTraceResult) player.pick(range, 0F, false);
+  }
+
+  private void renderColourCubes(RenderWorldLastEvent evt, PlayerEntity player, Map<BlockPos, Color> coords) {
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    int range = 5;
-    BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, false);
-    if (world.getBlockState(lookingAt.getPos()) == Blocks.AIR.getDefaultState()) {
-      return;
-    }
-    List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getPos(), lookingAt.getFace());
     Vec3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     MatrixStack matrix = evt.getMatrixStack();
     matrix.push();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;
     builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
-    for (BlockPos e : coords) {
+    for (BlockPos e : coords.keySet()) {
       matrix.push();
       matrix.translate(e.getX(), e.getY(), e.getZ());
       matrix.translate(-0.005f, -0.005f, -0.005f);
       matrix.scale(1.01f, 1.01f, 1.01f);
       matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
       Matrix4f positionMatrix = matrix.getLast().getMatrix();
-      Color color = RandomizerItem.canMove(world.getBlockState(e), world, e) ? Color.GREEN : Color.RED;
+      Color color = coords.get(e);
       UtilRender.renderCube(positionMatrix, builder, e, color);
       matrix.pop();
     }
