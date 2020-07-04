@@ -18,7 +18,10 @@ public class CommandHome implements ICyclicCommand {
   @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
     boolean isOp = ctx.getSource().hasPermissionLevel(1);
-    System.out.println("isOp = " + isOp);
+    if (!isOp) {
+      UtilChat.sendFeedback(ctx, "commands.help.failed");
+      return 1;
+    }
     BlockPos bedLocation = player.getBedLocation(player.dimension);
     if (bedLocation == null) {
       UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");
