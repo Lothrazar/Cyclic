@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.util;
 
+import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -9,7 +11,13 @@ public class UtilChat {
 
   public static void addChatMessage(PlayerEntity player, String message) {
     if (player.world.isRemote) {
-      player.sendMessage(new TranslationTextComponent((message)));
+      player.sendMessage(new TranslationTextComponent(message));
+    }
+  }
+
+  public static void addServerChatMessage(PlayerEntity player, String message) {
+    if (!player.world.isRemote) {
+      player.sendMessage(new TranslationTextComponent(message));
     }
   }
 
@@ -30,5 +38,9 @@ public class UtilChat {
   public static String lang(String message) {
     TranslationTextComponent t = new TranslationTextComponent(message);
     return t.getFormattedText();
+  }
+
+  public static void sendFeedback(CommandContext<CommandSource> ctx, String string) {
+    ctx.getSource().sendFeedback(new TranslationTextComponent(string), false);
   }
 }
