@@ -22,7 +22,7 @@ public class CommandGetHome implements ICyclicCommand {
       return 0;
     }
     UtilChat.sendFeedback(ctx, UtilChat.lang("command.cyclic.gethome.yours")
-        + bedLocation);
+        + " " + UtilChat.blockPosToString(bedLocation));
     return 1;
   }
 }
