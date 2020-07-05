@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"all": "cyclic:items/ender_lightning",
-		"arc": "cyclic:items/ender_lightning_arc_1"
+		"all": "cyclic:items/lightning_scepter",
+		"arc": "cyclic:items/lightning_scepter_arc"
 	},
 
 	"elements": [
