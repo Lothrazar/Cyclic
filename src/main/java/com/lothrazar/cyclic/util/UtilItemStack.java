@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.util;
 
 import java.util.List;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -61,10 +60,6 @@ public class UtilItemStack {
   public static void drop(World world, BlockPos pos, ItemStack drop) {
     if (!world.isRemote)
       world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
-  }
-
-  public static float getBlockHardness(BlockState state, World world, BlockPos pos) {
-    return state.getBlock().getBlockHardness(state, world, pos);
   }
 
   public static boolean matches(ItemStack current, ItemStack in) {

@@ -122,7 +122,7 @@ public class UtilFluid {
       return false;
     }
     catch (Exception e) {
-      ModCyclic.error("A fluid tank had an issue when we tried to fill", e);
+      ModCyclic.LOGGER.error("A fluid tank had an issue when we tried to fill", e);
       //charset crashes here i guess
       //https://github.com/PrinceOfAmber/Cyclic/issues/605
       // https://github.com/PrinceOfAmber/Cyclic/issues/605https://pastebin.com/YVtMYsF6

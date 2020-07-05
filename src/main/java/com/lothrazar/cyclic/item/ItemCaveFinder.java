@@ -42,7 +42,6 @@ public class ItemCaveFinder extends ItemBase {
     super(properties.maxDamage(10));
   }
 
-  private static final int DURABILITY = 2000;
   private static final int COOLDOWN = 12;
   private static int range = 48;
 

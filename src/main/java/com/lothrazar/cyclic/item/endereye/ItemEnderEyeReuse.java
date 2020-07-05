@@ -18,10 +18,6 @@ import net.minecraft.world.server.ServerWorld;
 
 public class ItemEnderEyeReuse extends ItemBase {
 
-  private static final int COOLDOWN = 10;
-  private static int DUNGEONRADIUS = 64;
-  private boolean USE_THREADING;
-
   public ItemEnderEyeReuse(Properties properties) {
     super(properties.maxDamage(256));
   }

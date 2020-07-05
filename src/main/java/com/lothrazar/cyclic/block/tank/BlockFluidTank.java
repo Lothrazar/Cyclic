@@ -151,7 +151,7 @@ public class BlockFluidTank extends BlockBase {
     }
     catch (Exception e) {
       //
-      ModCyclic.error("Error during fill from item ", e);
+      ModCyclic.LOGGER.error("Error during fill from item ", e);
     }
     //set default state
     state = state.with(TANK_ABOVE, false).with(TANK_BELOW, false);

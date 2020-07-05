@@ -55,8 +55,8 @@ public abstract class BlockBase extends Block {
     this.hasGui = true;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
-  @Deprecated
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (this.hasGui && !world.isRemote) {
       TileEntity tileEntity = world.getTileEntity(pos);
@@ -71,6 +71,7 @@ public abstract class BlockBase extends Block {
     return super.onBlockActivated(state, world, pos, player, hand, result);
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {

@@ -41,14 +41,10 @@ public class CommandRegistry {
     for (ICyclicCommand cmd : COMMANDS) {
       SUBCOMMANDS.add(cmd.getName());
     }
-    //
     CommandDispatcher<CommandSource> r = event.getCommandDispatcher();
     // what now lol
     r.register(LiteralArgumentBuilder.<CommandSource> literal(ModCyclic.MODID)
-        .then(Commands.argument("arguments", StringArgumentType.greedyString())
-            //            .then(Commands.argument("arguments", StringArgumentType.greedyString())
-            //                
-            .executes(this::execute))
+        .then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(this::execute))
         .executes(this::execute));
   }
 

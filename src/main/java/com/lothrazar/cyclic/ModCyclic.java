@@ -19,7 +19,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -27,16 +26,13 @@ import net.minecraftforge.fml.loading.FMLPaths;
 @Mod(ModCyclic.MODID)
 public class ModCyclic {
 
-  public static final String certificateFingerprint = "@FINGERPRINT@";
-  public static final IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
   public static final String MODID = "cyclic";
   public static final Logger LOGGER = LogManager.getLogger();
-  public static ConfigManager config;
+  public static final IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
   public ModCyclic() {
-    // Register the setup method for modloading
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-    config = new ConfigManager(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
+    ConfigManager.setup(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
     FluidRegistry.setup();
   }
 
@@ -52,14 +48,5 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
-    FMLServerStartingEvent x;
-  }
-
-  public static void error(String s, Object... list) {
-    LOGGER.error(s, list);
-  }
-
-  public static void log(String s, Object... list) {
-    LOGGER.info(s, list);
   }
 }

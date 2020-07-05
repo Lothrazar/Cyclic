@@ -91,7 +91,7 @@ public class ConfigManager {
     COMMON_CONFIG = CFG.build();
   }
 
-  public ConfigManager(Path path) {
+  public static void setup(Path path) {
     final CommentedFileConfig configData = CommentedFileConfig.builder(path)
         .sync()
         .autosave()

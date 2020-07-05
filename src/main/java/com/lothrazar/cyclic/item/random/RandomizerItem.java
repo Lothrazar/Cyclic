@@ -92,7 +92,7 @@ public class RandomizerItem extends ItemBase {
   }
 
   public static boolean canMove(BlockState stateHere, World world, BlockPos p) {
-    if (stateHere.getBlock().getBlockHardness(stateHere, world, p) < 0) {
+    if (stateHere.getBlockHardness(world, p) < 0) {
       return false;//unbreakable
     }
     if (world.getTileEntity(p) == null

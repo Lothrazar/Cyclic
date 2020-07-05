@@ -28,7 +28,6 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -47,8 +46,7 @@ public class WaterSpreaderItem extends ItemBase {
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
-    //
-    ItemStack stack = context.getItem();
+    // 
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
     if (side != null) {
@@ -57,28 +55,6 @@ public class WaterSpreaderItem extends ItemBase {
     spreadWaterFromCenter(context.getWorld(), player, pos);
     return super.onItemUse(context);
   }
-  //
-  //  @Override
-  //  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-  //    ItemStack stack = player.getHeldItem(hand);
-  //    if (pos == null) {
-  //      return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
-  //    }
-  //    if (side != null) {
-  //      pos = pos.offset(side);
-  //    }
-  //    if (spreadWaterFromCenter(world, player, pos))
-  //      super.onUse(stack, player, world, hand);
-  //    return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
-  //  }
-  //
-  //  @Override
-  //  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-  //    ItemStack stack = player.getHeldItem(hand);
-  //    if (spreadWaterFromCenter(world, player, player.getPosition()))
-  //      super.onUse(stack, player, world, hand);
-  //    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-  //  }
 
   private boolean spreadWaterFromCenter(World world, PlayerEntity player, BlockPos posCenter) {
     int count = 0;
@@ -86,16 +62,6 @@ public class WaterSpreaderItem extends ItemBase {
       if (world.hasWater(pos)) {
         world.setBlockState(pos, Blocks.WATER.getDefaultState());
       }
-      //      world.setBlockState(pos, world.getBlockState(pos)
-      //          .with(WaterBlock.LEVEL, 0)); // , state.withProperty(LEVEL, 0)
-      //instead of just setBlockState, get the correct state for max level and for this fluid material, then schedule a tick update.
-      //      //this way, it sends correct block update and avoids 'stuck' water that doesnt flow
-      //      BlockDynamicLiquid blockdynamicliquid = BlockLiquid.getFlowingBlock(Material.WATER);
-      //      IBlockState state = blockdynamicliquid.getDefaultState();
-      //      world.setBlockState(pos, blockdynamicliquid.getDefaultState().withProperty(BlockLiquid.LEVEL, state.getValue(BlockLiquid.LEVEL)), 2);
-      //      world.scheduleUpdate(pos, blockdynamicliquid, blockdynamicliquid.tickRate(world));
-      //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
-      //      UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
       count++;
     }
     boolean success = count > 0;

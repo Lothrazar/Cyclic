@@ -56,7 +56,7 @@ public class UtilString {
       if (matchWildcard) {
         String[] blockIdArray = strFromList.split(":");
         if (blockIdArray.length <= 1) {
-          ModCyclic.error("Invalid config value for block : ", strFromList);
+          ModCyclic.LOGGER.error("Invalid config value for block : ", strFromList);
           return false;
         }
         String modIdFromList = blockIdArray[0];

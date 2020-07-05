@@ -120,7 +120,7 @@ public class TileTransporterItem extends ItemBase {
       }
     }
     catch (Exception e) {
-      ModCyclic.error("Error attempting to place block in world", e);
+      ModCyclic.LOGGER.error("Error attempting to place block in world", e);
       UtilChat.sendStatusMessage(player, "chest_sack.error.place");
       world.setBlockState(pos, Blocks.AIR.getDefaultState());
       return false;

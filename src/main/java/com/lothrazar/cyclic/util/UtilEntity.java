@@ -39,7 +39,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
@@ -571,8 +570,6 @@ public class UtilEntity {
 
   public static IAttributeInstance getAttributeJump(HorseEntity ahorse) {
     try {
-      IAttribute JUMP_STRENGTH = (new RangedAttribute((IAttribute) null, "horse.jumpStrength", 0.7D, 0.0D, 2.0D)).setDescription("Jump Strength").setShouldWatch(true);
-      //      JUMP_STRENGTH.set
       Field f = ObfuscationReflectionHelper.findField(AbstractHorseEntity.class, "field_110271_bv");//JUMP_STRENGTH
       f.setAccessible(true);
       Field modifiersField = Field.class.getDeclaredField("modifiers");
@@ -583,7 +580,7 @@ public class UtilEntity {
       return ahorse.getAttribute(jump);
     }
     catch (Exception e) {
-      ModCyclic.error("Horse jump error", e);
+      ModCyclic.LOGGER.error("Horse jump error", e);
     }
     return null;
   }
@@ -596,7 +593,7 @@ public class UtilEntity {
       m.invoke(ahorse);
     }
     catch (Exception e) {
-      ModCyclic.error("Horse eating animation error", e);
+      ModCyclic.LOGGER.error("Horse eating animation error", e);
     }
   }
 }

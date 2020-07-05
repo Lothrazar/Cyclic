@@ -134,6 +134,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void tryToggleRedstone(final BlockPos pos) {
     if (owner instanceof PlayerEntity) {
       try {
@@ -148,7 +149,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
       }
       catch (Throwable e) {
         //since activated can hit any block, be safe
-        ModCyclic.error("Error on activate block", e);
+        ModCyclic.LOGGER.error("Error on activate block", e);
       }
     }
   }

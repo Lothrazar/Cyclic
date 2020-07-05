@@ -67,7 +67,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     //      toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
     //    }
     BlockPos posTarget = pos.offset(myFacingDir);
-    boolean outputSuccess = UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
+    UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
   }
 
   public void moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {

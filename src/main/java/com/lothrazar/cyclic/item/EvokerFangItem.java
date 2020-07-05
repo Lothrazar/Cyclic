@@ -28,7 +28,7 @@ public class EvokerFangItem extends ItemBase {
     double minY = posY;//Math.min(posY, caster.posY);
     //double d1 = Math.max(posY,caster.posY) ;
     double tposX = player.getPosX();
-    double tposY = player.getPosY();
+    //    double tposY = player.getPosY();
     double tposZ = player.getPosZ();
     float arctan = (float) MathHelper.atan2(posZ - tposZ, posX - tposX);
     for (int i = 0; i < MAX_RANGE; ++i) {

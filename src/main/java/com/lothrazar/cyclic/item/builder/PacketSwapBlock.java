@@ -100,7 +100,7 @@ public class PacketSwapBlock extends PacketBase {
           if (isInBlacklist) {
             continue;
           }
-          if (UtilItemStack.getBlockHardness(replacedBlockState, world, curPos) < 0) {
+          if (replacedBlockState.getBlockHardness(world, curPos) < 0) {
             continue;//since we know -1 is unbreakable
           }
           //wait, do they match? are they the same? do not replace myself

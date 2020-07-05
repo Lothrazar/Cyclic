@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,7 +32,7 @@ public class UtilWorld {
     for (int i = 0; i < max; i++) {
       BlockState state = world.getBlockState(posLoop);
       if (state.getBlock() != null
-          && world.getBlockState(posLoop).getBlock().isAir(state)//.isReplaceable(world, posLoop)
+          && world.getBlockState(posLoop).getBlock() == Blocks.AIR//.isAir(state)//.isReplaceable(world, posLoop)
       ) {
         posToPlaceAt = posLoop;
         break;

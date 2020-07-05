@@ -96,7 +96,7 @@ public class UtilPlaceBlocks {
       // if there is a block here, we might have to stop
       stateHere = world.getBlockState(placePos);
       if (stateHere != null) {
-        Block blockHere = stateHere.getBlock();
+        //        Block blockHere = stateHere.getBlock();
         //
         //        if (blockHere.isReplaceable(world, placePos) == false) {
         //          // for example, torches, and the top half of a slab if you click
@@ -129,7 +129,7 @@ public class UtilPlaceBlocks {
       // PR for context https://github.com/PrinceOfAmber/Cyclic/pull/577/files
       // and  https://github.com/PrinceOfAmber/Cyclic/pull/579/files
       // show exception from above, possibly failed placement
-      ModCyclic.error("Error attempting to place block ", e);
+      ModCyclic.LOGGER.error("Error attempting to place block ", e);
     }
     // play sound to area when placement is a success
     if (success && playSound) {
