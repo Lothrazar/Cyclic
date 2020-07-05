@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.block.BlockPeatFuel;
 import com.lothrazar.cyclic.block.BlockSound;
 import com.lothrazar.cyclic.block.BlockSpikes;
 import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
+import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
@@ -184,6 +185,8 @@ public class BlockRegistry {
   public static Block crate;
   @ObjectHolder(ModCyclic.MODID + ":cask")
   public static Block cask;
+  @ObjectHolder(ModCyclic.MODID + ":flower_cyan")
+  public static Block flower_cyan;
 
   public static class Tiles {
 
@@ -288,6 +291,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));
     r.register(new BlockCask(Block.Properties.create(Material.ROCK)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.ROCK)).setRegistryName("crate"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));

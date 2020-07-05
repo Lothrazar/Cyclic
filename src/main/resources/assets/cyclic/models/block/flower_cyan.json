@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "cyclic:blocks/flower_cyan"
+    }
+}
