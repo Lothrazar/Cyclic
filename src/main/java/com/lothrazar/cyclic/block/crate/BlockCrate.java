@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockReader;
 public class BlockCrate extends BlockBase {
 
   public BlockCrate(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.STONE));
+    super(properties.hardnessAndResistance(1.1F, 3600000.0F).sound(SoundType.STONE));
     this.setHasGui();
   }
 

@@ -11,6 +11,8 @@
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.collector.tooltip": "Picks up nearby items",
     
+    "block.cyclic.crate": "Crate",
+    "block.cyclic.crate.tooltip": "Reinforced item storage",
     "block.cyclic.dark_glass": "Tempered Glass",
     "block.cyclic.dark_glass.tooltip": "Immune to light, explosions, and wither blasts",
     "block.cyclic.soundproofing": "Soundproofing",

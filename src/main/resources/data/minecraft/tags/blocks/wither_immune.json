@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "cyclic:dark_glass"
+    "cyclic:dark_glass",
+    "cyclic:crate"
   ]
 }

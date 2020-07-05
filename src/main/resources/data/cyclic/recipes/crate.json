@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "scs",
+    "rsr"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:iron_bars"
+    },
+    "r": {
+      "tag": "forge:chests/wooden"
+    },
+    "c": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:crate",
+    "count": 2
+  }
+}
