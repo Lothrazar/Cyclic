@@ -10,7 +10,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
 
-  private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+  private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
   public static BooleanValue SCAFFOLD = null;
   public static BooleanValue EMERALD;
@@ -33,42 +33,62 @@ public class ConfigManager {
   public static IntValue HARVESTERPOWER;
   public static IntValue DISENCHANTERPOWER;
   public static DoubleValue PEATCHANCE;
+  public static BooleanValue COMMANDNBT;
+  public static BooleanValue COMMANDGETHOME;
+  public static BooleanValue COMMANDHEALTH;
+  public static BooleanValue COMMANDHOME;
+  public static BooleanValue COMMANDHUNGER;
+  public static BooleanValue COMMANDPINGNETHER;
+  public static BooleanValue COMMANDWORLDSPAWN;
+  public static BooleanValue COMMANDGETHELP;
   static {
     initConfig();
   }
 
   private static void initConfig() {
-    COMMON_BUILDER.comment("Feature toggles; each of these will disable the registration of some content (items/enchants)").push(ModCyclic.MODID);
-    CABLES = COMMON_BUILDER.comment("Disable the cables aka pipes").define("cables", true);
-    BOOMERANGS = COMMON_BUILDER.comment("Disable the 3 boomerang items").define("boomerangs", true);
-    SPIKES = COMMON_BUILDER.comment("Disable the 3 spike blocks").define("spikes", true);
-    SCAFFOLD = COMMON_BUILDER.comment("Disable the 3 scaffolding blocks").define("scaffolding", true);
-    CARROTS = COMMON_BUILDER.comment("Disable the 5 carrot items that upgrade horses").define("carrots", true);
-    HEARTS = COMMON_BUILDER.comment("Disable 2 heart items that increase and decrease max health").define("hearts", true);
-    GLOVE = COMMON_BUILDER.comment("Disable the completely balanced climbing glove").define("glove", true);
-    CHARMS = COMMON_BUILDER.comment("Disable 6 charms (four basic, the ultimate, and the anti-gravity)").define("charms", true);
-    EMERALD = COMMON_BUILDER.comment("Disable 9 items, emerald armor and tools").define("emeraldGear", true);
-    SANDSTONE = COMMON_BUILDER.comment("Disable 5 sandstone tools").define("sandstoneGear", true);
-    GEMGEAR = COMMON_BUILDER.comment("Disable the endgame gear").define("gemObsidianGear", true);
-    NETHERBRICK = COMMON_BUILDER.comment("Disable 5 netherbrick tools").define("netherbrickGear", true);
-    ENCHANTMENTS = COMMON_BUILDER.comment("Disable all 11 enchantments").define("enchantments", true);
-    PEATPOWER = COMMON_BUILDER.comment("Power to repair one tick of durability")
-        .defineInRange("energy.fuel.peat_fuel", 256, 1, 64000);
-    PEATERICHPOWER = COMMON_BUILDER.comment("Power gained burning one of this")
-        .defineInRange("energy.fuel.peat_fuel_enriched", 256 * 4, 1, 64000);
-    DISENCHANTERPOWER = COMMON_BUILDER.comment("Power gained burning one of this").defineInRange("energy.cost.disenchanter", 1500, 1, 64000);
-    ANVILPOWER = COMMON_BUILDER.comment("Power gained burning one of this").defineInRange("energy.cost.anvil", 250, 1, 64000);
-    MELTERPOWER = COMMON_BUILDER.comment("Power per recipe")
-        .defineInRange("energy.cost.melter", 5000, 1, 64000);
-    SOLIDIFIERPOWER = COMMON_BUILDER.comment("Power per recipe")
-        .defineInRange("energy.cost.solidifier", 5000, 1, 64000);
-    HARVESTERPOWER = COMMON_BUILDER.comment("Power per use")
-        .defineInRange("energy.cost.harvester", 250, 1, 64000);
-    PEATCHANCE = COMMON_BUILDER.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)").defineInRange("peat.conversionChance",
-        0.08000000000000F,
-        0.0010000000000F, 1F);
-    COMMON_BUILDER.pop();
-    COMMON_CONFIG = COMMON_BUILDER.build();
+    CFG.comment("Feature toggles; each of these will disable the registration of some content (items/enchants)").push(ModCyclic.MODID);
+    String category = "";
+    CABLES = CFG.comment("Disable the cables aka pipes").define(category + "cables", true);
+    BOOMERANGS = CFG.comment("Disable the 3 boomerang items").define(category + "boomerangs", true);
+    SPIKES = CFG.comment("Disable the 3 spike blocks").define(category + "spikes", true);
+    SCAFFOLD = CFG.comment("Disable the 3 scaffolding blocks").define(category + "scaffolding", true);
+    CARROTS = CFG.comment("Disable the 5 carrot items that upgrade horses").define(category + "carrots", true);
+    HEARTS = CFG.comment("Disable 2 heart items that increase and decrease max health").define(category + "hearts", true);
+    GLOVE = CFG.comment("Disable the completely balanced climbing glove").define(category + "glove", true);
+    CHARMS = CFG.comment("Disable 6 charms (four basic, the ultimate, and the anti-gravity)").define(category + "charms", true);
+    EMERALD = CFG.comment("Disable 9 items, emerald armor and tools").define(category + "emeraldGear", true);
+    SANDSTONE = CFG.comment("Disable 5 sandstone tools").define(category + "sandstoneGear", true);
+    GEMGEAR = CFG.comment("Disable the endgame gear").define(category + "gemObsidianGear", true);
+    NETHERBRICK = CFG.comment("Disable 5 netherbrick tools").define(category + "netherbrickGear", true);
+    ENCHANTMENTS = CFG.comment("Disable all 11 enchantments").define(category + "enchantments", true);
+    category = "energy.fuel.";
+    PEATPOWER = CFG.comment("Power to repair one tick of durability")
+        .defineInRange(category + "peat_fuel", 256, 1, 64000);
+    PEATERICHPOWER = CFG.comment("Power gained burning one of this")
+        .defineInRange(category + "peat_fuel_enriched", 256 * 4, 1, 64000);
+    category = "energy.cost.";
+    DISENCHANTERPOWER = CFG.comment("Power gained burning one of this").defineInRange(category + "disenchanter", 1500, 1, 64000);
+    ANVILPOWER = CFG.comment("Power gained burning one of this").defineInRange(category + "anvil", 250, 1, 64000);
+    MELTERPOWER = CFG.comment("Power per recipe").defineInRange(category + "melter", 5000, 1, 64000);
+    SOLIDIFIERPOWER = CFG.comment("Power per recipe").defineInRange(category + "solidifier", 5000, 1, 64000);
+    HARVESTERPOWER = CFG.comment("Power per use").defineInRange(category + "harvester", 250, 1, 64000);
+    category = "peat.";
+    PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
+        .defineInRange(category + " conversionChance",
+            0.08000000000000F,
+            0.0010000000000F, 1F);
+    category = "command.";
+    COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "gethome", false);
+    COMMANDGETHELP = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "help", false);
+    COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "health", true);
+    COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "home", true);
+    COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "hunger", true);
+    COMMANDNBT = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "nbtprint", false);
+    COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "pingnether", false);
+    COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "worldspawn", true);
+    // done
+    CFG.pop();
+    COMMON_CONFIG = CFG.build();
   }
 
   public ConfigManager(Path path) {

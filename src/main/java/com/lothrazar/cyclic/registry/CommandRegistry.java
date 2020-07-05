@@ -26,7 +26,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
 public class CommandRegistry {
 
-  List<String> subs = new ArrayList<>();
+  public static final List<String> SUBCOMMANDS = new ArrayList<>();
   public static final List<ICyclicCommand> COMMANDS = new ArrayList<>();
 
   @SubscribeEvent
@@ -39,7 +39,7 @@ public class CommandRegistry {
     COMMANDS.add(new CommandNetherping());
     COMMANDS.add(new CommandWorldspawn());
     for (ICyclicCommand cmd : COMMANDS) {
-      subs.add(cmd.getName());
+      SUBCOMMANDS.add(cmd.getName());
     }
     //
     CommandDispatcher<CommandSource> r = event.getCommandDispatcher();
@@ -63,6 +63,18 @@ public class CommandRegistry {
     //loop on all registered commands
     for (ICyclicCommand cmd : COMMANDS) {
       if (sub.equalsIgnoreCase(cmd.getName())) {
+        //do i need op
+        if (cmd.needsOp()) {
+          //ok check me
+          boolean isOp = ctx.getSource().hasPermissionLevel(1);
+          if (!isOp) {
+            //player needs op but does not have it
+            ModCyclic.LOGGER.info("Player [" + player.getDisplayNameAndUUID().getFormattedText() + "] attempted /cyclic command "
+                + sub + " but does not have the required permissions");
+            UtilChat.sendFeedback(ctx, "commands.help.failed");
+            return 1;
+          }
+        }
         return cmd.execute(ctx, arguments.subList(2, arguments.size()), player);
       }
     }
@@ -73,6 +85,6 @@ public class CommandRegistry {
   private void badCommandMsg(ServerPlayerEntity player) {
     UtilChat.addServerChatMessage(player,
         UtilChat.lang("command.cyclic.arguments.null")
-            + "[" + String.join(", ", subs) + "]");
+            + "[" + String.join(", ", SUBCOMMANDS) + "]");
   }
 }

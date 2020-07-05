@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.List;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.mojang.brigadier.context.CommandContext;
@@ -16,12 +17,12 @@ public class CommandHome implements ICyclicCommand {
   }
 
   @Override
+  public boolean needsOp() {
+    return ConfigManager.COMMANDHOME.get();
+  }
+
+  @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    boolean isOp = ctx.getSource().hasPermissionLevel(1);
-    if (!isOp) {
-      UtilChat.sendFeedback(ctx, "commands.help.failed");
-      return 1;
-    }
     BlockPos bedLocation = player.getBedLocation(player.dimension);
     if (bedLocation == null) {
       UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");

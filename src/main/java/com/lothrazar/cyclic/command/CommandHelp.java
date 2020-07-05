@@ -2,26 +2,32 @@ package com.lothrazar.cyclic.command;
 
 import java.util.List;
 import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.registry.CommandRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class CommandHealth implements ICyclicCommand {
+public class CommandHelp implements ICyclicCommand {
 
   @Override
   public String getName() {
-    return "health";
+    return "help";
   }
 
   @Override
   public boolean needsOp() {
-    return ConfigManager.COMMANDHEALTH.get();
+    return ConfigManager.COMMANDGETHELP.get();
   }
 
   @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    float newlevel = Float.parseFloat(arguments.get(0));
-    player.setHealth(newlevel);
+    UtilChat.addServerChatMessage(player,
+        "[" + String.join(", ", CommandRegistry.SUBCOMMANDS) + "]");
+    for (ICyclicCommand cmd : CommandRegistry.COMMANDS) {
+      UtilChat.addServerChatMessage(player,
+          cmd.getName());
+    }
     return 1;
   }
 }

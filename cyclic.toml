@@ -28,14 +28,38 @@
 	#Disable the 5 carrot items that upgrade horses
 	carrots = true
 
+	[cyclic.command]
+		#True means only players with OP can use this /cyclic command
+		help = false
+		#True means only players with OP can use this /cyclic command
+		nbtprint = false
+		#True means only players with OP can use this /cyclic command
+		health = true
+		#True means only players with OP can use this /cyclic command
+		pingnether = false
+		#True means only players with OP can use this /cyclic command
+		gethome = false
+		#True means only players with OP can use this /cyclic command
+		worldspawn = true
+		#True means only players with OP can use this /cyclic command
+		home = true
+		#True means only players with OP can use this /cyclic command
+		hunger = true
+
 	[cyclic.peat]
 		#Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)
 		#Range: 0.0010000000474974513 ~ 1.0
-		conversionChance = 0.07999999821186066
+		" conversionChance" = 0.07999999821186066
 
 	[cyclic.energy]
 
 		[cyclic.energy.cost]
+			#Power per use
+			#Range: 1 ~ 64000
+			harvester = 250
+			#Power gained burning one of this
+			#Range: 1 ~ 64000
+			disenchanter = 1500
 			#Power gained burning one of this
 			#Range: 1 ~ 64000
 			anvil = 250

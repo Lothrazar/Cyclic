@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.List;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
@@ -15,12 +15,12 @@ public class CommandWorldspawn implements ICyclicCommand {
   }
 
   @Override
+  public boolean needsOp() {
+    return ConfigManager.COMMANDWORLDSPAWN.get();
+  }
+
+  @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    boolean isOp = ctx.getSource().hasPermissionLevel(1);
-    if (!isOp) {
-      UtilChat.sendFeedback(ctx, "commands.help.failed");
-      return 1;
-    }
     UtilEntity.teleportWallSafe(player, player.world, player.world.getSpawnPoint());
     return 1;
   }
