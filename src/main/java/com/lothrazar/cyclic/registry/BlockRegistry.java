@@ -36,6 +36,9 @@ import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.BlockCollector;
 import com.lothrazar.cyclic.block.collectitem.ContainerCollector;
 import com.lothrazar.cyclic.block.collectitem.TileCollector;
+import com.lothrazar.cyclic.block.crate.BlockCrate;
+import com.lothrazar.cyclic.block.crate.ContainerCrate;
+import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.detector.BlockDetector;
 import com.lothrazar.cyclic.block.detector.ContainerDetector;
 import com.lothrazar.cyclic.block.detector.TileDetector;
@@ -175,6 +178,8 @@ public class BlockRegistry {
   public static Block wireless_receiver;
   @ObjectHolder(ModCyclic.MODID + ":clock")
   public static Block clock;
+  @ObjectHolder(ModCyclic.MODID + ":crate")
+  public static Block crate;
 
   public static class Tiles {
 
@@ -230,6 +235,8 @@ public class BlockRegistry {
     public static TileEntityType<TileFluidCollect> collector_fluid;
     @ObjectHolder(ModCyclic.MODID + ":clock")
     public static TileEntityType<TileRedstoneClock> clock;
+    @ObjectHolder(ModCyclic.MODID + ":crate")
+    public static TileEntityType<TileCrate> crate;
   }
 
   public static class ContainerScreens {
@@ -268,11 +275,14 @@ public class BlockRegistry {
     public static ContainerType<ContainerTransmit> wireless_transmitter;
     @ObjectHolder(ModCyclic.MODID + ":clock")
     public static ContainerType<ContainerClock> clock;
+    @ObjectHolder(ModCyclic.MODID + ":crate")
+    public static ContainerType<ContainerCrate> crate;
   }
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockCrate(Block.Properties.create(Material.ROCK)).setRegistryName("crate"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));
     r.register(new BlockWirelessRec(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_receiver"));
     r.register(new BlockWirelessTransmit(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_transmitter"));
@@ -316,6 +326,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileCrate::new, BlockRegistry.crate).build(null).setRegistryName("crate"));
     r.register(TileEntityType.Builder.create(TileRedstoneClock::new, BlockRegistry.clock).build(null).setRegistryName("clock"));
     r.register(TileEntityType.Builder.create(TileWirelessRec::new, BlockRegistry.wireless_receiver).build(null).setRegistryName("wireless_receiver"));
     r.register(TileEntityType.Builder.create(TileWirelessTransmit::new, BlockRegistry.wireless_transmitter).build(null).setRegistryName("wireless_transmitter"));
@@ -398,5 +409,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerClock(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("clock"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCrate(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("crate"));
   }
 }
