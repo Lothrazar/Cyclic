@@ -10,6 +10,8 @@
 	"block.cyclic.experience_pylon.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.collector.tooltip": "Picks up nearby items",
+    "block.cyclic.cask": "Cask",
+    "block.cyclic.cask.tooltip": "Small fluid tank",
     
     "block.cyclic.crate": "Crate",
     "block.cyclic.crate.tooltip": "Reinforced item storage",

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.tank;
+package com.lothrazar.cyclic.block.tankcask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,33 +6,23 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
-import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -40,49 +30,11 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-public class BlockFluidTank extends BlockBase {
+public class BlockCask extends BlockBase {
 
-  public static final BooleanProperty TANK_ABOVE = BooleanProperty.create("above");
-  public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");
-  public static final int heightCheckMax = 16;
-
-  public BlockFluidTank(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F)
-        .notSolid());
-  }
-
-  @Override
-  @Deprecated
-  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return 1.0f;
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-    return false;
-  }
-
-  @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    super.fillStateContainer(builder);
-    builder.add(TANK_ABOVE, TANK_BELOW);
-  }
-
-  @Override
-  public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
-    boolean tileAbove = world.getTileEntity(pos.up()) instanceof TileTank;
-    boolean tileBelow = world.getTileEntity(pos.down()) instanceof TileTank;
-    return state
-        .with(TANK_ABOVE, tileAbove)
-        .with(TANK_BELOW, tileBelow);
-  }
-
-  @Override
-  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-    return true;
+  public BlockCask(Properties properties) {
+    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F));
   }
 
   @Override
@@ -92,7 +44,7 @@ public class BlockFluidTank extends BlockBase {
 
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileTank();
+    return new TileCask();
   }
 
   @Override
@@ -130,13 +82,6 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
-  public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.tank, RenderTank::new);
-  }
-
-  @Override
   public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 
     return new ArrayList<>();
@@ -159,7 +104,7 @@ public class BlockFluidTank extends BlockBase {
       ModCyclic.LOGGER.error("Error during fill from item ", e);
     }
     //set default state
-    state = state.with(TANK_ABOVE, false).with(TANK_BELOW, false);
+    //    state = state.with(TANK_ABOVE, false).with(TANK_BELOW, false);
     world.setBlockState(pos, state);
   }
 

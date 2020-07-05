@@ -6,7 +6,7 @@
         "igi"
   ],
   "key": {
-    "o": { "item": "minecraft:obsidian"    },
+    "o": { "item": "cyclic:cask"    },
     "i": { "item": "minecraft:iron_ingot"  },
     "g": { "item": "minecraft:glass" }
   },

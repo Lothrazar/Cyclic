@@ -78,6 +78,8 @@ import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
+import com.lothrazar.cyclic.block.tankcask.BlockCask;
+import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.wireless.BlockWirelessRec;
@@ -180,6 +182,8 @@ public class BlockRegistry {
   public static Block clock;
   @ObjectHolder(ModCyclic.MODID + ":crate")
   public static Block crate;
+  @ObjectHolder(ModCyclic.MODID + ":cask")
+  public static Block cask;
 
   public static class Tiles {
 
@@ -237,6 +241,8 @@ public class BlockRegistry {
     public static TileEntityType<TileRedstoneClock> clock;
     @ObjectHolder(ModCyclic.MODID + ":crate")
     public static TileEntityType<TileCrate> crate;
+    @ObjectHolder(ModCyclic.MODID + ":cask")
+    public static TileEntityType<TileCrate> cask;
   }
 
   public static class ContainerScreens {
@@ -282,6 +288,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockCask(Block.Properties.create(Material.ROCK)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.ROCK)).setRegistryName("crate"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));
     r.register(new BlockWirelessRec(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_receiver"));
@@ -326,6 +333,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileCask::new, BlockRegistry.cask).build(null).setRegistryName("cask"));
     r.register(TileEntityType.Builder.create(TileCrate::new, BlockRegistry.crate).build(null).setRegistryName("crate"));
     r.register(TileEntityType.Builder.create(TileRedstoneClock::new, BlockRegistry.clock).build(null).setRegistryName("clock"));
     r.register(TileEntityType.Builder.create(TileWirelessRec::new, BlockRegistry.wireless_receiver).build(null).setRegistryName("wireless_receiver"));

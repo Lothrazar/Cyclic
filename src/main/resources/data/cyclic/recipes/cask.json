@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "scs",
+    "rsr"
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:string"
+    },
+    "r": {
+      "tag": "forge:leather"
+    },
+    "c": {
+      "item": "minecraft:barrel"
+    }
+  },
+  "result": {
+    "item": "cyclic:cask",
+    "count": 1
+  }
+}
