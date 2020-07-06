@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.fishing;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -15,6 +16,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockFisher extends BlockBase {
 
@@ -26,6 +28,7 @@ public class BlockFisher extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.fisher, RenderFisher::new);
   }
 
   @Override
@@ -33,7 +36,7 @@ public class BlockFisher extends BlockBase {
     TileFisher tile = (TileFisher) world.getTileEntity(pos);
     tile.inventory.ifPresent(handler -> {
       //
-      if (!world.isRemote && hand == Hand.MAIN_HAND) {
+      if (hand == Hand.MAIN_HAND) {//!world.isRemote &&
         ItemStack stack = player.getHeldItem(hand);
         if (stack.isEmpty()) {
           //withdraw

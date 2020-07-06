@@ -39,9 +39,6 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
   }
-  //kill tooltip
-  //  @Override
-  //  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {}
 
   protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
     Block block = state.getBlock();
@@ -49,10 +46,6 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
         block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
   }
 
-  /**
-   * Update the provided state given the provided neighbor facing and neighbor state, returning a new state. For example, fences make their connections to the passed in state if possible, and wet
-   * concrete powder immediately returns its solidified counterpart. Note that this method should ideally consider only the specific face passed in.
-   */
   @Override
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
     return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
