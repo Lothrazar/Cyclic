@@ -10,6 +10,9 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -19,9 +22,16 @@ import net.minecraftforge.common.IPlantable;
 
 public class FlowerSimpleBlock extends BlockBase implements IPlantable {
 
+  protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 10.0D, 11.0D);
+
   public FlowerSimpleBlock(Properties properties) {
-    super(properties.notSolid().doesNotBlockMovement().sound(SoundType.PLANT));
-    //.zeroHardnessAndResistance().
+    super(properties.notSolid().doesNotBlockMovement().sound(SoundType.PLANT).hardnessAndResistance(0));
+  }
+
+  @Override
+  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    Vec3d vec3d = state.getOffset(worldIn, pos);
+    return SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
   }
 
   @Override
@@ -29,10 +39,14 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
   }
+  //kill tooltip
+  //  @Override
+  //  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {}
 
   protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
     Block block = state.getBlock();
-    return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
+    return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT ||
+        block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
   }
 
   /**

@@ -12,6 +12,8 @@
     "block.cyclic.collector.tooltip": "Picks up nearby items",
     "block.cyclic.cask": "Cask",
     "block.cyclic.cask.tooltip": "Small fluid tank",
+    "block.cyclic.flower_cyan": "Cyan Rose",
+    "block.cyclic.flower_cyan.tooltip": "A lost legacy",
     
     "block.cyclic.crate": "Crate",
     "block.cyclic.crate.tooltip": "Reinforced item storage",
