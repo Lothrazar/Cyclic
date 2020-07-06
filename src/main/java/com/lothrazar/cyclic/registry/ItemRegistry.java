@@ -132,10 +132,13 @@ public class ItemRegistry {
   public static Item toxic_carrot;
   @ObjectHolder(ModCyclic.MODID + ":xpjuice_bucket")
   public static Item bucket_expjuice;
+  //  @ObjectHolder(ModCyclic.MODID + ":pattern_reader")
+  //  public static Item pattern_reader;
 
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.pattern_reader, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("pattern_reader"));
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("flower_cyan"));
     //redstone
     r.register(new BlockItem(BlockRegistry.cask, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cask"));
