@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.event;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.cable.WrenchActionType;
@@ -23,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -52,12 +50,15 @@ public class ItemEvents {
   public void onBonemealEvent(BonemealEvent event) {
     World world = event.getWorld();
     BlockPos pos = event.getPos();
-    Biome biome = world.getBiome(pos);
-    ModCyclic.LOGGER.info("cyan flower? " + biome + "?" + biome.getDefaultTemperature()
-        + " at " + world.getBlockState(pos));
     if (world.getBlockState(pos).getBlock() == Blocks.PODZOL
         && world.isAirBlock(pos.up())) {
       world.setBlockState(pos.up(), BlockRegistry.flower_cyan.getDefaultState());
+      event.setResult(Result.ALLOW);
+    }
+    else if (world.getBlockState(pos).getBlock() == BlockRegistry.flower_cyan) {
+      event.setResult(Result.ALLOW);
+      if (world.rand.nextDouble() < 0.5)
+        UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.flower_cyan));
     }
   }
 
