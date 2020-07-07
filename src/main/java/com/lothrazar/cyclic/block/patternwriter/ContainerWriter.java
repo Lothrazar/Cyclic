@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.patternreader;
+package com.lothrazar.cyclic.block.patternwriter;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -11,19 +11,23 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class ContainerReader extends ContainerBase {
+public class ContainerWriter extends ContainerBase {
 
-  protected TileReader tile;
+  protected TileWriter tile;
 
-  public ContainerReader(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.structure_reader, windowId);
-    tile = (TileReader) world.getTileEntity(pos);
+  public ContainerWriter(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    super(BlockRegistry.ContainerScreens.structure_writer, windowId);
+    tile = (TileWriter) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      for (int s = 0; s < h.getSlots(); s++) {
-        addSlot(new SlotItemHandler(h, s, 8 + 18 * s, 29));
+      addSlot(new SlotItemHandler(h, 0, 4, 22));
+      for (int s = 0; s < 9; s++) {
+        addSlot(new SlotItemHandler(h, s + 1, 8 + 18 * s, 42));
+      }
+      for (int s = 0; s < 9; s++) {
+        addSlot(new SlotItemHandler(h, s + 10, 8 + 18 * s, 42 + 18));
       }
     });
     layoutPlayerInventorySlots(8, 84);
@@ -31,6 +35,6 @@ public class ContainerReader extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.structure_reader);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.structure_writer);
   }
 }

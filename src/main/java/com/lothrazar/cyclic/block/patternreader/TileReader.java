@@ -39,7 +39,7 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
   private String name = "testschematic";
 
   public TileReader() {
-    super(BlockRegistry.Tiles.pattern_reader);
+    super(BlockRegistry.Tiles.structure_reader);
   }
 
   private IItemHandler createHandler() {

@@ -141,7 +141,9 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
-    r.register(new BlockItem(BlockRegistry.pattern_reader, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("pattern_reader"));
+    r.register(new StructureDiskItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_disk"));
+    r.register(new BlockItem(BlockRegistry.structure_writer, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_writer"));
+    r.register(new BlockItem(BlockRegistry.structure_reader, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_reader"));
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("flower_cyan"));
     //redstone
     r.register(new BlockItem(BlockRegistry.cask, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cask"));
@@ -187,7 +189,6 @@ public class ItemRegistry {
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("biomass"));
     // basic tools
-    r.register(new StructureDiskItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_disk"));
     r.register(new LocationGpsItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("location"));
     r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(9000)).setRegistryName("mattock"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
