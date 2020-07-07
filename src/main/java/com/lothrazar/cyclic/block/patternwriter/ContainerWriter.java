@@ -22,15 +22,17 @@ public class ContainerWriter extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 4, 22));
+      addSlot(new SlotItemHandler(h, 0, 4, 62));
       for (int s = 0; s < 9; s++) {
-        addSlot(new SlotItemHandler(h, s + 1, 8 + 18 * s, 42));
+        addSlot(new SlotItemHandler(h, s + 1, 8 + 18 * s, 112));
       }
       for (int s = 0; s < 9; s++) {
-        addSlot(new SlotItemHandler(h, s + 10, 8 + 18 * s, 42 + 18));
+        addSlot(new SlotItemHandler(h, s + 10, 8 + 18 * s, 112 + 18));
       }
     });
-    layoutPlayerInventorySlots(8, 84);
+    layoutPlayerInventorySlots(8, 174 - 21);
+    this.trackIntField(tile, TileWriter.Fields.REDSTONE.ordinal());
+    this.trackIntField(tile, TileWriter.Fields.STATUS.ordinal());
   }
 
   @Override

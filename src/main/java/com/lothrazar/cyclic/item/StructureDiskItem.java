@@ -16,16 +16,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class StructureDiskItem extends ItemBase {
 
-  private static final String NBT_SIDE = "side";
-  private static final String NBT_DIM = "dim";
+  private static final String NBTSTRUCTURE = "structure";
 
   public StructureDiskItem(Properties properties) {
     super(properties);
   }
 
+  public static ResourceLocation readDisk(ItemStack item) {
+    CompoundNBT tag = item.getOrCreateTag();
+    if (!tag.contains(NBTSTRUCTURE)) {
+      return null;
+    }
+    return ResourceLocation.tryCreate(tag.getString(NBTSTRUCTURE));
+  }
+
   public static void saveDisk(ItemStack item, ResourceLocation saved) {
     CompoundNBT tag = item.getOrCreateTag();
-    tag.putString("structure", saved.toString());
+    tag.putString(NBTSTRUCTURE, saved.toString());
   }
 
   @Override
@@ -34,7 +41,7 @@ public class StructureDiskItem extends ItemBase {
     super.addInformation(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag()) {
       TranslationTextComponent t = new TranslationTextComponent(
-          stack.getTag().getString("structure"));
+          stack.getTag().getString(NBTSTRUCTURE));
       t.applyTextStyle(TextFormatting.GRAY);
       tooltip.add(t);
     }

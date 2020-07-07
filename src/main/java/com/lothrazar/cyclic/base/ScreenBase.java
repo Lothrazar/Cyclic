@@ -46,9 +46,13 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
    */
   protected void drawName(String name) {
     name = UtilChat.lang("block." + ModCyclic.MODID + "." + name);
-    this.font.drawString(name,
+    drawString(name,
         (this.getXSize() - this.font.getStringWidth(name)) / 2,
-        6.0F, 4210752);
+        6.0F);
+  }
+
+  protected void drawString(String name, float x, float y) {
+    this.font.drawString(name, x, y, 4210752);
   }
 
   public void drawButtonTooltips(int mouseX, int mouseY) {
