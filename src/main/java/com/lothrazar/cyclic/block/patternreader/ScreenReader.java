@@ -27,8 +27,9 @@ public class ScreenReader extends ScreenBase<ContainerReader> {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(TextureRegistry.INVENTORY);
-    for (int s = 0; s < 3; s++) {
+    for (int s = 0; s < 2; s++) {
       this.drawSlot(8 + 18 * s, 28, TextureRegistry.SLOT_GPS, 18);
     }
+    this.drawSlot(8 + 18 * 3, 28, TextureRegistry.SLOT, 18);
   }
 }

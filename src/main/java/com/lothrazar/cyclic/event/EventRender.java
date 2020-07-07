@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.item.ItemLocationGps;
+import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
@@ -71,9 +71,9 @@ public class EventRender {
       renderColourCubes(evt, player, mappos);
     }
     stack = player.getHeldItemMainhand();
-    if (stack.getItem() instanceof ItemLocationGps) {
+    if (stack.getItem() instanceof LocationGpsItem) {
       //
-      BlockPosDim loc = ItemLocationGps.getPosition(stack);
+      BlockPosDim loc = LocationGpsItem.getPosition(stack);
       if (loc != null && loc.getDimension() == player.dimension.getId()) {
         Map<BlockPos, Color> mappos = new HashMap<>();
         mappos.put(loc.getPos(), Color.BLUE);

@@ -2,9 +2,14 @@ package com.lothrazar.cyclic.block.patternreader;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.item.ItemLocationGps;
+import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.item.LocationGpsItem;
+import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -13,8 +18,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.ResourceLocationException;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -25,6 +36,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileReader extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private String name = "testschematic";
 
   public TileReader() {
     super(BlockRegistry.Tiles.pattern_reader);
@@ -35,7 +47,9 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return stack.getItem() instanceof ItemLocationGps;
+        if (slot == 0 || slot == 1)
+          return stack.getItem() instanceof LocationGpsItem;
+        return true;
       }
     };
   }
@@ -76,16 +90,60 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public void tick() {
-    inventory.ifPresent(inv -> {
-      //      for (int s = 0; s < inv.getSlots(); s++) {
-      //        ItemStack stack = inv.getStackInSlot(s);
-      //        BlockPosDim targetPos = ItemLocationGps.getPosition(stack);
-      //        if (targetPos == null || targetPos.getDimension() != world.dimension.getType().getId()) {
-      //          return;
-      //        }
-      //        toggleTarget(targetPos.getPos());
-      //      }
-    });
+    if (!this.world.isRemote) {
+      inventory.ifPresent(inv -> {
+        ItemStack stack = inv.getStackInSlot(0);
+        BlockPosDim targetPos = LocationGpsItem.getPosition(stack);
+        stack = inv.getStackInSlot(1);
+        BlockPosDim endPos = LocationGpsItem.getPosition(stack);
+        ItemStack resultStack = inv.getStackInSlot(2);
+        //        ModCyclic.LOGGER.info("check result before go" + resultStack.isEmpty());
+        if (targetPos != null && endPos != null &&
+            resultStack.isEmpty()) {
+          ModCyclic.LOGGER.info("about to save ");
+          ResourceLocation saved = this.save(targetPos.getPos(), endPos.getPos());
+          ModCyclic.LOGGER.info("saved? = " + saved);
+          //TOOD: the namecard 
+          ItemStack newDisk = new ItemStack(ItemRegistry.structure_disk);
+          StructureDiskItem.saveDisk(newDisk, saved);
+          //ok go
+          inv.insertItem(2, newDisk, false);
+        }
+      });
+    }
+  }
+
+  private ResourceLocation save(final BlockPos targetPos, final BlockPos endPos) {
+    ServerWorld serverworld = (ServerWorld) this.world;
+    TemplateManager templatemanager = serverworld.getStructureTemplateManager();
+    Template template;
+    try {
+      ResourceLocation nameResource = ResourceLocation.tryCreate(this.name);
+      template = templatemanager.getTemplateDefaulted(
+          nameResource);
+      int xSize = Math.abs(targetPos.getX() - endPos.getX());
+      int ySize = Math.abs(targetPos.getY() - endPos.getY());
+      int zSize = Math.abs(targetPos.getZ() - endPos.getZ());
+      //
+      BlockPos size = new BlockPos(xSize, ySize, zSize);
+      BlockPos start = new BlockPos(
+          Math.min(targetPos.getX(), endPos.getX()),
+          Math.min(targetPos.getY(), endPos.getY()),
+          Math.min(targetPos.getZ(), endPos.getZ()));
+      ModCyclic.LOGGER.info("SIZE = " + size);
+      ModCyclic.LOGGER.info("targetPos = " + targetPos);
+      template.takeBlocksFromWorld(this.world,
+          start, size, false, Blocks.STRUCTURE_VOID);
+      template.setAuthor(ModCyclic.MODID);
+      //and go 
+      if (templatemanager.writeToFile(nameResource)) {
+        return nameResource;//return if it saved
+      }
+    }
+    catch (ResourceLocationException var8) {
+      ModCyclic.LOGGER.error("schematic", var8);
+    }
+    return null;
   }
 
   @Override

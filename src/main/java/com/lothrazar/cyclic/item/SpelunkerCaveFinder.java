@@ -36,9 +36,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemCaveFinder extends ItemBase {
+public class SpelunkerCaveFinder extends ItemBase {
 
-  public ItemCaveFinder(Properties properties) {
+  public SpelunkerCaveFinder(Properties properties) {
     super(properties.maxDamage(10));
   }
 

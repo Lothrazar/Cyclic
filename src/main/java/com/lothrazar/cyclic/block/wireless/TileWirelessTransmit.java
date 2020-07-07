@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.item.ItemLocationGps;
+import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,7 +39,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return stack.getItem() instanceof ItemLocationGps;
+        return stack.getItem() instanceof LocationGpsItem;
       }
     };
   }
@@ -100,7 +100,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     inventory.ifPresent(inv -> {
       for (int s = 0; s < inv.getSlots(); s++) {
         ItemStack stack = inv.getStackInSlot(s);
-        BlockPosDim targetPos = ItemLocationGps.getPosition(stack);
+        BlockPosDim targetPos = LocationGpsItem.getPosition(stack);
         if (targetPos == null || targetPos.getDimension() != world.dimension.getType().getId()) {
           return;
         }

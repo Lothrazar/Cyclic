@@ -16,16 +16,17 @@ import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.HeartItem;
 import com.lothrazar.cyclic.item.HeartToxicItem;
 import com.lothrazar.cyclic.item.IceWand;
-import com.lothrazar.cyclic.item.ItemCaveFinder;
-import com.lothrazar.cyclic.item.ItemLocationGps;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.LightningScepter;
+import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.item.MattockItem;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.ShearsMaterial;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SnowScepter;
+import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
+import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.item.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.WrenchItem;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
@@ -132,8 +133,10 @@ public class ItemRegistry {
   public static Item toxic_carrot;
   @ObjectHolder(ModCyclic.MODID + ":xpjuice_bucket")
   public static Item bucket_expjuice;
-  //  @ObjectHolder(ModCyclic.MODID + ":pattern_reader")
-  //  public static Item pattern_reader;
+  @ObjectHolder(ModCyclic.MODID + ":pattern_reader")
+  public static Item pattern_reader;
+  @ObjectHolder(ModCyclic.MODID + ":structure_disk")
+  public static Item structure_disk;
 
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
@@ -184,7 +187,8 @@ public class ItemRegistry {
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("biomass"));
     // basic tools
-    r.register(new ItemLocationGps(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("location"));
+    r.register(new StructureDiskItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_disk"));
+    r.register(new LocationGpsItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("location"));
     r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(9000)).setRegistryName("mattock"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sleeping_mat"));
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(1024 * 1024)).setRegistryName("shears_obsidian"));
@@ -215,7 +219,7 @@ public class ItemRegistry {
     r.register(new EnderPearlReuse(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_pearl_reuse"));
     r.register(new EnderPearlMount(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("ender_pearl_mounted"));
     r.register(new ItemProjectileDungeon(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("spawner_seeker"));
-    r.register(new ItemCaveFinder(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("spelunker"));
+    r.register(new SpelunkerCaveFinder(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("spelunker"));
     r.register(new ItemMagicNet(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("magic_net"));
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1)).setRegistryName("mob_container"));
     r.register(new TileTransporterEmptyItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("tile_transporter_empty"));
