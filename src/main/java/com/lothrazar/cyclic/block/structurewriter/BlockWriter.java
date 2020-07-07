@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.patternwriter;
+package com.lothrazar.cyclic.block.structurewriter;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;

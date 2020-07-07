@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.patternwriter;
+package com.lothrazar.cyclic.block.structurewriter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,9 +14,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -26,6 +34,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWriter extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int SLOT_DISK = 0;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public static enum Fields {
@@ -43,7 +52,10 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
     NONE, INVALID, VALID;
   }
 
-  public StructureStatus structStatus;
+  private int shapeIndex = 0;// current index of shape array
+  StructureStatus structStatus;
+  private Mirror mirror = Mirror.NONE;
+  private Rotation rotation = Rotation.NONE;
 
   public TileWriter() {
     super(BlockRegistry.Tiles.structure_writer);
@@ -54,9 +66,16 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        if (slot == 0)
+        if (slot == SLOT_DISK)
           return stack.getItem() instanceof StructureDiskItem;
         return true;
+      }
+
+      @Override
+      public int getSlotLimit(int slot) {
+        if (slot == SLOT_DISK)
+          return 1;
+        return super.getSlotLimit(slot);
       }
     };
   }
@@ -82,6 +101,7 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public void read(CompoundNBT tag) {
+    shapeIndex = tag.getInt("shapeIndex");
     structStatus = StructureStatus.values()[tag.getInt("struct_status")];
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     super.read(tag);
@@ -89,6 +109,7 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("shapeIndex", shapeIndex);
     tag.putInt("struct_status", structStatus.ordinal());
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
@@ -100,10 +121,21 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
   @Override
   public void tick() {
     inventory.ifPresent(inv -> {
-      ItemStack disk = inv.getStackInSlot(0);
+      ItemStack disk = inv.getStackInSlot(SLOT_DISK);
       if (!disk.isEmpty() && disk.getItem() instanceof StructureDiskItem) {
         this.structStatus = StructureStatus.INVALID;
-        this.tryLoad(disk);
+        ResourceLocation location = StructureDiskItem.readDisk(disk);
+        if (location != null) {
+          this.structStatus = StructureStatus.VALID;
+          ModCyclic.LOGGER.info("found " + location);
+          if (!this.world.isRemote && this.build(location, disk)) {
+            //clear disk NBT 
+            StructureDiskItem.deleteDisk(disk);
+            // and refresh it
+            inv.extractItem(SLOT_DISK, 64, false);
+            inv.insertItem(SLOT_DISK, disk, false);
+          }
+        }
       }
       else {
         this.structStatus = StructureStatus.NONE;
@@ -112,17 +144,25 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
     //
   }
 
-  private void tryLoad(ItemStack disk) {
-    ResourceLocation location = StructureDiskItem.readDisk(disk);
-    if (location != null) {
-      this.structStatus = StructureStatus.VALID;
-      ModCyclic.LOGGER.info("found " + location);
-      this.build(location);
+  private boolean build(ResourceLocation location, ItemStack disk) {
+    ServerWorld serverworld = (ServerWorld) this.world;
+    TemplateManager templatemanager = serverworld.getStructureTemplateManager();
+    Template template = templatemanager.getTemplate(location);
+    PlacementSettings placementsettings = (new PlacementSettings())
+        .setMirror(this.mirror)
+        .setRotation(this.rotation)
+        .setIgnoreEntities(true)
+        .setChunk((ChunkPos) null);
+    //TODO: from gps target 
+    //      BlockPos size = template.getSize();
+    BlockPos blockpos2 = this.getPos().up(2);
+    ModCyclic.LOGGER.info("Build starting at " + blockpos2);
+    boolean DOBUILD = false;
+    if (DOBUILD) {//if true this does do the build
+      template.addBlocksToWorldChunk(this.world, blockpos2, placementsettings);
+      return true;
     }
-  }
-
-  private void build(ResourceLocation location) {
-    // TODO Auto-generated method stub
+    return false;
   }
 
   @Override

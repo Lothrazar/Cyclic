@@ -30,6 +30,10 @@ public class StructureDiskItem extends ItemBase {
     return ResourceLocation.tryCreate(tag.getString(NBTSTRUCTURE));
   }
 
+  public static void deleteDisk(ItemStack item) {
+    item.setTag(null);
+  }
+
   public static void saveDisk(ItemStack item, ResourceLocation saved) {
     CompoundNBT tag = item.getOrCreateTag();
     tag.putString(NBTSTRUCTURE, saved.toString());

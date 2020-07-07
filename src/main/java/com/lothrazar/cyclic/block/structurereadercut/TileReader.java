@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.patternreader;
+package com.lothrazar.cyclic.block.structurereadercut;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -100,8 +100,8 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
         //        ModCyclic.LOGGER.info("check result before go" + resultStack.isEmpty());
         if (targetPos != null && endPos != null &&
             resultStack.isEmpty()) {
-          ModCyclic.LOGGER.info("about to save ");
-          ResourceLocation saved = this.save(targetPos.getPos(), endPos.getPos());
+          ModCyclic.LOGGER.info("about to save , FIRST gather and delete all materials?");
+          ResourceLocation saved = this.saveCut(targetPos.getPos(), endPos.getPos());
           ModCyclic.LOGGER.info("saved? = " + saved);
           //TOOD: the namecard 
           ItemStack newDisk = new ItemStack(ItemRegistry.structure_disk);
@@ -113,14 +113,13 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
     }
   }
 
-  private ResourceLocation save(final BlockPos targetPos, final BlockPos endPos) {
+  private ResourceLocation saveCut(final BlockPos targetPos, final BlockPos endPos) {
     ServerWorld serverworld = (ServerWorld) this.world;
     TemplateManager templatemanager = serverworld.getStructureTemplateManager();
     Template template;
     try {
       ResourceLocation nameResource = ResourceLocation.tryCreate(this.name);
-      template = templatemanager.getTemplateDefaulted(
-          nameResource);
+      template = templatemanager.getTemplateDefaulted(nameResource);
       int xSize = Math.abs(targetPos.getX() - endPos.getX());
       int ySize = Math.abs(targetPos.getY() - endPos.getY());
       int zSize = Math.abs(targetPos.getZ() - endPos.getZ());
@@ -130,6 +129,10 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
           Math.min(targetPos.getX(), endPos.getX()),
           Math.min(targetPos.getY(), endPos.getY()),
           Math.min(targetPos.getZ(), endPos.getZ()));
+      BlockPos end = new BlockPos(
+          Math.max(targetPos.getX(), endPos.getX()),
+          Math.max(targetPos.getY(), endPos.getY()),
+          Math.max(targetPos.getZ(), endPos.getZ()));
       ModCyclic.LOGGER.info("SIZE = " + size);
       ModCyclic.LOGGER.info("targetPos = " + targetPos);
       template.takeBlocksFromWorld(this.world,
@@ -137,6 +140,7 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
       template.setAuthor(ModCyclic.MODID);
       //and go 
       if (templatemanager.writeToFile(nameResource)) {
+        this.deleteAll(start, end);
         return nameResource;//return if it saved
       }
     }
@@ -144,6 +148,17 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
       ModCyclic.LOGGER.error("schematic", var8);
     }
     return null;
+  }
+
+  private void deleteAll(BlockPos start, BlockPos end) {
+    for (int x = start.getX(); x <= end.getX(); x++)
+      for (int y = start.getX(); y <= end.getX(); y++)
+        for (int z = start.getX(); z <= end.getX(); z++)
+          this.setToAir(x, y, z);
+  }
+
+  private void setToAir(int x, int y, int z) {
+    world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
   }
 
   @Override

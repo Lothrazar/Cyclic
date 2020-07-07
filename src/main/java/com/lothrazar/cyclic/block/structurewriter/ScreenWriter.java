@@ -1,7 +1,7 @@
-package com.lothrazar.cyclic.block.patternwriter;
+package com.lothrazar.cyclic.block.structurewriter;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.patternwriter.TileWriter.StructureStatus;
+import com.lothrazar.cyclic.block.structurewriter.TileWriter.StructureStatus;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.entity.player.PlayerInventory;
