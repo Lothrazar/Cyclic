@@ -26,7 +26,6 @@ import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SnowScepter;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
-import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.item.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.WrenchItem;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
@@ -141,10 +140,10 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
-    r.register(new StructureDiskItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_disk"));
-    r.register(new BlockItem(BlockRegistry.structure_writer, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_writer"));
-    r.register(new BlockItem(BlockRegistry.structure_reader, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_reader"));
-    r.register(new BlockItem(BlockRegistry.structure_copy, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_copy"));
+    //    r.register(new StructureDiskItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_disk"));
+    //    r.register(new BlockItem(BlockRegistry.structure_writer, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_writer"));
+    //    r.register(new BlockItem(BlockRegistry.structure_reader, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_reader"));
+    //    r.register(new BlockItem(BlockRegistry.structure_copy, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_copy"));
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("flower_cyan"));
     //redstone
     r.register(new BlockItem(BlockRegistry.cask, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cask"));

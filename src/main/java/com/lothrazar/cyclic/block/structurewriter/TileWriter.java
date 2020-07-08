@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.structurewriter;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
@@ -200,5 +201,10 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
         return this.mode.ordinal();
     }
     return 0;
+  }
+
+  public List<BlockPos> getShape() {
+    // TODO Auto-generated method stub
+    return null;
   }
 }
