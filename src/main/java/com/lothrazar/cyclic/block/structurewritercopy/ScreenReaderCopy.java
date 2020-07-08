@@ -1,14 +1,15 @@
-package com.lothrazar.cyclic.block.structurereadercut;
+package com.lothrazar.cyclic.block.structurewritercopy;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
-public class ScreenReader extends ScreenBase<ContainerReader> {
+public class ScreenReaderCopy extends ScreenBase<ContainerReaderCopy> {
 
-  public ScreenReader(ContainerReader screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenReaderCopy(ContainerReaderCopy screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
+    this.ySize = 256 - 21;
   }
 
   @Override
@@ -26,9 +27,15 @@ public class ScreenReader extends ScreenBase<ContainerReader> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.INVENTORY);
+    this.drawBackground(TextureRegistry.INVENTORY_LARGE_PLAIN);
     this.drawSlot(27, 28, TextureRegistry.SLOT_GPS, 18);
     this.drawSlot(43, 28, TextureRegistry.SLOT_GPS, 18);
     this.drawSlot(67, 28, TextureRegistry.SLOT_LARGE, 18);
+    for (int s = 0; s < 9; s++) {
+      this.drawSlot(7 + 18 * s, 111, TextureRegistry.SLOT, 18);
+    }
+    for (int s = 0; s < 9; s++) {
+      this.drawSlot(7 + 18 * s, 111 + 18, TextureRegistry.SLOT, 18);
+    }
   }
 }

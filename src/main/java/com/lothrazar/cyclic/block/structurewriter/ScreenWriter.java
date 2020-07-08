@@ -11,7 +11,6 @@ public class ScreenWriter extends ScreenBase<ContainerWriter> {
 
   public ScreenWriter(ContainerWriter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.ySize = 256 - 21;
   }
 
   @Override
@@ -31,13 +30,7 @@ public class ScreenWriter extends ScreenBase<ContainerWriter> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.INVENTORY_LARGE_PLAIN);
-    for (int s = 0; s < 9; s++) {
-      this.drawSlot(7 + 18 * s, 111, TextureRegistry.SLOT, 18);
-    }
-    for (int s = 0; s < 9; s++) {
-      this.drawSlot(7 + 18 * s, 111 + 18, TextureRegistry.SLOT, 18);
-    }
+    this.drawBackground(TextureRegistry.INVENTORY);
     //    this.drawSlot(3, 21, TextureRegistry.SLOT, 18);
   }
 }

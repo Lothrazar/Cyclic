@@ -23,12 +23,7 @@ public class ContainerWriter extends ContainerBase {
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 4, 62));
-      for (int s = 0; s < 9; s++) {
-        addSlot(new SlotItemHandler(h, s + 1, 8 + 18 * s, 112));
-      }
-      for (int s = 0; s < 9; s++) {
-        addSlot(new SlotItemHandler(h, s + 10, 8 + 18 * s, 112 + 18));
-      }
+      addSlot(new SlotItemHandler(h, 1, 44, 62));
     });
     layoutPlayerInventorySlots(8, 174 - 21);
     this.trackIntField(tile, TileWriter.Fields.REDSTONE.ordinal());

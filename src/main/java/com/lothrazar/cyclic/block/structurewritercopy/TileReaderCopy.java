@@ -1,5 +1,7 @@
-package com.lothrazar.cyclic.block.structurereadercut;
+package com.lothrazar.cyclic.block.structurewritercopy;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
@@ -9,9 +11,13 @@ import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -33,17 +39,19 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileReader extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileReaderCopy extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private String name = "testschematic";
 
-  public TileReader() {
-    super(BlockRegistry.Tiles.structure_reader);
+  public TileReaderCopy() {
+    super(BlockRegistry.Tiles.structure_copy);
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(3) {
+    //3 for the 2 gps and the 1 OUTPUT
+    //then the rest for INVOOOO
+    return new ItemStackHandler(3 + 18) {//WTF +1 hack
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
@@ -62,7 +70,7 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
   @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerReader(i, world, pos, playerInventory, playerEntity);
+    return new ContainerReaderCopy(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
@@ -101,19 +109,21 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
         if (targetPos != null && endPos != null &&
             resultStack.isEmpty()) {
           ModCyclic.LOGGER.info("about to save , FIRST gather and delete all materials?");
-          ResourceLocation saved = this.saveCut(targetPos.getPos(), endPos.getPos());
-          ModCyclic.LOGGER.info("copy saved? = " + saved);
+          ResourceLocation saved = this.saveCopy(targetPos.getPos(), endPos.getPos());
+          ModCyclic.LOGGER.info("saved? = " + saved);
           //TOOD: the namecard 
-          ItemStack newDisk = new ItemStack(ItemRegistry.structure_disk);
-          StructureDiskItem.saveDisk(newDisk, saved);
-          //ok go
-          inv.insertItem(2, newDisk, false);
+          if (saved != null) {
+            ItemStack newDisk = new ItemStack(ItemRegistry.structure_disk);
+            StructureDiskItem.saveDisk(newDisk, saved);
+            //ok go
+            inv.insertItem(2, newDisk, false);
+          }
         }
       });
     }
   }
 
-  private ResourceLocation saveCut(final BlockPos targetPos, final BlockPos endPos) {
+  private ResourceLocation saveCopy(final BlockPos targetPos, final BlockPos endPos) {
     ServerWorld serverworld = (ServerWorld) this.world;
     TemplateManager templatemanager = serverworld.getStructureTemplateManager();
     Template template;
@@ -133,6 +143,10 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
           Math.max(targetPos.getX(), endPos.getX()),
           Math.max(targetPos.getY(), endPos.getY()),
           Math.max(targetPos.getZ(), endPos.getZ()));
+      if (this.detectEnoughMaterials(start, end) == false) {
+        ModCyclic.LOGGER.info("NOT ENOUGH STUFF = ");
+        return null;
+      }
       ModCyclic.LOGGER.info("SIZE = " + size);
       ModCyclic.LOGGER.info("targetPos = " + targetPos);
       template.takeBlocksFromWorld(this.world,
@@ -140,8 +154,6 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
       template.setAuthor(ModCyclic.MODID);
       //and go 
       if (templatemanager.writeToFile(nameResource)) {
-        ModCyclic.LOGGER.info("copy ready to delete all ");
-        this.deleteAll(start, end);
         return nameResource;//return if it saved
       }
     }
@@ -151,15 +163,41 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
     return null;
   }
 
-  private void deleteAll(BlockPos start, BlockPos end) {
+  private boolean detectEnoughMaterials(BlockPos start, BlockPos end) {
+    Map<Block, Integer> blRequired = new HashMap<>();
+    Map<Fluid, Integer> fluidsNeeded = new HashMap<>();
+    BlockState current;
     for (int x = start.getX(); x <= end.getX(); x++)
-      for (int y = start.getY(); y <= end.getY(); y++)
-        for (int z = start.getZ(); z <= end.getZ(); z++)
-          this.setToAir(x, y, z);
-  }
-
-  private void setToAir(int x, int y, int z) {
-    world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+      for (int y = start.getX(); y <= end.getX(); y++)
+        for (int z = start.getX(); z <= end.getX(); z++) {
+          BlockPos p = new BlockPos(x, y, z);
+          current = world.getBlockState(p);
+          Block blockHere = current.getBlock();
+          //is it fluid?
+          IFluidState fluidHere = current.getFluidState();
+          if (fluidHere != null && fluidHere.isSource()) {
+            ModCyclic.LOGGER.info("fluid check" + fluidHere);
+            Fluid fluidUnit = fluidHere.getFluid();
+            if (fluidsNeeded.containsKey(fluidUnit)) {
+              fluidsNeeded.put(fluidUnit, fluidsNeeded.get(fluidUnit) + 1);
+            }
+            else {//first time
+              fluidsNeeded.put(fluidUnit, 1);
+            }
+          }
+          else if (blockHere != Blocks.AIR) {
+            //solid block
+            if (blRequired.containsKey(blockHere)) {
+              blRequired.put(blockHere, blRequired.get(blockHere) + 1);
+            }
+            else {//first time
+              blRequired.put(blockHere, 1);
+            }
+          }
+        }
+    ModCyclic.LOGGER.info("unique blocks required " + blRequired.size());
+    ModCyclic.LOGGER.info("fluidsNeeded required " + fluidsNeeded.size());
+    return false;
   }
 
   @Override

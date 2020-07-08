@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,6 +36,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileWriter extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   private static final int SLOT_DISK = 0;
+  private static final int SLOT_GPS = 1;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public static enum Fields {
@@ -53,7 +55,7 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
   }
 
   private int shapeIndex = 0;// current index of shape array
-  StructureStatus structStatus;
+  StructureStatus structStatus = StructureStatus.NONE;
   private Mirror mirror = Mirror.NONE;
   private Rotation rotation = Rotation.NONE;
 
@@ -62,20 +64,18 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(2 * 9 + 1) {
+    return new ItemStackHandler(2) {//1 gps and one disk
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         if (slot == SLOT_DISK)
           return stack.getItem() instanceof StructureDiskItem;
-        return true;
+        return stack.getItem() instanceof LocationGpsItem;
       }
 
       @Override
       public int getSlotLimit(int slot) {
-        if (slot == SLOT_DISK)
-          return 1;
-        return super.getSlotLimit(slot);
+        return 1;
       }
     };
   }
