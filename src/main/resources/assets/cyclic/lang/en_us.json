@@ -1185,8 +1185,18 @@
     "block.cyclic.melter.tooltip": "Melt certain items into fluid",
 
     "button.fan.sound.tooltip": "Enable or disable sound",
-    "block.heat.level": "Heat",
+    
+    "block.cyclic.structure_writer":"Structure Writer",
+    "block.cyclic.structure_writer.tooltip":"Use structure disk to place structures",
+    
+    "cyclic.structure_writer.status.none":"Insert disk and location",
+    "cyclic.structure_writer.status.invalid":"Invalid disk",
+    "cyclic.structure_writer.status.valid":"Valid disk and location",
 
+    "cyclic.structure_writer.mode":"Structure Mode",
+    "cyclic.structure_writer.mode.preview":"Preview",
+    "cyclic.structure_writer.mode.build":"Build",
+    
     "block.cyclic.solidifier": "Crystallization Chamber",
     "block.cyclic.solidifier.tooltip": "Craft fluid into items"
 }

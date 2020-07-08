@@ -11,6 +11,7 @@ public class TextureRegistry {
   public static final ResourceLocation INVENTORY_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_large.png");
   public static final ResourceLocation INVENTORY_LARGE_PLAIN = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_large_plain.png");
   public static final ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot.png");
+  public static final ResourceLocation SLOT_DISK = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_disk.png");
   public static final ResourceLocation SLOT_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_large.png");
   public static final ResourceLocation SLOT_BOOK = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_book.png");
   public static final ResourceLocation SLOT_GPS = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_gps.png");

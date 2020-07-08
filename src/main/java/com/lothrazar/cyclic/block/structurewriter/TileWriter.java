@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -40,7 +41,7 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public static enum Fields {
-    REDSTONE, STATUS;
+    REDSTONE, STATUS, MODE;
   }
 
   /**
@@ -54,8 +55,13 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
     NONE, INVALID, VALID;
   }
 
+  enum StructureMode {
+    PREVIEW, BUILD;
+  }
+
   private int shapeIndex = 0;// current index of shape array
   StructureStatus structStatus = StructureStatus.NONE;
+  StructureMode mode = StructureMode.PREVIEW;
   private Mirror mirror = Mirror.NONE;
   private Rotation rotation = Rotation.NONE;
 
@@ -122,19 +128,25 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
   public void tick() {
     inventory.ifPresent(inv -> {
       ItemStack disk = inv.getStackInSlot(SLOT_DISK);
-      if (!disk.isEmpty() && disk.getItem() instanceof StructureDiskItem) {
+      ItemStack gps = inv.getStackInSlot(SLOT_GPS);
+      BlockPosDim posTarget = LocationGpsItem.getPosition(gps);
+      if (!disk.isEmpty() && disk.getItem() instanceof StructureDiskItem
+          && posTarget != null) {
         this.structStatus = StructureStatus.INVALID;
-        ResourceLocation location = StructureDiskItem.readDisk(disk);
-        if (location != null) {
+        ResourceLocation structureLoc = StructureDiskItem.readDisk(disk);
+        if (structureLoc != null) {
           this.structStatus = StructureStatus.VALID;
-          ModCyclic.LOGGER.info("found " + location);
-          if (!this.world.isRemote && this.build(location, disk)) {
+          ModCyclic.LOGGER.info("found " + structureLoc);
+          if (!this.world.isRemote
+              && this.mode == StructureMode.BUILD
+              && this.build(structureLoc, disk, posTarget.getPos())) {
             //clear disk NBT 
             StructureDiskItem.deleteDisk(disk);
             // and refresh it
             inv.extractItem(SLOT_DISK, 64, false);
             inv.insertItem(SLOT_DISK, disk, false);
           }
+          //else either build failed or its in preview mode
         }
       }
       else {
@@ -144,7 +156,7 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
     //
   }
 
-  private boolean build(ResourceLocation location, ItemStack disk) {
+  private boolean build(ResourceLocation location, ItemStack disk, BlockPos blockPos) {
     ServerWorld serverworld = (ServerWorld) this.world;
     TemplateManager templatemanager = serverworld.getStructureTemplateManager();
     Template template = templatemanager.getTemplate(location);
@@ -153,13 +165,10 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
         .setRotation(this.rotation)
         .setIgnoreEntities(true)
         .setChunk((ChunkPos) null);
-    //TODO: from gps target 
-    //      BlockPos size = template.getSize();
-    BlockPos blockpos2 = this.getPos().up(2);
-    ModCyclic.LOGGER.info("Build starting at " + blockpos2);
+    ModCyclic.LOGGER.info("Build starting at " + blockPos);
     boolean DOBUILD = false;
     if (DOBUILD) {//if true this does do the build
-      template.addBlocksToWorldChunk(this.world, blockpos2, placementsettings);
+      template.addBlocksToWorldChunk(this.world, blockPos, placementsettings);
       return true;
     }
     return false;
@@ -174,6 +183,9 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
       case STATUS:
         structStatus = StructureStatus.values()[value];
       break;
+      case MODE:
+        mode = StructureMode.values()[value];
+      break;
     }
   }
 
@@ -184,6 +196,8 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
         return this.getNeedsRedstone();
       case STATUS:
         return this.structStatus.ordinal();
+      case MODE:
+        return this.mode.ordinal();
     }
     return 0;
   }
