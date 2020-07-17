@@ -3,13 +3,10 @@ package com.lothrazar.cyclic.base;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.network.NetworkDirection;
 
 public class FluidTankBase extends FluidTank {
 
@@ -29,10 +26,8 @@ public class FluidTankBase extends FluidTank {
       return;
     }
     FluidStack f = handler.getFluidInTank(0);
-    if (tile.getWorld().isRemote == false)//if serverside then 
-      for (PlayerEntity player : tile.getWorld().getPlayers()) {
-        ServerPlayerEntity sp = ((ServerPlayerEntity) player);
-        PacketRegistry.INSTANCE.sendTo(new PacketFluidSync(tile.getPos(), f), sp.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-      }
+    if (tile.getWorld().isRemote == false) {//if serverside then 
+      PacketRegistry.sendToAllClients(tile.getWorld(), new PacketFluidSync(tile.getPos(), f));
+    }
   }
 }

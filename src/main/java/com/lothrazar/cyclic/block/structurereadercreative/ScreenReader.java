@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.structurereadercut;
+package com.lothrazar.cyclic.block.structurereadercreative;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;

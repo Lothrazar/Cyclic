@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.structurewritercopy;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.gen.feature.template.Template.BlockInfo;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
@@ -41,6 +43,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileReaderCopy extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int SLOT_GPSSTART = 0;
+  private static final int SLOT_GPSEND = 1;
+  private static final int SLOT_RESULT = 2;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private String name = "testschematic";
 
@@ -55,7 +60,7 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        if (slot == 0 || slot == 1)
+        if (slot == SLOT_GPSSTART || slot == SLOT_GPSEND)
           return stack.getItem() instanceof LocationGpsItem;
         return true;
       }
@@ -100,11 +105,11 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
   public void tick() {
     if (!this.world.isRemote) {
       inventory.ifPresent(inv -> {
-        ItemStack stack = inv.getStackInSlot(0);
+        ItemStack stack = inv.getStackInSlot(SLOT_GPSSTART);
         BlockPosDim targetPos = LocationGpsItem.getPosition(stack);
-        stack = inv.getStackInSlot(1);
+        stack = inv.getStackInSlot(SLOT_GPSEND);
         BlockPosDim endPos = LocationGpsItem.getPosition(stack);
-        ItemStack resultStack = inv.getStackInSlot(2);
+        ItemStack resultStack = inv.getStackInSlot(SLOT_RESULT);
         //        ModCyclic.LOGGER.info("check result before go" + resultStack.isEmpty());
         if (targetPos != null && endPos != null &&
             resultStack.isEmpty()) {
@@ -116,7 +121,7 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
             ItemStack newDisk = new ItemStack(ItemRegistry.structure_disk);
             StructureDiskItem.saveDisk(newDisk, saved);
             //ok go
-            inv.insertItem(2, newDisk, false);
+            inv.insertItem(SLOT_RESULT, newDisk, false);
           }
         }
       });
@@ -143,14 +148,14 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
           Math.max(targetPos.getX(), endPos.getX()),
           Math.max(targetPos.getY(), endPos.getY()),
           Math.max(targetPos.getZ(), endPos.getZ()));
-      if (this.detectEnoughMaterials(start, end) == false) {
-        ModCyclic.LOGGER.info("NOT ENOUGH STUFF = ");
-        return null;
-      }
       ModCyclic.LOGGER.info("SIZE = " + size);
       ModCyclic.LOGGER.info("targetPos = " + targetPos);
       template.takeBlocksFromWorld(this.world,
           start, size, false, Blocks.STRUCTURE_VOID);
+      if (this.detectEnoughMaterials(start, end, template) == false) {
+        ModCyclic.LOGGER.info("NOT ENOUGH STUFF = ");
+        return null;
+      }
       template.setAuthor(ModCyclic.MODID);
       //and go 
       if (templatemanager.writeToFile(nameResource)) {
@@ -163,9 +168,36 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
     return null;
   }
 
-  private boolean detectEnoughMaterials(BlockPos start, BlockPos end) {
+  private boolean detectEnoughMaterials(BlockPos start, BlockPos end, Template template) {
     Map<Block, Integer> blRequired = new HashMap<>();
     Map<Fluid, Integer> fluidsNeeded = new HashMap<>();
+    for (List<BlockInfo> b : template.blocks) {
+      for (BlockInfo bl : b) {
+        if (bl.state.getFluidState() != null
+            && bl.state.getFluidState().isSource()) {
+          IFluidState fluidHere = bl.state.getFluidState();
+          Fluid fluidUnit = fluidHere.getFluid();
+          if (fluidsNeeded.containsKey(fluidUnit)) {
+            fluidsNeeded.put(fluidUnit, fluidsNeeded.get(fluidUnit) + 1);
+          }
+          else {//first time
+            fluidsNeeded.put(fluidUnit, 1);
+          }
+        }
+        Block blockHere = bl.state.getBlock();
+        if (blRequired.containsKey(blockHere)) {
+          blRequired.put(blockHere, blRequired.get(blockHere) + 1);
+        }
+        else {//first time
+          blRequired.put(blockHere, 1);
+        }
+      }
+    }
+    ModCyclic.LOGGER.info("TEMPLATE VERSION unique blocks required " + blRequired.size());
+    ModCyclic.LOGGER.info("TEMPLATE VERSION fluidsNeeded required " + fluidsNeeded.size());
+    //loop
+    blRequired = new HashMap<>();
+    fluidsNeeded = new HashMap<>();
     BlockState current;
     for (int x = start.getX(); x <= end.getX(); x++)
       for (int y = start.getX(); y <= end.getX(); y++)

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.structurereadercut;
+package com.lothrazar.cyclic.block.structurereadercreative;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,8 +35,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileReader extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int SLOT_GPSSTART = 0;
+  private static final int SLOT_GPSEND = 1;
+  private static final int SLOT_RESULT = 2;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-  private String name = "testschematic";
+  private String name = "creativeschematic";
 
   public TileReader() {
     super(BlockRegistry.Tiles.structure_reader);
@@ -47,7 +50,7 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        if (slot == 0 || slot == 1)
+        if (slot == SLOT_GPSSTART || slot == SLOT_GPSEND)
           return stack.getItem() instanceof LocationGpsItem;
         return true;
       }
@@ -92,22 +95,21 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
   public void tick() {
     if (!this.world.isRemote) {
       inventory.ifPresent(inv -> {
-        ItemStack stack = inv.getStackInSlot(0);
+        ItemStack stack = inv.getStackInSlot(SLOT_GPSSTART);
         BlockPosDim targetPos = LocationGpsItem.getPosition(stack);
-        stack = inv.getStackInSlot(1);
+        stack = inv.getStackInSlot(SLOT_GPSEND);
         BlockPosDim endPos = LocationGpsItem.getPosition(stack);
-        ItemStack resultStack = inv.getStackInSlot(2);
+        ItemStack resultStack = inv.getStackInSlot(SLOT_RESULT);
         //        ModCyclic.LOGGER.info("check result before go" + resultStack.isEmpty());
         if (targetPos != null && endPos != null &&
             resultStack.isEmpty()) {
-          ModCyclic.LOGGER.info("about to save , FIRST gather and delete all materials?");
           ResourceLocation saved = this.saveCut(targetPos.getPos(), endPos.getPos());
           ModCyclic.LOGGER.info("copy saved? = " + saved);
           //TOOD: the namecard 
           ItemStack newDisk = new ItemStack(ItemRegistry.structure_disk);
           StructureDiskItem.saveDisk(newDisk, saved);
           //ok go
-          inv.insertItem(2, newDisk, false);
+          inv.insertItem(SLOT_RESULT, newDisk, false);
         }
       });
     }
@@ -133,15 +135,13 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
           Math.max(targetPos.getX(), endPos.getX()),
           Math.max(targetPos.getY(), endPos.getY()),
           Math.max(targetPos.getZ(), endPos.getZ()));
-      ModCyclic.LOGGER.info("SIZE = " + size);
-      ModCyclic.LOGGER.info("targetPos = " + targetPos);
       template.takeBlocksFromWorld(this.world,
           start, size, false, Blocks.STRUCTURE_VOID);
       template.setAuthor(ModCyclic.MODID);
       //and go 
       if (templatemanager.writeToFile(nameResource)) {
-        ModCyclic.LOGGER.info("copy ready to delete all ");
-        this.deleteAll(start, end);
+        ModCyclic.LOGGER.info("copied schematic for FREEE");
+        //        this.deleteAll(start, end);
         return nameResource;//return if it saved
       }
     }
@@ -150,17 +150,17 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
     }
     return null;
   }
-
-  private void deleteAll(BlockPos start, BlockPos end) {
-    for (int x = start.getX(); x <= end.getX(); x++)
-      for (int y = start.getY(); y <= end.getY(); y++)
-        for (int z = start.getZ(); z <= end.getZ(); z++)
-          this.setToAir(x, y, z);
-  }
-
-  private void setToAir(int x, int y, int z) {
-    world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
-  }
+  //
+  //  private void deleteAll(BlockPos start, BlockPos end) {
+  //    for (int x = start.getX(); x <= end.getX(); x++)
+  //      for (int y = start.getY(); y <= end.getY(); y++)
+  //        for (int z = start.getZ(); z <= end.getZ(); z++)
+  //          this.setToAir(x, y, z);
+  //  }
+  //
+  //  private void setToAir(int x, int y, int z) {
+  //    world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+  //  }
 
   @Override
   public void setField(int field, int value) {}

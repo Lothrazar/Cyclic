@@ -1,16 +1,21 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.random.PacketRandomize;
 import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.net.PacketItemToggle;
-import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.net.PacketTileData;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
@@ -36,5 +41,13 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketChestSack.class, PacketChestSack::encode, PacketChestSack::decode, PacketChestSack::handle);
     INSTANCE.registerMessage(id++, PacketSwapBlock.class, PacketSwapBlock::encode, PacketSwapBlock::decode, PacketSwapBlock::handle);
     INSTANCE.registerMessage(id++, PacketRandomize.class, PacketRandomize::encode, PacketRandomize::decode, PacketRandomize::handle);
+  }
+
+  public static void sendToAllClients(World world, PacketBase packet) {
+    for (PlayerEntity player : world.getPlayers()) {
+      ServerPlayerEntity sp = ((ServerPlayerEntity) player);
+      PacketRegistry.INSTANCE.sendTo(packet,
+          sp.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+    }
   }
 }
