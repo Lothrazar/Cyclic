@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.block.core;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.module.MultiContent;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -100,9 +101,13 @@ public abstract class BlockBaseFacingOmni extends BlockBaseHasTile {
       case PLAYER_FACING:
       default:
         fac = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+      //        if (MultiContent.unInvertedPlacement) {
+      //          fac = fac.getOpposite();//config toggle horizontal dir
+      //        }
       break;
     }
-    if (fac != EnumFacing.UP && fac != EnumFacing.DOWN) {
+    if (fac != EnumFacing.UP && fac != EnumFacing.DOWN
+        && !MultiContent.unInvertedPlacement) {
       fac = fac.getOpposite();//make consistent with non-omni blocks: faces user
     }
     return this.getDefaultState().withProperty(PROPERTYFACING, fac);

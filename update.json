@@ -1,5 +1,5 @@
 {
-  "homepage": "http://minecraft.curseforge.com/projects/cyclic",
+  "homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
   "promos": {
     "1.9.4-latest":  "1.2.0",
     "1.9.4-recommended":  "1.2.0",
@@ -9,10 +9,8 @@
     "1.10.2-recommended": "1.10.30",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12-latest": "1.8.6",
-    "1.12-recommended": "1.8.6",
-    "1.12.2-latest": "1.20.3",
-    "1.12.2-recommended": "1.20.3"
+    "1.12.2-latest": "1.20.4",
+    "1.12.2-recommended": "1.20.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -341,5 +339,6 @@
 	,"1.20.1":"Fixed game crashing if FastWorkbench is not installed. "
 	,"1.20.2":"Put in some checks in case a player is logging out and in with a bounce potion effects.  Item Sorter: Normal mode now matches NBT (enchantments etc); and new Ore Dictionary mode added"
 	,"1.20.3":"Fixed builder consuming two blocks for every one placed.  Water walking enchant now works better against BOP quicksand (mud).  By popuplar demand, renamed 'Whitelist/Blacklist' to 'Allowlist/Ignorelist' in a few tooltips (functionality unchanged).  Added some error safeguards in case IE wires throw an exception when hit by a certain projectile.  Block the extraction of items from the Workbench using things like hoppers (fixes some exploits).  Fixed Auto User in attack mode not hitting the full area in larger sized selections.  "
+	,"1.20.4":"Add config to reverse placement of machines -UnInvertedPlacement- (default value is no changes, edit to make machines face away from player on placing).  Confirmed compatibility with Guide-API-2.1.8-63 "
   }
 }

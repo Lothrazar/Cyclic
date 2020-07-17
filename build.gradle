@@ -22,7 +22,7 @@ compileJava {
 minecraft {
 
     version = "${mc_version}-${forge_version}"
-    mappings = "stable_39"
+    mappings = project.mappings_version
     runDir = "run"
     makeObfSourceJar = false
     useDepAts = true
@@ -95,11 +95,12 @@ repositories {
 }
 
 dependencies {
-
+  //if any dependencies fail to fetch, download and put in ./libs/
   deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
   deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${crt_version}"
   deobfCompile "baubles:Baubles:1.12:${baubles_version}"
   deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"
+  //TODO: fix guide api gradle, or else ./libs/Guide-API-1.12-2.1.8-63.jar 
   //deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
 
   // https://maven.mcmoddev.com/net/darkhax/enchdesc/EnchantmentDescriptions-1.12.2/1.1.9/
@@ -124,4 +125,19 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+
+build.dependsOn signJar
+
+task copyJar(type: Copy) {
+    from jar
+    into "c:/temp/"
+}
+
+build.finalizedBy copyJar
+
+cleanJar {
+  delete 'build/libs'
+}
+
 
