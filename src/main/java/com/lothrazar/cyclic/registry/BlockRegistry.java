@@ -33,6 +33,8 @@ import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.clock.BlockRedstoneClock;
 import com.lothrazar.cyclic.block.clock.ContainerClock;
 import com.lothrazar.cyclic.block.clock.TileRedstoneClock;
+import com.lothrazar.cyclic.block.collectfluid.BlockFluidCollect;
+import com.lothrazar.cyclic.block.collectfluid.ContainerFluidCollect;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.BlockCollector;
 import com.lothrazar.cyclic.block.collectitem.ContainerCollector;
@@ -68,6 +70,9 @@ import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
+import com.lothrazar.cyclic.block.placerfluid.BlockPlacerFluid;
+import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
+import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
@@ -202,6 +207,8 @@ public class BlockRegistry {
   public static Block structure_writer;
   @ObjectHolder(ModCyclic.MODID + ":structure_copy")
   public static Block structure_copy;
+  @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
+  public static Block placer_fluid;
 
   public static class Tiles {
 
@@ -267,6 +274,8 @@ public class BlockRegistry {
     public static TileEntityType<TileWriter> structure_writer;
     @ObjectHolder(ModCyclic.MODID + ":structure_copy")
     public static TileEntityType<TileReaderCopy> structure_copy;
+    @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
+    public static TileEntityType<TilePlacerFluid> placer_fluid;
   }
 
   public static class ContainerScreens {
@@ -313,11 +322,16 @@ public class BlockRegistry {
     public static ContainerType<ContainerWriter> structure_writer;
     @ObjectHolder(ModCyclic.MODID + ":structure_copy")
     public static ContainerType<ContainerReaderCopy> structure_copy;
+    @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
+    public static ContainerType<ContainerPlacerFluid> placer_fluid;
+    @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
+    public static ContainerType<ContainerFluidCollect> collector_fluid;
   }
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockPlacerFluid(Block.Properties.create(Material.IRON)).setRegistryName("placer_fluid"));
     r.register(new BlockReaderCopy(Block.Properties.create(Material.IRON)).setRegistryName("structure_copy"));
     r.register(new BlockWriter(Block.Properties.create(Material.IRON)).setRegistryName("structure_writer"));
     r.register(new BlockReader(Block.Properties.create(Material.IRON)).setRegistryName("structure_reader"));
@@ -333,7 +347,7 @@ public class BlockRegistry {
     r.register(new BlockDetector(Block.Properties.create(Material.ROCK)).setRegistryName("detector_entity"));
     r.register(new BlockUser(Block.Properties.create(Material.ROCK)).setRegistryName("user"));
     r.register(new BlockFisher(Block.Properties.create(Material.ROCK)).setRegistryName("fisher"));
-    //    r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
+    r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
     r.register(new BlockDisenchant(Block.Properties.create(Material.ROCK)).setRegistryName("disenchanter"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
@@ -367,6 +381,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TilePlacerFluid::new, BlockRegistry.placer_fluid).build(null).setRegistryName("placer_fluid"));
     r.register(TileEntityType.Builder.create(TileReaderCopy::new, BlockRegistry.structure_copy).build(null).setRegistryName("structure_copy"));
     r.register(TileEntityType.Builder.create(TileWriter::new, BlockRegistry.structure_writer).build(null).setRegistryName("structure_writer"));
     r.register(TileEntityType.Builder.create(TileReader::new, BlockRegistry.structure_reader).build(null).setRegistryName("structure_reader"));
@@ -375,7 +390,7 @@ public class BlockRegistry {
     r.register(TileEntityType.Builder.create(TileRedstoneClock::new, BlockRegistry.clock).build(null).setRegistryName("clock"));
     r.register(TileEntityType.Builder.create(TileWirelessRec::new, BlockRegistry.wireless_receiver).build(null).setRegistryName("wireless_receiver"));
     r.register(TileEntityType.Builder.create(TileWirelessTransmit::new, BlockRegistry.wireless_transmitter).build(null).setRegistryName("wireless_transmitter"));
-    //    r.register(TileEntityType.Builder.create(TileFluidCollect::new, BlockRegistry.collector_fluid).build(null).setRegistryName("collector_fluid"));
+    r.register(TileEntityType.Builder.create(TileFluidCollect::new, BlockRegistry.collector_fluid).build(null).setRegistryName("collector_fluid"));
     r.register(TileEntityType.Builder.create(TileDisenchant::new, BlockRegistry.disenchanter).build(null).setRegistryName("disenchanter"));
     r.register(TileEntityType.Builder.create(TileDetectorItem::new, BlockRegistry.detector_item).build(null).setRegistryName("detector_item"));
     r.register(TileEntityType.Builder.create(TileDetector::new, BlockRegistry.detector_entity).build(null).setRegistryName("detector_entity"));
@@ -466,5 +481,11 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerReaderCopy(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("structure_copy"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPlacerFluid(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("placer_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerFluidCollect(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("collector_fluid"));
   }
 }

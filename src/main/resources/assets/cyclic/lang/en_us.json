@@ -930,8 +930,9 @@
     "lingering_potion.effect.frostwalker": "Lingering Potion of Frostwalking",
     "tipped_arrow.effect.frostwalker": "Arrow of Frostwalking",
 
-    "block.cyclic.fluid_placer": "Fluid Placer",
-    "block.cyclic.fluid_placer.tooltip": "Place fluid in the world",
+    "block.cyclic.placer_fluid": "Fluid Placer",
+    "block.cyclic.placer_fluid.tooltip": "Place fluid in the world",
+    
     "block.cyclic.fluid_pipe": "Fluid Cable",
     "block.cyclic.fluid_pipe.tooltip": "Pipe liquid between blocks; use a Cable Wrench to customize",
     "block.cyclic.bundled_pipe": "Bundled Cable",

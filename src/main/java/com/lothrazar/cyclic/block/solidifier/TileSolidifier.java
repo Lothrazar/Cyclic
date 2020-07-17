@@ -40,7 +40,6 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
   private RecipeSolidifier currentRecipe;
-  private int timer = 0;
   FluidTankBase tank;
   private ItemStackHandlerSided inputSlots;
   private ItemStackHandlerSided outputSlot;
@@ -110,8 +109,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void read(CompoundNBT tag) {
-    CompoundNBT fluid = tag.getCompound("fluid");
-    tank.readFromNBT(fluid);
+    tank.readFromNBT(tag.getCompound("fluid"));
     energyWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inputsSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     outputSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("invoutput")));
