@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,7 +25,8 @@ public class ContainerFluidCollect extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TilePlacerFluid.Fields.REDSTONE.ordinal());
+    this.trackIntField(tile, TileFluidCollect.Fields.REDSTONE.ordinal());
+    this.trackIntField(tile, TileFluidCollect.Fields.RENDER.ordinal());
   }
 
   @Override

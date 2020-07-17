@@ -43,7 +43,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     btnRender = addButton(new ButtonMachine(x + 20, y, 20, 20, "", (p) -> {
       int f = TileStructure.Fields.RENDER.ordinal();
       container.tile.setField(f, (container.tile.getField(f) + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, container.tile.getNeedsRedstone(), container.tile.getPos()));
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, container.tile.getField(f), container.tile.getPos()));
     }));
     txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
         container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());

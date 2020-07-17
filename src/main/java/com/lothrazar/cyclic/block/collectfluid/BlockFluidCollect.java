@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockFluidCollect extends BlockBase {
 
@@ -19,6 +20,7 @@ public class BlockFluidCollect extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.collector_fluid, RenderPlacerFluid::new);
     ScreenManager.registerFactory(BlockRegistry.ContainerScreens.collector_fluid, ScreenFluidCollect::new);
   }
 
