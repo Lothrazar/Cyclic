@@ -4,8 +4,8 @@
         "0": "cyclic:blocks/placer/front",
         "1": "cyclic:blocks/placer/side",
         "2": "minecraft:block/cauldron_inner",
-        "3": "minecraft:block/lapis_block",
-        "4": "minecraft:block/quartz_block_bottom",
+        "3": "minecraft:block/furnace_top",
+        "4": "minecraft:block/diorite",
         "particle": "cyclic:blocks/side"
     }
 }

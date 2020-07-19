@@ -4,7 +4,7 @@
         "0": "cyclic:blocks/breaker/front",
         "1": "cyclic:blocks/breaker/side",
         "2": "minecraft:block/cauldron_inner",
-        "3": "minecraft:block/andesite",
+        "3": "minecraft:block/mossy_cobblestone",
         "4": "minecraft:block/quartz_block_bottom",
         "particle": "minecraft:block/iron_block"
     }

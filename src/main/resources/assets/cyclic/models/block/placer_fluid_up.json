@@ -3,8 +3,8 @@
 	"textures":{
         "1": "cyclic:blocks/placer/front",
         "0": "cyclic:blocks/placer/side",
-        "2": "minecraft:block/quartz_block_bottom",
-        "3": "minecraft:block/lapis_block",
+        "2": "minecraft:block/polished_diorite",
+        "3": "minecraft:block/furnace_top",
         "particle": "minecraft:block/iron_block"
 	}
 }
