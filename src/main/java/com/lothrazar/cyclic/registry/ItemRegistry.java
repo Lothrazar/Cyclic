@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
+import com.lothrazar.cyclic.item.CarbonPaperItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
 import com.lothrazar.cyclic.item.EnderWingItem;
 import com.lothrazar.cyclic.item.EnderWingSp;
@@ -207,6 +208,7 @@ public class ItemRegistry {
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.itemGroup), BuildStyle.OFFSET).setRegistryName("offset_scepter"));
     r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("randomize_scepter"));
     // magic tools
+    r.register(new CarbonPaperItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("carbon_paper"));
     r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("ice_scepter"));
     r.register(new FireScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("fire_scepter"));
     r.register(new LightningScepter(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(256)).setRegistryName("lightning_scepter"));

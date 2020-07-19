@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "ppp",
+    "bbb"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:paper"
+    },
+    "b": {
+      "item": "minecraft:charcoal"
+    }
+  },
+  "result": {
+    "item": "cyclic:carbon_paper",
+    "count": 1
+  }
+}
