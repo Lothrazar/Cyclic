@@ -22,9 +22,9 @@ public class ContainerReader extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 26, 29));
-      addSlot(new SlotItemHandler(h, 1, 44, 29));
-      addSlot(new SlotItemHandler(h, 2, 68, 29));
+      addSlot(new SlotItemHandler(h, 0, 13, 19));
+      addSlot(new SlotItemHandler(h, 1, 13, 39));
+      addSlot(new SlotItemHandler(h, 2, 41, 29));
     });
     layoutPlayerInventorySlots(8, 84);
   }
