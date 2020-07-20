@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.net.PacketItemToggle;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.net.PacketTileString;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -41,6 +42,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketChestSack.class, PacketChestSack::encode, PacketChestSack::decode, PacketChestSack::handle);
     INSTANCE.registerMessage(id++, PacketSwapBlock.class, PacketSwapBlock::encode, PacketSwapBlock::decode, PacketSwapBlock::handle);
     INSTANCE.registerMessage(id++, PacketRandomize.class, PacketRandomize::encode, PacketRandomize::decode, PacketRandomize::handle);
+    INSTANCE.registerMessage(id++, PacketTileString.class, PacketTileString::encode, PacketTileString::decode, PacketTileString::handle);
   }
 
   public static void sendToAllClients(World world, PacketBase packet) {

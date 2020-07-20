@@ -39,7 +39,7 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
   private static final int SLOT_GPSEND = 1;
   private static final int SLOT_RESULT = 2;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-  private String name = "creativeschematic";
+  private String schematicName = "creativeschematic";
 
   public TileReader() {
     super(BlockRegistry.Tiles.structure_reader);
@@ -55,6 +55,17 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
         return true;
       }
     };
+  }
+
+  @Override
+  public void setFieldString(int field, String value) {
+    ModCyclic.LOGGER.info("TE save " + value);
+    this.schematicName = value;// only field
+  }
+
+  @Override
+  public String getFieldString(int field) {
+    return this.schematicName;
   }
 
   @Override
@@ -78,12 +89,14 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public void read(CompoundNBT tag) {
+    tag.putString("schematicName", schematicName);
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     super.read(tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    this.schematicName = tag.getString("schematicName");
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
@@ -120,7 +133,7 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
     TemplateManager templatemanager = serverworld.getStructureTemplateManager();
     Template template;
     try {
-      ResourceLocation nameResource = ResourceLocation.tryCreate(this.name);
+      ResourceLocation nameResource = ResourceLocation.tryCreate(this.schematicName);
       template = templatemanager.getTemplateDefaulted(nameResource);
       int xSize = Math.abs(targetPos.getX() - endPos.getX());
       int ySize = Math.abs(targetPos.getY() - endPos.getY());

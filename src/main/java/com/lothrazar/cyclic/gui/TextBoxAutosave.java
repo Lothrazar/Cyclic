@@ -1,18 +1,21 @@
 package com.lothrazar.cyclic.gui;
 
-import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.net.PacketTileString;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.util.math.BlockPos;
 
-public class TextboxInteger extends TextFieldWidget {
+public class TextBoxAutosave extends TextFieldWidget {
 
   private static final int KEY_DELETE = 261;
   private static final int KEY_BACKSPACE = 259;
   private BlockPos pos;
+  private TileEntityBase tile;
 
-  public TextboxInteger(FontRenderer fontIn, int xIn, int yIn, int widthIn,
+  public TextBoxAutosave(FontRenderer fontIn, int xIn, int yIn, int widthIn,
       BlockPos pos, int field) {
     super(fontIn, xIn, yIn, widthIn, 16, "");
     this.setMaxStringLength(2);
@@ -21,6 +24,7 @@ public class TextboxInteger extends TextFieldWidget {
     this.setTextColor(16777215);
     this.pos = pos;
     this.tileFieldId = field;
+    this.tile = (TileEntityBase) ModCyclic.proxy.getClientWorld().getTileEntity(pos);
   }
 
   @Override
@@ -31,26 +35,13 @@ public class TextboxInteger extends TextFieldWidget {
 
   @Override
   public boolean keyPressed(int key, int p_keyPressed_2_, int p_keyPressed_3_) {
-    if (key == KEY_BACKSPACE || key == KEY_DELETE) {
-      saveValue();
-    }
+    saveValue();
     return super.keyPressed(key, p_keyPressed_2_, p_keyPressed_3_);
   }
 
   private void saveValue() {
-    PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.tileFieldId, this.getCurrent(), pos));
-  }
-
-  @Override
-  public boolean charTyped(char chr, int p) {
-    if (!Character.isDigit(chr)) {
-      return false;
-    }
-    boolean worked = super.charTyped(chr, p);
-    if (worked) {
-      saveValue();
-    }
-    return worked;
+    tile.setFieldString(tileFieldId, getText());
+    PacketRegistry.INSTANCE.sendToServer(new PacketTileString(this.tileFieldId, this.getText(), pos));
   }
 
   private int tileFieldId;
@@ -62,14 +53,5 @@ public class TextboxInteger extends TextFieldWidget {
 
   public void setTooltip(String tooltip) {
     this.tooltip = tooltip;
-  }
-
-  public int getCurrent() {
-    try {
-      return Integer.parseInt(this.getText());
-    }
-    catch (Exception e) {
-      return 0;
-    }
   }
 }

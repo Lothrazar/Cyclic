@@ -230,4 +230,13 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   @Deprecated
   @Override
   public void clear() {}
+
+  public void setFieldString(int field, String value) {
+    //for string field system
+  }
+
+  public String getFieldString(int field) {
+    //for string field system
+    return null;
+  }
 }

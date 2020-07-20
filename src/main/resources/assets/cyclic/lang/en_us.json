@@ -1189,8 +1189,20 @@
 
     "button.fan.sound.tooltip": "Enable or disable sound",
     
+    "item.cyclic.structure_disk":"Structure Disk",
+    "item.cyclic.structure_disk.tooltip":"Stores a structure from a copier, to be written into the world",
+    
     "block.cyclic.structure_writer":"Structure Writer",
     "block.cyclic.structure_writer.tooltip":"Use structure disk to place structures",
+    
+    "block.cyclic.structure_finder":"Structure finder",
+    "block.cyclic.structure_finder.tooltip":"Creative way to find any local structure file by name or id onto a disk",
+    
+    "block.cyclic.structure_reader":"Structure Reader",
+    "block.cyclic.structure_reader.tooltip":"Creative way to read any structure for free onto a disk",
+    
+    "block.cyclic.structure_copy":"Structure Copier",
+    "block.cyclic.structure_copy.tooltip":"Creative way to read a structure for free onto a disk",
     
     "cyclic.structure_writer.status.none":"Insert disk and location",
     "cyclic.structure_writer.status.invalid":"Invalid disk",

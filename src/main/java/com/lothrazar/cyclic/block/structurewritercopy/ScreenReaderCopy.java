@@ -30,7 +30,7 @@ public class ScreenReaderCopy extends ScreenBase<ContainerReaderCopy> {
     this.drawBackground(TextureRegistry.INVENTORY_LARGE_PLAIN);
     this.drawSlot(27, 28, TextureRegistry.SLOT_GPS, 18);
     this.drawSlot(43, 28, TextureRegistry.SLOT_GPS, 18);
-    this.drawSlot(67, 28, TextureRegistry.SLOT_LARGE, 18);
+    this.drawSlot(67, 28, TextureRegistry.SLOT_LARGE, 26);
     for (int s = 0; s < 9; s++) {
       this.drawSlot(7 + 18 * s, 111, TextureRegistry.SLOT, 18);
     }

@@ -172,6 +172,6 @@ public class EntityDungeonEye extends ProjectileItemEntity {
   @Override
   protected void onImpact(RayTraceResult result) {
     //    this.remove(); 
-    System.out.println("onimpact" + result);
+    //    System.out.println("onimpact" + result);
   }
 }
