@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -36,20 +37,20 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
   }
 
   @Override
-  public void render(int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground();
-    super.render(mouseX, mouseY, partialTicks);
-    this.renderHoveredToolTip(mouseX, mouseY);
-    fluid.renderHoveredToolTip(mouseX, mouseY, container.tile.tank.getFluid());
+  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(ms);
+    super.render(ms, mouseX, mouseY, partialTicks);
+    this.func_230459_a_(ms, mouseX, mouseY);
+    fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.tank.getFluid());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.drawButtonTooltips(mouseX, mouseY);
-    this.drawName(this.title.getFormattedText());
+  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+    this.drawButtonTooltips(ms, mouseX, mouseY);
+    this.drawName(ms, this.title.getString());
     int xp = container.tile.getStoredXp();
     if (xp > 0)
-      this.font.drawString(xp + " XP",
+      this.font.drawString(ms, xp + " XP",
           (this.getXSize()) / 2 + 4,
           40.0F, 4209792);
     btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.tile.getNeedsRedstone()));
@@ -57,8 +58,8 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.INVENTORY);
-    fluid.draw(container.tile.tank.getFluid());
+  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    fluid.draw(ms, container.tile.tank.getFluid());
   }
 }

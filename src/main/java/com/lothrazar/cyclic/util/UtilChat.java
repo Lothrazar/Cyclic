@@ -35,6 +35,10 @@ public class UtilChat {
     }
   }
 
+  public static TranslationTextComponent ilang(String message) {
+    return new TranslationTextComponent(message);
+  }
+
   public static String lang(String message) {
     TranslationTextComponent t = new TranslationTextComponent(message);
     return t.getString();

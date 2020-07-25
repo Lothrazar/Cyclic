@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -36,29 +37,29 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   }
 
   @Override
-  public void render(int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground();
-    super.render(mouseX, mouseY, partialTicks);
-    this.renderHoveredToolTip(mouseX, mouseY);
-    energy.renderHoveredToolTip(mouseX, mouseY, container.tile.getEnergy());
+  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(ms);
+    super.render(ms, mouseX, mouseY, partialTicks);
+    this.func_230459_a_(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.drawButtonTooltips(mouseX, mouseY);
-    this.drawName(this.title.getFormattedText());
+  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+    this.drawButtonTooltips(ms, mouseX, mouseY);
+    this.drawName(ms, this.title.getString());
     btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.tile.getNeedsRedstone()));
     btnRedstone.setTextureId(container.tile.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.INVENTORY);
+  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+    this.drawBackground(ms, TextureRegistry.INVENTORY);
     int x = 23;
     int y = 39;
-    this.drawSlot(x, y);
-    this.drawSlot(x + 24, y, TextureRegistry.SLOT_BOOK, 18);
-    this.drawSlotLarge(119, y - 4);
-    energy.draw(container.tile.getEnergy());
+    this.drawSlot(ms, x, y);
+    this.drawSlot(ms, x + 24, y, TextureRegistry.SLOT_BOOK, 18);
+    this.drawSlotLarge(ms, 119, y - 4);
+    energy.draw(ms, container.tile.getEnergy());
   }
 }

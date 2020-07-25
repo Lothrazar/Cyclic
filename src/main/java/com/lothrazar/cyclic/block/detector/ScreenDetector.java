@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -73,40 +74,40 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     txtLimit.setTooltip(UtilChat.lang("cyclic.detector.limit"));
     this.children.add(txtLimit);
   }
+  //
+  //  @Override
+  //  public void removed() {
+  //    this.txtX = null;
+  //    this.txtY = null;
+  //    this.txtZ = null;
+  //    this.txtLimit = null;
+  //  }
 
   @Override
-  public void removed() {
-    this.txtX = null;
-    this.txtY = null;
-    this.txtZ = null;
-    this.txtLimit = null;
+  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(ms);
+    super.render(ms, mouseX, mouseY, partialTicks);
+    this.func_230459_a_(ms, mouseX, mouseY);
   }
 
   @Override
-  public void render(int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground();
-    super.render(mouseX, mouseY, partialTicks);
-    this.renderHoveredToolTip(mouseX, mouseY);
-  }
-
-  @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.drawButtonTooltips(mouseX, mouseY);
-    this.drawName(this.title.getFormattedText());
+  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+    this.drawButtonTooltips(ms, mouseX, mouseY);
+    this.drawName(ms, this.title.getString());
     btnEntity.setTooltip(UtilChat.lang("cyclic.detector.entitytype.tooltip"));
-    btnEntity.setMessage(UtilChat.lang("cyclic.detector.entitytype" +
+    btnEntity.setMessage(UtilChat.ilang("cyclic.detector.entitytype" +
         container.tile.getField(TileDetector.Fields.ENTITYTYPE.ordinal())));
     btnComp.setTooltip(UtilChat.lang("cyclic.detector.compare.tooltip"));
-    btnComp.setMessage(UtilChat.lang("cyclic.detector.compare" +
+    btnComp.setMessage(UtilChat.ilang("cyclic.detector.compare" +
         container.tile.getField(TileDetector.Fields.GREATERTHAN.ordinal())));
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.INVENTORY);
-    this.txtX.render(mouseX, mouseX, partialTicks);
-    this.txtY.render(mouseX, mouseX, partialTicks);
-    this.txtZ.render(mouseX, mouseX, partialTicks);
-    this.txtLimit.render(mouseX, mouseX, partialTicks);
+  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.txtX.render(ms, mouseX, mouseX, partialTicks);
+    this.txtY.render(ms, mouseX, mouseX, partialTicks);
+    this.txtZ.render(ms, mouseX, mouseX, partialTicks);
+    this.txtLimit.render(ms, mouseX, mouseX, partialTicks);
   }
 }

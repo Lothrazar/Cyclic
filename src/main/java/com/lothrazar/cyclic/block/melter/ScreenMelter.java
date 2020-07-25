@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -30,32 +31,32 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   }
 
   @Override
-  public void render(int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground();
-    super.render(mouseX, mouseY, partialTicks);
-    this.renderHoveredToolTip(mouseX, mouseY);
-    energy.renderHoveredToolTip(mouseX, mouseY, container.getEnergy());
-    fluid.renderHoveredToolTip(mouseX, mouseY, container.tile.getFluid());
+  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(ms);
+    super.render(ms, mouseX, mouseY, partialTicks);
+    this.func_230459_a_(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.drawButtonTooltips(mouseX, mouseY);
-    this.drawName(this.title.getFormattedText());
+  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+    this.drawButtonTooltips(ms, mouseX, mouseY);
+    this.drawName(ms, title.getString());
     int timer = container.tile.getField(Fields.TIMER.ordinal());
     if (timer > 0)
-      this.font.drawString("[" + timer + "]",
+      this.font.drawString(ms, "[" + timer + "]",
           (this.getXSize()) / 2 + 4,
           40.0F, 4209792);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.INVENTORY);
-    this.drawSlot(16, 30);
-    this.drawSlot(34, 30);
-    timer.draw(container.tile.getField(Fields.TIMER.ordinal()));
-    energy.draw(container.getEnergy());
-    fluid.draw(container.tile.getFluid());
+  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawSlot(ms, 16, 30);
+    this.drawSlot(ms, 34, 30);
+    timer.draw(ms, container.tile.getField(Fields.TIMER.ordinal()));
+    energy.draw(ms, container.getEnergy());
+    fluid.draw(ms, container.tile.getFluid());
   }
 }
