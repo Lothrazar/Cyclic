@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -49,7 +48,7 @@ public class EnergyBar {
       String tt = energ + "/" + this.capacity;
       List<ITextProperties> list = new ArrayList<>();
       list.add(new TranslationTextComponent(tt));
-      parent.renderTooltip(ms, list, mouseX, mouseY, Minecraft.getInstance().fontRenderer);
+      parent.renderTooltip(ms, list, mouseX, mouseY);
     }
   }
 }

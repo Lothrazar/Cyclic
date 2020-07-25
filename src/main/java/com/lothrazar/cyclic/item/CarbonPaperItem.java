@@ -37,7 +37,7 @@ public class CarbonPaperItem extends ItemBase {
       tooltip.add(new TranslationTextComponent("[" + fakeSign.getTextColor().getString() + "]"));
       for (int i = 0; i <= 3; i++) {
         //        fakeSign.setText(line, p_212365_2_);
-        ITextComponent t = fakeSign.getText(i);
+        ITextComponent t = fakeSign.signText[i];
         //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
         tooltip.add(t);
       }
@@ -72,7 +72,7 @@ public class CarbonPaperItem extends ItemBase {
         sign.setTextColor(fakeSign.getTextColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());
-          sign.setText(i, fakeSign.getText(i));
+          sign.setText(i, fakeSign.signText[i]);
         }
         UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.written");
       }

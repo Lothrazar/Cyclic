@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluids;
@@ -91,7 +90,7 @@ public class FluidBar {
       String tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
       List<ITextProperties> list = new ArrayList<>();
       list.add(new TranslationTextComponent(tt));
-      parent.renderTooltip(ms, list, mouseX, mouseY, Minecraft.getInstance().fontRenderer);
+      parent.renderTooltip(ms, list, mouseX, mouseY);
     }
   }
 
