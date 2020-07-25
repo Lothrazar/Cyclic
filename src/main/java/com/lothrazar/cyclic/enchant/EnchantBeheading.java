@@ -116,7 +116,7 @@ public class EnchantBeheading extends EnchantBase {
       if (target == null) {
         return;
       } //probably wont happen just extra safe
-      BlockPos pos = target.func_233580_cy_();
+      BlockPos pos = target.getPosition();
       if (target instanceof PlayerEntity) {
         UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull((PlayerEntity) target));
         return;

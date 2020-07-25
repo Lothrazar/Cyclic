@@ -97,7 +97,7 @@ public class EnchantTraveller extends EnchantBase {
         if (event.getAmount() > event.getEntityLiving().getHealth() - 0.5F) {
           //either you crashed flying straight into the ground, or just fell while wearing elytra (you still die to void tho)
           event.setAmount(event.getEntityLiving().getHealth() - 1F);
-          UtilParticle.spawnParticle(event.getEntity().world, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().func_233580_cy_(), 4);
+          UtilParticle.spawnParticle(event.getEntity().world, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().getPosition(), 4);
         }
       }
     }

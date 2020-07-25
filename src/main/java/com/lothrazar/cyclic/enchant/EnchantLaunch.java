@@ -89,7 +89,7 @@ public class EnchantLaunch extends EnchantBase {
         return;
       }
       //if you are on the ground (or not airborne, should be same thing
-      if ((p.isAirBorne == false || p.func_233570_aj_()) && //onGround
+      if ((p.isAirBorne == false || p.isOnGround()) && //onGround
           armorStack.getOrCreateTag().getInt(NBT_USES) > 0) {
         //you have landed on the ground, dont count previous jumps
         UtilNBT.setItemStackNBTVal(armorStack, NBT_USES, 0);
@@ -122,7 +122,7 @@ public class EnchantLaunch extends EnchantBase {
       player.fallDistance = 0;
       float angle = (player.getMotion().x == 0 && player.getMotion().z == 0) ? 90 : ROTATIONPITCH;
       UtilEntity.launch(player, angle, LAUNCH_POWER);
-      UtilParticle.spawnParticle(player.getEntityWorld(), ParticleTypes.CRIT, player.func_233580_cy_(), 7);
+      UtilParticle.spawnParticle(player.getEntityWorld(), ParticleTypes.CRIT, player.getPosition(), 7);
       //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.enchant_launch, SoundCategory.PLAYERS, 0.04F);
       //      UtilItemStack.damageItem(player, feet);
       uses++;

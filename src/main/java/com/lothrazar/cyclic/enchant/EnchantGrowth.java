@@ -82,7 +82,7 @@ public class EnchantGrowth extends EnchantBase {
       final int growthLimit = level * 2 +
           (entity.world.isRaining() ? 4 : 1);//faster when raining too 
       int grown = 0;
-      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.func_233580_cy_().down(), level + 2);
+      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level + 2);
       shape = UtilShape.repeatShapeByHeight(shape, 2);
       Collections.shuffle(shape);
       for (int i = 0; i < shape.size(); i++) {
