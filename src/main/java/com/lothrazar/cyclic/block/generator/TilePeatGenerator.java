@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -68,13 +69,13 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     setFlowing(tag.getInt("flowing"));
     burnTime = tag.getInt("burnTime");
     fuelRate = tag.getInt("fuelRate");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

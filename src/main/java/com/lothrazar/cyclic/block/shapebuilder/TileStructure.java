@@ -64,7 +64,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     int t = tag.getInt("buildType");
@@ -72,7 +72,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     buildSize = tag.getInt("buildSize");
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

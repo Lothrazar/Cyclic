@@ -35,12 +35,11 @@ public class BlockDarkGlass extends BlockBase {
   public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0F;
   }
-
-  @Override
-  @Deprecated
-  public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return false;
-  }
+  //  @Override
+  //  @Deprecated
+  //  public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+  //     return false;
+  //  }
 
   @Override
   @OnlyIn(Dist.CLIENT)

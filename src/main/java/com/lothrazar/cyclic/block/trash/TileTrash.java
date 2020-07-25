@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.trash;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -34,10 +35,10 @@ public class TileTrash extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     CompoundNBT invTag = tag.getCompound("inv");
     handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(invTag));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

@@ -40,7 +40,7 @@ public class BlockSpikes extends BlockBase {
     PLAIN, FIRE, CURSE;
 
     @Override
-    public String getName() {
+    public String getString() {
       return this.name().toLowerCase(Locale.ENGLISH);
     }
   }

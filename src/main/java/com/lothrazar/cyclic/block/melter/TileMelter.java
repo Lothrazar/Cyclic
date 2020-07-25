@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -105,11 +106,11 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     tank.readFromNBT(tag.getCompound("fluid"));
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -127,11 +128,10 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     });
     return super.write(tag);
   }
-
-  @Override
-  public boolean hasFastRenderer() {
-    return true;
-  }
+  //  @Override
+  //  public boolean hasFastRenderer() {
+  //    return true;
+  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {

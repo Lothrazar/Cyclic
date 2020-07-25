@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilSound;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -61,13 +62,13 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     tank.readFromNBT(tag.getCompound("fluid"));
     int legacy = tag.getInt("storedXp");
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * 20));
     }
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

@@ -22,7 +22,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -82,7 +81,7 @@ public class BlockCask extends BlockBase {
   }
 
   @Override
-  public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+  public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 
     return new ArrayList<>();
   }

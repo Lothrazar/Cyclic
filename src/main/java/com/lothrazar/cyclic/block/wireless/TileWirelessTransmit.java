@@ -64,9 +64,9 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
 
   private void toggleTarget(BlockPos targetPos) {
     BlockState target = world.getBlockState(targetPos);
-    if (target.has(BlockStateProperties.POWERED)) {
+    if (target.hasProperty(BlockStateProperties.POWERED)) {
       boolean targetPowered = target.get(BlockStateProperties.POWERED);
       //update target based on my state
       boolean isPowered = world.isBlockPowered(pos);
@@ -101,7 +101,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
       for (int s = 0; s < inv.getSlots(); s++) {
         ItemStack stack = inv.getStackInSlot(s);
         BlockPosDim targetPos = LocationGpsItem.getPosition(stack);
-        if (targetPos == null || targetPos.getDimension() != world.dimension.getType().getId()) {
+        if (targetPos == null) {//|| targetPos.getDimension() != world.dimension.getType().getId()) {
           return;
         }
         toggleTarget(targetPos.getPos());

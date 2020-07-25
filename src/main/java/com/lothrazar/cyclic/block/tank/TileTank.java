@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -32,10 +33,10 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     CompoundNBT fluid = tag.getCompound("fluid");
     tank.readFromNBT(fluid);
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -45,11 +46,10 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
     tag.put("fluid", fluid);
     return super.write(tag);
   }
-
-  @Override
-  public boolean hasFastRenderer() {
-    return true;
-  }
+  //  @Override
+  //  public boolean hasFastRenderer() {
+  //    return true;
+  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {

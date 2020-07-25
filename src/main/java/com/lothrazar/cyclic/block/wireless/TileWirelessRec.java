@@ -2,20 +2,19 @@ package com.lothrazar.cyclic.block.wireless;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 
 public class TileWirelessRec extends TileEntityBase implements ITickableTileEntity {
-
-  private int power = 15;//TODO: transmit this
 
   public TileWirelessRec() {
     super(BlockRegistry.Tiles.wireless_receiver);
   }
 
   @Override
-  public void read(CompoundNBT tag) {
-    super.read(tag);
+  public void read(BlockState bs, CompoundNBT tag) {
+    super.read(bs, tag);
   }
 
   @Override

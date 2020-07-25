@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.structurewritercopy;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,7 +17,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -32,6 +31,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
+import net.minecraft.world.gen.feature.template.Template.Palette;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
@@ -87,9 +87,9 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -171,11 +171,11 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
   private boolean detectEnoughMaterials(BlockPos start, BlockPos end, Template template) {
     Map<Block, Integer> blRequired = new HashMap<>();
     Map<Fluid, Integer> fluidsNeeded = new HashMap<>();
-    for (List<BlockInfo> b : template.blocks) {
-      for (BlockInfo bl : b) {
+    for (Palette b : template.blocks) {
+      for (BlockInfo bl : b.func_237157_a_()) {
         if (bl.state.getFluidState() != null
             && bl.state.getFluidState().isSource()) {
-          IFluidState fluidHere = bl.state.getFluidState();
+          FluidState fluidHere = bl.state.getFluidState();
           Fluid fluidUnit = fluidHere.getFluid();
           if (fluidsNeeded.containsKey(fluidUnit)) {
             fluidsNeeded.put(fluidUnit, fluidsNeeded.get(fluidUnit) + 1);
@@ -206,7 +206,7 @@ public class TileReaderCopy extends TileEntityBase implements INamedContainerPro
           current = world.getBlockState(p);
           Block blockHere = current.getBlock();
           //is it fluid?
-          IFluidState fluidHere = current.getFluidState();
+          FluidState fluidHere = current.getFluidState();
           if (fluidHere != null && fluidHere.isSource()) {
             ModCyclic.LOGGER.info("fluid check" + fluidHere);
             Fluid fluidUnit = fluidHere.getFluid();

@@ -75,10 +75,10 @@ public class ItemCask extends BlockItem {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null && !fs.isEmpty()) {// + 
         TranslationTextComponent t = new TranslationTextComponent(
-            fs.getDisplayName().getFormattedText()
+            fs.getDisplayName().getString()
                 + " " + fs.getAmount()
                 + "/" + storage.getTankCapacity(0));
-        t.applyTextStyle(TextFormatting.GRAY);
+        t.mergeStyle(TextFormatting.GRAY);
         tooltip.add(t);
         return;
       }

@@ -87,17 +87,17 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     delay = tag.getInt("redstone_delay");
     duration = tag.getInt("redstone_duration");
     power = tag.getInt("redstone_power");
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean(f.getName()));
+      poweredSides.put(f, tag.getBoolean(f.getName2()));
     }
     if (this.detectAllOff()) {
       this.facingResetAllOn();//fix legacy data for one
     }
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -106,7 +106,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
     tag.putInt("redstone_duration", duration);
     tag.putInt("redstone_power", power);
     for (Direction f : Direction.values()) {
-      tag.putBoolean(f.getName(), poweredSides.get(f));
+      tag.putBoolean(f.getName2(), poweredSides.get(f));
     }
     return super.write(tag);
   }
@@ -134,7 +134,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
 
   private void updateMyState() throws IllegalArgumentException {
     BlockState blockState = world.getBlockState(pos);
-    if (blockState.has(BlockRedstoneClock.IS_LIT) == false) {
+    if (blockState.hasProperty(BlockRedstoneClock.IS_LIT) == false) {
       return;
     }
     if (this.power == 0) {

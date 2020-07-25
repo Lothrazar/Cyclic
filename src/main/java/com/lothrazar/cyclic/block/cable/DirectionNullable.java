@@ -9,7 +9,7 @@ public enum DirectionNullable implements IStringSerializable {
   DOWN, UP, NORTH, SOUTH, WEST, EAST, NONE;
 
   @Override
-  public String getName() {
+  public String getString() {
     return this.name().toLowerCase();
   }
 

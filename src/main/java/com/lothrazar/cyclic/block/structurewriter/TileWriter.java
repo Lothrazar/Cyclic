@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -107,11 +108,11 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     shapeIndex = tag.getInt("shapeIndex");
     structStatus = StructureStatus.values()[tag.getInt("struct_status")];
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -169,7 +170,8 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
     ModCyclic.LOGGER.info("Build starting at " + blockPos);
     boolean DOBUILD = false;
     if (DOBUILD) {//if true this does do the build
-      template.addBlocksToWorldChunk(this.world, blockPos, placementsettings);
+      //TODO 1.16
+      //      template.addBlocksToWorldChunk(this.world, blockPos, placementsettings);
       return true;
     }
     return false;

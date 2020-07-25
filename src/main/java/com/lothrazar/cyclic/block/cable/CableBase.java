@@ -100,7 +100,7 @@ public abstract class CableBase extends BlockBase {
     if (type == WrenchActionType.EXTRACT) {
       if (state.getBlock() == BlockRegistry.fluid_pipe
           || state.getBlock() == BlockRegistry.item_pipe) {
-        if (state.has(BlockCableFluid.EXTR)) {
+        if (state.hasProperty(BlockCableFluid.EXTR)) {
           DirectionNullable current = state.get(BlockCableFluid.EXTR);
           DirectionNullable newextr = current.toggle(sideToToggle);
           world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
@@ -109,7 +109,7 @@ public abstract class CableBase extends BlockBase {
     }
     else if (type == WrenchActionType.DISABLE && state.getBlock() instanceof CableBase) {
       EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
-      if (state.has(prop)) {
+      if (state.hasProperty(prop)) {
         EnumConnectType status = state.get(prop);
         BlockState stateNone;
         switch (status) {
@@ -144,7 +144,7 @@ public abstract class CableBase extends BlockBase {
     }
     EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(side);
     return blockState.getBlock() instanceof CableBase
-        && blockState.has(property)
+        && blockState.hasProperty(property)
         && blockState.get(property).isUnBlocked() == false;
   }
 }

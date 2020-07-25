@@ -9,10 +9,11 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -101,11 +102,11 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     shapeIndex = tag.getInt("shapeIndex");
     tank.readFromNBT(tag.getCompound("fluid"));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -139,7 +140,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       incrementShapePtr(shape);
       BlockPos posTarget = shape.get(shapeIndex);
       //ok on this target get fluid check it out
-      IFluidState fluidState = world.getFluidState(posTarget);
+      FluidState fluidState = world.getFluidState(posTarget);
       for (int ff = 0; ff < 20; ff++) {
         if (fluidState.isSource()) {
           break;

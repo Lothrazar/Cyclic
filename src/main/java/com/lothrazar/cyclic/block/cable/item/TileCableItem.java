@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -117,7 +118,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
@@ -126,7 +127,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
         ((INBTSerializable<CompoundNBT>) h).deserializeNBT(itemTag);
       });
     }
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -73,19 +74,19 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     for (Direction f : Direction.values()) {
-      mapIncomingEnergy.put(f, tag.getInt(f.getName() + "_incenergy"));
+      mapIncomingEnergy.put(f, tag.getInt(f.getString() + "_incenergy"));
     }
     CompoundNBT energyTag = tag.getCompound("energy");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     for (Direction f : Direction.values()) {
-      tag.putInt(f.getName() + "_incenergy", mapIncomingEnergy.get(f));
+      tag.putInt(f.getString() + "_incenergy", mapIncomingEnergy.get(f));
     }
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();

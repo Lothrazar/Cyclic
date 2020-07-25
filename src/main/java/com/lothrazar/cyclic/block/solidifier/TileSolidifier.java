@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerSided;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -108,12 +109,12 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     tank.readFromNBT(tag.getCompound("fluid"));
     energyWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inputsSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     outputSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("invoutput")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
@@ -135,11 +136,10 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     });
     return super.write(tag);
   }
-
-  @Override
-  public boolean hasFastRenderer() {
-    return true;
-  }
+  //  @Override
+  //  public boolean hasFastRenderer() {
+  //    return true;
+  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {

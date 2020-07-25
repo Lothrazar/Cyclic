@@ -179,7 +179,7 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     this.rangeX = tag.getInt("ox");
     this.rangeY = tag.getInt("oy");
     this.rangeZ = tag.getInt("oz");
@@ -187,7 +187,7 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
     int cType = tag.getInt("compare");
     if (cType >= 0 && cType < CompareType.values().length)
       this.compType = CompareType.values()[cType];
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

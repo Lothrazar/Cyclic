@@ -120,17 +120,17 @@ public class BlockSound extends BlockBase {
     }
 
     @Override
-    public float getX() {
+    public double getX() {
       return sound.getX();
     }
 
     @Override
-    public float getY() {
+    public double getY() {
       return sound.getY();
     }
 
     @Override
-    public float getZ() {
+    public double getZ() {
       return sound.getZ();
     }
   }

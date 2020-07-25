@@ -21,9 +21,10 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.IProperty;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.Property;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -40,7 +41,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  private static final BlockTags.Wrapper HARVEST_BREAK = new BlockTags.Wrapper(new ResourceLocation(ModCyclic.MODID, "harvester_break"));
+  private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
   private static final int RADIUS = 9;
   private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
@@ -56,11 +57,10 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public TileHarvester() {
     super(BlockRegistry.Tiles.harvesterTile);
   }
-
-  @Override
-  public boolean hasFastRenderer() {
-    return true;
-  }
+  //  @Override
+  //  public boolean hasFastRenderer() {
+  //    return true;
+  //  }
 
   @Override
   public void tick() {
@@ -143,7 +143,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   public static IntegerProperty getAgeProp(BlockState blockState) {
-    for (IProperty<?> p : blockState.getProperties()) {
+    for (Property<?> p : blockState.getProperties()) {
       if (p != null && p.getName() != null
           && p instanceof IntegerProperty &&
           p.getName().equalsIgnoreCase("age")) {
@@ -175,11 +175,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     this.laserTarget = UtilNBT.getBlockPos(tag);
     laserTimer = tag.getInt("lt");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

@@ -14,7 +14,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -52,11 +51,10 @@ public class BlockScaffolding extends BlockBase {
       worldIn.destroyBlock(pos, true);
     }
   }
-
-  @Override
-  public int tickRate(IWorldReader worldIn) {
-    return 200;
-  }
+  //  @Override
+  //  public int tickRate(IWorldReader worldIn) { 
+  //    return 200;
+  //  }
 
   @Override
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {

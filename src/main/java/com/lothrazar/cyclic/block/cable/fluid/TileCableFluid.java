@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -98,7 +99,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
       fluidh = (FluidTankBase) flow.get(dir).orElse(null);
@@ -106,7 +107,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
       }
     }
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
