@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,9 +33,10 @@ public class CarbonPaperItem extends ItemBase {
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (stack.hasTag()) {
       SignTileEntity fakeSign = new SignTileEntity();
-      fakeSign.read(stack.getTag());
-      tooltip.add(new TranslationTextComponent("[" + fakeSign.getTextColor().getName() + "]"));
+      fakeSign.read(Blocks.OAK_SIGN.getDefaultState(), stack.getTag());
+      tooltip.add(new TranslationTextComponent("[" + fakeSign.getTextColor().getString() + "]"));
       for (int i = 0; i <= 3; i++) {
+        fakeSign.setText(line, p_212365_2_);
         ITextComponent t = fakeSign.getText(i);
         //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
         tooltip.add(t);

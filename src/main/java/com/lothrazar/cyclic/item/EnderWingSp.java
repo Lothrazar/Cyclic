@@ -25,7 +25,6 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
@@ -48,7 +47,8 @@ public class EnderWingSp extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(context);
     }
-    UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
+    //TODO: 1.16
+    //    UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
     UtilSound.playSound(player, SoundRegistry.warp_echo);
     UtilItemStack.damageItem(player, context.getItem());
     player.getCooldownTracker().setCooldown(this, cooldown);

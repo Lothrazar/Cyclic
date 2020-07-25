@@ -73,7 +73,7 @@ public class BoomerangItem extends ItemBase {
         e = new BoomerangEntityStun(worldIn, player);
       break;
     }
-    e.shoot(entity, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    e.shoot(player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
     worldIn.addEntity(e);
     stack.damageItem(1, player, (p) -> {
       p.sendBreakAnimation(Hand.MAIN_HAND);

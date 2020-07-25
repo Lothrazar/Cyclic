@@ -35,7 +35,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -111,7 +111,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   private void moveTowardsTarget() {
     rotationYaw = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getPosX(), getPosY(), getPosZ(), targetEntity.getPosX(), targetEntity.getPosY(), targetEntity.getPosZ()));
     rotationPitch = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(getPosX(), getPosY(), getPosZ(), targetEntity.getPosX(), targetEntity.getPosY(), targetEntity.getPosZ()));
-    Vec3d moveVec = UtilEntity.lookVector(this.rotationYaw, this.rotationPitch).scale(SPEED);
+    Vector3d moveVec = UtilEntity.lookVector(this.rotationYaw, this.rotationPitch).scale(SPEED);
     this.setMotion(
         0.5f * this.getMotion().getX() + 0.5f * moveVec.x,
         0.5f * this.getMotion().getY() + 0.503f * moveVec.y,

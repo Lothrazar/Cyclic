@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.endereye;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.item.EyeOfEnderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -26,12 +25,12 @@ public class ItemEnderEyeReuse extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
     ItemStack stack = player.getHeldItem(hand);
     if (!worldIn.isRemote) {
-      BlockPos blockpos = ((ServerWorld) worldIn).getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(player), 100, false);
+      BlockPos blockpos = ((ServerWorld) worldIn).getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(player.getPosition()), 100, false);
       if (blockpos != null) {
         double posX = player.getPosX();
         double posY = player.getPosY();
         double posZ = player.getPosZ();
-        EyeOfEnderEntity eyeofenderentity = new EyeOfEnderEntityNodrop(worldIn, posX, posY + player.getHeight() / 2.0F, posZ);
+        EyeOfEnderEntityNodrop eyeofenderentity = new EyeOfEnderEntityNodrop(worldIn, posX, posY + player.getHeight() / 2.0F, posZ);
         eyeofenderentity.moveTowards(blockpos);
         worldIn.addEntity(eyeofenderentity);
         if (player instanceof ServerPlayerEntity) {
@@ -39,7 +38,7 @@ public class ItemEnderEyeReuse extends ItemBase {
         }
         worldIn.playSound((PlayerEntity) null, posX, posY, posZ, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.NEUTRAL, 0.5F,
             0.4F / (random.nextFloat() * 0.4F + 0.8F));
-        worldIn.playEvent((PlayerEntity) null, 1003, new BlockPos(player), 0);
+        worldIn.playEvent((PlayerEntity) null, 1003, new BlockPos(player.getPosition()), 0);
         UtilItemStack.damageItem(player, stack);
         player.addStat(Stats.ITEM_USED.get(this));
         player.getCooldownTracker().setCooldown(stack.getItem(), 10);

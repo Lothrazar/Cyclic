@@ -9,7 +9,6 @@ import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class BiomassFluidBlock extends FlowingFluidBlock {
@@ -26,9 +25,8 @@ public class BiomassFluidBlock extends FlowingFluidBlock {
     }
     super.onEntityCollision(state, worldIn, pos, entityIn);
   }
-
-  @Override
-  public int tickRate(IWorldReader worldIn) {
-    return super.tickRate(worldIn) + 1;
-  }
+  //  @Override
+  //  public int tickRate(IWorldReader worldIn) {
+  //    return super.tickRate(worldIn) + 1;
+  //  }
 }

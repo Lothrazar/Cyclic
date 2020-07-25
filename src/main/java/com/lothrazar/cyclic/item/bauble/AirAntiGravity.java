@@ -48,7 +48,7 @@ public class AirAntiGravity extends ItemBase implements IHasClickToggle {
       player.setMotion(player.getMotion().x, y, player.getMotion().z);
       player.isAirBorne = false;
       //if we set onGround->true all the time, it blocks fwd movement anywya
-      player.onGround = true;// (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
+      player.setOnGround(true);// (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
       if (player.getEntityWorld().rand.nextDouble() < 0.1) {
         //        super.damageCharm(player, stack);
         UtilItemStack.damageItem(player, stack);

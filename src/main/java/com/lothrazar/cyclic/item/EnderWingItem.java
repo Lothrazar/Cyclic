@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -51,11 +50,12 @@ public class EnderWingItem extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(context);
     }
-    if (player.dimension.getId() != Const.Dimension.overworld) {
+    boolean isOverworld = world.func_234923_W_() == World.field_234918_g_;
+    if (!isOverworld) {
       UtilChat.sendStatusMessage(player, "command.home.overworld");
     }
     else {
-      BlockPos pos = player.getBedLocation(player.dimension);
+      BlockPos pos = player.getBedPosition().orElse(null);
       if (pos == null) {
         UtilChat.sendStatusMessage(player, "command.gethome.bed");
       }

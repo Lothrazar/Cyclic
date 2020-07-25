@@ -103,9 +103,8 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     }
     super.onEntityCollision(state, worldIn, pos, entityIn);
   }
-
-  @Override
-  public int tickRate(IWorldReader worldIn) {
-    return super.tickRate(worldIn) * 8;
-  }
+  //  @Override
+  //  public int tickRate(IWorldReader worldIn) {
+  //    return super.tickRate(worldIn) * 8;
+  //  }
 }

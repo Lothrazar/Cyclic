@@ -8,10 +8,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -102,15 +102,14 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
    * @param entity
    */
   private void func_226946_a_(Entity entity) {
-    Vec3d vec3d = entity.getMotion();
+    Vector3d vec3d = entity.getMotion();
     if (vec3d.y < 0.0D) {
       double d0 = entity instanceof LivingEntity ? 1.0D : 0.8D;
       entity.setMotion(vec3d.x, -vec3d.y * d0, vec3d.z);
     }
   }
-
-  @Override
-  public int tickRate(IWorldReader worldIn) {
-    return super.tickRate(worldIn) * 3;
-  }
+  //  @Override
+  //  public int tickRate(IWorldReader worldIn) {
+  //    return super.tickRate(worldIn) * 3;
+  //  }
 }

@@ -49,7 +49,7 @@ public class EnderBagItem extends ItemBase {
     enderchestinventory.setChestTileEntity(null);
     player.openContainer(new SimpleNamedContainerProvider((p_220114_1_, p_220114_2_, p_220114_3_) -> {
       return ChestContainer.createGeneric9X3(p_220114_1_, p_220114_2_, enderchestinventory);
-    }, EnderChestBlock.field_220115_d));
+    }, EnderChestBlock.CONTAINER_NAME));
     player.addStat(Stats.OPEN_ENDERCHEST);
     if (world.rand.nextDouble() > 0.5)
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDER_CHEST_CLOSE);
