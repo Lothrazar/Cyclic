@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 
 public class StirrupsItem extends ItemBase {
@@ -36,8 +37,8 @@ public class StirrupsItem extends ItemBase {
   }
 
   @Override
-  public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-    // if (world.isRemote) { return false; }
-    return playerIn.startRiding(target, true);
+  public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    // if (world.isRemote) { return false; } 
+    return playerIn.startRiding(target, true) ? ActionResultType.SUCCESS : super.itemInteractionForEntity(stack, playerIn, target, hand);
   }
 }

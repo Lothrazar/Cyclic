@@ -6,14 +6,14 @@ import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Matrix4f;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 
 /**
  * Source from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x
@@ -45,7 +45,7 @@ public class RenderResizableCuboid {
     throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
   }
 
-  public static double getValue(Vec3d vector, Axis axis) {
+  public static double getValue(Vector3d vector, Axis axis) {
     if (axis == Axis.X) {
       return vector.x;
     }
@@ -63,10 +63,10 @@ public class RenderResizableCuboid {
     float green = UtilRender.getGreen(argb);
     float blue = UtilRender.getBlue(argb);
     float alpha = UtilRender.getAlpha(argb);
-    Vec3d size = new Vec3d(cube.sizeX(), cube.sizeY(), cube.sizeZ());
+    Vector3d size = new Vector3d(cube.sizeX(), cube.sizeY(), cube.sizeZ());
     matrix.push();
     matrix.translate(cube.minX, cube.minY, cube.minZ);
-    Matrix4f matrix4f = matrix.getLast().getMatrix();// getMatrix()
+    net.minecraft.util.math.vector.Matrix4f matrix4f = matrix.getLast().getMatrix();// getMatrix()
     for (Direction face : Direction.values()) {
       if (cube.shouldSideRender(face)) {
         int ordinal = face.ordinal();

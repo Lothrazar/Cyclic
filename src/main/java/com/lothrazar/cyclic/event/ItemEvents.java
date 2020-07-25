@@ -15,8 +15,8 @@ import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
@@ -35,7 +35,7 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onPlayerCloneDeath(PlayerEvent.Clone event) {
-    IAttributeInstance original = event.getOriginal().getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    ModifiableAttributeInstance original = event.getOriginal().getAttribute(Attributes.MAX_HEALTH);
     if (original != null) {
       UtilEntity.setMaxHealth(event.getPlayer(), original.getValue());
     }

@@ -65,7 +65,7 @@ public class CommandRegistry {
           boolean isOp = ctx.getSource().hasPermissionLevel(1);
           if (!isOp) {
             //player needs op but does not have it
-            ModCyclic.LOGGER.info("Player [" + player.getDisplayNameAndUUID().getFormattedText() + "] attempted /cyclic command "
+            ModCyclic.LOGGER.info("Player [" + player.getDisplayNameAndUUID().getString() + "] attempted /cyclic command "
                 + sub + " but does not have the required permissions");
             UtilChat.sendFeedback(ctx, "commands.help.failed");
             return 1;

@@ -21,7 +21,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .shadeModel(SHADE_ENABLED)
           .lightmap(LIGHTMAP_ENABLED)
           .texture(BLOCK_SHEET_MIPPED)
-          .layer(PROJECTION_LAYERING)
+          //          .layer(PROJECTION_LAYERING)
           .transparency(TRANSLUCENT_TRANSPARENCY)
           .depthTest(DEPTH_LEQUAL)
           .cull(CULL_DISABLED)
@@ -30,7 +30,7 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType TRANSPARENT_COLOUR = makeType("transparentColour",
       DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256,
       RenderType.State.getBuilder()
-          .layer(PROJECTION_LAYERING)
+          //          .layer(PROJECTION_LAYERING)
           .transparency(TRANSLUCENT_TRANSPARENCY)
           .texture(NO_TEXTURE)
           .depthTest(DEPTH_LEQUAL)
@@ -41,7 +41,7 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType SOLID_COLOUR = makeType("solidColour",
       DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256,
       RenderType.State.getBuilder()
-          .layer(PROJECTION_LAYERING)
+          //          .layer(PROJECTION_LAYERING)
           .transparency(ADDITIVE_TRANSPARENCY)
           .texture(NO_TEXTURE)
           .depthTest(DEPTH_LEQUAL)

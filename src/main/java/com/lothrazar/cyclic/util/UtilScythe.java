@@ -24,17 +24,19 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.item.scythe.ScytheType;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilScythe {
 
-  private static final BlockTags.Wrapper SBRUSH = new BlockTags.Wrapper(ScytheType.BRUSH.type());
-  private static final BlockTags.Wrapper SLEAVES = new BlockTags.Wrapper(ScytheType.LEAVES.type());
-  private static final BlockTags.Wrapper SFORAGE = new BlockTags.Wrapper(ScytheType.FORAGE.type());
+  private static final INamedTag<Block> SBRUSH = BlockTags.makeWrapperTag(ScytheType.BRUSH.type().toString());
+  private static final INamedTag<Block> SLEAVES = BlockTags.makeWrapperTag(ScytheType.LEAVES.type().toString());
+  private static final INamedTag<Block> SFORAGE = BlockTags.makeWrapperTag(ScytheType.FORAGE.type().toString());
   //  private static final BlockTags.Wrapper HARVESTABLE = new BlockTags.Wrapper(new ResourceLocation("cyclic", "harvest"));
 
   //  private static class ScytheConfig {

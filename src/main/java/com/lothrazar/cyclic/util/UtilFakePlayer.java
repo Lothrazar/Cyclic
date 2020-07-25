@@ -51,7 +51,8 @@ public class UtilFakePlayer {
       fakePlayer = null;
       return null; // trying to get around https://github.com/PrinceOfAmber/Cyclic/issues/113
     }
-    fakePlayer.get().onGround = true;
+    fakePlayer.get().setOnGround(true);
+    //    fakePlayer.get().onGround = true;
     fakePlayer.get().connection = new ServerPlayNetHandler(ws.getServer(), new NetworkManager(PacketDirection.SERVERBOUND), fakePlayer.get()) {
 
       @Override

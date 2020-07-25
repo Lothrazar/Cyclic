@@ -24,8 +24,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Matrix4f;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +33,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -74,7 +74,9 @@ public class EventRender {
     if (stack.getItem() instanceof LocationGpsItem) {
       //
       BlockPosDim loc = LocationGpsItem.getPosition(stack);
-      if (loc != null && loc.getDimension() == player.dimension.getId()) {
+      if (loc != null) {
+        //TODO: dimension check
+        //        && loc.getDimension() == player.dimension.getId()
         Map<BlockPos, Color> mappos = new HashMap<>();
         mappos.put(loc.getPos(), Color.BLUE);
         renderColourCubes(evt, player, mappos);
@@ -89,7 +91,7 @@ public class EventRender {
   private void renderColourCubes(RenderWorldLastEvent evt, PlayerEntity player, Map<BlockPos, Color> coords) {
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    Vec3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+    Vector3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     MatrixStack matrix = evt.getMatrixStack();
     matrix.push();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
@@ -136,7 +138,7 @@ public class EventRender {
     IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);//i guess?
     BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
     matrix.push();
-    Vec3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+    Vector3d playerPos = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-playerPos.getX(), -playerPos.getY(), -playerPos.getZ());
     List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getFace(), buildStyle);
     for (BlockPos coordinate : coordinates) {

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.gui;
 
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 
 public class TimerBar {
@@ -26,11 +27,11 @@ public class TimerBar {
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
   }
 
-  public void draw(float energ) {
+  public void draw(MatrixStack ms, float energ) {
     //    Screen.blit(relX, relY, 0, 0, width, height, width, height);
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.TIMER);
     float pct = Math.min(energ / capacity, 1.0F);
-    Screen.blit(guiLeft + x, guiTop + y,
+    Screen.blit(ms, guiLeft + x, guiTop + y,
         0, 0,
         (int) (width * pct), height,
         width, height);

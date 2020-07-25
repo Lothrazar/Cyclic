@@ -10,14 +10,12 @@ import net.minecraft.util.math.BlockPos;
 
 public class TextBoxAutosave extends TextFieldWidget {
 
-  private static final int KEY_DELETE = 261;
-  private static final int KEY_BACKSPACE = 259;
   private BlockPos pos;
   private TileEntityBase tile;
 
   public TextBoxAutosave(FontRenderer fontIn, int xIn, int yIn, int widthIn,
       BlockPos pos, int field) {
-    super(fontIn, xIn, yIn, widthIn, 16, "");
+    super(fontIn, xIn, yIn, widthIn, 16, null);
     this.setMaxStringLength(2);
     this.setEnableBackgroundDrawing(true);
     this.setVisible(true);

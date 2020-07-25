@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.TextboxInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
@@ -19,24 +20,24 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     super(screenContainer, inv, titleIn);
   }
 
-  protected void drawBackground(ResourceLocation gui) {
+  protected void drawBackground(MatrixStack ms, ResourceLocation gui) {
     this.minecraft.getTextureManager().bindTexture(gui);
     int relX = (this.width - this.xSize) / 2;
     int relY = (this.height - this.ySize) / 2;
-    this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
+    this.blit(ms, relX, relY, 0, 0, this.xSize, this.ySize);
   }
 
-  protected void drawSlot(int x, int y, ResourceLocation texture, int size) {
+  protected void drawSlot(MatrixStack ms, int x, int y, ResourceLocation texture, int size) {
     this.minecraft.getTextureManager().bindTexture(texture);
-    blit(guiLeft + x, guiTop + y, 0, 0, size, size, size, size);
+    blit(ms, guiLeft + x, guiTop + y, 0, 0, size, size, size, size);
   }
 
-  protected void drawSlot(int x, int y) {
-    drawSlot(x, y, TextureRegistry.SLOT, 18);
+  protected void drawSlot(MatrixStack ms, int x, int y) {
+    drawSlot(ms, x, y, TextureRegistry.SLOT, 18);
   }
 
-  protected void drawSlotLarge(int x, int y) {
-    drawSlot(x, y, TextureRegistry.SLOT_LARGE, 26);
+  protected void drawSlotLarge(MatrixStack ms, int x, int y) {
+    drawSlot(ms, x, y, TextureRegistry.SLOT_LARGE, 26);
   }
 
   /**
@@ -44,28 +45,29 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
    * 
    * @param name
    */
-  protected void drawName(String name) {
+  protected void drawName(MatrixStack ms, String name) {
     name = UtilChat.lang("block." + ModCyclic.MODID + "." + name);
-    drawString(name,
+    drawString(ms, name,
         (this.getXSize() - this.font.getStringWidth(name)) / 2,
         6.0F);
   }
 
-  protected void drawString(String name, float x, float y) {
-    this.font.drawString(name, x, y, 4210752);
+  protected void drawString(MatrixStack ms, String name, float x, float y) {
+    this.font.drawString(ms, name, x, y, 4210752);
   }
 
-  public void drawButtonTooltips(int mouseX, int mouseY) {
+  public void drawButtonTooltips(MatrixStack ms, int mouseX, int mouseY) {
     for (Widget btn : this.buttons) {
       if (btn instanceof ButtonMachine && btn.isMouseOver(mouseX, mouseY)) {
-        btn.renderToolTip(mouseX, mouseY);
-        this.renderTooltip(((ButtonMachine) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        //        btn.too
+        btn.renderToolTip(ms, mouseX, mouseY);
+        this.renderTooltip(ms, ((ButtonMachine) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }
     for (IGuiEventListener widget : this.children) {
       if (widget instanceof TextboxInteger && widget.isMouseOver(mouseX, mouseY)) {
         TextboxInteger txt = (TextboxInteger) widget;
-        this.renderTooltip(txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        this.renderTooltip(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }
   }

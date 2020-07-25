@@ -11,13 +11,13 @@ public class UtilChat {
 
   public static void addChatMessage(PlayerEntity player, String message) {
     if (player.world.isRemote) {
-      player.sendMessage(new TranslationTextComponent(message));
+      player.sendMessage(new TranslationTextComponent(message), player.getUniqueID());
     }
   }
 
   public static void addServerChatMessage(PlayerEntity player, String message) {
     if (!player.world.isRemote) {
-      player.sendMessage(new TranslationTextComponent(message));
+      player.sendMessage(new TranslationTextComponent(message), player.getUniqueID());
     }
   }
 
@@ -37,7 +37,7 @@ public class UtilChat {
 
   public static String lang(String message) {
     TranslationTextComponent t = new TranslationTextComponent(message);
-    return t.getFormattedText();
+    return t.getString();
   }
 
   public static void sendFeedback(CommandContext<CommandSource> ctx, String string) {

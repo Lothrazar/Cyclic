@@ -1,10 +1,14 @@
 package com.lothrazar.cyclic.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class TextboxInteger extends TextFieldWidget {
 
@@ -14,7 +18,7 @@ public class TextboxInteger extends TextFieldWidget {
 
   public TextboxInteger(FontRenderer fontIn, int xIn, int yIn, int widthIn,
       BlockPos pos, int field) {
-    super(fontIn, xIn, yIn, widthIn, 16, "");
+    super(fontIn, xIn, yIn, widthIn, 16, null);
     this.setMaxStringLength(2);
     this.setEnableBackgroundDrawing(true);
     this.setVisible(true);
@@ -54,14 +58,17 @@ public class TextboxInteger extends TextFieldWidget {
   }
 
   private int tileFieldId;
-  private String tooltip;
+  private List<ITextProperties> tooltip;
 
-  public String getTooltip() {
+  public List<ITextProperties> getTooltip() {
     return tooltip;
   }
 
-  public void setTooltip(String tooltip) {
-    this.tooltip = tooltip;
+  public void setTooltip(String tt) {
+    if (tooltip == null) {
+      tooltip = new ArrayList<>();
+    }
+    this.tooltip.add(new TranslationTextComponent(tt));
   }
 
   public int getCurrent() {

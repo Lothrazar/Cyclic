@@ -61,7 +61,7 @@ public class EnchantMagnet extends EnchantBase {
     //Ticking
     int level = getLevelAll(entity);
     if (level > 0) {
-      UtilEntity.moveEntityItemsInRegion(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
+      UtilEntity.moveEntityItemsInRegion(entity.getEntityWorld(), entity.func_233580_cy_(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }
   }
 }

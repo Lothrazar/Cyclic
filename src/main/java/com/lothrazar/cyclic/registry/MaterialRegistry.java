@@ -62,6 +62,13 @@ public class MaterialRegistry {
       public float getToughness() {
         return ArmorMaterial.DIAMOND.getToughness() * 1.5F;
       }
+
+      @Override
+      public float getKnockbackResistance() {
+        // TODO Auto-generated method stub
+        //knockback
+        return ArmorMaterial.DIAMOND.getKnockbackResistance();
+      }
     };
     public static final IArmorMaterial GEMOBSIDIAN = new IArmorMaterial() {
 
@@ -98,6 +105,12 @@ public class MaterialRegistry {
       @Override
       public float getToughness() {
         return ArmorMaterial.DIAMOND.getToughness() * 3F;
+      }
+
+      @Override
+      public float getKnockbackResistance() {
+        // knockback
+        return ArmorMaterial.NETHERITE.getKnockbackResistance();
       }
     };
   }

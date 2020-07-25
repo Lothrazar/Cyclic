@@ -1,7 +1,13 @@
 package com.lothrazar.cyclic.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class EnergyBar {
 
@@ -24,23 +30,26 @@ public class EnergyBar {
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
   }
 
-  public void draw(float energ) {
+  public void draw(MatrixStack ms, float energ) {
     int relX;
     int relY;
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_CTR);
     relX = guiLeft + x;
     relY = guiTop + y;
-    Screen.blit(relX, relY, 0, 0, width, height, width, height);
+    Screen.blit(ms, relX, relY, 0, 0, width, height, width, height);
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_INNER);
     relX = relX + 1;
     relY = relY + 1;
     float pct = Math.min(energ / capacity, 1.0F);
-    Screen.blit(relX, relY, 0, 0, width - 2, (int) ((height - 2) * pct), width - 2, height - 2);
+    Screen.blit(ms, relX, relY, 0, 0, width - 2, (int) ((height - 2) * pct), width - 2, height - 2);
   }
 
-  public void renderHoveredToolTip(int mouseX, int mouseY, int energ) {
+  public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int energ) {
     if (this.isMouseover(mouseX, mouseY)) {
-      parent.renderTooltip(energ + "/" + this.capacity, mouseX, mouseY);
+      String tt = energ + "/" + this.capacity;
+      List<ITextProperties> list = new ArrayList<>();
+      list.add(new TranslationTextComponent(tt));
+      parent.renderTooltip(ms, list, mouseX, mouseY, Minecraft.getInstance().fontRenderer);
     }
   }
 }

@@ -44,7 +44,7 @@ public class ItemBase extends Item {
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
-    t.applyTextStyle(TextFormatting.GRAY);
+    t.mergeStyle(TextFormatting.GRAY);
     tooltip.add(t);
   }
 }

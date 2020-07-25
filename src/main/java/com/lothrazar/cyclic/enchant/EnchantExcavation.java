@@ -122,7 +122,7 @@ public class EnchantExcavation extends EnchantBase {
       //check canHarvest every time -> permission or any other hooks
       if (world.isAirBlock(targetPos)
           || !player.isAllowEdit()
-          || player.canHarvestBlock(targetState) == false
+          || player.func_234569_d_(targetState) == false//canHarvestBlock
           || totalBroken >= this.getHarvestMax(level)
           || player.getHeldItem(player.swingingHand).isEmpty()
           || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)) {

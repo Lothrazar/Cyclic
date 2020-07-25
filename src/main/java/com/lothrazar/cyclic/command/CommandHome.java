@@ -23,7 +23,7 @@ public class CommandHome implements ICyclicCommand {
 
   @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    BlockPos bedLocation = player.getBedLocation(player.dimension);
+    BlockPos bedLocation = player.getBedPosition().orElse(null);
     if (bedLocation == null) {
       UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");
       return 0;

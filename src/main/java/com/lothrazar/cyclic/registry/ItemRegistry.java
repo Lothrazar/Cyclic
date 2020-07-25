@@ -66,6 +66,7 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemTier;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
@@ -275,7 +276,7 @@ public class ItemRegistry {
       r.register(new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemGroup)).setRegistryName("crystal_sword"));
       r.register(new PickaxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crystal_pickaxe"));
       r.register(new AxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crystal_axe"));
-      r.register(new HoeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 0.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crystal_hoe"));
+      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crystal_hoe"));
       r.register(new ShovelItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crystal_shovel"));
       r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crystal_boots"));
       r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crystal_helmet"));
@@ -286,7 +287,7 @@ public class ItemRegistry {
       r.register(new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemGroup)).setRegistryName("emerald_sword"));
       r.register(new PickaxeItem(MaterialRegistry.ToolMats.EMERALD, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_pickaxe"));
       r.register(new AxeItem(MaterialRegistry.ToolMats.EMERALD, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_axe"));
-      r.register(new HoeItem(MaterialRegistry.ToolMats.EMERALD, 0.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_hoe"));
+      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_hoe"));
       r.register(new ShovelItem(MaterialRegistry.ToolMats.EMERALD, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_shovel"));
       r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.FEET, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_boots"));
       r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.HEAD, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("emerald_helmet"));
@@ -297,14 +298,14 @@ public class ItemRegistry {
       r.register(new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemGroup)).setRegistryName("sandstone_sword"));
       r.register(new PickaxeItem(MaterialRegistry.ToolMats.SANDSTONE, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sandstone_pickaxe"));
       r.register(new AxeItem(MaterialRegistry.ToolMats.SANDSTONE, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sandstone_axe"));
-      r.register(new HoeItem(MaterialRegistry.ToolMats.SANDSTONE, 0.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sandstone_hoe"));
+      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sandstone_hoe"));
       r.register(new ShovelItem(MaterialRegistry.ToolMats.SANDSTONE, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("sandstone_shovel"));
     }
     if (ConfigManager.NETHERBRICK.get()) {
       r.register(new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_sword"));
       r.register(new PickaxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_pickaxe"));
       r.register(new AxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_axe"));
-      r.register(new HoeItem(MaterialRegistry.ToolMats.NETHERBRICK, 0.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_hoe"));
+      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_hoe"));
       r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("netherbrick_shovel"));
     }
     if (ConfigManager.HEARTS.get()) {

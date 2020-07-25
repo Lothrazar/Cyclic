@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.util.UtilFluid;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -39,7 +40,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Override
   public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.SUpdateTileEntityPacket pkt) {
-    this.read(pkt.getNbtCompound());
+    this.read(this.getBlockState(), pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
 
@@ -155,11 +156,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     needsRedstone = tag.getInt("needsRedstone");
     renderParticles = tag.getInt("renderParticles");
     timer = tag.getInt("timer");
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

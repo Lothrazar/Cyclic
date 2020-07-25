@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 public class UtilNBT {
 
   public static ItemStack buildNamedPlayerSkull(PlayerEntity player) {
-    return buildNamedPlayerSkull(player.getDisplayName().getFormattedText());
+    return buildNamedPlayerSkull(player.getDisplayName().getString());
   }
 
   public static ItemStack buildNamedPlayerSkull(String displayNameString) {

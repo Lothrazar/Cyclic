@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
@@ -25,15 +25,16 @@ public class UtilPlaceBlocks {
     if (clickedBlock.isIn(BlockTags.SLABS)) {
       final String key = "type";//top or bottom
       final String valueDupe = "double";//actually theres 3 but dont worry about it
-      for (IProperty<?> prop : clicked.getProperties()) {
+      //      clicked.get(property)
+      for (Property<?> prop : clicked.getProperties()) {//getProperties
         //yes
         if (prop.getName().equals(key)) {
-          //then cycle me
-          newState = clicked.cycle(prop);
+          //then cycle me 
+          newState = clicked.func_235896_a_(prop);//cycle
           if (newState.get(prop).toString().equals(valueDupe)) {
             //haha just hack and skip. turns into length 2. dont worry about it
             //      ModCyclic.LOGGER.info("yes is double");
-            newState = newState.cycle(prop);
+            newState = newState.func_235896_a_(prop);
           }
         }
       }

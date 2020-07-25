@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.data;
 
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 public class BlockPosDim {
 
@@ -12,7 +12,7 @@ public class BlockPosDim {
   private BlockPos pos;
   private int dimension;
   private String display;
-  private Vec3d hitVec = Vec3d.ZERO;
+  private Vector3d hitVec = Vector3d.ZERO;
   private Direction side;
   private Direction sidePlayerFacing;
 
@@ -84,11 +84,11 @@ public class BlockPosDim {
     this.side = side;
   }
 
-  public Vec3d getHitVec() {
+  public Vector3d getHitVec() {
     return hitVec;
   }
 
-  public void setHitVec(Vec3d hitVec) {
+  public void setHitVec(Vector3d hitVec) {
     this.hitVec = hitVec;
   }
 

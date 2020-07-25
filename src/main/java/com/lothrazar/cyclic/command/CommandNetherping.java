@@ -7,6 +7,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class CommandNetherping implements ICyclicCommand {
 
@@ -25,7 +26,8 @@ public class CommandNetherping implements ICyclicCommand {
   @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
     double factor = 1 / netherRatio;//overworld: use 1/8th
-    if (player.dimension.getId() == -1) {
+    boolean isnether = player.world.func_234923_W_() == World.field_234919_h_;
+    if (isnether) {
       //you are nether, multiply by it
       factor = netherRatio;
     }

@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @OnlyIn(Dist.CLIENT)
@@ -37,7 +38,8 @@ public class ClientProxy implements IProxy {
 
   @Override
   public void setPlayerReach(PlayerEntity player, int currentReach) {
-    player.getAttribute(PlayerEntity.REACH_DISTANCE).setBaseValue(currentReach);
+    //thank you ForgeMod for adding this when mojang removed
+    player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
   }
 
   private void initColours() {

@@ -1,13 +1,19 @@
 package com.lothrazar.cyclic.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilRender;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidBar {
@@ -44,10 +50,10 @@ public class FluidBar {
     this.width = width;
   }
 
-  public void draw(FluidStack fluid) {
+  public void draw(MatrixStack ms, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.FLUID_WIDGET);
-    Screen.blit(
+    Screen.blit(ms,
         x, y, u, v,
         width, height,
         width, height);
@@ -79,10 +85,13 @@ public class FluidBar {
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
   }
 
-  public void renderHoveredToolTip(int mouseX, int mouseY, FluidStack current) {
+  public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, FluidStack current) {
     if (this.isMouseover(mouseX, mouseY) && current != null
         && !current.isEmpty()) {
-      parent.renderTooltip(current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getFormattedText(), mouseX, mouseY);
+      String tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
+      List<ITextProperties> list = new ArrayList<>();
+      list.add(new TranslationTextComponent(tt));
+      parent.renderTooltip(ms, list, mouseX, mouseY, Minecraft.getInstance().fontRenderer);
     }
   }
 

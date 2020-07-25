@@ -23,9 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,10 +33,10 @@ import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
@@ -51,7 +49,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
@@ -137,14 +135,15 @@ public class UtilEntity {
 
   public static void moveEntityWallSafe(Entity entity, World world) {
     //    world.checkBlockCollision(bb)
-    while (world.checkBlockCollision(entity.getBoundingBox())) {
+    //    world.hasNoCollisions(p_226669_1_)
+    while (world.hasNoCollisions(entity) == false) {
       entity.setPositionAndUpdate(entity.prevPosX, entity.prevPosY + 1.0D, entity.prevPosZ);
     }
   }
 
   //
   public static void setMaxHealth(LivingEntity living, double max) {
-    IAttributeInstance healthAttribute = living.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    ModifiableAttributeInstance healthAttribute = living.getAttribute(Attributes.MAX_HEALTH);
     double amount = max - healthAttribute.getValue();
     AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
     // Need to remove modifier to apply a new one
@@ -154,11 +153,12 @@ public class UtilEntity {
     // Operation 0 is a flat increase
     modifier = new AttributeModifier(HEALTH_MODIFIER_ID, HEALTH_MODIFIER_NAME, amount,
         AttributeModifier.Operation.ADDITION);
-    healthAttribute.applyModifier(modifier);
+    healthAttribute.applyPersistentModifier(modifier);
+    //    healthAttribute.applyModifier(modifier);
   }
 
   public static double getMaxHealth(LivingEntity living) {
-    IAttributeInstance healthAttribute = living.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    ModifiableAttributeInstance healthAttribute = living.getAttribute(Attributes.MAX_HEALTH);
     double maxHealth = healthAttribute.getValue();
     AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
     if (modifier != null) {
@@ -392,8 +392,9 @@ public class UtilEntity {
       if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
         continue;//sneak avoid feature
       }
-      xDist = Math.abs(x - entity.getPosition().getX());
-      zDist = Math.abs(z - entity.getPosition().getZ());
+      BlockPos p = entity.getPosition();
+      xDist = Math.abs(x - p.getX());
+      zDist = Math.abs(z - p.getZ());
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
       if (hdist > ENTITY_PULL_DIST) {
         speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? speedFar : speedClose;
@@ -445,7 +446,7 @@ public class UtilEntity {
   private static final int TICKS_FALLDIST_SYNC = 16;//tick every so often
 
   public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
-    Vec3d motion = entity.getMotion();
+    Vector3d motion = entity.getMotion();
     if (entity.isCrouching()) {
       entity.setMotion(motion.x, 0, motion.z);
     }
@@ -496,7 +497,7 @@ public class UtilEntity {
   //    ObfuscationReflectionHelper.setPrivateValue(VillagerEntity.class, merchant, c, "careerId", "field_175563_bv");
   //  }
   public static String getCareerName(VillagerEntity merchant) {
-    return merchant.getDisplayName().getFormattedText();//getProfessionForge().getCareer(maybeC).getName();
+    return merchant.getDisplayName().getString(); //.getFormattedText();//getProfessionForge().getCareer(maybeC).getName();
   }
 
   public static float yawDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2) {
@@ -508,8 +509,8 @@ public class UtilEntity {
     return (float) Math.toDegrees(Math.atan2(posY2 - posY, Math.sqrt((posX2 - posX) * (posX2 - posX) + (posZ2 - posZ) * (posZ2 - posZ))));
   }
 
-  public static Vec3d lookVector(float rotYaw, float rotPitch) {
-    return new Vec3d(
+  public static Vector3d lookVector(float rotYaw, float rotPitch) {
+    return new Vector3d(
         Math.sin(rotYaw) * Math.cos(rotPitch),
         Math.sin(rotPitch),
         Math.cos(rotYaw) * Math.cos(rotPitch));
@@ -568,21 +569,8 @@ public class UtilEntity {
     player.getCooldownTracker().setCooldown(item, cooldown);
   }
 
-  public static IAttributeInstance getAttributeJump(HorseEntity ahorse) {
-    try {
-      Field f = ObfuscationReflectionHelper.findField(AbstractHorseEntity.class, "field_110271_bv");//JUMP_STRENGTH
-      f.setAccessible(true);
-      Field modifiersField = Field.class.getDeclaredField("modifiers");
-      modifiersField.setAccessible(true);
-      modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-      //now we can read it
-      IAttribute jump = (IAttribute) f.get(null);
-      return ahorse.getAttribute(jump);
-    }
-    catch (Exception e) {
-      ModCyclic.LOGGER.error("Horse jump error", e);
-    }
-    return null;
+  public static Attribute getAttributeJump(HorseEntity ahorse) {
+    return Attributes.HORSE_JUMP_STRENGTH;//was reflection lol
   }
 
   public static void eatingHorse(HorseEntity ahorse) {

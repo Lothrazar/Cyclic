@@ -36,7 +36,7 @@ import net.minecraft.item.ArrowItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
@@ -71,15 +71,15 @@ public class EnchantMultishot extends EnchantBase {
     if (worldIn.isRemote == false) {
       float charge = BowItem.getArrowVelocity(stackBow.getUseDuration() - event.getCharge());
       //use cross product to push arrows out to left and right
-      Vec3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
-      Vec3d left = playerDirection.crossProduct(new Vec3d(0, 1, 0));
-      Vec3d right = playerDirection.crossProduct(new Vec3d(0, -1, 0));
+      Vector3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
+      Vector3d left = playerDirection.crossProduct(new Vector3d(0, 1, 0));
+      Vector3d right = playerDirection.crossProduct(new Vector3d(0, -1, 0));
       spawnArrow(worldIn, player, stackBow, charge, left.normalize());
       spawnArrow(worldIn, player, stackBow, charge, right.normalize());
     }
   }
 
-  public void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, float charge, Vec3d offsetVector) {
+  public void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, float charge, Vector3d offsetVector) {
     //TODO: custom ammo one day? The event does not send ammo only the bow
     //    ArrowItem item;
     ArrowItem itemarrow = (ArrowItem) (Items.ARROW);
@@ -90,7 +90,8 @@ public class EnchantMultishot extends EnchantBase {
     entityarrow.prevPosX += offsetVector.x;
     entityarrow.prevPosY += offsetVector.y;
     entityarrow.prevPosZ += offsetVector.z;
-    entityarrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, charge, 1.0F);
+    //    entityarrow.shoot(x, y, z, velocity, inaccuracy); 
+    entityarrow.shoot(player.rotationPitch, player.rotationYaw, 0.0F, charge, 1.0F);
     //from ItemBow vanilla class
     if (charge == 1.0F) {
       entityarrow.setIsCritical(true);
