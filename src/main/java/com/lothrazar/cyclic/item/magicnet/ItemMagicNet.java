@@ -53,7 +53,7 @@ public class ItemMagicNet extends ItemBase {
     }
     PlayerEntity player = (PlayerEntity) entity;
     EntityMagicNetEmpty e = new EntityMagicNetEmpty(worldIn, player);
-    e.shoot(entity, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    e.shoot(player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
     worldIn.addEntity(e);
     stack.shrink(1);
   }

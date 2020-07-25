@@ -43,7 +43,7 @@ public class FireEntity extends ProjectileItemEntity {
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), MathHelper.nextInt(world.rand, 1, 3));
+        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), MathHelper.nextInt(world.rand, 1, 3));
         if (target.isBurning() == false
             && target instanceof LivingEntity) {
           target.attackEntityFrom(DamageSource.IN_FIRE, MathHelper.nextInt(world.rand, 1, 4));

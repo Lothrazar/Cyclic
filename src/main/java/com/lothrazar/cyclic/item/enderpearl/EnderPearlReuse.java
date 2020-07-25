@@ -19,7 +19,7 @@ public class EnderPearlReuse extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
     ItemStack stack = player.getHeldItem(handIn);
     EnderPearlEntity ent = new EnderPearlEntity(worldIn, player);
-    ent.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+    ent.shoot(player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
     player.getCooldownTracker().setCooldown(stack.getItem(), 10);
     UtilItemStack.damageItem(player, stack);

@@ -33,7 +33,7 @@ public class ItemTorchThrower extends ItemBase {
     if (!world.isRemote) {
       EntityTorchBolt ball = new EntityTorchBolt(player, world);
       float velocityFactor = 1.5F;
-      ball.shoot(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+      ball.shoot(player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
       player.getHeldItem(hand).damageItem(1, player, (p) -> {
         p.sendBreakAnimation(hand);
       });

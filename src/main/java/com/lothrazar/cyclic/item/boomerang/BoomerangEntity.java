@@ -119,6 +119,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   private void tryPickupNearby() {
+    Entity owner = func_234616_v_();
     if (owner == null || world.isRemote) {
       return;
     }
@@ -136,6 +137,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
 
   @SuppressWarnings("deprecation")
   private void tryToggleRedstone(final BlockPos pos) {
+    Entity owner = func_234616_v_();
     if (owner instanceof PlayerEntity) {
       try {
         BlockState blockState = world.getBlockState(pos);
@@ -171,11 +173,13 @@ public class BoomerangEntity extends ProjectileItemEntity {
    */
   private void dropAsItem() {
     if (!boomerangThrown.isEmpty()) {
+      Entity owner = func_234616_v_();
       //we have something to drop
-      if (this.owner != null) {
+      if (owner instanceof PlayerEntity) {
+        PlayerEntity pl = (PlayerEntity) owner;
         //try to give it to the player the nicest way possible 
-        if (owner.getHeldItemMainhand().isEmpty()) {
-          owner.setHeldItem(Hand.MAIN_HAND, boomerangThrown);
+        if (pl.getHeldItemMainhand().isEmpty()) {
+          pl.setHeldItem(Hand.MAIN_HAND, boomerangThrown);
           boomerangThrown = ItemStack.EMPTY;
         }
         else {
@@ -202,7 +206,8 @@ public class BoomerangEntity extends ProjectileItemEntity {
       setIsReturning();
     }
     final BlockPos pos = this.getPosition();
-    if (owner != null && UtilWorld.distanceBetweenHorizontal(pos, this.owner.getPosition()) < 1) {
+    Entity owner = func_234616_v_();
+    if (owner != null && UtilWorld.distanceBetweenHorizontal(pos, owner.getPosition()) < 1) {
       //       ModCyclic.LOGGER.info("Drop by distance");
       dropAsItem();
       return;
@@ -253,6 +258,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
     if (entityHit == null || !entityHit.isAlive()) {
       return;
     }
+    Entity owner = func_234616_v_();
     if (owner == entityHit) {
       //player catch it on return 
       dropAsItem();
@@ -267,7 +273,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
           float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
-          boolean attackSucc = live.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
+          boolean attackSucc = live.attackEntityFrom(DamageSource.causeThrownDamage(this, owner), damage);
           if (attackSucc && live.isAlive() == false) {
             //            System.out.println("killed one");
           }

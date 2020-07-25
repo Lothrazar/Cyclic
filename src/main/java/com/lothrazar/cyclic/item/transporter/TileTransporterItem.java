@@ -113,7 +113,7 @@ public class TileTransporterItem extends ItemBase {
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
-        tile.read(tileData);// can cause errors in 3rd party mod
+        tile.read(toPlace, tileData);// can cause errors in 3rd party mod
         //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
         tile.markDirty();
         world.markChunkDirty(pos, tile);
@@ -139,14 +139,14 @@ public class TileTransporterItem extends ItemBase {
       if (blockname != null && blockname.length() > 0) {
         TranslationTextComponent t = new TranslationTextComponent(
             UtilChat.lang(blockname));//.replace("block.", "item.") + ".name"
-        t.applyTextStyle(TextFormatting.DARK_GREEN);
+        t.mergeStyle(TextFormatting.DARK_GREEN);
         list.add(t);
       }
     }
     else {
       TranslationTextComponent t = new TranslationTextComponent(
           UtilChat.lang("invalid"));//.replace("block.", "item.") + ".name"
-      t.applyTextStyle(TextFormatting.DARK_RED);
+      t.mergeStyle(TextFormatting.DARK_RED);
       list.add(t);
     }
     //super.addInformation(itemStack, player, list, advanced);

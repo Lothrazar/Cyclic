@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.horse;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -45,10 +45,10 @@ public class ItemHorseRedstoneSpeed extends ItemEntityInteractable {
         && event.getTarget() instanceof HorseEntity) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
-      double speed = ahorse.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
+      double speed = ahorse.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
       double newSpeed = speed + SPEED_AMT;
       if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
-        ahorse.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
+        ahorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         event.setCanceled(true);
         event.setCancellationResult(ActionResultType.SUCCESS);
         event.getItemStack().shrink(1);

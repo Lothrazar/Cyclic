@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
@@ -27,7 +27,7 @@ public class HeartItem extends ItemBase {
       return super.onItemUse(context);
     }
     player.getFoodStats().addStats(1, 4);
-    IAttributeInstance healthAttribute = player.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    ModifiableAttributeInstance healthAttribute = player.getAttribute(Attributes.MAX_HEALTH);
     if (healthAttribute.getValue() < MAX) {
       UtilEntity.incrementMaxHealth(player, 2);
       player.getCooldownTracker().setCooldown(this, COOLDOWN);

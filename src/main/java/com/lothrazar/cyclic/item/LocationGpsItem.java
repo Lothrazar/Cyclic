@@ -16,7 +16,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -49,7 +49,7 @@ public class LocationGpsItem extends ItemBase {
     }
     else {
       TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
-      t.applyTextStyle(TextFormatting.GRAY);
+      t.mergeStyle(TextFormatting.GRAY);
       tooltip.add(t);
     }
   }
@@ -69,7 +69,7 @@ public class LocationGpsItem extends ItemBase {
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
         + UtilChat.blockPosToString(pos));
     // fl
-    Vec3d vec = context.getHitVec();
+    Vector3d vec = context.getHitVec();
     held.getOrCreateTag().putDouble("hitx", vec.x - pos.getX());
     held.getOrCreateTag().putDouble("hity", vec.y - pos.getY());
     held.getOrCreateTag().putDouble("hitz", vec.z - pos.getZ());
@@ -86,7 +86,7 @@ public class LocationGpsItem extends ItemBase {
     try {
       dim.setSidePlayerFacing(Direction.values()[tag.getInt(NBT_SIDE + "facing")]);
       dim.setSide(Direction.values()[tag.getInt(NBT_SIDE)]);
-      Vec3d vec = new Vec3d(
+      Vector3d vec = new Vector3d(
           tag.getDouble("hitx"),
           tag.getDouble("hity"),
           tag.getDouble("hitz"));

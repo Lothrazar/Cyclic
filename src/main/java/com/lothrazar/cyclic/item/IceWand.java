@@ -30,7 +30,7 @@ import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -65,7 +65,7 @@ public class IceWand extends ItemBase {
     int count = 0;
     List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
     for (BlockPos pos : water) {
-      IFluidState fluidState = world.getBlockState(pos).getFluidState();
+      FluidState fluidState = world.getBlockState(pos).getFluidState();
       if (fluidState != null &&
           fluidState.getFluidState() != null &&
           fluidState.getFluidState().getLevel() >= 8) {

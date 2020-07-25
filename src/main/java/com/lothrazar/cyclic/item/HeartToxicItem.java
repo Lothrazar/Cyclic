@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
@@ -25,7 +25,7 @@ public class HeartToxicItem extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(context);
     }
-    IAttributeInstance healthAttribute = player.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+    ModifiableAttributeInstance healthAttribute = player.getAttribute(Attributes.MAX_HEALTH);
     if (healthAttribute != null && healthAttribute.getBaseValue() > 2) {
       player.getFoodStats().addStats(3, 1);
       player.giveExperiencePoints(EXP);

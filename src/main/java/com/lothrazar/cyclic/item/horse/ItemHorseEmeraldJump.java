@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.horse;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -45,11 +45,13 @@ public class ItemHorseEmeraldJump extends ItemEntityInteractable {
         && event.getTarget() instanceof HorseEntity) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
-      IAttributeInstance attr = UtilEntity.getAttributeJump(ahorse);
-      double current = attr.getValue();
+      Attribute attr = UtilEntity.getAttributeJump(ahorse);
+      double current = attr.getDefaultValue();//.getValue();
       double newSpeed = current + JUMP_AMT;
       if (UtilEntity.getJumpTranslated(newSpeed) < JUMP_MAX) {
-        attr.setBaseValue(newSpeed);
+        //        attr.setBaseValue(newSpeed);
+        //TODO: 1.16 make it like health
+        attr.clampValue(newSpeed);
         event.setCanceled(true);
         event.setCancellationResult(ActionResultType.SUCCESS);
         event.getItemStack().shrink(1);

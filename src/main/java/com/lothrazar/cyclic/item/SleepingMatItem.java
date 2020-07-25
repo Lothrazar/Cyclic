@@ -41,15 +41,18 @@ public class SleepingMatItem extends ItemBase {
     if (ret != null) {
       return Either.left(ret);
     }
-    if (!player.world.isRemote) {
+    World world = player.world;
+    if (!world.isRemote) {
       if (player.isSleeping() || !player.isAlive()) {
         return Either.left(PlayerEntity.SleepResult.OTHER_PROBLEM);
       }
-      if (!player.world.dimension.isSurfaceWorld()) {
+      boolean isoverworld = world.func_234923_W_() == World.field_234918_g_;
+      if (!isoverworld) {
         return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_HERE);
       }
       if (!net.minecraftforge.event.ForgeEventFactory.fireSleepingTimeCheck(player, optAt)) {
-        player.setSpawnPoint(at, false, true, player.dimension);// setRespawnPosition
+        //        player.setSpawnPoint(at, false, true, player.dimension);// setRespawnPosition
+        //TODO: 1.16
         return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
       }
     }

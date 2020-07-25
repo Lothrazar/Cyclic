@@ -36,7 +36,7 @@ public class CarbonPaperItem extends ItemBase {
       fakeSign.read(Blocks.OAK_SIGN.getDefaultState(), stack.getTag());
       tooltip.add(new TranslationTextComponent("[" + fakeSign.getTextColor().getString() + "]"));
       for (int i = 0; i <= 3; i++) {
-        fakeSign.setText(line, p_212365_2_);
+        //        fakeSign.setText(line, p_212365_2_);
         ITextComponent t = fakeSign.getText(i);
         //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
         tooltip.add(t);
@@ -68,7 +68,7 @@ public class CarbonPaperItem extends ItemBase {
       if (held.hasTag()) {
         //write to fake sign to parse nbt internally
         SignTileEntity fakeSign = new SignTileEntity();
-        fakeSign.read(held.getTag());
+        fakeSign.read(Blocks.OAK_SIGN.getDefaultState(), held.getTag());
         sign.setTextColor(fakeSign.getTextColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());

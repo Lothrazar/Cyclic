@@ -13,6 +13,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.server.ServerWorld;
 
 public class ItemEnderEyeReuse extends ItemBase {
@@ -24,8 +26,12 @@ public class ItemEnderEyeReuse extends ItemBase {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
     ItemStack stack = player.getHeldItem(hand);
-    if (!worldIn.isRemote) {
-      BlockPos blockpos = ((ServerWorld) worldIn).getChunkProvider().getChunkGenerator().findNearestStructure(worldIn, "Stronghold", new BlockPos(player.getPosition()), 100, false);
+    if (!worldIn.isRemote && worldIn instanceof ServerWorld) {
+      ServerWorld sw = (ServerWorld) worldIn;
+      ChunkGenerator chunkGenerator = sw.getChunkProvider().getChunkGenerator();
+      //      chunkGenerator.func_235956_a_(p_235956_1_, p_235956_2_, p_235956_3_, p_235956_4_, p_235956_5_)
+      //findNearestStructure
+      BlockPos blockpos = chunkGenerator.func_235956_a_(sw, Structure.field_236375_k_, new BlockPos(player.getPosition()), 100, false);
       if (blockpos != null) {
         double posX = player.getPosX();
         double posY = player.getPosY();

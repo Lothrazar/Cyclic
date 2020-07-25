@@ -39,14 +39,17 @@ public class LightningEntity extends ProjectileItemEntity {
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
-        LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, target.getPosX(), target.getPosY(), target.getPosZ(), false);
+        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), 0);
+        //        LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, target.getPosX(), target.getPosY(), target.getPosZ(), false);
+        LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+        lightningboltentity.moveForced(target.getPosX(), target.getPosY(), target.getPosZ());
         world.addEntity(lightningboltentity);
       }
     }
     else if (type == RayTraceResult.Type.BLOCK) {
       //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
-      LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ(), false);
+      LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+      lightningboltentity.moveForced(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
       world.addEntity(lightningboltentity);
     }
     this.remove();

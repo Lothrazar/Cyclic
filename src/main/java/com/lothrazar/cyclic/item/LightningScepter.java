@@ -23,7 +23,7 @@ public class LightningScepter extends ItemBase {
       return super.onItemRightClick(worldIn, player, handIn);
     }
     LightningEntity ent = new LightningEntity(player, worldIn);
-    ent.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+    ent.shoot(player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
     player.getCooldownTracker().setCooldown(stack.getItem(), 20);
     UtilItemStack.damageItem(player, stack);

@@ -46,7 +46,7 @@ public class StructureDiskItem extends ItemBase {
     if (stack.hasTag()) {
       TranslationTextComponent t = new TranslationTextComponent(
           stack.getTag().getString(NBTSTRUCTURE));
-      t.func_240699_a_(TextFormatting.GRAY);
+      t.mergeStyle(TextFormatting.GRAY);
       tooltip.add(t);
     }
   }

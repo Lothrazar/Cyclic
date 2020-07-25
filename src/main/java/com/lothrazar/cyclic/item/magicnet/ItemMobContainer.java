@@ -30,7 +30,7 @@ public class ItemMobContainer extends ItemBase {
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (stack.hasTag()) {
       TranslationTextComponent t = new TranslationTextComponent(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
-      t.applyTextStyle(TextFormatting.GRAY);
+      t.mergeStyle(TextFormatting.GRAY);
       tooltip.add(t);
     }
     else {

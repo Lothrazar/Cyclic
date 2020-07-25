@@ -50,7 +50,7 @@ public class EntityTorchBolt extends ProjectileItemEntity {
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
+        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), 0);
       }
       UtilItemStack.drop(world, target.getPosition(), new ItemStack(Items.TORCH));
     }

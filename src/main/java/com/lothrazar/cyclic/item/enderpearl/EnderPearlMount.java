@@ -20,7 +20,7 @@ public class EnderPearlMount extends ItemBase {
     ItemStack stack = playerIn.getHeldItem(handIn);
     EnderPearlEntity ent = new EnderPearlEntity(worldIn, playerIn);
     //    ent.func_213884_b(itemstack);
-    ent.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+    ent.shoot(playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
     worldIn.addEntity(ent);
     playerIn.startRiding(ent, true);
     //    ent.riding

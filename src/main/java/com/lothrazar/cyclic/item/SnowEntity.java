@@ -43,7 +43,7 @@ public class SnowEntity extends ProjectileItemEntity {
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive() && target instanceof LivingEntity) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), MathHelper.nextInt(world.rand, 2, 5));
+        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), MathHelper.nextInt(world.rand, 2, 5));
         target.attackEntityFrom(DamageSource.DRYOUT, MathHelper.nextInt(world.rand, 2, 3));
         LivingEntity living = (LivingEntity) target;
         living.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, 60, 1));
