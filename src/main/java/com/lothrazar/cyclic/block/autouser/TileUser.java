@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -48,11 +49,10 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   public TileUser() {
     super(BlockRegistry.Tiles.user);
   }
-
-  @Override
-  public boolean hasFastRenderer() {
-    return true;
-  }
+  //  @Override
+  //  public boolean hasFastRenderer() {
+  //    return true;
+  //  }
 
   @Override
   public void tick() {
@@ -183,10 +183,10 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     timerDelay = tag.getInt("delay");
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override

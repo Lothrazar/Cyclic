@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.anvil;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -23,23 +24,23 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
   }
 
   @Override
-  public void render(int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground();
-    super.render(mouseX, mouseY, partialTicks);
-    this.renderHoveredToolTip(mouseX, mouseY);
-    energy.renderHoveredToolTip(mouseX, mouseY, container.getEnergy());
+  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(ms);
+    super.render(ms, mouseX, mouseY, partialTicks);
+    this.func_230459_a_(ms, mouseX, mouseY);//renderHoveredToolTip
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.drawButtonTooltips(mouseX, mouseY);
-    this.drawName(this.title.getFormattedText());
+  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+    this.drawButtonTooltips(ms, mouseX, mouseY);
+    this.drawName(ms, this.title.getString());
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(TextureRegistry.INVENTORY);
-    this.drawSlot(60, 20);
-    energy.draw(container.getEnergy());
+  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawSlot(ms, 60, 20);
+    energy.draw(ms, container.getEnergy());
   }
 }

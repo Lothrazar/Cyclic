@@ -18,7 +18,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -43,8 +42,8 @@ public class BlockBattery extends BlockBase {
   }
 
   @Override
-  public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-    //because harvestBlock manually forces a drop 
+  public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
+    //because harvestBlock manually forces a drop  
     return new ArrayList<>();
   }
 

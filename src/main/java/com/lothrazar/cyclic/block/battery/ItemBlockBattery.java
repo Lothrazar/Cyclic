@@ -42,7 +42,7 @@ public class ItemBlockBattery extends BlockItem {
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     if (storage != null) {
       TranslationTextComponent t = new TranslationTextComponent(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
-      t.applyTextStyle(TextFormatting.RED);
+      t.mergeStyle(TextFormatting.RED);
       tooltip.add(t);
     }
     super.addInformation(stack, worldIn, tooltip, flagIn);

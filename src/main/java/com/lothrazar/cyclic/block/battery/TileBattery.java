@@ -80,19 +80,19 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public void read(CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
+      poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
     }
     setFlowing(tag.getInt("flowing"));
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    super.read(tag);
+    super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     for (Direction f : Direction.values()) {
-      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
+      tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
     }
     tag.putInt("flowing", getFlowing());
     energy.ifPresent(h -> {
