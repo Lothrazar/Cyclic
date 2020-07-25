@@ -161,6 +161,9 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
     ServerWorld serverworld = (ServerWorld) this.world;
     TemplateManager templatemanager = serverworld.getStructureTemplateManager();
     Template template = templatemanager.getTemplate(location);
+    if (template == null) {
+      //NOT found
+    }
     PlacementSettings placementsettings = (new PlacementSettings())
         .setMirror(this.mirror)
         .setRotation(this.rotation)

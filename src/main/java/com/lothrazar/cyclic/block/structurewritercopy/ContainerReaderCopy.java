@@ -32,7 +32,7 @@ public class ContainerReaderCopy extends ContainerBase {
         addSlot(new SlotItemHandler(h, s + 3 + 9, 8 + 18 * s, 69));
       }
     });
-    layoutPlayerInventorySlots(8, 84);
+    layoutPlayerInventorySlots(8, 153);
   }
 
   @Override

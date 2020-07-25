@@ -39,7 +39,7 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
   private static final int SLOT_GPSEND = 1;
   private static final int SLOT_RESULT = 2;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-  private String schematicName = "creativeschematic";
+  private String schematicName = "default";
 
   public TileReader() {
     super(BlockRegistry.Tiles.structure_reader);
@@ -115,7 +115,8 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
         ItemStack resultStack = inv.getStackInSlot(SLOT_RESULT);
         //        ModCyclic.LOGGER.info("check result before go" + resultStack.isEmpty());
         if (targetPos != null && endPos != null &&
-            resultStack.isEmpty()) {
+            resultStack.isEmpty()
+            && this.schematicName != "") {
           ResourceLocation saved = this.saveCut(targetPos.getPos(), endPos.getPos());
           ModCyclic.LOGGER.info("copy saved? = " + saved);
           //TOOD: the namecard 
@@ -133,7 +134,18 @@ public class TileReader extends TileEntityBase implements INamedContainerProvide
     TemplateManager templatemanager = serverworld.getStructureTemplateManager();
     Template template;
     try {
-      ResourceLocation nameResource = ResourceLocation.tryCreate(this.schematicName);
+      //TODO: DO NOT OVERWRITE
+      //      ResourceLocation.tryCreate(p_208304_0_)
+      //      ResourceLocation.read("minecraft:" + this.schematicName);
+      ResourceLocation nameResource = ResourceLocation.tryCreate("minecraft:" + this.schematicName);
+      ModCyclic.LOGGER.info("nameResource from textbox ", nameResource);
+      template = templatemanager.getTemplate(nameResource);
+      if (template != null) {
+        //NOT found
+        ModCyclic.LOGGER.info("exists cannot overwrite");
+        return null;
+      }
+      //
       template = templatemanager.getTemplateDefaulted(nameResource);
       int xSize = Math.abs(targetPos.getX() - endPos.getX());
       int ySize = Math.abs(targetPos.getY() - endPos.getY());
