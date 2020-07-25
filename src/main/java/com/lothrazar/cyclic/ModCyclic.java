@@ -49,4 +49,5 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
   }
-}
+}//scythe_leaves.json: 
+ //"#minecraft:leaves", error?

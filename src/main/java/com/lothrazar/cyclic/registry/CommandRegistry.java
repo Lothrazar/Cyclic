@@ -21,6 +21,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
@@ -30,7 +31,7 @@ public class CommandRegistry {
   public static final List<ICyclicCommand> COMMANDS = new ArrayList<>();
 
   @SubscribeEvent
-  public void serverStarting(FMLServerStartingEvent event) {
+  public void tarting(RegisterCommandsEvent event) {
     COMMANDS.add(new CommandGetHome());
     COMMANDS.add(new CommandHealth());
     COMMANDS.add(new CommandHome());
@@ -41,11 +42,16 @@ public class CommandRegistry {
     for (ICyclicCommand cmd : COMMANDS) {
       SUBCOMMANDS.add(cmd.getName());
     }
-    CommandDispatcher<CommandSource> r = event.getCommandDispatcher();
-    // what now lol
+    //
+    CommandDispatcher<CommandSource> r = event.getDispatcher();
     r.register(LiteralArgumentBuilder.<CommandSource> literal(ModCyclic.MODID)
         .then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(this::execute))
         .executes(this::execute));
+  }
+
+  @SubscribeEvent
+  public void serverStarting(FMLServerStartingEvent event) {
+    //ok
   }
 
   private int execute(CommandContext<CommandSource> ctx) throws CommandSyntaxException {

@@ -22,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -499,17 +498,23 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         new ResourceLocation(ModCyclic.MODID, "solid_leafbiomass"),
         new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 4),
         new ItemStack(ItemRegistry.biomass));
-    rec.ingredients.add(Ingredient.fromTag(ItemTags.LEAVES));
-    rec.ingredients.add(Ingredient.fromTag(ItemTags.LEAVES));
-    rec.ingredients.add(Ingredient.fromTag(ItemTags.LEAVES));
+    Ingredient leafs = Ingredient.fromStacks(new ItemStack(Blocks.ACACIA_LEAVES),
+        new ItemStack(Blocks.OAK_LEAVES));
+    //    leafs = Ingredient.fromTag(ItemTags.LEAVES);//ded
+    rec.ingredients.add(leafs);
+    rec.ingredients.add(leafs);
+    rec.ingredients.add(leafs);
     RECIPES.add(rec);
     rec = new RecipeSolidifier(
         new ResourceLocation(ModCyclic.MODID, "solid_biomass"),
         new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10),
         new ItemStack(ItemRegistry.biomass));
-    rec.ingredients.add(Ingredient.fromTag(ItemTags.SMALL_FLOWERS));
-    rec.ingredients.add(Ingredient.fromTag(ItemTags.SMALL_FLOWERS));
-    rec.ingredients.add(Ingredient.fromTag(ItemTags.SMALL_FLOWERS));
+    Ingredient fws = Ingredient.fromStacks(new ItemStack(Blocks.POPPY),
+        new ItemStack(Blocks.DANDELION));
+    //    fws = Ingredient.fromTag(ItemTags.SMALL_FLOWERS);//ded
+    rec.ingredients.add(fws);
+    rec.ingredients.add(fws);
+    rec.ingredients.add(fws);
     RECIPES.add(rec);
     //
     RecipeSolidifier.addRecipe("honeyamber",

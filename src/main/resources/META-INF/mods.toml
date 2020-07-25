@@ -18,9 +18,9 @@ version="${file.jarVersion}" #mandatory
  # A display name for the mod
 displayName="Cyclic" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://raw.githubusercontent.com/Lothrazar/cyclic/trunk/1.15/update.json" #optional
+updateJSONURL="https://raw.githubusercontent.com/Lothrazar/cyclic/trunk/1.16/update.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="http://minecraft.curseforge.com/projects/cyclic" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/cyclic" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="cyclic.png" #optional
 # A text field displayed in the mod UI
@@ -38,7 +38,7 @@ A small mod by Lothrazar
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[31.1.25,)" #mandatory
+    versionRange="[32,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -47,6 +47,6 @@ A small mod by Lothrazar
 [[dependencies.cyclic]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.1,)"
     ordering="NONE"
     side="BOTH"
