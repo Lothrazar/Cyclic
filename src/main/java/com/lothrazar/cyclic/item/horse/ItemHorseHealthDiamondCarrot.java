@@ -50,7 +50,8 @@ public class ItemHorseHealthDiamondCarrot extends ItemEntityInteractable {
         event.setCanceled(true);
         event.setCancellationResult(ActionResultType.SUCCESS);
         event.getItemStack().shrink(1);
-        ahorse.processInteract(event.getPlayer(), event.getHand());
+        ahorse.func_230254_b_(event.getPlayer(), event.getHand());
+        //processInteract
         //trigger eatingHorse
         UtilEntity.eatingHorse(ahorse);
       }

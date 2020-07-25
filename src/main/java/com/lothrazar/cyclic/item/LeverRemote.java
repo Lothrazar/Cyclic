@@ -68,7 +68,8 @@ public class LeverRemote extends ItemBase {
     if (world.getBlockState(pos).getBlock() instanceof LeverBlock) {
       UtilNBT.setItemStackBlockPos(stack, pos);
       //and save dimension
-      UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
+      stack.getOrCreateTag().putString("LeverDim", UtilWorld.dimensionToString(player.world));
+      //      UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
       if (world.isRemote) {
         UtilChat.sendStatusMessage(player, this.getTranslationKey() + ".saved");
       }
@@ -95,9 +96,10 @@ public class LeverRemote extends ItemBase {
       }
       return false;
     }
-    int dimensionTarget = stack.getOrCreateTag().getInt("LeverDim");
+    String dimensionTarget = stack.getOrCreateTag().getString("LeverDim");
     //check if we can avoid crossing dimensions
-    if (dimensionTarget == player.dimension.getId()) {
+    String currentDim = UtilWorld.dimensionToString(player.world);
+    if (dimensionTarget.equalsIgnoreCase(currentDim)) {//same dim eh
       BlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (world.isRemote) {

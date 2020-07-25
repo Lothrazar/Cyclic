@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -63,7 +64,8 @@ public class LocationGpsItem extends ItemBase {
     ItemStack held = player.getHeldItem(hand);
     player.swingArm(hand);
     UtilNBT.setItemStackBlockPos(held, pos);
-    UtilNBT.setItemStackNBTVal(held, NBT_DIM, player.dimension.getId());
+    held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.world));
+    //    UtilNBT.setItemStackNBTVal(held, NBT_DIM, player.dimension.getId());
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getHorizontalFacing().ordinal());
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")

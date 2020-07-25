@@ -18,6 +18,11 @@ import net.minecraft.world.World;
 
 public class UtilWorld {
 
+  public static String dimensionToString(World w) {
+    //example: returns "minecraft:overworld" resource location
+    return w.func_234923_W_().func_240901_a_().toString();
+  }
+
   public static double distanceBetweenHorizontal(BlockPos start, BlockPos end) {
     int xDistance = Math.abs(start.getX() - end.getX());
     int zDistance = Math.abs(start.getZ() - end.getZ());

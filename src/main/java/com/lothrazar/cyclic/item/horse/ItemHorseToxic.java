@@ -55,7 +55,8 @@ public class ItemHorseToxic extends ItemEntityInteractable {
         zombie.setTamedBy(event.getPlayer());
       }
       if (ahorse.isHorseSaddled()) {
-        zombie.setHorseSaddled(true);
+        //TODO:1.16
+        //        zombie.setHorseSaddled(true);
         //try to copy the EXACT saddle as well if possible
         IItemHandler horseChest = ahorse.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         if (horseChest != null) {
