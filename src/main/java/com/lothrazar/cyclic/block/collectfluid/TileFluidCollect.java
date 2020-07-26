@@ -41,7 +41,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private int shapeIndex = 0;// current index of shape array
-  private int size = 4;
+  private int size = 4 * 2;
   private int height = 16;
 
   public static enum Fields {
