@@ -45,10 +45,8 @@ public class ItemHorseLapisVariant extends ItemEntityInteractable {
       HorseEntity ahorse = (HorseEntity) event.getTarget();
       int seed = event.getWorld().rand.nextInt(7);
       //setHorseVariant
-      //TODO: access transformers
-      //      ahorse.getDataManager().set(HorseEntity.HORSE_VARIANT, 1);
-      //TODO: 1.16 make the variant visible
-      //      ahorse.func_234242_w_(seed | event.getWorld().rand.nextInt(5) << 8);
+      //  access transformers
+      ahorse.getDataManager().set(HorseEntity.HORSE_VARIANT, (seed | event.getWorld().rand.nextInt(5) << 8));
       event.setCanceled(true);
       event.setCancellationResult(ActionResultType.SUCCESS);
       event.getPlayer().getCooldownTracker().setCooldown(this, 10);

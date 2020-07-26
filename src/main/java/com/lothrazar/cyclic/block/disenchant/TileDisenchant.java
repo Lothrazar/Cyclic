@@ -130,7 +130,6 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     if (cap.getEnergyStored() < ConfigManager.DISENCHANTERPOWER.get()) {
       return;//broke
     }
-    //TODO: has power
     inventory.ifPresent(inv -> {
       ItemStack input = inv.getStackInSlot(SLOT_INPUT);
       ItemStack book = inv.getStackInSlot(SLOT_BOOK);

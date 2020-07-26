@@ -49,8 +49,7 @@ public class ItemHorseEmeraldJump extends ItemEntityInteractable {
       double current = attr.getDefaultValue();//.getValue();
       double newSpeed = current + JUMP_AMT;
       if (UtilEntity.getJumpTranslated(newSpeed) < JUMP_MAX) {
-        //        attr.setBaseValue(newSpeed);
-        //TODO: 1.16 make it like health
+        //TODO: 1.16 make it like health   attr.setBaseValue(newSpeed);
         attr.clampValue(newSpeed);
         event.setCanceled(true);
         event.setCancellationResult(ActionResultType.SUCCESS);

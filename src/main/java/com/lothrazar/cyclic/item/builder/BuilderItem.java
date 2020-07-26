@@ -54,7 +54,7 @@ public class BuilderItem extends ItemBase {
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
     BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
-    //TODO: INSIDE building no offset
+    //TODO: ??INSIDE building no offset
     // on top of selected = do offset
     if (side != null && buildStyle.isOffset()) {
       pos = pos.offset(side);

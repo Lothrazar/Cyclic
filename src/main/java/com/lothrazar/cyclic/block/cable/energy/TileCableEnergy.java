@@ -106,7 +106,5 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   @Override
-  public void setField(int field, int value) {
-    // TODO Auto-generated method stub
-  }
+  public void setField(int field, int value) {}
 }

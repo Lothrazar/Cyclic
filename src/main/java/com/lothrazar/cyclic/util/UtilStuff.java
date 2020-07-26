@@ -20,7 +20,6 @@ public class UtilStuff {
     else if (entity.moveForward > 0.0F && entity.getMotion().y < climbSpeed) {
       entity.setMotion(entity.getMotion().x, climbSpeed, entity.getMotion().z);
       entity.fallDistance = 0.0F;
-      //TODO: packet for falldamgage
     } //setting fall distance on clientside wont work
     if (worldIn.isRemote && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
       PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());

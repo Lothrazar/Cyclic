@@ -211,7 +211,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       if (en.getEnergyStored() < repair) {
         break;
       }
-      //TODO PAY POWER
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
       if (!World.isOutsideBuildHeight(nextPos)

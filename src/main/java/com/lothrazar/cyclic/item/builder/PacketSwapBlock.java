@@ -111,7 +111,6 @@ public class PacketSwapBlock extends PacketBase {
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           world.setBlockState(curPos, Blocks.AIR.getDefaultState());
           boolean success = false;
-          //TODO: maybe toggle between
           //place item block gets slabs in top instead of bottom. but tries to do facing stairs
           // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
           if (!success) {

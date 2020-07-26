@@ -109,7 +109,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     List<ItemStack> seeds = Block.getDrops(blockState.getBlock().getDefaultState(),
         (ServerWorld) world, posCurrent, (TileEntity) null);
     boolean deleteSeed = drops.size() > 0;
-    //TODO: blacklist melon pumpkin stem
     ItemStack seed = ItemStack.EMPTY;
     if (seeds != null && seeds.size() > 0) {
       seed = seeds.get(0);

@@ -65,8 +65,6 @@ public class MaterialRegistry {
 
       @Override
       public float getKnockbackResistance() {
-        // TODO Auto-generated method stub
-        //knockback
         return ArmorMaterial.DIAMOND.getKnockbackResistance();
       }
     };

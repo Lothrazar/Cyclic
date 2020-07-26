@@ -20,7 +20,7 @@ public class CommandWorldspawn implements ICyclicCommand {
 
   @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    //TODO: 1.16
+    //TODO: 1.16 World Spawn 
     //    UtilEntity.teleportWallSafe(player, player.world, player.world.getSpawnPoint());
     return 1;
   }

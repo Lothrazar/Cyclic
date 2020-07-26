@@ -156,7 +156,6 @@ public class EnchantExcavation extends EnchantBase {
 
   private Set<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
     Set<BlockPos> list = new HashSet<BlockPos>();
-    // TODO: DIAGONAL!
     List<Direction> targetFaces = Arrays.asList(VALUES);
     Collections.shuffle(targetFaces);
     for (Direction fac : targetFaces) {

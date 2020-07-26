@@ -150,10 +150,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
         fluidState = world.getFluidState(posTarget);
       }
       if (fluidState.isSource()) {
-        //        System.out.println("tilefluidcollect issource " + posTarget);
         FluidStack fstack = new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME);
-        //is target air?
-        //TODO: shape
         int result = tank.fill(fstack, FluidAction.SIMULATE);
         if (result == FluidAttributes.BUCKET_VOLUME) {
           //we got enough  

@@ -53,22 +53,6 @@ public class EntityRegistry {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void registerModels(FMLClientSetupEvent event) {
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here
-    //TODO: loop here 
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.snowbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lightningbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_stun, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));

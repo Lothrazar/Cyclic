@@ -61,8 +61,7 @@ public class EnchantBeheading extends EnchantBase {
     //mhf https://twitter.com/Marc_IRL/status/542330244473311232  https://pastebin.com/5mug6EBu
     //other https://www.planetminecraft.com/blog/minecraft-playerheads-2579899/
     //NBT image data from  http://www.minecraft-heads.com/custom/heads/animals/6746-llama
-    //TODO: 
-    // config file for extra mod support
+    //TODO config file for extra mod support
     mapResourceToSkin.put("minecraft:blaze", "MHF_Blaze");
     mapResourceToSkin.put("minecraft:cat", "MHF_Ocelot");
     mapResourceToSkin.put("minecraft:cave_spider", "MHF_CaveSpider");

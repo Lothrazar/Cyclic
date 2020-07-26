@@ -55,8 +55,6 @@ public class ItemMobContainer extends ItemBase {
         .create(world);
     //    entity.egg
     entity.read(stack.getTag());
-    //  target.rotationYaw// TODO
-    //  target.rotationPitch
     entity.setPosition(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
     if (world.addEntity(entity)) {
       stack.setTag(null);

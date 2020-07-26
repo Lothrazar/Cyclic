@@ -10,7 +10,6 @@ import com.lothrazar.cyclic.command.CommandHome;
 import com.lothrazar.cyclic.command.CommandHunger;
 import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
-import com.lothrazar.cyclic.command.CommandWorldspawn;
 import com.lothrazar.cyclic.command.ICyclicCommand;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.CommandDispatcher;
@@ -38,7 +37,7 @@ public class CommandRegistry {
     COMMANDS.add(new CommandHunger());
     COMMANDS.add(new CommandNbt());
     COMMANDS.add(new CommandNetherping());
-    COMMANDS.add(new CommandWorldspawn());
+    //    COMMANDS.add(new CommandWorldspawn());
     for (ICyclicCommand cmd : COMMANDS) {
       SUBCOMMANDS.add(cmd.getName());
     }

@@ -175,7 +175,5 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void setField(int field, int value) {
-    // TODO Auto-generated method stub
-  }
+  public void setField(int field, int value) {}
 }

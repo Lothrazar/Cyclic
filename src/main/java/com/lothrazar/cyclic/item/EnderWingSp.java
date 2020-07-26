@@ -25,11 +25,13 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EnderWingSp extends ItemBase {
@@ -47,11 +49,13 @@ public class EnderWingSp extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(context);
     }
-    //TODO: 1.16
-    //    UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
-    UtilSound.playSound(player, SoundRegistry.warp_echo);
-    UtilItemStack.damageItem(player, context.getItem());
-    player.getCooldownTracker().setCooldown(this, cooldown);
+    BlockPos spawn = player.getBedPosition().orElse(null);
+    if (spawn != null) {
+      UtilEntity.teleportWallSafe(player, world, spawn);
+      UtilSound.playSound(player, SoundRegistry.warp_echo);
+      UtilItemStack.damageItem(player, context.getItem());
+      player.getCooldownTracker().setCooldown(this, cooldown);
+    }
     return super.onItemUse(context);
   }
 }

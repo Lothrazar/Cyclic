@@ -147,7 +147,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
         //now actually drain that much from here
         handlerHere.extractEnergy(filled, false);
         if (filled > 0 && tileTarget instanceof TileCableEnergy) {
-          //TODO: not so compatible with other fluid systems. itl do i guess
+          // not so compatible with other fluid systems. itl do i guess
           TileCableEnergy cable = (TileCableEnergy) tileTarget;
           cable.updateIncomingEnergyFace(themFacingMe);
         }

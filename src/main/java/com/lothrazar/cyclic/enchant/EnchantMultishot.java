@@ -80,7 +80,6 @@ public class EnchantMultishot extends EnchantBase {
   }
 
   public void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, float charge, Vector3d offsetVector) {
-    //TODO: custom ammo one day? The event does not send ammo only the bow
     //    ArrowItem item;
     ArrowItem itemarrow = (ArrowItem) (Items.ARROW);
     //    itemarrow.createArrow(worldIn, stack, shooter)

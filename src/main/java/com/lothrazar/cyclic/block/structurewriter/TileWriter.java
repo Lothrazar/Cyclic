@@ -167,11 +167,11 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
         .setRotation(this.rotation)
         .setIgnoreEntities(true)
         .setChunk((ChunkPos) null);
-    ModCyclic.LOGGER.info("Build starting at " + blockPos);
-    boolean DOBUILD = false;
+    boolean DOBUILD = true;
     if (DOBUILD) {//if true this does do the build
-      //TODO 1.16
-      //      template.addBlocksToWorldChunk(this.world, blockPos, placementsettings);
+      ModCyclic.LOGGER.info("Build starting at " + blockPos);
+      //addBlocksToWorldChunk
+      template.func_237144_a_(this.world, blockPos, placementsettings, world.rand);
       return true;
     }
     return false;
@@ -206,7 +206,6 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
   }
 
   public List<BlockPos> getShape() {
-    // TODO Auto-generated method stub
     return null;
   }
 }

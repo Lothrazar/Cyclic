@@ -85,7 +85,7 @@ public class RenderResizableCuboid {
           float maxV = sprite.getMinV();
           double sizeU = getValue(size, u);
           double sizeV = getValue(size, v);
-          //TODO: Look into this more, as it makes tiling of multiple objects not render properly if they don't fit the full texture.
+          // Look into this more, as it makes tiling of multiple objects not render properly if they don't fit the full texture.
           // Example: Mechanical pipes rendering water or lava, makes it relatively easy to see the texture artifacts
           for (int uIndex = 0; uIndex < sizeU; uIndex++) {
             float[] baseUV = new float[] { minU, maxU, minV, maxV };

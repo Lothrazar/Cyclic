@@ -45,8 +45,6 @@ public abstract class CableBase extends BlockBase {
   private static final double w = 2;
   private static final double sm = C - w;
   private static final double lg = C + w;
-  //TODO PRE COMPUTE ALL POSSIBLE COMBINATIONS OF ALL 6 DIRS
-  //(double x1, double y1, double z1, double x2, double y2, double z2)
   protected static final VoxelShape AABB = Block.makeCuboidShape(sm, sm, sm, lg, lg, lg);
   //Y for updown
   protected static final VoxelShape AABB_UP = Block.makeCuboidShape(sm, sm, sm, lg, top, lg);

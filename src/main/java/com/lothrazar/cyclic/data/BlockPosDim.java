@@ -10,13 +10,13 @@ public class BlockPosDim {
   private double y;
   private double z;
   private BlockPos pos;
-  private int dimension;
+  private String dimension;
   private String display;
   private Vector3d hitVec = Vector3d.ZERO;
   private Direction side;
   private Direction sidePlayerFacing;
 
-  public BlockPosDim(BlockPos pos, int dimension) {
+  public BlockPosDim(BlockPos pos, String dimension) {
     setX(pos.getX());
     setY(pos.getY());
     setZ(pos.getZ());
@@ -36,11 +36,11 @@ public class BlockPosDim {
     return "[" + getDimension() + "] (" + (int) getX() + ", " + (int) getY() + ", " + (int) getZ() + ")";
   }
 
-  public int getDimension() {
+  public String getDimension() {
     return dimension;
   }
 
-  public void setDimension(int dimension) {
+  public void setDimension(String dimension) {
     this.dimension = dimension;
   }
 

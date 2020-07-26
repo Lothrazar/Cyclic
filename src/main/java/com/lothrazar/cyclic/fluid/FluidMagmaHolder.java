@@ -29,10 +29,9 @@ public class FluidMagmaHolder {
   public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new MagmaFluidBlock.Source(FluidMagmaHolder.properties));
   public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new MagmaFluidBlock.Flowing(FluidMagmaHolder.properties));
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_fluid",
-      () -> new MagmaFluidBlock(STILL, Block.Properties.create(Material.WATER).hardnessAndResistance(100.0F)
-          //         TODO 1.16
-          //          .lightValue(8)
-          .noDrops()));
+      () -> new MagmaFluidBlock(STILL, Block.Properties.create(Material.WATER).hardnessAndResistance(100.0F).setLightLevel((p_235456_0_) -> {
+        return 8;
+      }).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
       () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemGroup)));
   private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(

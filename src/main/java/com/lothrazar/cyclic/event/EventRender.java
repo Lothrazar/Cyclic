@@ -75,7 +75,6 @@ public class EventRender {
       //
       BlockPosDim loc = LocationGpsItem.getPosition(stack);
       if (loc != null) {
-        //TODO: dimension check
         //        && loc.getDimension() == player.dimension.getId()
         Map<BlockPos, Color> mappos = new HashMap<>();
         mappos.put(loc.getPos(), Color.BLUE);

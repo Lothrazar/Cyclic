@@ -48,7 +48,7 @@ public class UtilShape {
     return shape;
   }
 
-  //TODO: merge x/z vers
+  //SHOLD TO-DO: merge x/z vers
   public static List<BlockPos> squareVerticalZ(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube

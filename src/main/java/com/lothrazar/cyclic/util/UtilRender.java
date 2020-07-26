@@ -344,12 +344,11 @@ public class UtilRender {
     }
   }
 
-  //TODO: Use these calculateGlowLight after rewriting the renderResizableCuboid?
   public static int calculateGlowLight(int light, @Nonnull FluidStack fluid) {
     return fluid.isEmpty() ? light : calculateGlowLight(light, fluid.getFluid().getAttributes().getLuminosity(fluid));
   }
 
-  //TODO: Replace various usages of this with the getter for calculating glow light, at least if we end up making it only
+  // Replace various usages of this with the getter for calculating glow light, at least if we end up making it only
   // effect block light for the glow rather than having it actually become full light
   public static final int FULL_LIGHT = 0xF000F0;
 
