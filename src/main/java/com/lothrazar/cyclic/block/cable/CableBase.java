@@ -60,7 +60,6 @@ public abstract class CableBase extends BlockBase {
     super(properties);
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world,
       BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {

@@ -143,6 +143,7 @@ public class BlockSpikes extends BlockBase {
     }
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     if (state.get(ACTIVATED).booleanValue() == false
