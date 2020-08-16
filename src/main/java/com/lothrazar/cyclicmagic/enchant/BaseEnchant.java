@@ -31,6 +31,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
+import java.util.Map;
+
 public abstract class BaseEnchant extends Enchantment implements IContent {
 
   protected BaseEnchant(String name, Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
@@ -44,8 +46,12 @@ public abstract class BaseEnchant extends Enchantment implements IContent {
   }
 
   protected int getCurrentLevelTool(ItemStack stack) {
-    if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this))
-      return EnchantmentHelper.getEnchantments(stack).get(this);
+    if (!stack.isEmpty()) {
+      Integer enchantment = EnchantmentHelper.getEnchantments(stack).get(this);
+      if (enchantment != null) {
+        return enchantment;
+      }
+    }
     return -1;
   }
 
@@ -65,11 +71,10 @@ public abstract class BaseEnchant extends Enchantment implements IContent {
     int level = 0;
     for (EntityEquipmentSlot slot : armors) {
       ItemStack armor = player.getItemStackFromSlot(slot);
-      if (armor.isEmpty() == false
-          && EnchantmentHelper.getEnchantments(armor) != null
-          && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
-        int newlevel = EnchantmentHelper.getEnchantments(armor).get(this);
-        if (newlevel > level) {
+      if (!armor.isEmpty()) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(armor);
+        Integer newlevel = enchantments.get(this);
+        if (newlevel != null && newlevel > level) {
           level = newlevel;
         }
       }
@@ -86,7 +91,7 @@ public abstract class BaseEnchant extends Enchantment implements IContent {
       return ItemStack.EMPTY;
     }
     for (ItemStack main : player.getArmorInventoryList()) {
-      if ((main.isEmpty() == false) &&
+      if ((!main.isEmpty()) &&
           EnchantmentHelper.getEnchantments(main).containsKey(this)) {
         return main;// EnchantmentHelper.getEnchantments(main).get(this);
       }

@@ -25,6 +25,8 @@ package com.lothrazar.cyclicmagic.enchant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
+
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
@@ -36,6 +38,7 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.item.EntityBoat;
@@ -132,7 +135,9 @@ public class EnchantLaunch extends BaseEnchant {
     if (feet == null || feet.isEmpty() || player.isSneaking()) {
       return;
     } //sneak to not double jump
-    if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) {
+    Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(feet);
+    Integer level = enchantments.get(this);
+    if (level == null) {
       return;
     }
     if (player.getCooldownTracker().hasCooldown(feet.getItem())) {
@@ -141,7 +146,6 @@ public class EnchantLaunch extends BaseEnchant {
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isKeyDown()
         && player.posY < player.lastTickPosY && player.isAirBorne && player.isInWater() == false) {
       //JUMP IS pressed and you are moving down
-      int level = EnchantmentHelper.getEnchantments(feet).get(this);
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
       player.fallDistance = 0;
       float angle = (player.motionX == 0 && player.motionZ == 0) ? 90 : ROTATIONPITCH;
