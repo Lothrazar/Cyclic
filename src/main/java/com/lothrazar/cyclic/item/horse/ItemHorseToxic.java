@@ -30,6 +30,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.passive.horse.ZombieHorseEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -45,10 +46,11 @@ public class ItemHorseToxic extends ItemEntityInteractable {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof HorseEntity
         //        && event.getWorld().isRemote == false
+        && event.getWorld() instanceof ServerWorld
         && !event.getPlayer().getCooldownTracker().hasCooldown(this)) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
-      ZombieHorseEntity zombie = EntityType.ZOMBIE_HORSE.spawn(event.getWorld(), null, null, event.getPlayer(), event.getPos(), SpawnReason.NATURAL, false, false);
+      ZombieHorseEntity zombie = EntityType.ZOMBIE_HORSE.spawn((ServerWorld) event.getWorld(), null, null, event.getPlayer(), event.getPos(), SpawnReason.NATURAL, false, false);
       event.getWorld().addEntity(zombie);
       if (ahorse.isTame() && ahorse.getOwnerUniqueId() == event.getPlayer().getUniqueID()) {
         // you still tamed it

@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
@@ -14,7 +14,7 @@ public class ButtonMachine extends ExtendedButton {
 
   private int tileField;
   private TextureEnum textureId;
-  private List<ITextProperties> tooltip;
+  private List<ITextComponent> tooltip;
 
   public ButtonMachine(int xPos, int yPos, int width, int height, String displayString, IPressable handler) {
     super(xPos, yPos, width, height, new TranslationTextComponent(displayString), handler);
@@ -40,7 +40,7 @@ public class ButtonMachine extends ExtendedButton {
     this.renderBg(ms, minecraft, mouseX, mouseY);
   }
 
-  public List<? extends ITextProperties> getTooltip() {
+  public List<ITextComponent> getTooltip() {
     return tooltip;
   }
 

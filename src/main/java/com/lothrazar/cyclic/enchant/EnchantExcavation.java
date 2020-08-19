@@ -134,8 +134,8 @@ public class EnchantExcavation extends EnchantBase {
       int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
       int silklevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());
       int exp = targetState.getExpDrop(world, targetPos, bonusLevel, silklevel);
-      if (exp > 0) {
-        block.dropXpOnBlockBreak(world, targetPos, exp);
+      if (exp > 0 && world instanceof ServerWorld) {
+        block.dropXpOnBlockBreak((ServerWorld) world, targetPos, exp);
       }
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);

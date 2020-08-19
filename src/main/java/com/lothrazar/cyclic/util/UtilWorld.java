@@ -21,6 +21,7 @@ public class UtilWorld {
   public static String dimensionToString(World w) {
     //example: returns "minecraft:overworld" resource location
     return w.func_234923_W_().func_240901_a_().toString();
+    //RegistryKey.func_240903_a_(Registry.WORLD_KEY, new ResourceLocation("twilightforest", "twilightforest"));
   }
 
   public static double distanceBetweenHorizontal(BlockPos start, BlockPos end) {

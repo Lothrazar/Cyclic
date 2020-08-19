@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class TextboxInteger extends TextFieldWidget {
@@ -58,9 +58,9 @@ public class TextboxInteger extends TextFieldWidget {
   }
 
   private int tileFieldId;
-  private List<ITextProperties> tooltip;
+  private List<ITextComponent> tooltip;
 
-  public List<ITextProperties> getTooltip() {
+  public List<ITextComponent> getTooltip() {
     return tooltip;
   }
 

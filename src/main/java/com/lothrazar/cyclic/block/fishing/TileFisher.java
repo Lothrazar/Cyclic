@@ -26,6 +26,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
@@ -119,8 +120,9 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity {
       //got it
       int luck = EnchantmentHelper.getEnchantmentLevel(
           Enchantments.LUCK_OF_THE_SEA, fishingRod) + 1;
+      Vector3d fffffffffff = new Vector3d(center.getX(), center.getY(), center.getZ());
       LootContext lootContext = new LootContext.Builder((ServerWorld) world)
-          .withLuck(luck).withRandom(rand).withParameter(LootParameters.POSITION, center)
+          .withLuck(luck).withRandom(rand).withParameter(LootParameters.field_237457_g_, fffffffffff)
           .withParameter(LootParameters.TOOL, fishingRod)
           .build(LootParameterSets.FISHING);
       List<ItemStack> lootDrops = table.generate(lootContext);

@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 
 public class MattockItem extends ToolItem {
@@ -69,11 +70,12 @@ public class MattockItem extends ToolItem {
             ServerPlayerEntity mp = (ServerPlayerEntity) player;
             int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, posCurrent);
             if (xpGivenOnDrop >= 0) {
-              if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
+              if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())
+                  && world instanceof ServerWorld) {
                 TileEntity tile = world.getTileEntity(posCurrent);
                 blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
                 blockCurrent.harvestBlock(world, player, posCurrent, bsCurrent, tile, stack);
-                blockCurrent.dropXpOnBlockBreak(world, posCurrent, xpGivenOnDrop);
+                blockCurrent.dropXpOnBlockBreak((ServerWorld) world, posCurrent, xpGivenOnDrop);
               }
               mp.connection.sendPacket(new SChangeBlockPacket(world, posCurrent));
             }

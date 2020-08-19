@@ -98,7 +98,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     
     compile fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
-    compile fg.deobf("top.theillusivec4.curios:curios:FORGE-${mc_version}-${curios_version}")
+    compile fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"

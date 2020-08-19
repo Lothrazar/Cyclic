@@ -61,13 +61,13 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
       if (btn instanceof ButtonMachine && btn.isMouseOver(mouseX, mouseY)) {
         //        btn.too
         btn.renderToolTip(ms, mouseX, mouseY);
-        this.renderTooltip(ms, ((ButtonMachine) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        this.func_243308_b(ms, ((ButtonMachine) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }
     for (IGuiEventListener widget : this.children) {
       if (widget instanceof TextboxInteger && widget.isMouseOver(mouseX, mouseY)) {
         TextboxInteger txt = (TextboxInteger) widget;
-        this.renderTooltip(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        this.func_243308_b(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }
   }

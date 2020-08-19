@@ -11,7 +11,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -88,9 +88,9 @@ public class FluidBar {
     if (this.isMouseover(mouseX, mouseY) && current != null
         && !current.isEmpty()) {
       String tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
-      List<ITextProperties> list = new ArrayList<>();
+      List<ITextComponent> list = new ArrayList<>();
       list.add(new TranslationTextComponent(tt));
-      parent.renderTooltip(ms, list, mouseX, mouseY);
+      parent.func_243308_b(ms, list, mouseX, mouseY);
     }
   }
 

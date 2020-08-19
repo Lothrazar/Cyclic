@@ -25,7 +25,6 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.block.EnderChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EnderChestInventory;
 import net.minecraft.inventory.container.ChestContainer;
@@ -35,6 +34,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class EnderBagItem extends ItemBase {
@@ -49,7 +49,8 @@ public class EnderBagItem extends ItemBase {
     enderchestinventory.setChestTileEntity(null);
     player.openContainer(new SimpleNamedContainerProvider((p_220114_1_, p_220114_2_, p_220114_3_) -> {
       return ChestContainer.createGeneric9X3(p_220114_1_, p_220114_2_, enderchestinventory);
-    }, EnderChestBlock.CONTAINER_NAME));
+    }, new TranslationTextComponent("container.enderchest")));//EnderChestBlock.CONTAINER_NAME));//stupid mojang makes things private for no reason becasue  they hate modders
+    //..
     player.addStat(Stats.OPEN_ENDERCHEST);
     if (world.rand.nextDouble() > 0.5)
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDER_CHEST_CLOSE);

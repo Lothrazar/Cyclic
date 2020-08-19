@@ -5,7 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class EnergyBar {
@@ -46,9 +46,9 @@ public class EnergyBar {
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int energ) {
     if (this.isMouseover(mouseX, mouseY)) {
       String tt = energ + "/" + this.capacity;
-      List<ITextProperties> list = new ArrayList<>();
+      List<ITextComponent> list = new ArrayList<>();
       list.add(new TranslationTextComponent(tt));
-      parent.renderTooltip(ms, list, mouseX, mouseY);
+      parent.func_243308_b(ms, list, mouseX, mouseY);
     }
   }
 }

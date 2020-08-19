@@ -170,8 +170,8 @@ public class TileWriter extends TileEntityBase implements INamedContainerProvide
     boolean DOBUILD = true;
     if (DOBUILD) {//if true this does do the build
       ModCyclic.LOGGER.info("Build starting at " + blockPos);
-      //addBlocksToWorldChunk
-      template.func_237144_a_(this.world, blockPos, placementsettings, world.rand);
+      //addBlocksToWorldChunk 
+      //      template.func_237149_a_(this.world, blockPos, placementsettings, world.rand);
       return true;
     }
     return false;
