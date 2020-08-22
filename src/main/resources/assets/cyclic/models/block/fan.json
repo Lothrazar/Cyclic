@@ -56,6 +56,7 @@
 			"name": "BladesPlane",
 			"from": [ 2, 2, 1 ], 
 			"to": [ 14, 14, 1 ], 
+			
 			"faces": {
 				"north": { "texture": "#blades", "uv": [ 2, 2, 14, 14 ] },
 				"south": { "texture": "#blades", "uv": [ 2, 2, 14, 14 ] }

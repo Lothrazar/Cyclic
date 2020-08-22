@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -10,6 +12,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
 
+  public static Map<String, String> mapResourceToSkin = new HashMap<String, String>();
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
   public static BooleanValue SCAFFOLD = null;
@@ -41,11 +44,46 @@ public class ConfigManager {
   public static BooleanValue COMMANDPINGNETHER;
   public static BooleanValue COMMANDWORLDSPAWN;
   public static BooleanValue COMMANDGETHELP;
+
+  private static void buildDefaultHeadList() {
+    //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
+    //mhf https://twitter.com/Marc_IRL/status/542330244473311232  https://pastebin.com/5mug6EBu
+    //other https://www.planetminecraft.com/blog/minecraft-playerheads-2579899/
+    //NBT image data from  http://www.minecraft-heads.com/custom/heads/animals/6746-llama
+    //TODO config file for extra mod support
+    mapResourceToSkin.put("minecraft:blaze", "MHF_Blaze");
+    mapResourceToSkin.put("minecraft:cat", "MHF_Ocelot");
+    mapResourceToSkin.put("minecraft:cave_spider", "MHF_CaveSpider");
+    mapResourceToSkin.put("minecraft:chicken", "MHF_Chicken");
+    mapResourceToSkin.put("minecraft:cow", "MHF_Cow");
+    mapResourceToSkin.put("minecraft:enderman", "MHF_Enderman");
+    mapResourceToSkin.put("minecraft:ghast", "MHF_Ghast");
+    mapResourceToSkin.put("minecraft:iron_golem", "MHF_Golem");
+    mapResourceToSkin.put("minecraft:magma_cube", "MHF_LavaSlime");
+    mapResourceToSkin.put("minecraft:mooshroom", "MHF_MushroomCow");
+    mapResourceToSkin.put("minecraft:ocelot", "MHF_Ocelot");
+    mapResourceToSkin.put("minecraft:pig", "MHF_Pig");
+    mapResourceToSkin.put("minecraft:zombie_pigman", "MHF_PigZombie");
+    mapResourceToSkin.put("minecraft:sheep", "MHF_Sheep");
+    mapResourceToSkin.put("minecraft:slime", "MHF_Slime");
+    mapResourceToSkin.put("minecraft:spider", "MHF_Spider");
+    mapResourceToSkin.put("minecraft:squid", "MHF_Squid");
+    mapResourceToSkin.put("minecraft:villager", "MHF_Villager");
+    mapResourceToSkin.put("minecraft:witch", "MHF_Witch");
+    mapResourceToSkin.put("minecraft:wolf", "MHF_Wolf");
+    mapResourceToSkin.put("minecraft:guardian", "MHF_Guardian");
+    mapResourceToSkin.put("minecraft:elder_guardian", "MHF_Guardian");
+    mapResourceToSkin.put("minecraft:snow_golem", "MHF_SnowGolem");
+    mapResourceToSkin.put("minecraft:silverfish", "MHF_Silverfish");
+    mapResourceToSkin.put("minecraft:endermite", "MHF_Endermite");
+  }
+
   static {
     initConfig();
   }
 
   private static void initConfig() {
+    buildDefaultHeadList();
     CFG.comment("Feature toggles; each of these will disable the registration of some content (items/enchants)").push(ModCyclic.MODID);
     String category = "";
     CABLES = CFG.comment("Disable the cables aka pipes").define(category + "cables", true);
@@ -86,6 +124,9 @@ public class ConfigManager {
     COMMANDNBT = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "nbtprint", false);
     COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "pingnether", false);
     COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "worldspawn", true);
+    //enchant subclasses
+    category = "enchant.beheading.";
+    //    CFG.comment("Beheading enchant add player skin head drop to any mob entity id").define(category + "BeheadingEntityMHF", mapResourceToSkin);
     // done
     CFG.pop();
     COMMON_CONFIG = CFG.build();

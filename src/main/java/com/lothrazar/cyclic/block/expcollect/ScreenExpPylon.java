@@ -19,7 +19,7 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
 
   public ScreenExpPylon(ContainerExpPylon screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this, 132, 8, TileExpPylon.CAPACITY);
+    fluid = new FluidBar(this, 150, 8, TileExpPylon.CAPACITY);
   }
 
   @Override
