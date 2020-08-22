@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +35,11 @@ public class ContainerHarvester extends ContainerBase {
         //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
+  }
+
+  @Override
+  public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    return ItemStack.EMPTY;
   }
 
   public int getNeedsRedstone() {

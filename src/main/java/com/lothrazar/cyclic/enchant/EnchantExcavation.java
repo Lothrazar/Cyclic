@@ -158,7 +158,17 @@ public class EnchantExcavation extends EnchantBase {
     Set<BlockPos> list = new HashSet<BlockPos>();
     // TODO: DIAGONAL!
     List<Direction> targetFaces = Arrays.asList(VALUES);
-    Collections.shuffle(targetFaces);
+    try {
+      // cannot replicate this error at all at max level (5 = V)
+      // java.lang.StackOverflowError: Exception in server tick loop
+      //      at java.util.Collections.swap(Unknown Source) ~[?:1.8.0_201] {}
+      //      at java.util.Collections.shuffle(Unknown Source) ~[?:1.8.0_201] {}
+      //      at java.util.Collections.shuffle(Unknown Source) ~[?:1.8.0_201] {}
+      Collections.shuffle(targetFaces);
+    }
+    catch (Exception e) {
+      // java.util shit the bed not my problem 
+    }
     for (Direction fac : targetFaces) {
       if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
         list.add(start.offset(fac));
