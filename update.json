@@ -6,6 +6,6 @@
   },
   "1.16.2": {
   	"0.6.1":"Ported ",
-  	"0.6.2":"Fixed crash in harvester GUI.  Remove logspam in Disenchanter.  Patch StackOverflowError in Excavate enchant when level is high.  Fixed projectiles thrown from items not flying.   "
+  	"0.6.2":"Fixed crash in harvester GUI.  Remove logspam in Disenchanter.  Patch StackOverflowError in Excavate enchant when level is high.  Fixed projectiles thrown from items not flying.   Fan now can blow through non-solid blocks.  Fan has a GUI to control speed and range.  "
   }
 }

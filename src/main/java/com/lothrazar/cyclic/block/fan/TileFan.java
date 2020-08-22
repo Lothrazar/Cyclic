@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.fan;
 
 import java.util.List;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.item.bauble.GloveItem;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -10,24 +10,46 @@ import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
-public class TileFan extends TileEntityBase implements ITickableTileEntity {
+public class TileFan extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private int range = 7;
   private int speed = 5;
+  private static final int MIN_RANGE = 1;
+
+  public static enum Fields {
+    REDSTONE, RANGE, SPEED;
+  }
 
   public TileFan() {
     super(BlockRegistry.Tiles.fantile);
   }
 
   @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerFan(i, world, pos, playerInventory, playerEntity);
+  }
+
+  @Override
   public void tick() {
-    if (this.isPowered() == false) {
+    if (this.requiresRedstone() && !this.isPowered()) {
       setAnimation(false);
       return;
     }
@@ -41,8 +63,6 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
     if (previous != lit)
       this.world.setBlockState(pos, st.with(BlockFan.IS_LIT, lit));
   }
-
-  private static final int MIN_RANGE = 1;
 
   public int getRange() {
     return this.range;
@@ -65,8 +85,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   }
 
   private boolean canBlowThrough(BlockPos tester) {
-    //passes through air, and anything NOT a full block
-    return this.getWorld().isAirBlock(tester);// HMM? HOW TO ? || !this.getWorld().getBlockState(tester).func_215691_g()
+    return !world.getBlockState(tester).isSolid();
   }
 
   public List<BlockPos> getShape() {
@@ -166,7 +185,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
         break;
       }
       entity.setMotion(newx, newy, newz);
-      if (world.isRemote && entity.ticksExisted % GloveItem.TICKS_FALLDIST_SYNC == 0
+      if (world.isRemote && entity.ticksExisted % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
           && entity instanceof PlayerEntity) {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
       }
@@ -175,5 +194,57 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void read(BlockState bs, CompoundNBT tag) {
+    speed = tag.getInt("speed");
+    range = tag.getInt("range");
+    super.read(bs, tag);
+  }
+
+  @Override
+  public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("speed", speed);
+    tag.putInt("range", range);
+    return super.write(tag);
+  }
+
+  @Override
+  public int getField(int f) {
+    switch (Fields.values()[f]) {
+      case RANGE:
+        return range;
+      case REDSTONE:
+        return this.needsRedstone;
+      case SPEED:
+        return this.speed;
+    }
+    return 0;
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    Fields f = Fields.values()[field];
+    switch (f) {
+      case RANGE:
+        range = value;
+        if (range < 1) {
+          range = 1;
+        }
+        if (range > 64) {
+          range = 64;
+        }
+      break;
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+      case SPEED:
+        speed = value;
+        if (speed < 1) {
+          speed = 1;
+        }
+        if (speed > 61) {
+          speed = 16;
+        }
+      break;
+    }
+  }
 }

@@ -55,6 +55,7 @@ import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
+import com.lothrazar.cyclic.block.fan.ContainerFan;
 import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
@@ -326,6 +327,8 @@ public class BlockRegistry {
     public static ContainerType<ContainerPlacerFluid> placer_fluid;
     @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
     public static ContainerType<ContainerFluidCollect> collector_fluid;
+    @ObjectHolder(ModCyclic.MODID + ":fan")
+    public static ContainerType<ContainerFan> fan;
   }
 
   @SubscribeEvent
@@ -487,5 +490,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerFluidCollect(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("collector_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerFan(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("fan"));
   }
 }

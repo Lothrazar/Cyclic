@@ -23,6 +23,10 @@
     "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
     "block.cyclic.fan": "Fan",
     "block.cyclic.fan.tooltip": "Pushes entities",
+    
+    "cyclic.fan.range":"Range",
+    "cyclic.fan.speed":"Speed",
+    
     "item.cyclic.glove_climb": "Climbing Gloves",
     "item.cyclic.glove_climb.tooltip": "Climb any vertical surface",
     "block.cyclic.breaker": "Block Breaker",

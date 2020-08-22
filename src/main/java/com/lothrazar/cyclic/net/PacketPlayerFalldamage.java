@@ -8,6 +8,8 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketPlayerFalldamage extends PacketBase {
 
+  public static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
+
   public static void handle(PacketPlayerFalldamage message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayerEntity player = ctx.get().getSender();

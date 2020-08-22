@@ -13,7 +13,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GloveItem extends ItemBase implements IHasClickToggle {
 
-  public static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final double CLIMB_SPEED = 0.288D;
 
   public GloveItem(Properties properties) {
@@ -32,11 +31,11 @@ public class GloveItem extends ItemBase implements IHasClickToggle {
         World world = player.getEntityWorld();
         UtilStuff.tryMakeEntityClimb(world, player, CLIMB_SPEED);
         //        stack.damageItem(1, player);
-        if (world.isRemote &&
-            player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-          //SOUND DOES WORK I JSUT dont like it anymore lol
-          //  UtilStuff.playSound(player, SoundEvents.BLOCK_LADDER_STEP);
-        }
+        //        if (world.isRemote &&
+        //            player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+        //          //SOUND DOES WORK I JSUT dont like it anymore lol
+        //          //  UtilStuff.playSound(player, SoundEvents.BLOCK_LADDER_STEP);
+        //        }
       }
     }
   }
