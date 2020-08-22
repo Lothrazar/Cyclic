@@ -5,7 +5,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ConfigManager;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -175,7 +174,6 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
           inv.insertItem(SLOT_INPUT, inputCopy, false);
         }
         else {
-          ModCyclic.LOGGER.info("remaining overwrite enchants  " + enchants.size());
           EnchantmentHelper.setEnchantments(enchants, input);//set as removed
           //          inv.extractItem(SLOT_INPUT, 64, false);//delete input
           //          inv.insertItem(SLOT_INPUT, input, false);
