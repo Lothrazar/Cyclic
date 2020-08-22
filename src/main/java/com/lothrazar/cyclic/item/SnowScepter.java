@@ -17,25 +17,17 @@ public class SnowScepter extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
     ItemStack stack = player.getHeldItem(handIn);
     if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemRightClick(worldIn, player, handIn);
+      return super.onItemRightClick(world, player, handIn);
     }
-    SnowEntity ent = new SnowEntity(player, worldIn);
-    ent.shoot(player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 0.5F);
-    worldIn.addEntity(ent);
-    ent = new SnowEntity(player, worldIn);
-    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 1, ent.getPosZ());
-    ent.shoot(player.rotationPitch, player.rotationYaw - 0.2F, 0.0F, 1.5F, 1.0F);
-    worldIn.addEntity(ent);
-    ent = new SnowEntity(player, worldIn);
-    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 2, ent.getPosZ());
-    ent.shoot(player.rotationPitch, player.rotationYaw - 0.5F, 0.0F, 1.5F, 1.0F);
-    worldIn.addEntity(ent);
+    shootMe(world, player, new SnowEntity(player, world));
+    shootMe(world, player, new SnowEntity(player, world), 10);
+    shootMe(world, player, new SnowEntity(player, world), -10);
     player.getCooldownTracker().setCooldown(stack.getItem(), 6);
     UtilItemStack.damageItem(player, stack);
     UtilSound.playSound(player, SoundRegistry.frost_staff_launch);
-    return super.onItemRightClick(worldIn, player, handIn);
+    return super.onItemRightClick(world, player, handIn);
   }
 }

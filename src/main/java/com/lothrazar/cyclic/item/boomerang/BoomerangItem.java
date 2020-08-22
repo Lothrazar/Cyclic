@@ -47,7 +47,7 @@ public class BoomerangItem extends ItemBase {
   }
 
   @Override
-  public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entity, int chargeTimer) {
+  public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entity, int chargeTimer) {
     int charge = this.getUseDuration(stack) - chargeTimer;
     float percentageCharged = BowItem.getArrowVelocity(charge);//never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
@@ -63,18 +63,17 @@ public class BoomerangItem extends ItemBase {
     BoomerangEntity e;
     switch (this.type) {
       case CARRY:
-        e = new BoomerangEntityCarry(worldIn, player);
+        e = new BoomerangEntityCarry(world, player);
       break;
       case DAMAGE:
-        e = new BoomerangEntityDamage(worldIn, player);
+        e = new BoomerangEntityDamage(world, player);
       break;
       default:
       case STUN:
-        e = new BoomerangEntityStun(worldIn, player);
+        e = new BoomerangEntityStun(world, player);
       break;
     }
-    e.shoot(player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
-    worldIn.addEntity(e);
+    shootMe(world, player, e);
     stack.damageItem(1, player, (p) -> {
       p.sendBreakAnimation(Hand.MAIN_HAND);
     });

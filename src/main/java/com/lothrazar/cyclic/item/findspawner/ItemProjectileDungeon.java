@@ -26,9 +26,8 @@ public class ItemProjectileDungeon extends ItemBase {
     ItemStack stack = player.getHeldItem(hand);
     //    if (!world.isRemote) {
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
-    ball.shoot(player.rotationPitch, player.rotationYaw, 0, 0.5F, 1);
+    shootMe(world, player, ball);
     stack.shrink(1);
-    world.addEntity(ball);
     UtilSound.playSound(player, player.getPosition(), SoundRegistry.dungeonfinder);
     Runnable runnable = new Runnable() {
 

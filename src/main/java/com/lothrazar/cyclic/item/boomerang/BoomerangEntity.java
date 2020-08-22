@@ -280,7 +280,9 @@ public class BoomerangEntity extends ProjectileItemEntity {
         }
       break;
       case STUN:
-        if (entityHit != owner && entityHit instanceof LivingEntity) {
+        //!entityHit.getUniqueID().equals(owner.getUniqueID()) 
+        if (entityHit != owner && entityHit instanceof LivingEntity
+            && !(entityHit instanceof PlayerEntity)) {
           LivingEntity live = (LivingEntity) entityHit;
           if (live.isPotionActive(PotionRegistry.PotionEffects.stun) == false) {
             live.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));

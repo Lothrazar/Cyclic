@@ -18,22 +18,22 @@ public class FireScepter extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
+    shootMe(worldIn, player, new FireEntity(player, worldIn));
+    shootMe(worldIn, player, new FireEntity(player, worldIn), 10);
+    shootMe(worldIn, player, new FireEntity(player, worldIn), -10);
+    //    ent = new FireEntity(player, worldIn);
+    //    ent.shoot(player.rotationPitch, player.rotationYaw - 0.1F, 0.0F, 1.5F, 1.0F);
+    //    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 1, ent.getPosZ());
+    //    worldIn.addEntity(ent);
+    //    ent = new FireEntity(player, worldIn);
+    //    ent.shoot(player.rotationPitch, player.rotationYaw - 0.2F, 0.0F, 1.5F, 1.0F);
+    //    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 2, ent.getPosZ());
+    //    worldIn.addEntity(ent);
+    //    ent = new FireEntity(player, worldIn);
+    //    ent.shoot(player.rotationPitch, player.rotationYaw - 0.5F, 0.0F, 1.5F, 1.0F);
+    //    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 3, ent.getPosZ());
+    //    worldIn.addEntity(ent);
     ItemStack stack = player.getHeldItem(handIn);
-    FireEntity ent = new FireEntity(player, worldIn);
-    ent.shoot(player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
-    worldIn.addEntity(ent);
-    ent = new FireEntity(player, worldIn);
-    ent.shoot(player.rotationPitch, player.rotationYaw - 0.1F, 0.0F, 1.5F, 1.0F);
-    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 1, ent.getPosZ());
-    worldIn.addEntity(ent);
-    ent = new FireEntity(player, worldIn);
-    ent.shoot(player.rotationPitch, player.rotationYaw - 0.2F, 0.0F, 1.5F, 1.0F);
-    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 2, ent.getPosZ());
-    worldIn.addEntity(ent);
-    ent = new FireEntity(player, worldIn);
-    ent.shoot(player.rotationPitch, player.rotationYaw - 0.5F, 0.0F, 1.5F, 1.0F);
-    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 3, ent.getPosZ());
-    worldIn.addEntity(ent);
     player.getCooldownTracker().setCooldown(stack.getItem(), 16);
     UtilItemStack.damageItem(player, stack);
     UtilSound.playSound(player, SoundRegistry.fireball_staff_launch);

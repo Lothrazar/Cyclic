@@ -5,8 +5,12 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -16,8 +20,32 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemBase extends Item {
 
+  public static final float INACCURACY_DEFAULT = 1.0F;
+  public static final float VELOCITY_MAX = 1.5F;
+  public static final float velocityFactor = 1.5F;
+
   public ItemBase(Properties properties) {
     super(properties);
+  }
+
+  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball) {
+    shootMe(world, shooter, ball, 0F);
+  }
+
+  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball, float PITCHOFFSET) {
+    if (world.isRemote) {
+      return;
+    }
+    Vector3d vector3d1 = shooter.getUpVector(1.0F);
+    //      float projectileAngle = 0;//is degrees so can be -10, +10, etc
+    Quaternion quaternion = new Quaternion(new Vector3f(vector3d1), PITCHOFFSET, true);
+    Vector3d vector3d = shooter.getLook(1.0F);
+    Vector3f vector3f = new Vector3f(vector3d);
+    vector3f.transform(quaternion);
+    ball.shoot(
+        vector3f.getX(), vector3f.getY(), vector3f.getZ(),
+        velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    world.addEntity(ball);
   }
 
   protected ItemStack findAmmo(PlayerEntity player, Item item) {

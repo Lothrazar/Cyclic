@@ -12,10 +12,6 @@ import net.minecraft.world.World;
 
 public class ItemTorchThrower extends ItemBase {
 
-  private static final float INACCURACY_DEFAULT = 1.0F;
-  private static final float PITCHOFFSET = 0.0F;
-  private static final float VELOCITY_MAX = 1.5F;
-
   public ItemTorchThrower(Properties properties) {
     super(properties.maxStackSize(1).maxDamage(256));
   }
@@ -29,16 +25,11 @@ public class ItemTorchThrower extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
-    if (!world.isRemote) {
-      EntityTorchBolt ball = new EntityTorchBolt(player, world);
-      float velocityFactor = 1.5F;
-      ball.shoot(player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
-      player.getHeldItem(hand).damageItem(1, player, (p) -> {
-        p.sendBreakAnimation(hand);
-      });
-      world.addEntity(ball);
-    }
-    return super.onItemRightClick(world, player, hand);
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity shooter, @Nonnull Hand hand) {
+    shootMe(world, shooter, new EntityTorchBolt(shooter, world));
+    shooter.getHeldItem(hand).damageItem(1, shooter, (p) -> {
+      p.sendBreakAnimation(hand);
+    });
+    return super.onItemRightClick(world, shooter, hand);
   }
 }
