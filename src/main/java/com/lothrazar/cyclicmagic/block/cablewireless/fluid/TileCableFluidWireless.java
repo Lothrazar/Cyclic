@@ -23,13 +23,12 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileCableFluidWireless extends TileEntityBaseMachineFluid implements ITickable, ILaserTarget, ITileRedstoneToggle {
 
-  public static final int TRANSFER_FLUID_PER_TICK = 500;
+  private static final String NBT_RATE = "transferRate";
   public static final int TANK_FULL = 10000;
   public static final int MAX_TRANSFER = 1000;
   public static final int SLOT_COUNT = 9;
-  List<Integer> slotList = IntStream.rangeClosed(
-      0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
-  private int transferRate = MAX_TRANSFER / 2;
+  private List<Integer> slotList = IntStream.rangeClosed(0, TileCableEnergyWireless.SLOT_COUNT).boxed().collect(Collectors.toList());
+  private int transferRate = MAX_TRANSFER / 2;// default
 
   public static enum Fields {
     REDSTONE, TRANSFER_RATE, RENDERPARTICLES;
@@ -66,7 +65,7 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
         this.needsRedstone = value % 2;
       break;
       case TRANSFER_RATE:
-        transferRate = value;
+        transferRate = value;// its a slider, no checks needed
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
@@ -88,7 +87,7 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
     if (isRunning() == false) {
       return;
     }
-    //shuffle into random order
+    // shuffle into random order
     Collections.shuffle(slotList);
     for (int slot : slotList) {
       outputFluid(slot);
@@ -119,7 +118,7 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
       if (sideTarget == null) {//legacy from null
         UtilWorld.getRandFacing();
       }
-      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), sideTarget, this.tank, TRANSFER_FLUID_PER_TICK);
+      UtilFluid.tryFillPositionFromTank(world, dim.toBlockPos(), sideTarget, this.tank, this.transferRate);
     }
   }
 
@@ -135,7 +134,7 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
 
   @Override
   public List<LaserConfig> getTarget() {
-    //find laser endpoints and go
+    // find laser endpoints and go
     BlockPosDim first = new BlockPosDim(this.getPos(), this.getDimension());
     List<LaserConfig> laser = new ArrayList<>();
     for (BlockPos second : this.getShape()) {
@@ -165,14 +164,12 @@ public class TileCableFluidWireless extends TileEntityBaseMachineFluid implement
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
-    this.transferRate = compound.getInteger("transferRate");
-    this.needsRedstone = compound.getInteger(NBT_REDST);
+    this.transferRate = compound.getInteger(NBT_RATE);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setInteger("transferRate", transferRate);
-    compound.setInteger(NBT_REDST, this.needsRedstone);
+    compound.setInteger(NBT_RATE, transferRate);
     return super.writeToNBT(compound);
   }
 }
