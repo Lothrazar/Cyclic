@@ -29,15 +29,18 @@ import net.minecraft.potion.PotionEffect;
 
 public class PotionSaturation extends PotionBase {
 
+  private static final double PCT_TRIGGER = 0.03;
+
   public PotionSaturation() {
     super("saturation", true, 0x5D4033);
   }
 
   @Override
-  public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier) {
-    super.performEffect(entityLivingBaseIn, amplifier);
-    if (!entityLivingBaseIn.world.isRemote) {
-      ((EntityPlayer) entityLivingBaseIn).getFoodStats().addStats(amplifier + 1, 1.0F);
+  public void performEffect(EntityLivingBase entity, int amplifier) {
+    super.performEffect(entity, amplifier);
+    if (!entity.world.isRemote
+        && entity instanceof EntityPlayer) {
+      ((EntityPlayer) entity).getFoodStats().addStats(amplifier + 1, amplifier + 0.2F);
     }
   }
 
@@ -45,10 +48,10 @@ public class PotionSaturation extends PotionBase {
   @Override
   public void tick(EntityLivingBase entity) {
     if (!entity.world.isRemote
-        && entity.world.rand.nextDouble() < 0.03) {
+        && entity.world.rand.nextDouble() < PCT_TRIGGER
+        && entity instanceof EntityPlayer) {
       PotionEffect pot = entity.getActivePotionEffect(this);
-      int amp = pot.getAmplifier() + 1;
-      ((EntityPlayer) entity).getFoodStats().addStats(amp, 0.5F);
+      ((EntityPlayer) entity).getFoodStats().addStats(pot.getAmplifier() + 1, pot.getAmplifier() + 0.5F);
     }
   }
 }
