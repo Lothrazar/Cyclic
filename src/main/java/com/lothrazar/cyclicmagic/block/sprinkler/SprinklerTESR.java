@@ -52,6 +52,10 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
 
   @Override
   public void render(TileSprinkler te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    //B:SprinklerAnimationsAllowed=true
+    if (!BlockSprinkler.sprinklerAnimationsAllowed) {
+      return;
+    }
     GlStateManager.pushAttrib();
     GlStateManager.pushMatrix();
     // Translate to the location of our tile entity

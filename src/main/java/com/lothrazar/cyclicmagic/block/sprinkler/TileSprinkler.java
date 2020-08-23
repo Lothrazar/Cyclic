@@ -87,7 +87,7 @@ public class TileSprinkler extends TileEntityBaseMachineInvo implements ITickabl
             continue;//its at full growth, stahp
           }
           //plantable has no such
-          if (spawnParticles && world.isRemote) {
+          if (spawnParticles && BlockSprinkler.sprinklerAnimationsAllowed && world.isRemote) {
             UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, current);
           }
           try {//no need to literally increase internal growth numbers, just force more  update ticks

@@ -108,6 +108,7 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
   }
 
   private boolean enabled;
+  static boolean sprinklerAnimationsAllowed;
 
   @Override
   public boolean enabled() {
@@ -117,6 +118,7 @@ public class BlockSprinkler extends BlockBaseHasTile implements IBlockHasTESR, I
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean("Sprinkler", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    sprinklerAnimationsAllowed = config.getBoolean("SprinklerAnimationsAllowed", Const.ConfigCategory.content, true, "Animations are allowed.  false to disable all sprinkler animations");
   }
 
   @Override
