@@ -135,8 +135,6 @@ public class ItemRegistry {
   public static Item toxic_carrot;
   @ObjectHolder(ModCyclic.MODID + ":xpjuice_bucket")
   public static Item bucket_expjuice;
-  @ObjectHolder(ModCyclic.MODID + ":pattern_reader")
-  public static Item pattern_reader;
   @ObjectHolder(ModCyclic.MODID + ":structure_disk")
   public static Item structure_disk;
 

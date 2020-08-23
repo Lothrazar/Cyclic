@@ -1,17 +1,20 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://dist.creeper.host/Sponge/maven' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
 import net.minecraftforge.gradle.common.task.SignJar
 import groovy.json.JsonSlurper
@@ -91,6 +94,13 @@ minecraft {
     }
 }
 
+mixin {
+// IMPORTANT: RUN CONFIGURATION PROGRAM ARGUMENTS   --mixin mixins.myplugin.json
+       //add sourceSets.main, "main.refmap.json"
+
+       //disableTargetValidator = false
+}
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
@@ -100,7 +110,8 @@ dependencies {
     compile fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     compile fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
     
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+ //   compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+ //   runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
@@ -139,7 +150,11 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"cyclicsareus",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            
+            //'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+	        //'MixinConfigs': 'mixins.myplugin.json',
+	        //'FMLCorePluginContainsFMLMod': 'true',
         ])
     }
 }
