@@ -99,6 +99,8 @@ dependencies {
     
     compile fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     compile fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
+    
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
@@ -120,22 +122,11 @@ dependencies {
 }
 
 repositories {
-  maven {
-    // location of the maven that hosts JEI files
-    name = "Progwml6 maven"
-    url = "https://dvs1.progwml6.com/files/maven/"
-  }
-  maven {
-    // location of a maven mirror for JEI files, as a fallback
-    name = "ModMaven"
-    url = "https://modmaven.k-4u.nl"
-  }    
-    maven {
-        url = "https://maven.theillusivec4.top/"
-    }
-    maven {
-        url 'http://maven.mcmoddev.com'
-    }
+  maven { url = "https://dvs1.progwml6.com/files/maven/"  }
+  maven { url = "https://modmaven.k-4u.nl"  }    
+  maven { url = "https://maven.theillusivec4.top/"    }
+  maven { url 'http://maven.mcmoddev.com'    }
+  maven { url 'https://maven.blamejared.com' }
     
 }
 // Example for how to get properties into the manifest for reading by the runtime..

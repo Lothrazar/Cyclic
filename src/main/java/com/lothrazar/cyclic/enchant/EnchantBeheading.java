@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import java.util.Map;
 import com.lothrazar.cyclic.ConfigManager;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
@@ -69,7 +69,6 @@ public class EnchantBeheading extends EnchantBase {
       if (level <= 0) {
         return;
       }
-      System.out.println("level beheading " + level);
       World world = attacker.world;
       //      ModCyclic.LOGGER.info(level + "---" + percentForLevel(level));
       if (MathHelper.nextInt(world.rand, 0, 100) > percentForLevel(level)) {
@@ -89,8 +88,9 @@ public class EnchantBeheading extends EnchantBase {
       String key = target.getType().getRegistryName().toString();
       ////we allow all these, which include config, to override the vanilla skulls below
       //first do my wacky class mapping// TODO delete and go to minecraft:blah
-      if (ConfigManager.mapResourceToSkin.containsKey(key)) {
-        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(ConfigManager.mapResourceToSkin.get(key)));
+      Map<String, String> mappedBeheading = ConfigManager.getMappedBeheading();
+      if (mappedBeheading.containsKey(key)) {
+        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mappedBeheading.get(key)));
       }
       else if (target.getType() == EntityType.ENDER_DRAGON) {
         UtilItemStack.drop(world, pos, new ItemStack(Items.DRAGON_HEAD));
@@ -111,9 +111,9 @@ public class EnchantBeheading extends EnchantBase {
         //Drop number of heads equal to level of enchant [1,3] 
         UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL, level));
       }
-      else {
-        ModCyclic.LOGGER.error("Beheading : mob not found in EntityList, update config file " + target.getName());
-      }
+      //      else {
+      //        ModCyclic.LOGGER.error("Beheading : mob not found in EntityList, update config file " + target.getName());
+      //      }
     }
   }
 }
