@@ -237,6 +237,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private BlockPos getCenterSource() {
     BlockPos targetA = getGpsTargetPos(SLOT_SRCA);
     BlockPos targetB = getGpsTargetPos(SLOT_SRCB);
+    if (targetA == null || targetB == null) {
+      return null;
+    }
     return new BlockPos(
         (targetA.getX() + targetB.getX()) / 2,
         (targetA.getY() + targetB.getY()) / 2,
@@ -273,6 +276,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
     }
     BlockPos trueCenter = this.getCenterTarget();
+    if (trueCenter == null) {
+      return shapeTarget;//skip just in case
+    }
     shapeTarget = UtilShape.rotateShape(trueCenter, shapeTarget, this.getRotation());
     //    //flip
     if (getField(Fields.FLIPX) == 1) {
