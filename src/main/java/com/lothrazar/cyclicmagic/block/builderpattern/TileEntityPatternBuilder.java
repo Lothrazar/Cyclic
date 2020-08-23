@@ -81,6 +81,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.initEnergy(new EnergyStore(MENERGY), BlockPatternBuilder.FUEL_COST);
     this.setSlotsForBoth();
     syncBlockItemMap();
+    this.needsRedstone = 0;
   }
 
   private void syncBlockItemMap() {
