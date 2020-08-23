@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.enchant;
 
+import java.util.Map;
 import com.lothrazar.cyclicmagic.IContent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -30,8 +31,6 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-
-import java.util.Map;
 
 public abstract class BaseEnchant extends Enchantment implements IContent {
 
@@ -93,7 +92,7 @@ public abstract class BaseEnchant extends Enchantment implements IContent {
     for (ItemStack main : player.getArmorInventoryList()) {
       if ((!main.isEmpty()) &&
           EnchantmentHelper.getEnchantments(main).containsKey(this)) {
-        return main;// EnchantmentHelper.getEnchantments(main).get(this);
+        return main;
       }
     }
     return ItemStack.EMPTY;

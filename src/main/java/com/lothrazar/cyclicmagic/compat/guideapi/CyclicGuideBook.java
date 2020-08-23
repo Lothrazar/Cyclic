@@ -168,6 +168,7 @@ public class CyclicGuideBook implements IGuideBook {
         cat.text(), cat.icon()));
   }
 
+  @SuppressWarnings("deprecation")
   private void buildBookItem() {
     book = new Book();
     book.setTitle("guide.title");

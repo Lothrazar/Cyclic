@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.enchant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
