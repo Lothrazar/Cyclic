@@ -340,5 +340,6 @@
 	,"1.20.2":"Put in some checks in case a player is logging out and in with a bounce potion effects.  Item Sorter: Normal mode now matches NBT (enchantments etc); and new Ore Dictionary mode added"
 	,"1.20.3":"Fixed builder consuming two blocks for every one placed.  Water walking enchant now works better against BOP quicksand (mud).  By popuplar demand, renamed 'Whitelist/Blacklist' to 'Allowlist/Ignorelist' in a few tooltips (functionality unchanged).  Added some error safeguards in case IE wires throw an exception when hit by a certain projectile.  Block the extraction of items from the Workbench using things like hoppers (fixes some exploits).  Fixed Auto User in attack mode not hitting the full area in larger sized selections.  "
 	,"1.20.4":"Add config to reverse placement of machines -UnInvertedPlacement- (default value is no changes, edit to make machines face away from player on placing).  Confirmed compatibility with Guide-API-2.1.8-63 "
+	,"1.20.5":"Optimize BaseEnchant calls to EnchantmentHelper and HashMap (merge PR Ricket).  "
   }
 }
