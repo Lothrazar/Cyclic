@@ -34,14 +34,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
-public class ContainerMerchantBetter extends ContainerBaseMachine {
+public class ContainerMerchantAlmanac extends ContainerBaseMachine {
 
   final static int HOTBAR_START = 27;
   final static int HOTBAR_END = 35;
@@ -49,10 +48,10 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   final static int INV_END = 26;
   public final EntityVillager merchant;
   private MerchantRecipeList trades;
-  private final InventoryMerchantBetter merchantInventory;
+  private final InventoryMerchantAlmanac merchantInventory;
   private EntityPlayer player;
 
-  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn) {
+  public ContainerMerchantAlmanac(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantAlmanac im, World worldIn) {
     this.setScreenSize(ScreenSize.LARGEWIDE);
     this.merchant = m;
     this.merchantInventory = im;
@@ -66,7 +65,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     UtilEntity.setVillagerCareer(merchant, c);
   }
 
-  public InventoryMerchantBetter getMerchantInventory() {
+  public InventoryMerchantAlmanac getMerchantInventory() {
     return this.merchantInventory;
   }
 
@@ -80,7 +79,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
-    if (player instanceof EntityPlayerMP && player.openContainer instanceof ContainerMerchantBetter) {
+    if (player instanceof EntityPlayerMP && player.openContainer instanceof ContainerMerchantAlmanac) {
       MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(player);
       EntityPlayerMP mp = (EntityPlayerMP) player;
       ModCyclic.network.sendTo(new PacketSyncVillagerToClient(this.getCareer(), merchantrecipelist), mp);
@@ -109,36 +108,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   @Override
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-    ItemStack itemstack = ItemStack.EMPTY;
-    Slot slot = this.inventorySlots.get(index);
-    if (slot != null && slot.getHasStack()) {
-      ItemStack itemstack1 = slot.getStack();
-      itemstack = itemstack1.copy();
-      //      if (index == SLOT_OUTPUT) {
-      //        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) { return null; }
-      //        slot.onSlotChange(itemstack1, itemstack);
-      //      }
-      //      else if (index != SLOT_INPUT && index != SLOT_INPUTX) { //so it must be a player slot
-      //        if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
-      //      }
-      //      else {//so it is 0,1
-      if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) {
-        return ItemStack.EMPTY;
-      }
-      //      }
-      //cleanup steps
-      if (itemstack1.getCount() == 0) {
-        slot.putStack(ItemStack.EMPTY);
-      }
-      else {
-        slot.onSlotChanged();
-      }
-      if (itemstack1.getCount() == itemstack.getCount()) {
-        return ItemStack.EMPTY;
-      }
-      slot.onTake(playerIn, itemstack1);
-    }
-    return itemstack;
+    return ItemStack.EMPTY;
   }
 
   @Override
@@ -161,6 +131,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   public void doTrade(EntityPlayer player, int selectedMerchantRecipe) {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
     if (trade.isRecipeDisabled()) {
+      // trade has red x
       return;
     }
     ItemStack itemToBuy = trade.getItemToBuy().copy();
@@ -193,20 +164,19 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     }
     boolean tradeSuccess = false;
     if (canTrade) {
+      //swap the items by counts
       if (!secondItem.isEmpty()) {
-        //        firstItem.stackSize -= itemToBuy.stackSize;
-        //        secondItem.stackSize -= itemSecondBuy.stackSize;
         firstItem.shrink(itemToBuy.getCount());
         secondItem.shrink(itemSecondBuy.getCount());
         tradeSuccess = true;
       }
       if (itemSecondBuy.isEmpty() && secondItem.isEmpty()) {
-        //        firstItem.stackSize -= itemToBuy.stackSize;
         firstItem.shrink(itemToBuy.getCount());
         tradeSuccess = true;
       }
     }
     if (tradeSuccess) {
+      //give purchase 
       ItemStack purchased = trade.getItemToSell().copy();
       player.entityDropItem(purchased, 1);
       this.merchant.useRecipe(trade);

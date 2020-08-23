@@ -69,9 +69,9 @@ public class PacketSyncVillagerToClient implements IMessage, IMessageHandler<Pac
     if (ctx.side == Side.CLIENT) {
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
       //      player.getEntityData().setInteger(Const.MODID + "_VILLAGERHACK", message.career);//TODO: validate/delete
-      if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
+      if (player != null && player.openContainer instanceof ContainerMerchantAlmanac) {
         //TODO: this spams every second, not sure why
-        ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
+        ContainerMerchantAlmanac c = (ContainerMerchantAlmanac) player.openContainer;
         c.setCareer(message.career);
         if (message.trades != null) {
           c.setTrades(message.trades);

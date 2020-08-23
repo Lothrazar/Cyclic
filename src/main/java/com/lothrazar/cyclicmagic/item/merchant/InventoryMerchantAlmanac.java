@@ -37,7 +37,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
-public class InventoryMerchantBetter extends InventoryMerchant implements IInventory {
+public class InventoryMerchantAlmanac extends InventoryMerchant implements IInventory {
 
   private final IMerchant theMerchant;
   private final NonNullList<ItemStack> inv = NonNullList.withSize(3, ItemStack.EMPTY);
@@ -46,7 +46,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   private int currentRecipeIndex;
   private MerchantRecipeList trades;
 
-  public InventoryMerchantBetter(EntityPlayer thePlayerIn, IMerchant theMerchantIn) {
+  public InventoryMerchantAlmanac(EntityPlayer thePlayerIn, IMerchant theMerchantIn) {
     super(thePlayerIn, theMerchantIn);
     this.thePlayer = thePlayerIn;
     this.theMerchant = theMerchantIn;

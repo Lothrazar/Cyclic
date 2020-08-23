@@ -176,9 +176,9 @@ import com.lothrazar.cyclicmagic.item.cyclicwand.ContainerWand;
 import com.lothrazar.cyclicmagic.item.cyclicwand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.item.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.enderbook.GuiEnderBook;
-import com.lothrazar.cyclicmagic.item.merchant.ContainerMerchantBetter;
+import com.lothrazar.cyclicmagic.item.merchant.ContainerMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.merchant.GuiMerchantBetter;
-import com.lothrazar.cyclicmagic.item.merchant.InventoryMerchantBetter;
+import com.lothrazar.cyclicmagic.item.merchant.InventoryMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.item.signcolor.GuiSignEditor;
 import com.lothrazar.cyclicmagic.item.storagesack.ContainerStorage;
@@ -359,7 +359,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemMerchantAlmanac.radius));
         if (v != null) {
           v.setCustomer(player);
-          ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world);
+          ContainerMerchantAlmanac c = new ContainerMerchantAlmanac(player.inventory, v, new InventoryMerchantAlmanac(player, v), world);
           return c;
         }
       break;
@@ -633,7 +633,7 @@ public class ForgeGuiHandler implements IGuiHandler {
         case GUI_INDEX_VILLAGER:
           EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemMerchantAlmanac.radius));
           if (v != null) {
-            return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world);
+            return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantAlmanac(player, v), world);
           }
         break;
         case GUI_INDEX_FAN:

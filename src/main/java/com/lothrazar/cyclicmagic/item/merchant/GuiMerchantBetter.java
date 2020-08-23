@@ -63,16 +63,16 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   private int selectedMerchantRecipe;
   private List<GuiButtonPurchase> merchButtons = new ArrayList<GuiButtonPurchase>();
 
-  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn) {
-    super(new ContainerMerchantBetter(ip, merch, im, worldIn));
+  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantAlmanac im, World worldIn) {
+    super(new ContainerMerchantAlmanac(ip, merch, im, worldIn));
     player = ip.player;
     this.setScreenSize(ScreenSize.LARGEWIDE);
     this.xSize = getScreenSize().width();
     this.ySize = getScreenSize().height();
   }
 
-  public ContainerMerchantBetter getContainer() {
-    return (ContainerMerchantBetter) this.inventorySlots;
+  public ContainerMerchantAlmanac getContainer() {
+    return (ContainerMerchantAlmanac) this.inventorySlots;
   }
 
   @Override

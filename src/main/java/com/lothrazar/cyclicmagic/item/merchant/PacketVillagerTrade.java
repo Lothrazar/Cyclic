@@ -69,8 +69,8 @@ public class PacketVillagerTrade implements IMessage, IMessageHandler<PacketVill
       } //dedupe fix: if player spams button, dont start second trade WHILE first is still processing
       UtilNBT.setEntityBoolean(player, NBT_DUPE_BLOCKER);
       try {
-        if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
-          ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
+        if (player != null && player.openContainer instanceof ContainerMerchantAlmanac) {
+          ContainerMerchantAlmanac c = (ContainerMerchantAlmanac) player.openContainer;
           c.setCurrentRecipeIndex(message.selectedMerchantRecipe); //TODO: well this duplicates packetsyncvilltoserv..so..
           c.doTrade(player, message.selectedMerchantRecipe);
         }

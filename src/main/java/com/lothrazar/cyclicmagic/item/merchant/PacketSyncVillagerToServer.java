@@ -59,8 +59,8 @@ public class PacketSyncVillagerToServer implements IMessage, IMessageHandler<Pac
   public IMessage onMessage(PacketSyncVillagerToServer message, MessageContext ctx) {
     if (ctx.side == Side.SERVER) {
       EntityPlayer player = ctx.getServerHandler().player;// ModCyclic.proxy.getPlayerEntity(ctx);
-      if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
-        ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
+      if (player != null && player.openContainer instanceof ContainerMerchantAlmanac) {
+        ContainerMerchantAlmanac c = (ContainerMerchantAlmanac) player.openContainer;
         c.setCurrentRecipeIndex(message.selectedMerchantRecipe);
       }
     }
