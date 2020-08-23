@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:blocks/block",
+	"parent": "minecraft:blocks/cube",
     "textures": {
         "particle": "#0"
     },
