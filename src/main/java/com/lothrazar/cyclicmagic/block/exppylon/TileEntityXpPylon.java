@@ -24,12 +24,17 @@
 package com.lothrazar.cyclicmagic.block.exppylon;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.liquid.FluidTankFixDesync;
+import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -57,10 +62,10 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
   }
 
   public static enum ActionMode {
-    SPRAY, COLLECT;
+    SPRAY, COLLECT, NONE;
   }
 
-  private int collect = 1;
+  private int collect = ActionMode.COLLECT.ordinal();
 
   public TileEntityXpPylon() {
     super(2);
@@ -88,16 +93,53 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     if (this.isRunning() == false) {
       return;
     }
+    collectPlayerExperience();
+    if (this.collect == ActionMode.SPRAY.ordinal()) {
+      updateSpray();
+    }
     this.timer--;
     if (this.timer <= 0) {
       this.timer = TIMER_FULL;
       if (this.collect == ActionMode.COLLECT.ordinal()) {
         updateCollection();
       }
-      if (this.collect == ActionMode.SPRAY.ordinal()) {
-        updateSpray();
-      }
       updateBottle();
+    }
+  }
+
+  private void collectPlayerExperience() {
+    if (world.isRemote) {
+      return;
+    }
+    List<EntityPlayer> players = world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.getPos().up()));
+    for (EntityPlayer p : players) {
+      if (p.isSneaking() && UtilExperience.getExpTotal(p) > 0) {
+        //go
+        int addMeXp = 1;
+        //if large total
+        if (UtilExperience.getExpTotal(p) > 100) {
+          addMeXp = 10;//drain fast if you have a large dump 
+        }
+        if (UtilExperience.getExpTotal(p) > 500) {
+          addMeXp = 50;//drain fast if you have a large dump 
+        }
+        if (UtilExperience.getExpTotal(p) > 7000) {
+          addMeXp = 500;//drain fast if you have a large dump 
+        }
+        int addMeFluid = addMeXp * FLUID_PER_EXP;
+        ModCyclic.logger.log("BEFORE player  .getExpTotal() = " + UtilExperience.getExpTotal(p) + " DRAIN BY addMeXp=" + addMeXp);
+        if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
+          UtilExperience.drainExp(p, addMeXp);
+          //drain from player done  NOW go with fluid
+          ModCyclic.logger.log("BEFORE .getFluidAmount() = " + tank.getFluidAmount());
+          tank.fill(new FluidStack(FluidRegistry.getFluid("xpjuice"), addMeFluid), true);
+          ModCyclic.logger.log("AFTER .getFluidAmount() = " + tank.getFluidAmount());
+          ModCyclic.logger.log("AFTER player  .getExpTotal() = " + UtilExperience.getExpTotal(p));
+          //          ModCyclic.logger.log("drainy tank.getFluidAmount() = " + tank.getFluidAmount());
+          UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+          this.markDirty();
+        }
+      }
     }
   }
 
@@ -105,6 +147,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
    * outgoing: convert fluid to EXP in a bottle
    */
   private void updateBottle() {
+    if (world.isRemote) {
+      return;
+    }
     //so 11*20 is the fluid per bottle
     int fluidToDrain = XP_PER_BOTTLE * FLUID_PER_EXP;
     if (outputSlotHasRoom() && inputSlotHasSome() && this.getCurrentFluidStackAmount() >= fluidToDrain) {
@@ -122,12 +167,18 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
    * outgoing: convert fluid to EXP
    */
   private void updateSpray() {
+    if (world.isRemote) {
+      return;
+    }
     //for example if we drain 200 fluid units, which gives us 10 xp in the orb
-    int fluidToDrain = XP_PER_SPEWORB * FLUID_PER_EXP;
-    int toSpew = Math.min(fluidToDrain, this.getCurrentFluidStackAmount());
-    int expToRelease = toSpew / XP_PER_SPEWORB;
-    if (expToRelease > 0 && this.getCurrentFluidStackAmount() >= toSpew) {
-      FluidStack actuallyDrained = this.tank.drain(toSpew, true);
+    int spewPerOrb = XP_PER_SPEWORB;
+    int fluidToDrain = spewPerOrb * FLUID_PER_EXP;
+    if (this.getCurrentFluidStackAmount() < fluidToDrain) {
+      spewPerOrb = 1;//tank is low, do one tick drains
+    }
+    fluidToDrain = spewPerOrb * FLUID_PER_EXP;
+    if (this.getCurrentFluidStackAmount() >= fluidToDrain) {
+      FluidStack actuallyDrained = this.tank.drain(fluidToDrain, true);
       //was the correct amount drained
       if (actuallyDrained == null || actuallyDrained.amount == 0) {
         return;
@@ -135,7 +186,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
       if (world.isRemote == false) {
         EntityXPOrb orb = new EntityXPOrb(world);
         orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-        orb.xpValue = expToRelease;
+        orb.xpValue = spewPerOrb;
         orb.delayBeforeCanPickup = 0;
         world.spawnEntity(orb);
         orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
@@ -147,6 +198,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
    * incoming: convert EXP to fluid
    */
   private void updateCollection() {
+    if (world.isRemote) {
+      return;
+    }
     //expand only goes ONE direction. so expand(3...) goes 3 in + x, but not both ways. for full boc centered at this..!! we go + and -
     AxisAlignedBB region = new AxisAlignedBB(this.getPos().up()).expand(RADIUS, VRADIUS, RADIUS).expand(-1 * RADIUS, -1 * VRADIUS, -1 * RADIUS);//expandXyz
     List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, region);
@@ -248,7 +302,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
         this.tank.setFluidAmount(value);
       break;
       case COLLECT:
-        this.collect = value % 2;
+        this.collect = value % ActionMode.values().length;
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;
@@ -257,20 +311,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
       break;
     }
   }
-  //
-  //  private void setCurrentFluid(int amt) {
-  //    IFluidHandler fluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-  //    if (fluidHandler == null || fluidHandler.getTankProperties() == null || fluidHandler.getTankProperties().length == 0) {
-  //      return;
-  //    }
-  //    FluidStack fluid = fluidHandler.getTankProperties()[0].getContents();
-  //    if (fluid == null) {
-  //      fluid = new FluidStack(FluidRegistry.getFluid("xpjuice"), amt);
-  //    }
-  //    fluid.amount = amt;
-  //    // ModCyclic.logger.info("setCurrentFluid to " + fluid.amount + " from isClient = " + this.world.isRemote);
-  //    this.tank.setFluid(fluid);
-  //  }
 
   @Override
   public void toggleNeedsRedstone() {

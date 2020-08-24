@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.block.exppylon.PacketTilePylon;
 import com.lothrazar.cyclicmagic.block.password.PacketTilePassword;
 import com.lothrazar.cyclicmagic.block.vector.PacketTileVector;
 import com.lothrazar.cyclicmagic.item.cannon.MessageGolemLaserFX;
@@ -127,7 +126,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSleepClient.class, PacketSleepClient.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketEntityDropRandom.class, PacketEntityDropRandom.class, packetID++, Side.SERVER);
     network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
+    packetID++;//   network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSound.class, PacketSound.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketFluidSync.class, PacketFluidSync.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSwapPlayerHotbar.class, PacketSwapPlayerHotbar.class, packetID++, Side.SERVER);

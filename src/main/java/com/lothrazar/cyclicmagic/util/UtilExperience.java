@@ -38,30 +38,31 @@ public class UtilExperience {
     return totalExp;
   }
 
-  public static boolean drainExp(EntityPlayer player, float f) {
-    double totalExp = getExpTotal(player);
-    if (totalExp - f < 0) {
-      return false;
+  /**
+   * https://forums.minecraftforge.net/topic/25116-removing-xp-from-player/
+   */
+  public static void drainExp(EntityPlayer player, int amount) {
+    if (player.experienceTotal - amount <= 0) {
+      player.experienceLevel = 0;
+      player.experience = 0;
+      player.experienceTotal = 0;
+      return;
     }
-    int result = (int) (totalExp - f);
-    setXp(player, result);
-    return true;
+    player.experienceTotal -= amount;
+    if (player.experience * player.xpBarCap() <= amount) {
+      amount -= player.experience * player.xpBarCap();
+      player.experience = 1.0f;
+      player.experienceLevel--;
+    }
+    while (player.xpBarCap() < amount) {
+      amount -= player.xpBarCap();
+      player.experienceLevel--;
+    }
+    player.experience -= amount / (float) player.xpBarCap();
   }
 
-  public static int getXpToGainLevel(int level) {
-    // numeric reference:
-    // http://minecraft.gamepedia.com/Experience#Leveling_up
-    // so if our current level is 5, we pass in5 here and find out
-    // how much exp to get from 5 to 6
-    int nextLevelExp = 0;
-    if (level <= 15)
-      nextLevelExp = 2 * level + 7;
-    else if (level <= 30)
-      nextLevelExp = 5 * level - 38;
-    else
-      // level >= 31
-      nextLevelExp = 9 * level - 158;
-    return nextLevelExp;
+  public static void incrementExp(EntityPlayer player, int xp) {
+    setXp(player, (int) getExpTotal(player) + xp);
   }
 
   public static int getXpForLevel(int level) {
@@ -84,10 +85,6 @@ public class UtilExperience {
       lev++;
     }
     return lev - 1;
-  }
-
-  public static void incrementExp(EntityPlayer player, int xp) {
-    setXp(player, (int) getExpTotal(player) + xp);
   }
 
   public static void setXp(EntityPlayer player, int xp) {

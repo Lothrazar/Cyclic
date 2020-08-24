@@ -34,6 +34,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -43,7 +44,7 @@ public class BlockFluidExp extends BlockFluidBase {
   public static FluidStack stack;//= new FluidStack(FluidsRegistry.fluid_milk,1000);
 
   public BlockFluidExp() {
-    super(FluidsRegistry.fluid_exp, Material.WATER);
+    super(FluidRegistry.getFluid("xpjuice"), Material.WATER);
     FluidsRegistry.fluid_exp.setBlock(this);
     stack = new FluidStack(FluidsRegistry.fluid_exp, Fluid.BUCKET_VOLUME);
   }
