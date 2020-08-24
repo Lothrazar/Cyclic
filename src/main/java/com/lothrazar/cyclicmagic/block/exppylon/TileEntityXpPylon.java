@@ -62,7 +62,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
   }
 
   public static enum ActionMode {
-    SPRAY, COLLECT, NONE;
+    SPRAY, COLLECT, NONE, BOTTLE;
   }
 
   private int collect = ActionMode.COLLECT.ordinal();
@@ -103,7 +103,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
       if (this.collect == ActionMode.COLLECT.ordinal()) {
         updateCollection();
       }
-      updateBottle();
+      if (this.collect == ActionMode.BOTTLE.ordinal()) {
+        updateBottle();
+      }
     }
   }
 

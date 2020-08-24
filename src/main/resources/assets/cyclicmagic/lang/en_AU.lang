@@ -26,6 +26,7 @@ button.exp_pylon.collect.tooltip=Toggle between collecting or dispensing Exp Orb
 button.exp_pylon.collect0=Spray Orbs
 button.exp_pylon.collect1=Collect Orbs
 button.exp_pylon.collect2=None
+button.exp_pylon.collect3=Bottle
 button.exp_pylon.deposit.tooltip=Drain experience from the player
 button.exp_pylon.drain.tooltip=Add experience to the player from the pylon
 button.exp_pylon.depositall.tooltip=Drain all experience from the player
