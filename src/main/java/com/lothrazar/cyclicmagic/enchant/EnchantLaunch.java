@@ -29,6 +29,7 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.guide.GuideRegistry;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclicmagic.potion.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -148,6 +149,12 @@ public class EnchantLaunch extends BaseEnchant {
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
       player.fallDistance = 0;
       float angle = (player.motionX == 0 && player.motionZ == 0) ? 90 : ROTATIONPITCH;
+      //if i have potion
+      if (player.getActivePotionEffect(PotionEffectRegistry.BOUNCE) != null
+          && angle != 90) {
+        //uh oh, you have bounce power on, disable the angle, dont use ROTATIONPITCH
+        angle = 89;
+      }
       UtilEntity.launch(player, angle, LAUNCH_POWER);
       UtilParticle.spawnParticle(player.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, player.getPosition());
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.enchant_launch, SoundCategory.PLAYERS, 0.04F);
