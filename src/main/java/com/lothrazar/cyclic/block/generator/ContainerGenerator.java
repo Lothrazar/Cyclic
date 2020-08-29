@@ -19,7 +19,7 @@ public class ContainerGenerator extends ContainerBase {
   TilePeatGenerator tile;
 
   public ContainerGenerator(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.generatorCont, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.generatorCont, windowId);
     tile = (TilePeatGenerator) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

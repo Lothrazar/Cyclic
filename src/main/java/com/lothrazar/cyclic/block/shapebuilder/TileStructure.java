@@ -60,7 +60,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private int timer;
 
   public TileStructure() {
-    super(BlockRegistry.Tiles.structure);
+    super(BlockRegistry.TileRegistry.structure);
   }
 
   @Override

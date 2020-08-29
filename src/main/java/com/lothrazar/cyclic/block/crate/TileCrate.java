@@ -25,7 +25,7 @@ public class TileCrate extends TileEntityBase implements INamedContainerProvider
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileCrate() {
-    super(BlockRegistry.Tiles.crate);
+    super(BlockRegistry.TileRegistry.crate);
   }
 
   private IItemHandler createHandler() {

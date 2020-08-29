@@ -17,7 +17,7 @@ public class ContainerBattery extends ContainerBase {
   TileBattery tile;
 
   public ContainerBattery(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.batteryCont, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.batteryCont, windowId);
     tile = (TileBattery) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -38,7 +38,7 @@ public class ContainerBattery extends ContainerBase {
 
       @Override
       public int get() {
-        return getFlowing();
+        return tile.getFlowing();
       }
 
       @Override
@@ -46,10 +46,6 @@ public class ContainerBattery extends ContainerBase {
         tile.setFlowing(value);
       }
     });
-  }
-
-  int getFlowing() {
-    return tile.getFlowing();
   }
 
   public int getEnergy() {

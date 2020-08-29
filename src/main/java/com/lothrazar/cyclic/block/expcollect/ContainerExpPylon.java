@@ -14,7 +14,7 @@ public class ContainerExpPylon extends ContainerBase {
   TileExpPylon tile;
 
   public ContainerExpPylon(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.experience_pylon, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.experience_pylon, windowId);
     tile = (TileExpPylon) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

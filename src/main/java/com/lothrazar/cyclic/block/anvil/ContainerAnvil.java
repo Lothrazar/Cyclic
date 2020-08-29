@@ -19,7 +19,7 @@ public class ContainerAnvil extends ContainerBase {
   TileAnvilAuto tile;
 
   public ContainerAnvil(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.anvil, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.anvil, windowId);
     tile = (TileAnvilAuto) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

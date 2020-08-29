@@ -16,7 +16,7 @@ public class ContainerCrate extends ContainerBase {
   TileCrate tile;
 
   public ContainerCrate(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.crate, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.crate, windowId);
     tile = (TileCrate) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

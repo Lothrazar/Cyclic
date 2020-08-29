@@ -28,7 +28,7 @@ public class BlockBreaker extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.breaker, ScreenBreaker::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.breaker, ScreenBreaker::new);
   }
 
   @Override

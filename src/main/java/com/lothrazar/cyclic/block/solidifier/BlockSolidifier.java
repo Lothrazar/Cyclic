@@ -105,7 +105,7 @@ public class BlockSolidifier extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.solidifier, ScreenSolidifier::new);
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.solidifier, RenderSolidifier::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.solidifier, ScreenSolidifier::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.solidifier, RenderSolidifier::new);
   }
 }

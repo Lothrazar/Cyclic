@@ -33,7 +33,6 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   public static enum Fields {
     FLOWING, N, E, S, W, U, D;
-    ;
   }
 
   private Map<Direction, Boolean> poweredSides;
@@ -41,7 +40,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   private int flowing = 0;
 
   public TileBattery() {
-    super(BlockRegistry.Tiles.batterytile);
+    super(BlockRegistry.TileRegistry.batterytile);
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);

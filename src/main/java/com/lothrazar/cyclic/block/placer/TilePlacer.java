@@ -35,7 +35,7 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
   }
 
   public TilePlacer() {
-    super(BlockRegistry.Tiles.placer);
+    super(BlockRegistry.TileRegistry.placer);
   }
 
   private IItemHandler createHandler() {

@@ -37,7 +37,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     int x = guiLeft + 132, y = guiTop + 8;
     int size = 14;
     btnToggle = addButton(new ButtonMachine(x, y, size, size, "", (p) -> {
-      container.tile.setFlowing((container.getFlowing() + 1) % 2);
+      container.tile.setFlowing((container.tile.getFlowing() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(Fields.FLOWING.ordinal(), container.tile.getFlowing(), container.tile.getPos()));
     }));
     x = guiLeft + 18;
@@ -103,8 +103,8 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
 
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
-    btnToggle.setTextureId(container.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
+    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.tile.getFlowing()));
+    btnToggle.setTextureId(container.tile.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
     //    btnU.setTooltip("gui.cyclic.flowing" + container.tile.getField(Fields.U.ordinal()));
     //    btnD.setTooltip("gui.cyclic.flowing" + container.tile.getField(Fields.D.ordinal()));
     btnU.setTextureId(getTextureId(Fields.U));

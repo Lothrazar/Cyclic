@@ -19,7 +19,7 @@ public class ContainerMelter extends ContainerBase {
   TileMelter tile;
 
   public ContainerMelter(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.melter, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.melter, windowId);
     tile = (TileMelter) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

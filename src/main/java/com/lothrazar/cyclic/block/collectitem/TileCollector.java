@@ -37,7 +37,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileCollector() {
-    super(BlockRegistry.Tiles.collectortile);
+    super(BlockRegistry.TileRegistry.collectortile);
     this.setNeedsRedstone(1);
   }
 

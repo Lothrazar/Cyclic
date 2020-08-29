@@ -50,7 +50,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   public TileMelter() {
-    super(BlockRegistry.Tiles.melter);
+    super(BlockRegistry.TileRegistry.melter);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

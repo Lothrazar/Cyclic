@@ -15,12 +15,12 @@ import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
-import com.lothrazar.cyclic.block.autouser.BlockUser;
-import com.lothrazar.cyclic.block.autouser.ContainerUser;
-import com.lothrazar.cyclic.block.autouser.TileUser;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
+import com.lothrazar.cyclic.block.beaconpotion.BlockPotion;
+import com.lothrazar.cyclic.block.beaconpotion.ContainerPotion;
+import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.breaker.ContainerBreaker;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
@@ -39,18 +39,30 @@ import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.BlockCollector;
 import com.lothrazar.cyclic.block.collectitem.ContainerCollector;
 import com.lothrazar.cyclic.block.collectitem.TileCollector;
+import com.lothrazar.cyclic.block.crafter.BlockCrafter;
+import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
+import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
 import com.lothrazar.cyclic.block.crate.ContainerCrate;
 import com.lothrazar.cyclic.block.crate.TileCrate;
-import com.lothrazar.cyclic.block.detector.BlockDetector;
-import com.lothrazar.cyclic.block.detector.ContainerDetector;
-import com.lothrazar.cyclic.block.detector.TileDetector;
+import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
+import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
+import com.lothrazar.cyclic.block.creativeitem.BlockItemInfinite;
+import com.lothrazar.cyclic.block.creativeitem.TileItemInfinite;
+import com.lothrazar.cyclic.block.detectorentity.BlockDetector;
+import com.lothrazar.cyclic.block.detectorentity.ContainerDetector;
+import com.lothrazar.cyclic.block.detectorentity.TileDetector;
 import com.lothrazar.cyclic.block.detectoritem.BlockDetectorItem;
 import com.lothrazar.cyclic.block.detectoritem.ContainerDetectorItem;
 import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
+import com.lothrazar.cyclic.block.dice.BlockDice;
+import com.lothrazar.cyclic.block.dice.TileDice;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.disenchant.ContainerDisenchant;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
+import com.lothrazar.cyclic.block.dropper.BlockDropper;
+import com.lothrazar.cyclic.block.dropper.ContainerDropper;
+import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
@@ -59,50 +71,61 @@ import com.lothrazar.cyclic.block.fan.ContainerFan;
 import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
+import com.lothrazar.cyclic.block.forester.BlockForester;
+import com.lothrazar.cyclic.block.forester.ContainerForester;
+import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generator.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.generator.ContainerGenerator;
 import com.lothrazar.cyclic.block.generator.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.block.magnet.BlockMagnet;
+import com.lothrazar.cyclic.block.magnet.ContainerMagnet;
+import com.lothrazar.cyclic.block.magnet.TileMagnet;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.TileMelter;
+import com.lothrazar.cyclic.block.miner.BlockMiner;
+import com.lothrazar.cyclic.block.miner.ContainerMiner;
+import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.placerfluid.BlockPlacerFluid;
 import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
 import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
+import com.lothrazar.cyclic.block.planter.BlockPlanter;
+import com.lothrazar.cyclic.block.planter.ContainerPlanter;
+import com.lothrazar.cyclic.block.planter.TilePlanter;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
+import com.lothrazar.cyclic.block.screen.BlockScreentext;
+import com.lothrazar.cyclic.block.screen.ContainerScreentext;
+import com.lothrazar.cyclic.block.screen.TileScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
 import com.lothrazar.cyclic.block.shapebuilder.ContainerStructure;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
-import com.lothrazar.cyclic.block.structurereadercreative.BlockReader;
-import com.lothrazar.cyclic.block.structurereadercreative.ContainerReader;
-import com.lothrazar.cyclic.block.structurereadercreative.TileReader;
-import com.lothrazar.cyclic.block.structurewriter.BlockWriter;
-import com.lothrazar.cyclic.block.structurewriter.ContainerWriter;
-import com.lothrazar.cyclic.block.structurewriter.TileWriter;
-import com.lothrazar.cyclic.block.structurewritercopy.BlockReaderCopy;
-import com.lothrazar.cyclic.block.structurewritercopy.ContainerReaderCopy;
-import com.lothrazar.cyclic.block.structurewritercopy.TileReaderCopy;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
-import com.lothrazar.cyclic.block.wireless.BlockWirelessRec;
-import com.lothrazar.cyclic.block.wireless.BlockWirelessTransmit;
-import com.lothrazar.cyclic.block.wireless.ContainerTransmit;
-import com.lothrazar.cyclic.block.wireless.TileWirelessRec;
-import com.lothrazar.cyclic.block.wireless.TileWirelessTransmit;
+import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
+import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
+import com.lothrazar.cyclic.block.user.BlockUser;
+import com.lothrazar.cyclic.block.user.ContainerUser;
+import com.lothrazar.cyclic.block.user.TileUser;
+import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessRec;
+import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessTransmit;
+import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
+import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessRec;
+import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessTransmit;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -202,16 +225,35 @@ public class BlockRegistry {
   public static Block cask;
   @ObjectHolder(ModCyclic.MODID + ":flower_cyan")
   public static Block flower_cyan;
-  @ObjectHolder(ModCyclic.MODID + ":structure_reader")
-  public static Block structure_reader;
-  @ObjectHolder(ModCyclic.MODID + ":structure_writer")
-  public static Block structure_writer;
-  @ObjectHolder(ModCyclic.MODID + ":structure_copy")
-  public static Block structure_copy;
   @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
   public static Block placer_fluid;
+  //
+  @ObjectHolder(ModCyclic.MODID + ":beacon")
+  public static Block beacon;
+  @ObjectHolder(ModCyclic.MODID + ":crafter")
+  public static Block crafter;
+  @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
+  public static Block battery_infinite;
+  @ObjectHolder(ModCyclic.MODID + ":item_infinite")
+  public static Block item_infinite;
+  @ObjectHolder(ModCyclic.MODID + ":dice")
+  public static Block dice;
+  @ObjectHolder(ModCyclic.MODID + ":dropper")
+  public static Block dropper;
+  @ObjectHolder(ModCyclic.MODID + ":planter")
+  public static Block planter;
+  @ObjectHolder(ModCyclic.MODID + ":forester")
+  public static Block forester;
+  @ObjectHolder(ModCyclic.MODID + ":magnet")
+  public static Block magnet;
+  @ObjectHolder(ModCyclic.MODID + ":miner")
+  public static Block miner;
+  @ObjectHolder(ModCyclic.MODID + ":screen")
+  public static Block screen;
+  @ObjectHolder(ModCyclic.MODID + ":uncrafter")
+  public static Block uncrafter;
 
-  public static class Tiles {
+  public static class TileRegistry {
 
     @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
     public static TileEntityType<TileWirelessRec> wireless_receiver;
@@ -269,17 +311,36 @@ public class BlockRegistry {
     public static TileEntityType<TileCrate> crate;
     @ObjectHolder(ModCyclic.MODID + ":cask")
     public static TileEntityType<TileCrate> cask;
-    @ObjectHolder(ModCyclic.MODID + ":structure_reader")
-    public static TileEntityType<TileReader> structure_reader;
-    @ObjectHolder(ModCyclic.MODID + ":structure_writer")
-    public static TileEntityType<TileWriter> structure_writer;
-    @ObjectHolder(ModCyclic.MODID + ":structure_copy")
-    public static TileEntityType<TileReaderCopy> structure_copy;
     @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
     public static TileEntityType<TilePlacerFluid> placer_fluid;
+    //
+    @ObjectHolder(ModCyclic.MODID + ":beacon")
+    public static TileEntityType<TilePotion> beacon;
+    @ObjectHolder(ModCyclic.MODID + ":crafter")
+    public static TileEntityType<TileCrafter> crafter;
+    @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
+    public static TileEntityType<TileBatteryInfinite> battery_infinite;
+    @ObjectHolder(ModCyclic.MODID + ":item_infinite")
+    public static TileEntityType<TileItemInfinite> item_infinite;
+    @ObjectHolder(ModCyclic.MODID + ":dice")
+    public static TileEntityType<TileDice> dice;
+    @ObjectHolder(ModCyclic.MODID + ":dropper")
+    public static TileEntityType<TileDropper> dropper;
+    @ObjectHolder(ModCyclic.MODID + ":planter")
+    public static TileEntityType<TilePlanter> planter;
+    @ObjectHolder(ModCyclic.MODID + ":forester")
+    public static TileEntityType<TileForester> forester;
+    @ObjectHolder(ModCyclic.MODID + ":magnet")
+    public static TileEntityType<TileMagnet> magnet;
+    @ObjectHolder(ModCyclic.MODID + ":miner")
+    public static TileEntityType<TileMiner> miner;
+    @ObjectHolder(ModCyclic.MODID + ":screen")
+    public static TileEntityType<TileScreentext> screen;
+    @ObjectHolder(ModCyclic.MODID + ":uncrafter")
+    public static TileEntityType<TileUncraft> uncrafter;
   }
 
-  public static class ContainerScreens {
+  public static class ContainerScreenRegistry {
 
     @ObjectHolder(ModCyclic.MODID + ":breaker")
     public static ContainerType<ContainerBreaker> breaker;
@@ -317,27 +378,50 @@ public class BlockRegistry {
     public static ContainerType<ContainerClock> clock;
     @ObjectHolder(ModCyclic.MODID + ":crate")
     public static ContainerType<ContainerCrate> crate;
-    @ObjectHolder(ModCyclic.MODID + ":structure_reader")
-    public static ContainerType<ContainerReader> structure_reader;
-    @ObjectHolder(ModCyclic.MODID + ":structure_writer")
-    public static ContainerType<ContainerWriter> structure_writer;
-    @ObjectHolder(ModCyclic.MODID + ":structure_copy")
-    public static ContainerType<ContainerReaderCopy> structure_copy;
     @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
     public static ContainerType<ContainerPlacerFluid> placer_fluid;
     @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
     public static ContainerType<ContainerFluidCollect> collector_fluid;
     @ObjectHolder(ModCyclic.MODID + ":fan")
     public static ContainerType<ContainerFan> fan;
+    //
+    @ObjectHolder(ModCyclic.MODID + ":beacon")
+    public static ContainerType<ContainerPotion> beacon;
+    @ObjectHolder(ModCyclic.MODID + ":crafter")
+    public static ContainerType<ContainerCrafter> crafter;
+    @ObjectHolder(ModCyclic.MODID + ":dropper")
+    public static ContainerType<ContainerDropper> dropper;
+    @ObjectHolder(ModCyclic.MODID + ":planter")
+    public static ContainerType<ContainerPlanter> planter;
+    @ObjectHolder(ModCyclic.MODID + ":forester")
+    public static ContainerType<ContainerForester> forester;
+    @ObjectHolder(ModCyclic.MODID + ":magnet")
+    public static ContainerType<ContainerMagnet> magnet;
+    @ObjectHolder(ModCyclic.MODID + ":miner")
+    public static ContainerType<ContainerMiner> miner;
+    @ObjectHolder(ModCyclic.MODID + ":screen")
+    public static ContainerType<ContainerScreentext> screen;
   }
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    //
+    r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
+    r.register(new BlockCrafter(Block.Properties.create(Material.IRON)).setRegistryName("crafter"));
+    r.register(new BlockBatteryInfinite(Block.Properties.create(Material.IRON)).setRegistryName("battery_infinite"));
+    r.register(new BlockItemInfinite(Block.Properties.create(Material.IRON)).setRegistryName("item_infinite"));
+    r.register(new BlockDice(Block.Properties.create(Material.IRON)).setRegistryName("dice"));
+    r.register(new BlockDropper(Block.Properties.create(Material.IRON)).setRegistryName("dropper"));
+    r.register(new BlockForester(Block.Properties.create(Material.IRON)).setRegistryName("forester"));
+    r.register(new BlockPlanter(Block.Properties.create(Material.IRON)).setRegistryName("planter"));
+    r.register(new BlockMagnet(Block.Properties.create(Material.IRON)).setRegistryName("magnet"));
+    r.register(new BlockMiner(Block.Properties.create(Material.IRON)).setRegistryName("miner"));
+    r.register(new BlockScreentext(Block.Properties.create(Material.IRON)).setRegistryName("screen"));
+    r.register(new BlockUncraft(Block.Properties.create(Material.IRON)).setRegistryName("uncrafter"));
+    //
+    //
     r.register(new BlockPlacerFluid(Block.Properties.create(Material.IRON)).setRegistryName("placer_fluid"));
-    r.register(new BlockReaderCopy(Block.Properties.create(Material.IRON)).setRegistryName("structure_copy"));
-    r.register(new BlockWriter(Block.Properties.create(Material.IRON)).setRegistryName("structure_writer"));
-    r.register(new BlockReader(Block.Properties.create(Material.IRON)).setRegistryName("structure_reader"));
     r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));
     r.register(new BlockCask(Block.Properties.create(Material.ROCK)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.ROCK)).setRegistryName("crate"));
@@ -384,10 +468,21 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    //
+    r.register(TileEntityType.Builder.create(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));
+    r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
+    r.register(TileEntityType.Builder.create(TileBatteryInfinite::new, BlockRegistry.battery_infinite).build(null).setRegistryName("battery_infinite"));
+    r.register(TileEntityType.Builder.create(TileItemInfinite::new, BlockRegistry.item_infinite).build(null).setRegistryName("item_infinite"));
+    r.register(TileEntityType.Builder.create(TileDice::new, BlockRegistry.dice).build(null).setRegistryName("dice"));
+    r.register(TileEntityType.Builder.create(TileDropper::new, BlockRegistry.dropper).build(null).setRegistryName("dropper"));
+    r.register(TileEntityType.Builder.create(TileForester::new, BlockRegistry.forester).build(null).setRegistryName("forester"));
+    r.register(TileEntityType.Builder.create(TilePlanter::new, BlockRegistry.planter).build(null).setRegistryName("planter"));
+    r.register(TileEntityType.Builder.create(TileMagnet::new, BlockRegistry.magnet).build(null).setRegistryName("magnet"));
+    r.register(TileEntityType.Builder.create(TileMiner::new, BlockRegistry.miner).build(null).setRegistryName("miner"));
+    r.register(TileEntityType.Builder.create(TileScreentext::new, BlockRegistry.screen).build(null).setRegistryName("screen"));
+    r.register(TileEntityType.Builder.create(TileUncraft::new, BlockRegistry.uncrafter).build(null).setRegistryName("uncrafter"));
+    //
     r.register(TileEntityType.Builder.create(TilePlacerFluid::new, BlockRegistry.placer_fluid).build(null).setRegistryName("placer_fluid"));
-    r.register(TileEntityType.Builder.create(TileReaderCopy::new, BlockRegistry.structure_copy).build(null).setRegistryName("structure_copy"));
-    r.register(TileEntityType.Builder.create(TileWriter::new, BlockRegistry.structure_writer).build(null).setRegistryName("structure_writer"));
-    r.register(TileEntityType.Builder.create(TileReader::new, BlockRegistry.structure_reader).build(null).setRegistryName("structure_reader"));
     r.register(TileEntityType.Builder.create(TileCask::new, BlockRegistry.cask).build(null).setRegistryName("cask"));
     r.register(TileEntityType.Builder.create(TileCrate::new, BlockRegistry.crate).build(null).setRegistryName("crate"));
     r.register(TileEntityType.Builder.create(TileRedstoneClock::new, BlockRegistry.clock).build(null).setRegistryName("clock"));
@@ -476,15 +571,6 @@ public class BlockRegistry {
       return new ContainerCrate(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("crate"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerReader(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("structure_reader"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerWriter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("structure_writer"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerReaderCopy(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("structure_copy"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerPlacerFluid(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("placer_fluid"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
@@ -493,5 +579,34 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerFan(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("fan"));
+    //
+    //
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPotion(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("beacon"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCrafter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("crafter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDropper(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("dropper"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerForester(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("forester"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPlanter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("planter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerMagnet(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("magnet"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerMiner(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("miner"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerScreentext(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("screen"));
+    //    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    //      return new ContainerUncraft(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    //    }).setRegistryName("uncrafter"));
   }
 }

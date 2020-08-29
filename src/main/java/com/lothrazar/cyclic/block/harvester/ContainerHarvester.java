@@ -18,7 +18,7 @@ public class ContainerHarvester extends ContainerBase {
   protected TileHarvester tile;
 
   public ContainerHarvester(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.harvester, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.harvester, windowId);
     tile = (TileHarvester) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

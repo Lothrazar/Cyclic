@@ -22,7 +22,7 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   }
 
   public TileBreaker() {
-    super(BlockRegistry.Tiles.breakerTile);
+    super(BlockRegistry.TileRegistry.breakerTile);
   }
 
   private void setAnimation(boolean lit) {

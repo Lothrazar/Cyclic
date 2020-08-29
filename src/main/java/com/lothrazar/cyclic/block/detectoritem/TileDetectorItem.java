@@ -4,7 +4,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.detector.TileDetector.CompareType;
+import com.lothrazar.cyclic.block.detectorentity.TileDetector.CompareType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
@@ -35,7 +35,7 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   }
 
   public TileDetectorItem() {
-    super(BlockRegistry.Tiles.detector_item);
+    super(BlockRegistry.TileRegistry.detector_item);
   }
 
   @Override

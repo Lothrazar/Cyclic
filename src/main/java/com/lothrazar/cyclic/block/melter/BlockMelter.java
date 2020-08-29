@@ -105,7 +105,7 @@ public class BlockMelter extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.melter, ScreenMelter::new);
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.melter, RenderMelter::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.melter, ScreenMelter::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.melter, RenderMelter::new);
   }
 }

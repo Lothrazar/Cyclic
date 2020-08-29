@@ -28,7 +28,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 
   public TileCableEnergy() {
-    super(BlockRegistry.Tiles.energy_pipeTile);
+    super(BlockRegistry.TileRegistry.energy_pipeTile);
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }

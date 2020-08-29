@@ -40,7 +40,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileAnvilAuto() {
-    super(BlockRegistry.Tiles.anvil);
+    super(BlockRegistry.TileRegistry.anvil);
   }
 
   private IEnergyStorage createEnergy() {

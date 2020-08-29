@@ -6,11 +6,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -45,7 +44,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   private int fuelRate = 0;
 
   public TilePeatGenerator() {
-    super(BlockRegistry.Tiles.peat_generator);
+    super(BlockRegistry.TileRegistry.peat_generator);
     this.setNeedsRedstone(0);
   }
 
@@ -123,12 +122,9 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       //burnTime is zero grab another
       inventory.ifPresent(h -> {
         ItemStack stack = h.getStackInSlot(0);
-        int hackyFuel = stack.getItem() == ItemRegistry.peat_fuel ? ConfigManager.PEATPOWER.get() : 0;
-        if (stack.getItem() == ItemRegistry.peat_fuel_enriched) {
-          hackyFuel = ConfigManager.PEATERICHPOWER.get();
-        }
-        if (hackyFuel > 0) {
-          fuelRate = hackyFuel;
+        if (stack.getItem() instanceof PeatItem) {
+          PeatItem peat = (PeatItem) stack.getItem();
+          fuelRate = peat.getPeatFuelValue();
           h.extractItem(0, 1, false);
           this.burnTime = BURNTIME;
         }

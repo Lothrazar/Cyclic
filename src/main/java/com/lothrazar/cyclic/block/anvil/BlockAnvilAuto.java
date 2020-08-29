@@ -44,7 +44,7 @@ public class BlockAnvilAuto extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.anvil, ScreenAnvil::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.anvil, ScreenAnvil::new);
   }
 
   @Override

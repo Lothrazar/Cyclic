@@ -33,7 +33,7 @@ public class BlockFan extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.fan, ScreenFan::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.fan, ScreenFan::new);
   }
 
   @Nullable

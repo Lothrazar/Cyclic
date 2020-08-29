@@ -22,12 +22,12 @@ import com.lothrazar.cyclic.item.LightningScepter;
 import com.lothrazar.cyclic.item.LocationGpsItem;
 import com.lothrazar.cyclic.item.MattockItem;
 import com.lothrazar.cyclic.item.PeatItem;
+import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
 import com.lothrazar.cyclic.item.ShearsMaterial;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SnowScepter;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
-import com.lothrazar.cyclic.item.StructureDiskItem;
 import com.lothrazar.cyclic.item.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.WrenchItem;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
@@ -83,46 +83,24 @@ public class ItemRegistry {
   public static Item gem_amber;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
   public static Item biomass;
+  @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
+  public static Item peat_fuel;
+  @ObjectHolder(ModCyclic.MODID + ":peat_fuel_enriched")
+  public static Item peat_fuel_enriched;
   @ObjectHolder(ModCyclic.MODID + ":cable_wrench")
   public static CableWrench cable_wrench;
-  @ObjectHolder(ModCyclic.MODID + ":antigravity")
-  public static Item antigravity;
-  @ObjectHolder(ModCyclic.MODID + ":build_scepter")
-  public static Item build_scepter;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
   public static Item spawner_seeker;
   @ObjectHolder(ModCyclic.MODID + ":gem_obsidian")
   public static Item gem_obsidian;
-  @ObjectHolder(ModCyclic.MODID + ":lapis_carrot_variant")
-  public static Item lapis_carrot_variant;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
   public static Item boomerang_damage;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_carry")
   public static Item boomerang_carry;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_stun")
   public static Item boomerang_stun;
-  @ObjectHolder(ModCyclic.MODID + ":emerald_carrot_jump")
-  public static Item emerald_carrot_jump;
-  @ObjectHolder(ModCyclic.MODID + ":redstone_carrot_speed")
-  public static Item redstone_carrot_speed;
-  @ObjectHolder(ModCyclic.MODID + ":diamond_carrot_health")
-  public static Item diamond_carrot_health;
-  @ObjectHolder(ModCyclic.MODID + ":torch_launcher")
-  public static ItemTorchThrower torch_launcher;
-  @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
-  public static ItemScaffolding item_scaffold_replace;
-  @ObjectHolder(ModCyclic.MODID + ":scaffold_fragile")
-  public static ItemScaffolding item_scaffold_fragile;
-  @ObjectHolder(ModCyclic.MODID + ":scaffold_responsive")
-  public static ItemScaffolding item_scaffold_responsive;
   @ObjectHolder(ModCyclic.MODID + ":mob_container")
   public static ItemMobContainer mob_container;
-  @ObjectHolder(ModCyclic.MODID + ":wrench")
-  public static WrenchItem wrench;
-  @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
-  public static PeatItem peat_fuel;
-  @ObjectHolder(ModCyclic.MODID + ":peat_fuel_enriched")
-  public static PeatItem peat_fuel_enriched;
   @ObjectHolder(ModCyclic.MODID + ":experience_food")
   public static Item experience_food;
   @ObjectHolder(ModCyclic.MODID + ":magic_net")
@@ -131,22 +109,26 @@ public class ItemRegistry {
   public static Item tile_transporter;
   @ObjectHolder(ModCyclic.MODID + ":tile_transporter_empty")
   public static Item tile_transporterempty;
-  @ObjectHolder(ModCyclic.MODID + ":toxic_carrot")
-  public static Item toxic_carrot;
-  @ObjectHolder(ModCyclic.MODID + ":xpjuice_bucket")
-  public static Item bucket_expjuice;
-  @ObjectHolder(ModCyclic.MODID + ":structure_disk")
-  public static Item structure_disk;
 
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.beacon, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("beacon"));
+    r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crafter"));
+    r.register(new BlockItem(BlockRegistry.battery_infinite, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("battery_infinite"));
+    r.register(new BlockItem(BlockRegistry.item_infinite, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("item_infinite"));
+    r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("dice"));
+    r.register(new BlockItem(BlockRegistry.dropper, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("dropper"));
+    r.register(new BlockItem(BlockRegistry.forester, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("forester"));
+    r.register(new BlockItem(BlockRegistry.planter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("planter"));
+    r.register(new BlockItem(BlockRegistry.magnet, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("magnet"));
+    r.register(new BlockItem(BlockRegistry.miner, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("miner"));
+    r.register(new BlockItem(BlockRegistry.screen, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("screen"));
+    r.register(new BlockItem(BlockRegistry.uncrafter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("uncrafter"));
+    //
+    //
+    //
     r.register(new BlockItem(BlockRegistry.placer_fluid, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("placer_fluid"));
-    r.register(new StructureDiskItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_disk"));
-    r.register(new BlockItem(BlockRegistry.structure_writer, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_writer"));
-    r.register(new BlockItem(BlockRegistry.structure_reader, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_reader"));
-    r.register(new BlockItem(BlockRegistry.structure_copy, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_copy"));
-    r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("flower_cyan"));
     //redstone
     r.register(new BlockItem(BlockRegistry.cask, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cask"));
     r.register(new BlockItem(BlockRegistry.crate, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crate"));
@@ -187,9 +169,9 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_generator"));
     r.register(new BlockItem(BlockRegistry.peat_unbaked, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_unbaked"));
     r.register(new BlockItem(BlockRegistry.peat_baked, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_baked"));
-    r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_fuel"));
-    r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("peat_fuel_enriched"));
-    r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("biomass"));
+    r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup), PeatItemType.NORM).setRegistryName("peat_fuel"));
+    r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup), PeatItemType.ENRICHED).setRegistryName("peat_fuel_enriched"));
+    r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemGroup), PeatItemType.BIOMASS).setRegistryName("biomass"));
     // basic tools
     r.register(new LocationGpsItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("location"));
     r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.itemGroup).maxDamage(9000)).setRegistryName("mattock"));

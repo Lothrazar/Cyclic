@@ -20,8 +20,8 @@ public class BlockHarvester extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.harvesterTile, RenderHarvester::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.harvester, ScreenHarvester::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.harvesterTile, RenderHarvester::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.harvester, ScreenHarvester::new);
   }
 
   @Override

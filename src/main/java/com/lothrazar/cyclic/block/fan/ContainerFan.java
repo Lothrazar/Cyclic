@@ -14,7 +14,7 @@ public class ContainerFan extends ContainerBase {
   protected TileFan tile;
 
   public ContainerFan(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.fan, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.fan, windowId);
     tile = (TileFan) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

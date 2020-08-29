@@ -32,7 +32,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   private Map<Direction, LazyOptional<IFluidHandler>> flow = Maps.newHashMap();
 
   public TileCableFluid() {
-    super(BlockRegistry.Tiles.fluid_pipeTile);
+    super(BlockRegistry.TileRegistry.fluid_pipeTile);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(this::createHandler));
     }

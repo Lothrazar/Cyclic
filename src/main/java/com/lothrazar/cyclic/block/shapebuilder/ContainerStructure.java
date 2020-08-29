@@ -19,7 +19,7 @@ public class ContainerStructure extends ContainerBase {
   TileStructure tile;
 
   public ContainerStructure(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.structure, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.structure, windowId);
     tile = (TileStructure) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

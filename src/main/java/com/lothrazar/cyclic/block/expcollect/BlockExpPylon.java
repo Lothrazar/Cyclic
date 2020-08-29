@@ -23,7 +23,7 @@ public class BlockExpPylon extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.experience_pylon, ScreenExpPylon::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.experience_pylon, ScreenExpPylon::new);
   }
 
   @Override

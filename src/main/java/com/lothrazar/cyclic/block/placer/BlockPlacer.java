@@ -28,7 +28,7 @@ public class BlockPlacer extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.placer, ScreenPlacer::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.placer, ScreenPlacer::new);
   }
 
   @Override

@@ -45,7 +45,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   public TileExpPylon() {
-    super(BlockRegistry.Tiles.experience_pylontile);
+    super(BlockRegistry.TileRegistry.experience_pylontile);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

@@ -39,7 +39,7 @@ public class BlockPlacerFluid extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.placer_fluid, ScreenPlacerFluid::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.placer_fluid, ScreenPlacerFluid::new);
   }
 
   @Override

@@ -48,6 +48,6 @@ public class BlockCollector extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.collectortileContainer, ScreenCollector::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.collectortileContainer, ScreenCollector::new);
   }
 }

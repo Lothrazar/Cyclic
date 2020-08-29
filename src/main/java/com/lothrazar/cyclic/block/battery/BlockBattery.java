@@ -33,7 +33,7 @@ public class BlockBattery extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.batteryCont, ScreenBattery::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.batteryCont, ScreenBattery::new);
   }
 
   @Override

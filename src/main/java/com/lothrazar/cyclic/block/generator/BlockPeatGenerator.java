@@ -26,6 +26,6 @@ public class BlockPeatGenerator extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.generatorCont, ScreenGenerator::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.generatorCont, ScreenGenerator::new);
   }
 }

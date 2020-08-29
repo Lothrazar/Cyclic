@@ -24,7 +24,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   public FluidTankBase tank;
 
   public TileCask() {
-    super(BlockRegistry.Tiles.cask);
+    super(BlockRegistry.TileRegistry.cask);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

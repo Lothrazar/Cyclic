@@ -47,7 +47,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   }
 
   public TileDisenchant() {
-    super(BlockRegistry.Tiles.disenchanter);
+    super(BlockRegistry.TileRegistry.disenchanter);
   }
 
   private IItemHandler createHandler() {

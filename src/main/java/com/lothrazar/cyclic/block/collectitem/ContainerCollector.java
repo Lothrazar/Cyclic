@@ -16,7 +16,7 @@ public class ContainerCollector extends ContainerBase {
   TileCollector tile;
 
   public ContainerCollector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.collectortileContainer, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.collectortileContainer, windowId);
     tile = (TileCollector) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

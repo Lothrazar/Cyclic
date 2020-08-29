@@ -24,7 +24,7 @@ public class BlockDetectorItem extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.detector_item, ScreenDetectorItem::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.detector_item, ScreenDetectorItem::new);
   }
 
   @Override

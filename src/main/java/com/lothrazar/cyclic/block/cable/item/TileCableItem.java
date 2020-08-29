@@ -30,7 +30,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
 
   public TileCableItem() {
-    super(BlockRegistry.Tiles.item_pipeTile);
+    super(BlockRegistry.TileRegistry.item_pipeTile);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(this::createHandler));
     }

@@ -29,8 +29,8 @@ public class BlockStructure extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.structure, RenderStructure::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.structure, ScreenStructure::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.structure, RenderStructure::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.structure, ScreenStructure::new);
   }
 
   @Override

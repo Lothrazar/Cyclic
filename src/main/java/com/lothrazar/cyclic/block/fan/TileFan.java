@@ -33,7 +33,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   }
 
   public TileFan() {
-    super(BlockRegistry.Tiles.fantile);
+    super(BlockRegistry.TileRegistry.fantile);
   }
 
   @Override

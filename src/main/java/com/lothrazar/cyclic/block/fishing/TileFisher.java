@@ -44,7 +44,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity {
   LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileFisher() {
-    super(BlockRegistry.Tiles.fisher);
+    super(BlockRegistry.TileRegistry.fisher);
   }
 
   private IItemHandler createHandler() {

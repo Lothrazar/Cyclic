@@ -55,7 +55,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   int laserTimer;
 
   public TileHarvester() {
-    super(BlockRegistry.Tiles.harvesterTile);
+    super(BlockRegistry.TileRegistry.harvesterTile);
   }
   //  @Override
   //  public boolean hasFastRenderer() {

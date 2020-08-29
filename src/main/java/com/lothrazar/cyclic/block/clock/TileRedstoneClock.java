@@ -29,7 +29,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
 
   public TileRedstoneClock() {
-    super(BlockRegistry.Tiles.clock);
+    super(BlockRegistry.TileRegistry.clock);
     timer = 0;
     delay = 60;
     duration = 60;

@@ -55,7 +55,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   public TileSolidifier() {
-    super(BlockRegistry.Tiles.solidifier);
+    super(BlockRegistry.TileRegistry.solidifier);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     inputSlots = new ItemStackHandlerSided(3);
     outputSlot = new ItemStackHandlerSided(1);

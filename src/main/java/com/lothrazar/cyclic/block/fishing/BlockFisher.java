@@ -28,7 +28,7 @@ public class BlockFisher extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.fisher, RenderFisher::new);
+    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.fisher, RenderFisher::new);
   }
 
   @Override

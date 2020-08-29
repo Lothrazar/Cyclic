@@ -16,7 +16,7 @@ public class ContainerPlacerFluid extends ContainerBase {
   protected TilePlacerFluid tile;
 
   public ContainerPlacerFluid(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreens.placer_fluid, windowId);
+    super(BlockRegistry.ContainerScreenRegistry.placer_fluid, windowId);
     tile = (TilePlacerFluid) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

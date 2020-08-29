@@ -22,7 +22,7 @@ public class BlockDisenchant extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.disenchanter, ScreenDisenchant::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.disenchanter, ScreenDisenchant::new);
   }
 
   @Override

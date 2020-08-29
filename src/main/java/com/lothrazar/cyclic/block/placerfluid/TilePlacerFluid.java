@@ -36,7 +36,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   }
 
   public TilePlacerFluid() {
-    super(BlockRegistry.Tiles.placer_fluid);
+    super(BlockRegistry.TileRegistry.placer_fluid);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
   }

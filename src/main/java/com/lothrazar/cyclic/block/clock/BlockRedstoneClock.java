@@ -55,7 +55,7 @@ public class BlockRedstoneClock extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     //    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.harvesterTile, RenderHarvester::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.clock, ScreenClock::new);
+    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.clock, ScreenClock::new);
   }
 
   @Override
