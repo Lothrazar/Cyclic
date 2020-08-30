@@ -1,6 +1,6 @@
 {
-    "parent": "block/cube_all",
+    "parent": "minecraft:block/cube_all",
     "textures": {
-        "all": "cyclic:blocks/glass_strong"
+        "all": "cyclic:blocks/dark_glass"
     }
 }

@@ -27,9 +27,9 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
 
   private void setAnimation(boolean lit) {
     BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockBreaker.IS_LIT);
+    boolean previous = st.get(BlockBreaker.LIT);
     if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockBreaker.IS_LIT, lit));
+      this.world.setBlockState(pos, st.with(BlockBreaker.LIT, lit));
   }
 
   private Direction getCurrentFacing() {

@@ -59,9 +59,9 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
 
   private void setAnimation(boolean lit) {
     BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockFan.IS_LIT);
+    boolean previous = st.get(BlockFan.LIT);
     if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockFan.IS_LIT, lit));
+      this.world.setBlockState(pos, st.with(BlockFan.LIT, lit));
   }
 
   public int getRange() {

@@ -1,5 +1,5 @@
 {
-    "parent": "block/cube_directional",
+    "parent": "minecraft:block/cube_directional",
     "textures": {
         "particle": "cyclic:blocks/tank/tank_top",
         "down": "cyclic:blocks/tank/tank_top",

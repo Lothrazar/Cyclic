@@ -95,6 +95,6 @@ public class BlockPlacerFluid extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.FACING).add(IS_LIT);
+    builder.add(BlockStateProperties.FACING).add(LIT);
   }
 }

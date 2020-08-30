@@ -134,16 +134,16 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
 
   private void updateMyState() throws IllegalArgumentException {
     BlockState blockState = world.getBlockState(pos);
-    if (blockState.hasProperty(BlockRedstoneClock.IS_LIT) == false) {
+    if (blockState.hasProperty(BlockRedstoneClock.LIT) == false) {
       return;
     }
     if (this.power == 0) {
-      world.setBlockState(pos, blockState.with(BlockRedstoneClock.IS_LIT, false));
+      world.setBlockState(pos, blockState.with(BlockRedstoneClock.LIT, false));
       return;
     }
     this.timer++;
     boolean powered;
-    boolean prevPowered = blockState.get(BlockRedstoneClock.IS_LIT);
+    boolean prevPowered = blockState.get(BlockRedstoneClock.LIT);
     if (timer < delay) {
       powered = false;
     }
@@ -156,7 +156,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
       powered = false;
     }
     if (prevPowered != powered) {
-      world.setBlockState(pos, blockState.with(BlockRedstoneClock.IS_LIT, powered));
+      world.setBlockState(pos, blockState.with(BlockRedstoneClock.LIT, powered));
       //super weird hotfix for down state not updating
       //all other directions read update, but not down apparently!
       //      world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);

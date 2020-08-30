@@ -56,9 +56,9 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
 
   private void setAnimation(boolean lit) {
     BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockBatteryInfinite.IS_LIT);
+    boolean previous = st.get(BlockBatteryInfinite.LIT);
     if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockBatteryInfinite.IS_LIT, lit));
+      this.world.setBlockState(pos, st.with(BlockBatteryInfinite.LIT, lit));
   }
 
   private IEnergyStorage createEnergy() {

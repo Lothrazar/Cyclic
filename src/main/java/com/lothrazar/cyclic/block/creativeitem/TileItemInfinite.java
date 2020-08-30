@@ -26,9 +26,9 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
 
   private void setAnimation(boolean lit) {
     BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockItemInfinite.IS_LIT);
+    boolean previous = st.get(BlockItemInfinite.LIT);
     if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockItemInfinite.IS_LIT, lit));
+      this.world.setBlockState(pos, st.with(BlockItemInfinite.LIT, lit));
   }
 
   @Override

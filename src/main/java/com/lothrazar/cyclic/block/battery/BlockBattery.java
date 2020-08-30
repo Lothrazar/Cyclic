@@ -38,7 +38,7 @@ public class BlockBattery extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(IS_LIT);
+    builder.add(LIT);
   }
 
   @Override

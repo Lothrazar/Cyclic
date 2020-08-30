@@ -51,6 +51,6 @@ public class BlockScreentext extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.FACING);
+    builder.add(BlockStateProperties.FACING).add(LIT);
   }
 }

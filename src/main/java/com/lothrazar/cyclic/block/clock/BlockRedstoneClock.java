@@ -17,18 +17,18 @@ public class BlockRedstoneClock extends BlockBase {
 
   public BlockRedstoneClock(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
-    this.setDefaultState(this.stateContainer.getBaseState().with(IS_LIT, Boolean.valueOf(false)));
+    this.setDefaultState(this.stateContainer.getBaseState().with(LIT, Boolean.valueOf(false)));
     this.setHasGui();
   }
 
   @Override
   public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    return blockState.get(IS_LIT) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
+    return blockState.get(LIT) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
 
   @Override
   public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    return blockState.get(IS_LIT) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
+    return blockState.get(LIT) ? getPower(blockAccess, pos, side.getOpposite()) : 0;
   }
 
   private int getPower(IBlockReader world, BlockPos pos, Direction side) {
@@ -60,6 +60,6 @@ public class BlockRedstoneClock extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(IS_LIT);
+    builder.add(LIT);
   }
 }

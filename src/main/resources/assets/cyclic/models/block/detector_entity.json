@@ -1,5 +1,5 @@
 {
-    "parent": "block/block",
+    "parent": "minecraft:block/block",
     "textures": {
      	"0":"minecraft:block/redstone_block",
     	"1":"minecraft:block/quartz_block_top",

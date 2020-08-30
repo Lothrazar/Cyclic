@@ -1,6 +1,12 @@
 {
-    "parent": "block/cube_all",
+    "parent": "minecraft:block/cube",
     "textures": {
-        "all": "cyclic:blocks/item_infinite"
+        "particle": "cyclic:blocks/item_infinite",
+        "down": "cyclic:blocks/item_infinite",
+        "up": "cyclic:blocks/item_infinite",
+        "north": "cyclic:blocks/item_infinite",
+        "south": "cyclic:blocks/item_infinite",
+        "west": "cyclic:blocks/item_infinite",
+        "east": "cyclic:blocks/item_infinite"
     }
 }

@@ -35,7 +35,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public abstract class BlockBase extends Block {
 
-  public static final BooleanProperty IS_LIT = BooleanProperty.create("lit");
+  public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
   private static boolean hasCapabilityDir(Direction facing, IWorld world, BlockPos facingPos, Capability<?> cap) {
     if (facing == null) {

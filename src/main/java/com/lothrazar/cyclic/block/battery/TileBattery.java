@@ -61,9 +61,9 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   private void setAnimation(boolean lit) {
     BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockBattery.IS_LIT);
+    boolean previous = st.get(BlockBattery.LIT);
     if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockBattery.IS_LIT, lit));
+      this.world.setBlockState(pos, st.with(BlockBattery.LIT, lit));
   }
 
   private IEnergyStorage createEnergy() {

@@ -1,5 +1,5 @@
 {
-	"parent": "block/cube",
+	"parent": "minecraft:block/cube",
     "textures": {
 		"particle":"cyclic:blocks/pylon",
         "0": "cyclic:blocks/pylon"

@@ -1,11 +1,11 @@
 { 
- 	"parent": "cyclic:parent/machine_south",
+ 	"parent": "cyclic:parent/machine_classic",
     "textures": {
-        "0": "cyclic:blocks/breaker/front",
-        "1": "cyclic:blocks/breaker/side",
-        "2": "minecraft:block/cauldron_inner",
-        "3": "minecraft:block/mossy_cobblestone",
-        "4": "minecraft:block/quartz_block_bottom",
-        "particle": "minecraft:block/iron_block"
+        "front": "cyclic:blocks/miner/front",
+        "side": "cyclic:blocks/miner/side",
+        "inner": "cyclic:blocks/miner/inner",
+        "stem": "cyclic:blocks/miner/stem",
+        "base": "cyclic:blocks/miner/base",
+        "particle": "cyclic:blocks/miner/side"
     }
 }

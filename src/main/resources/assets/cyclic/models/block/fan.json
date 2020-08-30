@@ -1,5 +1,5 @@
 {
-	"parent": "block/block",
+	"parent": "minecraft:block/block",
 
 	"textures": {
 		"body_front": "cyclic:blocks/fan/fan_body_front",
