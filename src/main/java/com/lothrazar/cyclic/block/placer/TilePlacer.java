@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.placer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -35,7 +35,7 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
   }
 
   public TilePlacer() {
-    super(BlockRegistry.TileRegistry.placer);
+    super(TileRegistry.placer);
   }
 
   private IItemHandler createHandler() {

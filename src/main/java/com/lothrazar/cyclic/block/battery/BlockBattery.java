@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
@@ -33,7 +33,7 @@ public class BlockBattery extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.batteryCont, ScreenBattery::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.batteryCont, ScreenBattery::new);
   }
 
   @Override

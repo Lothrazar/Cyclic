@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.clock;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -14,7 +15,7 @@ public class ContainerClock extends ContainerBase {
   protected TileRedstoneClock tile;
 
   public ContainerClock(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.clock, windowId);
+    super(ContainerScreenRegistry.clock, windowId);
     tile = (TileRedstoneClock) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

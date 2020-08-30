@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.anvilmagma;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -19,7 +20,7 @@ public class ContainerAnvilMagma extends ContainerBase {
   TileAnvilMagma tile;
 
   public ContainerAnvilMagma(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.anvil, windowId);
+    super(ContainerScreenRegistry.anvil_magma, windowId);
     tile = (TileAnvilMagma) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -48,6 +49,6 @@ public class ContainerAnvilMagma extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.anvil);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.anvil_magma);
   }
 }

@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
@@ -45,7 +45,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   public TileExpPylon() {
-    super(BlockRegistry.TileRegistry.experience_pylontile);
+    super(TileRegistry.experience_pylontile);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

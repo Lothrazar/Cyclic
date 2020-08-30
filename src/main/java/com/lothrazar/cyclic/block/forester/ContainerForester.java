@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.forester;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -19,7 +20,7 @@ public class ContainerForester extends ContainerBase {
   TileForester tile;
 
   public ContainerForester(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.forester, windowId);
+    super(ContainerScreenRegistry.forester, windowId);
     tile = (TileForester) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

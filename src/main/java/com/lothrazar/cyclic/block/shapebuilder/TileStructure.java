@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -17,7 +17,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -60,7 +59,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private int timer;
 
   public TileStructure() {
-    super(BlockRegistry.TileRegistry.structure);
+    super(TileRegistry.structure);
   }
 
   @Override
@@ -257,10 +256,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   public BlockPos getTargetFacing() {
     //move center over that much, not including exact horizontal
     return this.getPosTarget().offset(this.getCurrentFacing(), this.buildSize + 1);
-  }
-
-  private Direction getCurrentFacing() {
-    return this.getBlockState().get(BlockStateProperties.HORIZONTAL_FACING);
   }
 
   public List<BlockPos> getShape() {

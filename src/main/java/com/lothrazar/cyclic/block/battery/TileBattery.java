@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -40,7 +40,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   private int flowing = 0;
 
   public TileBattery() {
-    super(BlockRegistry.TileRegistry.batterytile);
+    super(TileRegistry.batterytile);
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);
@@ -57,13 +57,6 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   public void setSideField(Direction side, int pow) {
     this.poweredSides.put(side, (pow == 1));
-  }
-
-  private void setAnimation(boolean lit) {
-    BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockBattery.LIT);
-    if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockBattery.LIT, lit));
   }
 
   private IEnergyStorage createEnergy() {

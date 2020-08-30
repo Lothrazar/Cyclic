@@ -1,12 +1,8 @@
 {
-    "parent": "minecraft:block/cube",
+    "parent": "cyclic:parent/beacon",
     "textures": {
-        "particle": "cyclic:blocks/beacon",
-        "down": "cyclic:blocks/beacon",
-        "up": "cyclic:blocks/beacon",
-        "north": "cyclic:blocks/beacon",
-        "south": "cyclic:blocks/beacon",
-        "west": "cyclic:blocks/beacon",
-        "east": "cyclic:blocks/beacon"
+        "particle": "minecraft:block/glass",
+        "side": "minecraft:block/glass",
+        "base": "minecraft:block/emerald_block"
     }
 }

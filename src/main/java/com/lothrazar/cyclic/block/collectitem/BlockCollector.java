@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.collectitem;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,6 +48,6 @@ public class BlockCollector extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.collectortileContainer, ScreenCollector::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.collectortileContainer, ScreenCollector::new);
   }
 }

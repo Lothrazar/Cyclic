@@ -1,9 +1,11 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,7 +21,8 @@ public class BlockPotion extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.beacon, ScreenPotion::new);
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    ScreenManager.registerFactory(ContainerScreenRegistry.beacon, ScreenPotion::new);
   }
 
   @Override

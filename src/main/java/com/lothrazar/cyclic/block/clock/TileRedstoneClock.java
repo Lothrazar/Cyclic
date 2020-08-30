@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,7 +29,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
 
   public TileRedstoneClock() {
-    super(BlockRegistry.TileRegistry.clock);
+    super(TileRegistry.clock);
     timer = 0;
     delay = 60;
     duration = 60;

@@ -1,8 +1,9 @@
 package com.lothrazar.cyclic.block.creativeitem;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.text.ITextComponent;
@@ -17,18 +18,22 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileItemInfinite() {
-    super(BlockRegistry.TileRegistry.item_infinite);
+    super(TileRegistry.item_infinite);
   }
+
+  int here = 0;
+  int backup = 1;
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
-  }
+    return new ItemStackHandler(2) {
 
-  private void setAnimation(boolean lit) {
-    BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockItemInfinite.LIT);
-    if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockItemInfinite.LIT, lit));
+      @Override
+      public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        if (slot == backup)//no extracting here allowed
+          return ItemStack.EMPTY;
+        return super.extractItem(slot, amount, simulate);
+      }
+    };
   }
 
   @Override
@@ -53,7 +58,21 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
 
   @Override
   public void tick() {
-    //    setAnimation(isFlowing);//if item exists
+    inventory.ifPresent(h -> {
+      ItemStack stackHere = h.getStackInSlot(here);
+      //      ItemStack stackBackup = h.getStackInSlot(backup);
+      //      if (stackBackup.isEmpty()) {
+      //        //copy here to backup. backup never gets drained its always a fresh copy
+      //        h.insertItem(backup, stackHere, false);
+      //        return;
+      //      }
+      //      //take the backup, and overwrite whats here. if here is empty
+      //      if (stackHere.isEmpty()) {
+      //        stackBackup.setCount(64);
+      //        h.extractItem(here, 64, false);
+      //        h.insertItem(here, stackBackup.copy(), false);
+      //      }
+    });
   }
 
   @Override

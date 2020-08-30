@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.wirelessredstone;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
@@ -27,7 +27,7 @@ public class BlockWirelessTransmit extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     //    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.harvesterTile, RenderHarvester::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.wireless_transmitter, ScreenTransmit::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.wireless_transmitter, ScreenTransmit::new);
   }
 
   @Override

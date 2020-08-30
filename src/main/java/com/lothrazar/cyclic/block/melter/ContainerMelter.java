@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -19,7 +20,7 @@ public class ContainerMelter extends ContainerBase {
   TileMelter tile;
 
   public ContainerMelter(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.melter, windowId);
+    super(ContainerScreenRegistry.melter, windowId);
     tile = (TileMelter) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

@@ -1,9 +1,12 @@
 package com.lothrazar.cyclic.block.harvester;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,8 +23,8 @@ public class BlockHarvester extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.harvesterTile, RenderHarvester::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.harvester, ScreenHarvester::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.harvesterTile, RenderHarvester::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.harvester, ScreenHarvester::new);
   }
 
   @Override
@@ -32,5 +35,10 @@ public class BlockHarvester extends BlockBase {
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new TileHarvester();
+  }
+
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    builder.add(LIT);
   }
 }

@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.crate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,7 +25,7 @@ public class TileCrate extends TileEntityBase implements INamedContainerProvider
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileCrate() {
-    super(BlockRegistry.TileRegistry.crate);
+    super(TileRegistry.crate);
   }
 
   private IItemHandler createHandler() {

@@ -1,9 +1,11 @@
 package com.lothrazar.cyclic.block.generator;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
@@ -26,6 +28,11 @@ public class BlockPeatGenerator extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.generatorCont, ScreenGenerator::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.generatorCont, ScreenGenerator::new);
+  }
+
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    builder.add(LIT);
   }
 }

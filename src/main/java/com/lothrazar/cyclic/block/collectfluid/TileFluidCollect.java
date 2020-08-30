@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -49,7 +49,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   }
 
   public TileFluidCollect() {
-    super(BlockRegistry.TileRegistry.collector_fluid);
+    super(TileRegistry.collector_fluid);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
     this.renderParticles = 1;

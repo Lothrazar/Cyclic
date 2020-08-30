@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.detectorentity;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
@@ -24,7 +24,7 @@ public class BlockDetector extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.detector_entity, ScreenDetector::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.detector_entity, ScreenDetector::new);
   }
 
   @Override

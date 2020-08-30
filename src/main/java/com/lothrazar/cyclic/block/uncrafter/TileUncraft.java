@@ -1,10 +1,9 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -26,7 +25,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity {
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileUncraft() {
-    super(BlockRegistry.TileRegistry.uncrafter);
+    super(TileRegistry.uncrafter);
   }
 
   private IEnergyStorage createEnergy() {
@@ -70,19 +69,21 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
-    //        .withLuck(1).with; 
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      IEnergyStorage en = this.energy.orElse(null);
-      final int repair = ConfigManager.ANVILPOWER.get();
-      if (en != null &&
-          en.getEnergyStored() >= repair &&
-          stack.isRepairable() &&
-          stack.getDamage() > 0) {}
-    });
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setAnimation(false);
+      return;
+    }
+    setAnimation(true);
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    if (en == null || inv == null) {
+      return;
+    }
+    ItemStack dropMe = inv.getStackInSlot(0).copy();
   }
 
   @Override

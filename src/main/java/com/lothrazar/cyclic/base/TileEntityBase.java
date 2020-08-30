@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.base;
 
+import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.block.BlockState;
@@ -8,6 +9,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -30,12 +32,38 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     super(tileEntityTypeIn);
   }
 
+  public void setAnimation(boolean lit) {
+    BlockState st = this.getBlockState();
+    if (!st.hasProperty(BlockBase.LIT)) {
+      return;
+    }
+    boolean previous = st.get(BlockBreaker.LIT);
+    if (previous != lit) {
+      this.world.setBlockState(pos, st.with(BlockBreaker.LIT, lit));
+    }
+  }
+
+  public Direction getCurrentFacing() {
+    if (this.getBlockState().hasProperty(BlockStateProperties.FACING))
+      return this.getBlockState().get(BlockStateProperties.FACING);
+    if (this.getBlockState().hasProperty(BlockStateProperties.HORIZONTAL_FACING))
+      return this.getBlockState().get(BlockStateProperties.HORIZONTAL_FACING);
+    return null;
+  }
+
   @Override
   public CompoundNBT getUpdateTag() {
     //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
     CompoundNBT syncData = new CompoundNBT();
     this.write(syncData);//this calls writeInternal
     return syncData;
+  }
+
+  protected BlockPos getCurrentFacingPos() {
+    Direction f = this.getCurrentFacing();
+    if (f != null)
+      return this.pos.offset(f);
+    return this.pos;
   }
 
   @Override

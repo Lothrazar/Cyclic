@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -27,15 +27,14 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
   static final int MAX = 6400000;
 
   public static enum Fields {
-    FLOWING, N, E, S, W, U, D;
+    N, E, S, W, U, D;
   }
 
   private Map<Direction, Boolean> poweredSides;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private int flowing = 1;
 
   public TileBatteryInfinite() {
-    super(BlockRegistry.TileRegistry.battery_infinite);
+    super(TileRegistry.battery_infinite);
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, true);
@@ -52,13 +51,6 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
 
   public void setSideField(Direction side, int pow) {
     this.poweredSides.put(side, (pow == 1));
-  }
-
-  private void setAnimation(boolean lit) {
-    BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockBatteryInfinite.LIT);
-    if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockBatteryInfinite.LIT, lit));
   }
 
   private IEnergyStorage createEnergy() {
@@ -78,7 +70,6 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
     }
-    setFlowing(tag.getInt("flowing"));
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     super.read(bs, tag);
   }
@@ -88,7 +79,6 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
     }
-    tag.putInt("flowing", getFlowing());
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
@@ -105,21 +95,16 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
   public void tick() {
     //recharge
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
+    if (handlerHere == null) {
       return;
     }
     handlerHere.receiveEnergy(MAX / 4, false);
     //now go
-    boolean isFlowing = this.getFlowing() == 1;
-    setAnimation(isFlowing);
-    if (isFlowing) {
-      this.tickCableFlow();
-    }
+    this.tickCableFlow();
   }
 
   private List<Integer> rawList = IntStream.rangeClosed(
-      0,
-      5).boxed().collect(Collectors.toList());
+      0, 5).boxed().collect(Collectors.toList());
 
   private void tickCableFlow() {
     Collections.shuffle(rawList);
@@ -128,14 +113,6 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
       if (this.poweredSides.get(exportToSide))
         moveEnergy(exportToSide, MAX / 4);
     }
-  }
-
-  public int getFlowing() {
-    return flowing;
-  }
-
-  public void setFlowing(int flowing) {
-    this.flowing = flowing;
   }
 
   @Override
@@ -153,8 +130,6 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
         return this.getSideField(Direction.UP);
       case W:
         return this.getSideField(Direction.WEST);
-      case FLOWING:
-        return flowing;
     }
     return -1;
   }
@@ -162,9 +137,6 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
   @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
-      case FLOWING:
-        flowing = value;
-      break;
       case D:
         this.setSideField(Direction.DOWN, value % 2);
       break;

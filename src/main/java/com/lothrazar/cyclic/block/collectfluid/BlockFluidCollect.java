@@ -1,7 +1,8 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.tileentity.TileEntity;
@@ -20,8 +21,8 @@ public class BlockFluidCollect extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.collector_fluid, RenderPlacerFluid::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.collector_fluid, ScreenFluidCollect::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.collector_fluid, RenderPlacerFluid::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.collector_fluid, ScreenFluidCollect::new);
   }
 
   @Override

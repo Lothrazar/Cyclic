@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.disenchant;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
@@ -22,7 +22,7 @@ public class BlockDisenchant extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.disenchanter, ScreenDisenchant::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.disenchanter, ScreenDisenchant::new);
   }
 
   @Override

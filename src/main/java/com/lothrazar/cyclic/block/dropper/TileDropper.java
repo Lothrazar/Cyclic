@@ -4,15 +4,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,8 +33,16 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public static enum Fields {
+    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET;
+  }
+
+  private int dropCount = 1;
+  private int delay = 10;
+  private int hOffset = 0;
+
   public TileDropper() {
-    super(BlockRegistry.TileRegistry.dropper);
+    super(TileRegistry.dropper);
   }
 
   private IEnergyStorage createEnergy() {
@@ -68,6 +79,9 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   public void read(BlockState bs, CompoundNBT tag) {
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    this.delay = tag.getInt("delay");
+    this.dropCount = tag.getInt("dropCount");
+    this.hOffset = tag.getInt("hOffset");
     super.read(bs, tag);
   }
 
@@ -81,17 +95,73 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
     });
+    tag.putInt("delay", delay);
+    tag.putInt("dropCount", dropCount);
+    tag.putInt("hOffset", hOffset);
     return super.write(tag);
   }
 
   @Override
   public void tick() {
-    //        .withLuck(1).with; 
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setAnimation(false);
+      return;
+    }
+    setAnimation(true);
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    timer = delay;
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    if (en == null || inv == null) {
+      return;
+    }
+    ItemStack dropMe = inv.getStackInSlot(0).copy();
+    BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
+    int amtDrop = Math.min(this.dropCount, dropMe.getCount());
+    dropMe.setCount(amtDrop);
+    UtilItemStack.dropItemStackMotionless(world, target, dropMe);
+    dropMe.shrink(1);
+    //      this.decrStackSize(slotCurrent, amtDrop);
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        return this.needsRedstone;
+      case DELAY:
+        return this.delay;
+      case DROPCOUNT:
+        return this.dropCount;
+      case OFFSET:
+        return this.hOffset;
+    }
+    return -1;
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case TIMER:
+        this.timer = value;
+      break;
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+      case DELAY:
+        delay = Math.max(0, value);
+      break;
+      case DROPCOUNT:
+        dropCount = Math.max(1, value);
+      break;
+      case OFFSET:
+        hOffset = Math.max(0, value);
+      break;
+    }
+  }
 }

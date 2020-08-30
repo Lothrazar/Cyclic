@@ -1,7 +1,8 @@
 package com.lothrazar.cyclic.block.solidifier;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
@@ -105,7 +106,7 @@ public class BlockSolidifier extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.solidifier, ScreenSolidifier::new);
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.solidifier, RenderSolidifier::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.solidifier, ScreenSolidifier::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.solidifier, RenderSolidifier::new);
   }
 }

@@ -4,9 +4,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -37,7 +36,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileCollector() {
-    super(BlockRegistry.TileRegistry.collectortile);
+    super(TileRegistry.collectortile);
     this.setNeedsRedstone(1);
   }
 
@@ -85,10 +84,6 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), radius);
-  }
-
-  private Direction getCurrentFacing() {
-    return this.getBlockState().get(HorizontalBlock.HORIZONTAL_FACING);
   }
 
   @Override

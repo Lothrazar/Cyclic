@@ -4,7 +4,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,12 +27,19 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileMagnet extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static final int ITEM_VRADIUS = 2;
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private int delay = 10;
+  private int range = 8;
+
+  public static enum Fields {
+    TIMER, REDSTONE, DELAY, RANGE;
+  }
 
   public TileMagnet() {
-    super(BlockRegistry.TileRegistry.magnet);
+    super(TileRegistry.magnet);
   }
 
   private IEnergyStorage createEnergy() {
@@ -68,6 +76,8 @@ public class TileMagnet extends TileEntityBase implements INamedContainerProvide
   public void read(BlockState bs, CompoundNBT tag) {
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    this.delay = tag.getInt("delay");
+    this.range = tag.getInt("range");
     super.read(bs, tag);
   }
 
@@ -81,17 +91,61 @@ public class TileMagnet extends TileEntityBase implements INamedContainerProvide
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
     });
+    tag.putInt("delay", delay);
+    tag.putInt("range", range);
     return super.write(tag);
   }
 
   @Override
   public void tick() {
-    //        .withLuck(1).with; 
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setAnimation(false);
+      return;
+    }
+    setAnimation(true);
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    //TODO: ENTITY FILTER
+    //OR DIFFERENT BLOCKS FOR JOB TYPES
+    timer = delay;
+    double x = this.getPos().getX() + 0.5;
+    double y = this.getPos().getY() + 0.7;
+    double z = this.getPos().getZ() + 0.5;
+    UtilEntity.moveEntityItemsInRegion(this.getWorld(), x, y, z, range, ITEM_VRADIUS, true);
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        return this.needsRedstone;
+      case DELAY:
+        return this.delay;
+      case RANGE:
+        return this.range;
+    }
+    return -1;
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case TIMER:
+        this.timer = value;
+      break;
+      case REDSTONE:
+        this.needsRedstone = value;
+      break;
+      case DELAY:
+        delay = Math.max(0, value);
+      break;
+      case RANGE:
+        delay = Math.min(0, 64);
+      break;
+    }
+  }
 }

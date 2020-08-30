@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.dice;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -19,7 +19,7 @@ public class TileDice extends TileEntityBase implements ITickableTileEntity {
   }
 
   public TileDice() {
-    super(BlockRegistry.TileRegistry.dice);
+    super(TileRegistry.dice);
   }
 
   @Override

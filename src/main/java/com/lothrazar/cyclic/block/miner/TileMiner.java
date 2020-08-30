@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,7 +31,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileMiner() {
-    super(BlockRegistry.TileRegistry.miner);
+    super(TileRegistry.miner);
   }
 
   private IEnergyStorage createEnergy() {

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.crate;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -16,7 +17,7 @@ public class ContainerCrate extends ContainerBase {
   TileCrate tile;
 
   public ContainerCrate(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.crate, windowId);
+    super(ContainerScreenRegistry.crate, windowId);
     tile = (TileCrate) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

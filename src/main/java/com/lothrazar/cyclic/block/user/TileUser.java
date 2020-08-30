@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -18,7 +18,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -47,7 +46,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   private int timerDelay = 20;
 
   public TileUser() {
-    super(BlockRegistry.TileRegistry.user);
+    super(TileRegistry.user);
   }
   //  @Override
   //  public boolean hasFastRenderer() {
@@ -132,10 +131,6 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
         fakePlayer.get().setHeldItem(Hand.MAIN_HAND, maybeTool);
       }
     });
-  }
-
-  private Direction getCurrentFacing() {
-    return this.world.getBlockState(pos).get(BlockStateProperties.FACING);
   }
 
   @Override

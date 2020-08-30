@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,13 +34,19 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int OUT = 1;
+  private static final int IN = 0;
   public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public static enum Fields {
+    TIMER, REDSTONE;
+  }
+
   public TileAnvilAuto() {
-    super(BlockRegistry.TileRegistry.anvil);
+    super(TileRegistry.anvil);
   }
 
   private IEnergyStorage createEnergy() {
@@ -48,7 +54,19 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(2) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        if (slot == IN)
+          return stack.isRepairable() &&
+              stack.getDamage() > 0;
+        if (slot == OUT)
+          return stack.isRepairable() &&
+              stack.getDamage() == 0;
+        return true;
+      }
+    };
   }
 
   @Override
@@ -95,10 +113,11 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
-    //        .withLuck(1).with; 
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setAnimation(false);
+      return;
+    }
+    setAnimation(true);
     inventory.ifPresent(inv -> {
       ItemStack stack = inv.getStackInSlot(0);
       if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
@@ -114,6 +133,12 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
         //ok drain power  
         UtilItemStack.repairItem(stack);
         en.extractEnergy(repair, false);
+      }
+      //shift to other slot
+      if (inv.getStackInSlot(1).isEmpty()) {
+        //
+        inv.insertItem(1, stack.copy(), false);
+        inv.extractItem(0, stack.getCount(), false);
       }
     });
   }

@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -55,7 +55,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   int laserTimer;
 
   public TileHarvester() {
-    super(BlockRegistry.TileRegistry.harvesterTile);
+    super(TileRegistry.harvesterTile);
   }
   //  @Override
   //  public boolean hasFastRenderer() {

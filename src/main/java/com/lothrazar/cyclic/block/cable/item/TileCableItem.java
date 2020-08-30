@@ -10,7 +10,7 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -30,7 +30,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
 
   public TileCableItem() {
-    super(BlockRegistry.TileRegistry.item_pipeTile);
+    super(TileRegistry.item_pipeTile);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(this::createHandler));
     }

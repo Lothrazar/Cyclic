@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.crate;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
@@ -27,6 +27,6 @@ public class BlockCrate extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.crate, ScreenCrate::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.crate, ScreenCrate::new);
   }
 }

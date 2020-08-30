@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.fishing;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -28,7 +28,7 @@ public class BlockFisher extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.fisher, RenderFisher::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.fisher, RenderFisher::new);
   }
 
   @Override

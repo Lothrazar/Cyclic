@@ -1,12 +1,14 @@
 package com.lothrazar.cyclic.block.anvilmagma;
 
+import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,8 +28,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -35,20 +39,40 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileAnvilMagma extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
-  static final int MAX = 64000;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  public FluidTankBase tank;
 
-  public TileAnvilMagma() {
-    super(BlockRegistry.TileRegistry.anvil);
+  public static enum Fields {
+    TIMER, REDSTONE;
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
+  private static final int OUT = 1;
+  private static final int IN = 0;
+
+  public TileAnvilMagma() {
+    super(TileRegistry.anvil_magma);
+    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  }
+
+  public Predicate<FluidStack> isFluidValid() {
+    return p -> p.getFluid() == FluidMagmaHolder.STILL.get();
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(2) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        if (slot == IN)
+          return stack.isRepairable() &&
+              stack.getDamage() > 0;
+        if (slot == OUT)
+          return stack.isRepairable() &&
+              stack.getDamage() == 0;
+        return true;
+      }
+    };
   }
 
   @Override
@@ -64,28 +88,27 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
-    }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventory.cast();
+    }
+    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return LazyOptional.of(() -> tank).cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    tank.readFromNBT(tag.getCompound("fluid"));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    CompoundNBT fluid = new CompoundNBT();
+    tank.writeToNBT(fluid);
+    tag.put("fluid", fluid);
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
@@ -95,29 +118,40 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
 
   @Override
   public void tick() {
-    //        .withLuck(1).with; 
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setAnimation(false);
+      return;
+    }
+    setAnimation(true);
     inventory.ifPresent(inv -> {
       ItemStack stack = inv.getStackInSlot(0);
       if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
         return;
       }
-      IEnergyStorage en = this.energy.orElse(null);
       final int repair = ConfigManager.ANVILPOWER.get();
-      if (en != null &&
-          en.getEnergyStored() >= repair &&
+      if (tank != null &&
+          tank.getFluidAmount() >= repair &&
           stack.isRepairable() &&
           stack.getDamage() > 0) {
         //we can repair so steal some power 
         //ok drain power  
         UtilItemStack.repairItem(stack);
-        en.extractEnergy(repair, false);
+        tank.drain(repair, FluidAction.EXECUTE);
+      }
+      //shift to other slot
+      if ((stack.getDamage() == 0 || !stack.isRepairable())
+          && inv.getStackInSlot(1).isEmpty()) {
+        //
+        inv.insertItem(1, stack.copy(), false);
+        inv.extractItem(0, stack.getCount(), false);
       }
     });
   }
 
   @Override
   public void setField(int field, int value) {}
+
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
+  }
 }

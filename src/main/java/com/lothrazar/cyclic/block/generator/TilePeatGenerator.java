@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.PeatItem;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -44,7 +44,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   private int fuelRate = 0;
 
   public TilePeatGenerator() {
-    super(BlockRegistry.TileRegistry.peat_generator);
+    super(TileRegistry.peat_generator);
     this.setNeedsRedstone(0);
   }
 

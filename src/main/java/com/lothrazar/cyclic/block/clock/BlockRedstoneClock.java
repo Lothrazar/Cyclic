@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.clock;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
@@ -55,7 +55,7 @@ public class BlockRedstoneClock extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     //    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.harvesterTile, RenderHarvester::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.clock, ScreenClock::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.clock, ScreenClock::new);
   }
 
   @Override

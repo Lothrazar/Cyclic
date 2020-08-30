@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cyclic:structure_writer"
+          "name": "cyclic:anvil_magma"
         }
       ],
       "conditions": [

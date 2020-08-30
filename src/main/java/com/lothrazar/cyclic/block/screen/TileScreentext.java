@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.screen;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,7 +27,7 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileScreentext() {
-    super(BlockRegistry.TileRegistry.screen);
+    super(TileRegistry.screen);
   }
 
   private IItemHandler createHandler() {

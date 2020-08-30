@@ -4,7 +4,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -44,7 +44,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   }
 
   public TileDetector() {
-    super(BlockRegistry.TileRegistry.detector_entity);
+    super(TileRegistry.detector_entity);
   }
 
   @Override

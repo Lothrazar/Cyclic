@@ -2,7 +2,8 @@ package com.lothrazar.cyclic.block.shapebuilder;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,8 +30,8 @@ public class BlockStructure extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.structure, RenderStructure::new);
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.structure, ScreenStructure::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.structure, RenderStructure::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.structure, ScreenStructure::new);
   }
 
   @Override

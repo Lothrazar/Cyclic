@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.solidifier;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.Direction;
@@ -21,7 +22,7 @@ public class ContainerSolidifier extends ContainerBase {
   TileSolidifier tile;
 
   public ContainerSolidifier(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.solidifier, windowId);
+    super(ContainerScreenRegistry.solidifier, windowId);
     tile = (TileSolidifier) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

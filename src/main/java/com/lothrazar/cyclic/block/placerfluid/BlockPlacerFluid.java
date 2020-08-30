@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.placerfluid;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
@@ -39,7 +39,7 @@ public class BlockPlacerFluid extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.placer_fluid, ScreenPlacerFluid::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.placer_fluid, ScreenPlacerFluid::new);
   }
 
   @Override

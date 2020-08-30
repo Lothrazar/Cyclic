@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -44,7 +44,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity {
   LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileFisher() {
-    super(BlockRegistry.TileRegistry.fisher);
+    super(TileRegistry.fisher);
   }
 
   private IItemHandler createHandler() {

@@ -11,7 +11,7 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -32,7 +32,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   private Map<Direction, LazyOptional<IFluidHandler>> flow = Maps.newHashMap();
 
   public TileCableFluid() {
-    super(BlockRegistry.TileRegistry.fluid_pipeTile);
+    super(TileRegistry.fluid_pipeTile);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(this::createHandler));
     }

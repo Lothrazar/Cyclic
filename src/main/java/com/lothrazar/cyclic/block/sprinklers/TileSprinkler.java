@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,7 +40,7 @@ public class TileSprinkler extends TileEntityBase implements INamedContainerProv
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileSprinkler() {
-    super(BlockRegistry.TileRegistry.anvil);
+    super(TileRegistry.anvil);
   }
 
   private IEnergyStorage createEnergy() {

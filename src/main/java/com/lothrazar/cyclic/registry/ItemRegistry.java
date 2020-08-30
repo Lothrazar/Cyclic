@@ -113,6 +113,8 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("flower_cyan"));
+    r.register(new BlockItem(BlockRegistry.anvil_magma, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("anvil_magma"));
     r.register(new BlockItem(BlockRegistry.beacon, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("beacon"));
     r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.battery_infinite, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("battery_infinite"));

@@ -2,10 +2,12 @@ package com.lothrazar.cyclic.block.anvilmagma;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
@@ -42,7 +44,7 @@ public class BlockAnvilMagma extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    //    ScreenManager.registerFactory(BlockRegistry.ContainerScreens.anvil, ScreenAnvilMagma::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.anvil_magma, ScreenAnvilMagma::new);
   }
 
   @Override

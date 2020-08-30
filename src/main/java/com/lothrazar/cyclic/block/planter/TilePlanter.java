@@ -4,12 +4,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -31,7 +32,7 @@ public class TilePlanter extends TileEntityBase implements INamedContainerProvid
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TilePlanter() {
-    super(BlockRegistry.TileRegistry.planter);
+    super(TileRegistry.planter);
   }
 
   private IEnergyStorage createEnergy() {
@@ -86,10 +87,23 @@ public class TilePlanter extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
-    //        .withLuck(1).with; 
-    //    if (this.isPowered() == false) {
-    //      return;
-    //    }
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setAnimation(false);
+      return;
+    }
+    setAnimation(true);
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    if (en == null || inv == null) {
+      return;
+    }
+    //tillSoil();
+    ItemStack dropMe = inv.getStackInSlot(0).copy();
+    //plantMySeeds();
   }
 
   @Override

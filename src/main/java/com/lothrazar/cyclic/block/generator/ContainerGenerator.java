@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generator;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -19,7 +20,7 @@ public class ContainerGenerator extends ContainerBase {
   TilePeatGenerator tile;
 
   public ContainerGenerator(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.generatorCont, windowId);
+    super(ContainerScreenRegistry.generatorCont, windowId);
     tile = (TilePeatGenerator) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

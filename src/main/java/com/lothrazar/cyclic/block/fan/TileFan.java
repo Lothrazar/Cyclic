@@ -4,8 +4,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
-import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -14,7 +14,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -33,7 +32,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   }
 
   public TileFan() {
-    super(BlockRegistry.TileRegistry.fantile);
+    super(TileRegistry.fantile);
   }
 
   @Override
@@ -55,13 +54,6 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
     }
     setAnimation(true);
     this.pushEntities();
-  }
-
-  private void setAnimation(boolean lit) {
-    BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockFan.LIT);
-    if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockFan.LIT, lit));
   }
 
   public int getRange() {
@@ -90,10 +82,6 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
 
   public List<BlockPos> getShape() {
     return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
-  }
-
-  private Direction getCurrentFacing() {
-    return this.getBlockState().get(BlockStateProperties.FACING);
   }
 
   private int pushEntities() {

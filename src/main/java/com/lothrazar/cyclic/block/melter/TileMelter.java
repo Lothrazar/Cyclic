@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -50,7 +50,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   public TileMelter() {
-    super(BlockRegistry.TileRegistry.melter);
+    super(TileRegistry.melter);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

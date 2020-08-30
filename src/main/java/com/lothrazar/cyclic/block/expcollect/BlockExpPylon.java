@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
@@ -23,7 +23,7 @@ public class BlockExpPylon extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(BlockRegistry.ContainerScreenRegistry.experience_pylon, ScreenExpPylon::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.experience_pylon, ScreenExpPylon::new);
   }
 
   @Override

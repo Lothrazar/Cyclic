@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.dropper;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -19,7 +20,7 @@ public class ContainerDropper extends ContainerBase {
   TileDropper tile;
 
   public ContainerDropper(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.dropper, windowId);
+    super(ContainerScreenRegistry.dropper, windowId);
     tile = (TileDropper) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -28,6 +29,10 @@ public class ContainerDropper extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 61, 21));
     });
     layoutPlayerInventorySlots(8, 84);
+    this.trackIntField(tile, TileDropper.Fields.REDSTONE.ordinal());
+    this.trackIntField(tile, TileDropper.Fields.DROPCOUNT.ordinal());
+    this.trackIntField(tile, TileDropper.Fields.DELAY.ordinal());
+    this.trackIntField(tile, TileDropper.Fields.OFFSET.ordinal());
     trackInt(new IntReferenceHolder() {
 
       @Override

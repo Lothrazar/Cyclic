@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.List;
+import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -75,6 +76,19 @@ public class UtilItemStack {
   public static void drop(World world, BlockPos center, List<ItemStack> lootDrops) {
     for (ItemStack dropMe : lootDrops) {
       UtilItemStack.drop(world, center, dropMe);
+    }
+  }
+
+  public static void dropItemStackMotionless(World world, BlockPos pos, @Nonnull ItemStack stack) {
+    if (stack.isEmpty()) {
+      return;
+    }
+    ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+    if (world.isRemote == false) {
+      // do not spawn a second 'ghost' one onclient side
+      world.addEntity(entityItem);
+      entityItem.setMotion(0, 0, 0);
+      //      entityItem.motionX = entityItem.motionY = entityItem.motionZ = 0;
     }
   }
 }

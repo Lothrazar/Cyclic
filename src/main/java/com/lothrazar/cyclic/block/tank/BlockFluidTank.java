@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -132,7 +132,7 @@ public class BlockFluidTank extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    ClientRegistry.bindTileEntityRenderer(BlockRegistry.TileRegistry.tank, RenderTank::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.tank, RenderTank::new);
   }
 
   @Override

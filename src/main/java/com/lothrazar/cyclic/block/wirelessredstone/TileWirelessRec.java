@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.wirelessredstone;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -9,7 +9,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 public class TileWirelessRec extends TileEntityBase implements ITickableTileEntity {
 
   public TileWirelessRec() {
-    super(BlockRegistry.TileRegistry.wireless_receiver);
+    super(TileRegistry.wireless_receiver);
   }
 
   @Override

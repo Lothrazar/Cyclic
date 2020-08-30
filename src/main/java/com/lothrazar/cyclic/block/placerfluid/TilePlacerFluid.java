@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -36,7 +36,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   }
 
   public TilePlacerFluid() {
-    super(BlockRegistry.TileRegistry.placer_fluid);
+    super(TileRegistry.placer_fluid);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
   }

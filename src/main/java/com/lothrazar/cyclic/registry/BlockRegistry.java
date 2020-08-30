@@ -15,6 +15,9 @@ import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
+import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
+import com.lothrazar.cyclic.block.anvilmagma.ContainerAnvilMagma;
+import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -151,6 +154,8 @@ public class BlockRegistry {
   public static Block structure;
   @ObjectHolder(ModCyclic.MODID + ":anvil")
   public static Block anvil;
+  @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
+  public static Block anvil_magma;
   @ObjectHolder(ModCyclic.MODID + ":tank")
   public static BlockFluidTank tank;
   @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
@@ -253,160 +258,11 @@ public class BlockRegistry {
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static Block uncrafter;
 
-  public static class TileRegistry {
-
-    @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
-    public static TileEntityType<TileWirelessRec> wireless_receiver;
-    @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
-    public static TileEntityType<TileWirelessTransmit> wireless_transmitter;
-    @ObjectHolder(ModCyclic.MODID + ":detector_item")
-    public static TileEntityType<TileDetectorItem> detector_item;
-    @ObjectHolder(ModCyclic.MODID + ":detector_entity")
-    public static TileEntityType<TileDetector> detector_entity;
-    @ObjectHolder(ModCyclic.MODID + ":solidifier")
-    public static TileEntityType<TileSolidifier> solidifier;
-    @ObjectHolder(ModCyclic.MODID + ":melter")
-    public static TileEntityType<TileMelter> melter;
-    @ObjectHolder(ModCyclic.MODID + ":structure")
-    public static TileEntityType<TileStructure> structure;
-    @ObjectHolder(ModCyclic.MODID + ":anvil")
-    public static TileEntityType<TileAnvilAuto> anvil;
-    @ObjectHolder(ModCyclic.MODID + ":tank")
-    public static TileEntityType<TileTank> tank;
-    @ObjectHolder(ModCyclic.MODID + ":battery")
-    public static TileEntityType<TileBattery> batterytile;
-    @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
-    public static TileEntityType<TileCableEnergy> energy_pipeTile;
-    @ObjectHolder(ModCyclic.MODID + ":item_pipe")
-    public static TileEntityType<TileCableItem> item_pipeTile;
-    @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
-    public static TileEntityType<TileCableFluid> fluid_pipeTile;
-    @ObjectHolder(ModCyclic.MODID + ":collector")
-    public static TileEntityType<TileCollector> collectortile;
-    @ObjectHolder(ModCyclic.MODID + ":trash")
-    public static TileEntityType<TileTrash> trashtile;
-    @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-    public static TileEntityType<TilePeatGenerator> peat_generator;
-    @ObjectHolder(ModCyclic.MODID + ":harvester")
-    public static TileEntityType<TileHarvester> harvesterTile;
-    @ObjectHolder(ModCyclic.MODID + ":breaker")
-    public static TileEntityType<TileBreaker> breakerTile;
-    @ObjectHolder(ModCyclic.MODID + ":fan")
-    public static TileEntityType<TileFan> fantile;
-    @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
-    public static TileEntityType<TileExpPylon> experience_pylontile;
-    @ObjectHolder(ModCyclic.MODID + ":placer")
-    public static TileEntityType<TilePlacer> placer;
-    @ObjectHolder(ModCyclic.MODID + ":fisher")
-    public static TileEntityType<TileFisher> fisher;
-    @ObjectHolder(ModCyclic.MODID + ":user")
-    public static TileEntityType<TileUser> user;
-    @ObjectHolder(ModCyclic.MODID + ":disenchanter")
-    public static TileEntityType<TileDisenchant> disenchanter;
-    @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
-    public static TileEntityType<TileFluidCollect> collector_fluid;
-    @ObjectHolder(ModCyclic.MODID + ":clock")
-    public static TileEntityType<TileRedstoneClock> clock;
-    @ObjectHolder(ModCyclic.MODID + ":crate")
-    public static TileEntityType<TileCrate> crate;
-    @ObjectHolder(ModCyclic.MODID + ":cask")
-    public static TileEntityType<TileCrate> cask;
-    @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
-    public static TileEntityType<TilePlacerFluid> placer_fluid;
-    //
-    @ObjectHolder(ModCyclic.MODID + ":beacon")
-    public static TileEntityType<TilePotion> beacon;
-    @ObjectHolder(ModCyclic.MODID + ":crafter")
-    public static TileEntityType<TileCrafter> crafter;
-    @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
-    public static TileEntityType<TileBatteryInfinite> battery_infinite;
-    @ObjectHolder(ModCyclic.MODID + ":item_infinite")
-    public static TileEntityType<TileItemInfinite> item_infinite;
-    @ObjectHolder(ModCyclic.MODID + ":dice")
-    public static TileEntityType<TileDice> dice;
-    @ObjectHolder(ModCyclic.MODID + ":dropper")
-    public static TileEntityType<TileDropper> dropper;
-    @ObjectHolder(ModCyclic.MODID + ":planter")
-    public static TileEntityType<TilePlanter> planter;
-    @ObjectHolder(ModCyclic.MODID + ":forester")
-    public static TileEntityType<TileForester> forester;
-    @ObjectHolder(ModCyclic.MODID + ":magnet")
-    public static TileEntityType<TileMagnet> magnet;
-    @ObjectHolder(ModCyclic.MODID + ":miner")
-    public static TileEntityType<TileMiner> miner;
-    @ObjectHolder(ModCyclic.MODID + ":screen")
-    public static TileEntityType<TileScreentext> screen;
-    @ObjectHolder(ModCyclic.MODID + ":uncrafter")
-    public static TileEntityType<TileUncraft> uncrafter;
-  }
-
-  public static class ContainerScreenRegistry {
-
-    @ObjectHolder(ModCyclic.MODID + ":breaker")
-    public static ContainerType<ContainerBreaker> breaker;
-    @ObjectHolder(ModCyclic.MODID + ":solidifier")
-    public static ContainerType<ContainerSolidifier> solidifier;
-    @ObjectHolder(ModCyclic.MODID + ":melter")
-    public static ContainerType<ContainerMelter> melter;
-    @ObjectHolder(ModCyclic.MODID + ":structure")
-    public static ContainerType<ContainerStructure> structure;
-    @ObjectHolder(ModCyclic.MODID + ":placer")
-    public static ContainerType<ContainerPlacer> placer;
-    @ObjectHolder(ModCyclic.MODID + ":anvil")
-    public static ContainerType<ContainerAnvil> anvil;
-    @ObjectHolder(ModCyclic.MODID + ":battery")
-    public static ContainerType<ContainerBattery> batteryCont;
-    @ObjectHolder(ModCyclic.MODID + ":collector")
-    public static ContainerType<ContainerCollector> collectortileContainer;
-    @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-    public static ContainerType<ContainerGenerator> generatorCont;
-    @ObjectHolder(ModCyclic.MODID + ":harvester")
-    public static ContainerType<ContainerHarvester> harvester;
-    @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
-    public static ContainerType<ContainerExpPylon> experience_pylon;
-    @ObjectHolder(ModCyclic.MODID + ":user")
-    public static ContainerType<ContainerUser> user;
-    @ObjectHolder(ModCyclic.MODID + ":detector_entity")
-    public static ContainerType<ContainerDetector> detector_entity;
-    @ObjectHolder(ModCyclic.MODID + ":detector_item")
-    public static ContainerType<ContainerDetectorItem> detector_item;
-    @ObjectHolder(ModCyclic.MODID + ":disenchanter")
-    public static ContainerType<ContainerDisenchant> disenchanter;
-    @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
-    public static ContainerType<ContainerTransmit> wireless_transmitter;
-    @ObjectHolder(ModCyclic.MODID + ":clock")
-    public static ContainerType<ContainerClock> clock;
-    @ObjectHolder(ModCyclic.MODID + ":crate")
-    public static ContainerType<ContainerCrate> crate;
-    @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
-    public static ContainerType<ContainerPlacerFluid> placer_fluid;
-    @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
-    public static ContainerType<ContainerFluidCollect> collector_fluid;
-    @ObjectHolder(ModCyclic.MODID + ":fan")
-    public static ContainerType<ContainerFan> fan;
-    //
-    @ObjectHolder(ModCyclic.MODID + ":beacon")
-    public static ContainerType<ContainerPotion> beacon;
-    @ObjectHolder(ModCyclic.MODID + ":crafter")
-    public static ContainerType<ContainerCrafter> crafter;
-    @ObjectHolder(ModCyclic.MODID + ":dropper")
-    public static ContainerType<ContainerDropper> dropper;
-    @ObjectHolder(ModCyclic.MODID + ":planter")
-    public static ContainerType<ContainerPlanter> planter;
-    @ObjectHolder(ModCyclic.MODID + ":forester")
-    public static ContainerType<ContainerForester> forester;
-    @ObjectHolder(ModCyclic.MODID + ":magnet")
-    public static ContainerType<ContainerMagnet> magnet;
-    @ObjectHolder(ModCyclic.MODID + ":miner")
-    public static ContainerType<ContainerMiner> miner;
-    @ObjectHolder(ModCyclic.MODID + ":screen")
-    public static ContainerType<ContainerScreentext> screen;
-  }
-
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
     //
+    r.register(new BlockAnvilMagma(Block.Properties.create(Material.IRON)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
     r.register(new BlockCrafter(Block.Properties.create(Material.IRON)).setRegistryName("crafter"));
     r.register(new BlockBatteryInfinite(Block.Properties.create(Material.IRON)).setRegistryName("battery_infinite"));
@@ -419,7 +275,6 @@ public class BlockRegistry {
     r.register(new BlockMiner(Block.Properties.create(Material.IRON)).setRegistryName("miner"));
     r.register(new BlockScreentext(Block.Properties.create(Material.IRON)).setRegistryName("screen"));
     r.register(new BlockUncraft(Block.Properties.create(Material.IRON)).setRegistryName("uncrafter"));
-    //
     //
     r.register(new BlockPlacerFluid(Block.Properties.create(Material.IRON)).setRegistryName("placer_fluid"));
     r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));
@@ -469,6 +324,7 @@ public class BlockRegistry {
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
     //
+    r.register(TileEntityType.Builder.create(TileAnvilMagma::new, BlockRegistry.anvil_magma).build(null).setRegistryName("anvil_magma"));
     r.register(TileEntityType.Builder.create(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileBatteryInfinite::new, BlockRegistry.battery_infinite).build(null).setRegistryName("battery_infinite"));
@@ -605,6 +461,9 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerScreentext(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("screen"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerAnvilMagma(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("anvil_magma"));
     //    r.register(IForgeContainerType.create((windowId, inv, data) -> {
     //      return new ContainerUncraft(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     //    }).setRegistryName("uncrafter"));

@@ -2,15 +2,13 @@ package com.lothrazar.cyclic.block.breaker;
 
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -22,18 +20,7 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   }
 
   public TileBreaker() {
-    super(BlockRegistry.TileRegistry.breakerTile);
-  }
-
-  private void setAnimation(boolean lit) {
-    BlockState st = this.world.getBlockState(pos);
-    boolean previous = st.get(BlockBreaker.LIT);
-    if (previous != lit)
-      this.world.setBlockState(pos, st.with(BlockBreaker.LIT, lit));
-  }
-
-  private Direction getCurrentFacing() {
-    return this.getBlockState().get(BlockStateProperties.FACING);
+    super(TileRegistry.breakerTile);
   }
 
   @Override

@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.LocationGpsItem;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,7 +31,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileWirelessTransmit() {
-    super(BlockRegistry.TileRegistry.wireless_transmitter);
+    super(TileRegistry.wireless_transmitter);
   }
 
   private IItemHandler createHandler() {

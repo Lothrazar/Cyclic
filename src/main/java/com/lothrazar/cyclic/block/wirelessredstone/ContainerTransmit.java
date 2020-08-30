@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.wirelessredstone;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -16,7 +17,7 @@ public class ContainerTransmit extends ContainerBase {
   protected TileWirelessTransmit tile;
 
   public ContainerTransmit(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.wireless_transmitter, windowId);
+    super(ContainerScreenRegistry.wireless_transmitter, windowId);
     tile = (TileWirelessTransmit) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);

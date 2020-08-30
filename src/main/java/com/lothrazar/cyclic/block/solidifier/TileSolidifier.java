@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerSided;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -55,7 +55,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   public TileSolidifier() {
-    super(BlockRegistry.TileRegistry.solidifier);
+    super(TileRegistry.solidifier);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     inputSlots = new ItemStackHandlerSided(3);
     outputSlot = new ItemStackHandlerSided(1);

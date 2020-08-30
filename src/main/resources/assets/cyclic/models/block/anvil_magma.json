@@ -1,0 +1,9 @@
+{
+   "parent": "cyclic:parent/anvil",
+   "textures": {
+        "particle": "minecraft:block/obsidian",
+        "body": "minecraft:block/magma",
+        "base": "minecraft:block/obsidian",
+        "pillar": "minecraft:block/obsidian"
+    }
+}

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.placer;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
@@ -16,7 +17,7 @@ public class ContainerPlacer extends ContainerBase {
   protected TilePlacer tile;
 
   public ContainerPlacer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(BlockRegistry.ContainerScreenRegistry.placer, windowId);
+    super(ContainerScreenRegistry.placer, windowId);
     tile = (TilePlacer) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
