@@ -37,10 +37,10 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
-      setAnimation(false);
+      setLitProperty(false);
       return;
     }
-    setAnimation(true);
+    setLitProperty(true);
     if (world.rand.nextDouble() < 0.3) {
       BlockPos target = pos.offset(this.getCurrentFacing());
       BlockState state = world.getBlockState(target);

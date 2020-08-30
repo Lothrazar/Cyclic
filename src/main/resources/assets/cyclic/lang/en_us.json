@@ -555,6 +555,8 @@
     "block.cyclic.disenchanter.tooltip": "Transfer enchantments onto books",
     "block.cyclic.anvil": "Powered Diamond Anvil",
     "block.cyclic.anvil.tooltip": "Repair using Energy",
+    "block.cyclic.anvil_magma": "Magma Anvil",
+    "block.cyclic.anvil_magma.tooltip": "Repair using Magma",
     "block.cyclic.enchanter": "Powered Enchanter",
     "block.cyclic.enchanter.tooltip": "Add enchantments using experience fluid and energy",
     "block.cyclic.enchanter.guide": "Feed in experience as a fluid, and then add any enchantable item. Can be automated with pipes & hoppers.",
@@ -682,7 +684,8 @@
     "block.cyclic.magnet_anti_block.tooltip": "Repels mobs every $t$ ticks with range $r$",
 	
     "block.cyclic.magnet": "Item Magnet",
-    "block.cyclic.magnet.tooltip": "Pulls items and exp every $t$ ticks.  On by default; can be turned off by giving it redstone power.",
+    "block.cyclic.magnet.tooltip": "Pulls items",
+    
     "block.cyclic.milk": "Milk",
  
     "block.cyclic.password_block.activetype.pulse": "Pulse",
@@ -982,14 +985,14 @@
     "block.cyclic.miner.tooltip": "miner",
 
 
-    "block.cyclic.forester": "forester",
-    "block.cyclic.forester.tooltip": "forester tooltip",
-    "block.cyclic.planter": "planter",
-    "block.cyclic.planter.tooltip": "planter tooltip",
+    "block.cyclic.forester": "Forester",
+    "block.cyclic.forester.tooltip": "Farming saplings to wood",
+    "block.cyclic.planter": "Planter",
+    "block.cyclic.planter.tooltip": "Tilling and planting fields",
 
 
     "block.cyclic.dropper": "Precise Dropper",
-    "block.cyclic.dropper.tooltip": "Drop with no randomness and more control",
+    "block.cyclic.dropper.tooltip": "Drop without randomness",
    
     "cyclic.dropper.delay": "Delay",
     "cyclic.dropper.offset": "Offset",
@@ -1003,9 +1006,9 @@
  
     "block.cyclic.battery_infinite": "Infinite Battery",
     "block.cyclic.battery_infinite.tooltip": "Creative energy source",
-    "block.cyclic.battery_infinite.guide": "Creative mode infinite energy source (for cheating and testing)",
 
-
+    "block.cyclic.item_infinite": "Infinite Item-ator",
+    "block.cyclic.item_infinite.tooltip": "Duplicate items for pack testing",
 
 
     "block.fire_dark.guide": "Does not destroy blocks or harm players.  Spawned by Duskflame Hex",

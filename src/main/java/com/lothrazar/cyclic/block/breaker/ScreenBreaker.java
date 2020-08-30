@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.breaker;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
@@ -28,7 +27,7 @@ public class ScreenBreaker extends ScreenBase<ContainerBreaker> {
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
       container.tile.setNeedsRedstone((container.tile.getNeedsRedstone() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TilePlacer.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileBreaker.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
   }
 

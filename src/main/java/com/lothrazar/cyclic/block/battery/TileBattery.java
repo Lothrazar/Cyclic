@@ -108,7 +108,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   @Override
   public void tick() {
     boolean isFlowing = this.getFlowing() == 1;
-    setAnimation(isFlowing);
+    setLitProperty(isFlowing);
     if (isFlowing) {
       this.tickCableFlow();
     }

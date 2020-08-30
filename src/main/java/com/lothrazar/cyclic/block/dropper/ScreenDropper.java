@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.dropper;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextboxInteger;
@@ -37,7 +36,7 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
       container.tile.setNeedsRedstone((container.tile.getNeedsRedstone() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileFan.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileDropper.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
     x = guiLeft + 46;
     y = guiTop + 22;
@@ -79,7 +78,7 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 60, 20);
+    this.drawSlot(ms, 54, 34);
     energy.draw(ms, container.getEnergy());
     txtCount.render(ms, mouseX, mouseY, partialTicks);
     txtDelay.render(ms, mouseX, mouseY, partialTicks);

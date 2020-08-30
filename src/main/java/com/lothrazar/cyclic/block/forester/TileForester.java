@@ -36,6 +36,10 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public enum Fields {
+    REDSTONE;
+  }
+
   public TileForester() {
     super(TileRegistry.forester);
   }
@@ -93,10 +97,10 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
-      setAnimation(false);
+      setLitProperty(false);
       return;
     }
-    setAnimation(true);
+    setLitProperty(true);
     timer--;
     if (timer > 0) {
       return;

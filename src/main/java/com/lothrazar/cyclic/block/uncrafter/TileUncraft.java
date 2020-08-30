@@ -1,14 +1,20 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
+import java.util.Collection;
+import java.util.List;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -70,10 +76,10 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
-      setAnimation(false);
+      setLitProperty(false);
       return;
     }
-    setAnimation(true);
+    setLitProperty(true);
     timer--;
     if (timer > 0) {
       return;
@@ -83,7 +89,36 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity {
     if (en == null || inv == null) {
       return;
     }
+    int RADIUS = 2;
+    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(
+        pos.getX() - RADIUS, pos.getY() - 1, pos.getZ() - RADIUS,
+        pos.getX() + RADIUS, pos.getY() + 2, pos.getZ() + RADIUS), (entity) -> {
+          return entity.isAlive() && !entity.getItem().isEmpty();
+        });
     ItemStack dropMe = inv.getStackInSlot(0).copy();
+    if (!dropMe.isEmpty()) {
+      this.uncraft(dropMe);
+    }
+  }
+
+  private IRecipe<?> uncraft(ItemStack dropMe) {
+    // TODO Auto-generated method stub
+    //    CraftingManager.INSTNACE 
+    Collection<IRecipe<?>> list = world.getServer().getRecipeManager().getRecipes();
+    for (IRecipe<?> recipe : list) {
+      if (recipe.getType() == IRecipeType.CRAFTING) {
+        //actual uncraft, ie not furnace recipe or anything
+        if (recipeMatches(dropMe, recipe)) {
+          return recipe;
+        }
+      }
+    }
+    return null;
+  }
+
+  private boolean recipeMatches(ItemStack dropMe, IRecipe<?> recipe) {
+    return recipe.getRecipeOutput().equals(dropMe, false);
+    //    return false;
   }
 
   @Override

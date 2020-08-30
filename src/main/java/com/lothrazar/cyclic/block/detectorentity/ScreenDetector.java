@@ -74,14 +74,6 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     txtLimit.setTooltip(UtilChat.lang("cyclic.detector.limit"));
     this.children.add(txtLimit);
   }
-  //
-  //  @Override
-  //  public void removed() {
-  //    this.txtX = null;
-  //    this.txtY = null;
-  //    this.txtZ = null;
-  //    this.txtLimit = null;
-  //  }
 
   @Override
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {

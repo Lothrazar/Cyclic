@@ -30,6 +30,10 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public enum Fields {
+    REDSTONE;
+  }
+
   public TileMiner() {
     super(TileRegistry.miner);
   }

@@ -1,5 +1,6 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/beacon" }
+        "lit=false": { "model": "cyclic:block/beacon" },
+        "lit=true": { "model": "cyclic:block/beacon_on" }
     }
 }

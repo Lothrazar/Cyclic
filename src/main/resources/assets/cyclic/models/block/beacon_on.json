@@ -1,0 +1,8 @@
+{
+    "parent": "cyclic:parent/beacon",
+    "textures": {
+        "particle": "minecraft:block/glass",
+        "side": "minecraft:block/glass",
+        "base": "minecraft:block/diamond_block"
+    }
+}

@@ -49,10 +49,10 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
-      setAnimation(false);
+      setLitProperty(false);
       return;
     }
-    setAnimation(true);
+    setLitProperty(true);
     this.pushEntities();
   }
 

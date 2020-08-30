@@ -31,6 +31,10 @@ public class TilePlanter extends TileEntityBase implements INamedContainerProvid
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public enum Fields {
+    REDSTONE;
+  }
+
   public TilePlanter() {
     super(TileRegistry.planter);
   }
@@ -88,10 +92,10 @@ public class TilePlanter extends TileEntityBase implements INamedContainerProvid
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
-      setAnimation(false);
+      setLitProperty(false);
       return;
     }
-    setAnimation(true);
+    setLitProperty(true);
     timer--;
     if (timer > 0) {
       return;

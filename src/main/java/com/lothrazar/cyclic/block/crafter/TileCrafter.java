@@ -8,8 +8,14 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.ICraftingRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -30,6 +36,10 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public enum Fields {
+    REDSTONE;
+  }
+
   public TileCrafter() {
     super(TileRegistry.crafter);
   }
@@ -38,8 +48,9 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     return new CustomEnergyStorage(MAX, MAX);
   }
 
+  //a 3x3, one output, and then what
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(10);
   }
 
   @Override
@@ -71,6 +82,21 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     super.read(bs, tag);
   }
 
+  private static CraftingInventory createCraftingInventory() {
+    CraftingInventory craftinginventory = new CraftingInventory(new Container((ContainerType) null, -1) {
+
+      /**
+       * Determines whether supplied player can use this container
+       */
+      @Override
+      public boolean canInteractWith(PlayerEntity playerIn) {
+        return false;
+      }
+    }, 3, 3);
+    craftinginventory.setInventorySlotContents(1, new ItemStack(Items.ACACIA_LOG));
+    return craftinginventory;
+  }
+
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     energy.ifPresent(h -> {
@@ -86,9 +112,17 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
-    //        .withLuck(1).with; 
-    //    if (this.isPowered() == false) {
-    //      return;
+    ICraftingRecipe matching = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, createCraftingInventory(), world).orElse(null);
+    if (matching != null) {
+      //
+      ItemStack winner = matching.getRecipeOutput();
+    }
+    //coould loop
+    //    Collection<IRecipe<?>> list = world.getServer().getRecipeManager().getRecipes();
+    //    for (IRecipe<?> recipe : list) {
+    //      if (recipe.getType() == IRecipeType.CRAFTING) {
+    //        //ok 
+    //      }
     //    }
   }
 

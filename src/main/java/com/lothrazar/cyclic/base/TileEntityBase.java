@@ -32,7 +32,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     super(tileEntityTypeIn);
   }
 
-  public void setAnimation(boolean lit) {
+  public void setLitProperty(boolean lit) {
     BlockState st = this.getBlockState();
     if (!st.hasProperty(BlockBase.LIT)) {
       return;

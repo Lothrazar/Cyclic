@@ -119,10 +119,10 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
-      setAnimation(false);
+      setLitProperty(false);
       return;
     }
-    setAnimation(true);
+    setLitProperty(true);
     inventory.ifPresent(inv -> {
       ItemStack stack = inv.getStackInSlot(0);
       if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {

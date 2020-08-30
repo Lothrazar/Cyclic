@@ -1,15 +1,19 @@
 package com.lothrazar.cyclic.block.creativeitem;
 
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -43,6 +47,14 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
+  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return inventory.cast();
+    }
+    return super.getCapability(cap, side);
+  }
+
+  @Override
   public CompoundNBT write(CompoundNBT tag) {
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
@@ -60,18 +72,18 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
   public void tick() {
     inventory.ifPresent(h -> {
       ItemStack stackHere = h.getStackInSlot(here);
-      //      ItemStack stackBackup = h.getStackInSlot(backup);
-      //      if (stackBackup.isEmpty()) {
-      //        //copy here to backup. backup never gets drained its always a fresh copy
-      //        h.insertItem(backup, stackHere, false);
-      //        return;
-      //      }
-      //      //take the backup, and overwrite whats here. if here is empty
-      //      if (stackHere.isEmpty()) {
-      //        stackBackup.setCount(64);
-      //        h.extractItem(here, 64, false);
-      //        h.insertItem(here, stackBackup.copy(), false);
-      //      }
+      ItemStack stackBackup = h.getStackInSlot(backup);
+      if (!stackHere.isEmpty() && stackBackup.isEmpty()) {
+        //copy here to backup. backup never gets drained its always a fresh copy
+        h.insertItem(backup, stackHere.copy(), false);
+        return;
+      }
+      //take the backup, and overwrite whats here. if here is empty
+      if (stackHere.isEmpty()) {
+        stackBackup.setCount(64);
+        h.extractItem(here, 64, false);
+        h.insertItem(here, stackBackup.copy(), false);
+      }
     });
   }
 
