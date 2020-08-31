@@ -46,7 +46,7 @@ public class SleepingMatItem extends ItemBase {
       if (player.isSleeping() || !player.isAlive()) {
         return Either.left(PlayerEntity.SleepResult.OTHER_PROBLEM);
       }
-      boolean isoverworld = world.func_234923_W_() == World.field_234918_g_;
+      boolean isoverworld = world.getDimensionKey() == World.OVERWORLD;
       if (!isoverworld) {
         return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_HERE);
       }

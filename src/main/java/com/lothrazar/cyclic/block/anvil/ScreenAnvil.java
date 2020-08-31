@@ -40,7 +40,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.func_230459_a_(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
     btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.tile.getNeedsRedstone()));
     btnRedstone.setTextureId(container.tile.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);

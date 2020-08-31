@@ -26,7 +26,7 @@ public class CommandNetherping implements ICyclicCommand {
   @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
     double factor = 1 / netherRatio;//overworld: use 1/8th
-    boolean isnether = player.world.func_234923_W_() == World.field_234919_h_;
+    boolean isnether = player.world.getDimensionKey() == World.THE_NETHER;
     if (isnether) {
       //you are nether, multiply by it
       factor = netherRatio;

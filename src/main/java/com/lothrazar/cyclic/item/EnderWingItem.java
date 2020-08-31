@@ -50,7 +50,7 @@ public class EnderWingItem extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemUse(context);
     }
-    boolean isOverworld = world.func_234923_W_() == World.field_234918_g_;
+    boolean isOverworld = world.getDimensionKey() == World.OVERWORLD;
     if (!isOverworld) {
       UtilChat.sendStatusMessage(player, "command.home.overworld");
     }

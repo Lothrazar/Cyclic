@@ -40,7 +40,7 @@ public class ScreenPlacerFluid extends ScreenBase<ContainerPlacerFluid> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.func_230459_a_(ms, mouseX, mouseY);
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
   }
 

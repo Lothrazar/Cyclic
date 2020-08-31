@@ -133,6 +133,10 @@ dependencies {
 }
 
 repositories {
+  maven {
+    name = "mappings"
+    url 'https://dogforce-games.com/maven'
+  }
   maven { url = "https://dvs1.progwml6.com/files/maven/"  }
   maven { url = "https://modmaven.k-4u.nl"  }    
   maven { url = "https://maven.theillusivec4.top/"    }

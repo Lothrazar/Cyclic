@@ -93,7 +93,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.func_230459_a_(ms, mouseX, mouseY);
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
   }
 
