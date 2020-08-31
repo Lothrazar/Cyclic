@@ -48,6 +48,7 @@ public class ConfigManager {
   public static BooleanValue COMMANDWORLDSPAWN;
   public static BooleanValue COMMANDGETHELP;
   private static ConfigValue<List<String>> BEHEADING_SKINS;
+  public static IntValue DROPPERPOWER;
 
   private static void buildDefaultHeadList() {
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
@@ -113,6 +114,7 @@ public class ConfigManager {
     ANVILPOWER = CFG.comment("Power gained burning one of this").defineInRange(category + "anvil", 250, 1, 64000);
     MELTERPOWER = CFG.comment("Power per recipe").defineInRange(category + "melter", 5000, 1, 64000);
     SOLIDIFIERPOWER = CFG.comment("Power per recipe").defineInRange(category + "solidifier", 5000, 1, 64000);
+    DROPPERPOWER = CFG.comment("Power per use").defineInRange(category + "dropper", 50, 1, 64000);
     HARVESTERPOWER = CFG.comment("Power per use").defineInRange(category + "harvester", 250, 1, 64000);
     category = "peat.";
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")

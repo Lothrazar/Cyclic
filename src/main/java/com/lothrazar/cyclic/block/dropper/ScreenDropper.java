@@ -38,25 +38,26 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
       container.tile.setNeedsRedstone((container.tile.getNeedsRedstone() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileDropper.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
     }));
-    x = guiLeft + 46;
-    y = guiTop + 22;
+    x = guiLeft + 86;
+    y = guiTop + 18;
     txtCount = new TextboxInteger(this.font, x, y, 20,
         container.tile.getPos(), TileDropper.Fields.DROPCOUNT.ordinal());
     txtCount.setText("" + container.tile.getField(TileDropper.Fields.DROPCOUNT.ordinal()));
     txtCount.setTooltip(UtilChat.lang("cyclic.dropper.count"));
     this.children.add(txtCount);
-    y += 30;
-    txtDelay = new TextboxInteger(this.font, x, y, 20,
-        container.tile.getPos(), TileDropper.Fields.DELAY.ordinal());
-    txtDelay.setText("" + container.tile.getField(TileDropper.Fields.DELAY.ordinal()));
-    txtDelay.setTooltip(UtilChat.lang("cyclic.dropper.delay"));
-    this.children.add(txtDelay);
-    y += 30;
+    y += 22;
     txtOffset = new TextboxInteger(this.font, x, y, 20,
         container.tile.getPos(), TileDropper.Fields.OFFSET.ordinal());
     txtOffset.setText("" + container.tile.getField(TileDropper.Fields.OFFSET.ordinal()));
     txtOffset.setTooltip(UtilChat.lang("cyclic.dropper.offset"));
     this.children.add(txtOffset);
+    y += 22;
+    txtDelay = new TextboxInteger(this.font, x, y, 30,
+        container.tile.getPos(), TileDropper.Fields.DELAY.ordinal());
+    txtDelay.setMaxStringLength(3);
+    txtDelay.setText("" + container.tile.getField(TileDropper.Fields.DELAY.ordinal()));
+    txtDelay.setTooltip(UtilChat.lang("cyclic.dropper.delay"));
+    this.children.add(txtDelay);
   }
 
   @Override
@@ -82,5 +83,6 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     energy.draw(ms, container.getEnergy());
     txtCount.render(ms, mouseX, mouseY, partialTicks);
     txtDelay.render(ms, mouseX, mouseY, partialTicks);
+    txtOffset.render(ms, mouseX, mouseY, partialTicks);
   }
 }

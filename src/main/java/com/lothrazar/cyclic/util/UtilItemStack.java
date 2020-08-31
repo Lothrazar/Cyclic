@@ -83,8 +83,8 @@ public class UtilItemStack {
     if (stack.isEmpty()) {
       return;
     }
-    ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
     if (world.isRemote == false) {
+      ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
       // do not spawn a second 'ghost' one onclient side
       world.addEntity(entityItem);
       entityItem.setMotion(0, 0, 0);

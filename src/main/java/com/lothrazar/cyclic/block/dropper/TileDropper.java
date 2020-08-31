@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.dropper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -121,10 +122,12 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
     ItemStack dropMe = inv.getStackInSlot(0).copy();
     BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
     int amtDrop = Math.min(this.dropCount, dropMe.getCount());
-    dropMe.setCount(amtDrop);
-    UtilItemStack.dropItemStackMotionless(world, target, dropMe);
-    dropMe.shrink(1);
-    //      this.decrStackSize(slotCurrent, amtDrop);
+    if (amtDrop > 0) {
+      en.extractEnergy(ConfigManager.DROPPERPOWER.get(), false);
+      dropMe.setCount(amtDrop);
+      UtilItemStack.dropItemStackMotionless(world, target, dropMe);
+      inv.getStackInSlot(0).shrink(amtDrop);
+    } //      this.decrStackSize(slotCurrent, amtDrop);
   }
 
   @Override

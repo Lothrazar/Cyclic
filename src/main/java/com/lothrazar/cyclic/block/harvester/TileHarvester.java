@@ -80,7 +80,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         break;//too broke
       }
       if (this.tryHarvestSingle(target)) {
-        cap.extractEnergy(ConfigManager.HARVESTERPOWER.get(), true);
+        cap.extractEnergy(ConfigManager.HARVESTERPOWER.get(), false);
         break;
       }
     }
