@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
+import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
@@ -15,7 +16,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
   private FluidBar fluid;
-  private ButtonMachine btnRedstone;
+  private ButtonMachineRedstone btnRedstone;
   private ButtonMachine btnRender;
 
   public ScreenFluidCollect(ContainerFluidCollect screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -31,10 +32,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
-      container.tile.setNeedsRedstone((container.tile.getNeedsRedstone() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileFluidCollect.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
-    }));
+    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     btnRender = addButton(new ButtonMachine(x + 20, y, 20, 20, "", (p) -> {
       int f = TileFluidCollect.Fields.RENDER.ordinal();
       container.tile.setField(f, (container.tile.getField(f) + 1) % 2);
@@ -54,8 +52,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.tile.getNeedsRedstone()));
-    btnRedstone.setTextureId(container.tile.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
+    btnRedstone.onValueUpdate(container.tile);
     int on = container.tile.getField(TileFluidCollect.Fields.RENDER.ordinal());
     btnRender.setTooltip(UtilChat.lang("gui.cyclic.render" + on));
     btnRender.setTextureId(on == 1 ? TextureEnum.RENDER_SHOW : TextureEnum.RENDER_HIDE);

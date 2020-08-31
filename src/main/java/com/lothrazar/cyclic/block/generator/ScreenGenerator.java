@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generator;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
+import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
@@ -15,7 +16,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
 
   private ButtonMachine btnToggle;
-  private ButtonMachine btnRedstone;
+  private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
 
   public ScreenGenerator(ContainerGenerator screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -35,10 +36,7 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
     }));
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
-      container.tile.setNeedsRedstone((container.getNeedsRedstone() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TilePeatGenerator.Fields.REDSTONE.ordinal(), container.tile.getNeedsRedstone(), container.tile.getPos()));
-    }));
+    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePeatGenerator.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override
@@ -53,8 +51,7 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
     btnToggle.setTextureId(container.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
-    btnRedstone.setTooltip(UtilChat.lang("gui.cyclic.redstone" + container.getNeedsRedstone()));
-    btnRedstone.setTextureId(container.getNeedsRedstone() == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
+    btnRedstone.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }

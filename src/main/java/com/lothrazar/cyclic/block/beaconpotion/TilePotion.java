@@ -212,7 +212,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        this.needsRedstone = value;
+        this.needsRedstone = value % 2;
       break;
       case TIMER:
         this.timer = value;

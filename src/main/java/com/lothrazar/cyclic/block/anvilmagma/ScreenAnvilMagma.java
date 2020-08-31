@@ -3,8 +3,6 @@ package com.lothrazar.cyclic.block.anvilmagma;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.FluidBar;
-import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,8 +26,7 @@ public class ScreenAnvilMagma extends ScreenBase<ContainerAnvilMagma> {
     fluid.guiTop = guiTop;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileAnvilMagma.Fields.REDSTONE.ordinal(),
-        container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileAnvilMagma.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

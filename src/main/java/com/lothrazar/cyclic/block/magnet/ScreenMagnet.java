@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.magnet;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -9,6 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenMagnet extends ScreenBase<ContainerMagnet> {
 
+  private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
 
   public ScreenMagnet(ContainerMagnet screenContainer, PlayerInventory inv, ITextComponent titleIn) {
