@@ -30,6 +30,7 @@ public class ContainerAnvil extends ContainerBase {
       addSlot(new SlotItemHandler(h, 1, 104, 34));
     });
     layoutPlayerInventorySlots(8, 84);
+    this.trackIntField(tile, TileAnvilAuto.Fields.REDSTONE.ordinal());
     trackInt(new IntReferenceHolder() {
 
       @Override

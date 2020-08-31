@@ -6,12 +6,14 @@ import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class ButtonMachine extends ExtendedButton {
 
+  BlockPos tilePos;
   private int tileField;
   private TextureEnum textureId;
   private List<ITextComponent> tooltip;

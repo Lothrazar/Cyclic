@@ -30,6 +30,7 @@ public class ContainerAnvilMagma extends ContainerBase {
       addSlot(new SlotItemHandler(h, 1, 109, 35));
     });
     layoutPlayerInventorySlots(8, 84);
+    this.trackIntField(tile, TileAnvilMagma.Fields.REDSTONE.ordinal());
     trackInt(new IntReferenceHolder() {
 
       @Override

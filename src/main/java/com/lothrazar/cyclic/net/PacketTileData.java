@@ -16,11 +16,21 @@ public class PacketTileData extends PacketBase {
   private int field;
   private int value;
   private BlockPos pos;
+  private boolean autoIncrement = false;
+
+  public PacketTileData(int field, BlockPos pos) {
+    super();
+    this.field = field;
+    this.value = -1;
+    this.autoIncrement = true;
+    this.pos = pos;
+  }
 
   public PacketTileData(int field, int value, BlockPos pos) {
     super();
     this.field = field;
     this.value = value;
+    this.autoIncrement = false;
     this.pos = pos;
   }
 
@@ -33,7 +43,14 @@ public class PacketTileData extends PacketBase {
       TileEntity tile = world.getTileEntity(message.pos);
       if (tile instanceof TileEntityBase) {
         TileEntityBase base = (TileEntityBase) tile;
-        base.setField(message.field, message.value);
+        if (message.autoIncrement) {
+          //ignore message.value, do a ++
+          int incr = base.getField(message.field) + 1;
+          base.setField(message.field, incr);
+        }
+        else {
+          base.setField(message.field, message.value);
+        }
       }
     });
     message.done(ctx);
@@ -45,6 +62,7 @@ public class PacketTileData extends PacketBase {
     p.value = buf.readInt();
     CompoundNBT tags = buf.readCompoundTag();
     p.pos = new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z"));
+    p.autoIncrement = buf.readBoolean();
     return p;
   }
 
@@ -56,5 +74,6 @@ public class PacketTileData extends PacketBase {
     tags.putInt("y", msg.pos.getY());
     tags.putInt("z", msg.pos.getZ());
     buf.writeCompoundTag(tags);
+    buf.writeBoolean(msg.autoIncrement);
   }
 }

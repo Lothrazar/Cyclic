@@ -149,7 +149,29 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        return this.needsRedstone;
+      case TIMER:
+        return this.timer;
+      default:
+      break;
+    }
+    return 0;
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
+      case TIMER:
+        this.timer = value;
+      break;
+    }
+  }
 
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
