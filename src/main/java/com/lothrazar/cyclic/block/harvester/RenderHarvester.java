@@ -28,6 +28,7 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   public void render(TileHarvester te, float v, MatrixStack matrixStack,
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
+    UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack);
     if (ENABLED) {
       if (te.laserTimer > 0) {
         UtilRender.renderLaser(new LaserConfig(te.laserTarget, te.getPos(),

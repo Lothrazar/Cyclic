@@ -1,8 +1,15 @@
 package com.lothrazar.cyclic.base;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.UUID;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilFluid;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -12,8 +19,15 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
@@ -30,6 +44,57 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
+  }
+
+  public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
+    int start = (includeMainHand) ? 0 : 1;//main hand is 1
+    ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
+    for (int i = start; i < fp.get().inventory.mainInventory.size(); i++) {
+      ItemStack s = fp.get().inventory.mainInventory.get(i);
+      if (s.isEmpty() == false) {
+        toDrop.add(s.copy());
+        fp.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
+      }
+    }
+    UtilItemStack.drop(this.world, this.pos.up(), toDrop);
+  }
+
+  public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot) {
+    i.ifPresent(inv -> {
+      ItemStack maybeTool = inv.getStackInSlot(0);
+      if (!maybeTool.isEmpty()) {
+        if (maybeTool.getCount() <= 0) {
+          maybeTool = ItemStack.EMPTY;
+        }
+      }
+      if (!maybeTool.equals(fp.get().getHeldItem(Hand.MAIN_HAND))) {
+        fp.get().setHeldItem(Hand.MAIN_HAND, maybeTool);
+      }
+    });
+  }
+
+  public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,
+      World world, BlockPos targetPos) throws Exception {
+    Hand hand = Hand.MAIN_HAND;
+    BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
+        fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
+        targetPos, true);
+    //processRightClick
+    ActionResultType result = fakePlayer.get().interactionManager.func_219441_a(fakePlayer.get(), world,
+        fakePlayer.get().getHeldItem(hand), hand, blockraytraceresult);
+    return result;
+  }
+
+  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name) {
+    WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, UUID.randomUUID(), name);
+    if (fakePlayer == null) {
+      ModCyclic.LOGGER.error("Fake player failed to init ");
+      return null;
+    }
+    //fake player facing the same direction as tile. for throwables
+    fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());//seems to help interact() mob drops like milk
+    fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
+    return fakePlayer;
   }
 
   public void setLitProperty(boolean lit) {

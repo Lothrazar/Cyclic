@@ -12,6 +12,7 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
+import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -61,6 +62,10 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   //  public boolean hasFastRenderer() {
   //    return true;
   //  }
+
+  public List<BlockPos> getShape() {
+    return UtilShape.squareHorizontalHollow(this.getPos(), RADIUS);
+  }
 
   @Override
   public void tick() {
