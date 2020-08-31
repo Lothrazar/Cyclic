@@ -257,11 +257,25 @@ public class BlockRegistry {
   public static Block screen;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static Block uncrafter;
+  @ObjectHolder(ModCyclic.MODID + ":mason_cobble")
+  public static Block mason_cobble;
+  @ObjectHolder(ModCyclic.MODID + ":mason_stone")
+  public static Block mason_stone;
+  @ObjectHolder(ModCyclic.MODID + ":mason_iron")
+  public static Block mason_iron;
+  @ObjectHolder(ModCyclic.MODID + ":mason_plate")
+  public static Block mason_plate;
+  @ObjectHolder(ModCyclic.MODID + ":mason_steel")
+  public static Block mason_steel;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
-    //
+    r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_cobble"));
+    r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_stone"));
+    r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_iron"));
+    r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_plate"));
+    r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_steel"));
     r.register(new BlockAnvilMagma(Block.Properties.create(Material.IRON)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
     r.register(new BlockCrafter(Block.Properties.create(Material.IRON)).setRegistryName("crafter"));

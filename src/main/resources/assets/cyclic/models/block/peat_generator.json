@@ -1,11 +1,9 @@
 {
- 	"parent": "cyclic:parent/machine_peat",
+ 	"parent": "cyclic:parent/machine_simple",
     "textures": {
-        "0": "cyclic:blocks/plate",
-        "1": "minecraft:block/cauldron_inner",
-        "2": "cyclic:blocks/plate",
-        "3": "cyclic:blocks/peat_unbaked",
-        "4": "cyclic:blocks/peat_unbaked",
-        "particle": "cyclic:blocks/peat_unbaked"
+        "side": "cyclic:blocks/peat_generator/side",
+        "base": "cyclic:blocks/peat_generator/base",
+        "inner": "cyclic:blocks/peat_generator/inner",
+        "particle": "cyclic:blocks/peat_generator/inner"
     }
 }

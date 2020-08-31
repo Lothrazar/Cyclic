@@ -1,11 +1,11 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
     "textures": {
-        "front": "cyclic:blocks/placer/front",
-        "side": "cyclic:blocks/placer/side",
-        "inner": "minecraft:block/cauldron_inner",
-        "stem": "minecraft:block/furnace_top",
-        "base": "minecraft:block/diorite",
-        "particle": "cyclic:blocks/side"
+        "front": "cyclic:blocks/placer_fluid/front",
+        "side": "cyclic:blocks/placer_fluid/side",
+        "inner": "cyclic:blocks/placer_fluid/inner",
+        "stem": "cyclic:blocks/placer_fluid/stem",
+        "base": "cyclic:blocks/placer_fluid/base",
+        "particle": "cyclic:blocks/placer_fluid/side"
     }
 }

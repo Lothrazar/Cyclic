@@ -33,7 +33,7 @@ public class FluidMagmaHolder {
         return 8;
       }).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
-      () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemGroup)));
+      () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemgrp)));
   private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
       STILL,
       FLOWING,

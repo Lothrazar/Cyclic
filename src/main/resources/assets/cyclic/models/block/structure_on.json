@@ -1,11 +1,11 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
     "textures": {
-        "front": "cyclic:blocks/plate_hole",
-        "side": "cyclic:blocks/plate",
-        "inner": "minecraft:block/cauldron_inner",
-        "stem": "minecraft:block/gold_block",
-        "base": "minecraft:block/gold_block",
-        "particle": "minecraft:block/iron_block"
+        "front": "cyclic:blocks/structureshape/front",
+        "side": "cyclic:blocks/structureshape/side",
+        "inner": "cyclic:blocks/structureshape/inner",
+        "stem": "cyclic:blocks/structureshape/stem",
+        "base": "cyclic:blocks/structureshape/base",
+        "particle": "cyclic:blocks/structureshape/side"
     }
 }

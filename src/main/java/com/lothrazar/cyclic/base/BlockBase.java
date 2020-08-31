@@ -58,13 +58,15 @@ public abstract class BlockBase extends Block {
   @SuppressWarnings("deprecation")
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-    if (this.hasGui && !world.isRemote) {
-      TileEntity tileEntity = world.getTileEntity(pos);
-      if (tileEntity instanceof INamedContainerProvider) {
-        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-      }
-      else {
-        throw new IllegalStateException("Our named container provider is missing!");
+    if (this.hasGui) {
+      if (!world.isRemote) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof INamedContainerProvider) {
+          NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+        }
+        else {
+          throw new IllegalStateException("Our named container provider is missing!");
+        }
       }
       return ActionResultType.SUCCESS;
     }

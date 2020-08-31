@@ -1,12 +1,9 @@
 {
-    "parent": "minecraft:block/cube",
+ 	"parent": "cyclic:parent/machine_simple",
     "textures": {
-        "particle": "cyclic:blocks/uncrafter",
-        "down": "cyclic:blocks/uncrafter",
-        "up": "cyclic:blocks/uncrafter",
-        "north": "cyclic:blocks/uncrafter",
-        "south": "cyclic:blocks/uncrafter",
-        "west": "cyclic:blocks/uncrafter",
-        "east": "cyclic:blocks/uncrafter"
+        "side": "cyclic:blocks/uncrafter/side",
+        "base": "cyclic:blocks/uncrafter/base",
+        "inner": "cyclic:blocks/uncrafter/inner",
+        "particle": "cyclic:blocks/uncrafter/inner"
     }
 }

@@ -1,11 +1,9 @@
 {
- 	"parent": "cyclic:parent/machine_peat",
+ 	"parent": "cyclic:parent/machine_simple",
     "textures": {
-        "0": "cyclic:blocks/trash_end",
-        "1": "minecraft:block/cauldron_inner",
-        "2": "cyclic:blocks/trash_end",
-        "3": "cyclic:blocks/pylon",
-        "4": "cyclic:blocks/pylon",
-        "particle": "cyclic:blocks/pylon"
+        "side": "cyclic:blocks/harvester/side",
+        "base": "cyclc:blocks/harvester/base",
+        "inner": "cyclic:blocks/harvester/inner",
+        "particle": "cyclic:blocks/harvester/inner"
     }
 }

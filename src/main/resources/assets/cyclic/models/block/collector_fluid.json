@@ -1,11 +1,11 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
     "textures": {
-        "front":"cyclic:blocks/plate",
-        "side": "minecraft:block/cauldron_inner",
-        "inner": "cyclic:blocks/plate",
-        "stem": "minecraft:block/lapis_block",
-        "base": "minecraft:block/lapis_block",
-        "particle": "minecraft:block/iron_block"
+        "front": "cyclic:blocks/collector_fluid/front",
+        "side": "cyclic:blocks/collector_fluid/side",
+        "inner": "cyclic:blocks/collector_fluid/inner",
+        "stem": "cyclic:blocks/collector_fluid/stem",
+        "base": "cyclic:blocks/collector_fluid/base",
+        "particle": "cyclic:blocks/collector_fluid/side"
     }
 }

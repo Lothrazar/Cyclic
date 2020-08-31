@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "cic",
+    "ccc"
+  ],
+  "key": {
+    "c": {
+      "item": "cyclic:mason_steel"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:mason_plate",
+	"count": 8
+  }
+}

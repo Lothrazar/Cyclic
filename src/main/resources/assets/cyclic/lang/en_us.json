@@ -1200,29 +1200,15 @@
     "block.cyclic.melter.tooltip": "Melt certain items into fluid",
 
     "button.fan.sound.tooltip": "Enable or disable sound",
-    
-    "item.cyclic.structure_disk":"Structure Disk",
-    "item.cyclic.structure_disk.tooltip":"Stores a structure from a copier, to be written into the world",
-    
-    "block.cyclic.structure_writer":"Structure Writer",
-    "block.cyclic.structure_writer.tooltip":"Use structure disk to place structures",
-    
-    "block.cyclic.structure_finder":"Structure finder",
-    "block.cyclic.structure_finder.tooltip":"Creative way to find any local structure file by name or id onto a disk",
-    
-    "block.cyclic.structure_reader":"Structure Reader",
-    "block.cyclic.structure_reader.tooltip":"Creative way to read any structure for free onto a disk",
-    
-    "block.cyclic.structure_copy":"Structure Copier",
-    "block.cyclic.structure_copy.tooltip":"Creative way to read a structure for free onto a disk",
-    
-    "cyclic.structure_writer.status.none":"Insert disk and location",
-    "cyclic.structure_writer.status.invalid":"Invalid disk",
-    "cyclic.structure_writer.status.valid":"Valid disk and location",
 
-    "cyclic.structure_writer.mode":"Structure Mode",
-    "cyclic.structure_writer.mode.preview":"Preview",
-    "cyclic.structure_writer.mode.build":"Build",
+
+	"block.cyclic.mason_stone":"Mason Stone",
+	"block.cyclic.mason_cobble":"Mason Cobblestone",
+	"block.cyclic.mason_iron":"Mason Iron",
+	"block.cyclic.mason_steel":"Mason Steel",
+	"block.cyclic.mason_plate":"Mason Plate",    
+
+
     
     "block.cyclic.solidifier": "Crystallization Chamber",
     "block.cyclic.solidifier.tooltip": "Craft fluid into items"

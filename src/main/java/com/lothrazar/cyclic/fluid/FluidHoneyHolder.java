@@ -31,7 +31,7 @@ public class FluidHoneyHolder {
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
       () -> new HoneyFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
-      () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemGroup)));
+      () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.itemgrp)));
   private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
       STILL,
       FLOWING,

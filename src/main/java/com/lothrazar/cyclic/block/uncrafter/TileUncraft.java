@@ -95,10 +95,18 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity {
         pos.getX() + RADIUS, pos.getY() + 2, pos.getZ() + RADIUS), (entity) -> {
           return entity.isAlive() && !entity.getItem().isEmpty();
         });
+    if (list.size() > 0) {
+      //PICK ME UP
+      this.pickupItem(list.get(0));
+    }
     ItemStack dropMe = inv.getStackInSlot(0).copy();
     if (!dropMe.isEmpty()) {
       this.uncraft(dropMe);
     }
+  }
+
+  private void pickupItem(ItemEntity itemEntity) {
+    // TODO Auto-generated method stub
   }
 
   private IRecipe<?> uncraft(ItemStack dropMe) {
