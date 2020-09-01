@@ -6,6 +6,8 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IntReferenceHolder;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -19,6 +21,27 @@ public abstract class ContainerBase extends Container {
 
   protected ContainerBase(ContainerType<?> type, int id) {
     super(type, id);
+  }
+
+  protected void trackEnergy(TileEntityBase tile) {
+    trackInt(new IntReferenceHolder() {
+
+      @Override
+      public int get() {
+        return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+      }
+
+      @Override
+      public void set(int value) {
+        // tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+      }
+    });
+  }
+
+  protected void trackAllIntFields(TileEntityBase tile, int fieldCount) {
+    for (int f = 0; f < fieldCount; f++) {
+      trackIntField(tile, f);
+    }
   }
 
   protected void trackIntField(TileEntityBase tile, int fieldOrdinal) {

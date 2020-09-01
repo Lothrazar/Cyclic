@@ -43,12 +43,12 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
-  private static final int RADIUS = 9;
+  private int radius = 9;
   private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
 
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, RENDER;
   }
 
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -58,20 +58,18 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public TileHarvester() {
     super(TileRegistry.harvesterTile);
   }
-  //  @Override
-  //  public boolean hasFastRenderer() {
-  //    return true;
-  //  }
 
   public List<BlockPos> getShape() {
-    return UtilShape.squareHorizontalHollow(this.getPos(), RADIUS);
+    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius), radius);
   }
 
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
       return;
     }
+    setLitProperty(true);
     if (this.laserTimer > 0) {
       laserTimer--;
     }
@@ -80,7 +78,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return;
     }
     for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
-      BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), RADIUS);
+      BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), radius);
       if (cap.getEnergyStored() < ConfigManager.HARVESTERPOWER.get()) {
         break;//too broke
       }
@@ -158,10 +156,24 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public void setField(int field, int value) {
-    switch (Fields.values()[field]) {
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
       case REDSTONE:
-        setNeedsRedstone(value);
+        return this.needsRedstone;
+      case RENDER:
+        return render;
+    }
+    return 0;
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
+      case RENDER:
+        this.render = value % 2;
       break;
     }
   }

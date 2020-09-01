@@ -26,7 +26,7 @@ public class ContainerPlacerFluid extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TilePlacerFluid.Fields.REDSTONE.ordinal());
+    this.trackAllIntFields(tile, TilePlacerFluid.Fields.values().length);
   }
 
   @Override

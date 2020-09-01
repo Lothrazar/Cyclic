@@ -222,7 +222,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
         }
       break;
       case REDSTONE:
-        this.needsRedstone = value;
+        this.needsRedstone = value % 2;
       break;
       case SPEED:
         speed = value;

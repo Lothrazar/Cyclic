@@ -152,7 +152,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
       case RANGEZ:
         return this.rangeZ;
       case RENDERPARTICLES:
-        return this.renderParticles;
+        return this.render;
       default:
       break;
     }
@@ -206,7 +206,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
         this.entityType = EntityType.values()[value];
       break;
       case RENDERPARTICLES:
-        this.renderParticles = value % 2;
+        this.render = value % 2;
       break;
     }
   }

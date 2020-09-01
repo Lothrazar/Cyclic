@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.generator;
+package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -29,25 +29,13 @@ public class ContainerGenerator extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
+    trackEnergy(tile);
+    this.trackAllIntFields(tile, TilePeatGenerator.Fields.values().length);
     trackInt(new IntReferenceHolder() {
 
       @Override
       public int get() {
-        return getEnergy();
-      }
-
-      @Override
-      public void set(int value) {
-        //this was from mcjty 1.14 tutorial. but in 1.15 this is BAD and broken. causes client GUI reload to override server values to either 0 or -1024. why? IDK
-        //ref https://wiki.mcjty.eu/modding/index.php?title=Tut14_Ep5
-        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
-      }
-    });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return getBurnTime();
+        return tile.getBurnTime();
       }
 
       @Override
@@ -77,16 +65,8 @@ public class ContainerGenerator extends ContainerBase {
     return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
-  public int getBurnTime() {
-    return tile.getBurnTime();
-  }
-
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
     return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.peat_generator);
-  }
-
-  public int getNeedsRedstone() {
-    return tile.getNeedsRedstone();
   }
 }

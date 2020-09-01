@@ -8,13 +8,25 @@ import net.minecraft.util.math.BlockPos;
 
 public class ButtonMachineRedstone extends ButtonMachine {
 
+  private TextureEnum textureOff;
+  private TextureEnum textureOn;
+  private String tooltipPrefix;
+
   public ButtonMachineRedstone(int xPos, int yPos, int field, BlockPos pos) {
+    this(xPos, yPos, field, pos, TextureEnum.REDSTONE_ON, TextureEnum.REDSTONE_NEEDED, "gui.cyclic.redstone");
+  }
+
+  public ButtonMachineRedstone(int xPos, int yPos, int field, BlockPos pos,
+      TextureEnum textureOn, TextureEnum textureOff, String tooltipPrefix) {
     super(xPos, yPos, 20, 20, "", (p) -> {
       //
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(field, pos));
     });
     this.tilePos = pos;
     this.setTileField(field);
+    this.textureOn = textureOn;
+    this.textureOff = textureOff;
+    this.tooltipPrefix = tooltipPrefix;
   }
 
   public void onValueUpdate(TileEntityBase tile) {
@@ -23,7 +35,7 @@ public class ButtonMachineRedstone extends ButtonMachine {
   }
 
   private void onValueUpdate(int val) {
-    setTooltip(UtilChat.lang("gui.cyclic.redstone" + val));
-    setTextureId(val == 1 ? TextureEnum.REDSTONE_NEEDED : TextureEnum.REDSTONE_ON);
+    setTooltip(UtilChat.lang(this.tooltipPrefix + val));
+    setTextureId(val == 1 ? textureOff : textureOn);
   }
 }

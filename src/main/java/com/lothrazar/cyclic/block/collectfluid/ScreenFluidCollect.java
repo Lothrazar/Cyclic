@@ -1,14 +1,10 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
-import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -17,7 +13,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
   private FluidBar fluid;
   private ButtonMachineRedstone btnRedstone;
-  private ButtonMachine btnRender;
+  private ButtonMachineRedstone btnRender;
 
   public ScreenFluidCollect(ContainerFluidCollect screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -33,11 +29,13 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    btnRender = addButton(new ButtonMachine(x + 20, y, 20, 20, "", (p) -> {
-      int f = TileFluidCollect.Fields.RENDER.ordinal();
-      container.tile.setField(f, (container.tile.getField(f) + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, container.tile.getField(f), container.tile.getPos()));
-    }));
+    btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileFluidCollect.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "gui.cyclic.render"));
+    //    btnRender = addButton(new ButtonMachine(x + 20, y, 20, 20, "", (p) -> {
+    //      int f = TileFluidCollect.Fields.RENDER.ordinal();
+    //      container.tile.setField(f, (container.tile.getField(f) + 1) % 2);
+    //      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, container.tile.getField(f), container.tile.getPos()));
+    //    }));
   }
 
   @Override
@@ -53,9 +51,10 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(container.tile);
-    int on = container.tile.getField(TileFluidCollect.Fields.RENDER.ordinal());
-    btnRender.setTooltip(UtilChat.lang("gui.cyclic.render" + on));
-    btnRender.setTextureId(on == 1 ? TextureEnum.RENDER_SHOW : TextureEnum.RENDER_HIDE);
+    btnRender.onValueUpdate(container.tile);
+    //    int on = container.tile.getField(TileFluidCollect.Fields.RENDER.ordinal());
+    //    btnRender.setTooltip(UtilChat.lang("gui.cyclic.render" + on));
+    //    btnRender.setTextureId(on == 1 ? TextureEnum.RENDER_SHOW : TextureEnum.RENDER_HIDE);
   }
 
   @Override

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.generator;
+package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;

@@ -61,10 +61,10 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
         this.timer = value;
       break;
       case REDSTONE:
-        this.setNeedsRedstone(value);
+        this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.renderParticles = value % 2;
+        this.render = value % 2;
       break;
     }
   }
@@ -75,9 +75,9 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       case TIMER:
         return timer;
       case REDSTONE:
-        return this.getNeedsRedstone();
+        return this.needsRedstone;
       case RENDER:
-        return this.renderParticles;
+        return this.render;
     }
     return super.getField(field);
   }

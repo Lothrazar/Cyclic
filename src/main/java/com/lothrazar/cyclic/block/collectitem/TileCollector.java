@@ -118,10 +118,21 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        return this.needsRedstone;
+      //      case RENDER:
+      //        return this.renderParticles;
+    }
+    return 0;
+  }
+
+  @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        setNeedsRedstone(value);
+        this.needsRedstone = value % 2;
       break;
     }
   }

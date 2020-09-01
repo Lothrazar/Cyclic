@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.harvester;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,6 +13,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
 
   private EnergyBar energy;
   private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineRedstone btnRender;
 
   public ScreenHarvester(ContainerHarvester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -27,6 +29,8 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileHarvester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileHarvester.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "gui.cyclic.render"));
   }
 
   @Override
@@ -40,6 +44,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(container.tile);
+    btnRender.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
   }

@@ -26,8 +26,8 @@ public class ContainerUser extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TileUser.Fields.REDSTONE.ordinal());
-    this.trackIntField(tile, TileUser.Fields.TIMERDEL.ordinal());
+    this.trackAllIntFields(tile, TileUser.Fields.values().length);
+    trackEnergy(tile);
   }
 
   @Override

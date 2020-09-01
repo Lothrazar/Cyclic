@@ -26,7 +26,6 @@ public class BlockWirelessTransmit extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    //    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.harvesterTile, RenderHarvester::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.wireless_transmitter, ScreenTransmit::new);
   }
 

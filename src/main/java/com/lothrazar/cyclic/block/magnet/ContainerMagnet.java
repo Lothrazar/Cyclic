@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -29,22 +28,8 @@ public class ContainerMagnet extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 61, 21));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TileMagnet.Fields.REDSTONE.ordinal());
-    this.trackIntField(tile, TileMagnet.Fields.DELAY.ordinal());
-    this.trackIntField(tile, TileMagnet.Fields.RANGE.ordinal());
-    //    this.trackIntField(tile, TileMagnet.Fields.TIMER.ordinal());
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return getEnergy();
-      }
-
-      @Override
-      public void set(int value) {
-        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
-      }
-    });
+    this.trackAllIntFields(tile, TileMagnet.Fields.values().length);
+    trackEnergy(tile);
   }
 
   public int getEnergy() {

@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.anvil;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,6 +13,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
+  private TimerBar timer;
 
   public ScreenAnvil(ContainerAnvil screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -21,9 +23,9 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
   @Override
   public void init() {
     super.init();
-    int x, y;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
+    int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileAnvilAuto.Fields.REDSTONE.ordinal(), container.tile.getPos()));

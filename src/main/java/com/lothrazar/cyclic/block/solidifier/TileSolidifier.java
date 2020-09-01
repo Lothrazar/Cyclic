@@ -76,10 +76,10 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
         this.timer = value;
       break;
       case REDSTONE:
-        this.setNeedsRedstone(value);
+        this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.renderParticles = value % 2;
+        this.render = value % 2;
       break;
     }
   }
@@ -90,9 +90,9 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       case TIMER:
         return timer;
       case REDSTONE:
-        return this.getNeedsRedstone();
+        return this.needsRedstone;
       case RENDER:
-        return this.renderParticles;
+        return this.render;
     }
     return super.getField(field);
   }

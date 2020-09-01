@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -29,19 +28,8 @@ public class ContainerDisenchant extends ContainerBase {
       addSlot(new SlotItemHandler(h, 2, 124, 40));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TileDisenchant.Fields.REDSTONE.ordinal());
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getEnergy();
-      }
-
-      @Override
-      public void set(int value) {
-        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
-      }
-    });
+    this.trackAllIntFields(tile, TileDisenchant.Fields.values().length);
+    trackEnergy(tile);
   }
 
   @Override

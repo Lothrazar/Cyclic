@@ -20,9 +20,7 @@ public class ContainerFan extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TileFan.Fields.REDSTONE.ordinal());
-    this.trackIntField(tile, TileFan.Fields.RANGE.ordinal());
-    this.trackIntField(tile, TileFan.Fields.SPEED.ordinal());
+    this.trackAllIntFields(tile, TileFan.Fields.values().length);
   }
 
   @Override

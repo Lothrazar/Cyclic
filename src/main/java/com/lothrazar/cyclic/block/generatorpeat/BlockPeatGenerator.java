@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.generator;
+package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;

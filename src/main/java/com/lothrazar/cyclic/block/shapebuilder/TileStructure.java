@@ -56,7 +56,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private int height = 2;
   //machine settings
   private int shapeIndex = 0;// current index of shape array
-  private int timer;
 
   public TileStructure() {
     super(TileRegistry.structure);
@@ -149,10 +148,10 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         this.height = Math.max(1, value);
       break;
       case REDSTONE:
-        this.setNeedsRedstone(value);
+        this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.renderParticles = value % 2;
+        this.render = value % 2;
       break;
     }
   }
@@ -169,9 +168,9 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       case HEIGHT:
         return this.height;
       case REDSTONE:
-        return this.getNeedsRedstone();
+        return this.needsRedstone;
       case RENDER:
-        return this.renderParticles;
+        return this.render;
     }
     return super.getField(field);
   }
@@ -237,6 +236,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private static final int spotsSkippablePerTrigger = 50;
 
   private void incrementPosition(List<BlockPos> shape) {
+    //TODO: base class
     if (shape == null || shape.size() == 0) {
       return;
     }

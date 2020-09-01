@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.placer;
 
 import com.lothrazar.cyclic.base.ContainerBase;
+import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,7 +27,7 @@ public class ContainerPlacer extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TilePlacer.Fields.REDSTONE.ordinal());
+    this.trackAllIntFields(tile, TilePlacer.Fields.values().length);
   }
 
   @Override

@@ -23,18 +23,7 @@ public class ContainerBattery extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     layoutPlayerInventorySlots(8, 84);
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return getEnergy();
-      }
-
-      @Override
-      public void set(int value) {
-        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
-      }
-    });
+    trackEnergy(tile);
     trackInt(new IntReferenceHolder() {
 
       @Override

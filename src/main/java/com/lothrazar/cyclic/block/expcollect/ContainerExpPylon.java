@@ -26,8 +26,4 @@ public class ContainerExpPylon extends ContainerBase {
   public boolean canInteractWith(PlayerEntity playerIn) {
     return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.experience_pylon);
   }
-
-  public int getNeedsRedstone() {
-    return tile.getNeedsRedstone();
-  }
 }

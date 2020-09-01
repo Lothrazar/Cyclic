@@ -77,9 +77,9 @@ import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
 import com.lothrazar.cyclic.block.forester.TileForester;
-import com.lothrazar.cyclic.block.generator.BlockPeatGenerator;
-import com.lothrazar.cyclic.block.generator.ContainerGenerator;
-import com.lothrazar.cyclic.block.generator.TilePeatGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
@@ -113,6 +113,8 @@ import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
+import com.lothrazar.cyclic.block.sprinklers.BlockTerraPreta;
+import com.lothrazar.cyclic.block.sprinklers.TileTerraPreta;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
@@ -146,6 +148,8 @@ public class BlockRegistry {
 
   //not populated in the most ideal way 
   public static List<BlockBase> blocks = new ArrayList<>();
+  @ObjectHolder(ModCyclic.MODID + ":terra_preta")
+  public static Block terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block solidifier;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -271,6 +275,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockTerraPreta(Block.Properties.create(Material.IRON)).setRegistryName("terra_preta"));
     r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_cobble"));
     r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_stone"));
     r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_iron"));
@@ -337,6 +342,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.terra_preta).build(null).setRegistryName("terra_preta"));
     //
     r.register(TileEntityType.Builder.create(TileAnvilMagma::new, BlockRegistry.anvil_magma).build(null).setRegistryName("anvil_magma"));
     r.register(TileEntityType.Builder.create(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));

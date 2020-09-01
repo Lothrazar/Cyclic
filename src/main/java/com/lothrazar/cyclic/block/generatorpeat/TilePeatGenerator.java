@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.generator;
+package com.lothrazar.cyclic.block.generatorpeat;
 
 import java.util.Collections;
 import java.util.List;
@@ -191,7 +191,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
         setNeedsRedstone(value);
       break;
       case RENDER:
-        renderParticles = value % 2;
+        render = value % 2;
       break;
     }
   }

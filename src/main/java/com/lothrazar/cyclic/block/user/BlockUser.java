@@ -28,7 +28,6 @@ public class BlockUser extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    //    ClientRegistry.bindTileEntityRenderer(BlockRegistry.Tiles.harvesterTile, RenderHarvester::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.user, ScreenUser::new);
   }
 

@@ -39,7 +39,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static final int MENERGY = 64 * 1000;
   protected int needsRedstone = 0;//default to always on
-  protected int renderParticles = 1;
+  protected int render = 1;
   protected int timer;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
@@ -60,6 +60,9 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot) {
+    if (fp == null) {
+      return;
+    }
     i.ifPresent(inv -> {
       ItemStack maybeTool = inv.getStackInSlot(0);
       if (!maybeTool.isEmpty()) {
@@ -75,6 +78,9 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,
       World world, BlockPos targetPos) throws Exception {
+    if (fakePlayer == null) {
+      return ActionResultType.FAIL;
+    }
     Hand hand = Hand.MAIN_HAND;
     BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
         fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
@@ -124,11 +130,15 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return syncData;
   }
 
-  protected BlockPos getCurrentFacingPos() {
+  protected BlockPos getCurrentFacingPos(int distance) {
     Direction f = this.getCurrentFacing();
     if (f != null)
-      return this.pos.offset(f);
+      return this.pos.offset(f, distance);
     return this.pos;
+  }
+
+  protected BlockPos getCurrentFacingPos() {
+    return getCurrentFacingPos(1);
   }
 
   @Override
@@ -251,7 +261,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     needsRedstone = tag.getInt("needsRedstone");
-    renderParticles = tag.getInt("renderParticles");
+    render = tag.getInt("renderParticles");
     timer = tag.getInt("timer");
     super.read(bs, tag);
   }
@@ -259,7 +269,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("needsRedstone", needsRedstone);
-    tag.putInt("renderParticles", renderParticles);
+    tag.putInt("renderParticles", render);
     tag.putInt("timer", timer);
     return super.write(tag);
   }
@@ -270,12 +280,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return 0;
   }
 
-  public int getNeedsRedstone() {
-    return needsRedstone;
-  }
-
-  public void setNeedsRedstone(int needsRedstone) {
-    this.needsRedstone = needsRedstone;
+  public void setNeedsRedstone(int value) {
+    this.needsRedstone = value % 2;
   }
 
   public void setFluid(FluidStack fluid) {}

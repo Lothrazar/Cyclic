@@ -187,7 +187,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        this.setNeedsRedstone(value);
+        this.needsRedstone = value % 2;
       break;
     }
   }
@@ -196,7 +196,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   public int getField(int field) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        return this.getNeedsRedstone();
+        return this.needsRedstone;
     }
     return 0;
   }

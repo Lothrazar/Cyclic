@@ -18,7 +18,7 @@ import com.lothrazar.cyclic.block.dropper.ContainerDropper;
 import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.fan.ContainerFan;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
-import com.lothrazar.cyclic.block.generator.ContainerGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.magnet.ContainerMagnet;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;

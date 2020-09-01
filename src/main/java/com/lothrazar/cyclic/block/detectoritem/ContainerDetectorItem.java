@@ -20,12 +20,7 @@ public class ContainerDetectorItem extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     layoutPlayerInventorySlots(8, 84);
-    //    this.trackIntField(tile, TileDetectorItem.Fields.ENTITYTYPE.ordinal());
-    this.trackIntField(tile, TileDetectorItem.Fields.GREATERTHAN.ordinal());
-    this.trackIntField(tile, TileDetectorItem.Fields.LIMIT.ordinal());
-    this.trackIntField(tile, TileDetectorItem.Fields.RANGEX.ordinal());
-    this.trackIntField(tile, TileDetectorItem.Fields.RANGEY.ordinal());
-    this.trackIntField(tile, TileDetectorItem.Fields.RANGEZ.ordinal());
+    this.trackAllIntFields(tile, TileDetectorItem.Fields.values().length);
   }
 
   @Override

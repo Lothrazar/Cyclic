@@ -55,7 +55,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 16, 30);
     this.drawSlot(ms, 34, 30);
-    timer.draw(ms, container.tile.getField(Fields.TIMER.ordinal()));
+    timer.draw(ms, container.tile.getField(TileMelter.Fields.TIMER.ordinal()));
     energy.draw(ms, container.getEnergy());
     fluid.draw(ms, container.tile.getFluid());
   }

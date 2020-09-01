@@ -154,7 +154,7 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
         this.timer = value;
       break;
       case REDSTONE:
-        this.needsRedstone = value;
+        this.needsRedstone = value % 2;
       break;
       case DELAY:
         delay = Math.max(0, value);

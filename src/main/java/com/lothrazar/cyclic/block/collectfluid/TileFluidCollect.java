@@ -52,7 +52,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     super(TileRegistry.collector_fluid);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
-    this.renderParticles = 1;
+    this.render = 1;
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -179,7 +179,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
         this.setNeedsRedstone(value);
       break;
       case RENDER:
-        this.renderParticles = value % 2;
+        this.render = value % 2;
       break;
     }
   }
@@ -188,9 +188,9 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   public int getField(int field) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        return this.getNeedsRedstone();
+        return this.needsRedstone;
       case RENDER:
-        return this.renderParticles;
+        return this.render;
     }
     return 0;
   }

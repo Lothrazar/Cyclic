@@ -1,12 +1,15 @@
 package com.lothrazar.cyclic.block.forester;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
@@ -42,7 +45,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
-  BlockPos targetPos = BlockPos.ZERO;
+  private int shapeIndex = 0;
 
   //  public enum PlantingMode {
   //    //full is every square
@@ -54,7 +57,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   //  private PlantingMode mode;
   //harvest mode: do we shear or break leaves
   public enum Fields {
-    REDSTONE;
+    REDSTONE, RENDER;
   }
 
   public TileForester() {
@@ -127,20 +130,29 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     if (en == null || inv == null) {
       return;
     }
-    if (fakePlayer == null)
-      fakePlayer = setupBeforeTrigger((ServerWorld) world, "forester");
     ItemStack dropMe = inv.getStackInSlot(0).copy();
     if (this.isSapling(dropMe)) {
       try {
+        if (fakePlayer == null && world instanceof ServerWorld) {
+          fakePlayer = setupBeforeTrigger((ServerWorld) world, "forester");
+        }
         TileEntityBase.tryEquipItem(inventory, fakePlayer, 0);
         //plant me baby 
         //        targetPos = this.pos.offset(this.getCurrentFacing());
-        this.updateTargetPos();
+        List<BlockPos> shape = this.getShape();
+        if (shape.size() == 0) {
+          return;
+        }
+        if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
+          this.shapeIndex = 0;
+        }
+        BlockPos targetPos = shape.get(shapeIndex);
         //loop on positions
         ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos);
         if (result == ActionResultType.SUCCESS) {
-          //ok then
+          //ok then DRAIN POWER
         }
+        shapeIndex++;
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("User action item error", e);
@@ -148,34 +160,16 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
   }
 
-  private void updateTargetPos() {
-    //spiraling outward from center
-    //first are we out of bounds? if so start at center + 1
-    int minX = this.pos.getX() - this.size;
-    int maxX = this.pos.getX() + this.size;
-    int minY = this.pos.getY();
-    int maxY = this.pos.getY() + height - 1;
-    int minZ = this.pos.getZ() - this.size;
-    int maxZ = this.pos.getZ() + this.size;
-    //first we see if this column is done by going bottom to top
-    this.targetPos = this.targetPos.add(0, 1, 0);
-    if (this.targetPos.getY() <= maxY) {
-      return;//next position is valid
-    }
-    //when we are at the top, only THEN we move to a new horizontal x,z coordinate
-    //starting from the base. first move X left to right only
-    targetPos = new BlockPos(targetPos.getX() + 1, minY, targetPos.getZ());
-    if (targetPos.getX() <= maxX) {
-      return;
-    }
-    //end of the line
-    //so start over like a typewriter, moving up one Z row
-    targetPos = new BlockPos(minX, targetPos.getY(), targetPos.getZ() + 1);
-    if (targetPos.getZ() <= maxZ) {
-      return;
-    }
-    //this means we have passed over the threshold of ALL coordinates
-    targetPos = new BlockPos(minX, minY, minZ);
+  public List<BlockPos> getShape() {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(size), size);
+    return shape;
+  }
+
+  public List<BlockPos> getShapeHollow() {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size), this.size);
+    return shape;
   }
 
   static final int MAX_HEIGHT = 32;
@@ -193,5 +187,25 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        return this.needsRedstone;
+      case RENDER:
+        return render;
+    }
+    return 0;
+  }
+
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
+      case RENDER:
+        this.render = value % 2;
+      break;
+    }
+  }
 }

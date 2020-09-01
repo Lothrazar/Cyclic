@@ -55,7 +55,7 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        this.setNeedsRedstone(value);
+        this.needsRedstone = value % 2;
       break;
     }
   }
@@ -64,7 +64,7 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   public int getField(int field) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        return this.getNeedsRedstone();
+        return this.needsRedstone;
     }
     return 0;
   }

@@ -113,6 +113,7 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.terra_preta, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("terra_preta"));
     r.register(new BlockItem(BlockRegistry.mason_stone, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_stone"));
     r.register(new BlockItem(BlockRegistry.mason_steel, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_steel"));
     r.register(new BlockItem(BlockRegistry.mason_plate, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_plate"));

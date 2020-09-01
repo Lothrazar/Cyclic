@@ -79,7 +79,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        setNeedsRedstone(value);
+        this.needsRedstone = value % 2;
       break;
       case TIMER:
         this.timer = value;
@@ -96,7 +96,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   public int getField(int field) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        return this.getNeedsRedstone();
+        return this.needsRedstone;
       case TIMER:
         return timer;
       case TIMERDEL:

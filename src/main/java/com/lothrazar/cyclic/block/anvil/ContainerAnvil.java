@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -26,23 +25,12 @@ public class ContainerAnvil extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 54, 34));
-      addSlot(new SlotItemHandler(h, 1, 104, 34));
+      addSlot(new SlotItemHandler(h, 0, 55, 35));
+      addSlot(new SlotItemHandler(h, 1, 109, 35));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TileAnvilAuto.Fields.REDSTONE.ordinal());
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return getEnergy();
-      }
-
-      @Override
-      public void set(int value) {
-        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
-      }
-    });
+    this.trackAllIntFields(tile, TileAnvilAuto.Fields.values().length);
+    trackEnergy(tile);
   }
 
   public int getEnergy() {

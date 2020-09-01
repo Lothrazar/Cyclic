@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -29,18 +28,7 @@ public class ContainerCrafter extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 61, 21));
     });
     layoutPlayerInventorySlots(8, 84);
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return getEnergy();
-      }
-
-      @Override
-      public void set(int value) {
-        //        tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
-      }
-    });
+    trackEnergy(tile);
   }
 
   public int getEnergy() {

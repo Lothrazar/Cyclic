@@ -20,17 +20,7 @@ public class ContainerClock extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     layoutPlayerInventorySlots(8, 84);
-    this.trackIntField(tile, TileRedstoneClock.Fields.TIMER.ordinal());
-    this.trackIntField(tile, TileRedstoneClock.Fields.DELAY.ordinal());
-    this.trackIntField(tile, TileRedstoneClock.Fields.DURATION.ordinal());
-    this.trackIntField(tile, TileRedstoneClock.Fields.POWER.ordinal());
-    //    this.trackIntField(tile, TileRedstoneClock.Fields.REDSTONE.ordinal());
-    //    this.trackIntField(tile, TileRedstoneClock.Fields.N.ordinal());
-    //    this.trackIntField(tile, TileRedstoneClock.Fields.E.ordinal());
-    //    this.trackIntField(tile, TileRedstoneClock.Fields.S.ordinal());
-    //    this.trackIntField(tile, TileRedstoneClock.Fields.W.ordinal());
-    //    this.trackIntField(tile, TileRedstoneClock.Fields.U.ordinal());
-    //    this.trackIntField(tile, TileRedstoneClock.Fields.D.ordinal());
+    this.trackAllIntFields(tile, TileRedstoneClock.Fields.values().length);
   }
 
   @Override

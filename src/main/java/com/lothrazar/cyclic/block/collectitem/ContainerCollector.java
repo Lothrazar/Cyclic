@@ -36,10 +36,6 @@ public class ContainerCollector extends ContainerBase {
     layoutPlayerInventorySlots(8, 84);
   }
 
-  public int getNeedsRedstone() {
-    return tile.getNeedsRedstone();
-  }
-
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
     return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.collector);

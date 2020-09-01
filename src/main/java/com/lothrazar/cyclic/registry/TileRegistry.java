@@ -25,7 +25,7 @@ import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
-import com.lothrazar.cyclic.block.generator.TilePeatGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.magnet.TileMagnet;
 import com.lothrazar.cyclic.block.melter.TileMelter;
@@ -36,6 +36,7 @@ import com.lothrazar.cyclic.block.planter.TilePlanter;
 import com.lothrazar.cyclic.block.screen.TileScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
+import com.lothrazar.cyclic.block.sprinklers.TileTerraPreta;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
@@ -49,6 +50,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TileRegistry {
 
+  @ObjectHolder(ModCyclic.MODID + ":terra_preta")
+  public static TileEntityType<TileTerraPreta> terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
   public static TileEntityType<TileWirelessRec> wireless_receiver;
   @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
