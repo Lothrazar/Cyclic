@@ -9,6 +9,26 @@ import net.minecraft.util.math.BlockPos;
 
 public class UtilShape {
 
+  public static List<BlockPos> cubeSquareBase(
+      final BlockPos pos, int radius,
+      int height) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    // search in a cube
+    int xMin = pos.getX() - radius;
+    int xMax = pos.getX() + radius;
+    int zMin = pos.getZ() - radius;
+    int zMax = pos.getZ() + radius;
+    for (int x = xMin; x <= xMax; x++) {
+      for (int z = zMin; z <= zMax; z++) {
+        for (int y = pos.getY(); y < height; y++) {
+          //now go max height on each pillar for sort order
+          shape.add(new BlockPos(x, y, z));
+        }
+      }
+    }
+    return shape;
+  }
+
   public static List<BlockPos> squareHorizontalFull(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -19,7 +39,6 @@ public class UtilShape {
     int y = pos.getY();
     for (int x = xMin; x <= xMax; x++) {
       for (int z = zMin; z <= zMax; z++) {
-        shape.add(new BlockPos(x, y, z));
         shape.add(new BlockPos(x, y, z));
       }
     }

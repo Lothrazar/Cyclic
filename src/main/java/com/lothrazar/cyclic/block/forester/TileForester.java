@@ -14,16 +14,19 @@ import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -68,6 +71,8 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   public TileForester() {
     super(TileRegistry.forester);
+    this.needsRedstone = 1;
+    this.render = 0;
   }
 
   private IEnergyStorage createEnergy() {
@@ -127,14 +132,10 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       return;
     }
     setLitProperty(true);
-    timer--;
     IEnergyStorage en = this.energy.orElse(null);
     IItemHandler inv = this.inventory.orElse(null);
     if (en == null || inv == null
         || en.getEnergyStored() < ConfigManager.FORESTERPOWER.get()) {
-      return;
-    }
-    if (timer > 0) {
       return;
     }
     //
@@ -143,36 +144,47 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       return;
     }
     updateTargetPos(shape);
+    skipSomeAirBlocks(shape);
     ItemStack dropMe = inv.getStackInSlot(0).copy();
     //only saplings at my level, the rest is harvesting
-    if (this.isSapling(dropMe) && targetPos.getY() == this.pos.getY()) {
-      try {
-        if (fakePlayer == null && world instanceof ServerWorld) {
-          fakePlayer = setupBeforeTrigger((ServerWorld) world, "forester");
-        }
-        TileEntityBase.tryEquipItem(inventory, fakePlayer, 0);
+    try {
+      if (fakePlayer == null && world instanceof ServerWorld) {
+        fakePlayer = setupBeforeTrigger((ServerWorld) world, "forester");
+      }
+      this.equipTool();
+      if (this.isSapling(dropMe) && targetPos.getY() == this.pos.getY()) {
         //plant me baby 
-        //        targetPos = this.pos.offset(this.getCurrentFacing());
-        //loop on positions
-        ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos);
+        ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND);
         if (result == ActionResultType.SUCCESS) {
-          //ok then DRAIN POWER
-          ModCyclic.LOGGER.info("planted forester");
+          //ok then DRAIN POWER 
           en.extractEnergy(ConfigManager.FORESTERPOWER.get(), false);
         }
       }
-      catch (Exception e) {
-        ModCyclic.LOGGER.error("User action item error", e);
+      else if (this.isTree(dropMe)) {
+        if (TileEntityBase.tryHarvestBlock(fakePlayer, world, targetPos)) {
+          //ok then DRAIN POWER  
+          en.extractEnergy(ConfigManager.FORESTERPOWER.get(), false);
+        }
       }
     }
-    //
-    skipSomeAirBlocks(shape);
-    if (this.isTree(dropMe)) {
-      if (TileEntityBase.mineClickBlock(fakePlayer, world, targetPos)) {
-        //ok then DRAIN POWER
-        ModCyclic.LOGGER.info("harvest forester");
-        en.extractEnergy(ConfigManager.FORESTERPOWER.get(), false);
-      }
+    catch (Exception e) {
+      ModCyclic.LOGGER.error("User action item error", e);
+    }
+  }
+
+  /**
+   * off-hand for saplings; main-hand for mining tool
+   */
+  private void equipTool() {
+    if (fakePlayer == null) {
+      return;
+    }
+    TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.OFF_HAND);
+    if (fakePlayer.get().getHeldItem(Hand.MAIN_HAND).isEmpty()) {
+      ItemStack tool = new ItemStack(Items.DIAMOND_AXE);
+      //TODO:we can do both silk/fortune with toggle
+      tool.addEnchantment(Enchantments.FORTUNE, 3);
+      TileEntityBase.tryEquipItem(tool, fakePlayer, Hand.MAIN_HAND);
     }
   }
 
@@ -199,8 +211,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   //for harvest
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(size), size);
-    shape = UtilShape.repeatShapeByHeight(shape, height);
+    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(size), size, height);
     return shape;
   }
 
@@ -208,6 +219,9 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size), this.size);
+    if (targetPos != null) {
+      shape.add(targetPos);
+    }
     return shape;
   }
 
@@ -220,7 +234,10 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   }
 
   private boolean isTree(ItemStack dropMe) {
-    Block block = Block.getBlockFromItem(dropMe.getItem());
+    if (targetPos == null) {
+      return false;
+    }
+    Block block = world.getBlockState(targetPos).getBlock();
     return block.isIn(BlockTags.LOGS) ||
         block.isIn(BlockTags.LEAVES);
   }

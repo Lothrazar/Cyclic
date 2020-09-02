@@ -15,6 +15,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
@@ -61,9 +62,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     if (fakePlayer == null)
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "user");
     try {
-      TileEntityBase.tryEquipItem(inventory, fakePlayer, 0);
+      TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
       ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world,
-          this.pos.offset(this.getCurrentFacing()));
+          this.pos.offset(this.getCurrentFacing()), Hand.MAIN_HAND);
       if (result == ActionResultType.SUCCESS) {
         //        ModCyclic.LOGGER.info("user result " + result);
         //        this.markDirty();

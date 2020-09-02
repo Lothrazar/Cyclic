@@ -59,7 +59,16 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     UtilItemStack.drop(this.world, this.pos.up(), toDrop);
   }
 
-  public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot) {
+  public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp,
+      Hand hand) {
+    if (fp == null) {
+      return;
+    }
+    fp.get().setHeldItem(hand, item);
+  }
+
+  public static void tryEquipItem(LazyOptional<IItemHandler> i,
+      WeakReference<FakePlayer> fp, int slot, Hand hand) {
     if (fp == null) {
       return;
     }
@@ -70,18 +79,17 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
           maybeTool = ItemStack.EMPTY;
         }
       }
-      if (!maybeTool.equals(fp.get().getHeldItem(Hand.MAIN_HAND))) {
-        fp.get().setHeldItem(Hand.MAIN_HAND, maybeTool);
+      if (!maybeTool.equals(fp.get().getHeldItem(hand))) {
+        fp.get().setHeldItem(hand, maybeTool);
       }
     });
   }
 
   public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,
-      World world, BlockPos targetPos) throws Exception {
+      World world, BlockPos targetPos, Hand hand) throws Exception {
     if (fakePlayer == null) {
       return ActionResultType.FAIL;
     }
-    Hand hand = Hand.MAIN_HAND;
     BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
         fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
         targetPos, true);
@@ -91,20 +99,22 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return result;
   }
 
-  public static boolean mineClickBlock(WeakReference<FakePlayer> fakePlayer,
+  public static boolean tryHarvestBlock(WeakReference<FakePlayer> fakePlayer,
       World world, BlockPos targetPos) {
     if (fakePlayer == null) {
       return false;
     }
-    Hand hand = Hand.MAIN_HAND;
-    BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
-        fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
-        targetPos, true);
+    //    BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
+    //        fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
+    //        targetPos, true);
+    //TODO:?? 
+    //    world.sendBlockBreakProgress(fakePlayer.get().getEntityId(), targetPos, 10);
+    //    return world.destroyBlock(targetPos, true, fakePlayer.get());
     //processRightClick
-    boolean result = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+    return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
     //        .func_219441_a(fakePlayer.get(), world,
     //        fakePlayer.get().getHeldItem(hand), hand, blockraytraceresult);
-    return result;
+    //    return result;
   }
 
   public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name) {

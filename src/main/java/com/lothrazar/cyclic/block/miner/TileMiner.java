@@ -15,6 +15,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -105,7 +106,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     if (fakePlayer == null)
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "miner");
     try {
-      TileEntityBase.tryEquipItem(inventory, fakePlayer, 0);
+      TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
       //TODO: does this target block match filter
       updateMiningProgress();
     }

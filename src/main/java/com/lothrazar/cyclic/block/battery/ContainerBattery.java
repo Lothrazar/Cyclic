@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -24,18 +23,7 @@ public class ContainerBattery extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getFlowing();
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setFlowing(value);
-      }
-    });
+    this.trackAllIntFields(tile, TileBattery.Fields.values().length);
   }
 
   public int getEnergy() {

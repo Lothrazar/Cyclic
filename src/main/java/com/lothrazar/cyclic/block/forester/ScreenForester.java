@@ -30,7 +30,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileForester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileForester.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "gui.cyclic.render"));
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 
   @Override
