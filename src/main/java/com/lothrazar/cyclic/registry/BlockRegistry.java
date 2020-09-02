@@ -98,9 +98,6 @@ import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.placerfluid.BlockPlacerFluid;
 import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
 import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
-import com.lothrazar.cyclic.block.planter.BlockPlanter;
-import com.lothrazar.cyclic.block.planter.ContainerPlanter;
-import com.lothrazar.cyclic.block.planter.TilePlanter;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
@@ -249,8 +246,6 @@ public class BlockRegistry {
   public static Block dice;
   @ObjectHolder(ModCyclic.MODID + ":dropper")
   public static Block dropper;
-  @ObjectHolder(ModCyclic.MODID + ":planter")
-  public static Block planter;
   @ObjectHolder(ModCyclic.MODID + ":forester")
   public static Block forester;
   @ObjectHolder(ModCyclic.MODID + ":magnet")
@@ -289,7 +284,6 @@ public class BlockRegistry {
     r.register(new BlockDice(Block.Properties.create(Material.IRON)).setRegistryName("dice"));
     r.register(new BlockDropper(Block.Properties.create(Material.IRON)).setRegistryName("dropper"));
     r.register(new BlockForester(Block.Properties.create(Material.IRON)).setRegistryName("forester"));
-    r.register(new BlockPlanter(Block.Properties.create(Material.IRON)).setRegistryName("planter"));
     r.register(new BlockMagnet(Block.Properties.create(Material.IRON)).setRegistryName("magnet"));
     r.register(new BlockMiner(Block.Properties.create(Material.IRON)).setRegistryName("miner"));
     r.register(new BlockScreentext(Block.Properties.create(Material.IRON)).setRegistryName("screen"));
@@ -352,7 +346,6 @@ public class BlockRegistry {
     r.register(TileEntityType.Builder.create(TileDice::new, BlockRegistry.dice).build(null).setRegistryName("dice"));
     r.register(TileEntityType.Builder.create(TileDropper::new, BlockRegistry.dropper).build(null).setRegistryName("dropper"));
     r.register(TileEntityType.Builder.create(TileForester::new, BlockRegistry.forester).build(null).setRegistryName("forester"));
-    r.register(TileEntityType.Builder.create(TilePlanter::new, BlockRegistry.planter).build(null).setRegistryName("planter"));
     r.register(TileEntityType.Builder.create(TileMagnet::new, BlockRegistry.magnet).build(null).setRegistryName("magnet"));
     r.register(TileEntityType.Builder.create(TileMiner::new, BlockRegistry.miner).build(null).setRegistryName("miner"));
     r.register(TileEntityType.Builder.create(TileScreentext::new, BlockRegistry.screen).build(null).setRegistryName("screen"));
@@ -469,9 +462,6 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerForester(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("forester"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPlanter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("planter"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerMagnet(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("magnet"));

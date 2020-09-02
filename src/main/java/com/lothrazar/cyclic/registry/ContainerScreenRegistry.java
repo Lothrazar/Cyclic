@@ -25,7 +25,6 @@ import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.miner.ContainerMiner;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
-import com.lothrazar.cyclic.block.planter.ContainerPlanter;
 import com.lothrazar.cyclic.block.screen.ContainerScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.ContainerStructure;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
@@ -87,8 +86,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerCrafter> crafter;
   @ObjectHolder(ModCyclic.MODID + ":dropper")
   public static ContainerType<ContainerDropper> dropper;
-  @ObjectHolder(ModCyclic.MODID + ":planter")
-  public static ContainerType<ContainerPlanter> planter;
   @ObjectHolder(ModCyclic.MODID + ":forester")
   public static ContainerType<ContainerForester> forester;
   @ObjectHolder(ModCyclic.MODID + ":magnet")

@@ -32,7 +32,6 @@ import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
-import com.lothrazar.cyclic.block.planter.TilePlanter;
 import com.lothrazar.cyclic.block.screen.TileScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
@@ -125,8 +124,6 @@ public class TileRegistry {
   public static TileEntityType<TileDice> dice;
   @ObjectHolder(ModCyclic.MODID + ":dropper")
   public static TileEntityType<TileDropper> dropper;
-  @ObjectHolder(ModCyclic.MODID + ":planter")
-  public static TileEntityType<TilePlanter> planter;
   @ObjectHolder(ModCyclic.MODID + ":forester")
   public static TileEntityType<TileForester> forester;
   @ObjectHolder(ModCyclic.MODID + ":magnet")

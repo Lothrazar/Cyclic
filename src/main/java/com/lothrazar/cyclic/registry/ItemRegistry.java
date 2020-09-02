@@ -128,7 +128,6 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dice"));
     r.register(new BlockItem(BlockRegistry.dropper, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dropper"));
     r.register(new BlockItem(BlockRegistry.forester, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("forester"));
-    r.register(new BlockItem(BlockRegistry.planter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("planter"));
     r.register(new BlockItem(BlockRegistry.magnet, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("magnet"));
     r.register(new BlockItem(BlockRegistry.miner, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("miner"));
     r.register(new BlockItem(BlockRegistry.screen, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("screen"));
