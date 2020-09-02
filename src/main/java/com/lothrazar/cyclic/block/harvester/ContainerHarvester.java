@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerHarvester extends ContainerBase {
@@ -30,10 +28,6 @@ public class ContainerHarvester extends ContainerBase {
   @Override
   public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
     return ItemStack.EMPTY;
-  }
-
-  public int getEnergy() {
-    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override

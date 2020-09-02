@@ -20,7 +20,6 @@ import com.lothrazar.cyclic.block.fan.ContainerFan;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
 import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
-import com.lothrazar.cyclic.block.magnet.ContainerMagnet;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.miner.ContainerMiner;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
@@ -88,8 +87,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerDropper> dropper;
   @ObjectHolder(ModCyclic.MODID + ":forester")
   public static ContainerType<ContainerForester> forester;
-  @ObjectHolder(ModCyclic.MODID + ":magnet")
-  public static ContainerType<ContainerMagnet> magnet;
   @ObjectHolder(ModCyclic.MODID + ":miner")
   public static ContainerType<ContainerMiner> miner;
   @ObjectHolder(ModCyclic.MODID + ":screen")

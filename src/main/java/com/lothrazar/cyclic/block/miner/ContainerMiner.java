@@ -8,8 +8,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -19,7 +17,7 @@ public class ContainerMiner extends ContainerBase {
   TileMiner tile;
 
   public ContainerMiner(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.anvil, windowId);
+    super(ContainerScreenRegistry.miner, windowId);
     tile = (TileMiner) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -31,13 +29,13 @@ public class ContainerMiner extends ContainerBase {
     this.trackAllIntFields(tile, TileMiner.Fields.values().length);
     trackEnergy(tile);
   }
-
-  public int getEnergy() {
-    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-  }
+  //
+  //  public int getEnergy() {
+  //    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+  //  }
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.anvil);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.miner);
   }
 }

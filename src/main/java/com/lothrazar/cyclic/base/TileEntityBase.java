@@ -365,4 +365,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     //for string field system
     return null;
   }
+
+  public int getEnergy() {
+    return this.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+  }
 }

@@ -34,7 +34,7 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
@@ -48,6 +48,6 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 60, 20);
-    energy.draw(ms, container.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
   }
 }

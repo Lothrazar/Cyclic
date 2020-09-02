@@ -27,7 +27,6 @@ import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
-import com.lothrazar.cyclic.block.magnet.TileMagnet;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
@@ -126,8 +125,6 @@ public class TileRegistry {
   public static TileEntityType<TileDropper> dropper;
   @ObjectHolder(ModCyclic.MODID + ":forester")
   public static TileEntityType<TileForester> forester;
-  @ObjectHolder(ModCyclic.MODID + ":magnet")
-  public static TileEntityType<TileMagnet> magnet;
   @ObjectHolder(ModCyclic.MODID + ":miner")
   public static TileEntityType<TileMiner> miner;
   @ObjectHolder(ModCyclic.MODID + ":screen")

@@ -38,7 +38,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
@@ -52,6 +52,6 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    energy.draw(ms, container.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
   }
 }

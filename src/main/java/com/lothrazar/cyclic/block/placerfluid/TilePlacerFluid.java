@@ -32,7 +32,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   //  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
 
   public static enum Fields {
-    REDSTONE;
+    REDSTONE, RENDER;
   }
 
   public TilePlacerFluid() {
@@ -86,8 +86,10 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
       return;
     }
+    setLitProperty(true);
     FluidStack test = tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.SIMULATE);
     if (test.getAmount() == FluidAttributes.BUCKET_VOLUME
         && test.getFluid().getDefaultState() != null &&
@@ -105,20 +107,25 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   }
 
   @Override
-  public void setField(int field, int value) {
-    switch (Fields.values()[field]) {
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
       case REDSTONE:
-        this.needsRedstone = value % 2;
-      break;
+        return this.needsRedstone;
+      case RENDER:
+        return render;
     }
+    return 0;
   }
 
   @Override
-  public int getField(int field) {
-    switch (Fields.values()[field]) {
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
       case REDSTONE:
-        return this.needsRedstone;
+        this.needsRedstone = value % 2;
+      break;
+      case RENDER:
+        this.render = value % 2;
+      break;
     }
-    return 0;
   }
 }

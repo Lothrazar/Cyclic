@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +24,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -30,20 +33,23 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileUser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   public static enum Fields {
-    REDSTONE, TIMER, TIMERDEL;
+    REDSTONE, TIMER, TIMERDEL, RENDER;
   }
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
   private int timerDelay = 20;
+  static final int MAX = 640000;
+  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+
+  private IEnergyStorage createEnergy() {
+    return new CustomEnergyStorage(MAX, MAX / 4);
+  }
 
   public TileUser() {
     super(TileRegistry.user);
+    this.needsRedstone = 1;
   }
-  //  @Override
-  //  public boolean hasFastRenderer() {
-  //    return true;
-  //  }
 
   @Override
   public void tick() {
@@ -88,7 +94,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       case TIMERDEL:
         this.timerDelay = value;
       break;
-      default:
+      case RENDER:
+        this.render = value % 2;
       break;
     }
   }
@@ -102,8 +109,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
         return timer;
       case TIMERDEL:
         return this.timerDelay;
-      default:
-      break;
+      case RENDER:
+        return render;
     }
     return 0;
   }
@@ -117,6 +124,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventory.cast();
     }
+    if (cap == CapabilityEnergy.ENERGY) {
+      return energy.cast();
+    }
     return super.getCapability(cap, side);
   }
 
@@ -124,6 +134,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   public void read(BlockState bs, CompoundNBT tag) {
     timerDelay = tag.getInt("delay");
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     super.read(bs, tag);
   }
 
@@ -133,6 +144,10 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
+    });
+    energy.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("energy", compound);
     });
     return super.write(tag);
   }

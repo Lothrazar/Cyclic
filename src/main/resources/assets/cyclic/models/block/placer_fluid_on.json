@@ -1,5 +1,5 @@
 { 
- 	"parent": "cyclic:parent/machine_classic",
+ 	"parent": "cyclic:parent/machine_classic_on",
     "textures": { 
         "base": "cyclic:blocks/machine/fluid",
         "stem": "cyclic:blocks/machine/wood"

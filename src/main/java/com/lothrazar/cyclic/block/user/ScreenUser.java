@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.user;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextboxInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -11,16 +12,20 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
+  private EnergyBar energy;
   private TextboxInteger txtBox;
   private ButtonMachineRedstone btnRedstone;
 
   public ScreenUser(ContainerUser screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
+    this.energy = new EnergyBar(this, TileUser.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    energy.guiLeft = guiLeft;
+    energy.guiTop = guiTop;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
@@ -59,5 +64,6 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, xSize / 2 - 9, 28);
     this.txtBox.render(ms, mouseX, mouseX, partialTicks);
+    energy.draw(ms, container.tile.getEnergy());
   }
 }
