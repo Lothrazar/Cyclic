@@ -28,7 +28,7 @@ public class FluidMagmaHolder {
   private static final String id = "magma";
   public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new MagmaFluidBlock.Source(FluidMagmaHolder.properties));
   public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new MagmaFluidBlock.Flowing(FluidMagmaHolder.properties));
-  public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_fluid",
+  public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
       () -> new MagmaFluidBlock(STILL, Block.Properties.create(Material.WATER).hardnessAndResistance(100.0F).setLightLevel((p_235456_0_) -> {
         return 8;
       }).noDrops()));

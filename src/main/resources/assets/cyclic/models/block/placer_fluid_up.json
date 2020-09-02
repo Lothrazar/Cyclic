@@ -1,8 +1,8 @@
 {
  	"parent": "cyclic:parent/machine_vertical",
 	"textures":{
-        "front": "cyclic:blocks/placer/front",
-        "side": "cyclic:blocks/placer/side",
+        "front": "cyclic:blocks/machine/front",
+        "side": "cyclic:blocks/mason/stone",
         "base": "minecraft:block/polished_diorite",
         "stem": "minecraft:block/furnace_top",
         "particle": "minecraft:block/iron_block"
