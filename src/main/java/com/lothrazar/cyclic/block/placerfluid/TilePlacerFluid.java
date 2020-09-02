@@ -29,7 +29,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
+  //  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
 
   public static enum Fields {
     REDSTONE;
@@ -63,7 +63,8 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return tankWrapper.cast();
+      //      return tankWrapper.cast();
+      return LazyOptional.of(() -> tank).cast();
     }
     return super.getCapability(cap, side);
   }

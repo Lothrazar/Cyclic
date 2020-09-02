@@ -1,6 +1,8 @@
 {
 	"parent": "cyclic:parent/machine_classic",
     "textures": {
+        "left": "cyclic:blocks/machine/left_on",
+        "right": "cyclic:blocks/machine/right_on",
         "front": "cyclic:blocks/machine/front_on"
 	}
 }

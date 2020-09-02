@@ -1,11 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
-    "textures": {
-        "front": "cyclic:blocks/harvester/front",
-        "side": "cyclic:blocks/harvester/side",
-        "inner": "cyclic:blocks/harvester/inner",
-        "stem": "cyclic:blocks/harvester/stem",
-        "base": "cyclic:blocks/harvester/base",
-        "particle": "cyclic:blocks/harvester/side"
+    "textures": { 
+        "base": "cyclic:blocks/machine/green",
+        "stem": "cyclic:blocks/machine/obsidian"
     }
 }

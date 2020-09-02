@@ -1,11 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
-    "textures": {
-        "front": "cyclic:blocks/breaker/front",
-        "side": "cyclic:blocks/breaker/side",
-        "inner": "minecraft:block/cauldron_inner",
-        "stem": "minecraft:block/mossy_cobblestone",
-        "base": "minecraft:block/quartz_block_bottom",
-        "particle": "cyclic:blocks/breaker/side"
+    "textures": { 
+        "base": "cyclic:blocks/machine/mossy",
+        "stem": "cyclic:blocks/mason/stone"
     }
 }

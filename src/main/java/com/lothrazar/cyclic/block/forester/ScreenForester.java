@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.forester;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,6 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenForester extends ScreenBase<ContainerForester> {
 
+  private ButtonMachineRedstone btnRender;
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
 
@@ -27,6 +29,8 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileForester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileForester.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "gui.cyclic.render"));
   }
 
   @Override
@@ -42,12 +46,13 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(container.tile);
+    btnRender.onValueUpdate(container.tile);
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 60, 20);
+    this.drawSlot(ms, 54, 34);
     energy.draw(ms, container.getEnergy());
   }
 }

@@ -1,10 +1,7 @@
-{
- 	"parent": "cyclic:parent/machine_vertical",
-	"textures":{
-        "front": "cyclic:blocks/placer/front",
-        "side": "cyclic:blocks/placer/side",
-        "base": "minecraft:block/quartz_block_bottom",
-        "stem": "minecraft:block/andesite",
-        "particle": "minecraft:block/iron_block"
-	}
+{ 
+ 	"parent": "cyclic:parent/machine_classic",
+    "textures": { 
+        "base": "cyclic:blocks/machine/white",
+        "stem": "cyclic:blocks/mason/mossy"
+    }
 }

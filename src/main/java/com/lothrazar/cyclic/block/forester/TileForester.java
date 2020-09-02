@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -41,18 +42,23 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileForester extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static final int MAX_HEIGHT = 32;
+  private int height = MAX_HEIGHT;
+  private static final int MAX_SIZE = 9;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private int size = MAX_SIZE;
+  IOptionalNamedTag<Block> forge_sapling = BlockTags.createOptional(new ResourceLocation("forge", "saplings"));
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
   private int shapeIndex = 0;
-
   //  public enum PlantingMode {
   //    //full is every square
   //    //spread is grid with 2 between so every three 
   //    //twos is 2x2 trees with 2 between
-  //    FULL, SPREAD, LARGE;
+  //    FULL, GRID1, GRID2, LARGE;
   //  }
+
   //
   //  private PlantingMode mode;
   //harvest mode: do we shear or break leaves
@@ -122,16 +128,24 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
     setLitProperty(true);
     timer--;
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    if (en == null || inv == null
+        || en.getEnergyStored() < ConfigManager.FORESTERPOWER.get()) {
+      return;
+    }
     if (timer > 0) {
       return;
     }
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
-    if (en == null || inv == null) {
+    //
+    List<BlockPos> shape = this.getShape();
+    if (shape.size() == 0) {
       return;
     }
+    updateTargetPos(shape);
     ItemStack dropMe = inv.getStackInSlot(0).copy();
-    if (this.isSapling(dropMe)) {
+    //only saplings at my level, the rest is harvesting
+    if (this.isSapling(dropMe) && targetPos.getY() == this.pos.getY()) {
       try {
         if (fakePlayer == null && world instanceof ServerWorld) {
           fakePlayer = setupBeforeTrigger((ServerWorld) world, "forester");
@@ -139,44 +153,63 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         TileEntityBase.tryEquipItem(inventory, fakePlayer, 0);
         //plant me baby 
         //        targetPos = this.pos.offset(this.getCurrentFacing());
-        List<BlockPos> shape = this.getShape();
-        if (shape.size() == 0) {
-          return;
-        }
-        if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
-          this.shapeIndex = 0;
-        }
-        BlockPos targetPos = shape.get(shapeIndex);
         //loop on positions
         ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos);
         if (result == ActionResultType.SUCCESS) {
           //ok then DRAIN POWER
+          ModCyclic.LOGGER.info("planted forester");
+          en.extractEnergy(ConfigManager.FORESTERPOWER.get(), false);
         }
-        shapeIndex++;
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("User action item error", e);
       }
     }
+    //
+    skipSomeAirBlocks(shape);
+    if (this.isTree(dropMe)) {
+      if (TileEntityBase.mineClickBlock(fakePlayer, world, targetPos)) {
+        //ok then DRAIN POWER
+        ModCyclic.LOGGER.info("harvest forester");
+        en.extractEnergy(ConfigManager.FORESTERPOWER.get(), false);
+      }
+    }
   }
 
+  private void updateTargetPos(List<BlockPos> shape) {
+    shapeIndex++;
+    if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
+      this.shapeIndex = 0;
+    }
+    targetPos = shape.get(shapeIndex);
+  }
+
+  BlockPos targetPos = null;
+
+  private void skipSomeAirBlocks(List<BlockPos> shape) {
+    int skipping = MAX_HEIGHT - 2;
+    int i = 0;
+    while (world.isAirBlock(targetPos) && i < skipping
+        && targetPos.getY() > pos.getY()) {
+      updateTargetPos(shape);
+      i++;
+    }
+  }
+
+  //for harvest
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(size), size);
+    shape = UtilShape.repeatShapeByHeight(shape, height);
     return shape;
   }
 
+  //for render
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size), this.size);
     return shape;
   }
-
-  static final int MAX_HEIGHT = 32;
-  private int height = MAX_HEIGHT;
-  private static final int MAX_SIZE = 9;//radius 7 translates to 15x15 area (center block + 7 each side)
-  private int size = MAX_SIZE;
-  IOptionalNamedTag<Block> forge_sapling = BlockTags.createOptional(new ResourceLocation("forge", "saplings"));
 
   private boolean isSapling(ItemStack dropMe) {
     //    if(dropMe.getItem().isIn(Tags.Blocks.SAND))
@@ -184,6 +217,12 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     Block block = Block.getBlockFromItem(dropMe.getItem());
     return block.isIn(forge_sapling) ||
         block instanceof SaplingBlock;
+  }
+
+  private boolean isTree(ItemStack dropMe) {
+    Block block = Block.getBlockFromItem(dropMe.getItem());
+    return block.isIn(BlockTags.LOGS) ||
+        block.isIn(BlockTags.LEAVES);
   }
 
   @Override

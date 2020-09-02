@@ -1,11 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
-    "textures": {
-        "front": "cyclic:blocks/collector_fluid/front",
-        "side": "cyclic:blocks/collector_fluid/side",
-        "inner": "cyclic:blocks/collector_fluid/inner",
-        "stem": "cyclic:blocks/collector_fluid/stem",
-        "base": "cyclic:blocks/collector_fluid/base",
-        "particle": "cyclic:blocks/collector_fluid/side"
+    "textures": { 
+        "base": "cyclic:blocks/machine/blue",
+        "stem": "cyclic:blocks/machine/white"
     }
 }

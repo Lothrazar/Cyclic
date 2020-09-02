@@ -1,11 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
-    "textures": {
-        "front": "cyclic:blocks/forester/front",
-        "side": "cyclic:blocks/forester/side",
-        "inner": "cyclic:blocks/forester/inner",
-        "stem": "cyclic:blocks/forester/stem",
-        "base": "cyclic:blocks/forester/base",
-        "particle": "cyclic:blocks/forester/side"
+    "textures": { 
+        "base": "cyclic:blocks/machine/white",
+        "stem": "cyclic:blocks/machine/peat"
     }
 }

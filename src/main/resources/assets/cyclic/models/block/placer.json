@@ -1,11 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
-    "textures": {
-        "front": "cyclic:blocks/placer/front",
-        "side": "cyclic:blocks/placer/side",
-        "inner": "cyclic:blocks/placer/inner",
-        "stem": "cyclic:blocks/placer/stem",
-        "base": "cyclic:blocks/placer/base",
-        "particle": "cyclic:blocks/placer/side"
+    "textures": { 
+        "base": "cyclic:blocks/mason/stone",
+        "stem": "cyclic:blocks/machine/white"
     }
 }

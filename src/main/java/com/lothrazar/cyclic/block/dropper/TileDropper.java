@@ -108,17 +108,19 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
       setLitProperty(false);
       return;
     }
-    setLitProperty(true);
     timer--;
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    if (en == null || inv == null
+        || en.getEnergyStored() < ConfigManager.DROPPERPOWER.get()) {
+      setLitProperty(false);
+      return;//out of energy so keep it rendered as off
+    }
+    setLitProperty(true);
     if (timer > 0) {
       return;
     }
     timer = delay;
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
-    if (en == null || inv == null) {
-      return;
-    }
     ItemStack dropMe = inv.getStackInSlot(0).copy();
     BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
     int amtDrop = Math.min(this.dropCount, dropMe.getCount());

@@ -1,11 +1,7 @@
 { 
- 	"parent": "cyclic:parent/machine_classic",
-    "textures": {
-        "front": "cyclic:blocks/miner/front",
-        "side": "cyclic:blocks/miner/side",
-        "inner": "cyclic:blocks/miner/inner",
-        "stem": "cyclic:blocks/miner/stem",
-        "base": "cyclic:blocks/miner/base",
-        "particle": "cyclic:blocks/miner/side"
+ 	"parent": "cyclic:parent/machine_classic_on",
+    "textures": { 
+        "base": "cyclic:blocks/machine/lapis",
+        "stem": "cyclic:blocks/machine/obsidian"
     }
 }

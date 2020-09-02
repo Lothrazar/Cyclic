@@ -91,6 +91,22 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return result;
   }
 
+  public static boolean mineClickBlock(WeakReference<FakePlayer> fakePlayer,
+      World world, BlockPos targetPos) {
+    if (fakePlayer == null) {
+      return false;
+    }
+    Hand hand = Hand.MAIN_HAND;
+    BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
+        fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
+        targetPos, true);
+    //processRightClick
+    boolean result = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+    //        .func_219441_a(fakePlayer.get(), world,
+    //        fakePlayer.get().getHeldItem(hand), hand, blockraytraceresult);
+    return result;
+  }
+
   public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name) {
     WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, UUID.randomUUID(), name);
     if (fakePlayer == null) {
