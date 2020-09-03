@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.miner;
 
+import java.awt.Color;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -20,6 +21,6 @@ public class RenderMiner extends TileEntityRenderer<TileMiner> {
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
     if (te.getField(TileMiner.Fields.RENDER.ordinal()) == 1)
-      UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrixStack);
+      UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.2F, Color.DARK_GRAY);
   }
 }

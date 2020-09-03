@@ -25,10 +25,12 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.UtilShape;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -53,16 +55,28 @@ public class WaterSpreaderItem extends ItemBase {
       pos = pos.offset(side);
     }
     spreadWaterFromCenter(context.getWorld(), player, pos);
+    player.swingArm(context.getHand());
     return super.onItemUse(context);
   }
 
   private boolean spreadWaterFromCenter(World world, PlayerEntity player, BlockPos posCenter) {
     int count = 0;
-    for (BlockPos pos : UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS)) {
-      if (world.hasWater(pos)) {
+    for (BlockPos pos : UtilShape.squareHorizontalFull(posCenter, RADIUS)) {
+      if (world.hasWater(pos) && world.getBlockState(pos).getBlock() == Blocks.WATER) {
         world.setBlockState(pos, Blocks.WATER.getDefaultState());
+        count++;
       }
-      count++;
+      else {
+        BlockState state = world.getBlockState(pos);
+        if (state.hasProperty(BlockStateProperties.WATERLOGGED)
+            && !state.get(BlockStateProperties.WATERLOGGED).booleanValue()
+            && this.isWaterNextdoor(world, pos)) {
+          //  flow it into the loggable
+          state = state.with(BlockStateProperties.WATERLOGGED, true);
+          world.setBlockState(pos, state);
+          count++;
+        }
+      }
     }
     boolean success = count > 0;
     if (success) {//particles are on each location, sound is just once
@@ -70,5 +84,10 @@ public class WaterSpreaderItem extends ItemBase {
       //      UtilSound.playSound(player, SoundEvents.ENTITY_PLAYER_SPLASH);
     }
     return success;
+  }
+
+  private boolean isWaterNextdoor(World world, BlockPos pos) {
+    return world.hasWater(pos.north()) || world.hasWater(pos.south()) ||
+        world.hasWater(pos.east()) || world.hasWater(pos.west());
   }
 }

@@ -1,10 +1,12 @@
 package com.lothrazar.cyclic.block.miner;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextboxInteger;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -16,6 +18,7 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
   private TextboxInteger txtHeight;
   private TextboxInteger txtSize;
   private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineRedstone btnRender;
   private EnergyBar energy;
 
   public ScreenMiner(ContainerMiner screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -32,13 +35,16 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileMiner.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileHarvester.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
-    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
+    int row = 50;
+    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + row, 20,
         container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
     txtHeight.setText("" + container.tile.getField(TileMiner.Fields.HEIGHT.ordinal()));
     txtHeight.setTooltip(UtilChat.lang("buildertype.height.tooltip"));
     this.children.add(txtHeight);
-    txtSize = new TextboxInteger(this.font, guiLeft + 90, guiTop + 20, 20,
+    txtSize = new TextboxInteger(this.font, guiLeft + 90, guiTop + row, 20,
         container.tile.getPos(), TileStructure.Fields.SIZE.ordinal());
     txtSize.setTooltip(UtilChat.lang("buildertype.size.tooltip"));
     txtSize.setText("" + container.tile.getField(TileMiner.Fields.SIZE.ordinal()));
@@ -64,12 +70,13 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(container.tile);
+    btnRender.onValueUpdate(container.tile);
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 54, 34);
+    this.drawSlot(ms, 54, 49);
     energy.draw(ms, container.tile.getEnergy());
     this.txtHeight.render(ms, mouseX, mouseX, partialTicks);
     this.txtSize.render(ms, mouseX, mouseX, partialTicks);

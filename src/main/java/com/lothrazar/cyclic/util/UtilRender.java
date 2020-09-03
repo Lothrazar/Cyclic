@@ -466,7 +466,8 @@ public class UtilRender {
     matrix.pop();
   }
 
-  public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix) {
+  public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix,
+      float scale, Color color) {
     //    IRenderTypeBuffer.getImpl(ibuffer);
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
@@ -482,18 +483,22 @@ public class UtilRender {
         continue;
       }
       matrix.push();
-      matrix.translate(e.getX(), e.getY(), e.getZ());
+      matrix.translate(e.getX() + .5F, e.getY() + .5F, e.getZ() + .5F);
       matrix.translate(-0.005f, -0.005f, -0.005f);
-      float scale = 0.7F;
       matrix.scale(scale, scale, scale);
       matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
       Matrix4f positionMatrix = matrix.getLast().getMatrix();
-      Color color = Color.BLUE;
       UtilRender.renderCube(positionMatrix, builder, e, color);
       matrix.pop();
     }
     matrix.pop();
     //    RenderSystem.disableDepthTest();
     buffer.finish(FakeBlockRenderTypes.SOLID_COLOUR);
+  }
+
+  public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix) {
+    renderOutline(view, coords, matrix,
+        0.7F, // defaults
+        Color.BLUE);
   }
 }

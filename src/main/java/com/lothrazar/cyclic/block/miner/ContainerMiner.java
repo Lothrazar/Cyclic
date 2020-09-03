@@ -23,7 +23,7 @@ public class ContainerMiner extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 55, 35));
+      addSlot(new SlotItemHandler(h, 0, 55, 50));
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileMiner.Fields.values().length);

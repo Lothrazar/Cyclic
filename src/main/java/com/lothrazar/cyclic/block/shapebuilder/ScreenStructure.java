@@ -40,7 +40,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileStructure.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "gui.cyclic.render"));
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
         container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
     txtHeight.setText("" + container.tile.getField(TileStructure.Fields.HEIGHT.ordinal()));

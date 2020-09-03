@@ -170,7 +170,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       //state.getPlayerRelativeBlockHardness(player, worldIn, pos);UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
       curBlockDamage += relative;
       //
-      //      ModCyclic.LOGGER.info(" progress ? " + targetPos + "  relative = " + relative + "    curBlockDamage=" + curBlockDamage);
+      ModCyclic.LOGGER.info(world.getBlockState(targetPos) + " progress ? " + targetPos + "  relative = " + relative + "    curBlockDamage=" + curBlockDamage);
       //if hardness is relative, jus fekin break it like air eh
       if (curBlockDamage >= 1.0f || relative == 0) {
         boolean harvested = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
@@ -201,7 +201,8 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   private boolean isTargetValid() {
     return targetPos != null && !world.isAirBlock(targetPos)
-        && world.getBlockState(targetPos).hardness >= 0;
+        && world.getBlockState(targetPos).hardness >= 0
+        && world.getFluidState(targetPos) == null;
   }
 
   private void updateTargetPos(List<BlockPos> shape) {
@@ -230,19 +231,11 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(size + 1), size, height);
+    shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(size + 1), size);
     int diff = directionIsUp ? 1 : -1;
-    shape = UtilShape.repeatShapeByHeight(shape, diff * height);
-    return shape;
-  }
-
-  public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size + 1), this.size);
-    int diff = directionIsUp ? 1 : -1;
-    shape = UtilShape.repeatShapeByHeight(shape, diff * height);
-    if (targetPos != null) {
-      shape.add(targetPos);
+    //    System.out.println("diff" + (diff * height));
+    if (height > 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
     }
     return shape;
   }

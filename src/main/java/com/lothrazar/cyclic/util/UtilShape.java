@@ -20,7 +20,7 @@ public class UtilShape {
     int zMax = pos.getZ() + radius;
     for (int x = xMin; x <= xMax; x++) {
       for (int z = zMin; z <= zMax; z++) {
-        for (int y = pos.getY(); y < pos.getY() + height; y++) {
+        for (int y = pos.getY(); y <= pos.getY() + height; y++) {
           //now go max height on each pillar for sort order
           shape.add(new BlockPos(x, y, z));
         }
@@ -165,12 +165,15 @@ public class UtilShape {
     newShape.addAll(shape);//copy it
     for (int i = 1; i <= Math.abs(height); i++)
       for (BlockPos p : shape) {
-        BlockPos newOffset = p.up(i);
+        BlockPos newOffset = null;
         if (height > 0) {
-          newShape.add(newOffset);
+          newOffset = p.up(i);
         }
         else {
           newOffset = p.down(i);
+        }
+        if (newOffset.getY() > 3) {
+          System.out.println("yo WTF" + height + " this was down????" + newOffset + " From " + p);
         }
         if (newOffset.getY() >= 0 && newOffset.getY() <= 256)
           newShape.add(newOffset);
