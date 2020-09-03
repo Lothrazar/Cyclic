@@ -233,7 +233,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(size + 1), size);
     int diff = directionIsUp ? 1 : -1;
-    //    System.out.println("diff" + (diff * height));
     if (height > 0) {
       shape = UtilShape.repeatShapeByHeight(shape, diff * height);
     }

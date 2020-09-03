@@ -128,10 +128,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     });
     return super.write(tag);
   }
-  //  @Override
-  //  public boolean hasFastRenderer() {
-  //    return true;
-  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {

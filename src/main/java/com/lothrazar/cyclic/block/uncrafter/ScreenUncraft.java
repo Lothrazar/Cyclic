@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.anvil;
+package com.lothrazar.cyclic.block.uncrafter;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
@@ -8,15 +8,14 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
-public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
+public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
 
-  private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
-  //  private TimerBar timer;
+  private ButtonMachineRedstone btnRedstone;
 
-  public ScreenAnvil(ContainerAnvil screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenUncraft(ContainerUncraft screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileAnvilAuto.MAX);
+    this.energy = new EnergyBar(this, TileUncraft.MAX);
   }
 
   @Override
@@ -27,7 +26,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileAnvilAuto.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileUncraft.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override
@@ -36,11 +35,11 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
-    btnRedstone.onValueUpdate(container.tile);
   }
 
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+    btnRedstone.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
@@ -48,8 +47,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 54, 34);
-    this.drawSlotLarge(ms, 104, 30);
     energy.draw(ms, container.tile.getEnergy());
+    this.drawSlot(ms, xSize / 2 - 9, 28);
   }
 }

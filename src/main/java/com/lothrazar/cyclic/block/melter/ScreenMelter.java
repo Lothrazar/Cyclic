@@ -19,7 +19,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   public ScreenMelter(ContainerMelter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     energy = new EnergyBar(this, TileMelter.MAX);
-    fluid = new FluidBar(this, 132, 8, TileMelter.CAPACITY);
+    fluid = new FluidBar(this, 132, 8, TileMelter.CAPACITY);//152, 14,
     timer = new TimerBar(this, 88, 37, TileMelter.TIMER_FULL);
   }
 

@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -26,6 +27,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -43,9 +46,15 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   private int shapeIndex = 0;// current index of shape array
   private int size = 4 * 2;
   private int height = 16;
+  static final int MAX = 64000;
+  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 
   public static enum Fields {
     REDSTONE, RENDER;
+  }
+
+  private IEnergyStorage createEnergy() {
+    return new CustomEnergyStorage(MAX, MAX);
   }
 
   public TileFluidCollect() {
@@ -64,12 +73,18 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(1) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return Block.getBlockFromItem(stack.getItem()) != Blocks.AIR;
+      }
+    };
   }
 
   public List<BlockPos> getShape() {
     List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.pos.down(height), this.size);
-    shape = UtilShape.repeatShapeByHeight(shape, height - 1);
+    shape = UtilShape.repeatShapeByHeight(shape, height);
     return shape;
   }
 
@@ -98,6 +113,9 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return tankWrapper.cast();
     }
+    if (cap == CapabilityEnergy.ENERGY) {
+      return energy.cast();
+    }
     return super.getCapability(cap, side);
   }
 
@@ -105,6 +123,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   public void read(BlockState bs, CompoundNBT tag) {
     shapeIndex = tag.getInt("shapeIndex");
     tank.readFromNBT(tag.getCompound("fluid"));
+    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     super.read(bs, tag);
   }
@@ -114,6 +133,10 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
+    });
+    energy.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("energy", compound);
     });
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
@@ -125,6 +148,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
+      this.setLitProperty(false);
       return;
     }
     inventory.ifPresent(inv -> {
@@ -132,6 +156,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
         return;
       }
+      this.setLitProperty(true);
       List<BlockPos> shape = this.getShapeFilled();
       if (shape.size() == 0) {
         return;

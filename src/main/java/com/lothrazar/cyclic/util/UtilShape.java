@@ -172,9 +172,7 @@ public class UtilShape {
         else {
           newOffset = p.down(i);
         }
-        if (newOffset.getY() > 3) {
-          System.out.println("yo WTF" + height + " this was down????" + newOffset + " From " + p);
-        }
+        if (newOffset.getY() > 3) {}
         if (newOffset.getY() >= 0 && newOffset.getY() <= 256)
           newShape.add(newOffset);
       }

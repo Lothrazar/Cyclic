@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.collectfluid;
+package com.lothrazar.cyclic.block.uncrafter;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -12,13 +12,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class ContainerFluidCollect extends ContainerBase {
+public class ContainerUncraft extends ContainerBase {
 
-  protected TileFluidCollect tile;
+  protected TileUncraft tile;
 
-  public ContainerFluidCollect(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.collector_fluid, windowId);
-    tile = (TileFluidCollect) world.getTileEntity(pos);
+  public ContainerUncraft(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    super(ContainerScreenRegistry.user, windowId);
+    tile = (TileUncraft) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
@@ -26,12 +26,12 @@ public class ContainerFluidCollect extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 80, 29));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackAllIntFields(tile, TileFluidCollect.Fields.values().length);
-    this.trackEnergy(tile);
+    this.trackAllIntFields(tile, TileUncraft.Fields.values().length);
+    trackEnergy(tile);
   }
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.collector_fluid);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.user);
   }
 }

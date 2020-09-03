@@ -3,11 +3,16 @@ package com.lothrazar.cyclic.block.uncrafter;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
@@ -15,6 +20,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -24,7 +31,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileUncraft extends TileEntityBase implements ITickableTileEntity {
+public class TileUncraft extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -32,6 +39,21 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity {
 
   public TileUncraft() {
     super(TileRegistry.uncrafter);
+  }
+
+  public static enum Fields {
+    REDSTONE;
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerUncraft(i, world, pos, playerInventory, playerEntity);
   }
 
   private IEnergyStorage createEnergy() {

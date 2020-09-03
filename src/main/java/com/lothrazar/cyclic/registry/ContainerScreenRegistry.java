@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
 import com.lothrazar.cyclic.block.screen.ContainerScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.ContainerStructure;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
+import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
 import net.minecraft.inventory.container.ContainerType;
@@ -77,6 +78,8 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":fan")
   public static ContainerType<ContainerFan> fan;
   //
+  @ObjectHolder(ModCyclic.MODID + ":uncraft")
+  public static ContainerType<ContainerUncraft> uncraft;
   @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
   public static ContainerType<ContainerAnvilMagma> anvil_magma;
   @ObjectHolder(ModCyclic.MODID + ":beacon")

@@ -116,6 +116,7 @@ import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
+import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.BlockUser;
 import com.lothrazar.cyclic.block.user.ContainerUser;
@@ -464,8 +465,8 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerAnvilMagma(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("anvil_magma"));
-    //    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-    //      return new ContainerUncraft(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    //    }).setRegistryName("uncrafter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerUncraft(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("uncrafter"));
   }
 }
