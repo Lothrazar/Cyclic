@@ -95,6 +95,14 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
   }
 
   @Override
+  public void tick() {
+    this.txtZ.tick();
+    this.txtY.tick();
+    this.txtZ.tick();
+    this.txtLimit.tick();
+  }
+
+  @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.txtX.render(ms, mouseX, mouseX, partialTicks);

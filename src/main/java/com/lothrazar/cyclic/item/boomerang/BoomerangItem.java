@@ -59,7 +59,6 @@ public class BoomerangItem extends ItemBase {
       return;
     }
     PlayerEntity player = (PlayerEntity) entity;
-    //    System.out.println("GO" + velocityFactor);
     BoomerangEntity e;
     switch (this.type) {
       case CARRY:

@@ -24,14 +24,18 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -55,6 +59,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
   private int shapeIndex = 0;
+  BlockPos targetPos = null;
   //  public enum PlantingMode {
   //    //full is every square
   //    //spread is grid with 2 between so every three 
@@ -75,12 +80,24 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     this.render = 0;
   }
 
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
+  }
+
   private IEnergyStorage createEnergy() {
     return new CustomEnergyStorage(MAX, MAX);
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(1) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return isSapling(stack);
+      }
+    };
   }
 
   @Override
@@ -195,8 +212,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
     targetPos = shape.get(shapeIndex);
   }
-
-  BlockPos targetPos = null;
 
   private void skipSomeAirBlocks(List<BlockPos> shape) {
     int skipping = MAX_HEIGHT - 2;

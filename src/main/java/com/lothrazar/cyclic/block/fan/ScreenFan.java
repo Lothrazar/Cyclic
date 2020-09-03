@@ -49,6 +49,12 @@ public class ScreenFan extends ScreenBase<ContainerFan> {
   }
 
   @Override
+  public void tick() {
+    this.txtRange.tick();
+    this.txtSize.tick();
+  }
+
+  @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());

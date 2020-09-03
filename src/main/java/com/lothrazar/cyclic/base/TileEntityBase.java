@@ -231,9 +231,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
         //now push it into output, but find out what was ACTUALLY taken
         for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
           if (inv != null
-              && inv.isItemValidForSlot(slot, drain) == false) {
-            //            System.out.println("not valid");
-          }
+              && inv.isItemValidForSlot(slot, drain) == false) {}
           else {
             drain = handlerOutput.insertItem(slot, drain, false);
             if (drain.isEmpty()) {

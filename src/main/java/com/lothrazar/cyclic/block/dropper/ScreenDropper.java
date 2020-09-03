@@ -70,6 +70,13 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   }
 
   @Override
+  public void tick() {
+    this.txtCount.tick();
+    this.txtDelay.tick();
+    this.txtOffset.tick();
+  }
+
+  @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 54, 34);

@@ -41,13 +41,6 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileStructure.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "gui.cyclic.render"));
-    //    btnRender = addButton(new ButtonMachine(x + 20, y, 20, 20, "", (p) -> {
-    //      int f = TileStructure.Fields.RENDER.ordinal();
-    //      container.tile.setField(f, (container.tile.getField(f) + 1) % 2);
-    //      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, container.tile.getField(f), container.tile.getPos()));
-    //    }));
-    //    btnRender.setTooltip(UtilChat.lang("gui.cyclic.render" + on));
-    //    btnRender.setTextureId(on == 1 ? TextureEnum.RENDER_SHOW : TextureEnum.RENDER_HIDE);
     txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
         container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
     txtHeight.setText("" + container.tile.getField(TileStructure.Fields.HEIGHT.ordinal()));
@@ -85,11 +78,6 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
       this.shapeBtuns.add(btnShape);
     }
   }
-  //  @Override
-  //  public void removed() {
-  //    this.txtHeight = null;
-  //    this.txtSize = null;
-  //  }
 
   @Override
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {

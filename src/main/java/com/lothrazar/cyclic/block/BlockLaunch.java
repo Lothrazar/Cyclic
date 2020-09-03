@@ -72,7 +72,6 @@ public class BlockLaunch extends BlockBase {
     }
     //    int power = world.getRedstonePowerFromNeighbors(pos);// this.getStrongPower(state, worldIn, pos, Direction.UP);
     float ratio = ((power + 2) / 16F);
-    //    System.out.println(power + "=!power ; ratio" + ratio + "?? " + world.getStrongPower(pos));
     return 2.4F * ratio;
   }
 }

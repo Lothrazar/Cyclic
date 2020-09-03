@@ -20,7 +20,7 @@ public class UtilShape {
     int zMax = pos.getZ() + radius;
     for (int x = xMin; x <= xMax; x++) {
       for (int z = zMin; z <= zMax; z++) {
-        for (int y = pos.getY(); y < height; y++) {
+        for (int y = pos.getY(); y < pos.getY() + height; y++) {
           //now go max height on each pillar for sort order
           shape.add(new BlockPos(x, y, z));
         }
@@ -163,9 +163,17 @@ public class UtilShape {
   public static List<BlockPos> repeatShapeByHeight(List<BlockPos> shape, final int height) {
     List<BlockPos> newShape = new ArrayList<BlockPos>();
     newShape.addAll(shape);//copy it
-    for (int i = 1; i <= height; i++)
+    for (int i = 1; i <= Math.abs(height); i++)
       for (BlockPos p : shape) {
-        newShape.add(p.up(i));
+        BlockPos newOffset = p.up(i);
+        if (height > 0) {
+          newShape.add(newOffset);
+        }
+        else {
+          newOffset = p.down(i);
+        }
+        if (newOffset.getY() >= 0 && newOffset.getY() <= 256)
+          newShape.add(newOffset);
       }
     return newShape;
   }

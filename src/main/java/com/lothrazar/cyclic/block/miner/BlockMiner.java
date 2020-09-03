@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.miner;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,6 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockMiner extends BlockBase {
 
@@ -29,6 +31,7 @@ public class BlockMiner extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.miner, RenderMiner::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.miner, ScreenMiner::new);
   }
 

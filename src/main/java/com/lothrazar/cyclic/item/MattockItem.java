@@ -51,7 +51,7 @@ public class MattockItem extends ToolItem {
       for (BlockPos posCurrent : shape) {
         //
         BlockState bsCurrent = world.getBlockState(posCurrent);
-        //        System.out.println(bsCurrent.getBlock() + " " + this.getDestroySpeed(stack, bsCurrent)
+        //        ln(bsCurrent.getBlock() + " " + this.getDestroySpeed(stack, bsCurrent)
         //            + " " + ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
         //            + " BUT IS IT " + this.efficiency);
         if (player.canPlayerEdit(posCurrent, sideHit, stack)

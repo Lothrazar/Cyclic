@@ -275,7 +275,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
           float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
           boolean attackSucc = live.attackEntityFrom(DamageSource.causeThrownDamage(this, owner), damage);
           if (attackSucc && live.isAlive() == false) {
-            //            System.out.println("killed one");
+            //           ("killed one");
           }
         }
       break;

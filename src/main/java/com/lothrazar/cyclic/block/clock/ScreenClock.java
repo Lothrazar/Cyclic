@@ -45,12 +45,13 @@ public class ScreenClock extends ScreenBase<ContainerClock> {
     txtPower.setTooltip(UtilChat.lang("cyclic.clock.power"));
     this.children.add(txtPower);
   }
-  //  @Override
-  //  public void removed() {
-  //    this.txtDuration = null;
-  //    this.txtDelay = null;
-  //    this.txtPower = null;
-  //  }
+
+  @Override
+  public void tick() {
+    this.txtPower.tick();
+    this.txtDelay.tick();
+    this.txtDuration.tick();
+  }
 
   @Override
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {

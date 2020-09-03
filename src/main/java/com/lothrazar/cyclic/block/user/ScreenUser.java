@@ -40,16 +40,18 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     txtBox.setTooltip(UtilChat.lang("block.cyclic.user.delay"));
     this.children.add(txtBox);
   }
-  //  @Override
-  //  public void removed() {  
-  //    this.txtBox = null;
-  //  }
+
+  @Override
+  public void tick() {
+    this.txtBox.tick();
+  }
 
   @Override
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
@@ -62,8 +64,8 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
+    energy.draw(ms, container.tile.getEnergy());
     this.drawSlot(ms, xSize / 2 - 9, 28);
     this.txtBox.render(ms, mouseX, mouseX, partialTicks);
-    energy.draw(ms, container.tile.getEnergy());
   }
 }

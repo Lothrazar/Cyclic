@@ -75,7 +75,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     Ingredient ing = ingredients.get(slot);
     for (ItemStack test : ing.getMatchingStacks()) {
       if (UtilItemStack.matches(current, test)) {
-        // System.out.println(slot + " match " + current + " test " + test);
         return true;
       }
     }

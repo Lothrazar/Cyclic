@@ -60,7 +60,13 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(1) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return stack.hasEffect();
+      }
+    };
   }
 
   @Override
