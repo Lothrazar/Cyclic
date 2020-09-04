@@ -64,6 +64,8 @@ public class UtilItemStack {
   }
 
   public static boolean matches(ItemStack current, ItemStack in) {
+    System.out.println("ItemStack.areItemsEqualIgnoreDurability(current, in)? " + ItemStack.areItemsEqualIgnoreDurability(current, in));
+    System.out.println("Match? " + ItemStack.areItemStackTagsEqual(current, in));
     return ItemStack.areItemsEqualIgnoreDurability(current, in)
         && ItemStack.areItemStackTagsEqual(current, in);
   }

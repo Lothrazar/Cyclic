@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -144,12 +143,14 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       if (r.isEmpty()) {
         continue;
       }
+      //pay cost 
+      inv.extractItem(0, match.getRecipeOutput().getCount(), false);
+      //give result items 
       for (int i = 1; i < inv.getSlots(); i++) {
         if (r.isEmpty()) {
           break;
         }
         System.out.println("Found a result to insert" + r);
-        inv.extractItem(0, match.getRecipeOutput().getCount(), false);
         r = inv.insertItem(i, r.copy(), false);
       }
     }
@@ -170,9 +171,14 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
 
   // matches count and has enough
   public static boolean recipeMatches(ItemStack stack, IRecipe<?> recipe) {
-    return UtilItemStack.matches(recipe.getRecipeOutput(), stack)//.isItemEqualIgnoreDurability(stack)
-        && recipe.getRecipeOutput().getCount() >= stack.getCount();
-    //.equals(dropMe, false);
+    // do items match
+    if (stack.isEmpty() ||
+        stack.getItem() != recipe.getRecipeOutput().getItem()) {
+      return false;
+    }
+    //data tags match, and we have enough quantity 
+    return ItemStack.areItemStackTagsEqual(stack, recipe.getRecipeOutput())
+        && recipe.getRecipeOutput().getCount() <= stack.getCount();
   }
 
   @Override
