@@ -1,20 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "sss",
-    "ccc",
-    "sss"
+    "ab",
+    "ba"
   ],
   "key": {
-    "c": {
+    "a": {
       "item": "minecraft:cobblestone"
     },
-    "s": {
-      "item": "minecraft:stone"
+    "b": {
+      "item": "minecraft:gravel"
     }
   },
   "result": {
     "item": "cyclic:mason_cobble",
-	"count": 8
+	"count": 4
   }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "cic",
+    "ccc"
+  ],
+  "key": {
+    "c": {
+      "item": "cyclic:biomass"
+    },
+    "i": {
+      "item": "cyclic:peat_unbaked"
+    }
+  },
+  "result": {
+    "item": "cyclic:terra_preta",
+	"count": 4
+  }
+}

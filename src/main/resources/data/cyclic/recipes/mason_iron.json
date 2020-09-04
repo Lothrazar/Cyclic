@@ -1,20 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ccc",
-    "cic",
-    "ccc"
+    "is",
+    "si"
   ],
   "key": {
-    "c": {
+    "s": {
       "item": "cyclic:mason_stone"
     },
     "i": {
-      "item": "minecraft:iron_block"
+      "tag": "forge:storage_blocks/iron"
     }
   },
   "result": {
     "item": "cyclic:mason_iron",
-	"count": 8
+	"count": 2
   }
 }

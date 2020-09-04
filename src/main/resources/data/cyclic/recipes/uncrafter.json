@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "g g",
+    "ooo"
+  ],
+  "key": {
+    "s": {
+      "item": "cyclic:gem_obsidian"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "g": {
+      "item": "cyclic:mason_plate"
+    },
+    "r": {
+      "tag": "forge:storage_blocks/diamond"
+    }
+  },
+  "result": {
+    "item": "cyclic:uncrafter",
+    "count": 1
+  }
+}

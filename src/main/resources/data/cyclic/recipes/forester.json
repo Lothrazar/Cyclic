@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "xax",
+    "ooo"
+  ],
+  "key": {
+    "a": {
+      "item": "cyclic:gem_amber"
+    },
+    "o": {
+      "item": "cyclic:mason_plate"
+    },
+    "x": {
+      "tag": "minecraft:logs"
+    },
+    "r": {
+      "item": "minecraft:observer"
+    }
+  },
+  "result": {
+    "item": "cyclic:forester",
+    "count": 1
+  }
+}

@@ -16,7 +16,7 @@
       "item": "minecraft:dispenser"
     },
     "s": {
-      "item": "minecraft:slime_ball"
+      "item": "cyclic:mason_plate"
     }
   },
   "result": {

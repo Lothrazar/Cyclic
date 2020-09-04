@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sgs",
+    "ooo"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:nether_stars"
+    },
+    "o": {
+      "tag": "forge:gems/emerald"
+    },
+    "s": {
+      "tag": "forge:glass/colorless"
+    }
+  },
+  "result": {
+    "item": "cyclic:beacon",
+    "count": 1
+  }
+}

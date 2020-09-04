@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "gbg",
+    "ooo"
+  ],
+  "key": {
+    "b": {
+      "item": "cyclic:gem_amber"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "g": {
+      "item": "cyclic:mason_plate"
+    },
+    "r": {
+      "tag": "forge:storage_blocks/lapis"
+    },
+    "s": {
+      "item": "minecraft:iron_pickaxe"
+    }
+  },
+  "result": {
+    "item": "cyclic:miner",
+    "count": 1
+  }
+}

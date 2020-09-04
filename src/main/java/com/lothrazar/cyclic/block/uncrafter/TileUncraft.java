@@ -39,12 +39,22 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  public static enum UncraftStatusEnum {
+    EMPTY, CANT, MATCH;
+  }
+
+  public static enum Fields {
+    REDSTONE, STATUS;
+  }
+
   public TileUncraft() {
     super(TileRegistry.uncrafter);
   }
 
-  public static enum Fields {
-    REDSTONE;
+  private UncraftStatusEnum status;
+
+  public UncraftStatusEnum getStatus() {
+    return status;
   }
 
   @Override
@@ -110,25 +120,30 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     IEnergyStorage en = this.energy.orElse(null);
     IItemHandler inv = this.inventory.orElse(null);
     if (en == null || inv == null || world.getServer() == null) {
+      this.status = UncraftStatusEnum.EMPTY;
       return;
     }
     //    int RADIUS = 2;
     //
     ItemStack dropMe = inv.getStackInSlot(0).copy();
-    if (!dropMe.isEmpty()) {
+    if (dropMe.isEmpty()) {
+      this.status = UncraftStatusEnum.EMPTY;
+    }
+    else {
       setLitProperty(true);
       IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
       if (match != null) {
+        this.status = UncraftStatusEnum.MATCH;
         uncraftRecipe(inv, match);
       }
       else {
+        this.status = UncraftStatusEnum.CANT;
         System.out.println("no match exists for " + dropMe);
       }
     }
   }
 
   private void uncraftRecipe(IItemHandler inv, IRecipe<?> match) {
-    System.out.println("Found a match" + match);
     List<ItemStack> result = new ArrayList<>();
     for (Ingredient ing : match.getIngredients()) {
       if (ing.getMatchingStacks().length == 0) {
@@ -186,6 +201,8 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
+      case STATUS:
+        return this.status.ordinal();
     }
     return 0;
   }
@@ -195,6 +212,9 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
+      break;
+      case STATUS:
+      //        this.status = UncraftStatusEnum.values()[value];
       break;
     }
   }
