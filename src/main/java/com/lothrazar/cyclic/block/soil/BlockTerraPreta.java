@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.sprinklers;
+package com.lothrazar.cyclic.block.soil;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;

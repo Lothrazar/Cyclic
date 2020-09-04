@@ -1,0 +1,9 @@
+{
+ 	"parent": "cyclic:parent/machine_simple",
+    "textures": {
+        "side": "cyclic:blocks/mason/stone",
+        "base": "cyclic:blocks/machine/diamond",
+        "inner": "cyclic:blocks/machine/obsidian",
+        "particle": "cyclic:blocks/machine/diamond"
+    }
+}

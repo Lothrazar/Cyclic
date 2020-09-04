@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -7,8 +8,8 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -16,12 +17,14 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -61,7 +64,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(1 + 8 + 8);
   }
 
   @Override
@@ -101,39 +104,58 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       setLitProperty(false);
       return;
     }
-    setLitProperty(true);
     timer--;
     if (timer > 0) {
       return;
     }
     IEnergyStorage en = this.energy.orElse(null);
     IItemHandler inv = this.inventory.orElse(null);
-    if (en == null || inv == null) {
+    if (en == null || inv == null || world.getServer() == null) {
       return;
     }
-    int RADIUS = 2;
-    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(
-        pos.getX() - RADIUS, pos.getY() - 1, pos.getZ() - RADIUS,
-        pos.getX() + RADIUS, pos.getY() + 2, pos.getZ() + RADIUS), (entity) -> {
-          return entity.isAlive() && !entity.getItem().isEmpty();
-        });
-    if (list.size() > 0) {
-      //PICK ME UP
-      this.pickupItem(list.get(0));
-    }
+    //    int RADIUS = 2;
+    //
     ItemStack dropMe = inv.getStackInSlot(0).copy();
     if (!dropMe.isEmpty()) {
-      this.uncraft(dropMe);
+      setLitProperty(true);
+      IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
+      if (match != null) {
+        uncraftRecipe(inv, match);
+      }
+      else {
+        System.out.println("no match exists for " + dropMe);
+      }
     }
   }
 
-  private void pickupItem(ItemEntity itemEntity) {
-    // TODO Auto-generated method stub
+  private void uncraftRecipe(IItemHandler inv, IRecipe<?> match) {
+    System.out.println("Found a match" + match);
+    List<ItemStack> result = new ArrayList<>();
+    for (Ingredient ing : match.getIngredients()) {
+      if (ing.getMatchingStacks().length == 0) {
+        continue;
+      }
+      //ok
+      int index = MathHelper.nextInt(world.rand, 0, ing.getMatchingStacks().length - 1);
+      index = 0;//non random
+      result.add(ing.getMatchingStacks()[index]);
+    }
+    for (ItemStack r : result) {
+      if (r.isEmpty()) {
+        continue;
+      }
+      for (int i = 1; i < inv.getSlots(); i++) {
+        if (r.isEmpty()) {
+          break;
+        }
+        System.out.println("Found a result to insert" + r);
+        inv.extractItem(0, match.getRecipeOutput().getCount(), false);
+        r = inv.insertItem(i, r.copy(), false);
+      }
+    }
   }
 
-  private IRecipe<?> uncraft(ItemStack dropMe) {
-    // TODO Auto-generated method stub
-    //    CraftingManager.INSTNACE 
+  public IRecipe<?> findMatchingRecipe(World world, ItemStack dropMe) {
     Collection<IRecipe<?>> list = world.getServer().getRecipeManager().getRecipes();
     for (IRecipe<?> recipe : list) {
       if (recipe.getType() == IRecipeType.CRAFTING) {
@@ -146,11 +168,28 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     return null;
   }
 
-  private boolean recipeMatches(ItemStack dropMe, IRecipe<?> recipe) {
-    return recipe.getRecipeOutput().equals(dropMe, false);
-    //    return false;
+  // matches count and has enough
+  public static boolean recipeMatches(ItemStack stack, IRecipe<?> recipe) {
+    return UtilItemStack.matches(recipe.getRecipeOutput(), stack)//.isItemEqualIgnoreDurability(stack)
+        && recipe.getRecipeOutput().getCount() >= stack.getCount();
+    //.equals(dropMe, false);
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case REDSTONE:
+        return this.needsRedstone;
+    }
+    return 0;
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
+    }
+  }
 }

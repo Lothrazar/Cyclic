@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -48,6 +49,10 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, container.tile.getEnergy());
-    this.drawSlot(ms, xSize / 2 - 9, 28);
+    this.drawSlot(ms, xSize / 2 - 9, 18);
+    for (int i = 0; i < 8; i++) {
+      this.drawSlot(ms, 7 + i * Const.SQ, 44);
+      this.drawSlot(ms, 7 + i * Const.SQ, 44 + Const.SQ);
+    }
   }
 }

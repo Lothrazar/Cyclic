@@ -78,7 +78,7 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":fan")
   public static ContainerType<ContainerFan> fan;
   //
-  @ObjectHolder(ModCyclic.MODID + ":uncraft")
+  @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static ContainerType<ContainerUncraft> uncraft;
   @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
   public static ContainerType<ContainerAnvilMagma> anvil_magma;

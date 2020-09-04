@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.sprinklers;
+package com.lothrazar.cyclic.block.soil;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.ModCyclic;
@@ -65,8 +65,9 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
       return;
     }
     timer = TIMER_FULL;
-    for (int h = 0; h < HEIGHT; h++)
+    for (int h = 0; h < HEIGHT; h++) {
       doGrowth(h);
+    }
   }
 
   /**
@@ -88,6 +89,7 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
       try {//no need to literally increase internal growth numbers, just force more  update ticks 
         //        world.scheduleBlockUpdate(current, block, world.rand.nextInt(30) + 20, 1);
         if (!world.isRemote && world instanceof ServerWorld) {
+          ModCyclic.LOGGER.info("growth from TP");
           block.randomTick(bState, (ServerWorld) world, current, world.rand);
           //          block.updateTick(world, current, bState, world.rand);
         }

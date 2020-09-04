@@ -61,35 +61,42 @@ public abstract class ContainerBase extends Container {
 
   @Override
   public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-    int playerStart = endInv + 1;
-    int playerEnd = endInv + PLAYERSIZE;//53 = 17 + 36
-    //player is 18 to 53
-    //TILE is [0, 17]
-    ItemStack itemstack = ItemStack.EMPTY;
-    Slot slot = this.inventorySlots.get(index);
-    if (slot != null && slot.getHasStack()) {
-      ItemStack stack = slot.getStack();
-      itemstack = stack.copy();
-      if (index <= this.endInv) {
-        if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
+    try {
+      //if last machine slot is 17, endInv is 18
+      int playerStart = endInv;
+      int playerEnd = endInv + PLAYERSIZE;//53 = 17 + 36 
+      //player is 18 to 53
+      //TILE is [0, 17]
+      ItemStack itemstack = ItemStack.EMPTY;
+      Slot slot = this.inventorySlots.get(index);
+      if (slot != null && slot.getHasStack()) {
+        ItemStack stack = slot.getStack();
+        itemstack = stack.copy();
+        if (index < this.endInv) {
+          if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
+            return ItemStack.EMPTY;
+          }
+        }
+        else if (index <= playerEnd && !this.mergeItemStack(stack, startInv, endInv, false)) {
           return ItemStack.EMPTY;
         }
+        if (stack.isEmpty()) {
+          slot.putStack(ItemStack.EMPTY);
+        }
+        else {
+          slot.onSlotChanged();
+        }
+        if (stack.getCount() == itemstack.getCount()) {
+          return ItemStack.EMPTY;
+        }
+        slot.onTake(playerIn, stack);
       }
-      else if (index <= playerEnd && !this.mergeItemStack(stack, startInv, endInv, false)) {
-        return ItemStack.EMPTY;
-      }
-      if (stack.isEmpty()) {
-        slot.putStack(ItemStack.EMPTY);
-      }
-      else {
-        slot.onSlotChanged();
-      }
-      if (stack.getCount() == itemstack.getCount()) {
-        return ItemStack.EMPTY;
-      }
-      slot.onTake(playerIn, stack);
+      return itemstack;
     }
-    return itemstack;
+    catch (Exception e) {
+      //      ModCyclic.LOGGER.error("Shift click error", e);
+      return ItemStack.EMPTY;
+    }
   }
 
   private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {

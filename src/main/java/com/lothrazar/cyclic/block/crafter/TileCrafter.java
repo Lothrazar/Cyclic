@@ -116,6 +116,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     if (matching != null) {
       //
       ItemStack winner = matching.getRecipeOutput();
+      System.out.println("crafter" + winner);
     }
     //coould loop
     //    Collection<IRecipe<?>> list = world.getServer().getRecipeManager().getRecipes();
