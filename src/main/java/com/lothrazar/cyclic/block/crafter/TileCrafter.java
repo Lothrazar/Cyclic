@@ -50,7 +50,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   //a 3x3, one output, and then what
   private IItemHandler createHandler() {
-    return new ItemStackHandler(10);
+    return new ItemStackHandler(9 * 3);
   }
 
   @Override

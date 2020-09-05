@@ -6,6 +6,14 @@
 	
 		"facing=south,lit=false":	{ "model": "cyclic:block/screen" , "y": 180 },
 	
-		"facing=west,lit=false":	{ "model": "cyclic:block/screen", "y": 270 }
+		"facing=west,lit=false":	{ "model": "cyclic:block/screen", "y": 270 },
+		
+		"facing=north,lit=true":	{ "model": "cyclic:block/screen_on"},
+	
+		"facing=east,lit=true":	{ "model": "cyclic:block/screen_on", "y": 90 },
+	
+		"facing=south,lit=true":	{ "model": "cyclic:block/screen_on" , "y": 180 },
+	
+		"facing=west,lit=true":	{ "model": "cyclic:block/screen_on", "y": 270 }
     }
 }
