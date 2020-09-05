@@ -51,7 +51,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     super(TileRegistry.uncrafter);
   }
 
-  private UncraftStatusEnum status;
+  private UncraftStatusEnum status = UncraftStatusEnum.EMPTY;
 
   public UncraftStatusEnum getStatus() {
     return status;
@@ -91,11 +91,13 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   public void read(BlockState bs, CompoundNBT tag) {
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("ucstats", status.ordinal());
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
@@ -137,8 +139,8 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         uncraftRecipe(inv, match);
       }
       else {
+        //        System.out.println("     server    this.status = " + this.status);
         this.status = UncraftStatusEnum.CANT;
-        System.out.println("no match exists for " + dropMe);
       }
     }
   }
@@ -214,7 +216,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         this.needsRedstone = value % 2;
       break;
       case STATUS:
-      //        this.status = UncraftStatusEnum.values()[value];
+        this.status = UncraftStatusEnum.values()[value];
       break;
     }
   }

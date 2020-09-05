@@ -576,7 +576,7 @@
 
     "enchantment_stack.empty": "Empty; use an enchanted book to store",
     "block.cyclic.screen": "Text Projector",
-    "block.cyclic.screen.tooltip": "Projects text with control of font size, padding, and colour",
+    "block.cyclic.screen.tooltip": "Projects text",
     "block.cyclic.screen.guide": "Like a slightly advanced computerized sign",
     "block.cyclic.screen_target": "Sensor Display",
     "block.cyclic.screen_target.tooltip": "Display properties of a distant block",

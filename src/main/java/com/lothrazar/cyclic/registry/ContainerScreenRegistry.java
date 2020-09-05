@@ -31,9 +31,109 @@ import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ContainerScreenRegistry {
+
+  @SubscribeEvent
+  public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
+    IForgeRegistry<ContainerType<?>> r = event.getRegistry();
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("collector"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("peat_generator"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerBattery(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("battery"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerHarvester(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("harvester"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerAnvil(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("anvil"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPlacer(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("placer"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerStructure(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("structure"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerMelter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("melter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerSolidifier(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("solidifier"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerBreaker(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("breaker"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerExpPylon(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("experience_pylon"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerUser(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("user"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDetector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("detector_entity"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDetectorItem(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("detector_item"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDisenchant(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("disenchanter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerTransmit(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("wireless_transmitter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerClock(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("clock"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCrate(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("crate"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPlacerFluid(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("placer_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerFluidCollect(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("collector_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerFan(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("fan"));
+    //
+    //
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPotion(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("beacon"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCrafter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("crafter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerDropper(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("dropper"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerForester(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("forester"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerMiner(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("miner"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerScreentext(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("screen"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerAnvilMagma(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("anvil_magma"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerUncraft(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("uncrafter"));
+  }
 
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static ContainerType<ContainerBreaker> breaker;

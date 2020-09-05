@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -16,8 +17,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BlockPotion extends BlockBase {
 
   public BlockPotion(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.hardnessAndResistance(1.8F)
+        .notSolid()//trying to get transparency
+    );
     this.setHasGui();
+  }
+
+  @Override
+  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+    return false;
   }
 
   @Override

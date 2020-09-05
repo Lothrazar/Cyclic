@@ -1,13 +1,10 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.uncrafter.TileUncraft.UncraftStatusEnum;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -46,13 +43,15 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     btnRedstone.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    if (container.tile.getStatus() == UncraftStatusEnum.CANT) {
-      String name = UtilChat.lang("block." + ModCyclic.MODID + ".uncrafter.cant");
-      int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;
-      drawString(ms, name,
-          center + 15,
-          8.0F);
-    }
+    //    if (container.tile.getStatus() == UncraftStatusEnum.CANT) {
+    //    System.out.println("screeoln status" + container.tile.getField(1));
+    //    String name = UtilChat.lang("block." + ModCyclic.MODID +
+    //        ".uncrafter." + container.tile.getStatus().name().toLowerCase());
+    //    int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;
+    //    drawString(ms, name,
+    //        center + 15,
+    //        12.0F);
+    //    }
   }
 
   @Override

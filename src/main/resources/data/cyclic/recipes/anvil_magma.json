@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ddd",
+    " s ",
+    "r r"
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "s": {
+      "item": "cyclic:mason_steel"
+    },
+    "d": {
+      "item": "minecraft:magma_block"
+    },
+    "r": {
+      "tag": "forge:obsidian"
+    }
+  },
+  "result": {
+    "item": "cyclic:anvil_magma",
+    "count": 1
+  }
+}

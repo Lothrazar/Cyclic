@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
@@ -44,6 +46,7 @@ public class BlockAnvilAuto extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.anvil, ScreenAnvil::new);
   }
 
