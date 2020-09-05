@@ -29,10 +29,13 @@ public class RenderScreen extends TileEntityRenderer<TileScreentext> {
   public void render(TileScreentext tile, float v, MatrixStack matrix,
       IRenderTypeBuffer buffer, int light, int overlayLight) {
     //
-    this.renderText("testing", tile, matrix, buffer, light, tile.getCurrentFacing());
+    this.renderText(tile.getFieldString(0), tile, matrix, buffer, light, tile.getCurrentFacing());
   }
 
   private void renderText(String text, TileScreentext tile, MatrixStack matrix, IRenderTypeBuffer buffer, int light, Direction side) {
+    if (text == null || text.isEmpty()) {
+      return;
+    }
     float alpha = 1;
     FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
     //    BlockDrawers block = (BlockDrawers) state.getBlock();
@@ -54,10 +57,10 @@ public class RenderScreen extends TileEntityRenderer<TileScreentext> {
     matrix.translate(offsetX, offsetY, 0);
     //set the size
     float scaleX = .125F, scaleY = .125F;
-    matrix.scale(scaleX, scaleY, 1);
+    matrix.scale(scaleX * tile.fontSize, scaleY * tile.fontSize, 1);
     //then draw it
     //    moveRendering(matrix, .125f, .125f, offsetX, offsetY, offsetZ);
-    int red = 24, green = 16, blue = 8;
+    int red = tile.red, green = tile.green, blue = tile.blue;
     int color = (int) (255 * alpha) << red | 255 << green | 255 << blue | 255;
     fontRenderer.renderString(text, -textWidth / 2f, 0.5f, color, false, matrix.getLast().getMatrix(), buffer, false, 0, light); // 15728880
     matrix.pop();

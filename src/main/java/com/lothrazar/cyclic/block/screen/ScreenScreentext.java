@@ -1,7 +1,8 @@
 package com.lothrazar.cyclic.block.screen;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.block.clock.TileRedstoneClock;
+import com.lothrazar.cyclic.gui.TextBoxAutosave;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,18 +10,28 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
 
-  private EnergyBar energy;
+  private TextBoxAutosave txtDuration;
 
   public ScreenScreentext(ContainerScreentext screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileScreentext.MAX);
   }
 
   @Override
   public void init() {
     super.init();
-    energy.guiLeft = guiLeft;
-    energy.guiTop = guiTop;
+    int x, y;
+    int w = 90;
+    int f = TileRedstoneClock.Fields.DURATION.ordinal();
+    x = guiLeft + 38;
+    y = guiTop + 26;
+    txtDuration = new TextBoxAutosave(this.font, x, y, w, container.tile.getPos(), 0);
+    txtDuration.setText(container.tile.getFieldString(0));
+    this.children.add(txtDuration);
+  }
+
+  @Override
+  public void tick() {
+    this.txtDuration.tick();
   }
 
   @Override
@@ -28,7 +39,7 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    //energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
   }
 
   @Override
@@ -40,7 +51,7 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 60, 20);
-    energy.draw(ms, container.getEnergy());
+    this.txtDuration.render(ms, mouseX, mouseY, partialTicks);
+    //  energy.draw(ms, container.getEnergy());
   }
 }
