@@ -1,8 +1,12 @@
 package com.lothrazar.cyclic.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class TimerBar {
 
@@ -10,7 +14,7 @@ public class TimerBar {
   private int x = 20;
   private int y = 98;
   private int capacity;
-  private int width = 26;
+  public int width = 26;
   private int height = 14;
   public int guiLeft;
   public int guiTop;
@@ -37,5 +41,13 @@ public class TimerBar {
         width, height);
   }
 
-  public void renderHoveredToolTip(int mouseX, int mouseY, int energ) {}
+  public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int curr) {
+    if (this.isMouseover(mouseX, mouseY)) {
+      int seconds = curr / 20;
+      String tt = seconds + "";// + this.capacity;
+      List<ITextComponent> list = new ArrayList<>();
+      list.add(new TranslationTextComponent(tt));
+      parent.func_243308_b(ms, list, mouseX, mouseY);
+    }
+  }
 }

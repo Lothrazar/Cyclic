@@ -15,7 +15,7 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
 
   public ScreenPotion(ContainerPotion screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TilePotion.MAX);
+    energy = new EnergyBar(this, TilePotion.MAX);
   }
 
   @Override
@@ -34,7 +34,7 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
@@ -47,7 +47,13 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 54, 34);
-    energy.draw(ms, container.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
+    this.drawSlot(ms, 8, 34);
+    int x = guiLeft + 29, y = guiTop + 16;
+    this.drawString(ms, container.tile.getTimerDisplay(), x, y);
+    for (String s : container.tile.getPotionDisplay()) {
+      y += 10;
+      this.drawString(ms, s, x, y);
+    }
   }
 }

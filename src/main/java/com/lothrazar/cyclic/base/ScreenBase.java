@@ -69,7 +69,7 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
   }
 
   protected void drawString(MatrixStack ms, String name, float x, float y) {
-    this.font.drawString(ms, name, x, y, 4210752);
+    this.font.drawString(ms, UtilChat.lang(name), x, y, 4210752);
   }
 
   public void drawButtonTooltips(MatrixStack ms, int mouseX, int mouseY) {

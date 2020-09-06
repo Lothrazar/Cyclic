@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "sss",
-    "sgs",
+    "sbs",
     "ooo"
   ],
   "key": {
-    "g": {
-      "tag": "forge:nether_stars"
+    "b": {
+      "item": "minecraft:beacon"
     },
     "o": {
       "tag": "forge:gems/emerald"
