@@ -9,6 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
@@ -24,13 +26,14 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockScreentext extends BlockBase {
 
   public BlockScreentext(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.ANVIL));
+    super(properties.hardnessAndResistance(1.8F).sound(SoundType.ANVIL).notSolid());
     this.setHasGui();
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.screen, ScreenScreentext::new);
     ClientRegistry.bindTileEntityRenderer(TileRegistry.screen, RenderScreen::new);
   }

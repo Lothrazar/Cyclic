@@ -76,7 +76,6 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
   @Override
   public void setFieldString(int field, String value) {
     text[field] = value;
-    System.out.println("SAVE !!!  " + text[field]);
   }
 
   @Override

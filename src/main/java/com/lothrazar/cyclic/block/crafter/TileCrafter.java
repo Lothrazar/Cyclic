@@ -110,8 +110,14 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     return super.write(tag);
   }
 
+  boolean disabled = true;//for test
+
   @Override
   public void tick() {
+    if (disabled ||
+        world.getServer() == null || world.getServer().getRecipeManager() == null) {
+      return;
+    }
     ICraftingRecipe matching = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, createCraftingInventory(), world).orElse(null);
     if (matching != null) {
       //

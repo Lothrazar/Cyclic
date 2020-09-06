@@ -42,7 +42,6 @@ public class TextBoxAutosave extends TextFieldWidget {
 
   private void saveValue() {
     tile.setFieldString(tileFieldId, getText());
-    System.out.println("SAVE clientside" + tile.getFieldString(tileFieldId));
     PacketRegistry.INSTANCE.sendToServer(new PacketTileString(this.tileFieldId, this.getText(), pos));
   }
 
