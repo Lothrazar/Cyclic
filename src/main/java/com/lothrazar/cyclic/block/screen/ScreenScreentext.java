@@ -37,23 +37,23 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     int f = TileScreentext.Fields.RED.ordinal();
     GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 255, container.tile.getField(f)));
-    y += h;
+    y += h + 1;
     f = TileScreentext.Fields.GREEN.ordinal();
     GuiSliderInteger green = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 255, container.tile.getField(f)));
-    y += h;
+    y += h + 1;
     f = TileScreentext.Fields.BLUE.ordinal();
     GuiSliderInteger blue = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 255, container.tile.getField(f)));
-    y += h;
+    y += h + 1;
     f = TileScreentext.Fields.PADDING.ordinal();
     GuiSliderInteger pad = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 10, container.tile.getField(f)));
-    y += h;
+        0, 20, container.tile.getField(f)));
+    y += h + 1;
     f = TileScreentext.Fields.FONT.ordinal();
     GuiSliderInteger font = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 100, container.tile.getField(f)));
-    y += h;
+    y += h + 1;
     f = TileScreentext.Fields.OFFSET.ordinal();
     GuiSliderInteger offset = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 10, container.tile.getField(f)));
@@ -86,7 +86,7 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawBackground(ms, TextureRegistry.INVENTORY_PLAIN);
     this.txtString.render(ms, mouseX, mouseY, partialTicks);
   }
 }

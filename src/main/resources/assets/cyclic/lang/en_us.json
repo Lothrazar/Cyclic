@@ -600,10 +600,14 @@
     "cyclic.screen.fontsize": "Font Size",
     "cyclic.screen.blue": "Blue",
     "cyclic.screen.red": "Red",
+    "cyclic.screen.green": "Green",
+    "cyclic.screen.sliderkeys": "Arrow keys",
+    
+    
+    
     "cyclic.screen.style0": "Normal",
     "cyclic.screen.style1": "%",
     "cyclic.screen.style2": "Max",
-    "cyclic.screen.green": "Green",
     "cyclic.screen.alpha": "Alpha Transparency",
     "cyclic.screen.padding": "Padding",
     "cyclic.screen.x": "Horizontal Padding",

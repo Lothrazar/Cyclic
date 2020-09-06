@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
@@ -44,6 +45,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
       tooltip = new ArrayList<>();
     }
     this.tooltip.add(new TranslationTextComponent(tt));
+    this.tooltip.add(new TranslationTextComponent("cyclic.gui.sliderkeys").mergeStyle(TextFormatting.DARK_GRAY));
   }
 
   @Override

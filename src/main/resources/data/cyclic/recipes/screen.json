@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sfs",
+    "rgb",
+    "iii"
+  ],
+  "key": {
+    "s": {
+      "item": "cyclic:mason_stone"
+    },
+    "f": {
+      "item": "cyclic:mason_steel"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
+    },
+    "r": {
+      "item": "minecraft:red_dye"
+    },
+    "g": {
+      "item": "minecraft:green_dye"
+    },
+    "b": {
+      "item": "minecraft:blue_dye"
+    }
+  },
+  "result": {
+    "item": "cyclic:screen",
+    "count": 1
+  }
+}

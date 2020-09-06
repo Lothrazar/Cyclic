@@ -40,7 +40,7 @@ public class RenderScreen extends TileEntityRenderer<TileScreentext> {
     int padding = tile.padding;
     int offset = tile.offset;
     //    int textWidth = fontRenderer.getStringWidth(text);// for Centering feature in future?
-    float offsetHoriz = padding;
+    float offsetHoriz = padding * 5;
     float offsetVertical = 0;
     float blockOffset = -0.01F - offset;//negative val is so its not overlapping texture  
     matrix.push();
