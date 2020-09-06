@@ -9,19 +9,24 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class TileScreentext extends TileEntityBase implements INamedContainerProvider {
 
   public static final int STRINGS = 4;
   private String[] text = new String[STRINGS];
-  int red = 100;
-  int green = 100;
-  int blue = 100;
+  int red = 255;
+  int green = 255;
+  int blue = 255;
   int padding = 0;
   int fontSize = 1;
   int offset = 0;
+  private boolean dropShadow;//TODO
 
   public static enum Fields {
     REDSTONE, RED, GREEN, BLUE, PADDING, FONT, OFFSET;
@@ -29,6 +34,19 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
 
   public TileScreentext() {
     super(TileRegistry.screen);
+    this.needsRedstone = 0;
+  }
+
+  public int getColor() {
+    return ((red & 0xFF) << 16) | //red
+        ((green & 0xFF) << 8) | //green
+        ((blue & 0xFF) << 0);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
@@ -48,12 +66,13 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
     for (int i = 0; i < STRINGS; i++) {
       text[i] = tags.getString("text" + i);
     }
-    tags.putInt("red", red);
-    tags.putInt("green", green);
-    tags.putInt("blue", blue);
-    tags.putInt("padding", padding);
-    tags.putInt("font", fontSize);
-    tags.putInt("offset", offset);
+    red = tags.getInt("red");
+    green = tags.getInt("green");
+    blue = tags.getInt("blue");
+    padding = tags.getInt("padding");
+    fontSize = tags.getInt("font");
+    offset = tags.getInt("offset");
+    dropShadow = tags.getBoolean("dropShadow");
     super.read(bs, tags);
   }
 
@@ -64,12 +83,13 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
         tags.putString("text" + i, text[i]);
       }
     }
-    red = tags.getInt("red");
-    green = tags.getInt("green");
-    blue = tags.getInt("blue");
-    padding = tags.getInt("padding");
-    fontSize = tags.getInt("font");
-    offset = tags.getInt("offset");
+    tags.putInt("red", red);
+    tags.putInt("green", green);
+    tags.putInt("blue", blue);
+    tags.putInt("padding", padding);
+    tags.putInt("font", fontSize);
+    tags.putInt("offset", offset);
+    tags.putBoolean("dropShadow", dropShadow);
     return super.write(tags);
   }
 
@@ -129,5 +149,9 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
         this.setNeedsRedstone(value);
       break;
     }
+  }
+
+  public boolean getDropShadow() {
+    return this.dropShadow;
   }
 }

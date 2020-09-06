@@ -1,10 +1,12 @@
 package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
@@ -24,6 +26,21 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     int relX = (this.width - this.xSize) / 2;
     int relY = (this.height - this.ySize) / 2;
     this.blit(ms, relX, relY, 0, 0, this.xSize, this.ySize);
+    //    this.keyPressed(keyCode, scanCode, modifiers)
+  }
+
+  @Override
+  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    for (Widget btn : this.buttons) {
+      Minecraft mc = Minecraft.getInstance();
+      int mouseX = (int) (mc.mouseHelper.getMouseX() * mc.getMainWindow().getScaledWidth() / mc.getMainWindow().getWidth());
+      int mouseY = (int) (mc.mouseHelper.getMouseY() * mc.getMainWindow().getScaledHeight() / mc.getMainWindow().getHeight());
+      if (btn instanceof GuiSliderInteger && btn.isMouseOver(mouseX, mouseY)) {
+        //        btn.too   
+        return btn.keyPressed(keyCode, scanCode, modifiers);
+      }
+    }
+    return super.keyPressed(keyCode, scanCode, modifiers);
   }
 
   protected void drawSlot(MatrixStack ms, int x, int y, ResourceLocation texture, int size) {

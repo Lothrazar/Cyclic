@@ -30,7 +30,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     this.pos = pos;
     this.min = min;
     this.max = max;
-    this.sliderValue = initialVal / max;
+    setSliderValueActual((int) initialVal);
   }
 
   @Override
@@ -64,12 +64,18 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     return super.keyPressed(keyCode, scanCode, modifiers);
   }
 
+  /**
+   * SAVE
+   */
   @Override
   protected void func_230979_b_() {
     int val = getSliderValueActual();
     this.setMessage(new TranslationTextComponent("" + val));
   }
 
+  /**
+   * Update Display
+   */
   @Override
   protected void func_230972_a_() {
     int val = getSliderValueActual();
@@ -79,6 +85,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   private void setSliderValueActual(int val) {
     this.sliderValue = val / max;
     this.func_230979_b_();
+    this.func_230972_a_();
   }
 
   private int getSliderValueActual() {
