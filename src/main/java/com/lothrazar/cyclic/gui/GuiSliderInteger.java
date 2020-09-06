@@ -1,20 +1,26 @@
 package com.lothrazar.cyclic.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractSlider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class GuiSliderInteger extends AbstractSlider {
+public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
 
+  public static final int ARROW_LEFT = 263;
+  public static final int ARROW_RIGHT = 262;
   private final double min;
   private final double max;
   private final BlockPos pos;
   private final int field;
+  private List<ITextComponent> tooltip;
 
   public GuiSliderInteger(int x, int y, int width, int height, int field,
       BlockPos pos, int min, int max,
@@ -25,34 +31,37 @@ public class GuiSliderInteger extends AbstractSlider {
     this.min = min;
     this.max = max;
     this.sliderValue = initialVal / max;
-    this.func_230979_b_();
+  }
+
+  @Override
+  public List<ITextComponent> getTooltip() {
+    return tooltip;
+  }
+
+  @Override
+  public void setTooltip(String tt) {
+    if (tooltip == null) {
+      tooltip = new ArrayList<>();
+    }
+    this.tooltip.add(new TranslationTextComponent(tt));
   }
 
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-    System.out.println("key " + keyCode);
-    int left = 263;
-    int right = 262;
-    if (keyCode == left || keyCode == right) {
+    if (keyCode == ARROW_LEFT || keyCode == ARROW_RIGHT) {
+      // move from arrow keys
+      int delta = (keyCode == ARROW_LEFT) ? -1 : 1;
       if (Screen.hasShiftDown()) {
-        //double 
-        boolean flag = keyCode == left;
-        float f = flag ? -5.0F : 5.0F;
-        System.out.println("extra ");
-        //yeah base class didnt make this a method sadly
-        this.setSliderValue2(this.sliderValue + f / (this.width - 8));
+        delta = delta * 5;
       }
+      else if (Screen.hasAltDown()) {
+        delta = delta * 10;
+      }
+      setSliderValueActual(this.getSliderValueActual() + delta);
+      this.func_230979_b_();
+      return true;
     }
     return super.keyPressed(keyCode, scanCode, modifiers);
-  }
-
-  private void setSliderValue2(double value) {
-    double d0 = this.sliderValue;
-    this.sliderValue = MathHelper.clamp(value, 0.0D, 1.0D);
-    if (d0 != this.sliderValue) {
-      this.func_230972_a_();
-    }
-    this.func_230979_b_();
   }
 
   @Override
@@ -64,8 +73,12 @@ public class GuiSliderInteger extends AbstractSlider {
   @Override
   protected void func_230972_a_() {
     int val = getSliderValueActual();
-    System.out.println("newval " + val);
     PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.field, val, pos));
+  }
+
+  private void setSliderValueActual(int val) {
+    this.sliderValue = val / max;
+    this.func_230979_b_();
   }
 
   private int getSliderValueActual() {

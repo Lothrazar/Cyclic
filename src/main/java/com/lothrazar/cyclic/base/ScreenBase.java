@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.TextboxInteger;
+import com.lothrazar.cyclic.gui.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -58,15 +57,15 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
 
   public void drawButtonTooltips(MatrixStack ms, int mouseX, int mouseY) {
     for (Widget btn : this.buttons) {
-      if (btn instanceof ButtonMachine && btn.isMouseOver(mouseX, mouseY)) {
+      if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)) {
         //        btn.too
         btn.renderToolTip(ms, mouseX, mouseY);
-        this.func_243308_b(ms, ((ButtonMachine) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        this.func_243308_b(ms, ((IHasTooltip) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }
     for (IGuiEventListener widget : this.children) {
-      if (widget instanceof TextboxInteger && widget.isMouseOver(mouseX, mouseY)) {
-        TextboxInteger txt = (TextboxInteger) widget;
+      if (widget instanceof IHasTooltip && widget.isMouseOver(mouseX, mouseY)) {
+        IHasTooltip txt = (IHasTooltip) widget;
         this.func_243308_b(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }

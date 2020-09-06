@@ -31,16 +31,19 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     x = guiLeft + 8;
     y = guiTop + 28;
     int h = 20;
-    this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 256, container.tile.getField(f)));
     f = TileScreentext.Fields.GREEN.ordinal();
     y += h;
-    this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger green = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 256, container.tile.getField(f)));
     f = TileScreentext.Fields.BLUE.ordinal();
     y += h;
-    this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger blue = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 256, container.tile.getField(f)));
+    red.setTooltip("cyclic.screen.red");
+    green.setTooltip("cyclic.screen.green");
+    blue.setTooltip("cyclic.screen.blue");
   }
 
   @Override

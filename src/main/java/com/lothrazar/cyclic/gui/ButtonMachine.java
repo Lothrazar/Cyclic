@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
-public class ButtonMachine extends ExtendedButton {
+public class ButtonMachine extends ExtendedButton implements IHasTooltip {
 
   BlockPos tilePos;
   private int tileField;
@@ -42,10 +42,12 @@ public class ButtonMachine extends ExtendedButton {
     this.renderBg(ms, minecraft, mouseX, mouseY);
   }
 
+  @Override
   public List<ITextComponent> getTooltip() {
     return tooltip;
   }
 
+  @Override
   public void setTooltip(String ttIn) {
     tooltip = new ArrayList<>();
     tooltip.add(new TranslationTextComponent(ttIn));
