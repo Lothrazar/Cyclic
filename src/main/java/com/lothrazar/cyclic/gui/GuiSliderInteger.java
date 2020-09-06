@@ -19,8 +19,8 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   public static final int ARROW_RIGHT = 262;
   private final double min;
   private final double max;
-  private final BlockPos pos;
-  private final int field;
+  private final BlockPos pos; // Tile entity location
+  private final int field; // field ID for saving value
   private List<ITextComponent> tooltip;
 
   public GuiSliderInteger(int x, int y, int width, int height, int field,
@@ -34,11 +34,17 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     setSliderValueActual((int) initialVal);
   }
 
+  /**
+   * Call from Screen class to render tooltip during mouseover
+   */
   @Override
   public List<ITextComponent> getTooltip() {
     return tooltip;
   }
 
+  /**
+   * Add a tooltip to first line (second line hardcoded)
+   */
   @Override
   public void setTooltip(String tt) {
     if (tooltip == null) {
@@ -48,6 +54,9 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     this.tooltip.add(new TranslationTextComponent("cyclic.gui.sliderkeys").mergeStyle(TextFormatting.DARK_GRAY));
   }
 
+  /**
+   * Fires when control is selected, also I call this from screen class whenever mouse is hovered for extra UX
+   */
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
     if (keyCode == ARROW_LEFT || keyCode == ARROW_RIGHT) {
@@ -67,7 +76,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   }
 
   /**
-   * SAVE
+   * Refresh display message
    */
   @Override
   protected void func_230979_b_() {
@@ -76,7 +85,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   }
 
   /**
-   * Update Display
+   * SAVE to tile entity with packet
    */
   @Override
   protected void func_230972_a_() {
@@ -84,14 +93,16 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.field, val, pos));
   }
 
+  /**
+   * Set inner [0,1] value relative to maximum and trigger save/ & refresh
+   */
   private void setSliderValueActual(int val) {
     this.sliderValue = val / max;
     this.func_230979_b_();
     this.func_230972_a_();
   }
 
-  private int getSliderValueActual() {
-    int val = MathHelper.floor(MathHelper.clampedLerp(min, max, this.sliderValue));
-    return val;
+  public int getSliderValueActual() {
+    return MathHelper.floor(MathHelper.clampedLerp(min, max, this.sliderValue));
   }
 }
