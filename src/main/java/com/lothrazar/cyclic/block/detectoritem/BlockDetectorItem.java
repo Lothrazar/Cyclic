@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.detectoritem;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
@@ -12,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockDetectorItem extends BlockBase {
 
@@ -24,6 +26,7 @@ public class BlockDetectorItem extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.detector_item, RenderDetectorItem::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.detector_item, ScreenDetectorItem::new);
   }
 

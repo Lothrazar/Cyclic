@@ -2,7 +2,9 @@ package com.lothrazar.cyclic.block.detectoritem;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.TextboxInteger;
+import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -14,11 +16,9 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
 
   private ButtonMachine btnComp;
-  private TextboxInteger txtX;
-  private TextboxInteger txtY;
-  private TextboxInteger txtZ;
-  private TextboxInteger txtLimit;
+  private ButtonMachineRedstone btnRender;
 
+  //TODO: unique items vs total items?
   public ScreenDetectorItem(ContainerDetectorItem screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
   }
@@ -27,55 +27,43 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
   public void init() {
     super.init();
     int x, y;
-    x = guiLeft + 96;
+    x = guiLeft + 8;
     y = guiTop + 18;
-    //    btnEntity = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {
-    //      int f = TileDetectorItem.Fields.ENTITYTYPE.ordinal();
-    //      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
-    //          container.tile.getField(f) + 1, container.tile.getPos()));
-    //    }));
-    y += 28;
+    btnRender = addButton(new ButtonMachineRedstone(x, y, TileDetectorItem.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+    x += 22;
     btnComp = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetectorItem.Fields.GREATERTHAN.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
           container.tile.getField(f) + 1, container.tile.getPos()));
     }));
     //x 
+    //sliders
+    int w = 160;
+    int h = 20;
     x = guiLeft + 8;
-    y = guiTop + 18;
-    txtX = new TextboxInteger(this.font, x, y, 20,
-        container.tile.getPos(), TileDetectorItem.Fields.RANGEX.ordinal());
-    txtX.setText("" + container.tile.getField(TileDetectorItem.Fields.RANGEX.ordinal()));
-    txtX.setTooltip(UtilChat.lang("cyclic.detector.rangex"));
-    this.children.add(txtX);
-    //y 
-    x += 30;
-    txtY = new TextboxInteger(this.font, x, y, 20,
-        container.tile.getPos(), TileDetectorItem.Fields.RANGEY.ordinal());
-    txtY.setText("" + container.tile.getField(TileDetectorItem.Fields.RANGEY.ordinal()));
-    txtY.setTooltip(UtilChat.lang("cyclic.detector.rangey"));
-    this.children.add(txtY);
-    x += 30;
-    txtZ = new TextboxInteger(this.font, x, y, 20,
-        container.tile.getPos(), TileDetectorItem.Fields.RANGEZ.ordinal());
-    txtZ.setText("" + container.tile.getField(TileDetectorItem.Fields.RANGEZ.ordinal()));
-    txtZ.setTooltip(UtilChat.lang("cyclic.detector.rangez"));
-    this.children.add(txtZ);
-    x = guiLeft + 38;
-    y += 28;
-    txtLimit = new TextboxInteger(this.font, x, y, 20,
-        container.tile.getPos(), TileDetectorItem.Fields.LIMIT.ordinal());
-    txtLimit.setText("" + container.tile.getField(TileDetectorItem.Fields.LIMIT.ordinal()));
-    txtLimit.setTooltip(UtilChat.lang("cyclic.detector.limit"));
-    this.children.add(txtLimit);
-  }
-
-  @Override
-  public void tick() {
-    this.txtX.tick();
-    this.txtY.tick();
-    this.txtZ.tick();
-    this.txtLimit.tick();
+    y += h + 1;
+    int f = TileDetectorItem.Fields.RANGEX.ordinal();
+    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        0, 64, container.tile.getField(f)));
+    red.setTooltip("cyclic.detector.rangex");
+    //
+    y += h + 1;
+    f = TileDetectorItem.Fields.RANGEY.ordinal();
+    GuiSliderInteger RANGEY = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        0, 64, container.tile.getField(f)));
+    RANGEY.setTooltip("cyclic.detector.rangey");
+    y += h + 1;
+    f = TileDetectorItem.Fields.RANGEZ.ordinal();
+    GuiSliderInteger RANGEZ = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        0, 64, container.tile.getField(f)));
+    RANGEZ.setTooltip("cyclic.detector.rangez");
+    //
+    y += h + 1;
+    f = TileDetectorItem.Fields.LIMIT.ordinal();
+    GuiSliderInteger LIMIT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        0, 64, container.tile.getField(f)));
+    LIMIT.setTooltip("cyclic.detector.limit");
   }
 
   @Override
@@ -89,9 +77,7 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    //    btnEntity.setTooltip(UtilChat.lang("cyclic.detector.entitytype.tooltip"));
-    //    btnEntity.setMessage(UtilChat.lang("cyclic.detector.entitytype" +
-    //        container.tile.getField(TileDetector.Fields.ENTITYTYPE.ordinal())));
+    btnRender.onValueUpdate(container.tile);
     btnComp.setTooltip(UtilChat.lang("cyclic.detector.compare.tooltip"));
     btnComp.setMessage(UtilChat.ilang("cyclic.detector.compare" +
         container.tile.getField(TileDetectorItem.Fields.GREATERTHAN.ordinal())));
@@ -99,10 +85,6 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.txtX.render(ms, mouseX, mouseX, partialTicks);
-    this.txtY.render(ms, mouseX, mouseX, partialTicks);
-    this.txtZ.render(ms, mouseX, mouseX, partialTicks);
-    this.txtLimit.render(ms, mouseX, mouseX, partialTicks);
+    this.drawBackground(ms, TextureRegistry.INVENTORY_PLAIN);
   }
 }

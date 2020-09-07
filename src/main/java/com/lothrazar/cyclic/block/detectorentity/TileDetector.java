@@ -33,12 +33,8 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   EntityFilterType entityFilter = EntityFilterType.LIVING;
   private boolean isPoweredNow = false;
 
-  public static enum Fields {
+  static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES, RENDER;
-  }
-
-  public static enum CompareType {
-    LESS, GREATER, EQUAL;
   }
 
   public TileDetector() {

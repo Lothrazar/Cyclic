@@ -19,7 +19,7 @@ public class ContainerDetectorItem extends ContainerBase {
     tile = (TileDetectorItem) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
-    layoutPlayerInventorySlots(8, 84);
+    //    layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileDetectorItem.Fields.values().length);
   }
 

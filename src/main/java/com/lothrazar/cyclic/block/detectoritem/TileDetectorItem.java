@@ -4,8 +4,9 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.detectorentity.TileDetector.CompareType;
+import com.lothrazar.cyclic.block.detectorentity.CompareType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,6 +16,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -30,8 +32,8 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   private CompareType compType = CompareType.GREATER;
   private boolean isPoweredNow = false;
 
-  public static enum Fields {
-    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ;
+  static enum Fields {
+    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, RENDER;
   }
 
   public TileDetectorItem() {
@@ -98,18 +100,23 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   }
 
   private int getCountInRange() {
-    double x = pos.getX();
-    double y = pos.getY();
-    double z = pos.getZ();
-    AxisAlignedBB entityRange = new AxisAlignedBB(
-        x - this.rangeX, y - this.rangeY, z - this.rangeZ,
-        x + this.rangeX, y + this.rangeY, z + this.rangeZ);
+    AxisAlignedBB entityRange = getRange();
     int entitiesFound = 0;
     List<ItemEntity> entityList = world.getEntitiesWithinAABB(ItemEntity.class, entityRange);
     for (ItemEntity item : entityList) {
       entitiesFound += item.getItem().getCount();
     }
     return entitiesFound;
+  }
+
+  private AxisAlignedBB getRange() {
+    double x = pos.getX();
+    double y = pos.getY();
+    double z = pos.getZ();
+    AxisAlignedBB entityRange = new AxisAlignedBB(
+        x - this.rangeX, y - this.rangeY, z - this.rangeZ,
+        x + this.rangeX, y + this.rangeY, z + this.rangeZ);
+    return entityRange;
   }
 
   @Override
@@ -125,8 +132,8 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
         return this.rangeY;
       case RANGEZ:
         return this.rangeZ;
-      //      case RENDERPARTICLES:
-      //        return this.renderParticles;
+      case RENDER:
+        return this.render;
       default:
       break;
     }
@@ -172,9 +179,9 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
       case RANGEZ:
         this.rangeZ = value;
       break;
-      //      case RENDERPARTICLES:
-      //        this.renderParticles = value % 2;
-      //      break;
+      case RENDER:
+        this.render = value % 2;
+      break;
     }
   }
 
@@ -198,5 +205,9 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
     return super.write(tag);
+  }
+
+  public List<BlockPos> getShape() {
+    return UtilShape.getShape(getRange(), pos.getY());
   }
 }
