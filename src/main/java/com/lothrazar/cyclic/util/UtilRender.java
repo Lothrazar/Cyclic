@@ -483,7 +483,9 @@ public class UtilRender {
         continue;
       }
       matrix.push();
-      matrix.translate(e.getX() + .5F, e.getY() + .5F, e.getZ() + .5F);
+      float ctr = (1 - scale) / 2;
+      matrix.translate(e.getX() + ctr, e.getY() + ctr, e.getZ() + ctr);
+      //      matrix.translate(e.getX() + .5F, e.getY() + .5F, e.getZ() + .5F);
       matrix.translate(-0.005f, -0.005f, -0.005f);
       matrix.scale(scale, scale, scale);
       matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));

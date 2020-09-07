@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class UtilShape {
@@ -110,6 +111,24 @@ public class UtilShape {
     int zMin = pos.getZ() - radiusZ;
     int zMax = pos.getZ() + radiusZ;
     int y = pos.getY();
+    for (int x = xMin; x <= xMax; x++) {
+      shape.add(new BlockPos(x, y, zMin));
+      shape.add(new BlockPos(x, y, zMax));
+    }
+    //corners are done so offset
+    for (int z = zMin + 1; z < zMax; z++) {
+      shape.add(new BlockPos(xMin, y, z));
+      shape.add(new BlockPos(xMax, y, z));
+    }
+    return shape;
+  }
+
+  public static List<BlockPos> getShape(AxisAlignedBB ab, int y) {
+    List<BlockPos> shape = new ArrayList<>();
+    int xMin = (int) ab.minX;
+    int xMax = (int) ab.maxX;
+    int zMin = (int) ab.minZ;
+    int zMax = (int) ab.maxZ;
     for (int x = xMin; x <= xMax; x++) {
       shape.add(new BlockPos(x, y, zMin));
       shape.add(new BlockPos(x, y, zMax));

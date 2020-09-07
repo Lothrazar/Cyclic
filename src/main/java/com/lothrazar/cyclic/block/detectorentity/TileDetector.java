@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,6 +16,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -32,7 +34,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   private boolean isPoweredNow = false;
 
   public static enum Fields {
-    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES;
+    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES, RENDER;
   }
 
   public static enum CompareType {
@@ -102,17 +104,23 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     }
   }
 
+  public List<BlockPos> getShape() {
+    return UtilShape.getShape(getRange(), pos.getY());
+  }
+
   private int getCountInRange() {
+    List<? extends LivingEntity> list = this.entityFilter.getEntities(world, getRange());
+    return list.size();
+  }
+
+  private AxisAlignedBB getRange() {
     double x = pos.getX();
     double y = pos.getY();
     double z = pos.getZ();
     AxisAlignedBB entityRange = new AxisAlignedBB(
         x - this.rangeX, y - this.rangeY, z - this.rangeZ,
         x + this.rangeX, y + this.rangeY, z + this.rangeZ);
-    List<? extends LivingEntity> list = this.entityFilter.getEntities(world, entityRange);
-    //    entitiesFound = (entityList == null) ? 0 : entityList.size();
-    //    ModCyclic.LOGGER.info(typeCurrent + " entitiesFound " + entitiesFound);
-    return list.size();
+    return entityRange;
   }
 
   @Override
@@ -132,24 +140,18 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
         return this.rangeZ;
       case RENDERPARTICLES:
         return this.render;
-      default:
-      break;
+      case RENDER:
+        return render;
     }
     return 0;
   }
 
   @Override
   public void setField(int field, int value) {
-    Fields f = Fields.values()[field];
-    if (f == Fields.RANGEX || f == Fields.RANGEY || f == Fields.RANGEZ) {
-      if (value > MAX_RANGE) {
-        value = MAX_RANGE;
-      }
-      if (value < 1) {
-        value = 1;
-      }
-    }
-    switch (f) {
+    switch (Fields.values()[field]) {
+      case RENDER:
+        this.render = value % 2;
+      break;
       case GREATERTHAN:
         if (value >= CompareType.values().length) {
           value = 0;
