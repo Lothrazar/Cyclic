@@ -31,7 +31,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   FluidTankBase tank;
   //  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, RENDER;
   }
 

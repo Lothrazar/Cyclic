@@ -43,7 +43,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     EMPTY, CANT, MATCH;
   }
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, STATUS;
   }
 

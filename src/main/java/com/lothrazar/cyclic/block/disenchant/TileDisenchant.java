@@ -42,7 +42,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   private static final int SLOT_BOOK = 1;
   private static final int SLOT_OUT = 2;
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE;
   }
 
@@ -71,6 +71,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     return new CustomEnergyStorage(MAX, MAX / 4);
   }
 
+  @Override
   public int getEnergy() {
     return this.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }

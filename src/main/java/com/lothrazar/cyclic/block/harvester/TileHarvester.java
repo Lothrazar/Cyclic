@@ -47,7 +47,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, RENDER;
   }
 

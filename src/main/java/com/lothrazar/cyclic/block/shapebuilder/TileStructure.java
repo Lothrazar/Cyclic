@@ -41,7 +41,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   public static int maxSize = 99;
   public static int maxHeight = 99;
 
-  public static enum Fields {
+  static enum Fields {
     TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDER;
   }
 

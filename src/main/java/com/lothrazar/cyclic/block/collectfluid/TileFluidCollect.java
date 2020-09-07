@@ -49,7 +49,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, RENDER;
   }
 

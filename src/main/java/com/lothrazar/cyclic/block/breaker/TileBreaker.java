@@ -15,7 +15,7 @@ import net.minecraft.util.text.StringTextComponent;
 
 public class TileBreaker extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE;
   }
 

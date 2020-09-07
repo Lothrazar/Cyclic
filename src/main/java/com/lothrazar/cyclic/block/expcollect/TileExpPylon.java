@@ -40,7 +40,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE;
   }
 

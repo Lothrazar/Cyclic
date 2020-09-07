@@ -43,7 +43,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   public FluidTankBase tank;
 
-  public static enum Fields {
+  static enum Fields {
     TIMER, REDSTONE;
   }
 

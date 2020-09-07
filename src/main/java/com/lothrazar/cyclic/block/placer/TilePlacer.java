@@ -30,7 +30,7 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE;
   }
 

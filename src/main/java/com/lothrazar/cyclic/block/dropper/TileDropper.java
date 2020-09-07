@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.dropper;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ConfigManager;
@@ -15,10 +17,14 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -34,8 +40,8 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
-  public static enum Fields {
-    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET;
+  static enum Fields {
+    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, RENDER;
   }
 
   private int dropCount = 1;
@@ -44,6 +50,12 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
 
   public TileDropper() {
     super(TileRegistry.dropper);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
   }
 
   private IEnergyStorage createEnergy() {
@@ -122,7 +134,7 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
     }
     timer = delay;
     ItemStack dropMe = inv.getStackInSlot(0).copy();
-    BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
+    BlockPos target = getTargetPos();
     int amtDrop = Math.min(this.dropCount, dropMe.getCount());
     if (amtDrop > 0) {
       en.extractEnergy(ConfigManager.DROPPERPOWER.get(), false);
@@ -130,6 +142,11 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
       UtilItemStack.dropItemStackMotionless(world, target, dropMe);
       inv.getStackInSlot(0).shrink(amtDrop);
     } //      this.decrStackSize(slotCurrent, amtDrop);
+  }
+
+  private BlockPos getTargetPos() {
+    BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
+    return target;
   }
 
   @Override
@@ -145,6 +162,8 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
         return this.dropCount;
       case OFFSET:
         return this.hOffset;
+      case RENDER:
+        return render;
     }
     return -1;
   }
@@ -167,6 +186,15 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
       case OFFSET:
         hOffset = Math.max(0, value);
       break;
+      case RENDER:
+        this.render = value % 2;
+      break;
     }
+  }
+
+  public List<BlockPos> getShape() {
+    List<BlockPos> shape = new ArrayList<>();
+    shape.add(getTargetPos());
+    return shape;
   }
 }

@@ -19,7 +19,7 @@ import net.minecraft.util.text.StringTextComponent;
 
 public class TileRedstoneClock extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static enum Fields {
+  static enum Fields {
     TIMER, DELAY, DURATION, POWER, REDSTONE, N, E, S, W, U, D;
   }
 

@@ -70,7 +70,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   //
   //  private PlantingMode mode;
   //harvest mode: do we shear or break leaves
-  public enum Fields {
+  static enum Fields {
     REDSTONE, RENDER;
   }
 

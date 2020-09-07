@@ -36,7 +36,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
-  public enum Fields {
+  static enum Fields {
     REDSTONE;
   }
 

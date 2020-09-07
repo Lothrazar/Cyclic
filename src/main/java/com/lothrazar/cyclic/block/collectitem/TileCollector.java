@@ -28,7 +28,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE;
   }
 

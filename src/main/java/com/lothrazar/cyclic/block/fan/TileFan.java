@@ -27,7 +27,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   private int speed = 5;
   private static final int MIN_RANGE = 1;
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, RANGE, SPEED;
   }
 

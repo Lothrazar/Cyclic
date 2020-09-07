@@ -45,7 +45,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   private RecipeMelter currentRecipe;
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 3;
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, TIMER, RENDER;
   }
 

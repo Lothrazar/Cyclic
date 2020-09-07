@@ -31,7 +31,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   static final int MAX = 6400000;
 
-  public static enum Fields {
+  static enum Fields {
     FLOWING, N, E, S, W, U, D;
   }
 

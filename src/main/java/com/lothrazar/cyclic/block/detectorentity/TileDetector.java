@@ -34,7 +34,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   private boolean isPoweredNow = false;
 
   static enum Fields {
-    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES, RENDER;
+    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDER;
   }
 
   public TileDetector() {
@@ -134,8 +134,6 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
         return this.rangeY;
       case RANGEZ:
         return this.rangeZ;
-      case RENDERPARTICLES:
-        return this.render;
       case RENDER:
         return render;
     }
@@ -181,9 +179,6 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
         if (value < 0)
           value = EntityFilterType.values().length - 1;
         this.entityFilter = EntityFilterType.values()[value];
-      break;
-      case RENDERPARTICLES:
-        this.render = value % 2;
       break;
     }
   }

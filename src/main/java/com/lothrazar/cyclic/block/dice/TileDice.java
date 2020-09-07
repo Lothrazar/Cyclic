@@ -14,7 +14,7 @@ public class TileDice extends TileEntityBase implements ITickableTileEntity {
   private static final int TICKS_PER_CHANGE = 4;
   private int spinningIfZero = 1;
 
-  public static enum Fields {
+  static enum Fields {
     TIMER, SPINNING;
   }
 

@@ -32,7 +32,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePeatGenerator extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static enum Fields {
+  static enum Fields {
     FLOWING, REDSTONE, RENDER;
   }
 

@@ -50,7 +50,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   private List<EffectInstance> effects = new ArrayList<>();
   EntityFilterType entityFilter = EntityFilterType.PLAYERS;
 
-  public static enum Fields {
+  static enum Fields {
     TIMER, REDSTONE, RANGE, ENTITYTYPE;
   }
 

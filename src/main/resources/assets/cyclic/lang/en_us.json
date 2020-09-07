@@ -601,8 +601,7 @@
     "cyclic.screen.blue": "Blue",
     "cyclic.screen.red": "Red",
     "cyclic.screen.green": "Green",
-    "cyclic.screen.sliderkeys": "Arrow keys",
-    "cyclic.gui.sliderkeys": "Arrow keys",
+    "cyclic.gui.sliderkeys": "Arrow keys; hold shift/alt",
     
     
     

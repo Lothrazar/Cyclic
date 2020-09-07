@@ -54,7 +54,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private BlockPos targetPos = BlockPos.ZERO;
   private boolean directionIsUp = false;
 
-  public enum Fields {
+  enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
   }
 

@@ -41,7 +41,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
-  public static enum Fields {
+  static enum Fields {
     TIMER, REDSTONE;
   }
 

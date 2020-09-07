@@ -50,7 +50,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   private final LazyOptional<IItemHandler> outputSlotWrapper = LazyOptional.of(() -> outputSlot);
   //  private final LazyOptional<IItemHandler> everything = LazyOptional.of(() -> new CombinedInvWrapper(inputSlots, outputSlot));
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, TIMER, RENDER;
   }
 

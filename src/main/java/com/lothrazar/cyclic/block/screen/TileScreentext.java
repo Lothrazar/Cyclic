@@ -28,7 +28,7 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
   int offset = 0;
   private boolean dropShadow;//TODO
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, RED, GREEN, BLUE, PADDING, FONT, OFFSET;
   }
 

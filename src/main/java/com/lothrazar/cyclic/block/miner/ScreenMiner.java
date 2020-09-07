@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.block.miner;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
-import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextboxInteger;
@@ -35,17 +33,17 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileMiner.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileHarvester.Fields.RENDER.ordinal(),
+    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileMiner.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     int row = 50;
     txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + row, 20,
-        container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
+        container.tile.getPos(), TileMiner.Fields.HEIGHT.ordinal());
     txtHeight.setText("" + container.tile.getField(TileMiner.Fields.HEIGHT.ordinal()));
     txtHeight.setTooltip(UtilChat.lang("buildertype.height.tooltip"));
     this.children.add(txtHeight);
     txtSize = new TextboxInteger(this.font, guiLeft + 90, guiTop + row, 20,
-        container.tile.getPos(), TileStructure.Fields.SIZE.ordinal());
+        container.tile.getPos(), TileMiner.Fields.SIZE.ordinal());
     txtSize.setTooltip(UtilChat.lang("buildertype.size.tooltip"));
     txtSize.setText("" + container.tile.getField(TileMiner.Fields.SIZE.ordinal()));
     this.children.add(txtSize);

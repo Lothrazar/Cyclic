@@ -26,7 +26,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
 
   static final int MAX = 6400000;
 
-  public static enum Fields {
+  static enum Fields {
     N, E, S, W, U, D;
   }
 

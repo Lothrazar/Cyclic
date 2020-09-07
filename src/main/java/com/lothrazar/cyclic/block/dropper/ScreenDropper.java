@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.block.dropper;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.TextboxInteger;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -14,9 +14,7 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
 
   private EnergyBar energy;
   private ButtonMachineRedstone btnRedstone;
-  private TextboxInteger txtCount;
-  private TextboxInteger txtDelay;
-  private TextboxInteger txtOffset;
+  private ButtonMachineRedstone btnRender;
 
   public ScreenDropper(ContainerDropper screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -26,32 +24,34 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   @Override
   public void init() {
     super.init();
-    int x, y;
+    int x, y, w, h;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileDropper.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    x = guiLeft + 86;
+    y += 20;
+    btnRender = addButton(new ButtonMachineRedstone(x, y, TileDropper.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+    x = guiLeft + 32;
     y = guiTop + 18;
-    txtCount = new TextboxInteger(this.font, x, y, 20,
-        container.tile.getPos(), TileDropper.Fields.DROPCOUNT.ordinal());
-    txtCount.setText("" + container.tile.getField(TileDropper.Fields.DROPCOUNT.ordinal()));
-    txtCount.setTooltip(UtilChat.lang("cyclic.dropper.count"));
-    this.children.add(txtCount);
-    y += 22;
-    txtOffset = new TextboxInteger(this.font, x, y, 20,
-        container.tile.getPos(), TileDropper.Fields.OFFSET.ordinal());
-    txtOffset.setText("" + container.tile.getField(TileDropper.Fields.OFFSET.ordinal()));
-    txtOffset.setTooltip(UtilChat.lang("cyclic.dropper.offset"));
-    this.children.add(txtOffset);
-    y += 22;
-    txtDelay = new TextboxInteger(this.font, x, y, 30,
-        container.tile.getPos(), TileDropper.Fields.DELAY.ordinal());
-    txtDelay.setMaxStringLength(3);
-    txtDelay.setText("" + container.tile.getField(TileDropper.Fields.DELAY.ordinal()));
-    txtDelay.setTooltip(UtilChat.lang("cyclic.dropper.delay"));
-    this.children.add(txtDelay);
+    w = 120;
+    h = 20;
+    int f = TileDropper.Fields.DROPCOUNT.ordinal();
+    GuiSliderInteger DROPCOUNT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        1, 64, container.tile.getField(f)));
+    DROPCOUNT.setTooltip("cyclic.dropper.count");
+    y += h + 1;
+    f = TileDropper.Fields.OFFSET.ordinal();
+    GuiSliderInteger OFFSET = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        0, 16, container.tile.getField(f)));
+    OFFSET.setTooltip("cyclic.dropper.offset");
+    y += h + 1;
+    f = TileDropper.Fields.DELAY.ordinal();
+    GuiSliderInteger DELAY = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        1, 500, container.tile.getField(f)));
+    DELAY.setTooltip("cyclic.dropper.delay");
+    //    y += 22;
   }
 
   @Override
@@ -66,23 +66,14 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
+    btnRender.onValueUpdate(container.tile);
     btnRedstone.onValueUpdate(container.tile);
-  }
-
-  @Override
-  public void tick() {
-    this.txtCount.tick();
-    this.txtDelay.tick();
-    this.txtOffset.tick();
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 54, 34);
+    this.drawSlot(ms, 9, 50);
     energy.draw(ms, container.getEnergy());
-    txtCount.render(ms, mouseX, mouseY, partialTicks);
-    txtDelay.render(ms, mouseX, mouseY, partialTicks);
-    txtOffset.render(ms, mouseX, mouseY, partialTicks);
   }
 }
