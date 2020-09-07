@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.beaconpotion;
+package com.lothrazar.cyclic.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,10 @@ public enum EntityFilterType {
     int z = pos.getZ();
     AxisAlignedBB axisalignedbb = (new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1)).grow(radius).expand(0.0D, world.getHeight(), 0.0D);
     //
+    return getEntities(world, axisalignedbb);
+  }
+
+  public List<? extends LivingEntity> getEntities(World world, AxisAlignedBB axisalignedbb) {
     List<LivingEntity> list = new ArrayList<>();
     switch (this) {
       case AMBIENT:

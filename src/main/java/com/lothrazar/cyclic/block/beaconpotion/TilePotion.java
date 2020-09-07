@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -47,7 +48,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   /** Primary potion effect given by this beacon. */
   private List<EffectInstance> effects = new ArrayList<>();
-  private EntityFilterType entityFilter = EntityFilterType.PLAYERS;
+  EntityFilterType entityFilter = EntityFilterType.PLAYERS;
 
   public static enum Fields {
     TIMER, REDSTONE, RANGE, ENTITYTYPE;
@@ -251,10 +252,11 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
         this.timer = value;
       break;
       case ENTITYTYPE:
-        if (value >= EntityFilterType.values().length)
-          value = 0;
-        if (value < 0)
-          value = EntityFilterType.values().length - 1;
+        value = value % EntityFilterType.values().length;
+        //        if (value >= EntityFilterType.values().length)
+        //          value = 0;
+        //        if (value < 0)
+        //          value = EntityFilterType.values().length - 1;
         this.entityFilter = EntityFilterType.values()[value];
       break;
       case RANGE:

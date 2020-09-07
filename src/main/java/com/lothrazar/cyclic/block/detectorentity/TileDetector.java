@@ -4,9 +4,9 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,15 +28,11 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   //default is > 0 living entities 
   private int limitUntilRedstone = 0;
   private CompareType compType = CompareType.GREATER;
-  private EntityType entityType = EntityType.LIVING;
+  EntityFilterType entityFilter = EntityFilterType.LIVING;
   private boolean isPoweredNow = false;
 
   public static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDERPARTICLES;
-  }
-
-  public static enum EntityType {
-    LIVING, PLAYER;
   }
 
   public static enum CompareType {
@@ -113,34 +109,17 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     AxisAlignedBB entityRange = new AxisAlignedBB(
         x - this.rangeX, y - this.rangeY, z - this.rangeZ,
         x + this.rangeX, y + this.rangeY, z + this.rangeZ);
-    int entitiesFound = 0;
-    List<Entity> entityList = null;
-    switch (this.entityType) {
-      case LIVING:
-        entityList = world.getEntitiesWithinAABB(LivingEntity.class, entityRange);
-        entitiesFound = entityList.size();
-        // ignore players! living only not players
-        for (Entity e : entityList) {
-          if (e instanceof PlayerEntity) {
-            entitiesFound--;
-          }
-        }
-      break;
-      case PLAYER:
-        entityList = world.getEntitiesWithinAABB(PlayerEntity.class, entityRange);
-        entitiesFound = entityList.size();
-      break;
-    }
+    List<? extends LivingEntity> list = this.entityFilter.getEntities(world, entityRange);
     //    entitiesFound = (entityList == null) ? 0 : entityList.size();
     //    ModCyclic.LOGGER.info(typeCurrent + " entitiesFound " + entitiesFound);
-    return entitiesFound;
+    return list.size();
   }
 
   @Override
   public int getField(int f) {
     switch (Fields.values()[f]) {
       case ENTITYTYPE:
-        return this.entityType.ordinal();
+        return this.entityFilter.ordinal();
       case GREATERTHAN:
         return this.compType.ordinal();
       case LIMIT:
@@ -199,11 +178,11 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
         this.rangeZ = value;
       break;
       case ENTITYTYPE:
-        if (value >= EntityType.values().length)
+        if (value >= EntityFilterType.values().length)
           value = 0;
         if (value < 0)
-          value = EntityType.values().length - 1;
-        this.entityType = EntityType.values()[value];
+          value = EntityFilterType.values().length - 1;
+        this.entityFilter = EntityFilterType.values()[value];
       break;
       case RENDERPARTICLES:
         this.render = value % 2;
@@ -221,8 +200,8 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     if (cType >= 0 && cType < CompareType.values().length)
       this.compType = CompareType.values()[cType];
     int eType = tag.getInt("entityType");
-    if (eType >= 0 && eType < EntityType.values().length)
-      this.entityType = EntityType.values()[eType];
+    if (eType >= 0 && eType < EntityFilterType.values().length)
+      this.entityFilter = EntityFilterType.values()[eType];
     super.read(bs, tag);
   }
 
@@ -233,7 +212,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     tag.putInt("oz", rangeZ);
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
-    tag.putInt("entityType", entityType.ordinal());
+    tag.putInt("entityType", entityFilter.ordinal());
     return super.write(tag);
   }
 }

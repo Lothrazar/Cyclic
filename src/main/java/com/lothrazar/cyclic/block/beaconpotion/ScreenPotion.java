@@ -1,15 +1,20 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenPotion extends ScreenBase<ContainerPotion> {
 
+  private ButtonMachine btnEntity;
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
 
@@ -27,6 +32,13 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePotion.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    y += 51;
+    //TODO  refactor btn
+    btnEntity = addButton(new ButtonMachine(x, y, 60, 20, "", (p) -> {
+      int f = TilePotion.Fields.ENTITYTYPE.ordinal();
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
+          container.tile.getField(f) + 1, container.tile.getPos()));
+    }));
   }
 
   @Override
@@ -42,6 +54,8 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(container.tile);
+    btnEntity.setTooltip(UtilChat.lang("cyclic.beacon.entitytype.tooltip"));
+    btnEntity.setMessage(UtilChat.ilang("cyclic.entitytype." + container.tile.entityFilter.name().toLowerCase()));
   }
 
   @Override

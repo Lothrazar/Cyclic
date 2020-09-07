@@ -30,6 +30,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     int x, y;
     x = guiLeft + 96;
     y = guiTop + 18;
+    //TODO  refactor btn
     btnEntity = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetector.Fields.ENTITYTYPE.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
@@ -87,8 +88,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnEntity.setTooltip(UtilChat.lang("cyclic.detector.entitytype.tooltip"));
-    btnEntity.setMessage(UtilChat.ilang("cyclic.detector.entitytype" +
-        container.tile.getField(TileDetector.Fields.ENTITYTYPE.ordinal())));
+    btnEntity.setMessage(UtilChat.ilang("cyclic.entitytype." + container.tile.entityFilter.name().toLowerCase()));
     btnComp.setTooltip(UtilChat.lang("cyclic.detector.compare.tooltip"));
     btnComp.setMessage(UtilChat.ilang("cyclic.detector.compare" +
         container.tile.getField(TileDetector.Fields.GREATERTHAN.ordinal())));

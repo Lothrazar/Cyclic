@@ -670,8 +670,20 @@
     "cyclic.detector.compare1": "Greater",
     "cyclic.detector.compare0": "Less",
     "cyclic.detector.compare.tooltip": "How to compare count to the limit",
-    "cyclic.detector.entitytype1": "Players",
-    "cyclic.detector.entitytype0": "Living",
+    "cyclic.entitytype.players": "Players",
+    "cyclic.entitytype.living": "Living",
+    "cyclic.entitytype.mob": "Mob",
+    "cyclic.entitytype.monster": "Monster",
+    "cyclic.entitytype.animal": "Animal",
+    "cyclic.entitytype.tameable": "Tameable",
+    "cyclic.entitytype.flying": "Flying",
+    "cyclic.entitytype.water": "Water",
+    "cyclic.entitytype.ambient": "Ambient",
+    
+    "cyclic.beacon.entitytype.tooltip": "Which entities are targeted",
+  
+    
+    
     "cyclic.detector.limit": "Limit",
     "cyclic.detector.rangex": "Range X",
     "cyclic.detector.rangey": "Range Y",
