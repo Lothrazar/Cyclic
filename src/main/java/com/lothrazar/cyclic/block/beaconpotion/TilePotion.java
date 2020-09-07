@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -34,12 +35,13 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePotion extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int TICKS_FIRE_PER = 60;
   //so if a potion has a duration of 1 second, use this many ticks
-  static final int TICKS_PER_DURATION = 1600000;
+  static final int TICKS_PER_DURATION = 160000;
   private static final int POTION_TICKS = 20 * 20;//cant be too low BC night vision flicker
   //  private static final int MAX_RADIUS = 8;
   static final int MAX = 64000;
-  private static final int MAX_RADIUS = 128;
+  private static final int MAX_RADIUS = 64;
   private int radius = MAX_RADIUS;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -141,62 +143,70 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
       setLitProperty(false);
       return;
     }
-    System.out.println("potion timer " + timer);
     if (effects.size() == 0) {
       timer = 0;
     }
-    else {
-      timer--;
-    }
-    if (timer > 0) {
-      if (effects.size() > 0) {
-        addEffectsToEntities();
-      }
-      return;
-    }
-    //timer is zero, delete all effects
-    effects.clear();
-    //
     IEnergyStorage en = this.energy.orElse(null);
     IItemHandler inv = this.inventory.orElse(null);
-    if (en == null || inv == null) {
+    final int repair = ConfigManager.BEACONPOWER.get();
+    if (en == null || inv == null
+        || en.getEnergyStored() < repair) {
       return;
     }
+    timer--;
+    if (timer > 0) {// && timer % 60 == 0
+      tryAffectEntities(en, repair);
+      return;
+    }
+    //timer is <=zero, delete all effects
+    effects.clear();
+    //
     ItemStack s = inv.getStackInSlot(0);
     if (s.isEmpty()) {
       return;
     }
     List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(s);
     if (newEffects.size() > 0) {
-      //add new effects
-      this.timer = TICKS_PER_DURATION;
-      setLitProperty(true);
-      //first read all potins
-      int maxDur = 0;
-      for (EffectInstance eff : newEffects) {
-        if (this.isPotionValid(eff)) { //cannot set the duration time so we must copy it
-          System.out.println("add effect " + eff);
-          effects.add(new EffectInstance(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, false));
-          maxDur = Math.max(eff.getDuration(), maxDur);
-        }
-      }
-      inv.extractItem(0, 1, false);
+      pullFromItem(inv, newEffects);
     }
   }
 
-  private void addEffectsToEntities() {
-    System.out.println(" addEffectsToEntities" + radius);
+  private void pullFromItem(IItemHandler inv, List<EffectInstance> newEffects) {
+    //add new effects
+    this.timer = TICKS_PER_DURATION;
+    setLitProperty(true);
+    //first read all potins
+    int maxDur = 0;
+    for (EffectInstance eff : newEffects) {
+      if (this.isPotionValid(eff)) { //cannot set the duration time so we must copy it
+        effects.add(new EffectInstance(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, false));
+        maxDur = Math.max(eff.getDuration(), maxDur);
+      }
+    }
+    inv.extractItem(0, 1, false);
+  }
+
+  private void tryAffectEntities(IEnergyStorage en, final int repair) {
+    if (timer % TICKS_FIRE_PER == 0
+        && effects.size() > 0
+        && en.getEnergyStored() >= repair) {
+      int affected = affectEntities();
+      if (affected > 0)
+        en.extractEnergy(repair, false);
+    }
+  }
+
+  private int affectEntities() {
     boolean showParticles = false;//(this.entityType == EntityType.PLAYERS);
     //    EnumCreatureType creatureType = this.getCreatureType();
+    int affecdted = 0;
     List<? extends LivingEntity> list = this.entityFilter.getEntities(world, pos, radius);
-    System.out.println("Living entities" + list.size());
     for (LivingEntity entity : list) {
-      System.out.println("target  entities" + entity);
       if (entity == null) {
-        return;
+        continue;
       }
       for (EffectInstance eff : this.effects) {
-        //        entity.isPotionActive(potionIn)
+        affecdted++;
         if (entity.isPotionActive(eff.getPotion())) {
           //important to use combine for thing effects that apply attributes such as health
           entity.getActivePotionEffect(eff.getPotion()).combine(eff);
@@ -206,6 +216,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
         }
       }
     }
+    return affecdted;
   }
 
   /**

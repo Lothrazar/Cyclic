@@ -24,8 +24,7 @@ public enum EntityFilterType {
     int x = pos.getX();
     int y = pos.getY();
     int z = pos.getZ();
-    int theRadius = ((int) Math.pow(2, radius));
-    AxisAlignedBB axisalignedbb = (new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1)).grow(theRadius).expand(0.0D, world.getHeight(), 0.0D);
+    AxisAlignedBB axisalignedbb = (new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1)).grow(radius).expand(0.0D, world.getHeight(), 0.0D);
     //
     List<LivingEntity> list = new ArrayList<>();
     switch (this) {

@@ -32,6 +32,7 @@ public class ConfigManager {
   public static BooleanValue BOOMERANGS;
   public static BooleanValue CABLES;
   public static IntValue ANVILPOWER;
+  public static IntValue BEACONPOWER;
   public static IntValue MELTERPOWER;
   public static IntValue SOLIDIFIERPOWER;
   public static IntValue PEATERICHPOWER;
@@ -118,6 +119,7 @@ public class ConfigManager {
     DROPPERPOWER = CFG.comment("Power per use").defineInRange(category + "dropper", 50, 1, 64000);
     FORESTERPOWER = CFG.comment("Power per use").defineInRange(category + "forester", 50, 1, 64000);
     HARVESTERPOWER = CFG.comment("Power per use").defineInRange(category + "harvester", 250, 1, 64000);
+    BEACONPOWER = CFG.comment("Power per tick").defineInRange(category + "beacon", 10, 1, 64000);
     category = "peat.";
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
         .defineInRange(category + " conversionChance",

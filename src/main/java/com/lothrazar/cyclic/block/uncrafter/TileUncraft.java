@@ -167,7 +167,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         if (r.isEmpty()) {
           break;
         }
-        System.out.println("Found a result to insert" + r);
+        //        System.out.println("Found a result to insert" + r);
         r = inv.insertItem(i, r.copy(), false);
       }
     }
