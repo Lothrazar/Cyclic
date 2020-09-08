@@ -27,7 +27,7 @@ public class ContainerStructure extends ContainerBase {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 61, 21));
     });
-    layoutPlayerInventorySlots(8, 84);
+    layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileStructure.Fields.values().length);
     trackEnergy(tile);
   }

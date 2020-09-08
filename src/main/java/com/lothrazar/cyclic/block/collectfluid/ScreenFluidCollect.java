@@ -26,7 +26,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   @Override
   public void init() {
     super.init();
-    energy.guiTop = fluid.guiLeft = guiLeft;
+    energy.guiLeft = fluid.guiLeft = guiLeft;
     energy.guiTop = fluid.guiTop = guiTop;
     int x, y;
     x = guiLeft + 8;
