@@ -38,8 +38,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileStructure extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  public static int maxSize = 99;
-  public static int maxHeight = 99;
+  public static final int maxHeight = 100;
 
   static enum Fields {
     TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDER;
