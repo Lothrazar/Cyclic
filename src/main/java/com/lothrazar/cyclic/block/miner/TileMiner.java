@@ -42,7 +42,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private int shapeIndex = 0;
   static final int MAX_HEIGHT = 64;
   private int height = MAX_HEIGHT / 2;
-  private static final int MAX_SIZE = 12;//radius 7 translates to 15x15 area (center block + 7 each side)
+  public static final int MAX_SIZE = 12;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = 5;
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
