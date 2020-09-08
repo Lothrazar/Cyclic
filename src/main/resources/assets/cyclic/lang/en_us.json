@@ -15,6 +15,9 @@
     "block.cyclic.flower_cyan": "Cyan Rose",
     "block.cyclic.flower_cyan.tooltip": "A lost legacy",
     
+    "block.cyclic.terra_preta":"Terra Preta",
+    "block.cyclic.terra_preta.tooltip":"Place below farmland for improved growth",
+    
     "block.cyclic.crate": "Crate",
     "block.cyclic.crate.tooltip": "Reinforced item storage",
     "block.cyclic.dark_glass": "Tempered Glass",
@@ -602,7 +605,7 @@
     "cyclic.screen.red": "Red",
     "cyclic.screen.green": "Green",
     "cyclic.gui.sliderkeys": "Arrow keys; hold shift/alt",
-    
+    "cyclic.gui.empty":"Empty",
     
     
     "cyclic.screen.style0": "Normal",

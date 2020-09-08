@@ -47,12 +47,12 @@ public class BlockDropper extends BlockBase {
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlockState(pos, state.with(BlockStateProperties.FACING, UtilStuff.getFacingFromEntityHorizontal(pos, entity)), 2);
+      world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilStuff.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
   }
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.FACING).add(LIT);
+    builder.add(BlockStateProperties.HORIZONTAL_FACING).add(LIT);
   }
 }

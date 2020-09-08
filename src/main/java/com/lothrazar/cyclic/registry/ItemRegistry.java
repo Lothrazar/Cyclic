@@ -122,7 +122,7 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("flower_cyan"));
     r.register(new BlockItem(BlockRegistry.anvil_magma, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("anvil_magma"));
     r.register(new BlockItem(BlockRegistry.beacon, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("beacon"));
-    r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
+    //    r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.battery_infinite, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("battery_infinite"));
     r.register(new BlockItem(BlockRegistry.item_infinite, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("item_infinite"));
     r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dice"));

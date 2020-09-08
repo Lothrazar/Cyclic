@@ -39,7 +39,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static final int MENERGY = 64 * 1000;
   protected int needsRedstone = 0;//default to always on
-  protected int render = 1;
+  protected int render = 0;
   protected int timer;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {

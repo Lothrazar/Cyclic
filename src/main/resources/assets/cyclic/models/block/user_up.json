@@ -1,10 +1,7 @@
 {
  	"parent": "cyclic:parent/machine_vertical",
 	"textures":{
-        "front": "cyclic:blocks/breaker/front",
-        "side": "cyclic:blocks/breaker/side",
-        "base": "minecraft:block/quartz_block_bottom",
-        "stem": "minecraft:block/gold_block",
-        "particle": "minecraft:block/iron_block"
+        "base": "cyclic:blocks/machine/gold",
+        "stem": "cyclic:blocks/machine/obsidian"
 	}
 }

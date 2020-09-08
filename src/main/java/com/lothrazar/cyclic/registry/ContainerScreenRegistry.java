@@ -184,8 +184,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerAnvilMagma> anvil_magma;
   @ObjectHolder(ModCyclic.MODID + ":beacon")
   public static ContainerType<ContainerPotion> beacon;
-  @ObjectHolder(ModCyclic.MODID + ":crafter")
-  public static ContainerType<ContainerCrafter> crafter;
   @ObjectHolder(ModCyclic.MODID + ":dropper")
   public static ContainerType<ContainerDropper> dropper;
   @ObjectHolder(ModCyclic.MODID + ":forester")

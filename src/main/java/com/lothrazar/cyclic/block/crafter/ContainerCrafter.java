@@ -1,11 +1,9 @@
 package com.lothrazar.cyclic.block.crafter;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -19,7 +17,7 @@ public class ContainerCrafter extends ContainerBase {
   TileCrafter tile;
 
   public ContainerCrafter(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.crafter, windowId);
+    super(ContainerScreenRegistry.anvil, windowId);
     tile = (TileCrafter) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -37,6 +35,6 @@ public class ContainerCrafter extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.crafter);
+    return false;// isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.crafter);
   }
 }

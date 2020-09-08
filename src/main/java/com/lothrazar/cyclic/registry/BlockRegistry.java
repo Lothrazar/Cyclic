@@ -160,8 +160,8 @@ public class BlockRegistry {
   //
   @ObjectHolder(ModCyclic.MODID + ":beacon")
   public static Block beacon;
-  @ObjectHolder(ModCyclic.MODID + ":crafter")
-  public static Block crafter;
+  //  @ObjectHolder(ModCyclic.MODID + ":crafter")
+  //  public static Block crafter;
   @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
   public static Block battery_infinite;
   @ObjectHolder(ModCyclic.MODID + ":item_infinite")
