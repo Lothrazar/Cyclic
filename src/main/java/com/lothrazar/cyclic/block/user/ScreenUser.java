@@ -3,9 +3,8 @@ package com.lothrazar.cyclic.block.user;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.TextboxInteger;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -13,7 +12,6 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
   private EnergyBar energy;
-  private TextboxInteger txtBox;
   private ButtonMachineRedstone btnRedstone;
 
   public ScreenUser(ContainerUser screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -31,19 +29,14 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileUser.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     //
-    x = guiLeft + 120;
-    y = guiTop + 28;
-    txtBox = new TextboxInteger(this.font, x, y, 30,
-        container.tile.getPos(), TileUser.Fields.TIMERDEL.ordinal());
-    txtBox.setMaxStringLength(3);
-    txtBox.setText("" + container.tile.getField(TileUser.Fields.TIMERDEL.ordinal()));
-    txtBox.setTooltip(UtilChat.lang("block.cyclic.user.delay"));
-    this.children.add(txtBox);
-  }
-
-  @Override
-  public void tick() {
-    this.txtBox.tick();
+    x = guiLeft + 32;
+    y = guiTop + 26;
+    int w = 120;
+    int h = 20;
+    int f = TileUser.Fields.TIMERDEL.ordinal();
+    GuiSliderInteger DROPCOUNT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        1, 64, container.tile.getField(f)));
+    DROPCOUNT.setTooltip("block.cyclic.user.delay");
   }
 
   @Override
@@ -65,7 +58,6 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, container.tile.getEnergy());
-    this.drawSlot(ms, xSize / 2 - 9, 28);
-    this.txtBox.render(ms, mouseX, mouseX, partialTicks);
+    this.drawSlot(ms, 9, 34);
   }
 }
