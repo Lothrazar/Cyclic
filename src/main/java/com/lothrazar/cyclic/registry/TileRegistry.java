@@ -12,7 +12,6 @@ import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.clock.TileRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
-import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.TileItemInfinite;
@@ -165,8 +164,6 @@ public class TileRegistry {
   //
   @ObjectHolder(ModCyclic.MODID + ":beacon")
   public static TileEntityType<TilePotion> beacon;
-  @ObjectHolder(ModCyclic.MODID + ":crafter")
-  public static TileEntityType<TileCrafter> crafter;
   @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
   public static TileEntityType<TileBatteryInfinite> battery_infinite;
   @ObjectHolder(ModCyclic.MODID + ":item_infinite")

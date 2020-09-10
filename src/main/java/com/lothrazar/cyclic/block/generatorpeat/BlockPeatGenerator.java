@@ -8,6 +8,8 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockPeatGenerator extends BlockBase {
 
@@ -27,6 +29,7 @@ public class BlockPeatGenerator extends BlockBase {
   }
 
   @Override
+  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ScreenManager.registerFactory(ContainerScreenRegistry.generatorCont, ScreenGenerator::new);
   }
