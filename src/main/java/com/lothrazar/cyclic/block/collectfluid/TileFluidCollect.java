@@ -64,8 +64,6 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   public TileFluidCollect() {
     super(TileRegistry.collector_fluid);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-    this.needsRedstone = 1;
-    this.render = 1;
   }
 
   public Predicate<FluidStack> isFluidValid() {
