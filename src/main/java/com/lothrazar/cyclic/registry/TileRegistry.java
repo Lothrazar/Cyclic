@@ -11,7 +11,7 @@ import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.clock.TileRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
-import com.lothrazar.cyclic.block.collectitem.TileCollector;
+import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
@@ -83,7 +83,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileMelter::new, BlockRegistry.melter).build(null).setRegistryName("melter"));
     r.register(TileEntityType.Builder.create(TileTank::new, BlockRegistry.tank).build(null).setRegistryName("tank"));
     r.register(TileEntityType.Builder.create(TileBreaker::new, BlockRegistry.breaker).build(null).setRegistryName("breaker"));
-    r.register(TileEntityType.Builder.create(TileCollector::new, BlockRegistry.collector).build(null).setRegistryName("collector"));
+    r.register(TileEntityType.Builder.create(TileItemCollector::new, BlockRegistry.collector).build(null).setRegistryName("collector"));
     r.register(TileEntityType.Builder.create(TileFan::new, BlockRegistry.fan).build(null).setRegistryName("fan"));
     r.register(TileEntityType.Builder.create(TileExpPylon::new, BlockRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
     r.register(TileEntityType.Builder.create(TileTrash::new, BlockRegistry.trash).build(null).setRegistryName("trash"));
@@ -131,7 +131,7 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
   public static TileEntityType<TileCableFluid> fluid_pipeTile;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static TileEntityType<TileCollector> collectortile;
+  public static TileEntityType<TileItemCollector> collectortile;
   @ObjectHolder(ModCyclic.MODID + ":trash")
   public static TileEntityType<TileTrash> trashtile;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")

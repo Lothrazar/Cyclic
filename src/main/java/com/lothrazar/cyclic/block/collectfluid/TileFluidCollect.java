@@ -48,7 +48,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private int shapeIndex = 0;// current index of shape array
-  private int size = 4 * 2;
+  private int radius = 4 * 2;
   private int height = 16;
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -92,14 +92,21 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     };
   }
 
+  private BlockPos getTargetCenter() {
+    //move center over that much, not including exact horizontal
+    return this.getPos().offset(this.getCurrentFacing(), radius + 1);
+  }
+
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.pos.down(height), this.size);
+    BlockPos ctr = getTargetCenter();
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(ctr.down(height), this.radius);
     shape = UtilShape.repeatShapeByHeight(shape, height);
     return shape;
   }
 
   public List<BlockPos> getShapeFilled() {
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(this.pos.down(height), this.size);
+    BlockPos ctr = getTargetCenter();
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(ctr.down(height), this.radius);
     shape = UtilShape.repeatShapeByHeight(shape, height - 1);
     return shape;
   }

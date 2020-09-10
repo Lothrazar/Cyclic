@@ -12,13 +12,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class ContainerCollector extends ContainerBase {
+public class ContainerItemCollector extends ContainerBase {
 
-  TileCollector tile;
+  TileItemCollector tile;
 
-  public ContainerCollector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerItemCollector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(ContainerScreenRegistry.collectortileContainer, windowId);
-    tile = (TileCollector) world.getTileEntity(pos);
+    tile = (TileItemCollector) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {

@@ -38,8 +38,8 @@ import net.minecraftforge.items.IItemHandler;
 public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static final int MENERGY = 64 * 1000;
-  protected int needsRedstone = 0;//default to always on
-  protected int render = 0;
+  protected int needsRedstone = 1;//default to off
+  protected int render = 0; // default to do not render
   protected int timer;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {

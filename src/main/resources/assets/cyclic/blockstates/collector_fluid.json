@@ -1,5 +1,15 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/collector_fluid" }
+		"facing=north,lit=false":	{ "model": "cyclic:block/collector_fluid"},
+		"facing=north,lit=true":	{ "model": "cyclic:block/collector_fluid_on" },
+	
+		"facing=east,lit=false":	{ "model": "cyclic:block/collector_fluid", "y": 90 },
+		"facing=east,lit=true":		{ "model": "cyclic:block/collector_fluid_on", "y": 90 },
+	
+		"facing=south,lit=false":	{ "model": "cyclic:block/collector_fluid" , "y": 180 },
+		"facing=south,lit=true":	{ "model": "cyclic:block/collector_fluid_on" , "y": 180 },
+	
+		"facing=west,lit=false":	{ "model": "cyclic:block/collector_fluid", "y": 270 },
+		"facing=west,lit=true":		{ "model": "cyclic:block/collector_fluid_on", "y": 270 }
     }
 }

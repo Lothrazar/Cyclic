@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,18 +27,17 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileItemCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static enum Fields {
-    REDSTONE;
+    REDSTONE, RENDER;
   }
 
   private int radius = 8;
   private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
-  public TileCollector() {
+  public TileItemCollector() {
     super(TileRegistry.collectortile);
-    this.setNeedsRedstone(1);
   }
 
   private IItemHandler createHandler() {
@@ -52,7 +52,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
   @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerCollector(i, world, pos, playerInventory, playerEntity);
+    return new ContainerItemCollector(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
@@ -83,7 +83,7 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
 
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), radius);
+    return this.getPos().offset(this.getCurrentFacing(), radius + 1);
   }
 
   @Override
@@ -94,12 +94,10 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
     if (world.isRemote) {
       return;
     }
-    BlockPos center = getTargetCenter();
-    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(
-        center.getX() - radius, center.getY(), center.getZ() - radius,
-        center.getX() + radius, center.getY() + 2, center.getZ() + radius), (entity) -> {
-          return entity.isAlive();//  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
-        });
+    AxisAlignedBB aabb = getRange();
+    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
+      return entity.isAlive();//  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
+    });
     if (list.size() > 0) {
       ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
       IItemHandler h = handler.orElse(null);
@@ -117,23 +115,38 @@ public class TileCollector extends TileEntityBase implements ITickableTileEntity
     }
   }
 
-  @Override
-  public int getField(int field) {
-    switch (Fields.values()[field]) {
-      case REDSTONE:
-        return this.needsRedstone;
-      //      case RENDER:
-      //        return this.renderParticles;
-    }
-    return 0;
+  public List<BlockPos> getShape() {
+    return UtilShape.getShape(getRange(), pos.getY());
+  }
+
+  private AxisAlignedBB getRange() {
+    BlockPos center = getTargetCenter();
+    AxisAlignedBB aabb = new AxisAlignedBB(
+        center.getX() - radius, center.getY(), center.getZ() - radius,
+        center.getX() + radius, center.getY() + 2, center.getZ() + radius);
+    return aabb;
   }
 
   @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        this.needsRedstone = value % 2;
+        this.setNeedsRedstone(value);
+      break;
+      case RENDER:
+        this.render = value % 2;
       break;
     }
+  }
+
+  @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        return this.needsRedstone;
+      case RENDER:
+        return this.render;
+    }
+    return 0;
   }
 }

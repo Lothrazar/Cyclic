@@ -1,6 +1,7 @@
 {
 	"_comments": "Thanks to https://tterrag.com/lang2json/",
-    "itemGroup.cyclic": "Cyclic",
+    "itemGroup.cyclic": "Cyclic Blocks",
+    "itemGroup.cyclicitems": "Cyclic Items",
     "block.cyclic.trash": "Trash Void",
     "block.cyclic.trash.tooltip": "Deletes any item piped into it",
     "block.cyclic.experience_pylon": "Experience Pylon",
@@ -1212,8 +1213,7 @@
     "item.cyclic.crystal_hoe": "Crystal Hoe",
 
     "block.cyclic.collector_fluid": "Fluid Collector",
-    "block.cyclic.collector_fluid.guide": "Drain fluid that is nearby and below, filling it with blocks",
-    "block.cyclic.collector_fluid.tooltip": "Drain fluid that is nearby and below, filling it with blocks",
+    "block.cyclic.collector_fluid.guide": "Drain nearby fluid",
 
     "block.cyclic.melter": "Melting Chamber",
     "block.cyclic.melter.tooltip": "Melt certain items into fluid",

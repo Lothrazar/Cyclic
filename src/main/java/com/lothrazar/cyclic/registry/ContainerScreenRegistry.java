@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.block.beaconpotion.ContainerPotion;
 import com.lothrazar.cyclic.block.breaker.ContainerBreaker;
 import com.lothrazar.cyclic.block.clock.ContainerClock;
 import com.lothrazar.cyclic.block.collectfluid.ContainerFluidCollect;
-import com.lothrazar.cyclic.block.collectitem.ContainerCollector;
+import com.lothrazar.cyclic.block.collectitem.ContainerItemCollector;
 import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclic.block.crate.ContainerCrate;
 import com.lothrazar.cyclic.block.detectorentity.ContainerDetector;
@@ -45,7 +45,7 @@ public class ContainerScreenRegistry {
   public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
     IForgeRegistry<ContainerType<?>> r = event.getRegistry();
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerCollector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerItemCollector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("collector"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
@@ -150,7 +150,7 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":battery")
   public static ContainerType<ContainerBattery> batteryCont;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static ContainerType<ContainerCollector> collectortileContainer;
+  public static ContainerType<ContainerItemCollector> collectortileContainer;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static ContainerType<ContainerGenerator> generatorCont;
   @ObjectHolder(ModCyclic.MODID + ":harvester")

@@ -22,8 +22,7 @@ import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.block.cable.item.BlockCableItem;
 import com.lothrazar.cyclic.block.clock.BlockRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.BlockFluidCollect;
-import com.lothrazar.cyclic.block.collectitem.BlockCollector;
-import com.lothrazar.cyclic.block.crafter.BlockCrafter;
+import com.lothrazar.cyclic.block.collectitem.BlockItemCollector;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
 import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.BlockItemInfinite;
@@ -110,7 +109,7 @@ public class BlockRegistry {
   @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
   public static BlockExpPylon experience_pylon;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static BlockCollector collector;
+  public static BlockItemCollector collector;
   @ObjectHolder(ModCyclic.MODID + ":battery")
   public static Block battery;
   @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
@@ -200,7 +199,7 @@ public class BlockRegistry {
     r.register(new Block(Block.Properties.create(Material.IRON)).setRegistryName("mason_steel"));
     r.register(new BlockAnvilMagma(Block.Properties.create(Material.ANVIL)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
-    r.register(new BlockCrafter(Block.Properties.create(Material.ROCK)).setRegistryName("crafter"));
+    //    r.register(new BlockCrafter(Block.Properties.create(Material.ROCK)).setRegistryName("crafter"));
     r.register(new BlockBatteryInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new BlockDice(Block.Properties.create(Material.ROCK)).setRegistryName("dice"));
@@ -232,7 +231,7 @@ public class BlockRegistry {
     r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), false).setRegistryName("scaffold_responsive"));
     r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD)).setRegistryName("scaffold_replace"));
     r.register(new BlockFluidTank(Block.Properties.create(Material.ROCK)).setRegistryName("tank"));
-    r.register(new BlockCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
+    r.register(new BlockItemCollector(Block.Properties.create(Material.ROCK)).setRegistryName("collector"));
     r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
     r.register(new BlockExpPylon(Block.Properties.create(Material.ROCK)).setRegistryName("experience_pylon"));
     r.register(new BlockFan(Block.Properties.create(Material.ROCK)).setRegistryName("fan"));

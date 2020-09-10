@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.collectfluid;
+package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -9,16 +9,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderPlacerFluid extends TileEntityRenderer<TileFluidCollect> {
+public class RenderItemCollect extends TileEntityRenderer<TileItemCollector> {
 
-  public RenderPlacerFluid(TileEntityRendererDispatcher d) {
+  public RenderItemCollect(TileEntityRendererDispatcher d) {
     super(d);
   }
 
   @Override
-  public void render(TileFluidCollect te, float v, MatrixStack matrix,
+  public void render(TileItemCollector te, float v, MatrixStack matrix,
       IRenderTypeBuffer ibuffer, int partialTicks, int destroyStage) {
-    if (1 == te.getField(TileFluidCollect.Fields.RENDER.ordinal())) {
+    if (1 == te.getField(TileItemCollector.Fields.RENDER.ordinal())) {
       UtilRender.renderOutline(te.getPos(), te.getShape(), matrix);
     }
   }

@@ -8,6 +8,8 @@ import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,16 +24,24 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockDice extends BlockBase {
 
   public BlockDice(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.hardnessAndResistance(1.8F).notSolid());
   }
 
   @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
   }
 
   @Override

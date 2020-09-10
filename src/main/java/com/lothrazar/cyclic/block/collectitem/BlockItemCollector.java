@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.collectitem;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,10 +17,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-public class BlockCollector extends BlockBase {
+public class BlockItemCollector extends BlockBase {
 
-  public BlockCollector(Properties properties) {
+  public BlockItemCollector(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.STONE));
     this.setHasGui();
   }
@@ -43,11 +47,13 @@ public class BlockCollector extends BlockBase {
 
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileCollector();
+    return new TileItemCollector();
   }
 
   @Override
+  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.collectortileContainer, ScreenCollector::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.collectortile, RenderItemCollect::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.collectortileContainer, ScreenItemCollector::new);
   }
 }
