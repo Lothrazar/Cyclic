@@ -17,7 +17,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
 
 public abstract class CableBase extends BlockBase {
@@ -55,6 +57,33 @@ public abstract class CableBase extends BlockBase {
   //X for e-w
   protected static final VoxelShape AABB_WEST = Block.makeCuboidShape(bot, sm, sm, lg, lg, lg);
   protected static final VoxelShape AABB_EAST = Block.makeCuboidShape(sm, sm, sm, top, lg, lg);
+
+  static boolean shapeConnects(BlockState state, EnumProperty<EnumConnectType> dirctionProperty) {
+    return state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
+  }
+
+  public static VoxelShape createShape(BlockState state) {
+    VoxelShape shape = AABB;
+    if (shapeConnects(state, UP)) {
+      shape = VoxelShapes.combine(shape, AABB_UP, IBooleanFunction.OR);
+    }
+    if (shapeConnects(state, DOWN)) {
+      shape = VoxelShapes.combine(shape, AABB_DOWN, IBooleanFunction.OR);
+    }
+    if (state.get(WEST).equals(EnumConnectType.INVENTORY)) {
+      shape = VoxelShapes.combine(shape, AABB_WEST, IBooleanFunction.OR);
+    }
+    if (state.get(EAST).equals(EnumConnectType.INVENTORY)) {
+      shape = VoxelShapes.combine(shape, AABB_EAST, IBooleanFunction.OR);
+    }
+    if (state.get(NORTH).equals(EnumConnectType.INVENTORY)) {
+      shape = VoxelShapes.combine(shape, AABB_NORTH, IBooleanFunction.OR);
+    }
+    if (state.get(SOUTH).equals(EnumConnectType.INVENTORY)) {
+      shape = VoxelShapes.combine(shape, AABB_SOUTH, IBooleanFunction.OR);
+    }
+    return shape;
+  }
 
   public CableBase(Properties properties) {
     super(properties);
