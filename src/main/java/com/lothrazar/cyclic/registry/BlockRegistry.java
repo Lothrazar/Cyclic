@@ -42,6 +42,8 @@ import com.lothrazar.cyclic.block.collectitem.TileCollector;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
 import com.lothrazar.cyclic.block.crate.ContainerCrate;
 import com.lothrazar.cyclic.block.crate.TileCrate;
+import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
+import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
 import com.lothrazar.cyclic.block.detector.BlockDetector;
 import com.lothrazar.cyclic.block.detector.ContainerDetector;
 import com.lothrazar.cyclic.block.detector.TileDetector;
@@ -82,15 +84,6 @@ import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
-import com.lothrazar.cyclic.block.structurereadercreative.BlockReader;
-import com.lothrazar.cyclic.block.structurereadercreative.ContainerReader;
-import com.lothrazar.cyclic.block.structurereadercreative.TileReader;
-import com.lothrazar.cyclic.block.structurewriter.BlockWriter;
-import com.lothrazar.cyclic.block.structurewriter.ContainerWriter;
-import com.lothrazar.cyclic.block.structurewriter.TileWriter;
-import com.lothrazar.cyclic.block.structurewritercopy.BlockReaderCopy;
-import com.lothrazar.cyclic.block.structurewritercopy.ContainerReaderCopy;
-import com.lothrazar.cyclic.block.structurewritercopy.TileReaderCopy;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
@@ -119,6 +112,8 @@ public class BlockRegistry {
 
   //not populated in the most ideal way 
   public static List<BlockBase> blocks = new ArrayList<>();
+  @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
+  public static Block battery_infinite;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block solidifier;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -201,17 +196,13 @@ public class BlockRegistry {
   public static Block cask;
   @ObjectHolder(ModCyclic.MODID + ":flower_cyan")
   public static Block flower_cyan;
-  @ObjectHolder(ModCyclic.MODID + ":structure_reader")
-  public static Block structure_reader;
-  @ObjectHolder(ModCyclic.MODID + ":structure_writer")
-  public static Block structure_writer;
-  @ObjectHolder(ModCyclic.MODID + ":structure_copy")
-  public static Block structure_copy;
   @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
   public static Block placer_fluid;
 
   public static class Tiles {
 
+    @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
+    public static TileEntityType<TileBatteryInfinite> battery_infinite;
     @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
     public static TileEntityType<TileWirelessRec> wireless_receiver;
     @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
@@ -268,12 +259,6 @@ public class BlockRegistry {
     public static TileEntityType<TileCrate> crate;
     @ObjectHolder(ModCyclic.MODID + ":cask")
     public static TileEntityType<TileCrate> cask;
-    @ObjectHolder(ModCyclic.MODID + ":structure_reader")
-    public static TileEntityType<TileReader> structure_reader;
-    @ObjectHolder(ModCyclic.MODID + ":structure_writer")
-    public static TileEntityType<TileWriter> structure_writer;
-    @ObjectHolder(ModCyclic.MODID + ":structure_copy")
-    public static TileEntityType<TileReaderCopy> structure_copy;
     @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
     public static TileEntityType<TilePlacerFluid> placer_fluid;
   }
@@ -316,12 +301,6 @@ public class BlockRegistry {
     public static ContainerType<ContainerClock> clock;
     @ObjectHolder(ModCyclic.MODID + ":crate")
     public static ContainerType<ContainerCrate> crate;
-    @ObjectHolder(ModCyclic.MODID + ":structure_reader")
-    public static ContainerType<ContainerReader> structure_reader;
-    @ObjectHolder(ModCyclic.MODID + ":structure_writer")
-    public static ContainerType<ContainerWriter> structure_writer;
-    @ObjectHolder(ModCyclic.MODID + ":structure_copy")
-    public static ContainerType<ContainerReaderCopy> structure_copy;
     @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
     public static ContainerType<ContainerPlacerFluid> placer_fluid;
     @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
@@ -331,10 +310,8 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockBatteryInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("battery_infinite"));
     r.register(new BlockPlacerFluid(Block.Properties.create(Material.IRON)).setRegistryName("placer_fluid"));
-    r.register(new BlockReaderCopy(Block.Properties.create(Material.IRON)).setRegistryName("structure_copy"));
-    r.register(new BlockWriter(Block.Properties.create(Material.IRON)).setRegistryName("structure_writer"));
-    r.register(new BlockReader(Block.Properties.create(Material.IRON)).setRegistryName("structure_reader"));
     r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));
     r.register(new BlockCask(Block.Properties.create(Material.ROCK)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.ROCK)).setRegistryName("crate"));
@@ -381,10 +358,8 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileBatteryInfinite::new, BlockRegistry.battery_infinite).build(null).setRegistryName("battery_infinite"));
     r.register(TileEntityType.Builder.create(TilePlacerFluid::new, BlockRegistry.placer_fluid).build(null).setRegistryName("placer_fluid"));
-    r.register(TileEntityType.Builder.create(TileReaderCopy::new, BlockRegistry.structure_copy).build(null).setRegistryName("structure_copy"));
-    r.register(TileEntityType.Builder.create(TileWriter::new, BlockRegistry.structure_writer).build(null).setRegistryName("structure_writer"));
-    r.register(TileEntityType.Builder.create(TileReader::new, BlockRegistry.structure_reader).build(null).setRegistryName("structure_reader"));
     r.register(TileEntityType.Builder.create(TileCask::new, BlockRegistry.cask).build(null).setRegistryName("cask"));
     r.register(TileEntityType.Builder.create(TileCrate::new, BlockRegistry.crate).build(null).setRegistryName("crate"));
     r.register(TileEntityType.Builder.create(TileRedstoneClock::new, BlockRegistry.clock).build(null).setRegistryName("clock"));
@@ -472,15 +447,6 @@ public class BlockRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerCrate(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("crate"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerReader(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("structure_reader"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerWriter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("structure_writer"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerReaderCopy(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
-    }).setRegistryName("structure_copy"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerPlacerFluid(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("placer_fluid"));

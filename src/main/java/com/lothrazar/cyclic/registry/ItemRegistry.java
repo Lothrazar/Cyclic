@@ -141,11 +141,8 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.battery_infinite, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("battery_infinite"));
     r.register(new BlockItem(BlockRegistry.placer_fluid, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("placer_fluid"));
-    //    r.register(new StructureDiskItem(new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_disk"));
-    //    r.register(new BlockItem(BlockRegistry.structure_writer, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_writer"));
-    //    r.register(new BlockItem(BlockRegistry.structure_reader, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_reader"));
-    //    r.register(new BlockItem(BlockRegistry.structure_copy, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("structure_copy"));
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("flower_cyan"));
     //redstone
     r.register(new BlockItem(BlockRegistry.cask, new Item.Properties().group(MaterialRegistry.itemGroup)).setRegistryName("cask"));

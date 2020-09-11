@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.DirectionNullable;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
+import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,10 +15,8 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -30,32 +29,9 @@ public class BlockCableItem extends CableBase {
     super(properties.hardnessAndResistance(0.5F));
   }
 
-  private boolean shapeConnects(BlockState state, EnumProperty<EnumConnectType> dirctionProperty) {
-    return state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
-  }
-
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    VoxelShape shape = AABB;
-    if (shapeConnects(state, UP)) {
-      shape = VoxelShapes.combine(shape, AABB_UP, IBooleanFunction.OR);
-    }
-    if (shapeConnects(state, DOWN)) {
-      shape = VoxelShapes.combine(shape, AABB_DOWN, IBooleanFunction.OR);
-    }
-    if (state.get(WEST).equals(EnumConnectType.INVENTORY)) {
-      shape = VoxelShapes.combine(shape, AABB_WEST, IBooleanFunction.OR);
-    }
-    if (state.get(EAST).equals(EnumConnectType.INVENTORY)) {
-      shape = VoxelShapes.combine(shape, AABB_EAST, IBooleanFunction.OR);
-    }
-    if (state.get(NORTH).equals(EnumConnectType.INVENTORY)) {
-      shape = VoxelShapes.combine(shape, AABB_NORTH, IBooleanFunction.OR);
-    }
-    if (state.get(SOUTH).equals(EnumConnectType.INVENTORY)) {
-      shape = VoxelShapes.combine(shape, AABB_SOUTH, IBooleanFunction.OR);
-    }
-    return shape;
+    return ShapeCache.getOrCreate(state, CableBase::createShape);
   }
 
   @Override

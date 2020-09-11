@@ -1,8 +1,8 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
   "promos": {
-    "1.15.2-latest": "0.6.2",
-    "1.15.2-recommended": "0.6.2"
+    "1.15.2-latest": "0.7.0",
+    "1.15.2-recommended": "0.7.0"
   },
   "1.15.2": {
   	"0.1.8":"Fixed server crash"
@@ -22,5 +22,6 @@
   	,"0.6.0":"Ported some commands (use /cyclic subcommand).  Added Cask.  Added Crate.  Added Cyan Rose (use bonemeal on podzol) "
   	,"0.6.1":"Ported Fluid Placer, Fluid Drain, Carbon Paper in from the 1.12 version.  "
   	,"0.6.2":"Fixed crash in harvester GUI.  Remove logspam in Disenchanter.  Patch StackOverflowError in Excavate enchant when level is high. "
+  	,"0.7.0":"Fixed 'lost connection: Took too long to log in' on servers.  Added Infinite Battery (for creative testing).   "
   }
 }
