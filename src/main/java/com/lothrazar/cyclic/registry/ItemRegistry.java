@@ -113,27 +113,30 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
-    r.register(new BlockItem(BlockRegistry.terra_preta, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("terra_preta"));
+    r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("flower_cyan"));
+    r.register(new BlockItem(BlockRegistry.mason_cobble, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_cobble"));
     r.register(new BlockItem(BlockRegistry.mason_stone, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_stone"));
     r.register(new BlockItem(BlockRegistry.mason_steel, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_steel"));
-    r.register(new BlockItem(BlockRegistry.mason_plate, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_plate"));
     r.register(new BlockItem(BlockRegistry.mason_iron, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_iron"));
-    r.register(new BlockItem(BlockRegistry.mason_cobble, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_cobble"));
-    r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("flower_cyan"));
-    r.register(new BlockItem(BlockRegistry.anvil_magma, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("anvil_magma"));
-    r.register(new BlockItem(BlockRegistry.beacon, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("beacon"));
+    r.register(new BlockItem(BlockRegistry.mason_plate, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_plate"));
+    //
+    r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("battery"));
+    r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_generator"));
+    r.register(new BlockItem(BlockRegistry.peat_unbaked, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_unbaked"));
+    r.register(new BlockItem(BlockRegistry.peat_baked, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_baked"));
+    r.register(new BlockItem(BlockRegistry.solidifier, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("solidifier"));
+    r.register(new BlockItem(BlockRegistry.melter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("melter"));
     //    r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
-    r.register(new BlockItem(BlockRegistry.battery_infinite, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("battery_infinite"));
-    r.register(new BlockItem(BlockRegistry.item_infinite, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("item_infinite"));
-    r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dice"));
+    r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("placer"));
+    r.register(new BlockItem(BlockRegistry.breaker, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("breaker"));
+    r.register(new BlockItem(BlockRegistry.user, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("user"));
     r.register(new BlockItem(BlockRegistry.dropper, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dropper"));
     r.register(new BlockItem(BlockRegistry.forester, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("forester"));
     r.register(new BlockItem(BlockRegistry.miner, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("miner"));
-    r.register(new BlockItem(BlockRegistry.screen, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("screen"));
-    r.register(new BlockItem(BlockRegistry.uncrafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("uncrafter"));
-    //
-    //
-    //
+    r.register(new BlockItem(BlockRegistry.structure, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("structure"));
+    r.register(new BlockItem(BlockRegistry.harvester, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("harvester"));
+    r.register(new BlockItem(BlockRegistry.collector, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("collector"));
+    r.register(new BlockItem(BlockRegistry.collector_fluid, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("collector_fluid"));
     r.register(new BlockItem(BlockRegistry.placer_fluid, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("placer_fluid"));
     //redstone
     r.register(new BlockItem(BlockRegistry.cask, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("cask"));
@@ -147,23 +150,22 @@ public class ItemRegistry {
     // machine blocks   
     r.register(new BlockItem(BlockRegistry.detector_item, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("detector_item"));
     r.register(new BlockItem(BlockRegistry.detector_entity, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("detector_entity"));
+    r.register(new BlockItem(BlockRegistry.screen, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("screen"));
+    r.register(new BlockItem(BlockRegistry.uncrafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("uncrafter"));
     r.register(new BlockItem(BlockRegistry.fisher, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("fisher"));
-    r.register(new BlockItem(BlockRegistry.user, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("user"));
     r.register(new BlockItem(BlockRegistry.disenchanter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("disenchanter"));
-    r.register(new BlockItem(BlockRegistry.collector_fluid, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("collector_fluid"));
     r.register(new BlockItem(BlockRegistry.fan, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("fan"));
     r.register(new BlockItem(BlockRegistry.soundproofing, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("soundproofing"));
-    r.register(new BlockItem(BlockRegistry.solidifier, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("solidifier"));
-    r.register(new BlockItem(BlockRegistry.melter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("melter"));
-    r.register(new BlockItem(BlockRegistry.structure, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("structure"));
-    r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("placer"));
     r.register(new BlockItem(BlockRegistry.anvil, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("anvil"));
+    r.register(new BlockItem(BlockRegistry.anvil_magma, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("anvil_magma"));
+    r.register(new BlockItem(BlockRegistry.beacon, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("beacon"));
     r.register(new ItemBlockTank(BlockRegistry.tank, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("tank"));
-    r.register(new BlockItem(BlockRegistry.breaker, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("breaker"));
-    r.register(new BlockItem(BlockRegistry.collector, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("collector"));
     r.register(new BlockItem(BlockRegistry.dark_glass, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dark_glass"));
-    r.register(new BlockItem(BlockRegistry.harvester, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("harvester"));
     r.register(new BlockItem(BlockRegistry.trash, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("trash"));
+    r.register(new BlockItem(BlockRegistry.battery_infinite, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("battery_infinite"));
+    r.register(new BlockItem(BlockRegistry.item_infinite, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("item_infinite"));
+    r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dice"));
+    r.register(new BlockItem(BlockRegistry.terra_preta, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("terra_preta"));
     // exp machines
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("experience_pylon"));
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("experience_food"));
@@ -171,10 +173,6 @@ public class ItemRegistry {
     r.register(new GemstoneItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("gem_obsidian"));
     r.register(new GemstoneItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("gem_amber"));
     //energy 
-    r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("battery"));
-    r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_generator"));
-    r.register(new BlockItem(BlockRegistry.peat_unbaked, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_unbaked"));
-    r.register(new BlockItem(BlockRegistry.peat_baked, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_baked"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemgrp), PeatItemType.NORM).setRegistryName("peat_fuel"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemgrp), PeatItemType.ENRICHED).setRegistryName("peat_fuel_enriched"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemgrp), PeatItemType.BIOMASS).setRegistryName("biomass"));
