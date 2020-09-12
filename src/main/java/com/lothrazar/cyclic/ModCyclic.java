@@ -15,6 +15,7 @@ import com.lothrazar.cyclic.registry.RecipeRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.IProxy;
 import com.lothrazar.cyclic.setup.ServerProxy;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -34,6 +35,9 @@ public class ModCyclic {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     ConfigManager.setup(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
     FluidRegistry.setup();
+    //why is this event so freakin weird 
+    //https://github.com/Minecraft-Forge-Tutorials/Custom-Json-Recipes/blob/master/src/main/java/net/darkhax/customrecipeexample/CustomRecipesMod.java
+    FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
   }
 
   private void setup(final FMLCommonSetupEvent event) {
