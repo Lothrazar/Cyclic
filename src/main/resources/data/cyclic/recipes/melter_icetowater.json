@@ -1,0 +1,13 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+      "item": "minecraft:ice"
+  },
+  "inputSecond": {
+      "item": "minecraft:ice"
+  },
+  "result": {
+    "fluid": "minecraft:water",
+    "count": 2000
+  }
+}

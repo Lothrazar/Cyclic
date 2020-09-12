@@ -142,14 +142,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   public static void initAllRecipes() {
     hashes = new HashSet<>();
     // WATER
-    //    RecipeMelter.addRecipe("snowwater",
-    //        new ItemStack(Blocks.SNOW_BLOCK),
-    //        new ItemStack(Blocks.SNOW_BLOCK),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 5));
-    //    RecipeMelter.addRecipe("icetowater",
-    //        new ItemStack(Blocks.ICE),
-    //        new ItemStack(Blocks.ICE),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME * 2));
     //    RecipeMelter.addRecipe("fbio",
     //        new ItemStack(ItemRegistry.biomass),
     //        new ItemStack(ItemRegistry.biomass),
