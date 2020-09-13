@@ -1,0 +1,13 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+      "item": "cyclic:experience_food"
+  },
+  "inputSecond": {
+      "item": "minecraft:ghast_tear"
+  },
+  "result": {
+    "fluid": "cyclic:xpjuice",
+    "count": 1200
+  }
+}

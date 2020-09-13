@@ -1,13 +1,13 @@
 {
   "type": "cyclic:melter",
   "inputFirst": {
-      "item": "cyclic:biomass"
+    "item": "minecraft:magma_block"
   },
   "inputSecond": {
-      "item": "minecraft:bamboo"
+    "item": "minecraft:magma_block"
   },
   "result": {
-    "fluid": "cyclic:biomass",
+    "fluid": "cyclic:magma",
     "count": 1000
   }
 }

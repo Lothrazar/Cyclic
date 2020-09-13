@@ -107,6 +107,9 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "melter"));
     }
 
+    /**
+     * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
+     */
     @Override
     public RecipeMelter read(ResourceLocation recipeId, JsonObject json) {
       RecipeMelter r = null;
@@ -144,126 +147,16 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     }
   }
 
-  public static void initAllRecipes() {
-    hashes = new HashSet<>();
-    //    RecipeMelter.addRecipe("wheatkelp",
-    //        new ItemStack(ItemRegistry.biomass),
-    //            new ItemStack(Items.WHEAT_SEEDS),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("beetrootkelp",
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(Items.BEETROOT_SEEDS),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("melonkelp",
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(Items.MELON_SEEDS),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("pumpskelp",
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(Items.PUMPKIN_SEEDS),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("pumpsasdfkelp",
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(Items.KELP),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    // 
-    //    RecipeMelter.addRecipe("obsidiansmstonelava",
-    //        new ItemStack(Blocks.OBSIDIAN),
-    //        new ItemStack(Blocks.SMOOTH_STONE),
-    //        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("obsidiancobblelava",
-    //        new ItemStack(Blocks.OBSIDIAN),
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("obsidiangravellava",
-    //        new ItemStack(Blocks.OBSIDIAN),
-    //        new ItemStack(Blocks.GRAVEL),
-    //        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("slimemagmaball",
-    //        new ItemStack(Items.MAGMA_CREAM),
-    //        new ItemStack(Items.MAGMA_CREAM),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), 200));
-    //    RecipeMelter.addRecipe("slimeball",
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), 200));
-    //    RecipeMelter.addRecipe("slimeblock",
-    //        new ItemStack(Blocks.SLIME_BLOCK),
-    //        new ItemStack(Blocks.SLIME_BLOCK),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), 1800));
-    //    //    
-    //    RecipeMelter.addRecipe("doubleexperience_food",
-    //        new ItemStack(ItemRegistry.experience_food),
-    //        new ItemStack(ItemRegistry.experience_food),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), 2 * ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    //    RecipeMelter.addRecipe("fexperience_food",
-    //        new ItemStack(ItemRegistry.experience_food),
-    //        new ItemStack(Items.GHAST_TEAR),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), 200 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    //    RecipeMelter.addRecipe("blazeexperience_food",
-    //        new ItemStack(ItemRegistry.experience_food),
-    //        new ItemStack(Items.BLAZE_ROD),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), 100 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    //    RecipeMelter.addRecipe("witherroseexperience_food",
-    //        new ItemStack(ItemRegistry.experience_food),
-    //        new ItemStack(Items.WITHER_ROSE),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), 150 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    //    RecipeMelter.addRecipe("fleshexperience_food",
-    //        new ItemStack(ItemRegistry.experience_food),
-    //        new ItemStack(Items.ROTTEN_FLESH),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), 50 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    //    RecipeMelter.addRecipe("boneexperience_food",
-    //        new ItemStack(ItemRegistry.experience_food),
-    //        new ItemStack(Items.BONE),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), 20 + ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD));
-    //    RecipeMelter.addRecipe("honey",
-    //        new ItemStack(Items.HONEY_BLOCK),
-    //        new ItemStack(Items.HONEY_BLOCK),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 2000));
-    //    RecipeMelter.addRecipe("honeyb",
-    //        new ItemStack(Items.HONEY_BOTTLE),
-    //        new ItemStack(Items.HONEY_BOTTLE),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 500));
-    //    RecipeMelter.addRecipe("honeyc",
-    //        new ItemStack(Items.HONEYCOMB_BLOCK),
-    //        new ItemStack(Items.HONEY_BLOCK),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 5000));
-    //    //
-    //    RecipeMelter.addRecipe("magma",
-    //        new ItemStack(Blocks.MAGMA_BLOCK),
-    //        new ItemStack(Blocks.MAGMA_BLOCK),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("magmar",
-    //        new ItemStack(Blocks.MAGMA_BLOCK),
-    //        new ItemStack(Blocks.NETHER_BRICKS),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("magmamelt",
-    //        new ItemStack(Blocks.MAGMA_BLOCK),
-    //        new ItemStack(Blocks.NETHERRACK),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), 600));
-    ModCyclic.LOGGER.info("Melter Recipes added " + RECIPES.size());
-  }
-
   private static Set<String> hashes = new HashSet<>();
 
   private static void addRecipe(RecipeMelter r) {
     ResourceLocation id = r.getId();
     if (hashes.contains(id.toString())) {
-      ModCyclic.LOGGER.error("Duplicate melter recipe id " + id.toString());
+      ModCyclic.LOGGER.error("Error: Duplicate melter recipe id " + id.toString());
     }
-    RECIPES.add(r);
-    hashes.add(id.toString());
+    else {
+      RECIPES.add(r);
+      hashes.add(id.toString());
+    }
   }
-  //  private static void addRecipe(String name, ItemStack itemStack, ItemStack secnd, FluidStack fluidStack) {
-  //    ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "melter_" + name);
-  //    if (hashes.contains(id.toString())) {
-  //      ModCyclic.LOGGER.error("Duplicate melter recipe id " + id.toString());
-  //    }
-  //    RECIPES.add(new RecipeMelter(
-  //        new ResourceLocation(ModCyclic.MODID, name),
-  //        itemStack,
-  //        secnd,
-  //        fluidStack));
-  //    hashes.add(id.toString());
-  //  }
 }

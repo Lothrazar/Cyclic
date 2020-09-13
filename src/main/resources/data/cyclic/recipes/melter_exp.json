@@ -1,0 +1,13 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+      "item": "cyclic:experience_food"
+  },
+  "inputSecond": {
+      "item": "cyclic:experience_food"
+  },
+  "result": {
+    "fluid": "cyclic:xpjuice",
+    "count": 2000
+  }
+}

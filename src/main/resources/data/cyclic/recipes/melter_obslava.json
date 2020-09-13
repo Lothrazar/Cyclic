@@ -1,13 +1,13 @@
 {
   "type": "cyclic:melter",
   "inputFirst": {
-      "item": "cyclic:biomass"
+      "tag": "forge:stone"
   },
   "inputSecond": {
-      "item": "minecraft:bamboo"
+      "tag": "forge:obsidian"
   },
   "result": {
-    "fluid": "cyclic:biomass",
+    "fluid": "minecraft:lava",
     "count": 1000
   }
 }

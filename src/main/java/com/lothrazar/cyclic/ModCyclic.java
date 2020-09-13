@@ -45,7 +45,7 @@ public class ModCyclic {
     CuriosRegistry.setup(event);
     PotionRegistry.setup(event);
     PacketRegistry.setup();
-    RecipeRegistry.setup();
+    RecipeRegistry.legacy();
     proxy.setup();
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
