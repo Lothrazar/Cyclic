@@ -109,18 +109,23 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeMelter read(ResourceLocation recipeId, JsonObject json) {
-      ModCyclic.LOGGER.info(json);
-      Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputFirst"));
-      Ingredient inputSecond = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputSecond"));
-      JsonObject result = json.get("result").getAsJsonObject();
-      ModCyclic.LOGGER.info(result);
-      int count = result.get("count").getAsInt();
-      String fluidId = JSONUtils.getString(result, "fluid");
-      ModCyclic.LOGGER.info(fluidId);
-      ResourceLocation resourceLocation = new ResourceLocation(fluidId);
-      Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
-      RecipeMelter r = new RecipeMelter(recipeId, inputFirst, inputSecond, new FluidStack(fluid, count));
-      addRecipe(r);
+      RecipeMelter r = null;
+      try {
+        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputFirst"));
+        Ingredient inputSecond = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputSecond"));
+        JsonObject result = json.get("result").getAsJsonObject();
+        int count = result.get("count").getAsInt();
+        String fluidId = JSONUtils.getString(result, "fluid");
+        ResourceLocation resourceLocation = new ResourceLocation(fluidId);
+        Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
+        r = new RecipeMelter(recipeId, inputFirst, inputSecond, new FluidStack(fluid, count));
+        addRecipe(r);
+      }
+      catch (Exception e) {
+        ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
+        return null;
+      }
+      ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
     }
 
@@ -141,18 +146,9 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
   public static void initAllRecipes() {
     hashes = new HashSet<>();
-    // WATER
-    //    RecipeMelter.addRecipe("fbio",
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
-    //    RecipeMelter.addRecipe("bambooskelp",
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(Items.BAMBOO),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
     //    RecipeMelter.addRecipe("wheatkelp",
     //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(Items.WHEAT_SEEDS),
+    //            new ItemStack(Items.WHEAT_SEEDS),
     //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME));
     //    RecipeMelter.addRecipe("beetrootkelp",
     //        new ItemStack(ItemRegistry.biomass),

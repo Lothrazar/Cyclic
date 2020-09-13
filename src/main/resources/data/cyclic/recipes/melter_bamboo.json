@@ -1,0 +1,13 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+      "item": "cyclic:biomass"
+  },
+  "inputSecond": {
+      "item": "cyclic:bamboo"
+  },
+  "result": {
+    "fluid": "cyclic:biomass",
+    "count": 1000
+  }
+}
