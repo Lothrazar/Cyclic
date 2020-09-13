@@ -30,11 +30,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
 
-  @Deprecated
-  protected RecipeMelter(ResourceLocation id, ItemStack in, ItemStack inSecond, FluidStack out) {
-    this(id, Ingredient.fromStacks(in), Ingredient.fromStacks(inSecond), out);
-  }
-
   protected RecipeMelter(ResourceLocation id, Ingredient in, Ingredient inSecond, FluidStack out) {
     super(id);
     ingredients.add(in);
@@ -90,19 +85,19 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     return CyclicRecipeType.MELTER;
   }
 
-  public static final Serializer SERIALIZER = new Serializer();
-
   @Override
   public IRecipeSerializer<?> getSerializer() {
-    return SERIALIZER;
+    return SERIALMELTER;
   }
+
+  public static final SerializeMelter SERIALMELTER = new SerializeMelter();
 
   /**
    * SHOUTOUT https://github.com/Minecraft-Forge-Tutorials/Custom-Json-Recipes
    */
-  public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeMelter> {
+  public static class SerializeMelter extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeMelter> {
 
-    Serializer() {
+    SerializeMelter() {
       // This registry name is what people will specify in their json files.
       this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "melter"));
     }
@@ -126,7 +121,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
-        return null;
       }
       ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
@@ -134,7 +128,8 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeMelter read(ResourceLocation recipeId, PacketBuffer buffer) {
-      return new RecipeMelter(recipeId, Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer));
+      return new RecipeMelter(recipeId,
+          Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer));
     }
 
     @Override

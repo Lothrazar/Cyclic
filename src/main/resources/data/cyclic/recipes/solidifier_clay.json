@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:terracotta"
+  },
+  "inputMiddle": {
+    "item": "minecraft:terracotta"
+  },
+  "inputBottom": {
+    "item": "minecraft:terracotta"
+  },
+  "mix": {
+    "fluid": "minecraft:water",
+    "count": 50
+  },
+  "result": {
+    "item": "minecraft:clay",
+	"count": 2
+  }
+}
