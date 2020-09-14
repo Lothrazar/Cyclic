@@ -170,25 +170,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   private static void initAllRecipes() {
     //water 
     //    Tags.Blocks.CHESTS
-    //    hashes = new HashSet<>();
-    //    RecipeSolidifier.addRecipe("clay",
-    //        new ItemStack(Blocks.TERRACOTTA),
-    //        new ItemStack(Blocks.TERRACOTTA),
-    //        new ItemStack(Blocks.TERRACOTTA),
-    //        new FluidStack(Fluids.WATER, 50),
-    //        new ItemStack(Blocks.CLAY, 2));
-    //    RecipeSolidifier.addRecipe("patn",
-    //        new ItemStack(Blocks.GRASS_BLOCK),
-    //        new ItemStack(Blocks.GRASS_BLOCK),
-    //        new ItemStack(Blocks.GRASS_BLOCK),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.GRASS_PATH, 2));
-    //    RecipeSolidifier.addRecipe("bush",
-    //        new ItemStack(Blocks.FERN),
-    //        new ItemStack(Blocks.FERN),
-    //        new ItemStack(Blocks.FERN),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.DEAD_BUSH, 3));
     //    RecipeSolidifier.addRecipe("btube_coral",
     //        new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
     //        new ItemStack(Blocks.TUBE_CORAL_BLOCK),
@@ -284,102 +265,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     //        new ItemStack(Blocks.HORN_CORAL_FAN, 3));
     //    //
     //    //
-    //    RecipeSolidifier.addRecipe("bbbconcrete",
-    //        new ItemStack(Blocks.BLACK_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.BLACK_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.BLACK_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.BLACK_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("wconcrete",
-    //        new ItemStack(Blocks.WHITE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.WHITE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.WHITE_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.WHITE_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("oconcrete",
-    //        new ItemStack(Blocks.ORANGE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.ORANGE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.ORANGE_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.ORANGE_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("mconcrete",
-    //        new ItemStack(Blocks.MAGENTA_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.MAGENTA_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.MAGENTA_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.MAGENTA_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("lconcrete",
-    //        new ItemStack(Blocks.LIGHT_BLUE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.LIGHT_BLUE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.LIGHT_BLUE_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.LIGHT_BLUE_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("yconcrete",
-    //        new ItemStack(Blocks.YELLOW_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.YELLOW_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.YELLOW_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.YELLOW_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("concrete",
-    //        new ItemStack(Blocks.LIME_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.LIME_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.LIME_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.LIME_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("concrepinkte",
-    //        new ItemStack(Blocks.PINK_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.PINK_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.PINK_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.PINK_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("gggrayconcrete",
-    //        new ItemStack(Blocks.GRAY_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.GRAY_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.GRAY_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.GRAY_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("ggrconcrete",
-    //        new ItemStack(Blocks.LIGHT_GRAY_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.LIGHT_GRAY_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.LIGHT_GRAY_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.LIGHT_GRAY_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("lgconcrete",
-    //        new ItemStack(Blocks.CYAN_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.CYAN_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.CYAN_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.CYAN_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("purplecyconcrete",
-    //        new ItemStack(Blocks.PURPLE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.PURPLE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.PURPLE_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.PURPLE_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("bluconcrete",
-    //        new ItemStack(Blocks.BLUE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.BLUE_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.BLUE_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.BLUE_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("brownconcrete",
-    //        new ItemStack(Blocks.BROWN_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.BROWN_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.BROWN_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.BROWN_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("greeeeconcrete",
-    //        new ItemStack(Blocks.GREEN_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.GREEN_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.GREEN_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.GREEN_CONCRETE, 3));
-    //    RecipeSolidifier.addRecipe("redconcrete",
-    //        new ItemStack(Blocks.RED_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.RED_CONCRETE_POWDER),
-    //        new ItemStack(Blocks.RED_CONCRETE_POWDER),
-    //        new FluidStack(Fluids.WATER, 10),
-    //        new ItemStack(Blocks.RED_CONCRETE, 3));
     //    //
     //    //
     //    RecipeSolidifier.addRecipe("freezeice",

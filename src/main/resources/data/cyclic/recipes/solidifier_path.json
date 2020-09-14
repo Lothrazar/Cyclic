@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:grass_block"
+  },
+  "inputMiddle": {
+    "item": "minecraft:grass_block"
+  },
+  "inputBottom": {
+    "item": "minecraft:grass_block"
+  },
+  "mix": {
+    "fluid": "minecraft:water",
+    "count": 10
+  },
+  "result": {
+    "item": "minecraft:grass_path",
+	"count": 3
+  }
+}
