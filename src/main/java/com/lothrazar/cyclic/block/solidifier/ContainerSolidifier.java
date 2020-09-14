@@ -27,9 +27,9 @@ public class ContainerSolidifier extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 37, 13));
-      addSlot(new SlotItemHandler(h, 1, 37, 13 + Const.SQ));
-      addSlot(new SlotItemHandler(h, 2, 37, 13 + 2 * Const.SQ));
+      addSlot(new SlotItemHandler(h, 0, 37, 17));
+      addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
+      addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
     });
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
       addSlot(new SlotItemHandler(h, 0, 121, 31));

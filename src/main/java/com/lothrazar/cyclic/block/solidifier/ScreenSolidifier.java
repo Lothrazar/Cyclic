@@ -41,7 +41,7 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
-    //    this.drawName(this.title.getFormattedText());
+    this.drawName(ms, title.getString());
     int timer = container.tile.getField(TileSolidifier.Fields.TIMER.ordinal());
     if (timer > 0)
       this.font.drawString(ms, "[" + timer + "]",
@@ -52,12 +52,12 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 36, 12);
-    this.drawSlot(ms, 36, 30);
-    this.drawSlot(ms, 36, 48);
     timer.draw(ms, container.tile.getField(TileSolidifier.Fields.TIMER.ordinal()));
     energy.draw(ms, container.getEnergy());
     fluid.draw(ms, container.tile.getFluid());
     drawSlotLarge(ms, 116, 26);
+    this.drawSlot(ms, 36, 16);
+    this.drawSlot(ms, 36, 34);
+    this.drawSlot(ms, 36, 52);
   }
 }

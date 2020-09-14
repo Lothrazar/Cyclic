@@ -166,361 +166,359 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       buffer.writeItemStack(recipe.getRecipeOutput());
     }
   }
-
-  private static void initAllRecipes() {
-    //water 
-    //    Tags.Blocks.CHESTS
-    //    RecipeSolidifier.addRecipe("btube_coral",
-    //        new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
-    //        new ItemStack(Blocks.TUBE_CORAL_BLOCK),
-    //        new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.TUBE_CORAL_BLOCK, 3));
-    //    RecipeSolidifier.addRecipe("bbraincoral",
-    //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_BLOCK),
-    //        new ItemStack(Blocks.BRAIN_CORAL_BLOCK),
-    //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_BLOCK),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.BRAIN_CORAL_BLOCK, 3));
-    //    RecipeSolidifier.addRecipe("bbubblecoral",
-    //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_BLOCK),
-    //        new ItemStack(Blocks.BUBBLE_CORAL_BLOCK),
-    //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_BLOCK),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.BUBBLE_CORAL_BLOCK, 3));
-    //    RecipeSolidifier.addRecipe("bfirecoral",
-    //        new ItemStack(Blocks.DEAD_FIRE_CORAL_BLOCK),
-    //        new ItemStack(Blocks.FIRE_CORAL_BLOCK),
-    //        new ItemStack(Blocks.DEAD_FIRE_CORAL_BLOCK),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.FIRE_CORAL_BLOCK, 3));
-    //    RecipeSolidifier.addRecipe("bhorncoral",
-    //        new ItemStack(Blocks.DEAD_HORN_CORAL_BLOCK),
-    //        new ItemStack(Blocks.HORN_CORAL_BLOCK),
-    //        new ItemStack(Blocks.DEAD_HORN_CORAL_BLOCK),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.HORN_CORAL_BLOCK, 3));
-    //    //
-    //    //
-    //    RecipeSolidifier.addRecipe("braincoraltube",
-    //        new ItemStack(Blocks.DEAD_TUBE_CORAL),
-    //        new ItemStack(Blocks.TUBE_CORAL),
-    //        new ItemStack(Blocks.DEAD_TUBE_CORAL),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.TUBE_CORAL, 3));
-    //    RecipeSolidifier.addRecipe("braincoral",
-    //        new ItemStack(Blocks.DEAD_BRAIN_CORAL),
-    //        new ItemStack(Blocks.BRAIN_CORAL),
-    //        new ItemStack(Blocks.DEAD_BRAIN_CORAL),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.BRAIN_CORAL, 3));
-    //    RecipeSolidifier.addRecipe("bubblecoral",
-    //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL),
-    //        new ItemStack(Blocks.BUBBLE_CORAL),
-    //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.BUBBLE_CORAL, 3));
-    //    RecipeSolidifier.addRecipe("firecoral",
-    //        new ItemStack(Blocks.DEAD_FIRE_CORAL),
-    //        new ItemStack(Blocks.FIRE_CORAL),
-    //        new ItemStack(Blocks.DEAD_FIRE_CORAL),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.FIRE_CORAL, 3));
-    //    RecipeSolidifier.addRecipe("hornecoral",
-    //        new ItemStack(Blocks.DEAD_HORN_CORAL),
-    //        new ItemStack(Blocks.HORN_CORAL),
-    //        new ItemStack(Blocks.DEAD_HORN_CORAL),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.HORN_CORAL, 3));
-    //    //fans
-    //    RecipeSolidifier.addRecipe("brainffaltube",
-    //        new ItemStack(Blocks.DEAD_TUBE_CORAL_FAN),
-    //        new ItemStack(Blocks.TUBE_CORAL_FAN),
-    //        new ItemStack(Blocks.DEAD_TUBE_CORAL_FAN),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.TUBE_CORAL_FAN, 3));
-    //    RecipeSolidifier.addRecipe("braincoralfa",
-    //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_FAN),
-    //        new ItemStack(Blocks.BRAIN_CORAL_FAN),
-    //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_FAN),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.BRAIN_CORAL_FAN, 3));
-    //    RecipeSolidifier.addRecipe("bubblecoralfan",
-    //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_FAN),
-    //        new ItemStack(Blocks.BUBBLE_CORAL_FAN),
-    //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_FAN),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.BUBBLE_CORAL_FAN, 3));
-    //    RecipeSolidifier.addRecipe("firecoralfan",
-    //        new ItemStack(Blocks.DEAD_FIRE_CORAL_FAN),
-    //        new ItemStack(Blocks.FIRE_CORAL_FAN),
-    //        new ItemStack(Blocks.DEAD_FIRE_CORAL_FAN),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.FIRE_CORAL_FAN, 3));
-    //    RecipeSolidifier.addRecipe("horncoralfann",
-    //        new ItemStack(Blocks.DEAD_HORN_CORAL_FAN),
-    //        new ItemStack(Blocks.HORN_CORAL_FAN),
-    //        new ItemStack(Blocks.DEAD_HORN_CORAL_FAN),
-    //        new FluidStack(Fluids.WATER, 100),
-    //        new ItemStack(Blocks.HORN_CORAL_FAN, 3));
-    //    //
-    //    //
-    //    //
-    //    //
-    //    RecipeSolidifier.addRecipe("freezeice",
-    //        new ItemStack(Blocks.SNOW_BLOCK),
-    //        new ItemStack(Blocks.SNOW_BLOCK),
-    //        new ItemStack(Blocks.SNOW_BLOCK),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME),
-    //        new ItemStack(Blocks.ICE));
-    //    RecipeSolidifier.addRecipe("obsidian",
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME),
-    //        new ItemStack(Blocks.OBSIDIAN));
-    //    RecipeSolidifier.addRecipe("obsidian2",
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new ItemStack(Items.BLAZE_POWDER),
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-    //        new ItemStack(Blocks.OBSIDIAN));
-    //    //
-    //    RecipeSolidifier.addRecipe("biograss",
-    //        new ItemStack(Blocks.GRASS),
-    //        new ItemStack(Blocks.COARSE_DIRT),
-    //        new ItemStack(Blocks.DIRT),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-    //        new ItemStack(Blocks.GRASS_BLOCK, 2));
-    //    RecipeSolidifier.addRecipe("biofarm",
-    //        new ItemStack(Blocks.DIRT),
-    //        new ItemStack(Blocks.COARSE_DIRT),
-    //        new ItemStack(Blocks.DIRT),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-    //        new ItemStack(Blocks.FARMLAND, 2));
-    //    RecipeSolidifier.addRecipe("biofarmpodzol",
-    //        new ItemStack(Blocks.GRASS_BLOCK),
-    //        new ItemStack(Blocks.COARSE_DIRT),
-    //        new ItemStack(Blocks.GRASS_BLOCK),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
-    //        new ItemStack(Blocks.PODZOL, 2));
-    //    RecipeSolidifier.addRecipe("mossybrick",
-    //        new ItemStack(Blocks.STONE_BRICKS),
-    //        new ItemStack(Blocks.STONE_BRICKS),
-    //        new ItemStack(Blocks.STONE_BRICKS),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
-    //        new ItemStack(Blocks.MOSSY_STONE_BRICKS, 3));
-    //    RecipeSolidifier.addRecipe("mossystone",
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new ItemStack(Blocks.COBBLESTONE),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
-    //        new ItemStack(Blocks.MOSSY_COBBLESTONE, 3));
-    //    RecipeSolidifier.addRecipe("biomycelium",
-    //        new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
-    //        new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
-    //        new ItemStack(Blocks.FARMLAND),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
-    //        new ItemStack(Blocks.MYCELIUM));
-    //    RecipeSolidifier.addRecipe("biochar",
-    //        new ItemStack(ItemRegistry.biomass),
-    //        new ItemStack(Blocks.DIRT),
-    //        new ItemStack(Items.CHARCOAL),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-    //        new ItemStack(BlockRegistry.peat_unbaked));
-    //    RecipeSolidifier.addRecipe("biocharrrr",
-    //        new ItemStack(Items.STICK),
-    //        new ItemStack(ItemRegistry.peat_fuel),
-    //        new ItemStack(Items.STICK),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), 100),
-    //        new ItemStack(Items.CHARCOAL, 4));
-    //    //
-    //    RecipeSolidifier.addRecipe("enrichfuel",
-    //        new ItemStack(ItemRegistry.peat_fuel),
-    //        new ItemStack(ItemRegistry.peat_fuel),
-    //        new ItemStack(ItemRegistry.peat_fuel),
-    //        new FluidStack(FluidBiomassHolder.STILL.get(), 500),
-    //        new ItemStack(ItemRegistry.peat_fuel_enriched, 3));
-    //    //
-    //    RecipeSolidifier.addRecipe("honeymelon",
-    //        new ItemStack(Items.MELON_SLICE),
-    //        new ItemStack(Items.GOLD_NUGGET),
-    //        new ItemStack(Items.MELON_SLICE),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-    //        new ItemStack(Items.GLISTERING_MELON_SLICE, 2));
-    //    RecipeSolidifier.addRecipe("honeycarrot",
-    //        new ItemStack(Items.CARROT),
-    //        new ItemStack(Items.GOLD_NUGGET),
-    //        new ItemStack(Items.CARROT),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-    //        new ItemStack(Items.GOLDEN_CARROT, 2));
-    //    RecipeSolidifier.addRecipe("honeycake",
-    //        new ItemStack(Items.EGG),
-    //        new ItemStack(Items.WHEAT),
-    //        new ItemStack(Items.WHEAT),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-    //        new ItemStack(Items.CAKE));
-    //    RecipeSolidifier.addRecipe("honeycookie",
-    //        new ItemStack(Items.WHEAT),
-    //        new ItemStack(Items.COCOA_BEANS),
-    //        new ItemStack(Items.WHEAT),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-    //        new ItemStack(Items.COOKIE, 16));
-    //    RecipeSolidifier.addRecipe("honeyspidereye",
-    //        new ItemStack(Items.SPIDER_EYE),
-    //        new ItemStack(Items.BROWN_MUSHROOM),
-    //        new ItemStack(Items.RED_MUSHROOM),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 10),
-    //        new ItemStack(Items.FERMENTED_SPIDER_EYE, 2));
-    //    RecipeSolidifier.addRecipe("honeypie",
-    //        new ItemStack(Items.PUMPKIN),
-    //        new ItemStack(Items.EGG),
-    //        new ItemStack(Items.PUMPKIN),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-    //        new ItemStack(Items.PUMPKIN_PIE, 3));
-    //    RecipeSolidifier.addRecipe("honeyhive",
-    //        new ItemStack(Items.CHEST),
-    //        new ItemStack(Items.HONEYCOMB),
-    //        new ItemStack(Items.STICK),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 100),
-    //        new ItemStack(Blocks.BEEHIVE));
-    //    RecipeSolidifier.addRecipe("honeynest",
-    //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
-    //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
-    //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME * 8),
-    //        new ItemStack(Blocks.BEE_NEST));
-    //    //
-    //    RecipeSolidifier.addRecipe("slimehoney",
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), 600),
-    //        new ItemStack(Blocks.SLIME_BLOCK));
-    //    RecipeSolidifier.addRecipe("slimefill",
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), 600),
-    //        new ItemStack(Items.SLIME_BALL, 9));
-    //    //cr l
-    //    RecipeSolidifier.addRecipe("magmaglow",
-    //        new ItemStack(Items.PRISMARINE),
-    //        new ItemStack(Items.GLOWSTONE_DUST),
-    //        new ItemStack(Items.PRISMARINE),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
-    //        new ItemStack(Items.PRISMARINE_CRYSTALS));
-    //    //create magma cream deal
-    //    RecipeSolidifier.addRecipe("slimemagmacream",
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new ItemStack(Items.SLIME_BALL),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
-    //        new ItemStack(Items.MAGMA_CREAM, 6));
-    //    //bricks
-    //    RecipeSolidifier.addRecipe("magmabricks",
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), 10),
-    //        new ItemStack(Blocks.NETHER_BRICKS));
-    //    RecipeSolidifier.addRecipe("slimebricks",
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), 10),
-    //        new ItemStack(Blocks.NETHER_BRICKS));
-    //    RecipeSolidifier.addRecipe("rednetherbricks",
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new ItemStack(Items.NETHER_WART),
-    //        new ItemStack(Items.NETHER_BRICK),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), 10),
-    //        new ItemStack(Blocks.RED_NETHER_BRICKS));
-    //    //
-    //    //
-    //    RecipeSolidifier rec = new RecipeSolidifier(
-    //        new ResourceLocation(ModCyclic.MODID, "solid_leafbiomass"),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 4),
-    //        new ItemStack(ItemRegistry.biomass));
-    //    Ingredient leafs = Ingredient.fromStacks(new ItemStack(Blocks.ACACIA_LEAVES),
-    //        new ItemStack(Blocks.OAK_LEAVES));
-    //    //    leafs = Ingredient.fromTag(ItemTags.LEAVES);//ded
-    //    rec.ingredients.add(leafs);
-    //    rec.ingredients.add(leafs);
-    //    rec.ingredients.add(leafs);
-    //    RECIPES.add(rec);
-    //    rec = new RecipeSolidifier(
-    //        new ResourceLocation(ModCyclic.MODID, "solid_biomass"),
-    //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10),
-    //        new ItemStack(ItemRegistry.biomass));
-    //    Ingredient fws = Ingredient.fromStacks(new ItemStack(Blocks.POPPY),
-    //        new ItemStack(Blocks.DANDELION));
-    //    //    fws = Ingredient.fromTag(ItemTags.SMALL_FLOWERS);//ded
-    //    rec.ingredients.add(fws);
-    //    rec.ingredients.add(fws);
-    //    rec.ingredients.add(fws);
-    //    RECIPES.add(rec);
-    //    //
-    //    RecipeSolidifier.addRecipe("honeyamber",
-    //        new ItemStack(Items.FIRE_CHARGE),
-    //        new ItemStack(Items.REDSTONE),
-    //        new ItemStack(Blocks.MAGMA_BLOCK),
-    //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-    //        new ItemStack(ItemRegistry.gem_amber));
-    //    RecipeSolidifier.addRecipe("honeyfireamber",
-    //        new ItemStack(Items.FIRE_CHARGE),
-    //        new ItemStack(Blocks.REDSTONE_BLOCK),
-    //        new ItemStack(Items.GOLD_INGOT),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
-    //        new ItemStack(ItemRegistry.gem_amber));
-    //    RecipeSolidifier.addRecipe("purp",
-    //        new ItemStack(Blocks.OBSIDIAN),
-    //        new ItemStack(ItemRegistry.gem_amber),
-    //        new ItemStack(Items.CHORUS_FRUIT),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
-    //        new ItemStack(ItemRegistry.gem_obsidian));
-    //    RecipeSolidifier.addRecipe("purpflower",
-    //        new ItemStack(Blocks.OBSIDIAN),
-    //        new ItemStack(ItemRegistry.gem_amber),
-    //        new ItemStack(Items.WITHER_ROSE),
-    //        new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
-    //        new ItemStack(ItemRegistry.gem_obsidian));
-    //    //
-    //    //
-    //    RecipeSolidifier.addRecipe("gravelmelt",
-    //        new ItemStack(Blocks.DIRT),
-    //        new ItemStack(Blocks.DIRT),
-    //        new ItemStack(Blocks.DIRT),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
-    //        new ItemStack(Blocks.GRAVEL, 9));
-    //    RecipeSolidifier.addRecipe("sandmelt",
-    //        new ItemStack(Blocks.GLASS),
-    //        new ItemStack(Blocks.GLASS),
-    //        new ItemStack(Blocks.GLASS),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), 10),
-    //        new ItemStack(Blocks.SAND, 3));
-    //    RecipeSolidifier.addRecipe("gunpowder",
-    //        new ItemStack(Blocks.RED_SAND),
-    //        new ItemStack(Items.BLAZE_POWDER),
-    //        new ItemStack(Items.BONE_MEAL),
-    //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
-    //        new ItemStack(Items.GUNPOWDER, 2));
-    //    //xp
-    //    // 
-    //    RecipeSolidifier.addRecipe("expglass",
-    //        new ItemStack(Items.GLASS_BOTTLE),
-    //        new ItemStack(Items.GLASS_BOTTLE),
-    //        new ItemStack(Items.GLASS_BOTTLE),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), ExpItemGain.FLUID_PER_EXP * 30),
-    //        new ItemStack(Items.EXPERIENCE_BOTTLE, 3));
-    //    RecipeSolidifier.addRecipe("expglassfood",
-    //        new ItemStack(Items.SUGAR),
-    //        new ItemStack(Items.SUGAR),
-    //        new ItemStack(Items.SUGAR),
-    //        new FluidStack(FluidXpJuiceHolder.STILL.get(), ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD),
-    //        new ItemStack(ItemRegistry.experience_food));
-    //    ModCyclic.LOGGER.info("Solidifier Recipes added " + RECIPES.size());
-  }
+  //water 
+  //    Tags.Blocks.CHESTS
+  //    RecipeSolidifier.addRecipe("btube_coral",
+  //          new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
+  //        new ItemStack(Blocks.TUBE_CORAL_BLOCK),
+  //        new ItemStack(Blocks.DEAD_TUBE_CORAL_BLOCK),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.TUBE_CORAL_BLOCK, 3));
+  //    RecipeSolidifier.addRecipe("bbraincoral",
+  //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_BLOCK),
+  //        new ItemStack(Blocks.BRAIN_CORAL_BLOCK),
+  //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_BLOCK),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.BRAIN_CORAL_BLOCK, 3));
+  //    RecipeSolidifier.addRecipe("bbubblecoral",
+  //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_BLOCK),
+  //        new ItemStack(Blocks.BUBBLE_CORAL_BLOCK),
+  //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_BLOCK),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.BUBBLE_CORAL_BLOCK, 3));
+  //    RecipeSolidifier.addRecipe("bfirecoral",
+  //        new ItemStack(Blocks.DEAD_FIRE_CORAL_BLOCK),
+  //        new ItemStack(Blocks.FIRE_CORAL_BLOCK),
+  //        new ItemStack(Blocks.DEAD_FIRE_CORAL_BLOCK),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.FIRE_CORAL_BLOCK, 3));
+  //    RecipeSolidifier.addRecipe("bhorncoral",
+  //        new ItemStack(Blocks.DEAD_HORN_CORAL_BLOCK),
+  //        new ItemStack(Blocks.HORN_CORAL_BLOCK),
+  //        new ItemStack(Blocks.DEAD_HORN_CORAL_BLOCK),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.HORN_CORAL_BLOCK, 3));
+  //    //
+  //    //
+  //    RecipeSolidifier.addRecipe("braincoraltube",
+  //        new ItemStack(Blocks.DEAD_TUBE_CORAL),
+  //        new ItemStack(Blocks.TUBE_CORAL),
+  //        new ItemStack(Blocks.DEAD_TUBE_CORAL),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.TUBE_CORAL, 3));
+  //    RecipeSolidifier.addRecipe("braincoral",
+  //        new ItemStack(Blocks.DEAD_BRAIN_CORAL),
+  //        new ItemStack(Blocks.BRAIN_CORAL),
+  //        new ItemStack(Blocks.DEAD_BRAIN_CORAL),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.BRAIN_CORAL, 3));
+  //    RecipeSolidifier.addRecipe("bubblecoral",
+  //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL),
+  //        new ItemStack(Blocks.BUBBLE_CORAL),
+  //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.BUBBLE_CORAL, 3));
+  //    RecipeSolidifier.addRecipe("firecoral",
+  //        new ItemStack(Blocks.DEAD_FIRE_CORAL),
+  //        new ItemStack(Blocks.FIRE_CORAL),
+  //        new ItemStack(Blocks.DEAD_FIRE_CORAL),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.FIRE_CORAL, 3));
+  //    RecipeSolidifier.addRecipe("hornecoral",
+  //        new ItemStack(Blocks.DEAD_HORN_CORAL),
+  //        new ItemStack(Blocks.HORN_CORAL),
+  //        new ItemStack(Blocks.DEAD_HORN_CORAL),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.HORN_CORAL, 3));
+  //    //fans
+  //    RecipeSolidifier.addRecipe("brainffaltube",
+  //        new ItemStack(Blocks.DEAD_TUBE_CORAL_FAN),
+  //        new ItemStack(Blocks.TUBE_CORAL_FAN),
+  //        new ItemStack(Blocks.DEAD_TUBE_CORAL_FAN),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.TUBE_CORAL_FAN, 3));
+  //    RecipeSolidifier.addRecipe("braincoralfa",
+  //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_FAN),
+  //        new ItemStack(Blocks.BRAIN_CORAL_FAN),
+  //        new ItemStack(Blocks.DEAD_BRAIN_CORAL_FAN),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.BRAIN_CORAL_FAN, 3));
+  //    RecipeSolidifier.addRecipe("bubblecoralfan",
+  //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_FAN),
+  //        new ItemStack(Blocks.BUBBLE_CORAL_FAN),
+  //        new ItemStack(Blocks.DEAD_BUBBLE_CORAL_FAN),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.BUBBLE_CORAL_FAN, 3));
+  //    RecipeSolidifier.addRecipe("firecoralfan",
+  //        new ItemStack(Blocks.DEAD_FIRE_CORAL_FAN),
+  //        new ItemStack(Blocks.FIRE_CORAL_FAN),
+  //        new ItemStack(Blocks.DEAD_FIRE_CORAL_FAN),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.FIRE_CORAL_FAN, 3));
+  //    RecipeSolidifier.addRecipe("horncoralfann",
+  //        new ItemStack(Blocks.DEAD_HORN_CORAL_FAN),
+  //        new ItemStack(Blocks.HORN_CORAL_FAN),
+  //        new ItemStack(Blocks.DEAD_HORN_CORAL_FAN),
+  //        new FluidStack(Fluids.WATER, 100),
+  //        new ItemStack(Blocks.HORN_CORAL_FAN, 3));
+  //    //
+  //    //
+  //    //
+  //    //
+  //    RecipeSolidifier.addRecipe("freezeice",
+  //        new ItemStack(Blocks.SNOW_BLOCK),
+  //        new ItemStack(Blocks.SNOW_BLOCK),
+  //        new ItemStack(Blocks.SNOW_BLOCK),
+  //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME),
+  //        new ItemStack(Blocks.ICE));
+  //    RecipeSolidifier.addRecipe("obsidian",
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME),
+  //        new ItemStack(Blocks.OBSIDIAN));
+  //    RecipeSolidifier.addRecipe("obsidian2",
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new ItemStack(Items.BLAZE_POWDER),
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
+  //        new ItemStack(Blocks.OBSIDIAN));
+  //    //
+  //    RecipeSolidifier.addRecipe("biograss",
+  //        new ItemStack(Blocks.GRASS),
+  //        new ItemStack(Blocks.COARSE_DIRT),
+  //        new ItemStack(Blocks.DIRT),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
+  //        new ItemStack(Blocks.GRASS_BLOCK, 2));
+  //    RecipeSolidifier.addRecipe("biofarm",
+  //        new ItemStack(Blocks.DIRT),
+  //        new ItemStack(Blocks.COARSE_DIRT),
+  //        new ItemStack(Blocks.DIRT),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
+  //        new ItemStack(Blocks.FARMLAND, 2));
+  //    RecipeSolidifier.addRecipe("biofarmpodzol",
+  //        new ItemStack(Blocks.GRASS_BLOCK),
+  //        new ItemStack(Blocks.COARSE_DIRT),
+  //        new ItemStack(Blocks.GRASS_BLOCK),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+  //        new ItemStack(Blocks.PODZOL, 2));
+  //    RecipeSolidifier.addRecipe("mossybrick",
+  //        new ItemStack(Blocks.STONE_BRICKS),
+  //        new ItemStack(Blocks.STONE_BRICKS),
+  //        new ItemStack(Blocks.STONE_BRICKS),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
+  //        new ItemStack(Blocks.MOSSY_STONE_BRICKS, 3));
+  //    RecipeSolidifier.addRecipe("mossystone",
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new ItemStack(Blocks.COBBLESTONE),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
+  //        new ItemStack(Blocks.MOSSY_COBBLESTONE, 3));
+  //    RecipeSolidifier.addRecipe("biomycelium",
+  //        new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
+  //        new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
+  //        new ItemStack(Blocks.FARMLAND),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+  //        new ItemStack(Blocks.MYCELIUM));
+  //    RecipeSolidifier.addRecipe("biochar",
+  //        new ItemStack(ItemRegistry.biomass),
+  //        new ItemStack(Blocks.DIRT),
+  //        new ItemStack(Items.CHARCOAL),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
+  //        new ItemStack(BlockRegistry.peat_unbaked));
+  //    RecipeSolidifier.addRecipe("biocharrrr",
+  //        new ItemStack(Items.STICK),
+  //        new ItemStack(ItemRegistry.peat_fuel),
+  //        new ItemStack(Items.STICK),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), 100),
+  //        new ItemStack(Items.CHARCOAL, 4));
+  //    //
+  //    RecipeSolidifier.addRecipe("enrichfuel",
+  //        new ItemStack(ItemRegistry.peat_fuel),
+  //        new ItemStack(ItemRegistry.peat_fuel),
+  //        new ItemStack(ItemRegistry.peat_fuel),
+  //        new FluidStack(FluidBiomassHolder.STILL.get(), 500),
+  //        new ItemStack(ItemRegistry.peat_fuel_enriched, 3));
+  //    //
+  //    RecipeSolidifier.addRecipe("honeymelon",
+  //        new ItemStack(Items.MELON_SLICE),
+  //        new ItemStack(Items.GOLD_NUGGET),
+  //        new ItemStack(Items.MELON_SLICE),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
+  //        new ItemStack(Items.GLISTERING_MELON_SLICE, 2));
+  //    RecipeSolidifier.addRecipe("honeycarrot",
+  //        new ItemStack(Items.CARROT),
+  //        new ItemStack(Items.GOLD_NUGGET),
+  //        new ItemStack(Items.CARROT),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
+  //        new ItemStack(Items.GOLDEN_CARROT, 2));
+  //    RecipeSolidifier.addRecipe("honeycake",
+  //        new ItemStack(Items.EGG),
+  //        new ItemStack(Items.WHEAT),
+  //        new ItemStack(Items.WHEAT),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
+  //        new ItemStack(Items.CAKE));
+  //    RecipeSolidifier.addRecipe("honeycookie",
+  //        new ItemStack(Items.WHEAT),
+  //        new ItemStack(Items.COCOA_BEANS),
+  //        new ItemStack(Items.WHEAT),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
+  //        new ItemStack(Items.COOKIE, 16));
+  //    RecipeSolidifier.addRecipe("honeyspidereye",
+  //        new ItemStack(Items.SPIDER_EYE),
+  //        new ItemStack(Items.BROWN_MUSHROOM),
+  //        new ItemStack(Items.RED_MUSHROOM),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), 10),
+  //        new ItemStack(Items.FERMENTED_SPIDER_EYE, 2));
+  //    RecipeSolidifier.addRecipe("honeypie",
+  //        new ItemStack(Items.PUMPKIN),
+  //        new ItemStack(Items.EGG),
+  //        new ItemStack(Items.PUMPKIN),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
+  //        new ItemStack(Items.PUMPKIN_PIE, 3));
+  //    RecipeSolidifier.addRecipe("honeyhive",
+  //        new ItemStack(Items.CHEST),
+  //        new ItemStack(Items.HONEYCOMB),
+  //        new ItemStack(Items.STICK),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), 100),
+  //        new ItemStack(Blocks.BEEHIVE));
+  //    RecipeSolidifier.addRecipe("honeynest",
+  //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
+  //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
+  //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME * 8),
+  //        new ItemStack(Blocks.BEE_NEST));
+  //    //
+  //    RecipeSolidifier.addRecipe("slimehoney",
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), 600),
+  //        new ItemStack(Blocks.SLIME_BLOCK));
+  //    RecipeSolidifier.addRecipe("slimefill",
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new FluidStack(FluidSlimeHolder.STILL.get(), 600),
+  //        new ItemStack(Items.SLIME_BALL, 9));
+  //    //cr l
+  //    RecipeSolidifier.addRecipe("magmaglow",
+  //        new ItemStack(Items.PRISMARINE),
+  //        new ItemStack(Items.GLOWSTONE_DUST),
+  //        new ItemStack(Items.PRISMARINE),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+  //        new ItemStack(Items.PRISMARINE_CRYSTALS));
+  //    //create magma cream deal
+  //    RecipeSolidifier.addRecipe("slimemagmacream",
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new ItemStack(Items.SLIME_BALL),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+  //        new ItemStack(Items.MAGMA_CREAM, 6));
+  //    //bricks
+  //    RecipeSolidifier.addRecipe("magmabricks",
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), 10),
+  //        new ItemStack(Blocks.NETHER_BRICKS));
+  //    RecipeSolidifier.addRecipe("slimebricks",
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new FluidStack(FluidSlimeHolder.STILL.get(), 10),
+  //        new ItemStack(Blocks.NETHER_BRICKS));
+  //    RecipeSolidifier.addRecipe("rednetherbricks",
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new ItemStack(Items.NETHER_WART),
+  //        new ItemStack(Items.NETHER_BRICK),
+  //        new FluidStack(FluidSlimeHolder.STILL.get(), 10),
+  //        new ItemStack(Blocks.RED_NETHER_BRICKS));
+  //    //
+  //    //
+  //    RecipeSolidifier rec = new RecipeSolidifier(
+  //        new ResourceLocation(ModCyclic.MODID, "solid_leafbiomass"),
+  //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 4),
+  //        new ItemStack(ItemRegistry.biomass));
+  //    Ingredient leafs = Ingredient.fromStacks(new ItemStack(Blocks.ACACIA_LEAVES),
+  //        new ItemStack(Blocks.OAK_LEAVES));
+  //    //    leafs = Ingredient.fromTag(ItemTags.LEAVES);//ded
+  //    rec.ingredients.add(leafs);
+  //    rec.ingredients.add(leafs);
+  //    rec.ingredients.add(leafs);
+  //    RECIPES.add(rec);
+  //    rec = new RecipeSolidifier(
+  //        new ResourceLocation(ModCyclic.MODID, "solid_biomass"),
+  //        new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 10),
+  //        new ItemStack(ItemRegistry.biomass));
+  //    Ingredient fws = Ingredient.fromStacks(new ItemStack(Blocks.POPPY),
+  //        new ItemStack(Blocks.DANDELION));
+  //    //    fws = Ingredient.fromTag(ItemTags.SMALL_FLOWERS);//ded
+  //    rec.ingredients.add(fws);
+  //    rec.ingredients.add(fws);
+  //    rec.ingredients.add(fws);
+  //    RECIPES.add(rec);
+  //    //
+  //    RecipeSolidifier.addRecipe("honeyamber",
+  //        new ItemStack(Items.FIRE_CHARGE),
+  //        new ItemStack(Items.REDSTONE),
+  //        new ItemStack(Blocks.MAGMA_BLOCK),
+  //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
+  //        new ItemStack(ItemRegistry.gem_amber));
+  //    RecipeSolidifier.addRecipe("honeyfireamber",
+  //        new ItemStack(Items.FIRE_CHARGE),
+  //        new ItemStack(Blocks.REDSTONE_BLOCK),
+  //        new ItemStack(Items.GOLD_INGOT),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+  //        new ItemStack(ItemRegistry.gem_amber));
+  //    RecipeSolidifier.addRecipe("purp",
+  //        new ItemStack(Blocks.OBSIDIAN),
+  //        new ItemStack(ItemRegistry.gem_amber),
+  //        new ItemStack(Items.CHORUS_FRUIT),
+  //        new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+  //        new ItemStack(ItemRegistry.gem_obsidian));
+  //    RecipeSolidifier.addRecipe("purpflower",
+  //        new ItemStack(Blocks.OBSIDIAN),
+  //        new ItemStack(ItemRegistry.gem_amber),
+  //        new ItemStack(Items.WITHER_ROSE),
+  //        new FluidStack(FluidSlimeHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
+  //        new ItemStack(ItemRegistry.gem_obsidian));
+  //    //
+  //    //
+  //    RecipeSolidifier.addRecipe("gravelmelt",
+  //        new ItemStack(Blocks.DIRT),
+  //        new ItemStack(Blocks.DIRT),
+  //        new ItemStack(Blocks.DIRT),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+  //        new ItemStack(Blocks.GRAVEL, 9));
+  //    RecipeSolidifier.addRecipe("sandmelt",
+  //        new ItemStack(Blocks.GLASS),
+  //        new ItemStack(Blocks.GLASS),
+  //        new ItemStack(Blocks.GLASS),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), 10),
+  //        new ItemStack(Blocks.SAND, 3));
+  //    RecipeSolidifier.addRecipe("gunpowder",
+  //        new ItemStack(Blocks.RED_SAND),
+  //        new ItemStack(Items.BLAZE_POWDER),
+  //        new ItemStack(Items.BONE_MEAL),
+  //        new FluidStack(FluidMagmaHolder.STILL.get(), 100),
+  //        new ItemStack(Items.GUNPOWDER, 2));
+  //    //xp
+  //    // 
+  //    RecipeSolidifier.addRecipe("expglass",
+  //        new ItemStack(Items.GLASS_BOTTLE),
+  //        new ItemStack(Items.GLASS_BOTTLE),
+  //        new ItemStack(Items.GLASS_BOTTLE),
+  //        new FluidStack(FluidXpJuiceHolder.STILL.get(), ExpItemGain.FLUID_PER_EXP * 30),
+  //        new ItemStack(Items.EXPERIENCE_BOTTLE, 3));
+  //    RecipeSolidifier.addRecipe("expglassfood",
+  //        new ItemStack(Items.SUGAR),
+  //        new ItemStack(Items.SUGAR),
+  //        new ItemStack(Items.SUGAR),
+  //        new FluidStack(FluidXpJuiceHolder.STILL.get(), ExpItemGain.FLUID_PER_EXP * ExpItemGain.EXP_PER_FOOD),
+  //        new ItemStack(ItemRegistry.experience_food));
+  //    ModCyclic.LOGGER.info("Solidifier Recipes added " + RECIPES.size());
+  //  }
 
   private static Set<String> hashes = new HashSet<>();
 

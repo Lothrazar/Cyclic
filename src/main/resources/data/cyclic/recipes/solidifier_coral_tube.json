@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:dead_tube_coral"
+  },
+  "inputMiddle": {
+    "item": "minecraft:tube_coral"
+  },
+  "inputBottom": {
+    "item": "minecraft:dead_tube_coral"
+  },
+  "mix": {
+    "fluid": "minecraft:water",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:tube_coral",
+	"count": 3
+  }
+}
