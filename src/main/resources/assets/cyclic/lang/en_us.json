@@ -1229,6 +1229,6 @@
 
 
     
-    "block.cyclic.solidifier": "Crystallization Chamber",
+    "block.cyclic.solidifier": "Solidification Chamber",
     "block.cyclic.solidifier.tooltip": "Craft fluid into items"
 }

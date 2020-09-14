@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "tag": "forge:cobblestone"
+  },
+  "inputMiddle": {
+    "tag": "forge:cobblestone"
+  },
+  "inputBottom": {
+    "tag": "forge:cobblestone"
+  },
+  "mix": {
+    "fluid": "minecraft:lava",
+    "count": 800
+  },
+  "result": {
+    "item": "minecraft:obsidian",
+	"count": 1
+  }
+}
