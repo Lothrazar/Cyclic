@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:wheat"
+  },
+  "inputMiddle": {
+    "item": "minecraft:cocoa_beans"
+  },
+  "inputBottom": {
+    "item": "minecraft:wheat"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 50
+  },
+  "result": {
+    "item": "minecraft:cookie",
+	"count": 16
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:chest"
+  },
+  "inputMiddle": {
+    "item": "minecraft:honeycomb"
+  },
+  "inputBottom": {
+    "item": "minecraft:stick"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:beehive",
+	"count": 3
+  }
+}

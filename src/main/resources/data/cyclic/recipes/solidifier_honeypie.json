@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:egg"
+  },
+  "inputMiddle": {
+    "item": "minecraft:pumpkin"
+  },
+  "inputBottom": {
+    "item": "minecraft:egg"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:pumpkin_pie",
+	"count": 3
+  }
+}

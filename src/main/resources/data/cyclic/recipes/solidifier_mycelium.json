@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "tag": "forge:mushrooms"
+  },
+  "inputMiddle": {
+    "tag": "forge:mushrooms"
+  },
+  "inputBottom": {
+    "item": "minecraft:dirt"
+  },
+  "mix": {
+    "fluid": "cyclic:biomass",
+    "count": 50
+  },
+  "result": {
+    "item": "minecraft:mycelium",
+	"count": 1
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:melon_slice"
+  },
+  "inputMiddle": {
+    "item": "minecraft:gold_nugget"
+  },
+  "inputBottom": {
+    "item": "minecraft:melon_slice"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:glistering_melon_slice",
+	"count": 2
+  }
+}

@@ -136,6 +136,10 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         String fluidId = JSONUtils.getString(mix, "fluid");
         ResourceLocation resourceLocation = new ResourceLocation(fluidId);
         Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
+        //is it air? which means not found
+        if (fluid == FluidStack.EMPTY.getFluid()) {
+          throw new IllegalArgumentException("Invalid fluid specified " + fluidId);
+        }
         r = new RecipeSolidifier(recipeId, inputFirst, inputSecond,
             inputThird, new FluidStack(fluid, count), resultStack);
         addRecipe(r);
@@ -143,7 +147,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
     }
 
@@ -168,56 +171,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
   //water 
   //      Tags.Blocks.CHESTS
-  //    //
-  //    RecipeSolidifier.addRecipe("obsidian2",
-  //        new ItemStack(Blocks.COBBLESTONE),
-  //        new ItemStack(Items.BLAZE_POWDER),
-  //        new ItemStack(Blocks.COBBLESTONE),
-  //        new FluidStack(FluidMagmaHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-  //        new ItemStack(Blocks.OBSIDIAN));
-  //    //
-  //    RecipeSolidifier.addRecipe("biograss",
-  //        new ItemStack(Blocks.GRASS),
-  //        new ItemStack(Blocks.COARSE_DIRT),
-  //        new ItemStack(Blocks.DIRT),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-  //        new ItemStack(Blocks.GRASS_BLOCK, 2));
-  //    RecipeSolidifier.addRecipe("biofarm",
-  //        new ItemStack(Blocks.DIRT),
-  //        new ItemStack(Blocks.COARSE_DIRT),
-  //        new ItemStack(Blocks.DIRT),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-  //        new ItemStack(Blocks.FARMLAND, 2));
-  //    RecipeSolidifier.addRecipe("biofarmpodzol",
-  //        new ItemStack(Blocks.GRASS_BLOCK),
-  //        new ItemStack(Blocks.COARSE_DIRT),
-  //        new ItemStack(Blocks.GRASS_BLOCK),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
-  //        new ItemStack(Blocks.PODZOL, 2));
-  //    RecipeSolidifier.addRecipe("mossybrick",
-  //        new ItemStack(Blocks.STONE_BRICKS),
-  //        new ItemStack(Blocks.STONE_BRICKS),
-  //        new ItemStack(Blocks.STONE_BRICKS),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
-  //        new ItemStack(Blocks.MOSSY_STONE_BRICKS, 3));
-  //    RecipeSolidifier.addRecipe("mossystone",
-  //        new ItemStack(Blocks.COBBLESTONE),
-  //        new ItemStack(Blocks.COBBLESTONE),
-  //        new ItemStack(Blocks.COBBLESTONE),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), 10),
-  //        new ItemStack(Blocks.MOSSY_COBBLESTONE, 3));
-  //    RecipeSolidifier.addRecipe("biomycelium",
-  //        new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
-  //        new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
-  //        new ItemStack(Blocks.FARMLAND),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME),
-  //        new ItemStack(Blocks.MYCELIUM));
-  //    RecipeSolidifier.addRecipe("biochar",
-  //        new ItemStack(ItemRegistry.biomass),
-  //        new ItemStack(Blocks.DIRT),
-  //        new ItemStack(Items.CHARCOAL),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-  //        new ItemStack(BlockRegistry.peat_unbaked));
   //    RecipeSolidifier.addRecipe("biocharrrr",
   //        new ItemStack(Items.STICK),
   //        new ItemStack(ItemRegistry.peat_fuel),
@@ -225,49 +178,15 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   //        new FluidStack(FluidBiomassHolder.STILL.get(), 100),
   //        new ItemStack(Items.CHARCOAL, 4));
   //    //
-  //    RecipeSolidifier.addRecipe("enrichfuel",
-  //        new ItemStack(ItemRegistry.peat_fuel),
-  //        new ItemStack(ItemRegistry.peat_fuel),
-  //        new ItemStack(ItemRegistry.peat_fuel),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), 500),
-  //        new ItemStack(ItemRegistry.peat_fuel_enriched, 3));
   //    //
-  //    RecipeSolidifier.addRecipe("honeymelon",
-  //        new ItemStack(Items.MELON_SLICE),
-  //        new ItemStack(Items.GOLD_NUGGET),
-  //        new ItemStack(Items.MELON_SLICE),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-  //        new ItemStack(Items.GLISTERING_MELON_SLICE, 2));
-  //    RecipeSolidifier.addRecipe("honeycarrot",
-  //        new ItemStack(Items.CARROT),
-  //        new ItemStack(Items.GOLD_NUGGET),
-  //        new ItemStack(Items.CARROT),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-  //        new ItemStack(Items.GOLDEN_CARROT, 2));
-  //    RecipeSolidifier.addRecipe("honeycake",
-  //        new ItemStack(Items.EGG),
-  //        new ItemStack(Items.WHEAT),
-  //        new ItemStack(Items.WHEAT),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME / 2),
-  //        new ItemStack(Items.CAKE));
-  //    RecipeSolidifier.addRecipe("honeycookie",
-  //        new ItemStack(Items.WHEAT),
-  //        new ItemStack(Items.COCOA_BEANS),
-  //        new ItemStack(Items.WHEAT),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-  //        new ItemStack(Items.COOKIE, 16));
+  //
+  //
   //    RecipeSolidifier.addRecipe("honeyspidereye",
   //        new ItemStack(Items.SPIDER_EYE),
   //        new ItemStack(Items.BROWN_MUSHROOM),
   //        new ItemStack(Items.RED_MUSHROOM),
   //        new FluidStack(FluidHoneyHolder.STILL.get(), 10),
   //        new ItemStack(Items.FERMENTED_SPIDER_EYE, 2));
-  //    RecipeSolidifier.addRecipe("honeypie",
-  //        new ItemStack(Items.PUMPKIN),
-  //        new ItemStack(Items.EGG),
-  //        new ItemStack(Items.PUMPKIN),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), 50),
-  //        new ItemStack(Items.PUMPKIN_PIE, 3));
   //    RecipeSolidifier.addRecipe("honeyhive",
   //        new ItemStack(Items.CHEST),
   //        new ItemStack(Items.HONEYCOMB),
@@ -281,14 +200,8 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME * 8),
   //        new ItemStack(Blocks.BEE_NEST));
   //    //
-  //    RecipeSolidifier.addRecipe("slimehoney",
-  //        new ItemStack(Items.SLIME_BALL),
-  //        new ItemStack(Items.SLIME_BALL),
-  //        new ItemStack(Items.SLIME_BALL),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), 600),
-  //        new ItemStack(Blocks.SLIME_BLOCK));
   //    RecipeSolidifier.addRecipe("slimefill",
-  //        new ItemStack(Items.SLIME_BALL),
+  //          new ItemStack(Items.SLIME_BALL),
   //        new ItemStack(Items.SLIME_BALL),
   //        new ItemStack(Items.SLIME_BALL),
   //        new FluidStack(FluidSlimeHolder.STILL.get(), 600),
@@ -418,8 +331,10 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     ResourceLocation id = r.getId();
     if (hashes.contains(id.toString())) {
       ModCyclic.LOGGER.error("Duplicate solidifier recipe id " + id.toString());
+      return;
     }
     RECIPES.add(r);
     hashes.add(id.toString());
+    ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
   }
 }
