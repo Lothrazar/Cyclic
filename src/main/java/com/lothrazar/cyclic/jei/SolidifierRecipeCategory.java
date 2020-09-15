@@ -6,6 +6,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import mezz.jei.api.constants.VanillaTypes;
@@ -22,7 +23,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 @SuppressWarnings("rawtypes")
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
 
-  static ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "solid_jei");
+  static ResourceLocation id = new ResourceLocation(CyclicRecipeType.SOLID.toString());
   private IDrawable gui;
   private IDrawable icon;
 
@@ -61,12 +62,22 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
-    for (int i = 0; i <= 2; i++) {
-      Collections.addAll(stuff, recipe.ingredientAt(i));
-      in.add(stuff);
-      ingredients.setInputLists(VanillaTypes.ITEM, in);
-      stuff = new ArrayList<>();
-    }
+    //    for (int i = 0; i <= 2; i++) {
+    //      Collections.addAll(stuff, recipe.ingredientAt(i));
+    //      in.add(stuff);
+    //      ingredients.setInputLists(VanillaTypes.ITEM, in);
+    //      stuff = new ArrayList<>();
+    //    }
+    //test without loop just in case?
+    Collections.addAll(stuff, recipe.ingredientAt(0));
+    in.add(stuff);
+    stuff = new ArrayList<>();
+    Collections.addAll(stuff, recipe.ingredientAt(1));
+    in.add(stuff);
+    stuff = new ArrayList<>();
+    Collections.addAll(stuff, recipe.ingredientAt(2));
+    in.add(stuff);
+    ingredients.setInputLists(VanillaTypes.ITEM, in);
     ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
 

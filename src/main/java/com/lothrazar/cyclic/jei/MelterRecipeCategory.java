@@ -6,6 +6,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import mezz.jei.api.constants.VanillaTypes;
@@ -22,7 +23,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 @SuppressWarnings("rawtypes")
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
-  static ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "melter_jei");
+  static ResourceLocation id = new ResourceLocation(CyclicRecipeType.MELTER.toString());
   private IDrawable gui;
   private IDrawable icon;
 

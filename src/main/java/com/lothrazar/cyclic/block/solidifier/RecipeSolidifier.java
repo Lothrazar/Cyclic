@@ -171,34 +171,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
   //water 
   //      Tags.Blocks.CHESTS
-  //    RecipeSolidifier.addRecipe("biocharrrr",
-  //        new ItemStack(Items.STICK),
-  //        new ItemStack(ItemRegistry.peat_fuel),
-  //        new ItemStack(Items.STICK),
-  //        new FluidStack(FluidBiomassHolder.STILL.get(), 100),
-  //        new ItemStack(Items.CHARCOAL, 4));
   //    //
-  //    //
-  //
-  //
-  //    RecipeSolidifier.addRecipe("honeyspidereye",
-  //        new ItemStack(Items.SPIDER_EYE),
-  //        new ItemStack(Items.BROWN_MUSHROOM),
-  //        new ItemStack(Items.RED_MUSHROOM),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), 10),
-  //        new ItemStack(Items.FERMENTED_SPIDER_EYE, 2));
-  //    RecipeSolidifier.addRecipe("honeyhive",
-  //        new ItemStack(Items.CHEST),
-  //        new ItemStack(Items.HONEYCOMB),
-  //        new ItemStack(Items.STICK),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), 100),
-  //        new ItemStack(Blocks.BEEHIVE));
-  //    RecipeSolidifier.addRecipe("honeynest",
-  //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
-  //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
-  //        new ItemStack(Blocks.HONEYCOMB_BLOCK),
-  //        new FluidStack(FluidHoneyHolder.STILL.get(), FluidAttributes.BUCKET_VOLUME * 8),
-  //        new ItemStack(Blocks.BEE_NEST));
   //    //
   //    RecipeSolidifier.addRecipe("slimefill",
   //          new ItemStack(Items.SLIME_BALL),

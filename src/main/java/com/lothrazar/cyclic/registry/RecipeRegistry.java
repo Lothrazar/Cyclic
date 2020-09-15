@@ -6,7 +6,9 @@ import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RecipeRegistry {
 
   public static void registerRecipeSerializers(Register<IRecipeSerializer<?>> event) {
