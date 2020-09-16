@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:fire_charge"
+  },
+  "inputMiddle": {
+    "tag": "forge:storage_blocks/redstone"
+  },
+  "inputBottom": {
+    "tag": "forge:ingots/gold"
+  },
+  "mix": {
+    "fluid": "cyclic:magma",
+    "count": 1000
+  },
+  "result": {
+    "item": "cyclic:gem_amber",
+	"count": 1
+  }
+}

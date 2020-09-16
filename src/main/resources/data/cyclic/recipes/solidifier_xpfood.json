@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:sugar"
+  },
+  "inputMiddle": {
+    "item": "minecraft:sugar"
+  },
+  "inputBottom": {
+    "item": "minecraft:sugar"
+  },
+  "mix": {
+    "fluid": "cyclic:xpjuice",
+    "count": 1000
+  },
+  "result": {
+    "item": "cyclic:experience_food",
+	"count": 1
+  }
+}

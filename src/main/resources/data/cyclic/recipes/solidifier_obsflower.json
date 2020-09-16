@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "tag": "forge:obsidian"
+  },
+  "inputMiddle": {
+    "item": "cyclic:gem_amber"
+  },
+  "inputBottom": {
+    "item": "minecraft:wither_rose"
+  },
+  "mix": {
+    "fluid": "cyclic:slime",
+    "count": 1000
+  },
+  "result": {
+    "item": "cyclic:gem_obsidian",
+	"count": 1
+  }
+}

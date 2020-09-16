@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:prismarine"
+  },
+  "inputMiddle": {
+    "tag": "forge:dusts/glowstone"
+  },
+  "inputBottom": {
+    "item": "minecraft:prismarine"
+  },
+  "mix": {
+    "fluid": "cyclic:magma",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:prismarine_crystals",
+	"count": 1
+  }
+}

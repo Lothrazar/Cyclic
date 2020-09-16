@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:fire_charge"
+  },
+  "inputMiddle": {
+    "tag": "forge:dusts/redstone"
+  },
+  "inputBottom": {
+    "item": "minecraft:magma_block"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 500
+  },
+  "result": {
+    "item": "cyclic:gem_amber",
+	"count": 1
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:nether_brick"
+  },
+  "inputMiddle": {
+    "item": "minecraft:nether_brick"
+  },
+  "inputBottom": {
+    "item": "minecraft:nether_brick"
+  },
+  "mix": {
+    "fluid": "cyclic:slime",
+    "count": 10
+  },
+  "result": {
+    "item": "minecraft:nether_bricks",
+	"count": 1
+  }
+}

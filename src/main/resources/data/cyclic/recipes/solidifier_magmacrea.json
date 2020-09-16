@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:slime_ball"
+  },
+  "inputMiddle": {
+    "item": "minecraft:slime_ball"
+  },
+  "inputBottom": {
+    "item": "minecraft:slime_ball"
+  },
+  "mix": {
+    "fluid": "cyclic:magma",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:magma_cream",
+	"count": 6
+  }
+}
