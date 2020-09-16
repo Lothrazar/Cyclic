@@ -1,0 +1,11 @@
+{
+  "name": "item.patchouli.cyclic.book.name",
+  "landing_text": "patchouli.cyclic.book.landing",
+  "subtitle ": "patchouli.cyclic.book.subtitle ",
+  "model": "patchouli:book_purple",
+  "i18n": true,
+  "dont_generate_book": false,
+  "creative_tab": "cyclic",
+  "version": 1,
+  "show_progress": false
+}
