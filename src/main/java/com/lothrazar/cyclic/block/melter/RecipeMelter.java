@@ -122,14 +122,16 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
     }
 
     @Override
     public RecipeMelter read(ResourceLocation recipeId, PacketBuffer buffer) {
-      return new RecipeMelter(recipeId,
+      RecipeMelter r = new RecipeMelter(recipeId,
           Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer));
+      //server reading recipe from client or vice/versa 
+      addRecipe(r);
+      return r;
     }
 
     @Override
@@ -147,11 +149,12 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   private static void addRecipe(RecipeMelter r) {
     ResourceLocation id = r.getId();
     if (hashes.contains(id.toString())) {
-      ModCyclic.LOGGER.error("Error: Duplicate melter recipe id " + id.toString());
+      ModCyclic.LOGGER.info("Warning: Duplicate melter recipe id " + id.toString());
     }
     else {
       RECIPES.add(r);
       hashes.add(id.toString());
+      ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
     }
   }
 }

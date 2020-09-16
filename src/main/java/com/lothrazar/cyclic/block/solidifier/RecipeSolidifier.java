@@ -152,9 +152,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeSolidifier read(ResourceLocation recipeId, PacketBuffer buffer) {
-      return new RecipeSolidifier(recipeId,
+      RecipeSolidifier r = new RecipeSolidifier(recipeId,
           Ingredient.read(buffer), Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer),
           buffer.readItemStack());
+      //server reading recipe from client or vice/versa 
+      addRecipe(r);
+      return r;
     }
 
     @Override
@@ -175,11 +178,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   private static void addRecipe(RecipeSolidifier r) {
     ResourceLocation id = r.getId();
     if (hashes.contains(id.toString())) {
-      ModCyclic.LOGGER.error("Duplicate solidifier recipe id " + id.toString());
-      return;
+      ModCyclic.LOGGER.info("Warn: Duplicate solidifier recipe id " + id.toString());
     }
-    RECIPES.add(r);
-    hashes.add(id.toString());
-    ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
+    else {
+      RECIPES.add(r);
+      hashes.add(id.toString());
+      ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
+    }
   }
 }
