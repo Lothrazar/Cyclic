@@ -95,7 +95,9 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   /**
    * SHOUTOUT https://github.com/Minecraft-Forge-Tutorials/Custom-Json-Recipes
    */
-  public static class SerializeMelter extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeMelter> {
+  //  @SuppressWarnings("unchecked")
+  //  @SuppressWarnings("rawtypes")
+  public static class SerializeMelter extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
 
     SerializeMelter() {
       // This registry name is what people will specify in their json files.
@@ -106,7 +108,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
      * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
      */
     @Override
-    public RecipeMelter read(ResourceLocation recipeId, JsonObject json) {
+    public RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
       RecipeMelter r = null;
       try {
         Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputFirst"));

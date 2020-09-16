@@ -24,10 +24,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-@SuppressWarnings("rawtypes")
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
-  public static List<RecipeSolidifier> RECIPES = new ArrayList<>();
+  public static List<RecipeSolidifier<?>> RECIPES = new ArrayList<>();
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack fluidInput;
@@ -41,18 +40,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     ingredients.add(in);
     ingredients.add(inSecond);
     ingredients.add(inThird);
-  }
-
-  @Deprecated
-  private RecipeSolidifier(ResourceLocation id,
-      ItemStack in, ItemStack inSecond, ItemStack inThird, FluidStack fluid,
-      ItemStack result) {
-    super(id);
-    this.result = result;
-    this.fluidInput = fluid;
-    ingredients.add(Ingredient.fromStacks(in));
-    ingredients.add(Ingredient.fromStacks(inSecond));
-    ingredients.add(Ingredient.fromStacks(inThird));
   }
 
   @Override
@@ -116,7 +103,8 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   public static final SerializeSolidifier SERIALIZER = new SerializeSolidifier();
 
-  public static class SerializeSolidifier extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeSolidifier> {
+  @SuppressWarnings("rawtypes")
+  public static class SerializeSolidifier extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
 
     SerializeSolidifier() {
       // This registry name is what people will specify in their json files.
@@ -124,7 +112,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeSolidifier read(ResourceLocation recipeId, JsonObject json) {
+    public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
         Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputTop"));
