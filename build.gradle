@@ -24,6 +24,7 @@ version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Cyclic'
 
+
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
@@ -51,6 +52,8 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            property 'mixin.env.disableRefMap', 'true'
+		  
             mods {
                 cyclic {
                     source sourceSets.main
@@ -66,6 +69,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
 
             mods {
                 cyclic {
@@ -110,8 +114,8 @@ dependencies {
     compile fg.deobf("mezz.jei:jei-1.16.2:${jei_version}")
     compile fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
     
- //   compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
- //   runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+   compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+   runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
