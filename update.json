@@ -1,13 +1,14 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
   "promos": {
-    "1.16.2-latest": "0.7.0",
-    "1.16.2-recommended": "0.7.0"
+    "1.16.2-latest": "0.7.1",
+    "1.16.2-recommended": "0.7.1"
   },
   "1.16.2": {
   	"0.6.1":"Ported ",
   	"0.6.2":"Fixed crash in harvester GUI.  Remove logspam in Disenchanter.  Patch StackOverflowError in Excavate enchant when level is high.  Fixed projectiles thrown from items not flying.   Fan now can blow through non-solid blocks.  Fan has a GUI to control speed and range.  Beheading mob heads config list added.  Beheading enchant is able to drops skulls from wither boss equal to its level.  Fixed some resource and file not found warnings in startup console.   "
   	,"0.7.0":"Fixed 'lost connection: Took too long to log in' on servers.  Water scepter thing works on water-logged blocks.  Upgraded GUI of several blocks.  Ported from 1.12: Pharos Beacon, Creative battery, Creative item tester, Dice, Dropper, Forester, Miner, Text Projector, Uncrafter.  New blocks: Terra Preta, Mason blocks.  "
   	,"0.7.1":"All Solidifier and Melter recipes are now defined as JSON files and new recipes can be added by pack developers using the JSON format. "
+  	,"0.7.2":""
   }
 }
