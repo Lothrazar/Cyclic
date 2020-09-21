@@ -68,10 +68,10 @@ public class PotionRegistry {
 
   public static void setup(FMLCommonSetupEvent event) {
     basicBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
-    splashBrewing(PotionRegistry.PotionItem.stun);
+    splashBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
     lingerBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
     basicBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
-    splashBrewing(PotionRegistry.PotionItem.swimspeed);
+    splashBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
     lingerBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
   }
 
@@ -79,24 +79,39 @@ public class PotionRegistry {
     ItemStack AWKWARD = PotionUtils.addPotionToItemStack(
         new ItemStack(Items.POTION), Potions.AWKWARD);
     //hmm wat 
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(AWKWARD), Ingredient.fromItems(item),
+    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(AWKWARD, Ingredient.fromItems(item),
         PotionUtils.addPotionToItemStack(
             new ItemStack(Items.POTION), pot)));
   }
 
-  private static void splashBrewing(Potion pot) {
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.POTION), pot)),
-        Ingredient.fromStacks(new ItemStack(Items.GUNPOWDER)),
+  private static void splashBrewing(Potion pot, Item item) {
+    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(PotionUtils.addPotionToItemStack(
+        new ItemStack(Items.SPLASH_POTION), Potions.AWKWARD),
+        Ingredient.fromStacks(new ItemStack(item)),
         PotionUtils.addPotionToItemStack(
             new ItemStack(Items.SPLASH_POTION), pot)));
   }
 
   private static void lingerBrewing(Potion pot, Item item) {
-    BrewingRecipeRegistry.addRecipe(new BrewingRecipe(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD)),
+    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(PotionUtils.addPotionToItemStack(
+        new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD),
         Ingredient.fromStacks(new ItemStack(item)),
         PotionUtils.addPotionToItemStack(
             new ItemStack(Items.LINGERING_POTION), pot)));
+  }
+  
+  private static class ModBrewingRecipe extends BrewingRecipe {
+	  private ItemStack inputStack;
+	  
+	public ModBrewingRecipe(ItemStack inputStack, Ingredient ingredient, ItemStack output) {
+		super(Ingredient.fromStacks(inputStack), ingredient, output);
+		this.inputStack = inputStack;
+	}
+	
+	@Override
+	public boolean isInput(ItemStack stack) {
+		return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == PotionUtils.getPotionFromItem(inputStack);
+	}
+	  
   }
 }
