@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.anvilmagma;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
@@ -38,6 +37,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileAnvilMagma extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int OUT = 1;
+  private static final int IN = 0;
   public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -47,12 +48,41 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     TIMER, REDSTONE;
   }
 
-  private static final int OUT = 1;
-  private static final int IN = 0;
-
   public TileAnvilMagma() {
     super(TileRegistry.anvil_magma);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  }
+
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    setLitProperty(true);
+    inventory.ifPresent(inv -> {
+      ItemStack stack = inv.getStackInSlot(0);
+      if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
+        return;
+      }
+      final int repair = 100;
+      if (tank != null &&
+          tank.getFluidAmount() >= repair &&
+          stack.isRepairable() &&
+          stack.getDamage() > 0) {
+        //we can repair so steal some power 
+        //ok drain power  
+        UtilItemStack.repairItem(stack);
+        tank.drain(repair, FluidAction.EXECUTE);
+      }
+      //shift to other slot
+      if ((stack.getDamage() == 0 || !stack.isRepairable())
+          && inv.getStackInSlot(1).isEmpty()) {
+        //
+        inv.insertItem(1, stack.copy(), false);
+        inv.extractItem(0, stack.getCount(), false);
+      }
+    });
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -114,38 +144,6 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
       tag.put("inv", compound);
     });
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    setLitProperty(true);
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
-        return;
-      }
-      final int repair = ConfigManager.ANVILPOWER.get();
-      if (tank != null &&
-          tank.getFluidAmount() >= repair &&
-          stack.isRepairable() &&
-          stack.getDamage() > 0) {
-        //we can repair so steal some power 
-        //ok drain power  
-        UtilItemStack.repairItem(stack);
-        tank.drain(repair, FluidAction.EXECUTE);
-      }
-      //shift to other slot
-      if ((stack.getDamage() == 0 || !stack.isRepairable())
-          && inv.getStackInSlot(1).isEmpty()) {
-        //
-        inv.insertItem(1, stack.copy(), false);
-        inv.extractItem(0, stack.getCount(), false);
-      }
-    });
   }
 
   @Override

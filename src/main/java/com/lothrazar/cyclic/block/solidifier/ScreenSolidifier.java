@@ -27,6 +27,7 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
     super.init();
     timer.guiLeft = fluid.guiLeft = energy.guiLeft = guiLeft;
     timer.guiTop = fluid.guiTop = energy.guiTop = guiTop;
+    energy.visible = TileSolidifier.POWERCONF.get() > 0;
   }
 
   @Override

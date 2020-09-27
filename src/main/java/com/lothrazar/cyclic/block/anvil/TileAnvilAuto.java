@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.anvil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -23,6 +22,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -34,6 +34,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  public static IntValue POWERCONF;
   private static final int OUT = 1;
   private static final int IN = 0;
   public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
@@ -61,9 +62,6 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
         if (slot == IN)
           return stack.isRepairable() &&
               stack.getDamage() > 0;
-        if (slot == OUT)
-          return stack.isRepairable() &&
-              stack.getDamage() == 0;
         return true;
       }
     };
@@ -82,7 +80,8 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY
+        && POWERCONF.get() > 0) {
       return energy.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -124,21 +123,28 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
         return;
       }
       IEnergyStorage en = this.energy.orElse(null);
-      final int repair = ConfigManager.ANVILPOWER.get();
-      if (en != null &&
+      final int repair = POWERCONF.get();
+      boolean work = false;
+      if (repair > 0 &&
+          en != null &&
           en.getEnergyStored() >= repair &&
           stack.isRepairable() &&
           stack.getDamage() > 0) {
         //we can repair so steal some power 
         //ok drain power  
-        UtilItemStack.repairItem(stack);
         en.extractEnergy(repair, false);
+        work = true;
       }
       //shift to other slot
-      if (inv.getStackInSlot(1).isEmpty()) {
-        //
-        inv.insertItem(1, stack.copy(), false);
-        inv.extractItem(0, stack.getCount(), false);
+      if (work) {
+        UtilItemStack.repairItem(stack);
+        boolean done = stack.getDamage() == 0;
+        if (done && inv.getStackInSlot(1).isEmpty()) {
+          //          System.out.println("insert  " + stack);
+          inv.insertItem(1, stack.copy(), false);
+          //          System.out.println("extract   " + stack.getCount());
+          inv.extractItem(0, stack.getCount(), false);
+        }
       }
     });
   }

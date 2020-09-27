@@ -49,6 +49,16 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
+    collectLocalExperience();
+    if (!world.isRemote)
+      collectPlayerExperience();
+  }
+
   public Predicate<FluidStack> isFluidValid() {
     return p -> p.getFluid() == FluidXpJuiceHolder.STILL.get();
   }
@@ -78,16 +88,6 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     tag.put("fluid", fluid);
     tag.putInt("storedXp", getStoredXp());
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      return;
-    }
-    collectLocalExperience();
-    if (!world.isRemote)
-      collectPlayerExperience();
   }
 
   private void collectPlayerExperience() {

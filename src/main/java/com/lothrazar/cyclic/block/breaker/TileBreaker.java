@@ -24,17 +24,6 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
-  }
-
-  @Nullable
-  @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerBreaker(i, world, pos, playerInventory, playerEntity);
-  }
-
-  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -49,6 +38,17 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
       }
       //else unbreakable
     }
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerBreaker(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override

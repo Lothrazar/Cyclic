@@ -24,6 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -36,12 +37,9 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileUncraft extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static final int MAX = 64000;
+  public static IntValue POWERCONF;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-
-  public static enum UncraftStatusEnum {
-    EMPTY, CANT, MATCH;
-  }
 
   static enum Fields {
     REDSTONE, STATUS;
@@ -49,6 +47,47 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
 
   public TileUncraft() {
     super(TileRegistry.uncrafter);
+  }
+
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    if (en == null || inv == null || world.getServer() == null) {
+      this.status = UncraftStatusEnum.EMPTY;
+      return;
+    }
+    final int cost = POWERCONF.get();
+    if (en.getEnergyStored() < cost && cost > 0) {
+      return;//broke
+    }
+    //    int RADIUS = 2;
+    //
+    ItemStack dropMe = inv.getStackInSlot(0).copy();
+    if (dropMe.isEmpty()) {
+      this.status = UncraftStatusEnum.EMPTY;
+    }
+    else {
+      setLitProperty(true);
+      IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
+      if (match != null) {
+        this.status = UncraftStatusEnum.MATCH;
+        uncraftRecipe(inv, match);
+        en.extractEnergy(cost, false);
+      }
+      else {
+        //        System.out.println("     server    this.status = " + this.status);
+        this.status = UncraftStatusEnum.CANT;
+      }
+    }
   }
 
   private UncraftStatusEnum status = UncraftStatusEnum.EMPTY;
@@ -78,7 +117,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energy.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -107,42 +146,6 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       tag.put("inv", compound);
     });
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    timer--;
-    if (timer > 0) {
-      return;
-    }
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
-    if (en == null || inv == null || world.getServer() == null) {
-      this.status = UncraftStatusEnum.EMPTY;
-      return;
-    }
-    //    int RADIUS = 2;
-    //
-    ItemStack dropMe = inv.getStackInSlot(0).copy();
-    if (dropMe.isEmpty()) {
-      this.status = UncraftStatusEnum.EMPTY;
-    }
-    else {
-      setLitProperty(true);
-      IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
-      if (match != null) {
-        this.status = UncraftStatusEnum.MATCH;
-        uncraftRecipe(inv, match);
-      }
-      else {
-        //        System.out.println("     server    this.status = " + this.status);
-        this.status = UncraftStatusEnum.CANT;
-      }
-    }
   }
 
   private void uncraftRecipe(IItemHandler inv, IRecipe<?> match) {

@@ -26,6 +26,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     int x, y;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
+    energy.visible = TileHarvester.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileHarvester.Fields.REDSTONE.ordinal(), container.tile.getPos()));

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -25,6 +24,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,19 +37,52 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileDropper extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static final int MAX = 64000;
+  public static IntValue POWERCONF;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private int dropCount = 1;
+  private int delay = 10;
+  private int hOffset = 0;
 
   static enum Fields {
     TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, RENDER;
   }
 
-  private int dropCount = 1;
-  private int delay = 10;
-  private int hOffset = 0;
-
   public TileDropper() {
     super(TileRegistry.dropper);
+  }
+
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    timer--;
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    final int cost = POWERCONF.get();
+    if (en == null || inv == null
+        || en.getEnergyStored() < cost) {
+      if (cost > 0) {
+        setLitProperty(false);
+        return;//out of energy so keep it rendered as off
+      }
+    }
+    setLitProperty(true);
+    if (timer > 0) {
+      return;
+    }
+    timer = delay;
+    ItemStack dropMe = inv.getStackInSlot(0).copy();
+    BlockPos target = getTargetPos();
+    int amtDrop = Math.min(this.dropCount, dropMe.getCount());
+    if (amtDrop > 0) {
+      en.extractEnergy(cost, false);
+      dropMe.setCount(amtDrop);
+      UtilItemStack.dropItemStackMotionless(world, target, dropMe);
+      inv.getStackInSlot(0).shrink(amtDrop);
+    } //      this.decrStackSize(slotCurrent, amtDrop);
   }
 
   @Override
@@ -79,7 +112,7 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energy.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -112,36 +145,6 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
     tag.putInt("dropCount", dropCount);
     tag.putInt("hOffset", hOffset);
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    timer--;
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
-    if (en == null || inv == null
-        || en.getEnergyStored() < ConfigManager.DROPPERPOWER.get()) {
-      setLitProperty(false);
-      return;//out of energy so keep it rendered as off
-    }
-    setLitProperty(true);
-    if (timer > 0) {
-      return;
-    }
-    timer = delay;
-    ItemStack dropMe = inv.getStackInSlot(0).copy();
-    BlockPos target = getTargetPos();
-    int amtDrop = Math.min(this.dropCount, dropMe.getCount());
-    if (amtDrop > 0) {
-      en.extractEnergy(ConfigManager.DROPPERPOWER.get(), false);
-      dropMe.setCount(amtDrop);
-      UtilItemStack.dropItemStackMotionless(world, target, dropMe);
-      inv.getStackInSlot(0).shrink(amtDrop);
-    } //      this.decrStackSize(slotCurrent, amtDrop);
   }
 
   private BlockPos getTargetPos() {

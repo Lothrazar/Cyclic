@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -37,6 +36,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,7 +46,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
+  public static IntValue POWERCONF;
   private int radius = 9;
+  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  BlockPos laserTarget;
+  int laserTimer;
   private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
 
@@ -54,22 +58,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     REDSTONE, RENDER;
   }
 
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  BlockPos laserTarget;
-  int laserTimer;
-
   public TileHarvester() {
     super(TileRegistry.harvesterTile);
-  }
-
-  public List<BlockPos> getShape() {
-    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius), radius);
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
@@ -88,14 +78,25 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     }
     for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
       BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), radius);
-      if (cap.getEnergyStored() < ConfigManager.HARVESTERPOWER.get()) {
+      Integer cost = POWERCONF.get();
+      if (cap.getEnergyStored() < cost && cost > 0) {
         break;//too broke
       }
       if (this.tryHarvestSingle(target)) {
-        cap.extractEnergy(ConfigManager.HARVESTERPOWER.get(), false);
+        cap.extractEnergy(cost, false);
         break;
       }
     }
+  }
+
+  public List<BlockPos> getShape() {
+    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius), radius);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
   }
 
   private boolean tryHarvestSingle(BlockPos posCurrent) {
@@ -193,7 +194,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energy.cast();
     }
     return super.getCapability(cap, side);

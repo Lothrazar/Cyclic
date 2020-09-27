@@ -28,6 +28,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     super.init();
     energy.guiLeft = fluid.guiLeft = guiLeft;
     energy.guiTop = fluid.guiTop = guiTop;
+    energy.visible = TileFluidCollect.POWERCONF.get() > 0;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;

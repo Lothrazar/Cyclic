@@ -26,6 +26,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     int x, y;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
+    energy.visible = TileForester.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileForester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
@@ -37,7 +38,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
   }
 

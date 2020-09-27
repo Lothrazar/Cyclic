@@ -27,6 +27,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -39,6 +40,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileMiner extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  public static IntValue POWERCONF;
   private int shapeIndex = 0;
   static final int MAX_HEIGHT = 64;
   private int height = MAX_HEIGHT / 2;
@@ -89,7 +91,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energy.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -163,6 +165,11 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       updateTargetPos(shape);
       resetProgress();
     }
+    Integer cost = POWERCONF.get();
+    IEnergyStorage cap = this.energy.orElse(null);
+    if (cap.getEnergyStored() < cost && cost > 0) {
+      return false;
+    }
     //currentlyMining may have changed, and we are still turned on:
     if (isCurrentlyMining) {
       BlockState targetState = world.getBlockState(targetPos);
@@ -182,6 +189,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         }
         if (harvested) {
           // success 
+          cap.extractEnergy(cost, false);
           resetProgress();
         }
         else {

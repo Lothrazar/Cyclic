@@ -36,6 +36,16 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   }
 
   @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    setLitProperty(true);
+    this.pushEntities();
+  }
+
+  @Override
   public ITextComponent getDisplayName() {
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
@@ -44,16 +54,6 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerFan(i, world, pos, playerInventory, playerEntity);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    setLitProperty(true);
-    this.pushEntities();
   }
 
   public int getRange() {

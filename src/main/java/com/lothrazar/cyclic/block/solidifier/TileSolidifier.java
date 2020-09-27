@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.solidifier;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -21,6 +20,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -40,6 +40,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
+  public static IntValue POWERCONF;
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank;
   private ItemStackHandlerSided inputSlots;
@@ -59,6 +60,30 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     inputSlots = new ItemStackHandlerSided(3);
     outputSlot = new ItemStackHandlerSided(1);
+  }
+
+  @Override
+  public void tick() {
+    IEnergyStorage en = this.energyWrapper.orElse(null);
+    if (en == null) {
+      return;
+    }
+    this.findMatchingRecipe();
+    if (currentRecipe == null) {
+      return;
+    }
+    this.timer--;
+    if (timer < 0) {
+      timer = 0;
+    }
+    final int cost = POWERCONF.get();
+    if (en.getEnergyStored() < cost && cost > 0) {
+      return;//broke
+    }
+    if (timer == 0 && this.tryProcessRecipe()) {
+      this.timer = TIMER_FULL;
+      en.extractEnergy(cost, false);
+    }
   }
 
   private IEnergyStorage createEnergy() {
@@ -146,7 +171,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return tankWrapper.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyWrapper.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -168,30 +193,6 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   @Override
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
-  }
-
-  @Override
-  public void tick() {
-    IEnergyStorage en = this.energyWrapper.orElse(null);
-    if (en == null) {
-      return;
-    }
-    this.findMatchingRecipe();
-    if (currentRecipe == null) {
-      return;
-    }
-    this.timer--;
-    if (timer < 0) {
-      timer = 0;
-    }
-    final int cost = ConfigManager.SOLIDIFIERPOWER.get();
-    if (en.getEnergyStored() < cost) {
-      return;//broke
-    }
-    if (timer == 0 && this.tryProcessRecipe()) {
-      this.timer = TIMER_FULL;
-      en.extractEnergy(cost, false);
-    }
   }
 
   private void findMatchingRecipe() {

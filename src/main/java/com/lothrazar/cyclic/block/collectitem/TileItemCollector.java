@@ -40,6 +40,35 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     super(TileRegistry.collectortile);
   }
 
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
+    if (world.isRemote) {
+      return;
+    }
+    AxisAlignedBB aabb = getRange();
+    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
+      return entity.isAlive();//  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
+    });
+    if (list.size() > 0) {
+      ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
+      IItemHandler h = handler.orElse(null);
+      ItemStack remainder = stackEntity.getItem();
+      for (int i = 0; i < h.getSlots(); i++) {
+        if (remainder.isEmpty()) {
+          break;
+        }
+        remainder = h.insertItem(i, remainder, false);
+      }
+      stackEntity.setItem(remainder);
+      if (remainder.isEmpty()) {
+        stackEntity.remove();//kill it
+      }
+    }
+  }
+
   private IItemHandler createHandler() {
     return new ItemStackHandler(2 * 9);
   }
@@ -84,35 +113,6 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), radius + 1);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      return;
-    }
-    if (world.isRemote) {
-      return;
-    }
-    AxisAlignedBB aabb = getRange();
-    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
-      return entity.isAlive();//  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
-    });
-    if (list.size() > 0) {
-      ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
-      IItemHandler h = handler.orElse(null);
-      ItemStack remainder = stackEntity.getItem();
-      for (int i = 0; i < h.getSlots(); i++) {
-        if (remainder.isEmpty()) {
-          break;
-        }
-        remainder = h.insertItem(i, remainder, false);
-      }
-      stackEntity.setItem(remainder);
-      if (remainder.isEmpty()) {
-        stackEntity.remove();//kill it
-      }
-    }
   }
 
   public List<BlockPos> getShape() {

@@ -35,7 +35,8 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
+    if (TileAnvilAuto.POWERCONF.get() > 0)
+      energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
     btnRedstone.onValueUpdate(container.tile);
   }
 
@@ -50,6 +51,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 54, 34);
     this.drawSlotLarge(ms, 104, 30);
-    energy.draw(ms, container.tile.getEnergy());
+    if (TileAnvilAuto.POWERCONF.get() > 0)
+      energy.draw(ms, container.tile.getEnergy());
   }
 }

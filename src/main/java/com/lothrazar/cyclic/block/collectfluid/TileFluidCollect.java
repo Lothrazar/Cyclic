@@ -28,6 +28,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -43,6 +44,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileFluidCollect extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  public static IntValue POWERCONF;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
@@ -57,13 +59,66 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     REDSTONE, RENDER;
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
   public TileFluidCollect() {
     super(TileRegistry.collector_fluid);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  }
+
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      this.setLitProperty(false);
+      return;
+    }
+    IEnergyStorage cap = this.energy.orElse(null);
+    if (cap == null) {
+      return;
+    }
+    Integer cost = POWERCONF.get();
+    if (cap.getEnergyStored() < cost && cost > 0) {
+      return;//broke
+    }
+    inventory.ifPresent(inv -> {
+      ItemStack stack = inv.getStackInSlot(0);
+      if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
+        return;
+      }
+      this.setLitProperty(true);
+      List<BlockPos> shape = this.getShapeFilled();
+      if (shape.size() == 0) {
+        return;
+      }
+      //iterate around shape
+      incrementShapePtr(shape);
+      BlockPos posTarget = shape.get(shapeIndex);
+      //ok on this target get fluid check it out
+      FluidState fluidState = world.getFluidState(posTarget);
+      for (int ff = 0; ff < 20; ff++) {
+        if (fluidState.isSource()) {
+          break;
+        } //fast forward ten spots at a time in case big chunkso f nothin
+        incrementShapePtr(shape);
+        posTarget = shape.get(shapeIndex);
+        fluidState = world.getFluidState(posTarget);
+      }
+      if (fluidState.isSource()) {
+        FluidStack fstack = new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME);
+        int result = tank.fill(fstack, FluidAction.SIMULATE);
+        if (result == FluidAttributes.BUCKET_VOLUME) {
+          //we got enough  
+          if (world.setBlockState(posTarget, Block.getBlockFromItem(stack.getItem()).getDefaultState())) {
+            //build the block, shrink the item
+            stack.shrink(1);
+            //drink fluid
+            tank.fill(fstack, FluidAction.EXECUTE);
+          }
+        }
+      }
+    });
+  }
+
+  private IEnergyStorage createEnergy() {
+    return new CustomEnergyStorage(MAX, MAX);
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -158,51 +213,6 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     tag.put("fluid", fluid);
     tag.putInt("shapeIndex", shapeIndex);
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      this.setLitProperty(false);
-      return;
-    }
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
-        return;
-      }
-      this.setLitProperty(true);
-      List<BlockPos> shape = this.getShapeFilled();
-      if (shape.size() == 0) {
-        return;
-      }
-      //iterate around shape
-      incrementShapePtr(shape);
-      BlockPos posTarget = shape.get(shapeIndex);
-      //ok on this target get fluid check it out
-      FluidState fluidState = world.getFluidState(posTarget);
-      for (int ff = 0; ff < 20; ff++) {
-        if (fluidState.isSource()) {
-          break;
-        } //fast forward ten spots at a time in case big chunkso f nothin
-        incrementShapePtr(shape);
-        posTarget = shape.get(shapeIndex);
-        fluidState = world.getFluidState(posTarget);
-      }
-      if (fluidState.isSource()) {
-        FluidStack fstack = new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME);
-        int result = tank.fill(fstack, FluidAction.SIMULATE);
-        if (result == FluidAttributes.BUCKET_VOLUME) {
-          //we got enough  
-          if (world.setBlockState(posTarget, Block.getBlockFromItem(stack.getItem()).getDefaultState())) {
-            //build the block, shrink the item
-            stack.shrink(1);
-            //drink fluid
-            tank.fill(fstack, FluidAction.EXECUTE);
-          }
-        }
-      }
-    });
   }
 
   private void incrementShapePtr(List<BlockPos> shape) {

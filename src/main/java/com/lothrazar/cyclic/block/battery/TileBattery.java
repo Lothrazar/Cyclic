@@ -29,21 +29,29 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private Map<Direction, Boolean> poweredSides;
+  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  private int flowing = 0;
   static final int MAX = 6400000;
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;
   }
 
-  private Map<Direction, Boolean> poweredSides;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private int flowing = 0;
-
   public TileBattery() {
     super(TileRegistry.batterytile);
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);
+    }
+  }
+
+  @Override
+  public void tick() {
+    boolean isFlowing = this.getFlowing() == 1;
+    setLitProperty(isFlowing);
+    if (isFlowing) {
+      this.tickCableFlow();
     }
   }
 
@@ -103,15 +111,6 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerBattery(i, world, pos, playerInventory, playerEntity);
-  }
-
-  @Override
-  public void tick() {
-    boolean isFlowing = this.getFlowing() == 1;
-    setLitProperty(isFlowing);
-    if (isFlowing) {
-      this.tickCableFlow();
-    }
   }
 
   private List<Integer> rawList = IntStream.rangeClosed(

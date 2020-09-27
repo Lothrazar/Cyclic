@@ -41,6 +41,29 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
     this.needsRedstone = 1;
   }
 
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    setLitProperty(true);
+    FluidStack test = tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.SIMULATE);
+    if (test.getAmount() == FluidAttributes.BUCKET_VOLUME
+        && test.getFluid().getDefaultState() != null &&
+        test.getFluid().getDefaultState().getBlockState() != null) {
+      //we got enough
+      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
+      BlockPos offset = pos.offset(dir);
+      BlockState state = test.getFluid().getDefaultState().getBlockState();
+      if (world.isAirBlock(offset) &&
+          world.setBlockState(offset, state)) {
+        //pay
+        tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.EXECUTE);
+      }
+    }
+  }
+
   public Predicate<FluidStack> isFluidValid() {
     return p -> true;
   }
@@ -81,29 +104,6 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    setLitProperty(true);
-    FluidStack test = tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.SIMULATE);
-    if (test.getAmount() == FluidAttributes.BUCKET_VOLUME
-        && test.getFluid().getDefaultState() != null &&
-        test.getFluid().getDefaultState().getBlockState() != null) {
-      //we got enough
-      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
-      BlockPos offset = pos.offset(dir);
-      BlockState state = test.getFluid().getDefaultState().getBlockState();
-      if (world.isAirBlock(offset) &&
-          world.setBlockState(offset, state)) {
-        //pay
-        tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.EXECUTE);
-      }
-    }
   }
 
   @Override
