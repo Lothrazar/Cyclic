@@ -879,6 +879,8 @@
     "tipped_arrow.effect.bounce": "Arrow of Bouncing",
     
 
+    "effect.cyclic.haste": "Haste",
+    "effect.cyclic.strong_haste": "Haste II",
     "effect.cyclic.bounce": "Bouncy",
     "effect.cyclic.ender": "Ender Aura",
     "effect.cyclic.magnet": "Magnet",
@@ -887,6 +889,16 @@
     "effect.cyclic.swimspeed": "Swim Speed",
     "effect.cyclic.stun": "Paralyze",
     "effect.cyclic.waterwalk": "Waterwalking",
+    
+    "item.minecraft.potion.effect.cyclic_strong_haste": "Potion of Haste II",
+    "item.minecraft.splash_potion.effect.cyclic_strong_haste": "Splash Potion of Haste II",
+    "item.minecraft.lingering_potion.effect.cyclic_strong_haste": "Lingering Potion of Haste II",
+    "item.minecraft.tipped_arrow.effect.cyclic_strong_haste": "Arrow of Haste II",
+    
+    "item.minecraft.potion.effect.cyclic_haste": "Potion of Haste",
+    "item.minecraft.splash_potion.effect.cyclic_haste": "Splash Potion of Haste",
+    "item.minecraft.lingering_potion.effect.cyclic_haste": "Lingering Potion of Haste",
+    "item.minecraft.tipped_arrow.effect.cyclic_haste": "Arrow of Haste",
     
     "item.minecraft.potion.effect.cyclic_swimspeed": "Potion of Swim Speed",
     "item.minecraft.splash_potion.effect.cyclic_swimspeed": "Splash Potion of Swim Speed",
