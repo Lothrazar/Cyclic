@@ -6,9 +6,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class ItemMagicNet extends ItemBase {
@@ -53,7 +52,9 @@ public class ItemMagicNet extends ItemBase {
     }
     PlayerEntity player = (PlayerEntity) entity;
     EntityMagicNetEmpty e = new EntityMagicNetEmpty(worldIn, player);
-    e.shoot(player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    Vector3d lookVector = player.getLookVec();
+    e.shoot(lookVector.getX(), lookVector.getY(), lookVector.getZ(), velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    worldIn.playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
     worldIn.addEntity(e);
     stack.shrink(1);
   }
