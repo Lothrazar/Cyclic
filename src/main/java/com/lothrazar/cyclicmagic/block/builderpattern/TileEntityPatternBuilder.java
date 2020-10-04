@@ -183,7 +183,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       timer = 0;
       List<BlockPos> shapeSrc = this.getSourceShape();
       List<BlockPos> shapeTarget = this.getTargetShape();
-      if (shapeSrc.size() <= 0) {
+      if (shapeSrc.size() <= 0 || shapeTarget.size() <= 0) {
         return;
       }
       if (this.shapeIndex < 0 || this.shapeIndex >= shapeSrc.size()) {
