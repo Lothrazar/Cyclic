@@ -37,6 +37,7 @@ import com.lothrazar.cyclic.item.bauble.CharmFire;
 import com.lothrazar.cyclic.item.bauble.CharmOverpowered;
 import com.lothrazar.cyclic.item.bauble.CharmVoid;
 import com.lothrazar.cyclic.item.bauble.CharmWither;
+import com.lothrazar.cyclic.item.bauble.FlippersItem;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
@@ -296,5 +297,6 @@ public class ItemRegistry {
       r.register(new HeartItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart"));
       r.register(new HeartToxicItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart_empty"));
     }
+    r.register(new FlippersItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("flippers"));
   }
 }

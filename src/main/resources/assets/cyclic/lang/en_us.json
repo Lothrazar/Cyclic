@@ -31,8 +31,13 @@
     "cyclic.fan.range":"Range",
     "cyclic.fan.speed":"Speed",
     
+    "item.cyclic.flippers":"Flippers",
+    "item.cyclic.flippers.tooltip":"Increase swim speed",
+    
     "item.cyclic.glove_climb": "Climbing Gloves",
     "item.cyclic.glove_climb.tooltip": "Climb any vertical surface",
+    "item.cyclic.bauble.on.true": "On (right-click toggle)",
+    "item.cyclic.bauble.on.false": "Off (right-click toggle)",
     "block.cyclic.breaker": "Block Breaker",
 	"item.cyclic.wrench":"Wooden Wrench",   
 	"item.cyclic.wrench.tooltip":"Rotates simple blocks",   

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "blb",
+    " l "
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:clay_ball"
+    },
+    "b": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "cyclic:flippers",
+    "count": 1
+  }
+}
