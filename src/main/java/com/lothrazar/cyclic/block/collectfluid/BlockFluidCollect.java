@@ -23,7 +23,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockFluidCollect extends BlockBase {
 
   public BlockFluidCollect(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
   }
 
