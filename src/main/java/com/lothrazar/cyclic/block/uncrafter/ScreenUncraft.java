@@ -24,6 +24,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     super.init();
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
+    energy.visible = TileUncraft.POWERCONF.get() > 0;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;

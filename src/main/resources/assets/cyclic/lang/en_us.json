@@ -31,8 +31,13 @@
     "cyclic.fan.range":"Range",
     "cyclic.fan.speed":"Speed",
     
+    "item.cyclic.flippers":"Flippers",
+    "item.cyclic.flippers.tooltip":"Increase swim speed",
+    
     "item.cyclic.glove_climb": "Climbing Gloves",
     "item.cyclic.glove_climb.tooltip": "Climb any vertical surface",
+    "item.cyclic.bauble.on.true": "On (right-click toggle)",
+    "item.cyclic.bauble.on.false": "Off (right-click toggle)",
     "block.cyclic.breaker": "Block Breaker",
 	"item.cyclic.wrench":"Wooden Wrench",   
 	"item.cyclic.wrench.tooltip":"Rotates simple blocks",   
@@ -879,6 +884,8 @@
     "tipped_arrow.effect.bounce": "Arrow of Bouncing",
     
 
+    "effect.cyclic.haste": "Haste",
+    "effect.cyclic.strong_haste": "Haste II",
     "effect.cyclic.bounce": "Bouncy",
     "effect.cyclic.ender": "Ender Aura",
     "effect.cyclic.magnet": "Magnet",
@@ -887,6 +894,16 @@
     "effect.cyclic.swimspeed": "Swim Speed",
     "effect.cyclic.stun": "Paralyze",
     "effect.cyclic.waterwalk": "Waterwalking",
+    
+    "item.minecraft.potion.effect.cyclic_strong_haste": "Potion of Haste II",
+    "item.minecraft.splash_potion.effect.cyclic_strong_haste": "Splash Potion of Haste II",
+    "item.minecraft.lingering_potion.effect.cyclic_strong_haste": "Lingering Potion of Haste II",
+    "item.minecraft.tipped_arrow.effect.cyclic_strong_haste": "Arrow of Haste II",
+    
+    "item.minecraft.potion.effect.cyclic_haste": "Potion of Haste",
+    "item.minecraft.splash_potion.effect.cyclic_haste": "Splash Potion of Haste",
+    "item.minecraft.lingering_potion.effect.cyclic_haste": "Lingering Potion of Haste",
+    "item.minecraft.tipped_arrow.effect.cyclic_haste": "Arrow of Haste",
     
     "item.minecraft.potion.effect.cyclic_swimspeed": "Potion of Swim Speed",
     "item.minecraft.splash_potion.effect.cyclic_swimspeed": "Splash Potion of Swim Speed",

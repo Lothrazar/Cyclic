@@ -7,6 +7,16 @@ import java.util.List;
 import java.util.Map;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
+import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
+import com.lothrazar.cyclic.block.dropper.TileDropper;
+import com.lothrazar.cyclic.block.forester.TileForester;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.block.melter.TileMelter;
+import com.lothrazar.cyclic.block.miner.TileMiner;
+import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
+import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -18,7 +28,7 @@ public class ConfigManager {
   private static List<String> defaultBeheading = new ArrayList<>();
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
-  public static BooleanValue SCAFFOLD = null;
+  public static BooleanValue SCAFFOLD;
   public static BooleanValue EMERALD;
   public static BooleanValue SANDSTONE;
   public static BooleanValue GEMGEAR;
@@ -31,14 +41,8 @@ public class ConfigManager {
   public static BooleanValue SPIKES;
   public static BooleanValue BOOMERANGS;
   public static BooleanValue CABLES;
-  public static IntValue ANVILPOWER;
-  public static IntValue BEACONPOWER;
-  public static IntValue MELTERPOWER;
-  public static IntValue SOLIDIFIERPOWER;
   public static IntValue PEATERICHPOWER;
   public static IntValue PEATPOWER;
-  public static IntValue HARVESTERPOWER;
-  public static IntValue DISENCHANTERPOWER;
   public static DoubleValue PEATCHANCE;
   public static BooleanValue COMMANDNBT;
   public static BooleanValue COMMANDGETHOME;
@@ -49,8 +53,6 @@ public class ConfigManager {
   public static BooleanValue COMMANDWORLDSPAWN;
   public static BooleanValue COMMANDGETHELP;
   private static ConfigValue<List<String>> BEHEADING_SKINS;
-  public static IntValue DROPPERPOWER;
-  public static IntValue FORESTERPOWER;
 
   private static void buildDefaultHeadList() {
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
@@ -106,23 +108,26 @@ public class ConfigManager {
     GEMGEAR = CFG.comment("Disable the endgame gear").define(category + "gemObsidianGear", true);
     NETHERBRICK = CFG.comment("Disable 5 netherbrick tools").define(category + "netherbrickGear", true);
     ENCHANTMENTS = CFG.comment("Disable all 11 enchantments").define(category + "enchantments", true);
+    category = "energy.";
     category = "energy.fuel.";
     PEATPOWER = CFG.comment("Power to repair one tick of durability")
         .defineInRange(category + "peat_fuel", 256, 1, 64000);
     PEATERICHPOWER = CFG.comment("Power gained burning one of this")
         .defineInRange(category + "peat_fuel_enriched", 256 * 4, 1, 64000);
     category = "energy.cost.";
-    DISENCHANTERPOWER = CFG.comment("Power gained burning one of this").defineInRange(category + "disenchanter", 1500, 1, 64000);
-    ANVILPOWER = CFG.comment("Power gained burning one of this").defineInRange(category + "anvil", 250, 1, 64000);
-    MELTERPOWER = CFG.comment("Power per recipe").defineInRange(category + "melter", 5000, 1, 64000);
-    SOLIDIFIERPOWER = CFG.comment("Power per recipe").defineInRange(category + "solidifier", 5000, 1, 64000);
-    DROPPERPOWER = CFG.comment("Power per use").defineInRange(category + "dropper", 50, 1, 64000);
-    FORESTERPOWER = CFG.comment("Power per use").defineInRange(category + "forester", 50, 1, 64000);
-    HARVESTERPOWER = CFG.comment("Power per use").defineInRange(category + "harvester", 250, 1, 64000);
-    BEACONPOWER = CFG.comment("Power per tick").defineInRange(category + "beacon", 10, 1, 64000);
+    TileDisenchant.POWERCONF = CFG.comment("Power per use").defineInRange(category + "disenchanter", 1500, 0, 64000);
+    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair ").defineInRange(category + "anvil", 250, 0, 64000);
+    TileMelter.POWERCONF = CFG.comment("Power per recipe").defineInRange(category + "melter", 5000, 0, 64000);
+    TileSolidifier.POWERCONF = CFG.comment("Power per recipe").defineInRange(category + "solidifier", 5000, 0, 64000);
+    TileDropper.POWERCONF = CFG.comment("Power per use").defineInRange(category + "dropper", 50, 0, 64000);
+    TileForester.POWERCONF = CFG.comment("Power per use").defineInRange(category + "forester", 50, 0, 64000);
+    TileHarvester.POWERCONF = CFG.comment("Power per use").defineInRange(category + "harvester", 250, 0, 64000);
+    TilePotion.POWERCONF = CFG.comment("Power per tick").defineInRange(category + "beacon", 10, 0, 64000);
+    TileMiner.POWERCONF = CFG.comment("Power per use").defineInRange(category + "miner", 10, 0, 64000);
+    TileUncraft.POWERCONF = CFG.comment("Power per use").defineInRange(category + "uncraft", 1000, 0, 64000);
     category = "peat.";
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
-        .defineInRange(category + " conversionChance",
+        .defineInRange(category + "conversionChance",
             0.08000000000000F,
             0.0010000000000F, 1F);
     category = "command.";

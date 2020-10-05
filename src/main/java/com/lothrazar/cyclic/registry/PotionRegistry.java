@@ -13,6 +13,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
+import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
@@ -45,8 +46,13 @@ public class PotionRegistry {
   @SubscribeEvent
   public static void onPotRegistry(RegistryEvent.Register<Potion> event) {
     IForgeRegistry<Potion> r = event.getRegistry();
+    r.register(new Potion(ModCyclic.MODID + "_haste", new EffectInstance(Effects.HASTE, 3600)).setRegistryName(ModCyclic.MODID + ":haste"));
+    r.register(new Potion(ModCyclic.MODID + "_strong_haste", new EffectInstance(Effects.HASTE, 1800, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste"));
     r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(PotionEffects.stun, 1800)).setRegistryName(ModCyclic.MODID + ":stun"));
     r.register(new Potion(ModCyclic.MODID + "_swimspeed", new EffectInstance(PotionEffects.swimspeed, 3600)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
+    //
+    //    Effects.ABSORPTION
+    //    Effects.LEVITATION
   }
 
   public static class PotionEffects {
@@ -60,6 +66,10 @@ public class PotionRegistry {
 
   public static class PotionItem {
 
+    @ObjectHolder(ModCyclic.MODID + ":strong_haste")
+    public static Potion strong_haste;
+    @ObjectHolder(ModCyclic.MODID + ":haste")
+    public static Potion haste;
     @ObjectHolder(ModCyclic.MODID + ":stun")
     public static Potion stun;
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
@@ -67,17 +77,27 @@ public class PotionRegistry {
   }
 
   public static void setup(FMLCommonSetupEvent event) {
-    basicBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
-    splashBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
+
+    ItemStack AWKWARD = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD);
+    basicBrewing(AWKWARD.copy(), PotionRegistry.PotionItem.haste, Items.EMERALD);
+    splashBrewing(PotionRegistry.PotionItem.haste);
+    //strongh aste
+    basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste),
+        PotionRegistry.PotionItem.strong_haste, Items.REDSTONE);
+    splashBrewing(PotionRegistry.PotionItem.strong_haste);
+    //
+    basicBrewing(AWKWARD.copy(), PotionRegistry.PotionItem.stun, Items.CLAY);
+    splashBrewing(PotionRegistry.PotionItem.stun);
     lingerBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
-    basicBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
-    splashBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+    //
+    basicBrewing(AWKWARD.copy(), PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+    splashBrewing(PotionRegistry.PotionItem.swimspeed);
+
     lingerBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+    //    PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste).gr
   }
 
-  private static void basicBrewing(Potion pot, Item item) {
-    ItemStack AWKWARD = PotionUtils.addPotionToItemStack(
-        new ItemStack(Items.POTION), Potions.AWKWARD);
+  private static void basicBrewing(ItemStack AWKWARD, Potion pot, Item item) {
     //hmm wat 
     BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(AWKWARD, Ingredient.fromItems(item),
         PotionUtils.addPotionToItemStack(

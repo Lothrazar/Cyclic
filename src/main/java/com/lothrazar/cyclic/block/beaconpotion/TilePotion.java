@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.EntityFilterType;
@@ -25,6 +24,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -43,6 +43,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   //  private static final int MAX_RADIUS = 8;
   static final int MAX = 64000;
   private static final int MAX_RADIUS = 64;
+  public static IntValue POWERCONF;
   private int radius = MAX_RADIUS;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -58,6 +59,41 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
     super(TileRegistry.beacon);
     BeaconTileEntity x;
     timer = 0;
+  }
+
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    if (effects.size() == 0) {
+      timer = 0;
+    }
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inv = this.inventory.orElse(null);
+    final int repair = POWERCONF.get();
+    if (en == null || inv == null
+        || en.getEnergyStored() < repair) {
+      if (repair > 0)
+        return;
+    }
+    timer--;
+    if (timer > 0) {// && timer % 60 == 0
+      tryAffectEntities(en, repair);
+      return;
+    }
+    //timer is <=zero, delete all effects
+    effects.clear();
+    //
+    ItemStack s = inv.getStackInSlot(0);
+    if (s.isEmpty()) {
+      return;
+    }
+    List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(s);
+    if (newEffects.size() > 0) {
+      pullFromItem(inv, newEffects);
+    }
   }
 
   private IEnergyStorage createEnergy() {
@@ -87,7 +123,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energy.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -136,40 +172,6 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
       tag.put("Effects", listnbt);
     }
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    if (effects.size() == 0) {
-      timer = 0;
-    }
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
-    final int repair = ConfigManager.BEACONPOWER.get();
-    if (en == null || inv == null
-        || en.getEnergyStored() < repair) {
-      return;
-    }
-    timer--;
-    if (timer > 0) {// && timer % 60 == 0
-      tryAffectEntities(en, repair);
-      return;
-    }
-    //timer is <=zero, delete all effects
-    effects.clear();
-    //
-    ItemStack s = inv.getStackInSlot(0);
-    if (s.isEmpty()) {
-      return;
-    }
-    List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(s);
-    if (newEffects.size() > 0) {
-      pullFromItem(inv, newEffects);
-    }
   }
 
   private void pullFromItem(IItemHandler inv, List<EffectInstance> newEffects) {

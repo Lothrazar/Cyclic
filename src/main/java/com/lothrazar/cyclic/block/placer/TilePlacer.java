@@ -38,6 +38,28 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
     super(TileRegistry.placer);
   }
 
+  @Override
+  public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    setLitProperty(true);
+    inventory.ifPresent(inv -> {
+      ItemStack stack = inv.getStackInSlot(0);
+      if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
+        return;
+      }
+      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
+      BlockPos offset = pos.offset(dir);
+      BlockState state = Block.getBlockFromItem(stack.getItem()).getDefaultState();
+      if (world.isAirBlock(offset) &&
+          world.setBlockState(offset, state)) {
+        stack.shrink(1);
+      }
+    });
+  }
+
   private IItemHandler createHandler() {
     return new ItemStackHandler(1);
   }
@@ -74,28 +96,6 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
       tag.put("inv", compound);
     });
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    setLitProperty(true);
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
-        return;
-      }
-      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
-      BlockPos offset = pos.offset(dir);
-      BlockState state = Block.getBlockFromItem(stack.getItem()).getDefaultState();
-      if (world.isAirBlock(offset) &&
-          world.setBlockState(offset, state)) {
-        stack.shrink(1);
-      }
-    });
   }
 
   @Override

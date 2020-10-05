@@ -46,11 +46,6 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
     tag.put("fluid", fluid);
     return super.write(tag);
   }
-  //
-  //  @Override
-  //  public boolean hasFastRenderer() {
-  //    return true;
-  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {

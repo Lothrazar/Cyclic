@@ -28,6 +28,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     super.init();
     timer.guiLeft = fluid.guiLeft = energy.guiLeft = guiLeft;
     timer.guiTop = fluid.guiTop = energy.guiTop = guiTop;
+    energy.visible = (TileMelter.POWERCONF.get() > 0);
   }
 
   @Override

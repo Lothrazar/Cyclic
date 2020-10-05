@@ -18,6 +18,7 @@ public class EnergyBar {
   private int height = 62;
   public int guiLeft;
   public int guiTop;
+  public boolean visible = true;
 
   public EnergyBar(Screen parent, int cap) {
     this.parent = parent;
@@ -30,6 +31,9 @@ public class EnergyBar {
   }
 
   public void draw(MatrixStack ms, float energ) {
+    if (!visible) {
+      return;
+    }
     int relX;
     int relY;
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_CTR);
@@ -44,7 +48,7 @@ public class EnergyBar {
   }
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int energ) {
-    if (this.isMouseover(mouseX, mouseY)) {
+    if (visible && this.isMouseover(mouseX, mouseY)) {
       String tt = energ + "/" + this.capacity;
       List<ITextComponent> list = new ArrayList<>();
       list.add(new TranslationTextComponent(tt));

@@ -27,6 +27,7 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     int x, y, w, h;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
+    energy.visible = TileDropper.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileDropper.Fields.REDSTONE.ordinal(), container.tile.getPos()));
@@ -58,7 +59,7 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip 
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
   }
 

@@ -44,28 +44,6 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
-  }
-
-  @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
-  }
-
-  @Nullable
-  @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerDetectorItem(i, world, pos, playerInventory, playerEntity);
-  }
-
-  @Override
-  public boolean isPowered() {
-    return isPoweredNow;
-  }
-
-  @Override
   public void tick() {
     timer--;
     if (world.isRemote || timer > 0) {
@@ -106,6 +84,28 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
         ModCyclic.LOGGER.info("State change error in adjacent block ", e);
       }
     }
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public AxisAlignedBB getRenderBoundingBox() {
+    return TileEntity.INFINITE_EXTENT_AABB;
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerDetectorItem(i, world, pos, playerInventory, playerEntity);
+  }
+
+  @Override
+  public boolean isPowered() {
+    return isPoweredNow;
   }
 
   private int getCountInRange() {

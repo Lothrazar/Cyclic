@@ -38,6 +38,17 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
     this.facingResetAllOn();
   }
 
+  @Override
+  public void tick() {
+    try {
+      updateMyState();
+    }
+    catch (Throwable e) {
+      //
+      ModCyclic.LOGGER.error("Clock blockstate update error", e);
+    }
+  }
+
   private void facingResetAllOn() {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, true);
@@ -109,27 +120,6 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
       tag.putBoolean(f.getName2(), poweredSides.get(f));
     }
     return super.write(tag);
-  }
-
-  @Override
-  public void tick() {
-    try {
-      updateMyState();
-    }
-    catch (Throwable e) {
-      //
-      ModCyclic.LOGGER.error("Clock blockstate update error", e);
-    }
-    //    inventory.ifPresent(inv -> {
-    //      for (int s = 0; s < inv.getSlots(); s++) {
-    //        ItemStack stack = inv.getStackInSlot(s);
-    //        BlockPosDim targetPos = ItemLocationGps.getPosition(stack);
-    //        if (targetPos == null || targetPos.getDimension() != world.dimension.getType().getId()) {
-    //          return;
-    //        }
-    //        toggleTarget(targetPos.getPos());
-    //      }
-    //    }); 
   }
 
   private void updateMyState() throws IllegalArgumentException {
