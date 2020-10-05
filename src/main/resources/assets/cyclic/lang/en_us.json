@@ -187,6 +187,8 @@
     "enchantment.cyclic.traveler.desc": "Protects against exploration hazards (elytra, ender pearls, cacti, bees, fall resistance)",
     "enchantment.cyclic.venom": "Venom",
     "enchantment.cyclic.venom.desc": "Inflicts the poison status effect on the target",
+    "enchantment.cyclic.ender": "Ender",
+    "enchantment.cyclic.ender.desc": "Throws an Ender Pearl with your sword, consuming durability. Cooldown decreases with level.",
     "entity.Villager.druid": "Druid",
     "entity.Villager.sage": "Sage",
     "fluid.cyclic.biomass": "Biomass",
