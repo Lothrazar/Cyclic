@@ -34,9 +34,7 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
@@ -139,38 +137,6 @@ public class UtilEntity {
     while (world.hasNoCollisions(entity) == false) {
       entity.setPositionAndUpdate(entity.prevPosX, entity.prevPosY + 1.0D, entity.prevPosZ);
     }
-  }
-
-  //
-  public static void setMaxHealth(LivingEntity living, double max) {
-    ModifiableAttributeInstance healthAttribute = living.getAttribute(Attributes.MAX_HEALTH);
-    double amount = max - healthAttribute.getValue();
-    AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
-    // Need to remove modifier to apply a new one
-    if (modifier != null) {
-      healthAttribute.removeModifier(modifier);
-    }
-    // Operation 0 is a flat increase
-    modifier = new AttributeModifier(HEALTH_MODIFIER_ID, HEALTH_MODIFIER_NAME, amount,
-        AttributeModifier.Operation.ADDITION);
-    healthAttribute.applyPersistentModifier(modifier);
-    //    healthAttribute.applyModifier(modifier);
-  }
-
-  public static double getMaxHealth(LivingEntity living) {
-    ModifiableAttributeInstance healthAttribute = living.getAttribute(Attributes.MAX_HEALTH);
-    double maxHealth = healthAttribute.getValue();
-    AttributeModifier modifier = healthAttribute.getModifier(HEALTH_MODIFIER_ID);
-    if (modifier != null) {
-      maxHealth += modifier.getAmount();
-    }
-    return maxHealth;
-  }
-
-  public static int incrementMaxHealth(LivingEntity living, int by) {
-    int newVal = (int) getMaxHealth(living) + by;
-    setMaxHealth(living, newVal);
-    return newVal;
   }
 
   public static Direction getFacing(LivingEntity entity) {
