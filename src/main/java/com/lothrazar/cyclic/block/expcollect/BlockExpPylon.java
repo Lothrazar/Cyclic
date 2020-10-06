@@ -60,7 +60,7 @@ public class BlockExpPylon extends BlockBase {
           pylon.tank.drain(fluidPerAction, IFluidHandler.FluidAction.EXECUTE);
           player.addItemStackToInventory(new ItemStack(ItemRegistry.experience_food, 1));
           player.getHeldItemMainhand().shrink(1);
-          world.playSound((PlayerEntity)null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 0.5F, world.rand.nextFloat());
+          world.playSound((PlayerEntity) null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 0.5F, world.rand.nextFloat());
         }
         return ActionResultType.SUCCESS;
       }
@@ -68,7 +68,7 @@ public class BlockExpPylon extends BlockBase {
         if (pylon.tank.getFluidAmount() + fluidPerAction < pylon.tank.getCapacity()) {
           pylon.tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), fluidPerAction), IFluidHandler.FluidAction.EXECUTE);
           player.getHeldItemMainhand().shrink(1);
-          world.playSound((PlayerEntity)null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 0.2F, world.rand.nextFloat());
+          world.playSound((PlayerEntity) null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 0.2F, world.rand.nextFloat());
         }
         return ActionResultType.SUCCESS;
       }

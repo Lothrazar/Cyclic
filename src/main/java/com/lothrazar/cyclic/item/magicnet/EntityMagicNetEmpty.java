@@ -45,7 +45,6 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
     RayTraceResult.Type type = result.getType();
     BasicParticleType particleType = null;
     double targetHeightOffset = 0.0d;
-
     if (type == RayTraceResult.Type.ENTITY) {
       //now grab and kill the entity
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
