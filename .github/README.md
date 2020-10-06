@@ -4,37 +4,25 @@
 Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 
 
-Releases, information, and screenshots on Curse: http://mods.curse.com/mc-mods/minecraft/239286-cyclic
+# Setup
 
-
-# SETUP
-
-- First make sure vanilla minecraft is installed on your machine, and run it at least once in the current minecraft version (see gradle.properties : mc_version)
-- run the following bash command in the root folder
-`gradlew setupDecompWorkspace eclipse`
-- This uses the build.gradle script and uses the forge MDK
-- If you have any issues, you may have to download the MDK on your own from http://files.minecraftforge.net/ 
-- Finally, in eclipse go to File - Import - Existing Projects - and select the folder
+- First make sure vanilla minecraft is installed on your machine, and run it at least once in the current minecraft version 
+- If you import your project into a modern IDE such as IntelliJ or Eclipse, import it as a gradle project.
+- Run the gradle command to generate runs in order to run the project, either `./scripts/setup.sh` or one of the gradle commands `./gradlew genIntellijRuns`
+- This project was build using the Minecraft Forge MDK http://files.minecraftforge.net/ 
 
 
 # Contributions
 
-- To help with a bug, please check the Issues tab, especially the ones labelled "stuck"
-- Language files are also welcome via Pull Request, currently suppored are the following https://github.com/PrinceOfAmber/Cyclic/tree/master/src/main/resources/assets/cyclicmagic/lang
+- To help with an Issue, please check the Issues tab (and submit a different Pull Request per issue if possible)
+- Language files are also welcome via Pull Request, currently suppored are the following https://github.com/Lothrazar/Cyclic/tree/trunk/1.16/src/main/resources/assets/cyclic/lang
 
 
 # APIs and Optional Dependencies
-#### I have plugins/compatibility with the following mods, they are highly recommended.  However everything works perfectly fine without them.
+#### I have optional compatibility with the following mods, they are highly recommended. 
 
-- Baubles https://mods.curse.com/mc-mods/minecraft/227083-baubles
-- Guide API https://mods.curse.com/mc-mods/minecraft/228832-guide-api
-- JEI https://mods.curse.com/mc-mods/minecraft/238222-just-enough-items-jei
+- Curios https://www.curseforge.com/minecraft/mc-mods/curios
+- JEI https://www.curseforge.com/minecraft/mc-mods/jei
 - Enchantment Descriptions https://minecraft.curseforge.com/projects/enchantment-descriptions
-
-## CraftTweaker support
-
-Recipes for the Hydrator can be customized (added and removed) using CraftTwaker
-- https://minecraft.curseforge.com/projects/crafttweaker
-- Sample script https://github.com/PrinceOfAmber/Cyclic/blob/master/scripts_zen_example/hydrator.zs
 
 
