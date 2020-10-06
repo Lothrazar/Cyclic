@@ -9,6 +9,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.forester.TileForester;
@@ -125,6 +126,7 @@ public class ConfigManager {
     TilePotion.POWERCONF = CFG.comment("Power per tick").defineInRange(category + "beacon", 10, 0, 64000);
     TileMiner.POWERCONF = CFG.comment("Power per use").defineInRange(category + "miner", 10, 0, 64000);
     TileUncraft.POWERCONF = CFG.comment("Power per use").defineInRange(category + "uncraft", 1000, 0, 64000);
+    TileFluidCollect.POWERCONF = CFG.comment("Power per use").defineInRange(category + "collector_fluid", 500, 0, 64000);
     category = "peat.";
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
         .defineInRange(category + "conversionChance",
