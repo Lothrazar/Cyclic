@@ -6,14 +6,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class ItemMagicNet extends ItemBase {
 
   private static final float INACCURACY_DEFAULT = 1.0F;
-  private static final float PITCHOFFSET = 0.0F;
   private static final float VELOCITY_MAX = 1.5F;
   private static final int TICKS_USING = 93000;
 
@@ -54,7 +57,7 @@ public class ItemMagicNet extends ItemBase {
     EntityMagicNetEmpty e = new EntityMagicNetEmpty(worldIn, player);
     Vector3d lookVector = player.getLookVec();
     e.shoot(lookVector.getX(), lookVector.getY(), lookVector.getZ(), velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
-    worldIn.playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+    worldIn.playSound((PlayerEntity) null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
     worldIn.addEntity(e);
     stack.shrink(1);
   }

@@ -387,7 +387,7 @@
     "item.inventory_food.tooltip": "Eat to Upgrade your inventory",
     
     "item.cyclic.magic_net": "Monster Ball",
-    "item.cyclic.magic_net.tooltip": "Throw at a living entity to capture",
+    "item.cyclic.magic_net.tooltip": "Charge and throw at a living entity to capture",
     "item.cyclic.mob_container": "Monster Capsule",
     "item.cyclic.mob_container.tooltip": "Spawn captured mob from a Monster Ball",
     "item.cyclic.mattock.guide": "3x3 mining that treats dirt and stone type blocks equally.",
