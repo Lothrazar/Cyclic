@@ -1230,7 +1230,7 @@
     "item.cyclic.crystal_hoe": "Crystal Hoe",
 
     "block.cyclic.collector_fluid": "Fluid Collector",
-    "block.cyclic.collector_fluid.guide": "Drain nearby fluid",
+    "block.cyclic.collector_fluid.tooltip": "Collect nearby fluid to an internal tank",
 
     "block.cyclic.melter": "Melting Chamber",
     "block.cyclic.melter.tooltip": "Melt certain items into fluid",
