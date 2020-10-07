@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.peatfarm;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
@@ -21,7 +21,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
 
     public ScreenPeatFarm(ContainerPeatFarm screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
-        fluid = new FluidBar(this, 8, 8, TileFluidCollect.CAPACITY);
+        fluid = new FluidBar(this, 8, 8, TilePeatFarm.CAPACITY);
         energy = new EnergyBar(this, TilePeatFarm.MAX);
     }
 
@@ -31,6 +31,10 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
         fluid.guiLeft = energy.guiLeft = guiLeft;
         fluid.guiTop = energy.guiTop = guiTop;
         energy.visible = TileSolidifier.POWERCONF.get() > 0;
+        int x, y;
+        x = guiLeft + ContainerPeatFarm.SLOTX_START;
+        y = guiTop + 8;
+        btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     }
 
     @Override
@@ -46,6 +50,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
     protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
         this.drawButtonTooltips(ms, mouseX, mouseY);
         this.drawName(ms, title.getString());
+        btnRedstone.onValueUpdate(container.tile);
     }
 
     @Override

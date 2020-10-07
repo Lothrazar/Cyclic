@@ -29,6 +29,7 @@ import java.util.function.Predicate;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.BlockPeatFuel;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -152,6 +153,17 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
         }
     }
 
+    @Override
+    public int getField(int id) {
+        switch (TilePeatFarm.Fields.values()[id]) {
+            case REDSTONE:
+                return this.needsRedstone;
+            case RENDER:
+                return render;
+        }
+        return 0;
+    }
+
     private int needsRedstone = 1;
     private int blockPointer = 0;
 
@@ -211,7 +223,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     private void tryPlaceWater(BlockPos target) {
         if (world.getBlockState(target).isReplaceable(Fluids.WATER)
                 && world.getBlockState(target).getBlock() != Blocks.WATER
-                && tank.getFluidAmount() > FluidAttributes.BUCKET_VOLUME
+                && tank.getFluidAmount() >= FluidAttributes.BUCKET_VOLUME
                 && tank.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE) != null) {
             world.setBlockState(target, Blocks.WATER.getDefaultState());
         }
