@@ -75,7 +75,6 @@ public class EnderWingItem extends ItemBase {
           pos = new BlockPos(optional.get().getX(), optional.get().getY(), optional.get().getZ());
           RegistryKey<World> spawnWorldKey = serverPlayerEntity.func_241141_L_();
           ServerWorld spawnWorld = worldIn.getServer().getWorld(spawnWorldKey);
-          System.out.println(serverPlayerEntity.func_241141_L_());
 
           if (spawnWorld != null && spawnWorldKey == World.THE_NETHER) {
             if (worldIn.getDimensionKey() == World.THE_NETHER) {
