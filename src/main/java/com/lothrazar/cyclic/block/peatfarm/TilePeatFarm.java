@@ -77,6 +77,8 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
     public static final int TIMER_FULL = 1 * 10;
     private static final int PER_TICK = 1;
+    private int needsRedstone = 1;
+    private int blockPointer = 0;
 
     static enum Fields {
         REDSTONE, RENDER;
@@ -124,15 +126,21 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
             this.timer--;
             return;
         }
+        final int cost = POWERCONF.get();
+        if (cap.getEnergyStored() < cost && cost > 0) {
+            return;//broke
+        }
         for (int i = 0; i < PER_TICK; i++) {
             if (blockPointer < outer.size()) {
                 BlockPos target = outer.get(blockPointer);
                 boolean placeWater = (target.getX() - pos.getX()) % 3 == 0
                         && (target.getZ() - pos.getZ()) % 3 == 0;
-                if (placeWater)
-                    tryPlaceWater(target);
-                else
-                    tryPlacePeat(target);
+                if (placeWater) {
+                    if (tryPlaceWater(target))
+                        cap.extractEnergy(cost, false);
+                }
+                else if (tryPlacePeat(target))
+                    cap.extractEnergy(cost, false);
                 blockPointer++;
             }
             else
@@ -163,9 +171,6 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
         }
         return 0;
     }
-
-    private int needsRedstone = 1;
-    private int blockPointer = 0;
 
     public TilePeatFarm() {
         super(TileRegistry.peat_farm);
@@ -201,7 +206,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
         return CAPACITY;
     }
 
-    private void tryPlacePeat(BlockPos target) {
+    private boolean tryPlacePeat(BlockPos target) {
         IItemHandler inventory = this.inventory.orElse(null);
         for (int i = 0; i < inventory.getSlots(); i++) {
             ItemStack itemStack = inventory.getStackInSlot(i);
@@ -210,23 +215,27 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
                 continue;
             if (world.getBlockState(target).getBlock() instanceof BlockPeatFuel) {
                 world.destroyBlock(target, true);
-
             }
             if ((world.isAirBlock(target)
                     || world.getFluidState(target).getFluid() == Fluids.WATER
                     || world.getFluidState(target).getFluid() == Fluids.FLOWING_WATER)
-                    && world.setBlockState(target, state))
+                    && world.setBlockState(target, state)) {
                 itemStack.shrink(1);
+                return true;
+            }
         }
+        return false;
     }
 
-    private void tryPlaceWater(BlockPos target) {
+    private boolean tryPlaceWater(BlockPos target) {
         if (world.getBlockState(target).isReplaceable(Fluids.WATER)
                 && world.getBlockState(target).getBlock() != Blocks.WATER
                 && tank.getFluidAmount() >= FluidAttributes.BUCKET_VOLUME
                 && tank.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE) != null) {
             world.setBlockState(target, Blocks.WATER.getDefaultState());
+            return true;
         }
+        return false;
     }
 
     @Override
