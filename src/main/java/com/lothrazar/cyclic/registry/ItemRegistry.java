@@ -126,6 +126,7 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.peat_unbaked, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_unbaked"));
     r.register(new BlockItem(BlockRegistry.peat_baked, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_baked"));
     r.register(new BlockItem(BlockRegistry.solidifier, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("solidifier"));
+    r.register(new BlockItem(BlockRegistry.peat_farm, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_farm"));
     r.register(new BlockItem(BlockRegistry.melter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("melter"));
     //    r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("placer"));
