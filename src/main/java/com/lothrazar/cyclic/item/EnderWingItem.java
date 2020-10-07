@@ -34,6 +34,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -51,31 +52,56 @@ public class EnderWingItem extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (worldIn.isRemote)
+    if (worldIn.isRemote
+          || playerIn.getCooldownTracker().hasCooldown(this))
       return super.onItemRightClick(worldIn, playerIn, handIn);
-    if (playerIn.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemRightClick(worldIn, playerIn, handIn);
-    }
-    boolean isOverworld = worldIn.getDimensionKey() == World.OVERWORLD;
 
-    if (!isOverworld) {
-      UtilChat.sendStatusMessage(playerIn, "command.home.overworld");
-    }
-    else {
-      ServerWorld serverWorld = worldIn.getServer().getWorld(World.OVERWORLD);
-      ServerPlayerEntity serverPlayerEntity = playerIn instanceof ServerPlayerEntity ? (ServerPlayerEntity) playerIn : null;
-      if (serverWorld != null && serverPlayerEntity != null) {
-        BlockPos respawnPos = serverPlayerEntity.func_241140_K_();
-        if (respawnPos != null) {
-          Optional<Vector3d> optional = PlayerEntity.func_242374_a(serverWorld, respawnPos, 0.0F,true, true);
-          BlockPos pos;
-          if (optional.isPresent()) {
-            pos = new BlockPos(optional.get().getX(), optional.get().getY(), optional.get().getZ());
+    ServerWorld serverWorld = worldIn.getServer().getWorld(World.OVERWORLD);
+    ServerPlayerEntity serverPlayerEntity = playerIn instanceof ServerPlayerEntity ? (ServerPlayerEntity) playerIn : null;
+    if (serverWorld != null && serverPlayerEntity != null) {
+      /*
+      get the player's respawn point. This will be one of the following:
+        -- null: Player has not slept in a bed, or their bed has been destroyed, and they are not tied to a Respawn Anchor
+        -- the location of their bed, if they've set the respawn point with a bed
+        -- the location of their Respawn Anchor in the Nether
+       */
+      BlockPos respawnPos = serverPlayerEntity.func_241140_K_();
+      if (respawnPos != null) {
+        //This Optional checks that the player has a valid respawn point, and that it's safe to spawn there
+        Optional<Vector3d> optional = PlayerEntity.func_242374_a(serverWorld, respawnPos, 0.0F,true, true);
+        BlockPos pos;
+        boolean needsTeleport = false;
+        if (optional.isPresent()) {
+          pos = new BlockPos(optional.get().getX(), optional.get().getY(), optional.get().getZ());
+          RegistryKey<World> spawnWorldKey = serverPlayerEntity.func_241141_L_();
+          ServerWorld spawnWorld = worldIn.getServer().getWorld(spawnWorldKey);
+          System.out.println(serverPlayerEntity.func_241141_L_());
+
+          if (spawnWorld != null && spawnWorldKey == World.THE_NETHER) {
+            if (worldIn.getDimensionKey() == World.THE_NETHER) {
+              needsTeleport = true;
+            }
+            else {
+              UtilChat.sendStatusMessage(playerIn, "command.cyclic.home.nether");
+            }
+          }
+          else if (spawnWorld != null && spawnWorldKey == World.OVERWORLD) {
+            if (worldIn.getDimensionKey() == World.OVERWORLD) {
+              needsTeleport = true;
+            }
+            else {
+              UtilChat.sendStatusMessage(playerIn, "command.cyclic.home.overworld");
+            }
+          }
+          if (needsTeleport) {
             UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
             playerIn.getCooldownTracker().setCooldown(this, cooldown);
-            UtilEntity.teleportWallSafe(playerIn, worldIn, pos);
+            UtilEntity.teleportWallSafe(playerIn, spawnWorld, pos);
             UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
           }
+        }
+        else {
+          UtilChat.sendStatusMessage(playerIn, "command.cyclic.home.obstructed");
         }
       }
     }
