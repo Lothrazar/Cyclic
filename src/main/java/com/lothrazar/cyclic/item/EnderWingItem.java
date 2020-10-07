@@ -30,8 +30,11 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -44,30 +47,28 @@ public class EnderWingItem extends ItemBase {
   private static final int cooldown = 600;//ticks not seconds 
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    World world = context.getWorld();
-    if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemUse(context);
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    if (playerIn.getCooldownTracker().hasCooldown(this)) {
+      return super.onItemRightClick(worldIn, playerIn, handIn);
     }
-    boolean isOverworld = world.getDimensionKey() == World.OVERWORLD;
+    boolean isOverworld = worldIn.getDimensionKey() == World.OVERWORLD;
     if (!isOverworld) {
-      UtilChat.sendStatusMessage(player, "command.home.overworld");
+      UtilChat.sendStatusMessage(playerIn, "command.home.overworld");
     }
     else {
-      BlockPos pos = player.getBedPosition().orElse(null);
+      BlockPos pos = playerIn.getBedPosition().orElse(null);
       if (pos == null) {
-        UtilChat.sendStatusMessage(player, "command.gethome.bed");
+        UtilChat.sendStatusMessage(playerIn, "command.gethome.bed");
       }
       else {
-        UtilSound.playSound(player, SoundRegistry.warp_echo);
-        if (!world.isRemote()) {
-          UtilItemStack.damageItem(player, context.getItem());
-          player.getCooldownTracker().setCooldown(this, cooldown);
-          UtilEntity.teleportWallSafe(player, world, pos);
+        UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
+        if (!worldIn.isRemote()) {
+          UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
+          playerIn.getCooldownTracker().setCooldown(this, cooldown);
+          UtilEntity.teleportWallSafe(playerIn, worldIn, pos);
         }
       }
     }
-    return super.onItemUse(context);
+    return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }

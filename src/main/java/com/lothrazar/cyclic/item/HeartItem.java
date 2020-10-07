@@ -8,8 +8,12 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.world.World;
 
 public class HeartItem extends ItemBase {
 
@@ -23,13 +27,12 @@ public class HeartItem extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemUse(context);
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    if (playerIn.getCooldownTracker().hasCooldown(this)) {
+      return super.onItemRightClick(worldIn, playerIn, handIn);
     }
-    player.getFoodStats().addStats(1, 4);
-    ModifiableAttributeInstance healthAttribute = player.getAttribute(Attributes.MAX_HEALTH);
+    playerIn.getFoodStats().addStats(1, 4);
+    ModifiableAttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
     if (healthAttribute.getValue() < MAX) {
       //get attribute modif by id
       AttributeModifier oldHealthModifier = healthAttribute.getModifier(healthModifierUuid);
@@ -40,10 +43,10 @@ public class HeartItem extends ItemBase {
       AttributeModifier healthModifier = new AttributeModifier(healthModifierUuid, "HP Bonus from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
       healthAttribute.applyPersistentModifier(healthModifier);
       //finish up
-      player.getCooldownTracker().setCooldown(this, COOLDOWN);
-      player.getHeldItem(context.getHand()).shrink(1);
-      UtilSound.playSound(player, SoundRegistry.fill);
+      playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
+      playerIn.getHeldItem(handIn).shrink(1);
+      UtilSound.playSound(playerIn, SoundRegistry.fill);
     }
-    return super.onItemUse(context);
+    return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }
