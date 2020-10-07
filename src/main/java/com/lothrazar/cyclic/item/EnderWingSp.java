@@ -29,10 +29,12 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.IWorldInfo;
 
 public class EnderWingSp extends ItemBase {
 
@@ -43,19 +45,18 @@ public class EnderWingSp extends ItemBase {
   private static final int cooldown = 600;
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    World world = context.getWorld();
-    if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemUse(context);
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    if (playerIn.getCooldownTracker().hasCooldown(this)) {
+      return super.onItemRightClick(worldIn, playerIn, handIn);
     }
-    BlockPos spawn = player.getBedPosition().orElse(null);
-    if (spawn != null) {
-      UtilEntity.teleportWallSafe(player, world, spawn);
-      UtilSound.playSound(player, SoundRegistry.warp_echo);
-      UtilItemStack.damageItem(player, context.getItem());
-      player.getCooldownTracker().setCooldown(this, cooldown);
+    IWorldInfo worldInfo = worldIn.getWorldInfo();
+    if (worldInfo != null) {
+      BlockPos spawn = new BlockPos(worldInfo.getSpawnX(), worldInfo.getSpawnY(), worldInfo.getSpawnZ());
+      UtilEntity.teleportWallSafe(playerIn, worldIn, spawn);
+      UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
+      UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
+      playerIn.getCooldownTracker().setCooldown(this, cooldown);
     }
-    return super.onItemUse(context);
+    return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }
