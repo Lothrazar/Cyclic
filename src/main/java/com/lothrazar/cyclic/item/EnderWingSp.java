@@ -29,13 +29,15 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemStack; 
+import net.minecraft.util.ActionResult; 
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.ActionResultType; 
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.IWorldInfo;
 
 public class EnderWingSp extends ItemBase {
 
@@ -49,9 +51,14 @@ public class EnderWingSp extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
     if (playerIn.getCooldownTracker().hasCooldown(this)) {
       return super.onItemRightClick(worldIn, playerIn, handIn);
-    }
-    BlockPos spawn = playerIn.getBedPosition().orElse(null);
-    if (spawn != null) {
+    } 
+    IWorldInfo worldInfo = worldIn.getWorldInfo();
+    if (worldInfo != null) {
+      BlockPos spawn = new BlockPos(worldInfo.getSpawnX(), worldInfo.getSpawnY(), worldInfo.getSpawnZ());
+// =======
+//     BlockPos spawn = playerIn.getBedPosition().orElse(null);
+//     if (spawn != null) {
+// >>>>>>> trunk/1.16
       UtilEntity.teleportWallSafe(playerIn, worldIn, spawn);
       UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
       UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
