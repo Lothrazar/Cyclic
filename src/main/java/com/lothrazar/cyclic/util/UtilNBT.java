@@ -58,4 +58,8 @@ public class UtilNBT {
     }
     item.getOrCreateTag().putInt(prop, value);
   }
+
+  public static CompoundNBT getItemStackNBT(ItemStack held) {
+    return held.getOrCreateTag();
+  }
 }

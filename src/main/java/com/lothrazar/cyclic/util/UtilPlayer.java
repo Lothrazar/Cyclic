@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class UtilPlayer {
@@ -44,5 +46,12 @@ public class UtilPlayer {
     if (player.isCreative() == false) {
       player.inventory.decrStackSize(slot, 1);
     }
+  }
+
+  public static Item getItemArmorSlot(PlayerEntity player, EquipmentSlotType slot) {
+    ItemStack inslot = player.inventory.armorInventory.get(slot.getIndex());
+    //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
+    Item item = (inslot.isEmpty()) ? null : inslot.getItem();
+    return item;
   }
 }
