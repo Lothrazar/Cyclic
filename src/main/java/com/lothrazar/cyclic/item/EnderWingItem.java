@@ -35,6 +35,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.RegistryKey;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -52,6 +53,7 @@ public class EnderWingItem extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+
     if (worldIn.isRemote
           || playerIn.getCooldownTracker().hasCooldown(this))
       return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -101,6 +103,26 @@ public class EnderWingItem extends ItemBase {
         }
         else {
           UtilChat.sendStatusMessage(playerIn, "command.cyclic.home.obstructed");
+// =======
+//     if (playerIn.getCooldownTracker().hasCooldown(this)) {
+//       return super.onItemRightClick(worldIn, playerIn, handIn);
+//     }
+//     boolean isOverworld = worldIn.getDimensionKey() == World.OVERWORLD;
+//     if (!isOverworld) {
+//       UtilChat.sendStatusMessage(playerIn, "command.home.overworld");
+//     }
+//     else {
+//       BlockPos pos = playerIn.getBedPosition().orElse(null);
+//       if (pos == null) {
+//         UtilChat.sendStatusMessage(playerIn, "command.gethome.bed");
+//       }
+//       else {
+//         UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
+//         if (!worldIn.isRemote()) {
+//           UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
+//           playerIn.getCooldownTracker().setCooldown(this, cooldown);
+//           UtilEntity.teleportWallSafe(playerIn, worldIn, pos);
+// >>>>>>> trunk/1.16
         }
       }
     }
