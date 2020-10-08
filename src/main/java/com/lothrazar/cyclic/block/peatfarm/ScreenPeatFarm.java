@@ -17,11 +17,10 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
     private EnergyBar energy;
     private FluidBar fluid;
     private ButtonMachineRedstone btnRedstone;
-    private ButtonMachineRedstone btnRender;
 
     public ScreenPeatFarm(ContainerPeatFarm screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
-        fluid = new FluidBar(this, 8, 8, TilePeatFarm.CAPACITY);
+        fluid = new FluidBar(this, 132, 8, TilePeatFarm.CAPACITY);
         energy = new EnergyBar(this, TilePeatFarm.MAX);
     }
 
@@ -32,7 +31,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
         fluid.guiTop = energy.guiTop = guiTop;
         energy.visible = TileSolidifier.POWERCONF.get() > 0;
         int x, y;
-        x = guiLeft + ContainerPeatFarm.SLOTX_START;
+        x = guiLeft + 8;
         y = guiTop + 8;
         btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     }

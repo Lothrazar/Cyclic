@@ -41,7 +41,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 public class ContainerPeatFarm extends ContainerBase {
 
     static final int SLOTY_FLUID = 39;
-    static final int SLOTX_START = 36;
+    static final int SLOTX_START = 16;
     static final int MID_SPACING = 52;
     public static final int SLOTY = 36;
 
