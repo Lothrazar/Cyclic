@@ -4,15 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.BlockDarkGlass;
-import com.lothrazar.cyclic.block.BlockLaunch;
-import com.lothrazar.cyclic.block.BlockMason;
-import com.lothrazar.cyclic.block.BlockPeat;
-import com.lothrazar.cyclic.block.BlockPeatFuel;
-import com.lothrazar.cyclic.block.BlockSound;
-import com.lothrazar.cyclic.block.BlockSpikes;
+import com.lothrazar.cyclic.block.*;
 import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
-import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
@@ -191,6 +184,8 @@ public class BlockRegistry {
   public static Block mason_plate;
   @ObjectHolder(ModCyclic.MODID + ":mason_steel")
   public static Block mason_steel;
+  @ObjectHolder(ModCyclic.MODID + ":water_candle")
+  public static Block water_candle;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -259,5 +254,6 @@ public class BlockRegistry {
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     r.register(new BlockBatteryInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
+    r.register(new BlockWaterCandle(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
   }
 }

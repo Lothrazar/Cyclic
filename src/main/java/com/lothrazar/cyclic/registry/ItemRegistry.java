@@ -141,6 +141,7 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.item_infinite, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("item_infinite"));
     r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("dice"));
     r.register(new BlockItem(BlockRegistry.terra_preta, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("terra_preta"));
+    r.register(new BlockItem(BlockRegistry.water_candle, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("water_candle"));
     // exp machines
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("experience_pylon"));
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("experience_food"));
