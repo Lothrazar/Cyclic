@@ -25,6 +25,7 @@ package com.lothrazar.cyclicmagic.item.boomerang;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseItemChargeScepter;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
@@ -49,7 +50,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, IContent {
+public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, IContent, IHasConfig {
 
   public ItemBoomerang() {
     super(256);
@@ -62,6 +63,7 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, 
   }
 
   private boolean enabled;
+  public static boolean doesBreakBlocks;
 
   @Override
   public boolean enabled() {
@@ -76,6 +78,7 @@ public class ItemBoomerang extends BaseItemChargeScepter implements IHasRecipe, 
   @Override
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    doesBreakBlocks = config.getBoolean(getContentName() + ".doesBreakBlocks", Const.ConfigCategory.modpackMisc, false, "Does this break low-hardness blocks when thrown");
   }
 
   @Override

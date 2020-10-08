@@ -183,7 +183,7 @@ public class EntityBoomerang extends EntityThrowableDispensable {
             block.getBlock().removedByPlayer(block, world, mop.getBlockPos(), p, true);
           }
           //still break regardless of harvest 
-          world.destroyBlock(mop.getBlockPos(), false);
+          world.destroyBlock(mop.getBlockPos(), true);
         }
       }
       // hit a block or something, go back
@@ -192,15 +192,22 @@ public class EntityBoomerang extends EntityThrowableDispensable {
   }
 
   private boolean canHarvest(RayTraceResult mop) {
+    if (!ItemBoomerang.doesBreakBlocks) {
+      return false;
+    }
     IBlockState block = world.getBlockState(mop.getBlockPos());
     //is it in whitelist to override 
     Block b = block.getBlock();
     if (b == Blocks.MELON_BLOCK || b == Blocks.PUMPKIN || b == Blocks.CHORUS_FLOWER) {
       return true;
     }
-    //no ok otherwise just go by soft-ness
+    //no ok otherwise just go by soft-ness 
+    float hardness = block.getBlockHardness(world, mop.getBlockPos());
+    if (hardness < 0) {
+      return false;
+    }
     return world.isSideSolid(mop.getBlockPos(), mop.sideHit) == false
-        && block.getBlockHardness(world, mop.getBlockPos()) < 0.6F;
+        && hardness < 0.5F;
   }
 
   private void dropAsItem() {

@@ -131,7 +131,7 @@ build.dependsOn signJar
 
 task copyJar(type: Copy) {
     from jar
-    into "c:/temp/"
+    into "${dist_folder}"
 }
 
 build.finalizedBy copyJar
