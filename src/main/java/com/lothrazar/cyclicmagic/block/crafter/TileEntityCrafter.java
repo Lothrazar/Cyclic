@@ -38,7 +38,6 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -157,12 +156,6 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     //now paying cost is accurate
     List<Integer> toIgnore = new ArrayList<>();
     NonNullList<ItemStack> remaining = recipe.getRemainingItems(crafter);
-    for (int i = 0; i < remaining.size(); i++) {
-      ItemStack stackRemain = remaining.get(i);
-      if (!stackRemain.isEmpty()) {
-        toIgnore.add(i);
-      }
-    }
     ItemStack fromRecipe;
     ItemStack fromInput;
     boolean thisPaid = false;
@@ -213,18 +206,12 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
     //now we know there is enough everywhere. we validated
     for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
-      Item bucketThing = this.getStackInSlot(entry.getKey()).getItem().getContainerItem();
-      if (bucketThing != null && this.getStackInSlot(entry.getKey()).getCount() == 1) {
-        //example: making cake, dump out empty bucket
-        this.sendOutput(new ItemStack(bucketThing));
-      }
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
     for (int i = 0; i < remaining.size(); i++) {
       ItemStack stackRemain = remaining.get(i);
       if (!stackRemain.isEmpty()) {
-        this.crafter.setInventorySlotContents(i, stackRemain);
-        this.setInventorySlotContents(i + SIZE_INPUT, stackRemain);
+        this.sendOutput(stackRemain.copy());
       }
     }
     return true;
