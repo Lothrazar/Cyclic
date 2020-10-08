@@ -30,6 +30,9 @@
     
     "cyclic.fan.range":"Range",
     "cyclic.fan.speed":"Speed",
+
+    "block.cyclic.water_candle":"Water Candle",
+    "block.cyclic.water_candle.tooltip": "Light with Flint and Steel to increase mob spawns",
     
     "item.cyclic.flippers":"Flippers",
     "item.cyclic.flippers.tooltip":"Increase swim speed",
