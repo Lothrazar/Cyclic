@@ -1,11 +1,11 @@
 {
   "credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
   "textures": {
-    "pillar": "cyclic:blocks/mason/lapis",
+    "pillar": "cyclic:blocks/machine/lapis",
     "center": "cyclic:blocks/machine/gold",
     "base": "cyclic:blocks/mason/stone",
     "particle": "cyclic:blocks/machine/gold",
-    "centerwater": "minecraft:block/water_still",
+    "centerwater": "cyclic:blocks/water_fake",
     "flame": "cyclic:blocks/machine/gold"
   },
   "elements": [

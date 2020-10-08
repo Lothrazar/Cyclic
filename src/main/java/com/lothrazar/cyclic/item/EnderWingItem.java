@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
+import java.util.Optional;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -35,13 +36,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.RegistryKey;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-
-import java.util.Optional;
 
 public class EnderWingItem extends ItemBase {
 
@@ -53,31 +51,24 @@ public class EnderWingItem extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-
     if (worldIn.isRemote
-          || playerIn.getCooldownTracker().hasCooldown(this))
+        || playerIn.getCooldownTracker().hasCooldown(this))
       return super.onItemRightClick(worldIn, playerIn, handIn);
-
     ServerWorld serverWorld = worldIn.getServer().getWorld(World.OVERWORLD);
     ServerPlayerEntity serverPlayerEntity = playerIn instanceof ServerPlayerEntity ? (ServerPlayerEntity) playerIn : null;
     if (serverWorld != null && serverPlayerEntity != null) {
-      /*
-      get the player's respawn point. This will be one of the following:
-        -- null: Player has not slept in a bed, or their bed has been destroyed, and they are not tied to a Respawn Anchor
-        -- the location of their bed, if they've set the respawn point with a bed
-        -- the location of their Respawn Anchor in the Nether
-       */
+      /* get the player's respawn point. This will be one of the following: -- null: Player has not slept in a bed, or their bed has been destroyed, and they are not tied to a Respawn Anchor -- the
+       * location of their bed, if they've set the respawn point with a bed -- the location of their Respawn Anchor in the Nether */
       BlockPos respawnPos = serverPlayerEntity.func_241140_K_();
       if (respawnPos != null) {
         //This Optional checks that the player has a valid respawn point, and that it's safe to spawn there
-        Optional<Vector3d> optional = PlayerEntity.func_242374_a(serverWorld, respawnPos, 0.0F,true, true);
+        Optional<Vector3d> optional = PlayerEntity.func_242374_a(serverWorld, respawnPos, 0.0F, true, true);
         BlockPos pos;
         boolean needsTeleport = false;
         if (optional.isPresent()) {
           pos = new BlockPos(optional.get().getX(), optional.get().getY(), optional.get().getZ());
           RegistryKey<World> spawnWorldKey = serverPlayerEntity.func_241141_L_();
           ServerWorld spawnWorld = worldIn.getServer().getWorld(spawnWorldKey);
-
           if (spawnWorld != null && spawnWorldKey == World.THE_NETHER) {
             if (worldIn.getDimensionKey() == World.THE_NETHER) {
               needsTeleport = true;
@@ -103,26 +94,26 @@ public class EnderWingItem extends ItemBase {
         }
         else {
           UtilChat.sendStatusMessage(playerIn, "command.cyclic.home.obstructed");
-// =======
-//     if (playerIn.getCooldownTracker().hasCooldown(this)) {
-//       return super.onItemRightClick(worldIn, playerIn, handIn);
-//     }
-//     boolean isOverworld = worldIn.getDimensionKey() == World.OVERWORLD;
-//     if (!isOverworld) {
-//       UtilChat.sendStatusMessage(playerIn, "command.home.overworld");
-//     }
-//     else {
-//       BlockPos pos = playerIn.getBedPosition().orElse(null);
-//       if (pos == null) {
-//         UtilChat.sendStatusMessage(playerIn, "command.gethome.bed");
-//       }
-//       else {
-//         UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
-//         if (!worldIn.isRemote()) {
-//           UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
-//           playerIn.getCooldownTracker().setCooldown(this, cooldown);
-//           UtilEntity.teleportWallSafe(playerIn, worldIn, pos);
-// >>>>>>> trunk/1.16
+          // ======= old way
+          //     if (playerIn.getCooldownTracker().hasCooldown(this)) {
+          //       return super.onItemRightClick(worldIn, playerIn, handIn);
+          //     }
+          //     boolean isOverworld = worldIn.getDimensionKey() == World.OVERWORLD;
+          //     if (!isOverworld) {
+          //       UtilChat.sendStatusMessage(playerIn, "command.home.overworld");
+          //     }
+          //     else {
+          //       BlockPos pos = playerIn.getBedPosition().orElse(null);
+          //       if (pos == null) {
+          //         UtilChat.sendStatusMessage(playerIn, "command.gethome.bed");
+          //       }
+          //       else {
+          //         UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
+          //         if (!worldIn.isRemote()) {
+          //           UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
+          //           playerIn.getCooldownTracker().setCooldown(this, cooldown);
+          //           UtilEntity.teleportWallSafe(playerIn, worldIn, pos);
+          // >>>>>>> trunk/1.16
         }
       }
     }
