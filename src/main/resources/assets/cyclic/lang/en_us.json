@@ -1016,6 +1016,10 @@
     "block.cyclic.peat_generator.tooltip": "Generate power",
     "block.cyclic.peat_generator.guide": "Burn peat to create Energy.  Create Peat Fuel using Biomass, Peat Bog, and Carbon Catalyst.",
 
+    "block.cyclic.peat_farm": "Peat Farm",
+    "block.cyclic.peat_farm.tooltip": "Harvest saturated peat deposits",
+    "block.cyclic.peat_farm.guide": "Places dry peat bog and harvests it when it becomes saturated.",
+
     "block.cyclic.peat_farm": "Peat Farmer",
     "block.cyclic.peat_farm.tooltip": "Places and harvests a Peat Bog",
     "block.cyclic.peat_farm.guide": "Places and harvests a Peat Bog.  Requires energy and water.",
