@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
+
+import com.lothrazar.cyclic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -169,5 +171,19 @@ public class UtilWorld {
   public static boolean doBlockStatesMatch(BlockState replacedBlockState, BlockState newToPlace) {
     //    replacedBlockState.eq?
     return replacedBlockState.equals(newToPlace);
+  }
+
+  public static BlockPos getFirstBlockAbove(World world, BlockPos pos) {
+    //similar to vanilla fn getTopSolidOrLiquidBlock
+    BlockPos posCurrent = null;
+    for (int y = pos.getY() + 1; y < Const.WORLDHEIGHT; y++) {
+      posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
+      if (world.getBlockState(posCurrent).getBlock() == Blocks.AIR &&
+              world.getBlockState(posCurrent.up()).getBlock() == Blocks.AIR &&
+              world.getBlockState(posCurrent.down()).getBlock() != Blocks.AIR) {
+        return posCurrent;
+      }
+    }
+    return null;
   }
 }

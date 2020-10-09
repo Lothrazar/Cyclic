@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " de",
+    " gd",
+    "g  "
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:ender_eye"
+    },
+    "d": {
+      "item": "minecraft:quartz_block"
+    },
+    "g": {
+      "item": "minecraft:redstone_lamp"
+    }
+  },
+  "result": {
+    "item": "cyclic:elevation_wand",
+    "count": 1
+  }
+}
