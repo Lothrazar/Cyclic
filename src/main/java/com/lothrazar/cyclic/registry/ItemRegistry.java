@@ -7,8 +7,30 @@ import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
-import com.lothrazar.cyclic.item.*;
+import com.lothrazar.cyclic.item.CarbonPaperItem;
+import com.lothrazar.cyclic.item.EnderBagItem;
+import com.lothrazar.cyclic.item.EnderWingItem;
+import com.lothrazar.cyclic.item.EnderWingSp;
+import com.lothrazar.cyclic.item.EvokerFangItem;
+import com.lothrazar.cyclic.item.FireScepter;
+import com.lothrazar.cyclic.item.GemstoneItem;
+import com.lothrazar.cyclic.item.GlowingHelmetItem;
+import com.lothrazar.cyclic.item.HeartItem;
+import com.lothrazar.cyclic.item.HeartToxicItem;
+import com.lothrazar.cyclic.item.IceWand;
+import com.lothrazar.cyclic.item.LeverRemote;
+import com.lothrazar.cyclic.item.LightningScepter;
+import com.lothrazar.cyclic.item.LocationGpsItem;
+import com.lothrazar.cyclic.item.MattockItem;
+import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
+import com.lothrazar.cyclic.item.ShearsMaterial;
+import com.lothrazar.cyclic.item.SleepingMatItem;
+import com.lothrazar.cyclic.item.SnowScepter;
+import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
+import com.lothrazar.cyclic.item.StirrupsItem;
+import com.lothrazar.cyclic.item.WaterSpreaderItem;
+import com.lothrazar.cyclic.item.WrenchItem;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmAntidote;
@@ -41,7 +63,15 @@ import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemTier;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -190,7 +220,6 @@ public class ItemRegistry {
     r.register(new ItemMobContainer(new Item.Properties().maxStackSize(1)).setRegistryName("mob_container"));
     r.register(new TileTransporterEmptyItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("tile_transporter_empty"));
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
-
     if (ConfigManager.BOOMERANGS.get()) {
       r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_stun"));
       r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_carry"));
@@ -219,6 +248,7 @@ public class ItemRegistry {
       r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("glove_climb"));
     }
     if (ConfigManager.CHARMS.get()) {
+      r.register(new FlippersItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("flippers"));
       r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024 * 4)).setRegistryName("antigravity"));
       r.register(new CharmVoid(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_void"));
       r.register(new CharmAntidote(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_antidote"));
@@ -274,6 +304,5 @@ public class ItemRegistry {
       r.register(new HeartItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart"));
       r.register(new HeartToxicItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart_empty"));
     }
-    r.register(new FlippersItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("flippers"));
   }
 }
