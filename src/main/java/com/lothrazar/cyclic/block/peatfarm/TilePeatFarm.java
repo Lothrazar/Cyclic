@@ -77,7 +77,6 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
     public static final int TIMER_FULL = 1 * 10;
     private static final int PER_TICK = 1;
-    private int needsRedstone = 1;
     private int blockPointer = 0;
 
     static enum Fields {
