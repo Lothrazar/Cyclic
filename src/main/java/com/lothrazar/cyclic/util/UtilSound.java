@@ -25,6 +25,10 @@ public class UtilSound {
       entityIn.playSound(soundIn, 1.0F, 1.0F);
     }
   }
+  //should work but its just silent
+  //  public static void playSoundFromServer(ServerWorld world, @Nullable PlayerEntity playerIn, BlockPos pos, SoundEvent soundIn) {
+  //    world.playSound(playerIn, pos, soundIn, SoundCategory.PLAYERS, 1.0f, 1.0f);
+  //  }
 
   public static void playSoundFromServer(ServerPlayerEntity entityIn, SoundEvent soundIn) {
     if (soundIn != null)
