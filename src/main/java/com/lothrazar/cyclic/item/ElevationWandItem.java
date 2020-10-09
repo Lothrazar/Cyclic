@@ -39,16 +39,20 @@ public class ElevationWandItem extends ItemBase {
     }
 
     private boolean tryTeleport(World world, PlayerEntity playerIn, LivingEntity target, ItemStack stack) {
-        if (target == null || stack == null || world.isRemote)
+        if (target == null || stack == null)
             return false;
         BlockPos destination = UtilWorld.getFirstBlockAbove(world, target.getPosition());
         if (destination != null) {
-                UtilSound.playSound(target, target.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
-            UtilEntity.teleportWallSafe(target, world, destination);
-            stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity) playerIn);
+            if (playerIn.world.isRemote)
+                UtilSound.playSound(playerIn, target.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+            else {
+                UtilEntity.teleportWallSafe(target, world, destination);
+                stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity) playerIn);
+            }
             return true;
         }
-        UtilSound.playSound(target, target.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
+        if (playerIn.world.isRemote)
+            UtilSound.playSound(playerIn, target.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
         return false;
     }
 }
