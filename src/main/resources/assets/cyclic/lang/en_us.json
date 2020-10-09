@@ -536,6 +536,8 @@
     "item.cyclic.spell_water.guide": "Turns nearby flowing water into source water.  Fills lakes and rivers out very quickly.",
     "item.cyclic.spell_water": "Scepter: Water Infusion",
     "item.cyclic.spell_water.tooltip": "Replace nearby flowing water with source water",
+    "item.cyclic.elevation_wand": "Rod of Elevation",
+    "item.cyclic.elevation_wand.tooltip":  "Teleport yourself or the target entity up to the nearest surface above",
     "key.categories.inventorycontrol": "Cyclic Keybindings",
     "key.columnbardown": "Row Shift Down",
     "key.columnbarup": "Row Shift Up",
