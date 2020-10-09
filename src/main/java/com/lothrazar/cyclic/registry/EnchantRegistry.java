@@ -1,19 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ConfigManager;
-import com.lothrazar.cyclic.enchant.EnchantBeheading;
-import com.lothrazar.cyclic.enchant.EnchantExcavation;
-import com.lothrazar.cyclic.enchant.EnchantGrowth;
-import com.lothrazar.cyclic.enchant.EnchantLaunch;
-import com.lothrazar.cyclic.enchant.EnchantLifeLeech;
-import com.lothrazar.cyclic.enchant.EnchantMagnet;
-import com.lothrazar.cyclic.enchant.EnchantMultishot;
-import com.lothrazar.cyclic.enchant.EnchantQuickdraw;
-import com.lothrazar.cyclic.enchant.EnchantReach;
-import com.lothrazar.cyclic.enchant.EnchantStep;
-import com.lothrazar.cyclic.enchant.EnchantTraveller;
-import com.lothrazar.cyclic.enchant.EnchantVenom;
-import com.lothrazar.cyclic.enchant.EnchantXp;
+import com.lothrazar.cyclic.enchant.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -42,6 +30,7 @@ public class EnchantRegistry {
       r.register(new EnchantStep(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_LEGS, EquipmentSlotType.LEGS).setRegistryName("step"));
       r.register(new EnchantTraveller(Enchantment.Rarity.VERY_RARE, EnchantmentType.ARMOR_LEGS, EquipmentSlotType.LEGS).setRegistryName("traveler"));
       r.register(new EnchantVenom(Enchantment.Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("venom"));
+      r.register(new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName("auto_smelt"));
     }
   }
 }
