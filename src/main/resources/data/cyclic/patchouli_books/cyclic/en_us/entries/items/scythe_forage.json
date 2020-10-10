@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.scythe_forage",
+  "icon": "cyclic:scythe_forage",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scythe_forage.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scythe_forage"
+    }
+  ]
+}

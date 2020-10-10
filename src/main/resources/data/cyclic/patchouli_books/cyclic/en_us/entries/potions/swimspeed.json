@@ -1,0 +1,17 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_swimspeed",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.minecraft.potion.effect.cyclic_swimspeed.guide"
+    },
+    {
+      "type": "cyclic:brewing",
+      "ingredient": "minecraft:dried_kelp_block",
+      "base_potion": "minecraft:potion{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion{Potion:\"cyclic:swimspeed\"}"
+    }
+  ]
+}

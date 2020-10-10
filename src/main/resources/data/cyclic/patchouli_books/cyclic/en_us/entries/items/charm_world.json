@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.charm_world",
+  "icon": "cyclic:charm_world",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_world.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_world"
+    }
+  ]
+}

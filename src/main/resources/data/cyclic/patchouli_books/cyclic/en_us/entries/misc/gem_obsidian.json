@@ -1,0 +1,21 @@
+{
+  "name": "item.cyclic.gem.guide.title",
+  "icon": "cyclic:gem_obsidian",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.gem.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "cyclic:gem_obsidian",
+      "text": "item.cyclic.gem_obsidian.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "cyclic:gem_amber",
+      "text": "item.cyclic.gem_amber.guide"
+    }
+  ]
+}

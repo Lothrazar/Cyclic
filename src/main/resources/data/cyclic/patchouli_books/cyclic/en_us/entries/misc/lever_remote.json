@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.lever_remote",
+  "icon": "cyclic:lever_remote",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.lever_remote.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:lever_remote"
+    }
+  ]
+}

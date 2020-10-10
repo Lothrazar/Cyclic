@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.wireless_redstone.guide.title",
+  "icon": "cyclic:anvil",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.wireless_redstone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:wireless_transmitter",
+      "recipe2": "cyclic:wireless_receiver"
+    }
+  ]
+}

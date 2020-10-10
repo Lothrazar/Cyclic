@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.miner",
+  "icon": "cyclic:miner",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.miner.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:miner"
+    }
+  ]
+}

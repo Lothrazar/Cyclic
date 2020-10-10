@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.melter",
+  "icon": "cyclic:melter",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.melter.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:melter"
+    }
+  ]
+}

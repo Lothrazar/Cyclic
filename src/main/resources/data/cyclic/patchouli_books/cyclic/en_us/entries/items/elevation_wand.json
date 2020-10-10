@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.elevation_wand",
+  "icon": "cyclic:elevation_wand",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.elevation_wand.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:elevation_wand"
+    }
+  ]
+}

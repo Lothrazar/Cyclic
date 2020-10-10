@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.location",
+  "icon": "cyclic:location",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.location.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:location"
+    }
+  ]
+}

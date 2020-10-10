@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.detector_item",
+  "icon": "cyclic:detector_item",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.detector_item.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:detector_item"
+    }
+  ]
+}

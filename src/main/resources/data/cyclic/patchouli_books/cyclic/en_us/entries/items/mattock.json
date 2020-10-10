@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.mattock",
+  "icon": "cyclic:mattock",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.mattock.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:mattock"
+    }
+  ]
+}
