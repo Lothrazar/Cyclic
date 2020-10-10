@@ -15,7 +15,7 @@ Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 # Contributions
 
 - To help with an Issue, please check the Issues tab (and submit a different Pull Request per issue if possible)
-- Language files are also welcome via Pull Request, currently suppored are the following https://github.com/Lothrazar/Cyclic/tree/trunk/1.16/src/main/resources/assets/cyclic/lang
+- Language files are also welcome via Pull Request, currently supported are the following https://github.com/Lothrazar/Cyclic/tree/trunk/1.16/src/main/resources/assets/cyclic/lang
 
 
 # APIs and Optional Dependencies
