@@ -1,0 +1,10 @@
+{
+  "name": "guide.title",
+  "landing_text": "guide.landing_text",
+  "model": "cyclic:guidebook",
+  "i18n": true,
+  "dont_generate_book": false,
+  "creative_tab": "cyclic",
+  "version": 1,
+  "show_progress": false
+}

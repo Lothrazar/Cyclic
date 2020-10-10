@@ -1,0 +1,16 @@
+{
+  "name": "Peat Fuel",
+  "icon": "cyclic:peat_fuel_enriched",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.peat_fuel_enriched.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "cyclic:peat_fuel_enriched",
+      "link_recipe": true
+    }
+  ]
+}

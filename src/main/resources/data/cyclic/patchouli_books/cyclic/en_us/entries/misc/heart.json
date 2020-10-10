@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.heart",
+  "icon": "cyclic:heart",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.heart.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:heart"
+    }
+  ]
+}

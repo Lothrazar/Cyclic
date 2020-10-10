@@ -1,0 +1,26 @@
+{
+  "name": "block.cyclic.pipe.guide.title",
+  "icon": "cyclic:energy_pipe",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.pipe.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:fluid_pipe",
+      "text": "block.cyclic.fluid_pipe.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:item_pipe",
+      "text": "block.cyclic.item_pipe.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:energy_pipe",
+      "text": "block.cyclic.energy_pipe.guide"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.flower_cyan",
+  "icon": "cyclic:flower_cyan",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.flower_cyan.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:flower_cyan"
+    }
+  ]
+}

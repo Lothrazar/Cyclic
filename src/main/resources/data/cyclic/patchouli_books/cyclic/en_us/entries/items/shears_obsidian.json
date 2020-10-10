@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.shears_obsidian",
+  "icon": "cyclic:shears_obsidian",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.shears_obsidian.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shears_obsidian"
+    }
+  ]
+}

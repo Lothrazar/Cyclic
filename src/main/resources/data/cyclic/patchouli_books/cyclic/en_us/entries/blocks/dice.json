@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.dice",
+  "icon": "cyclic:dice",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.dice.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:dice"
+    }
+  ]
+}

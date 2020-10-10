@@ -1,0 +1,36 @@
+{
+  "name": "item.cyclic.emerald_gear",
+  "icon": "cyclic:emerald_chestplate",
+  "category": "cyclic:gear",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.emerald_gear.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:emerald_sword",
+      "recipe2": "cyclic:emerald_pickaxe"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:emerald_axe",
+      "recipe2": "cyclic:emerald_shovel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:emerald_helmet",
+      "recipe2": "cyclic:emerald_chestplate"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:emerald_leggings",
+      "recipe2": "cyclic:emerald_boots"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:emerald_hoe"
+
+    }
+  ]
+}

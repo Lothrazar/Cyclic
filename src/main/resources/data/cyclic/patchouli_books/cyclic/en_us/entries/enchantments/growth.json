@@ -1,0 +1,15 @@
+{
+  "name": "enchantment.cyclic.growth",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:growth\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.growth.desc"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:growth\",lvl:1}]}"
+    }
+  ]
+}

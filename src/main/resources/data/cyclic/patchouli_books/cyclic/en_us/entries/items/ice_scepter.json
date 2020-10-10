@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.ice_scepter",
+  "icon": "cyclic:ice_scepter",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.ice_scepter.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:ice_scepter"
+    }
+  ]
+}

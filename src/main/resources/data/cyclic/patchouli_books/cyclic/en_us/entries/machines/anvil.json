@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.anvil",
+  "icon": "cyclic:anvil",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.anvil.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:anvil"
+    }
+  ]
+}

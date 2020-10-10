@@ -1,0 +1,16 @@
+{
+  "name": "fluid.cyclic.biomass",
+  "icon": "cyclic:biomass_bucket",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "fluid.cyclic.biomass.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "cyclic:biomass_bucket",
+      "link_recipe": true
+    }
+  ]
+}

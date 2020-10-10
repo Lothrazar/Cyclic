@@ -1,0 +1,15 @@
+{
+  "name": "enchantment.cyclic.experience_boost",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:experience_boost\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.experience_boost.desc"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:experience_boost\",lvl:1}]}"
+    }
+  ]
+}

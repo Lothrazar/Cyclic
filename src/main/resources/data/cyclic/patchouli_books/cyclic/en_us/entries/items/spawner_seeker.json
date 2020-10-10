@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.spawner_seeker",
+  "icon": "cyclic:spawner_seeker",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.spawner_seeker.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:spawner_seeker"
+    }
+  ]
+}

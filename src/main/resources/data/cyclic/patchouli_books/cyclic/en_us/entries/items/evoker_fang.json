@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.evoker_fang",
+  "icon": "cyclic:evoker_fang",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.evoker_fang.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:evoker_fang"
+    }
+  ]
+}

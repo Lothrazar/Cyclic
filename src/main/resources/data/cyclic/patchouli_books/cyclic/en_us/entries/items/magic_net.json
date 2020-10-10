@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.magic_net",
+  "icon": "cyclic:magic_net",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.magic_net.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:magic_net"
+    }
+  ]
+}

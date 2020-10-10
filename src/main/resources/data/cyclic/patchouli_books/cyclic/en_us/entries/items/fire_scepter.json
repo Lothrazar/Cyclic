@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.fire_scepter",
+  "icon": "cyclic:fire_scepter",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.fire_scepter.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:fire_scepter"
+    }
+  ]
+}

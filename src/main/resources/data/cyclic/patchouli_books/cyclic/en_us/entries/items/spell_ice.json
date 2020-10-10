@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.spell_ice",
+  "icon": "cyclic:spell_ice",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.spell_ice.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:spell_ice"
+    }
+  ]
+}

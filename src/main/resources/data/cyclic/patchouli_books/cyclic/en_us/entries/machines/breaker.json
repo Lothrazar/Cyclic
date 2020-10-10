@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.breaker",
+  "icon": "cyclic:breaker",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.breaker.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:breaker"
+    }
+  ]
+}

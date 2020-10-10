@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.emerald_carrot_jump",
+  "icon": "cyclic:emerald_carrot_jump",
+  "category": "cyclic:carrots",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.emerald_carrot_jump.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:emerald_carrot_jump"
+    }
+  ]
+}
