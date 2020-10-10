@@ -84,9 +84,7 @@ public class EnchantAutoSmelt extends EnchantBase {
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> originalLoot, LootContext context) {
-            List<ItemStack> newLoot = new ArrayList<>();
-            originalLoot.add(new ItemStack(Items.GOLD_ORE, 5));
-            originalLoot.add(new ItemStack(Items.DIAMOND, 5));
+            List<ItemStack> newLoot = new ArrayList<>(); 
             originalLoot.forEach((stack) -> {
                 Optional<FurnaceRecipe> optional = context.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), context.getWorld());
                 if (optional.isPresent()) {
