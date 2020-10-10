@@ -1,5 +1,8 @@
 {
 	"_comments": "Thanks to https://tterrag.com/lang2json/",
+	
+	"curios.identifier.feet":"Feet",
+	
     "itemGroup.cyclic": "Cyclic Blocks",
     "itemGroup.cyclicitems": "Cyclic Items",
     "block.cyclic.trash": "Trash Void",
