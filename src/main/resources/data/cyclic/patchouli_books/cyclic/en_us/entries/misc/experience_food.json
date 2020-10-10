@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.experience_food",
+  "icon": "cyclic:experience_food",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.experience_food.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "cyclic:experience_food",
+      "text": "item.cyclic.experience_food.guide0"
+    }
+  ]
+}

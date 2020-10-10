@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_fire",
+  "icon": "cyclic:charm_fire",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_fire.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_fire",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

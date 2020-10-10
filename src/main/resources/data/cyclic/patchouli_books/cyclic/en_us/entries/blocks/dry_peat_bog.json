@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.peat_unbaked",
+  "icon": "cyclic:peat_unbaked",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.peat_unbaked.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:peat_unbaked"
+    }
+  ]
+}

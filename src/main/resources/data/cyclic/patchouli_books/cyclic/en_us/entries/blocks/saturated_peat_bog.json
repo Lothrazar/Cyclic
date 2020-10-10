@@ -1,0 +1,16 @@
+{
+  "name": "Saturated Peat Bog",
+  "icon": "cyclic:peat_baked",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.peat_baked.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "cyclic:peat_baked",
+      "link_recipe": true
+    }
+  ]
+}

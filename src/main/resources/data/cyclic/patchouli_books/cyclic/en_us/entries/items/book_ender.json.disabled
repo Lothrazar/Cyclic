@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.book_ender",
+  "icon": "cyclic:book_ender",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.book_ender.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:book_ender"
+    }
+  ]
+}

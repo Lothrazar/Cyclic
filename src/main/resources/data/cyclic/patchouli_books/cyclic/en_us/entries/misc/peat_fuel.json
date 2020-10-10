@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.peat_fuel",
+  "icon": "cyclic:peat_fuel",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.peat_fuel.guide"
+    },
+    {
+      "type": "smelting",
+      "recipe": "cyclic:peat_fuel"
+    }
+  ]
+}

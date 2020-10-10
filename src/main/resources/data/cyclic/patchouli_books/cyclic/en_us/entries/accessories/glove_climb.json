@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.glove_climb",
+  "icon": "cyclic:glove_climb",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.glove_climb.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:glove_climb",
+      "text": "item.cantoggle.guide"
+    }
+  ]
+}

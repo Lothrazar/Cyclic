@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.trash",
+  "icon": "cyclic:trash",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.trash.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:trash",
+      "text": "block.cyclic.trash.guide0"
+    }
+  ]
+}

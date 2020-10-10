@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.wrench",
+  "icon": "cyclic:wrench",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.wrench.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:wrench"
+    }
+  ]
+}

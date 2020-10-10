@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.flippers",
+  "icon": "cyclic:flippers",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.flippers.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:flippers",
+      "text": "item.cantoggle.guide"
+    }
+  ]
+}

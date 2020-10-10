@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.glowing_helmet",
+  "icon": "cyclic:glowing_helmet",
+  "category": "cyclic:gear",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.glowing_helmet.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:glowing_helmet"
+    }
+  ]
+}
