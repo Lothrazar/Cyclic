@@ -1,10 +1,11 @@
 {
   "name": "guide.title",
   "landing_text": "guide.landing_text",
-  "model": "cyclic:guidebook",
+  "model": "patchouli:book_purple",
+  "book_texture":"patchouli:textures/gui/book_purple.png",
   "i18n": true,
   "dont_generate_book": false,
-  "creative_tab": "cyclic",
+  "creative_tab": "cyclicitems",
   "version": 1,
   "show_progress": false
 }
