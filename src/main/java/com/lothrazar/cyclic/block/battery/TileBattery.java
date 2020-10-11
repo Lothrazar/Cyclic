@@ -70,7 +70,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   public EnumBatteryPercent calculateRoundedPercentFilled() {
     int percent = (int) Math.floor((this.getEnergy() * 1.0F) / MAX * 10.0) * 10;
-    System.out.printf("%d / %d = %d percent%n", this.getEnergy(), MAX, percent);
+//    System.out.printf("%d / %d = %d percent%n", this.getEnergy(), MAX, percent);
     if (percent >= 100)
       return EnumBatteryPercent.ONEHUNDRED;
     else if (percent >= 90)
