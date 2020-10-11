@@ -38,8 +38,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.loot.LootContext;
@@ -69,6 +68,13 @@ public class EnchantAutoSmelt extends EnchantBase {
     @Override
     public int getMaxLevel() {
         return 1;
+    }
+
+    @Override
+    public boolean canApply(ItemStack stack) {
+        return stack.getItem() == Items.BOOK
+                || stack.getItem() instanceof PickaxeItem
+                || stack.getItem() instanceof ShovelItem;
     }
 
     @Override
