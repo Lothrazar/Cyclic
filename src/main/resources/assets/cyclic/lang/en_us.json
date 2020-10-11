@@ -225,6 +225,8 @@
     "enchantment.cyclic.venom.desc": "Inflicts the poison status effect on the target",
     "enchantment.cyclic.auto_smelt": "Auto Smelt",
     "enchantment.cyclic.auto_smelt.desc": "Smelts whatever you harvest with this tool.",
+    "enchantment.cyclic.disarm": "Disarming",
+    "enchantment.cyclic.disarm.desc": "Chance to disarm opponent on hit.",
     "entity.Villager.druid": "Druid",
     "entity.Villager.sage": "Sage",
     "fluid.cyclic.biomass": "Biomass",
