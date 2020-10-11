@@ -45,8 +45,7 @@ public class EnchantDisarm extends EnchantBase {
     LivingEntity livingTarget = (LivingEntity) target;
     List<ItemStack> toDisarm = new ArrayList<>();
     target.getHeldEquipment().forEach(itemStack -> {
-      double rando = user.world.rand.nextDouble();
-      if (getChanceToDisarm(level) > rando) {
+      if (getChanceToDisarm(level) > user.world.rand.nextDouble()) {
         toDisarm.add(itemStack);
       }
     });

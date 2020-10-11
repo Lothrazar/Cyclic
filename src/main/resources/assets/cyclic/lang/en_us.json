@@ -227,6 +227,8 @@
     "enchantment.cyclic.auto_smelt.desc": "Smelts whatever you harvest with this tool.",
     "enchantment.cyclic.disarm": "Disarming",
     "enchantment.cyclic.disarm.desc": "Chance to disarm opponent on hit.",
+    "enchantment.cyclic.curse": "Gloom",
+    "enchantment.cyclic.curse.desc": "Chance to apply negative status effects to enemy when hit. Chance does not stack with multiple enchanted items.",
     "entity.Villager.druid": "Druid",
     "entity.Villager.sage": "Sage",
     "fluid.cyclic.biomass": "Biomass",
