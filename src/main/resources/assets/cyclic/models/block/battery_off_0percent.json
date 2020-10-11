@@ -1,9 +1,6 @@
 {
-    "parent": "minecraft:block/cube",
+    "parent": "cyclic:block/battery",
     "textures": {
-        "particle": "cyclic:blocks/battery/battery_on",
-        "down": "cyclic:blocks/battery/battery_on",
-        "up": "cyclic:blocks/battery/battery_on",
         "north": "cyclic:blocks/battery/battery_0percent",
         "south": "cyclic:blocks/battery/battery_0percent",
         "west": "cyclic:blocks/battery/battery_0percent",
