@@ -1,6 +1,18 @@
 {
     "variants": {
-        "lit=false": { "model": "cyclic:block/battery" },
-        "lit=true": { "model": "cyclic:block/battery_on" }
+        "percent=0,lit=false": { "model": "cyclic:block/battery_off_0percent" },
+        "percent=20,lit=false": { "model": "cyclic:block/battery_off_20percent" },
+        "percent=40,lit=false": { "model": "cyclic:block/battery_off_40percent" },
+        "percent=60,lit=false": { "model": "cyclic:block/battery_off_60percent" },
+        "percent=80,lit=false": { "model": "cyclic:block/battery_off_80percent" },
+        "percent=90,lit=false": { "model": "cyclic:block/battery_off_90percent" },
+        "percent=100,lit=false": { "model": "cyclic:block/battery_off_100percent" },
+        "percent=0,lit=true": { "model": "cyclic:block/battery_on_0percent" },
+        "percent=20,lit=true": { "model": "cyclic:block/battery_on_20percent" },
+        "percent=40,lit=true": { "model": "cyclic:block/battery_on_40percent" },
+        "percent=60,lit=true": { "model": "cyclic:block/battery_on_60percent" },
+        "percent=80,lit=true": { "model": "cyclic:block/battery_on_80percent" },
+        "percent=90,lit=true": { "model": "cyclic:block/battery_on_90percent" },
+        "percent=100,lit=true": { "model": "cyclic:block/battery_on_100percent" }
     }
 }
