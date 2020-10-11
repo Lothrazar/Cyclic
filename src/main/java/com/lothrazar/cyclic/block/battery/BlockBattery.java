@@ -13,6 +13,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -25,9 +27,12 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockBattery extends BlockBase {
 
+  public static EnumProperty<EnumBatteryPercent> PERCENT = EnumProperty.create("percent", EnumBatteryPercent.class);
+
   public BlockBattery(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
+    this.setDefaultState(this.stateContainer.getBaseState().with(PERCENT, EnumBatteryPercent.ZERO));
   }
 
   @Override
@@ -38,7 +43,7 @@ public class BlockBattery extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(LIT);
+    builder.add(LIT).add(PERCENT);
   }
 
   @Override

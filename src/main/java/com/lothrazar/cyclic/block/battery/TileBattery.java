@@ -17,6 +17,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -35,7 +36,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   static final int MAX = 6400000;
 
   static enum Fields {
-    FLOWING, N, E, S, W, U, D;
+    FLOWING, N, E, S, W, U, D, PERCENT;
   }
 
   public TileBattery() {
@@ -49,10 +50,40 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   @Override
   public void tick() {
     boolean isFlowing = this.getFlowing() == 1;
+    setPercentFilled();
     setLitProperty(isFlowing);
     if (isFlowing) {
       this.tickCableFlow();
     }
+  }
+
+  public void setPercentFilled() {
+    BlockState st = this.getBlockState();
+    if (st.hasProperty(BlockBattery.PERCENT)) {
+      EnumBatteryPercent previousPercent = st.get(BlockBattery.PERCENT);
+      EnumBatteryPercent percent = calculateRoundedPercentFilled();
+      if (percent != previousPercent) {
+        this.world.setBlockState(pos, st.with(BlockBattery.PERCENT, percent));
+      }
+    }
+  }
+
+  public EnumBatteryPercent calculateRoundedPercentFilled() {
+    int percent = (int) Math.floor((this.getEnergy() * 1.0F) / MAX * 10.0) * 10;
+//    System.out.printf("%d / %d = %d percent%n", this.getEnergy(), MAX, percent);
+    if (percent >= 100)
+      return EnumBatteryPercent.ONEHUNDRED;
+    else if (percent >= 90)
+      return EnumBatteryPercent.NINETY;
+    else if (percent >= 80)
+      return EnumBatteryPercent.EIGHTY;
+    else if (percent >= 60)
+      return EnumBatteryPercent.SIXTY;
+    else if (percent >= 40)
+      return EnumBatteryPercent.FOURTY;
+    else if (percent >= 20)
+      return EnumBatteryPercent.TWENTY;
+    return EnumBatteryPercent.ZERO;
   }
 
   public boolean getSideHasPower(Direction side) {
@@ -178,7 +209,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
       break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-      break;
+        break;
     }
   }
 }
