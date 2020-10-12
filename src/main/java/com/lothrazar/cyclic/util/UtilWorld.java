@@ -186,4 +186,30 @@ public class UtilWorld {
     }
     return null;
   }
+
+  public static BlockPos getLastAirBlockAbove(World world, BlockPos pos) {
+    //keep going up until you hit something that isn't air, then return the last air block
+    return getLastAirBlock(world, pos, Direction.UP);
+  }
+
+  public static BlockPos getLastAirBlockBelow(World world, BlockPos pos) {
+    return getLastAirBlock(world, pos, Direction.DOWN);
+  }
+
+  public static BlockPos getLastAirBlock(World world, BlockPos pos, Direction direction) {
+    int increment;
+    if (direction == Direction.DOWN)
+      increment = -1;
+    else
+      increment = 1;
+    BlockPos posCurrent;
+    BlockPos posPrevious = pos;
+    for (int y = pos.getY(); y < Const.WORLDHEIGHT && y > 0; y+=increment) {
+      posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
+      if (!world.isAirBlock(posCurrent))
+        return posPrevious;
+      posPrevious = posCurrent;
+    }
+    return pos;
+  }
 }
