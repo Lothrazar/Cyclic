@@ -229,14 +229,14 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   //for harvest
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(size), size, height);
+    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(size + 1), size, height);
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size), this.size);
+    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size + 1), this.size);
     if (targetPos != null) {
       shape.add(targetPos);
     }
