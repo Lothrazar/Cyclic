@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "cyclic:blocks/battery_on",
-        "down": "cyclic:blocks/battery_on",
-        "up": "cyclic:blocks/battery_on",
-        "north": "cyclic:blocks/battery_on",
-        "south": "cyclic:blocks/battery_on",
-        "west": "cyclic:blocks/battery_on",
-        "east": "cyclic:blocks/battery_on"
+        "particle": "cyclic:blocks/battery/battery_on",
+        "down": "cyclic:blocks/battery/battery_on",
+        "up": "cyclic:blocks/battery/battery_on",
+        "north": "cyclic:blocks/battery/battery_0percent",
+        "south": "cyclic:blocks/battery/battery_0percent",
+        "west": "cyclic:blocks/battery/battery_0percent",
+        "east": "cyclic:blocks/battery/battery_0percent"
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.scythe_leaves",
+  "icon": "cyclic:scythe_leaves",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scythe_leaves.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scythe_leaves"
+    }
+  ]
+}

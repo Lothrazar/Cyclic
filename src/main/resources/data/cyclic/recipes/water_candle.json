@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "qdq",
+    "ggg"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:string"
+    },
+    "g": {
+      "item": "minecraft:light_weighted_pressure_plate"
+    },
+    "d": {
+      "item": "minecraft:diamond_block"
+    },
+    "q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "cyclic:water_candle",
+    "count": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "type": "crafting_shapeless",
+    "ingredients": [{
+        "item": "cyclic:mason_cobble",
+        "count": 1
+    }, {
+        "item": "minecraft:book",
+        "count": 1
+    }],
+    "result": {
+        "type": "forge:nbt",
+        "item": "patchouli:guide_book",
+        "count": 1,
+        "nbt": {
+            "patchouli:book": "cyclic:cyclic_guide_book"
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.scythe_brush",
+  "icon": "cyclic:scythe_brush",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scythe_brush.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scythe_brush"
+    }
+  ]
+}

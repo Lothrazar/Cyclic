@@ -22,8 +22,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BlockScaffolding extends BlockBase {
 
   private static final double CLIMB_SPEED = 0.31D;//climbing glove is 0.288D
-  private static final double OFFSET = 0.0125D;//shearing & cactus are  0.0625D;
-  protected static final VoxelShape AABB = Block.makeCuboidShape(OFFSET * 16, 0, OFFSET * 16, (1 - OFFSET) * 16, 1, (1 - OFFSET) * 16);//required to make entity collied happen for ladder climbing
+  private static final double OFFSET = 0.125D;//shearing & cactus are  0.0625D;
+  protected static final VoxelShape AABB = Block.makeCuboidShape(OFFSET, OFFSET, OFFSET,
+      16 - OFFSET, 16 - OFFSET, 16 - OFFSET);//required to make entity collied happen for ladder climbing
   private boolean doesAutobreak = true;
 
   public BlockScaffolding(Properties properties, boolean autobreak) {
@@ -51,10 +52,6 @@ public class BlockScaffolding extends BlockBase {
       worldIn.destroyBlock(pos, true);
     }
   }
-  //  @Override
-  //  public int tickRate(IWorldReader worldIn) { 
-  //    return 200;
-  //  }
 
   @Override
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {

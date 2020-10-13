@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.user;
 
 import java.lang.ref.WeakReference;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
@@ -38,6 +39,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
+  private UUID uuid;
   private int timerDelay = 20;
   static final int MAX = 640000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -65,8 +67,11 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     }
     //timer is zero so trigger
     timer = timerDelay;
-    if (fakePlayer == null)
-      fakePlayer = setupBeforeTrigger((ServerWorld) world, "user");
+    if (fakePlayer == null) {
+      if (uuid == null)
+        uuid = UUID.randomUUID();
+      fakePlayer = setupBeforeTrigger((ServerWorld) world, "user", uuid);
+    }
     try {
       TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
       ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world,
@@ -135,6 +140,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     timerDelay = tag.getInt("delay");
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    if (tag.contains("uuid"))
+      uuid = tag.getUniqueId("uuid");
     super.read(bs, tag);
   }
 
@@ -149,6 +156,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
     });
+    if (uuid != null)
+      tag.putUniqueId("uuid", uuid);
     return super.write(tag);
   }
 

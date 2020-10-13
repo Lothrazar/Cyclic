@@ -21,6 +21,7 @@ import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.miner.ContainerMiner;
+import com.lothrazar.cyclic.block.peatfarm.ContainerPeatFarm;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
 import com.lothrazar.cyclic.block.screen.ContainerScreentext;
@@ -49,6 +50,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("peat_generator"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPeatFarm(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("peat_farm"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerBattery(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("battery"));
@@ -149,6 +153,8 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerItemCollector> collectortileContainer;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static ContainerType<ContainerGenerator> generatorCont;
+  @ObjectHolder(ModCyclic.MODID + ":peat_farm")
+  public static ContainerType<ContainerPeatFarm> peat_farm;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
   public static ContainerType<ContainerHarvester> harvester;
   @ObjectHolder(ModCyclic.MODID + ":experience_pylon")

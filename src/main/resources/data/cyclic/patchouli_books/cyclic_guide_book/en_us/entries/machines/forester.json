@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.forester",
+  "icon": "cyclic:forester",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.forester.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:forester"
+    }
+  ]
+}

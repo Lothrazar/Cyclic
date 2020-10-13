@@ -1,0 +1,15 @@
+{
+  "name": "enchantment.cyclic.curse",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:curse\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.curse.desc"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:curse\",lvl:1}]}"
+    }
+  ]
+}

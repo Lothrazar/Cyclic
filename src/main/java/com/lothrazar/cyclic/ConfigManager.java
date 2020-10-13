@@ -9,12 +9,14 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
+import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -110,7 +112,7 @@ public class ConfigManager {
     ENCHANTMENTS = CFG.comment("Disable all 11 enchantments").define(category + "enchantments", true);
     category = "energy.";
     category = "energy.fuel.";
-    PEATPOWER = CFG.comment("Power to repair one tick of durability")
+    PEATPOWER = CFG.comment("Power gained burning one of this")
         .defineInRange(category + "peat_fuel", 256, 1, 64000);
     PEATERICHPOWER = CFG.comment("Power gained burning one of this")
         .defineInRange(category + "peat_fuel_enriched", 256 * 4, 1, 64000);
@@ -125,6 +127,8 @@ public class ConfigManager {
     TilePotion.POWERCONF = CFG.comment("Power per tick").defineInRange(category + "beacon", 10, 0, 64000);
     TileMiner.POWERCONF = CFG.comment("Power per use").defineInRange(category + "miner", 10, 0, 64000);
     TileUncraft.POWERCONF = CFG.comment("Power per use").defineInRange(category + "uncraft", 1000, 0, 64000);
+    TileFluidCollect.POWERCONF = CFG.comment("Power per use").defineInRange(category + "collector_fluid", 500, 0, 64000);
+    TilePeatFarm.POWERCONF = CFG.comment("Power per use").defineInRange(category + "peat_farm", 500, 0, 64000);
     category = "peat.";
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
         .defineInRange(category + "conversionChance",

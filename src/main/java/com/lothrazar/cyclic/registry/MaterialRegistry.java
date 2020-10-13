@@ -33,6 +33,7 @@ public class MaterialRegistry {
 
     private static final String EMERALDID = ModCyclic.MODID + ":emerald";
     private static final String CRYSTALID = ModCyclic.MODID + ":crystal";
+    private static final String GLOWINGID = ModCyclic.MODID + ":glowing";
     public static final IArmorMaterial EMERALD = new IArmorMaterial() {
 
       @Override
@@ -116,6 +117,49 @@ public class MaterialRegistry {
       public float getKnockbackResistance() {
         // knockback
         return ArmorMaterial.NETHERITE.getKnockbackResistance();
+      }
+    };
+    public static final IArmorMaterial GLOWING = new IArmorMaterial() {
+      ArmorMaterial mimicArmor = ArmorMaterial.IRON;
+
+      @Override
+      public int getDurability(EquipmentSlotType slotIn) {
+        return mimicArmor.getDurability(slotIn);
+      }
+
+      @Override
+      public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+        return mimicArmor.getDamageReductionAmount(slotIn);
+      }
+
+      @Override
+      public int getEnchantability() {
+        return mimicArmor.getEnchantability() + 1;
+      }
+
+      @Override
+      public SoundEvent getSoundEvent() {
+        return mimicArmor.getSoundEvent();
+      }
+
+      @Override
+      public Ingredient getRepairMaterial() {
+        return Ingredient.fromStacks(new ItemStack(ItemRegistry.gem_amber));
+      }
+
+      @Override
+      public String getName() {
+        return GLOWINGID;
+      }
+
+      @Override
+      public float getToughness() {
+        return mimicArmor.getToughness();
+      }
+
+      @Override
+      public float getKnockbackResistance() {
+        return mimicArmor.getKnockbackResistance();
       }
     };
   }

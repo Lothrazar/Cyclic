@@ -1,0 +1,35 @@
+{
+  "components": [
+    {
+      "type": "header",
+      "text": "#output->iname",
+      "centered": true,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "item",
+      "item": "#ingredient",
+      "x": 20,
+      "y": 40
+    },
+    {
+      "type": "item",
+      "item": "#base_potion",
+      "x": 40,
+      "y": 40
+    },
+    {
+      "type": "item",
+      "item": "minecraft:brewing_stand",
+      "x": 60,
+      "y": 40
+    },
+    {
+      "type": "item",
+      "item": "#output",
+      "x": 80,
+      "y": 40
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.peat_generator",
+  "icon": "cyclic:peat_generator",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.peat_generator.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:peat_generator"
+    }
+  ]
+}

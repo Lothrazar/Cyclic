@@ -117,8 +117,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     //    return result;
   }
 
-  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name) {
-    WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, UUID.randomUUID(), name);
+  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name, UUID uuid) {
+    WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, uuid, name);
     if (fakePlayer == null) {
       ModCyclic.LOGGER.error("Fake player failed to init ");
       return null;
@@ -127,6 +127,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());//seems to help interact() mob drops like milk
     fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
     return fakePlayer;
+  }
+
+  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name) {
+    return setupBeforeTrigger(sw, name, UUID.randomUUID());
   }
 
   public void setLitProperty(boolean lit) {

@@ -1,0 +1,16 @@
+{
+  "name": "fluid.cyclic.slime",
+  "icon": "cyclic:slime_bucket",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "fluid.cyclic.slime.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "cyclic:slime_bucket",
+      "link_recipe": true
+    }
+  ]
+}

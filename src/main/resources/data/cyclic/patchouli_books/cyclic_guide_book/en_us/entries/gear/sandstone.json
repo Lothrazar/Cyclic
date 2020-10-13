@@ -1,0 +1,26 @@
+{
+  "name": "item.cyclic.sandstone_gear.title",
+  "icon": "cyclic:sandstone_sword",
+  "category": "cyclic:gear",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.sandstone_gear.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sandstone_sword",
+      "recipe2": "cyclic:sandstone_pickaxe"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sandstone_axe",
+      "recipe2": "cyclic:sandstone_shovel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sandstone_hoe"
+
+    }
+  ]
+}

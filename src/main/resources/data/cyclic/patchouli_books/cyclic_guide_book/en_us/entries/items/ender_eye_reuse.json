@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.ender_eye_reuse",
+  "icon": "cyclic:ender_eye_reuse",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.ender_eye_reuse.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:ender_eye_reuse"
+    }
+  ]
+}

@@ -4,15 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.BlockDarkGlass;
-import com.lothrazar.cyclic.block.BlockLaunch;
-import com.lothrazar.cyclic.block.BlockMason;
-import com.lothrazar.cyclic.block.BlockPeat;
-import com.lothrazar.cyclic.block.BlockPeatFuel;
-import com.lothrazar.cyclic.block.BlockSound;
-import com.lothrazar.cyclic.block.BlockSpikes;
+import com.lothrazar.cyclic.block.*;
 import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
-import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
@@ -40,6 +33,7 @@ import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
+import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placerfluid.BlockPlacerFluid;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
@@ -97,6 +91,8 @@ public class BlockRegistry {
   public static BlockPeat peat_unbaked;
   @ObjectHolder(ModCyclic.MODID + ":peat_baked")
   public static BlockPeatFuel peat_baked;
+  @ObjectHolder(ModCyclic.MODID + ":peat_farm")
+  public static BlockPeatFarm peat_farm;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static Block breaker;
   @ObjectHolder(ModCyclic.MODID + ":fan")
@@ -188,6 +184,8 @@ public class BlockRegistry {
   public static Block mason_plate;
   @ObjectHolder(ModCyclic.MODID + ":mason_steel")
   public static Block mason_steel;
+  @ObjectHolder(ModCyclic.MODID + ":water_candle")
+  public static Block water_candle;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -205,6 +203,7 @@ public class BlockRegistry {
     r.register(new BlockPeatGenerator(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
     r.register(new BlockPeat(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
     r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
+    r.register(new BlockPeatFarm(Block.Properties.create(Material.ROCK)).setRegistryName("peat_farm"));
     r.register(new BlockTerraPreta(Block.Properties.create(Material.EARTH)).setRegistryName("terra_preta"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
@@ -255,5 +254,6 @@ public class BlockRegistry {
     r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     r.register(new BlockBatteryInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
+    r.register(new BlockWaterCandle(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
   }
 }

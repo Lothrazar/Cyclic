@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+
+    "oio",
+    "o o"
+  ],
+  "key": {
+    "i": {
+      "item":"cyclic:gem_amber"
+    },
+    "o": {
+      "item":"minecraft:glowstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:glowing_helmet",
+    "count": 1
+  }
+}

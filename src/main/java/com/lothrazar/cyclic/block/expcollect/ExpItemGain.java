@@ -2,9 +2,12 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 
 public class ExpItemGain extends ItemBase {
 
@@ -17,10 +20,12 @@ public class ExpItemGain extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    context.getPlayer().giveExperiencePoints(EXP_PER_FOOD);
-    context.getPlayer().getHeldItem(context.getHand()).shrink(1);
-    UtilSound.playSound(context.getPlayer(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-    return super.onItemUse(context);
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+      playerIn.giveExperiencePoints(EXP_PER_FOOD);
+      playerIn.getHeldItemMainhand().shrink(1);
+      UtilSound.playSound(playerIn, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+    }
+    return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }

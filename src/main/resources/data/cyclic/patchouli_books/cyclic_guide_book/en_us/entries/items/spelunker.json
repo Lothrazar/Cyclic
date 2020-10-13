@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.spelunker",
+  "icon": "cyclic:spelunker",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.spelunker.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:spelunker"
+    }
+  ]
+}

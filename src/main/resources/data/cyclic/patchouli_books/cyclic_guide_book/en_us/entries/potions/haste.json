@@ -1,0 +1,23 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_haste",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.minecraft.potion.effect.cyclic_haste.guide"
+    },
+    {
+      "type": "cyclic:brewing",
+      "ingredient": "minecraft:emerald",
+      "base_potion": "minecraft:potion{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion{Potion:\"cyclic:strong_haste\"}"
+    },
+    {
+      "type": "cyclic:brewing",
+      "ingredient": "minecraft:redstone",
+      "base_potion": "minecraft:potion{Potion:\"cyclic:haste\"}",
+      "output": "minecraft:potion{Potion:\"cyclic:strong_haste\"}"
+    }
+  ]
+}

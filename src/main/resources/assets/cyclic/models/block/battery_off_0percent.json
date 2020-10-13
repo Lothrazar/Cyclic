@@ -1,0 +1,9 @@
+{
+    "parent": "cyclic:block/battery",
+    "textures": {
+        "north": "cyclic:blocks/battery/battery_0percent",
+        "south": "cyclic:blocks/battery/battery_0percent",
+        "west": "cyclic:blocks/battery/battery_0percent",
+        "east": "cyclic:blocks/battery/battery_0percent"
+    }
+}

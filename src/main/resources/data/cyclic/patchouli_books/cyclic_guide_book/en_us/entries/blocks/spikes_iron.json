@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.spikes_iron",
+  "icon": "cyclic:spikes_iron",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.spikes.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:spikes_iron",
+      "text": "block.cyclic.spikes_iron.guide"
+    }
+  ]
+}

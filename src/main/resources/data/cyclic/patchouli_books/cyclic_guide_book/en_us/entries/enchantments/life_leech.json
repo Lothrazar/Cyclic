@@ -1,0 +1,15 @@
+{
+  "name": "enchantment.cyclic.life_leech",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:life_leech\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.life_leech.desc"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:life_leech\",lvl:1}]}"
+    }
+  ]
+}

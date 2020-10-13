@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.base;
 
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
@@ -33,7 +34,8 @@ public abstract class ContainerBase extends Container {
 
       @Override
       public void set(int value) {
-        // tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        if (tile.getWorld().isRemote)//set energy on client when syncing from server (not the other way around)
+          tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
       }
     });
   }

@@ -1,0 +1,15 @@
+{
+  "name": "enchantment.cyclic.venom",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:venom\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.venom.desc"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:venom\",lvl:1}]}"
+    }
+  ]
+}

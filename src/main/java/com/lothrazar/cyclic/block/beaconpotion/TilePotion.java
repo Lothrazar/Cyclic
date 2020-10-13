@@ -19,7 +19,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -57,7 +56,6 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
 
   public TilePotion() {
     super(TileRegistry.beacon);
-    BeaconTileEntity x;
     timer = 0;
   }
 

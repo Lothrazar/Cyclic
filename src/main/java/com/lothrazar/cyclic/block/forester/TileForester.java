@@ -27,7 +27,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -36,7 +35,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -54,7 +52,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private int height = MAX_HEIGHT;
   private static final int MAX_SIZE = 9;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;
-  IOptionalNamedTag<Block> forge_sapling = BlockTags.createOptional(new ResourceLocation("forge", "saplings"));
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -122,6 +119,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         if (TileEntityBase.tryHarvestBlock(fakePlayer, world, targetPos)) {
           //ok then DRAIN POWER  
           en.extractEnergy(cost, false);
+          //          ModCyclic.LOGGER.info("drain " + cost + "current" + en.getEnergyStored());
         }
       }
     }
@@ -247,7 +245,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     //    if(dropMe.getItem().isIn(Tags.Blocks.SAND))
     //sapling tag SHOULD exist. it doesnt. idk WHY
     Block block = Block.getBlockFromItem(dropMe.getItem());
-    return block.isIn(forge_sapling) ||
+    return block.isIn(BlockTags.SAPLINGS) ||
         block instanceof SaplingBlock;
   }
 

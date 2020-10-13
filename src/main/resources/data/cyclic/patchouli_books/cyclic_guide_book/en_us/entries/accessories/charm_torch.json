@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_torch",
+  "icon": "cyclic:charm_torch",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_torch.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_torch",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

@@ -1,12 +1,18 @@
 package com.lothrazar.cyclic.item.bauble;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilStuff;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -38,6 +44,15 @@ public class GloveItem extends ItemBase implements IHasClickToggle {
         //        }
       }
     }
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    super.addInformation(stack, worldIn, tooltip, flagIn);
+    TranslationTextComponent t = new TranslationTextComponent("item.cyclic.bauble.on." + this.isOn(stack));
+    t.mergeStyle(TextFormatting.DARK_GRAY);
+    tooltip.add(t);
   }
 
   @Override

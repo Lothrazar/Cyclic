@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.solidifier",
+  "icon": "cyclic:solidifier",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.solidifier.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:solidifier"
+    }
+  ]
+}

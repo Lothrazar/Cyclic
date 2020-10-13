@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ipi",
+    "fof",
+    "ipi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "p": {
+      "item": "minecraft:dispenser"
+    },
+    "f": {
+      "item": "cyclic:peat_generator"
+    },
+    "o": {
+      "item": "minecraft:observer"
+    }
+  },
+  "result": {
+    "item": "cyclic:peat_farm",
+    "count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.biomass",
+  "icon": "cyclic:biomass",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.biomass.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:biomass"
+    }
+  ]
+}

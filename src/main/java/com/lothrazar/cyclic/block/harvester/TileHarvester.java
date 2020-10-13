@@ -77,7 +77,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return;
     }
     for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
-      BlockPos target = UtilWorld.getRandomPos(world.rand, getPos(), radius);
+      BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius), radius);
       Integer cost = POWERCONF.get();
       if (cap.getEnergyStored() < cost && cost > 0) {
         break;//too broke

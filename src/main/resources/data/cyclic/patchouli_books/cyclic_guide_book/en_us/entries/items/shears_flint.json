@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.shears_flint",
+  "icon": "cyclic:shears_flint",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.shears_flint.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shears_flint"
+    }
+  ]
+}

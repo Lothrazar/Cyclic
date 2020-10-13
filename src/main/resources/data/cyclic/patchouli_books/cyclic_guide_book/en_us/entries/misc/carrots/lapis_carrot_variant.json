@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.lapis_carrot_variant",
+  "icon": "cyclic:lapis_carrot_variant",
+  "category": "cyclic:carrots",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.lapis_carrot_variant.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:lapis_carrot_variant"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.antigravity",
+  "icon": "cyclic:antigravity",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.antigravity.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:antigravity",
+      "text": "item.cantoggle.guide"
+    }
+  ]
+}

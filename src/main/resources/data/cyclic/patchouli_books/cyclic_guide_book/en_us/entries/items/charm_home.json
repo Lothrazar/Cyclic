@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_home",
+  "icon": "cyclic:charm_home",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_home.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_home",
+      "text": "item.cyclic.charm_home.guide0"
+    }
+  ]
+}
