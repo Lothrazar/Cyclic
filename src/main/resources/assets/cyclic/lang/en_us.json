@@ -1,8 +1,8 @@
 {
 	"_comments": "Thanks to https://tterrag.com/lang2json/",
-	
+
 	"curios.identifier.feet":"Feet",
-	
+
     "itemGroup.cyclic": "Cyclic Blocks",
     "itemGroup.cyclicitems": "Cyclic Items",
     "block.cyclic.trash": "Trash Void",
@@ -229,6 +229,8 @@
     "enchantment.cyclic.disarm.desc": "Chance to disarm opponent on hit.",
     "enchantment.cyclic.curse": "Gloom",
     "enchantment.cyclic.curse.desc": "Chance to apply negative status effects to enemy when hit. Chance does not stack with multiple enchanted items.",
+    "enchantment.cyclic.ender": "Ender",
+    "enchantment.cyclic.ender.desc": "Throws an Ender Pearl with your sword, consuming durability. Cooldown decreases with level.",
     "entity.Villager.druid": "Druid",
     "entity.Villager.sage": "Sage",
     "fluid.cyclic.biomass": "Biomass",
@@ -1013,13 +1015,13 @@
     "item.minecraft.lingering_potion.effect.cyclic_haste": "Lingering Potion of Haste",
     "item.minecraft.tipped_arrow.effect.cyclic_haste": "Arrow of Haste",
     "item.minecraft.potion.effect.cyclic_haste.guide": "The Potion of Haste apples the Haste effect to the target, increasing their mining speed.",
-    
+
     "item.minecraft.potion.effect.cyclic_swimspeed": "Potion of Swim Speed",
     "item.minecraft.splash_potion.effect.cyclic_swimspeed": "Splash Potion of Swim Speed",
     "item.minecraft.lingering_potion.effect.cyclic_swimspeed": "Lingering Potion of Swim Speed",
     "item.minecraft.tipped_arrow.effect.cyclic_swimspeed": "Arrow of Swim Speed",
     "item.minecraft.potion.effect.cyclic_swimspeed.guide": "The Potion of Swim Speed greatly increases its target's speed while moving through liquids.",
-    
+
     "item.minecraft.potion.effect.cyclic_stun": "Potion of Paralyze",
     "item.minecraft.splash_potion.effect.cyclic_stun": "Splash Potion of Paralyze",
     "item.minecraft.lingering_potion.effect.cyclic_stun": "Lingering Potion of Paralyze",
@@ -1120,7 +1122,7 @@
     "item.cyclic.peat_fuel_enriched": "Enriched Peat",
     "item.cyclic.peat_fuel_enriched.tooltip": "Create energy in a Peat Generator",
     "item.cyclic.peat_fuel_enriched.guide": "Created by combining $(l:misc/peat_fuel)Peat$(/l) with $(l:misc/fluid_biomass)Fluid Biomass$(/l) in a $(l:machines/solidifier)Solidification Chamber$(/l) and used to provide even more power in a $(l:machines/peat_generator)Peat Generator$(/l).",
- 
+
     "block.cyclic.peat_unbaked": "Dry Peat Bog",
     "block.cyclic.peat_unbaked.tooltip": "Slowly turns into a Peat Deposit when sitting in water",
     "block.cyclic.peat_unbaked.guide": "Dry Peat Bog, when placed next to water, will slowly turn into a $(l:blocks/saturated_peat_bog)Saturated Peat Deposit$(/l), which can be smelted to create fuel for the $(l:machines/peat_generator)Peat Generator$(/l).",
