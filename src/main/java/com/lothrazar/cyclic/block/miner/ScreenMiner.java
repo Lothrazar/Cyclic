@@ -50,16 +50,6 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     GuiSliderInteger SIZE = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, TileMiner.MAX_SIZE, container.tile.getField(f)));
     SIZE.setTooltip("buildertype.size.tooltip");
-    //    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + row, 20,
-    //        container.tile.getPos(), TileMiner.Fields.HEIGHT.ordinal());
-    //    txtHeight.setText("" + container.tile.getField(TileMiner.Fields.HEIGHT.ordinal()));
-    //    txtHeight.setTooltip(UtilChat.lang("buildertype.height.tooltip"));
-    //    this.children.add(txtHeight);
-    //    txtSize = new TextboxInteger(this.font, guiLeft + 90, guiTop + row, 20,
-    //        container.tile.getPos(), TileMiner.Fields.SIZE.ordinal());
-    //    txtSize.setTooltip(UtilChat.lang("buildertype.size.tooltip"));
-    //    txtSize.setText("" + container.tile.getField(TileMiner.Fields.SIZE.ordinal()));
-    //    this.children.add(txtSize);
   }
 
   @Override

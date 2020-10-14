@@ -34,8 +34,16 @@ public abstract class ContainerBase extends Container {
 
       @Override
       public void set(int value) {
-        if (tile.getWorld().isRemote)//set energy on client when syncing from server (not the other way around)
-          tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h).setEnergy(value));
+        if (tile.getWorld().isRemote) {//set energy on client when syncing from server (not the other way around)
+          System.out.println("listener energy before " + value);
+          //          //tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h)
+          IEnergyStorage en = tile.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+          if (en != null && en instanceof CustomEnergyStorage) {
+            //i think this was causing out of bounds errors?
+            ((CustomEnergyStorage) en).setEnergy(value);
+            System.out.println("listener energy after " + value);
+          }
+        }
       }
     });
   }

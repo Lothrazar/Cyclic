@@ -1,9 +1,11 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -35,6 +37,23 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileFluidCollect.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+    //
+    //
+    int w = 96;
+    int h = 20;
+    x = guiLeft + 32;
+    y += h + 1;
+    int f = TileFluidCollect.Fields.HEIGHT.ordinal();
+    GuiSliderInteger HEIGHT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        1, TileFluidCollect.MAX_HEIGHT, container.tile.getField(f)));
+    HEIGHT.setTooltip("buildertype.height.tooltip");
+    y += h + 1;
+    //
+    //
+    f = TileFluidCollect.Fields.SIZE.ordinal();
+    GuiSliderInteger SIZE = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        0, TileMiner.MAX_SIZE, container.tile.getField(f)));
+    SIZE.setTooltip("buildertype.size.tooltip");
   }
 
   @Override
@@ -60,8 +79,8 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawSlot(ms, 9, 50);
     energy.draw(ms, container.tile.getEnergy());
     fluid.draw(ms, container.tile.getFluid());
-    this.drawSlot(ms, xSize / 2 - 9, 28);
   }
 }

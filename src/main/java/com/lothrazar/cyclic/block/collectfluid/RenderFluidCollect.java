@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
+import java.awt.Color;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -19,7 +20,7 @@ public class RenderFluidCollect extends TileEntityRenderer<TileFluidCollect> {
   public void render(TileFluidCollect te, float v, MatrixStack matrix,
       IRenderTypeBuffer ibuffer, int partialTicks, int destroyStage) {
     if (1 == te.getField(TileFluidCollect.Fields.RENDER.ordinal())) {
-      UtilRender.renderOutline(te.getPos(), te.getShape(), matrix);
+      UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrix, 0.4F, Color.DARK_GRAY);
     }
   }
 }

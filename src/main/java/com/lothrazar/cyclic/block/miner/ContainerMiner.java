@@ -26,8 +26,8 @@ public class ContainerMiner extends ContainerBase {
       addSlot(new SlotItemHandler(h, 0, 10, 51));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackAllIntFields(tile, TileMiner.Fields.values().length);
     trackEnergy(tile);
+    this.trackAllIntFields(tile, TileMiner.Fields.values().length);
   }
 
   @Override

@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -24,7 +23,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockMiner extends BlockBase {
 
   public BlockMiner(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.ANVIL));
+    super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
   }
 

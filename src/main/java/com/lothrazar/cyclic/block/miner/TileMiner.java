@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.miner;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
@@ -15,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -28,6 +30,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -43,8 +46,8 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   public static IntValue POWERCONF;
   private int shapeIndex = 0;
   static final int MAX_HEIGHT = 64;
-  private int height = MAX_HEIGHT / 2;
   public static final int MAX_SIZE = 12;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private int height = MAX_HEIGHT / 2;
   private int size = 5;
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -159,9 +162,11 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       updateTargetPos(shape);
     }
     if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
+      //      ModCyclic.LOGGER.info(" target valid, ismining true ? " + targetPos);
       isCurrentlyMining = true;
     }
     else { // no valid target, back out
+      //      ModCyclic.LOGGER.info(world.getBlockState(targetPos) + " target NOT  " + targetPos);
       updateTargetPos(shape);
       resetProgress();
     }
@@ -177,9 +182,10 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       //state.getPlayerRelativeBlockHardness(player, worldIn, pos);UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
       curBlockDamage += relative;
       //
-      ModCyclic.LOGGER.info(world.getBlockState(targetPos) + " progress ? " + targetPos + "  relative = " + relative + "    curBlockDamage=" + curBlockDamage);
+      //      ModCyclic.LOGGER.info(world.getBlockState(targetPos) + " progress ? " + targetPos + "  relative = " + relative + "    curBlockDamage=" + curBlockDamage);
       //if hardness is relative, jus fekin break it like air eh
       if (curBlockDamage >= 1.0f || relative == 0) {
+        //        ModCyclic.LOGGER.info("TRY t" + targetPos);
         boolean harvested = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
         if (!harvested) {
           //            world.destroyBlock(targetPos, true, fakePlayer.get()); 
@@ -193,14 +199,14 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
           resetProgress();
         }
         else {
-          ModCyclic.LOGGER.info(" FAILED ? " + targetPos + " removed");
-          //("CANCEL and or cant harvest" + targetPos);
+          //          ModCyclic.LOGGER.info(" FAILED ? " + targetPos + " removed");
           world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(),
               targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
     }
     else {//is mining is false
+      //      ModCyclic.LOGGER.info(" why not mining ? " + targetPos);
       world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(),
           targetPos, (int) (curBlockDamage * 10.0F) - 1);
     }
@@ -208,9 +214,28 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   private boolean isTargetValid() {
-    return targetPos != null && !world.isAirBlock(targetPos)
-        && world.getBlockState(targetPos).hardness >= 0
-        && world.getFluidState(targetPos) == null;
+    if (targetPos == null) {
+      return false;
+    }
+    //is this valid
+    ItemStack tool = fakePlayer.get().getHeldItem(Hand.MAIN_HAND);
+    BlockState block = world.getBlockState(targetPos);
+    Set<ToolType> tools = tool.getItem().getToolTypes(tool);
+    boolean isToolEffective = false;
+    if (tools.size() == 0)
+      isToolEffective = true;//if item is not a tool, treat like empty hand = "badly effective everywhere"
+    else
+      for (ToolType t : tools) {
+        if (block.isToolEffective(t)) {
+          isToolEffective = true;
+          break;
+        }
+      }
+    return !world.isAirBlock(targetPos)
+        && block.hardness >= 0
+        && isToolEffective
+    //  && world.getFluidState(targetPos) == null
+    ;
   }
 
   private void updateTargetPos(List<BlockPos> shape) {
@@ -243,6 +268,19 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
       shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    }
+    return shape;
+  }
+
+  public List<BlockPos> getShapeHollow() {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size + 1), size);
+    int diff = directionIsUp ? 1 : -1;
+    if (height > 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    }
+    if (targetPos != null) {
+      shape.add(targetPos);
     }
     return shape;
   }

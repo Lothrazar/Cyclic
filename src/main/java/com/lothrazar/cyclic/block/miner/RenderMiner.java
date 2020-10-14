@@ -21,6 +21,6 @@ public class RenderMiner extends TileEntityRenderer<TileMiner> {
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
     if (te.getField(TileMiner.Fields.RENDER.ordinal()) == 1)
-      UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.2F, Color.DARK_GRAY);
+      UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrixStack, 0.4F, Color.DARK_GRAY);
   }
 }

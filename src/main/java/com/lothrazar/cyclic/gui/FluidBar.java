@@ -89,9 +89,11 @@ public class FluidBar {
   }
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, FluidStack current) {
-    if (this.isMouseover(mouseX, mouseY) && current != null
-        && !current.isEmpty()) {
-      String tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
+    if (this.isMouseover(mouseX, mouseY)) {
+      String tt = "0";
+      if (current != null && !current.isEmpty()) {
+        tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
+      }
       List<ITextComponent> list = new ArrayList<>();
       list.add(new TranslationTextComponent(tt));
       parent.func_243308_b(ms, list, mouseX, mouseY);

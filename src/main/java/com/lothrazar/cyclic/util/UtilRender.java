@@ -429,9 +429,9 @@ public class UtilRender {
     //    BlockPos centerPos = center;//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-centerPos.getX(), -centerPos.getY(), -centerPos.getZ());
     for (BlockPos coordinate : shape) {
-      if (!world.isAirBlock(coordinate)) {
-        continue;
-      }
+      //      if (!world.isAirBlock(coordinate)) {
+      //        continue;
+      //      }
       float x = coordinate.getX();
       float y = coordinate.getY();
       float z = coordinate.getZ();
