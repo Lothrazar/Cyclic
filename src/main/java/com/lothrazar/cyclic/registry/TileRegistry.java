@@ -12,6 +12,8 @@ import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.clock.TileRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
+import com.lothrazar.cyclic.block.crafter.BlockCrafter;
+import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.TileItemInfinite;
@@ -99,6 +101,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileStructure::new, BlockRegistry.structure).build(null).setRegistryName("structure"));
     r.register(TileEntityType.Builder.create(TileFisher::new, BlockRegistry.fisher).build(null).setRegistryName("fisher"));
     r.register(TileEntityType.Builder.create(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
+    r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
@@ -184,4 +187,6 @@ public class TileRegistry {
   public static TileEntityType<TileScreentext> screen;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static TileEntityType<TileUncraft> uncrafter;
+  @ObjectHolder(ModCyclic.MODID + ":crafter")
+  public static TileEntityType<TileCrafter> crafter;
 }
