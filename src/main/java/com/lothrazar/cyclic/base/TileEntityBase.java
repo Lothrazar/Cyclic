@@ -120,7 +120,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name, UUID uuid) {
     WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, uuid, name);
     if (fakePlayer == null) {
-      ModCyclic.LOGGER.error("Fake player failed to init ");
+      ModCyclic.LOGGER.error("Fake player failed to init " + name + " " + uuid);
       return null;
     }
     //fake player facing the same direction as tile. for throwables

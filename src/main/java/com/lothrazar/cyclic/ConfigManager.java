@@ -171,7 +171,7 @@ public class ConfigManager {
         mappedBeheading.put(entity, skin);
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("Invalid config entry " + s);
+        ModCyclic.LOGGER.error("Beheading Enchantment: Invalid config entry " + s);
       }
     }
     return mappedBeheading;

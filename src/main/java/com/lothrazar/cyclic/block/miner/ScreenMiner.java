@@ -41,7 +41,7 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     y += h + 1;
     int f = TileMiner.Fields.HEIGHT.ordinal();
     GuiSliderInteger HEIGHT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        1, TileMiner.MAX_HEIGHT, container.tile.getField(f)));
+        0, TileMiner.MAX_HEIGHT, container.tile.getField(f)));
     HEIGHT.setTooltip("buildertype.height.tooltip");
     y += h + 1;
     //

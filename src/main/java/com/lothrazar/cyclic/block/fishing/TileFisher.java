@@ -94,7 +94,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity {
             this.doFishing(stack, center);
           } //loot tables are explosive
           catch (Exception e) {
-            ModCyclic.LOGGER.error("Loot table failed", e);
+            ModCyclic.LOGGER.error("Fishing Block: Loot table failed", e);
           }
         }
       }

@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.miner;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
@@ -16,8 +15,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -30,7 +29,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -53,7 +51,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
-  private List<BlockPos> shape;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
   private BlockPos targetPos = BlockPos.ZERO;
@@ -140,9 +137,11 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     try {
       TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
       //TODO: does this target block match filter
-      if (shape == null) {
-        rebuildShape();
-      }
+      List<BlockPos> shape = getShape();
+      //        resetProgress(); 
+      //        shapeIndex = 0;
+      //        targetPos = null;
+      //      }
       if (shape.size() == 0) {
         return;
       }
@@ -158,15 +157,16 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     if (fakePlayer == null) {
       return false;
     }
-    if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
-      updateTargetPos(shape);
-    }
+    //    if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
+    ////  This is making me skip block zero and other stuff randomly? i think this is bad
+    //      updateTargetPos(shape);
+    //    }
     if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
       //      ModCyclic.LOGGER.info(" target valid, ismining true ? " + targetPos);
       isCurrentlyMining = true;
+      //then keep current target
     }
-    else { // no valid target, back out
-      //      ModCyclic.LOGGER.info(world.getBlockState(targetPos) + " target NOT  " + targetPos);
+    else { // no valid target, back out 
       updateTargetPos(shape);
       resetProgress();
     }
@@ -182,7 +182,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       //state.getPlayerRelativeBlockHardness(player, worldIn, pos);UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
       curBlockDamage += relative;
       //
-      //      ModCyclic.LOGGER.info(world.getBlockState(targetPos) + " progress ? " + targetPos + "  relative = " + relative + "    curBlockDamage=" + curBlockDamage);
+      //      ModCyclic.LOGGER.info(targetState + " progress ? " + targetPos + "  relative = " + relative + "    curBlockDamage=" + curBlockDamage);
       //if hardness is relative, jus fekin break it like air eh
       if (curBlockDamage >= 1.0f || relative == 0) {
         //        ModCyclic.LOGGER.info("TRY t" + targetPos);
@@ -214,28 +214,47 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   private boolean isTargetValid() {
-    if (targetPos == null) {
-      return false;
+    if (targetPos == null || world.isAirBlock(targetPos)) {
+      return false;//dont mine air or liquid. 
     }
     //is this valid
-    ItemStack tool = fakePlayer.get().getHeldItem(Hand.MAIN_HAND);
-    BlockState block = world.getBlockState(targetPos);
-    Set<ToolType> tools = tool.getItem().getToolTypes(tool);
-    boolean isToolEffective = false;
-    if (tools.size() == 0)
-      isToolEffective = true;//if item is not a tool, treat like empty hand = "badly effective everywhere"
-    else
-      for (ToolType t : tools) {
-        if (block.isToolEffective(t)) {
-          isToolEffective = true;
-          break;
+    BlockState blockSt = world.getBlockState(targetPos);
+    if (blockSt.hardness < 0) {
+      return false;//unbreakable 
+    }
+    if (fakePlayer != null) {
+      //water logged is 
+      if (blockSt.getFluidState() != null) {
+        //am i PURE liquid? or just a WATERLOGGED block
+        if (blockSt.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
+          //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
+          return false;
         }
       }
-    return !world.isAirBlock(targetPos)
-        && block.hardness >= 0
-        && isToolEffective
-    //  && world.getFluidState(targetPos) == null
-    ;
+      //its a solid non-air, non-fluid block (but might be like waterlogged stairs or something)
+      return blockSt.canHarvestBlock(world, targetPos, fakePlayer.get());
+    }
+    //TODO: Fix this once forge is fixed
+    //but its busted
+    //  Set<ToolType> tools = tool.getItem().getToolTypes(tool);
+    //    ItemStack tool = fakePlayer.get().getHeldItem(Hand.MAIN_HAND);
+    //aww this isnt working, many things like WOOD PLANKS have harvestTool = null, meaning "axe" valid tools still have not effective come back
+    //    ModCyclic.LOGGER.info(shapeIndex + ":" + tool + " not effective on " + block + "??" + block.getBlock().getHarvestTool(block));
+    //  boolean isToolEffective = false;
+    //    if (tools.size() == 0)
+    //      isToolEffective = true;//if item is not a tool, treat like empty hand = "badly effective everywhere"
+    //    else
+    //      for (ToolType t : tools) {
+    //        if (block.isToolEffective(t)) {
+    //          isToolEffective = true;
+    //          break;
+    //        }
+    //      }
+    //    if (!isToolEffective) {
+    //      ModCyclic.LOGGER.info(shapeIndex + ":" + tool + " not effective on " + block + "??" + block.getBlock().getHarvestTool(block));
+    //    }
+    //i guess any non fluid
+    return world.getFluidState(targetPos) != null;
   }
 
   private void updateTargetPos(List<BlockPos> shape) {
@@ -253,13 +272,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
       getWorld().sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, -1);
     }
-  }
-
-  private void rebuildShape() {
-    resetProgress();
-    shape = this.getShape();
-    shapeIndex = 0;
-    targetPos = null;
   }
 
   public List<BlockPos> getShape() {
