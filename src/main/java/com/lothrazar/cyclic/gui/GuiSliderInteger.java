@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,6 +18,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
 
   public static final int ARROW_LEFT = 263;
   public static final int ARROW_RIGHT = 262;
+  static final int ESC = 256;
   private final double min;
   private final double max;
   private final BlockPos pos; // Tile entity location
@@ -59,6 +61,11 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
    */
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    if (keyCode == ESC) {
+      //close
+      ModCyclic.proxy.getClientPlayer().closeScreen();
+      return true;
+    }
     if (keyCode == ARROW_LEFT || keyCode == ARROW_RIGHT) {
       // move from arrow keys
       int delta = (keyCode == ARROW_LEFT) ? -1 : 1;
