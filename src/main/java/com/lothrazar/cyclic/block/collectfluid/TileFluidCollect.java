@@ -53,7 +53,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private int shapeIndex = 0;// current index of shape array
   private int size = 4 * 2;
-  private int height = 16;
+  private int height = 4;
   BlockPos targetPos = null;
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
@@ -96,15 +96,16 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       targetPos = shape.get(shapeIndex);
       //ok on this target get fluid check it out
       FluidState fluidState = world.getFluidState(targetPos);
-      for (int ff = 0; ff < 20; ff++) {
-        if (fluidState.isSource()) {
-          break;
-        } //fast forward ten spots at a time in case big chunkso f nothin
-        incrementShapePtr(shape);
-        targetPos = shape.get(shapeIndex);
-        fluidState = world.getFluidState(targetPos);
-      }
+      //      for (int ff = 0; ff < 20; ff++) {
+      //        if (!fluidState.isSource()) {
+      //          break;
+      //        } //fast forward ten spots at a time in case big chunkso f nothin
+      //        incrementShapePtr(shape);
+      //        targetPos = shape.get(shapeIndex);
+      //        fluidState = world.getFluidState(targetPos);
+      //      }
       if (fluidState.isSource()) {
+        //        ModCyclic.LOGGER.info("source " + targetPos);
         FluidStack fstack = new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME);
         int result = tank.fill(fstack, FluidAction.SIMULATE);
         if (result == FluidAttributes.BUCKET_VOLUME) {

@@ -7,7 +7,7 @@
     "itemGroup.cyclicitems": "Cyclic Items",
     "block.cyclic.trash": "Trash Void",
     "block.cyclic.trash.tooltip": "Deletes any item piped into it",
-    "block.cyclic.trash.guide": "Deletes any item piped into it.",
+    "block.cyclic.trash.guide": "Deletes all items and fluids piped into it.",
     "block.cyclic.trash.guide0": "Warning! There's no undo button. Once the item's gone, it's gone.",
     "block.cyclic.experience_pylon": "Experience Pylon",
     "block.cyclic.experience_pylon.tooltip": "Collects nearby XP orbs, players above",
