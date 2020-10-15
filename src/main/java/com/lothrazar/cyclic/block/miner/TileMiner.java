@@ -224,7 +224,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     }
     if (fakePlayer != null) {
       //water logged is 
-      if (blockSt.getFluidState() != null) {
+      if (blockSt.getFluidState() != null && blockSt.getFluidState().isEmpty() == false) {
         //am i PURE liquid? or just a WATERLOGGED block
         if (blockSt.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
           //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
