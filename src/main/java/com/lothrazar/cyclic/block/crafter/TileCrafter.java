@@ -230,7 +230,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         ItemStack itemStack = input.getStackInSlot(index);
         if (ingredient.test(itemStack)) {
           if (putbackStacks.containsKey(index))
-            putbackStacks.get(index).add(itemStack);
+            putbackStacks.get(index).add(new ItemStack(input.getStackInSlot(index).getItem(), 1));
           else {
             List<ItemStack> list = new ArrayList<>();
             list.add(new ItemStack(input.getStackInSlot(index).getItem(), 1));
@@ -247,6 +247,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       }
     }
     if (simulate) {
+
       putbackStacks(putbackStacks, input);
     }
     return true;
