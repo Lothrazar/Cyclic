@@ -28,6 +28,7 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -37,19 +38,21 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
 
   private EnergyBar energy;
   private ButtonMachineRedstone btnRedstone;
+  private TimerBar timer;
 
   public ScreenCrafter(ContainerCrafter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.ySize = 256;
     this.energy = new EnergyBar(this, TileCrafter.MAX);
+    this.timer = new TimerBar(this, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ + 2, TileCrafter.TIMER_FULL);
   }
 
   @Override
   protected void init() {
     super.init();
     int x, y, w, h;
-    energy.guiLeft = guiLeft;
-    energy.guiTop = guiTop;
+    energy.guiLeft = timer.guiLeft = guiLeft;
+    energy.guiTop = timer.guiTop = guiTop;
     energy.visible = TileCrafter.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
@@ -75,7 +78,6 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     energy.draw(ms, container.tile.getEnergy());
-    //this.drawSlot(ms, ContainerCrafter.PREVIEW_START_X - 1, ContainerCrafter.PREVIEW_START_Y - 1);
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
       for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
         this.drawSlot(ms, ContainerCrafter.INPUT_START_X - 1 + colPos * Const.SQ,
@@ -84,14 +86,15 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
                 ContainerCrafter.OUTPUT_START_Y - 1 + rowPos * Const.SQ);
       }
     }
-    for (int colPos = 0; colPos < TileCrafter.GRID_SIZE; colPos++) {
-      for (int rowPos = 0; rowPos < TileCrafter.GRID_SIZE; rowPos++) {
+    for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
+      for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
 
         this.drawSlot(ms,
                 ContainerCrafter.GRID_START_X - 1 + colPos * Const.SQ,
                 ContainerCrafter.GRID_START_Y - 1 + rowPos * Const.SQ);
       }
     }
+    timer.draw(ms, container.tile.getField(TileCrafter.Fields.TIMER.ordinal()));
   }
 
 }

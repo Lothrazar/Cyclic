@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.block.crafter;
 
 
-import com.lothrazar.cyclic.base.SidedTileEntityBase;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -48,66 +48,44 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class TileCrafter extends SidedTileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileCrafter extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static final int MAX = 64000;
+  public static final int TIMER_FULL = 40;
   public static IntValue POWERCONF;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  private final LazyOptional<IItemHandler> input = LazyOptional.of(this::createIOHandler);
+  private final LazyOptional<IItemHandler> output = LazyOptional.of(this::createIOHandler);
+  private final LazyOptional<IItemHandler> grid = LazyOptional.of(this::createGridHandler);
+  private final LazyOptional<IItemHandler> preview = LazyOptional.of(this::createPreviewHandler);
   public static final int IO_NUM_ROWS = 5;
   public static final int IO_NUM_COLS = 2;
-  public static final int GRID_SIZE = 3;
-  public static final int PREVIEW_SLOT = IO_NUM_ROWS * IO_NUM_COLS * 2 + GRID_SIZE * GRID_SIZE;
-  public static final int OUTPUT_SLOT_START = IO_NUM_ROWS * IO_NUM_COLS + GRID_SIZE * GRID_SIZE;
-  public static final int OUTPUT_SLOT_STOP = OUTPUT_SLOT_START + IO_NUM_ROWS * IO_NUM_COLS - 1;
-  public static final int GRID_START = IO_NUM_ROWS * IO_NUM_COLS;
-  public static final int GRID_STOP = GRID_START + GRID_SIZE * GRID_SIZE - 1;
+  public static final int GRID_NUM_ROWS = 3;
+  public static final int GRID_NUM_COLS = 3;
+  public static final int IO_SIZE = IO_NUM_ROWS * IO_NUM_COLS;
+  public static final int GRID_SIZE = GRID_NUM_ROWS * GRID_NUM_COLS;
+  public static final int PREVIEW_SLOT = IO_SIZE * 2 + GRID_SIZE;
+  public static final int OUTPUT_SLOT_START = IO_SIZE + GRID_SIZE;
+  public static final int OUTPUT_SLOT_STOP = OUTPUT_SLOT_START + IO_SIZE - 1;
+  public static final int GRID_SLOT_START = IO_SIZE;
+  public static final int GRID_SLOT_STOP = GRID_SLOT_START + GRID_SIZE - 1;
   private boolean hasValidRecipe = false;
-  private ArrayList<ItemStack> lastValidRecipeGrid = new ArrayList<>();
+  public boolean shouldSearch = true;
+  private boolean readyToCraft = false;
+  private ArrayList<ItemStack> lastRecipeGrid = new ArrayList<>();
   private IRecipe<?> lastValidRecipe = null;
   private ItemStack recipeOutput = ItemStack.EMPTY;
 
-  @Override
-  public int[] getSlotsForFace(Direction side) {
-    int[] inputSlotIds = {IO_NUM_ROWS * IO_NUM_COLS};
-    int[] outputSlotIds = {IO_NUM_ROWS * IO_NUM_COLS};
-    for (int i = 0; i < IO_NUM_ROWS * IO_NUM_COLS; i++) {
-      inputSlotIds[i] = i;
-    }
-    for (int i = OUTPUT_SLOT_START; i < OUTPUT_SLOT_STOP; i++) {
-      outputSlotIds[i - OUTPUT_SLOT_START] = i;
-    }
+  public enum ItemHandlers {
+    INPUT, OUTPUT, GRID, PREVIEW
+  };
 
-    switch (side) {
-      case UP:
-      case NORTH:
-      case SOUTH:
-      case EAST:
-      case WEST:
-        return ArrayUtils.addAll(inputSlotIds, outputSlotIds);
-      case DOWN:
-      default:
-        return outputSlotIds;
-    }
-  }
-
-  @Override
-  public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
-    return index < IO_NUM_ROWS * IO_NUM_COLS;
-  }
-
-  @Override
-  public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
-    return index >= OUTPUT_SLOT_START && index <= OUTPUT_SLOT_STOP;
-  }
-
-  static enum Fields {
+  public enum Fields {
     TIMER, REDSTONE, RENDER;
   }
 
@@ -127,9 +105,41 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
 
   @Override
   public void tick() {
+    IEnergyStorage en = this.energy.orElse(null);
+    IItemHandler inputHandler = this.input.orElse(null);
+    IItemHandler previewHandler = this.preview.orElse(null);
+    IItemHandler outputHandler = this.output.orElse(null);
+    ArrayList<ItemStack> itemStacksInGrid = getItemsInCraftingGrid();
+    if (lastRecipeGrid == null)
+      lastRecipeGrid = itemStacksInGrid;
+
+    if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0) //Nothing in Crafting grid, so don't do anything
+      return;
+    else if (!itemStacksInGrid.equals(lastRecipeGrid)) { //Crafting grid is updated, search for new recipe
+      reset();
+      lastRecipeGrid = itemStacksInGrid;
+      return;
+    }
+
+    if (!hasValidRecipe && shouldSearch) {
+      IRecipe<?> recipe = tryRecipes(itemStacksInGrid);
+      if (recipe != null) {
+        hasValidRecipe = true;
+        lastValidRecipe = recipe;
+        lastRecipeGrid = itemStacksInGrid;
+        recipeOutput = lastValidRecipe.getRecipeOutput();
+        shouldSearch = false;
+        setPreviewSlot(previewHandler, lastValidRecipe.getRecipeOutput());
+      }
+      else {
+        reset();
+        shouldSearch = false; //Went through all recipes, didn't find match. Don't search again (until crafting grid changes)
+      }
+
+    }
+
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
-      reset();
       return;
     }
     setLitProperty(true);
@@ -141,71 +151,64 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
     if (cap.getEnergyStored() < cost && cost > 0) {
       return;//broke
     }
-
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
-    int gridStartSlot = TileCrafter.IO_NUM_COLS * TileCrafter.IO_NUM_ROWS;
-    int gridStopSlot = gridStartSlot + TileCrafter.GRID_SIZE * TileCrafter.GRID_SIZE;
-    ArrayList<ItemStack> itemStacksInGrid = new ArrayList<>();
-    for (int i = gridStartSlot; i < gridStopSlot; i++) {
-      itemStacksInGrid.add(inv.getStackInSlot(i));
-    }
     if (world == null || world.getServer() == null)
       return;
-    Collection<IRecipe<?>> recipes = world.getServer().getRecipeManager().getRecipes();
-    if (!hasValidRecipe) {
-      if (countNonEmptyStacks(itemStacksInGrid) == 0)
-        return;
-      for (IRecipe<?> recipe : recipes) {
-        if (recipe instanceof ShapelessRecipe) {
-          recipe = (ShapelessRecipe) recipe;
-          //TODO: Process Shapeless Recipe
-        }
-        else if (recipe instanceof ShapedRecipe) {
-          ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-          if (!doSizesMatch(shapedRecipe, itemStacksInGrid)) {
-            continue;
-          }
-          hasValidRecipe = tryMatchShapedRecipe(itemStacksInGrid, shapedRecipe);
-          if (hasValidRecipe) {
-            inv.extractItem(PREVIEW_SLOT, 64, false);
-            inv.insertItem(PREVIEW_SLOT, recipe.getRecipeOutput(), false);
-            lastValidRecipe = shapedRecipe;
-            lastValidRecipeGrid = itemStacksInGrid;
-            recipeOutput = shapedRecipe.getRecipeOutput();
-            break;
-          }
-        }
-      }
-    }
-    else {
-      if (!itemStacksInGrid.equals(lastValidRecipeGrid)) {
-        hasValidRecipe = false;
-        lastValidRecipeGrid = null;
-        lastValidRecipe = null;
-        inv.extractItem(PREVIEW_SLOT, 64, false);
-        inv.insertItem(PREVIEW_SLOT, ItemStack.EMPTY, false);
+
+
+    if (hasValidRecipe) {
+      if (timer <= 0 && !readyToCraft && doCraft(inputHandler, true)) { //Start the timer
+        timer = TIMER_FULL;
+        readyToCraft = true;
         return;
       }
-      //TODO: Process crafting
-      if (timer <= 0 && hasFreeSpace(inv, recipeOutput)) {
-        en.extractEnergy(cost, false);
-        ItemStack output = recipeOutput.copy();
-        for (int slotId = OUTPUT_SLOT_START; slotId <= OUTPUT_SLOT_STOP; slotId++) {
-          output = inv.insertItem(slotId, output, false);
-          if (output == ItemStack.EMPTY || output.getCount() == 0)
-            break;
-        }
+
+      if (!doCraft(inputHandler, true)) {
+        //keep checking that we can craft while waiting
+        readyToCraft = false;
+        timer = 0;
       }
+
+      if (timer <= 0 && readyToCraft) {
+        if (!hasFreeSpace(outputHandler, recipeOutput)
+              || !doCraft(inputHandler, false)) {
+          return;
+        }
+        else {
+          en.extractEnergy(cost, false);
+          ItemStack output = recipeOutput.copy();
+          for (int slotId = 0; slotId < IO_SIZE; slotId++) {
+            output = outputHandler.insertItem(slotId, output, false);
+            if (output == ItemStack.EMPTY || output.getCount() == 0)
+              break;
+          }
+        }
+        readyToCraft = false;
+      }
+      timer--;
     }
-    if (this.timer <= 0) {
-      this.timer = 40;
+    if (timer < 0)
+      timer = 0;
+  }
+
+  @Nullable
+  private ArrayList<ItemStack> getItemsInCraftingGrid() {
+    ArrayList<ItemStack> itemStacks = new ArrayList<>();
+    IItemHandler gridHandler = this.grid.orElse(null);
+    if (gridHandler == null)
+      return null;
+    for (int i = 0; i < GRID_SIZE; i++) {
+      itemStacks.add(gridHandler.getStackInSlot(i));
     }
-    timer--;
+    return itemStacks;
+  }
+
+  private void setPreviewSlot(IItemHandler previewHandler, ItemStack itemStack) {
+    previewHandler.extractItem(0, 64, false);
+    previewHandler.insertItem(0, itemStack, false);
   }
 
   private boolean hasFreeSpace(IItemHandler inv, ItemStack output) {
-    for (int slotId = OUTPUT_SLOT_START; slotId <= OUTPUT_SLOT_STOP; slotId++) {
+    for (int slotId = 0; slotId < IO_SIZE; slotId++) {
       if (inv.getStackInSlot(slotId) == ItemStack.EMPTY
           || (inv.getStackInSlot(slotId).isItemEqual(output)
               && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize()))
@@ -216,7 +219,67 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
     return false;
   }
 
-  private ArrayList<ItemStack> getItemStacksForCrafting() {
+  private boolean doCraft(IItemHandler input, boolean simulate) {
+    HashMap<Integer, List<ItemStack>> putbackStacks = new HashMap<>();
+    for (Ingredient ingredient : lastValidRecipe.getIngredients()) {
+      if (ingredient == Ingredient.EMPTY) {
+        continue;
+      }
+      boolean matched = false;
+      for (int index = 0; index < input.getSlots(); index++) {
+        ItemStack itemStack = input.getStackInSlot(index);
+        if (ingredient.test(itemStack)) {
+          if (putbackStacks.containsKey(index))
+            putbackStacks.get(index).add(itemStack);
+          else {
+            List<ItemStack> list = new ArrayList<>();
+            list.add(new ItemStack(input.getStackInSlot(index).getItem(), 1));
+            putbackStacks.put(index, list);
+          }
+          matched = true;
+          input.extractItem(index, 1, false);
+          break;
+        }
+      }
+      if (!matched) {
+        putbackStacks(putbackStacks, input);
+        return false;
+      }
+    }
+    if (simulate) {
+      putbackStacks(putbackStacks, input);
+    }
+    return true;
+  }
+
+  private void putbackStacks(HashMap<Integer, List<ItemStack>> putbackStacks, IItemHandler itemHandler) {
+    for (HashMap.Entry<Integer, List<ItemStack>> entry : putbackStacks.entrySet()) {
+      for (ItemStack stack : entry.getValue())
+        itemHandler.insertItem(entry.getKey(), stack, false);
+    }
+  }
+
+  @Nullable
+  private IRecipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
+    if (world == null || world.getServer() == null)
+      return null;
+    Collection<IRecipe<?>> recipes = world.getServer().getRecipeManager().getRecipes();
+
+    for (IRecipe<?> recipe : recipes) {
+      if (recipe instanceof ShapelessRecipe) {
+        ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
+        if (tryMatchShapelessRecipe(itemStacksInGrid, shapelessRecipe))
+          return shapelessRecipe;
+      }
+      else if (recipe instanceof ShapedRecipe) {
+        ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
+        if (!doSizesMatch(shapedRecipe, itemStacksInGrid)) {
+          continue;
+        }
+        if (tryMatchShapedRecipe(itemStacksInGrid, shapedRecipe))
+          return shapedRecipe;
+      }
+    }
     return null;
   }
 
@@ -229,6 +292,25 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
       }
     }
     return false;
+  }
+
+  private boolean tryMatchShapelessRecipe(ArrayList<ItemStack> itemStacks, ShapelessRecipe recipe) {
+    ArrayList<ItemStack> itemStacksCopy = (ArrayList<ItemStack>) itemStacks.clone();
+    for (Ingredient ingredient : recipe.getIngredients()) {
+      Iterator iter = itemStacksCopy.iterator();
+      boolean matched = false;
+      while (iter.hasNext()) {
+        ItemStack itemStack = (ItemStack) iter.next();
+        if (ingredient.test(itemStack)) {
+          iter.remove();
+          matched = true;
+          break;
+        }
+      }
+      if (!matched)
+        return false;
+    }
+    return countNonEmptyStacks(itemStacksCopy) == 0;
   }
 
   private boolean tryMatchShapedRecipeRegion(ArrayList<ItemStack> itemStacks, ShapedRecipe recipe, int offsetX, int offsetY) {
@@ -254,8 +336,14 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
 
   public void reset() {
     this.hasValidRecipe = false;
-    this.lastValidRecipeGrid = null;
+    this.lastRecipeGrid = null;
     this.lastValidRecipe = null;
+    this.shouldSearch = true;
+    this.readyToCraft = false;
+    this.timer = 0;
+    IItemHandler previewHandler = this.preview.orElse(null);
+    if (previewHandler != null)
+      setPreviewSlot(previewHandler, ItemStack.EMPTY);
   }
 
   private int countNonEmptyStacks(ArrayList<ItemStack> itemStacks) {
@@ -284,7 +372,11 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
 
   private IEnergyStorage createEnergy() { return new CustomEnergyStorage(MAX, MAX); }
 
-  private IItemHandler createHandler() { return new ItemStackHandler(10 + 10 + 10); }
+  private IItemHandler createIOHandler() { return new ItemStackHandler(IO_SIZE); }
+
+  private IItemHandler createGridHandler() { return new ItemStackHandler(GRID_SIZE); }
+
+  private IItemHandler createPreviewHandler() { return new ItemStackHandler(1); }
 
   @Override
   public ITextComponent getDisplayName() {
@@ -302,16 +394,42 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energy.cast();
     }
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+    if (side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      switch (side) {
+        case EAST:
+        case WEST:
+        case NORTH:
+        case SOUTH:
+          return input.cast();
+        case UP:
+        case DOWN:
+        default:
+          return output.cast();
+      }
     }
     return super.getCapability(cap, side);
+  }
+
+  @Nullable
+  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nonnull ItemHandlers type) {
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      switch (type) {
+        case INPUT: return input.cast();
+        case OUTPUT: return output.cast();
+        case GRID: return grid.cast();
+        case PREVIEW: return preview.cast();
+      }
+    }
+    return null;
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    input.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("input")));
+    output.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("output")));
+    grid.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("grid")));
+    preview.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("preview")));
     super.read(bs, tag);
   }
 
@@ -321,9 +439,21 @@ public class TileCrafter extends SidedTileEntityBase implements INamedContainerP
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
     });
-    inventory.ifPresent(h -> {
+    input.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
+      tag.put("input", compound);
+    });
+    output.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("output", compound);
+    });
+    grid.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("grid", compound);
+    });
+    preview.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("preview", compound);
     });
     return super.write(tag);
   }
