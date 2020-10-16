@@ -17,6 +17,7 @@ import com.lothrazar.cyclic.block.cable.item.BlockCableItem;
 import com.lothrazar.cyclic.block.clock.BlockRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.BlockFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.BlockItemCollector;
+import com.lothrazar.cyclic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
 import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.BlockItemInfinite;
@@ -156,8 +157,6 @@ public class BlockRegistry {
   //
   @ObjectHolder(ModCyclic.MODID + ":beacon")
   public static Block beacon;
-  //  @ObjectHolder(ModCyclic.MODID + ":crafter")
-  //  public static Block crafter;
   @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
   public static Block battery_infinite;
   @ObjectHolder(ModCyclic.MODID + ":item_infinite")
@@ -186,6 +185,8 @@ public class BlockRegistry {
   public static Block mason_steel;
   @ObjectHolder(ModCyclic.MODID + ":water_candle")
   public static Block water_candle;
+  @ObjectHolder(ModCyclic.MODID + ":crafter")
+  public static Block crafter;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -224,6 +225,7 @@ public class BlockRegistry {
     r.register(new BlockFluidCollect(Block.Properties.create(Material.ROCK)).setRegistryName("collector_fluid"));
     r.register(new BlockStructure(Block.Properties.create(Material.ROCK)).setRegistryName("structure"));
     r.register(new BlockUncraft(Block.Properties.create(Material.IRON)).setRegistryName("uncrafter"));
+    r.register(new BlockCrafter(Block.Properties.create(Material.IRON)).setRegistryName("crafter"));
     //
     r.register(new BlockFluidTank(Block.Properties.create(Material.ROCK)).setRegistryName("tank"));
     //
