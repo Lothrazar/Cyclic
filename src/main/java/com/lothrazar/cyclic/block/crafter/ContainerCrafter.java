@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.block.crafter;
 
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -53,8 +54,7 @@ public class ContainerCrafter extends ContainerBase {
   public static final int PREVIEW_START_Y = 35;
 
   @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    System.out.println(""+slotId);
+  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) { 
     if (slotId == TileCrafter.PREVIEW_SLOT)
       return ItemStack.EMPTY;
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
@@ -94,8 +94,8 @@ public class ContainerCrafter extends ContainerBase {
       //add grid
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
       int index = 0;
-      for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
-        for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
+      for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
+        for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
 
           this.addSlot(new CrafterGridSlot(h, index,
                   GRID_START_X + colPos * Const.SQ,

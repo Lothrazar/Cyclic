@@ -287,8 +287,8 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   }
 
   private boolean tryMatchShapedRecipe(ArrayList<ItemStack> itemStacks, ShapedRecipe recipe) {
-    for(int i = 0; i <= 3 - recipe.getWidth(); ++i) {
-      for(int j = 0; j <= 3 - recipe.getHeight(); ++j) {
+    for(int j = 0; j <= 3 - recipe.getHeight(); ++j) {
+      for(int i = 0; i <= 3 - recipe.getWidth(); ++i) {
         if (this.tryMatchShapedRecipeRegion(itemStacks, recipe, i, j)) {
           return true;
         }
