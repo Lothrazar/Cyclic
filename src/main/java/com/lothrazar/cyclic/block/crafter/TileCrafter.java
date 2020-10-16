@@ -77,7 +77,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   private boolean hasValidRecipe = false;
   public boolean shouldSearch = true;
   private boolean readyToCraft = false;
-  private ArrayList<ItemStack> lastRecipeGrid = new ArrayList<>();
+  private ArrayList<ItemStack> lastRecipeGrid = null;
   private IRecipe<?> lastValidRecipe = null;
   private ItemStack recipeOutput = ItemStack.EMPTY;
 
@@ -105,6 +105,8 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
+    if (world.isRemote)
+      return;
     IEnergyStorage en = this.energy.orElse(null);
     IItemHandler inputHandler = this.input.orElse(null);
     IItemHandler previewHandler = this.preview.orElse(null);
@@ -113,12 +115,14 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     if (lastRecipeGrid == null)
       lastRecipeGrid = itemStacksInGrid;
 
-    if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0) //Nothing in Crafting grid, so don't do anything
+    if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0) { //Nothing in Crafting grid, so don't do anything
+      setPreviewSlot(previewHandler, ItemStack.EMPTY);
       return;
+    }
     else if (!itemStacksInGrid.equals(lastRecipeGrid)) { //Crafting grid is updated, search for new recipe
       reset();
       lastRecipeGrid = itemStacksInGrid;
-      return;
+      shouldSearch = true;
     }
 
     if (!hasValidRecipe && shouldSearch) {
@@ -133,9 +137,9 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       }
       else {
         reset();
+        System.out.println("Reset because no matches");
         shouldSearch = false; //Went through all recipes, didn't find match. Don't search again (until crafting grid changes)
       }
-
     }
 
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -262,10 +266,11 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Nullable
   private IRecipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
+    System.out.print("Trying... ");
     if (world == null || world.getServer() == null)
       return null;
     Collection<IRecipe<?>> recipes = world.getServer().getRecipeManager().getRecipes();
-
+    System.out.printf("%d recipes.%n", recipes.size());
     for (IRecipe<?> recipe : recipes) {
       if (recipe instanceof ShapelessRecipe) {
         ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
@@ -281,6 +286,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
           return shapedRecipe;
       }
     }
+    System.out.println("0 matches...");
     return null;
   }
 
