@@ -4,9 +4,9 @@
         "particle": "cyclic:blocks/crafter",
         "down": "cyclic:blocks/crafter",
         "up": "cyclic:blocks/crafter",
-        "north": "cyclic:blocks/crafter",
-        "south": "cyclic:blocks/crafter",
-        "west": "cyclic:blocks/crafter",
-        "east": "cyclic:blocks/crafter"
+        "north": "cyclic:blocks/crafter_side",
+        "south": "cyclic:blocks/crafter_side",
+        "west": "cyclic:blocks/crafter_side",
+        "east": "cyclic:blocks/crafter_side"
     }
 }
