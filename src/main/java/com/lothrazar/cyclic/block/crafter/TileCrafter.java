@@ -137,7 +137,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       }
       else {
         reset();
-        System.out.println("Reset because no matches");
         shouldSearch = false; //Went through all recipes, didn't find match. Don't search again (until crafting grid changes)
       }
     }
@@ -266,11 +265,9 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Nullable
   private IRecipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
-    System.out.print("Trying... ");
     if (world == null || world.getServer() == null)
       return null;
     Collection<IRecipe<?>> recipes = world.getServer().getRecipeManager().getRecipes();
-    System.out.printf("%d recipes.%n", recipes.size());
     for (IRecipe<?> recipe : recipes) {
       if (recipe instanceof ShapelessRecipe) {
         ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
@@ -286,7 +283,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
           return shapedRecipe;
       }
     }
-    System.out.println("0 matches...");
     return null;
   }
 
