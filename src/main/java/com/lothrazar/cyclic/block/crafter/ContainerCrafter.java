@@ -54,6 +54,7 @@ public class ContainerCrafter extends ContainerBase {
 
   @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    System.out.println(""+slotId);
     if (slotId == TileCrafter.PREVIEW_SLOT)
       return ItemStack.EMPTY;
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {

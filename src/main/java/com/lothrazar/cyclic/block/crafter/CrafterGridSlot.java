@@ -6,19 +6,21 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class CrafterGridSlot extends SlotItemHandler {
+
   @Override
   public boolean isItemValid(ItemStack stack) {
-    return false;
+    return true;
   }
 
   @Override
   public boolean canTakeStack(PlayerEntity playerIn) {
-    return false;
+    return true;
   }
 
   @Override
   public void putStack(ItemStack stack) {
-    super.putStack(stack);
+    super.putStack(stack.copy());
+    stack.grow(1);//hack for JEI when they auto-fill recipes, re fill it after it drains so its a 'mock slot'
   }
 
   public CrafterGridSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {

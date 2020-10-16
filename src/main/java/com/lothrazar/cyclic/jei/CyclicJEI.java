@@ -13,7 +13,11 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.registration.*;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -63,5 +67,8 @@ public class CyclicJEI implements IModPlugin {
     registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.id,
         0, 3, //recipeSLotStart, recipeSlotCount
         3, 4 * 9);// inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
+        10, 9, //recipeSLotStart, recipeSlotCount
+        30, 4 * 9);// inventorySlotStart, inventorySlotCount
   }
 }
