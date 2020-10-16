@@ -1354,6 +1354,10 @@
     "block.water_candle.tooltip": "Increase nearby spawns when lit",
     "block.water_candle.guide": "Light with flint and steel.  Greatly increases natural mobs spawns nearby.  Follows normal spawning rules of mobs and biome.  Has a chance of being extinguished on every spawn.  Many propertes in config file.",
 
+    "block.cyclic.fireplace": "Fireplace",
+    "block.cyclic.fireplace.tooltip": "Light a fire when powered, extinguish when not powered.",
+    "block.cyclic.fireplace.guide": "Lights a neverending fire on its netherrack face when powered by redstone. Extinguishes the fire when not powered.",
+
     "extended.toolbelt": "key to open in tool-belt mode",
 
     "item.cyclic.gem.guide.title": "Gems",

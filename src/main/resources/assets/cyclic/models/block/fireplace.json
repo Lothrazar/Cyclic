@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "minecraft:block/netherrack",
+        "down": "minecraft:block/bricks",
+        "up": "minecraft:block/bricks",
+        "north": "minecraft:block/netherrack",
+        "south": "minecraft:block/bricks",
+        "west": "minecraft:block/bricks",
+        "east": "minecraft:block/bricks"
+    }
+}

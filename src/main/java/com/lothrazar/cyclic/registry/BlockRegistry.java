@@ -186,6 +186,8 @@ public class BlockRegistry {
   public static Block mason_steel;
   @ObjectHolder(ModCyclic.MODID + ":water_candle")
   public static Block water_candle;
+  @ObjectHolder(ModCyclic.MODID + ":fireplace")
+  public static Block fireplace;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -255,5 +257,6 @@ public class BlockRegistry {
     r.register(new BlockBatteryInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new BlockWaterCandle(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
+    r.register(new BlockFireplace(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
   }
 }
