@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
+import com.lothrazar.cyclic.event.WorldGenEvents;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CuriosRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
@@ -50,6 +51,6 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
+    MinecraftForge.EVENT_BUS.register(new WorldGenEvents());
   }
-}//scythe_leaves.json: 
- //"#minecraft:leaves", error?
+}
