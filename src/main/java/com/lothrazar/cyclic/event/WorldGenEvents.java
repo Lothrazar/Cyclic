@@ -16,6 +16,9 @@ public class WorldGenEvents {
   public static final BlockClusterFeatureConfig CYAN_FLOWER = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.flower_cyan.getDefaultState()),
       new SimpleBlockPlacer())).tries(64).xSpread(20).ySpread(128).zSpread(20).build();
 
+  /**
+   * Credit to pams https://github.com/MatrexsVigil/phc2crops/blob/e9790425f59c3094acef00feb2a1d0ea2b9e7e93/src/main/java/pam/pamhc2crops/worldgen/WindyGardenFeature.java
+   */
   @SubscribeEvent
   public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
     //spawn depend on biome type
