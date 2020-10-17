@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
@@ -81,20 +80,18 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
       for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
         this.drawSlot(ms, ContainerCrafter.INPUT_START_X - 1 + colPos * Const.SQ,
-                ContainerCrafter.INPUT_START_Y - 1 + rowPos * Const.SQ);
+            ContainerCrafter.INPUT_START_Y - 1 + rowPos * Const.SQ);
         this.drawSlot(ms, ContainerCrafter.OUTPUT_START_X - 1 + colPos * Const.SQ,
-                ContainerCrafter.OUTPUT_START_Y - 1 + rowPos * Const.SQ);
+            ContainerCrafter.OUTPUT_START_Y - 1 + rowPos * Const.SQ);
       }
     }
     for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
       for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
-
         this.drawSlot(ms,
-                ContainerCrafter.GRID_START_X - 1 + colPos * Const.SQ,
-                ContainerCrafter.GRID_START_Y - 1 + rowPos * Const.SQ);
+            ContainerCrafter.GRID_START_X - 1 + colPos * Const.SQ,
+            ContainerCrafter.GRID_START_Y - 1 + rowPos * Const.SQ);
       }
     }
     timer.draw(ms, container.tile.getField(TileCrafter.Fields.TIMER.ordinal()));
   }
-
 }

@@ -120,6 +120,7 @@ public class MaterialRegistry {
       }
     };
     public static final IArmorMaterial GLOWING = new IArmorMaterial() {
+
       ArmorMaterial mimicArmor = ArmorMaterial.IRON;
 
       @Override

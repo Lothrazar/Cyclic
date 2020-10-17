@@ -11,13 +11,13 @@ import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
 import net.minecraftforge.common.MinecraftForge;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnchantDisarm extends EnchantBase {
 
   private static final double BASE_CHANCE = 0.08 / 2; //halves the desired base chance to activate because onEntityDamage gets called twice and it's currently a "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
+
   public EnchantDisarm(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
@@ -35,7 +35,7 @@ public class EnchantDisarm extends EnchantBase {
   @Override
   public boolean canApply(ItemStack stack) {
     return stack.getItem() == Items.BOOK
-            || stack.getItem() instanceof SwordItem;
+        || stack.getItem() instanceof SwordItem;
   }
 
   @Override
@@ -60,8 +60,8 @@ public class EnchantDisarm extends EnchantBase {
         dropHeld = true;
       }
       if (dropHeld) {
-        user.world.addEntity(new ItemEntity(user.world,livingTarget.getPosX(),
-                livingTarget.getPosY(), livingTarget.getPosZ(), itemStack));
+        user.world.addEntity(new ItemEntity(user.world, livingTarget.getPosX(),
+            livingTarget.getPosY(), livingTarget.getPosZ(), itemStack));
       }
     });
     super.onEntityDamaged(user, target, level);

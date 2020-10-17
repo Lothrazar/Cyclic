@@ -12,7 +12,6 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.common.MinecraftForge;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class EnchantCurse extends EnchantBase {
   @Override
   public boolean canApply(ItemStack stack) {
     return stack.getItem() == Items.BOOK
-            || stack.getItem() instanceof ArmorItem;
+        || stack.getItem() instanceof ArmorItem;
   }
 
   @Override
@@ -46,9 +45,9 @@ public class EnchantCurse extends EnchantBase {
       return;
     //only allow activation once
     int totalLevels = getCurrentArmorLevelSlot(user, EquipmentSlotType.HEAD)
-            + getCurrentArmorLevelSlot(user, EquipmentSlotType.CHEST)
-            + getCurrentArmorLevelSlot(user, EquipmentSlotType.LEGS)
-            + getCurrentArmorLevelSlot(user, EquipmentSlotType.FEET);
+        + getCurrentArmorLevelSlot(user, EquipmentSlotType.CHEST)
+        + getCurrentArmorLevelSlot(user, EquipmentSlotType.LEGS)
+        + getCurrentArmorLevelSlot(user, EquipmentSlotType.FEET);
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
     if (adjustedActivationChance > user.world.rand.nextDouble()) {
       LivingEntity livingAttacker = (LivingEntity) attacker;
@@ -57,7 +56,7 @@ public class EnchantCurse extends EnchantBase {
       int appliedEffects = 0;
       for (Effect effect : negativeEffects) {
         if (appliedEffects < MIN_EFFECTS
-                || BASE_APPLY_CHANCE > user.world.rand.nextDouble()) {
+            || BASE_APPLY_CHANCE > user.world.rand.nextDouble()) {
           livingAttacker.addPotionEffect(new EffectInstance(effect, EFFECT_DURATION));
           if (++appliedEffects >= MAX_EFFECTS)
             break;

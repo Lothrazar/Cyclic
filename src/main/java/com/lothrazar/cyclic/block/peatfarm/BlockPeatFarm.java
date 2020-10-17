@@ -55,57 +55,57 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockPeatFarm extends BlockBase {
 
-    public BlockPeatFarm(Properties properties) {
-        super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F)
-                .notSolid());
-    }
+  public BlockPeatFarm(Properties properties) {
+    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F)
+        .notSolid());
+  }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void registerClient() {
-        ScreenManager.registerFactory(ContainerScreenRegistry.peat_farm, ScreenPeatFarm::new);
-    }
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    ScreenManager.registerFactory(ContainerScreenRegistry.peat_farm, ScreenPeatFarm::new);
+  }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
+  @Override
+  public boolean hasTileEntity(BlockState state) {
+    return true;
+  }
 
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TilePeatFarm();
-    }
+  @Override
+  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    return new TilePeatFarm();
+  }
 
-    @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntity tankHere = world.getTileEntity(pos);
-            if (tankHere != null) {
-                IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getFace()).orElse(null);
-                if (handler != null
-                        && FluidUtil.interactWithFluidHandler(player, hand, handler)
-                        && handler.getFluidInTank(0) != null) {
-                    player.sendStatusMessage(new TranslationTextComponent(""
-                        + handler.getFluidInTank(0).getAmount() + "/" + handler.getTankCapacity(0)), true);
-                    if (player instanceof ServerPlayerEntity) {
-                        UtilSound.playSoundFromServer((ServerPlayerEntity) player, SoundEvents.ITEM_BUCKET_FILL);
-                    }
-                }
-                else {
-                    TileEntity tileEntity = world.getTileEntity(pos);
-                    if (tileEntity instanceof INamedContainerProvider) {
-                        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-                    }
-                    else {
-                        throw new IllegalStateException("Our named container provider is missing!");
-                    }
-                    return ActionResultType.SUCCESS;
-                }
-            }
+  @Override
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    if (!world.isRemote) {
+      TileEntity tankHere = world.getTileEntity(pos);
+      if (tankHere != null) {
+        IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getFace()).orElse(null);
+        if (handler != null
+            && FluidUtil.interactWithFluidHandler(player, hand, handler)
+            && handler.getFluidInTank(0) != null) {
+          player.sendStatusMessage(new TranslationTextComponent(""
+              + handler.getFluidInTank(0).getAmount() + "/" + handler.getTankCapacity(0)), true);
+          if (player instanceof ServerPlayerEntity) {
+            UtilSound.playSoundFromServer((ServerPlayerEntity) player, SoundEvents.ITEM_BUCKET_FILL);
+          }
         }
-        if (FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
-            return ActionResultType.SUCCESS;
+        else {
+          TileEntity tileEntity = world.getTileEntity(pos);
+          if (tileEntity instanceof INamedContainerProvider) {
+            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+          }
+          else {
+            throw new IllegalStateException("Our named container provider is missing!");
+          }
+          return ActionResultType.SUCCESS;
         }
-        return super.onBlockActivated(state, world, pos, player, hand, hit);
+      }
     }
+    if (FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
+      return ActionResultType.SUCCESS;
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, hit);
+  }
 }

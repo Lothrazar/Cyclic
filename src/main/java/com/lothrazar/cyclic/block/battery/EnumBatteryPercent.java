@@ -3,7 +3,8 @@ package com.lothrazar.cyclic.block.battery;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumBatteryPercent implements IStringSerializable {
-  ZERO,TWENTY,FOURTY,SIXTY,EIGHTY,NINETY,ONEHUNDRED;
+
+  ZERO, TWENTY, FOURTY, SIXTY, EIGHTY, NINETY, ONEHUNDRED;
 
   @Override
   public String getString() {

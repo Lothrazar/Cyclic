@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
@@ -54,7 +53,7 @@ public class ContainerCrafter extends ContainerBase {
   public static final int PREVIEW_START_Y = 35;
 
   @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) { 
+  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     if (slotId == TileCrafter.PREVIEW_SLOT)
       return ItemStack.EMPTY;
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
@@ -69,7 +68,6 @@ public class ContainerCrafter extends ContainerBase {
 
   @Override
   public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-
     return slotIn.getSlotIndex() != TileCrafter.PREVIEW_SLOT && super.canMergeSlot(stack, slotIn);
   }
 
@@ -84,45 +82,41 @@ public class ContainerCrafter extends ContainerBase {
       for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
         for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
           this.addSlot(new SlotItemHandler(h, index,
-                  INPUT_START_X + colPos * Const.SQ,
-                  INPUT_START_Y + rowPos * Const.SQ));
+              INPUT_START_X + colPos * Const.SQ,
+              INPUT_START_Y + rowPos * Const.SQ));
           index++;
         }
       }
     });
-
-      //add grid
+    //add grid
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
       int index = 0;
       for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
         for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
-
           this.addSlot(new CrafterGridSlot(h, index,
-                  GRID_START_X + colPos * Const.SQ,
-                  GRID_START_Y + rowPos * Const.SQ));
+              GRID_START_X + colPos * Const.SQ,
+              GRID_START_Y + rowPos * Const.SQ));
           index++;
         }
       }
     });
-
     //add output
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.OUTPUT).ifPresent(h -> {
       int index = 0;
       for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
         for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
           this.addSlot(new CrafterOutputSlot(h, index,
-                  OUTPUT_START_X + colPos * Const.SQ,
-                  OUTPUT_START_Y + rowPos * Const.SQ));
+              OUTPUT_START_X + colPos * Const.SQ,
+              OUTPUT_START_Y + rowPos * Const.SQ));
           index++;
         }
       }
     });
-
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
       int index = 0;
       addSlot(new CrafterGridSlot(h, index,
-              PREVIEW_START_X,
-              PREVIEW_START_Y));
+          PREVIEW_START_X,
+          PREVIEW_START_Y));
     });
     this.endInv = inventorySlots.size();
     layoutPlayerInventorySlots(8, 153);

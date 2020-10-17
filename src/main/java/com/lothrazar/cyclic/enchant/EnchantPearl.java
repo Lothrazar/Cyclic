@@ -32,12 +32,14 @@ public class EnchantPearl extends EnchantBase {
   private static final int DURABILITY_DAMAGE = 3;
 
   @Override
-  public int getMaxLevel() { return 3; }
+  public int getMaxLevel() {
+    return 3;
+  }
 
   @Override
   public boolean canApply(ItemStack stack) {
     boolean yes = stack.getItem() == Items.BOOK ||
-            stack.getItem() instanceof SwordItem;
+        stack.getItem() instanceof SwordItem;
     return yes;
   }
 
@@ -61,7 +63,7 @@ public class EnchantPearl extends EnchantBase {
         Vector3d lookVector = player.getLookVec();
         pearl.shoot(lookVector.getX(), lookVector.getY(), lookVector.getZ(), VELOCITY, INNACCURACY);
         UtilEntity.setCooldownItem(player, event.getItemStack().getItem(), adjustedCooldown);
-        event.getWorld().playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (event.getWorld().rand.nextFloat() * 0.4F + 0.8F));
+        event.getWorld().playSound((PlayerEntity) null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (event.getWorld().rand.nextFloat() * 0.4F + 0.8F));
         event.getWorld().addEntity(pearl);
         event.getItemStack().damageItem(DURABILITY_DAMAGE, player, (e) -> {});
       }

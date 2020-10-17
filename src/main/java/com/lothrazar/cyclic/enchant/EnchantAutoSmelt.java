@@ -26,11 +26,9 @@ package com.lothrazar.cyclic.enchant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.Enchantment;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -54,71 +52,72 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
-
 import javax.annotation.Nonnull;
-
 
 public class EnchantAutoSmelt extends EnchantBase {
 
-    public EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
-        super(rarityIn, typeIn, slots);
-        MinecraftForge.EVENT_BUS.register(this);
+  public EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+    super(rarityIn, typeIn, slots);
+    MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  @Override
+  public int getMaxLevel() {
+    return 1;
+  }
+
+  @Override
+  public boolean canApply(ItemStack stack) {
+    return stack.getItem() == Items.BOOK
+        || stack.getItem() instanceof PickaxeItem
+        || stack.getItem() instanceof ShovelItem;
+  }
+
+  @Override
+  public boolean canApplyTogether(Enchantment ench) {
+    return ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE && super.canApplyTogether(ench);
+  }
+
+  private static class EnchantAutoSmeltModifier extends LootModifier {
+
+    public EnchantAutoSmeltModifier(ILootCondition[] conditionsIn) {
+      super(conditionsIn);
+    }
+
+    @Nonnull
+    @Override
+    public List<ItemStack> doApply(List<ItemStack> originalLoot, LootContext context) {
+      List<ItemStack> newLoot = new ArrayList<>();
+      originalLoot.forEach((stack) -> {
+        Optional<FurnaceRecipe> optional = context.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), context.getWorld());
+        if (optional.isPresent()) {
+          ItemStack smeltedItemStack = optional.get().getRecipeOutput();
+          if (!smeltedItemStack.isEmpty()) {
+            smeltedItemStack = ItemHandlerHelper.copyStackWithSize(smeltedItemStack, stack.getCount() * smeltedItemStack.getCount());
+            newLoot.add(smeltedItemStack);
+          }
+          else {
+            newLoot.add(stack);
+          }
+        }
+        else {
+          newLoot.add(stack);
+        }
+      });
+      return newLoot;
+    }
+  }
+
+  public static class Serializer extends GlobalLootModifierSerializer<EnchantAutoSmeltModifier> {
+
+    @Override
+    public EnchantAutoSmeltModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn) {
+      return new EnchantAutoSmeltModifier(conditionsIn);
     }
 
     @Override
-    public int getMaxLevel() {
-        return 1;
+    public JsonObject write(EnchantAutoSmeltModifier instance) {
+      return null; //not sure what to do with this
     }
-
-    @Override
-    public boolean canApply(ItemStack stack) {
-        return stack.getItem() == Items.BOOK
-                || stack.getItem() instanceof PickaxeItem
-                || stack.getItem() instanceof ShovelItem;
-    }
-
-    @Override
-    public boolean canApplyTogether(Enchantment ench) {
-        return ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE && super.canApplyTogether(ench);
-    }
-
-    private static class EnchantAutoSmeltModifier extends LootModifier {
-        public EnchantAutoSmeltModifier(ILootCondition[] conditionsIn) {
-            super(conditionsIn);
-        }
-
-        @Nonnull
-        @Override
-        public List<ItemStack> doApply(List<ItemStack> originalLoot, LootContext context) {
-            List<ItemStack> newLoot = new ArrayList<>(); 
-            originalLoot.forEach((stack) -> {
-                Optional<FurnaceRecipe> optional = context.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), context.getWorld());
-                if (optional.isPresent()) {
-                    ItemStack smeltedItemStack = optional.get().getRecipeOutput();
-                    if (!smeltedItemStack.isEmpty()) {
-                        smeltedItemStack = ItemHandlerHelper.copyStackWithSize(smeltedItemStack, stack.getCount() * smeltedItemStack.getCount());
-                        newLoot.add(smeltedItemStack);
-                    }
-                    else {
-                        newLoot.add(stack);
-                    }
-                }
-                else {
-                    newLoot.add(stack);
-                }
-            });
-            return newLoot;
-        }
-    }
-    public static class Serializer extends GlobalLootModifierSerializer<EnchantAutoSmeltModifier> {
-        @Override
-        public EnchantAutoSmeltModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn) {
-            return new EnchantAutoSmeltModifier(conditionsIn);
-        }
-
-        @Override
-        public JsonObject write(EnchantAutoSmeltModifier instance) {
-            return null; //not sure what to do with this
-        }
-    }
+  }
 }

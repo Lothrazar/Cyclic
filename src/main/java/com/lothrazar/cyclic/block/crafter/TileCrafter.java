@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -48,7 +47,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
@@ -97,7 +95,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     if (index != PREVIEW_SLOT && (index < OUTPUT_SLOT_START
-            || index > OUTPUT_SLOT_STOP)) {
+        || index > OUTPUT_SLOT_STOP)) {
       super.isItemValidForSlot(index, stack);
     }
     return false;
@@ -114,7 +112,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     ArrayList<ItemStack> itemStacksInGrid = getItemsInCraftingGrid();
     if (lastRecipeGrid == null)
       lastRecipeGrid = itemStacksInGrid;
-
     if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0) { //Nothing in Crafting grid, so don't do anything
       setPreviewSlot(previewHandler, ItemStack.EMPTY);
       return;
@@ -124,7 +121,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       lastRecipeGrid = itemStacksInGrid;
       shouldSearch = true;
     }
-
     if (!hasValidRecipe && shouldSearch) {
       IRecipe<?> recipe = tryRecipes(itemStacksInGrid);
       if (recipe != null) {
@@ -140,7 +136,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         shouldSearch = false; //Went through all recipes, didn't find match. Don't search again (until crafting grid changes)
       }
     }
-
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
@@ -156,24 +151,20 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     }
     if (world == null || world.getServer() == null)
       return;
-
-
     if (hasValidRecipe) {
       if (timer <= 0 && !readyToCraft && doCraft(inputHandler, true)) { //Start the timer
         timer = TIMER_FULL;
         readyToCraft = true;
         return;
       }
-
       if (!doCraft(inputHandler, true)) {
         //keep checking that we can craft while waiting
         readyToCraft = false;
         timer = 0;
       }
-
       if (timer <= 0 && readyToCraft) {
         if (!hasFreeSpace(outputHandler, recipeOutput)
-              || !doCraft(inputHandler, false)) {
+            || !doCraft(inputHandler, false)) {
           return;
         }
         else {
@@ -250,7 +241,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       }
     }
     if (simulate) {
-
       putbackStacks(putbackStacks, input);
     }
     return true;
@@ -287,8 +277,8 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   }
 
   private boolean tryMatchShapedRecipe(ArrayList<ItemStack> itemStacks, ShapedRecipe recipe) {
-    for(int j = 0; j <= 3 - recipe.getHeight(); ++j) {
-      for(int i = 0; i <= 3 - recipe.getWidth(); ++i) {
+    for (int j = 0; j <= 3 - recipe.getHeight(); ++j) {
+      for (int i = 0; i <= 3 - recipe.getWidth(); ++i) {
         if (this.tryMatchShapedRecipeRegion(itemStacks, recipe, i, j)) {
           return true;
         }
@@ -372,14 +362,21 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     return ingredientCount == itemStackCount;
   }
 
+  private IEnergyStorage createEnergy() {
+    return new CustomEnergyStorage(MAX, MAX);
+  }
 
-  private IEnergyStorage createEnergy() { return new CustomEnergyStorage(MAX, MAX); }
+  private IItemHandler createIOHandler() {
+    return new ItemStackHandler(IO_SIZE);
+  }
 
-  private IItemHandler createIOHandler() { return new ItemStackHandler(IO_SIZE); }
+  private IItemHandler createGridHandler() {
+    return new ItemStackHandler(GRID_SIZE);
+  }
 
-  private IItemHandler createGridHandler() { return new ItemStackHandler(GRID_SIZE); }
-
-  private IItemHandler createPreviewHandler() { return new ItemStackHandler(1); }
+  private IItemHandler createPreviewHandler() {
+    return new ItemStackHandler(1);
+  }
 
   @Override
   public ITextComponent getDisplayName() {
@@ -417,10 +414,14 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nonnull ItemHandlers type) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       switch (type) {
-        case INPUT: return input.cast();
-        case OUTPUT: return output.cast();
-        case GRID: return grid.cast();
-        case PREVIEW: return preview.cast();
+        case INPUT:
+          return input.cast();
+        case OUTPUT:
+          return output.cast();
+        case GRID:
+          return grid.cast();
+        case PREVIEW:
+          return preview.cast();
       }
     }
     return null;
@@ -479,13 +480,13 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     switch (TileCrafter.Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 }

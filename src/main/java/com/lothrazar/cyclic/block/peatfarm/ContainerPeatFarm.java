@@ -40,39 +40,38 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerPeatFarm extends ContainerBase {
 
-    static final int SLOTY_FLUID = 39;
-    static final int SLOTX_START = 16;
-    static final int MID_SPACING = 52;
-    public static final int SLOTY = 36;
+  static final int SLOTY_FLUID = 39;
+  static final int SLOTX_START = 16;
+  static final int MID_SPACING = 52;
+  public static final int SLOTY = 36;
+  protected TilePeatFarm tile;
 
-    protected TilePeatFarm tile;
+  public ContainerPeatFarm(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    super(ContainerScreenRegistry.peat_farm, windowId);
+    tile = (TilePeatFarm) world.getTileEntity(pos);
+    this.playerEntity = player;
+    this.playerInventory = new InvWrapper(playerInventory);
+    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      this.endInv = h.getSlots();
+      int rowSize = 6;
+      for (int i = 0; i < rowSize; i++) {
+        addSlot(new SlotItemHandler(h, i, SLOTX_START + i * Const.SQ, SLOTY));
+      }
+      //for (int i = rowSize; i < 2 * rowSize; i++) {
+      //    addSlot(new SlotItemHandler(h, i, SLOTX_START + (i - rowSize) * Const.SQ, SLOTY + Const.SQ));
+      //}
+    });
+    layoutPlayerInventorySlots(8, 84);
+    this.trackAllIntFields(tile, TilePeatFarm.Fields.values().length);
+    trackEnergy(tile);
+  }
 
-    public ContainerPeatFarm(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(ContainerScreenRegistry.peat_farm, windowId);
-        tile = (TilePeatFarm) world.getTileEntity(pos);
-        this.playerEntity = player;
-        this.playerInventory = new InvWrapper(playerInventory);
-        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            this.endInv = h.getSlots();
-            int rowSize = 6;
-            for (int i = 0; i < rowSize; i++) {
-                addSlot(new SlotItemHandler(h, i, SLOTX_START + i * Const.SQ, SLOTY));
-            }
-            //for (int i = rowSize; i < 2 * rowSize; i++) {
-            //    addSlot(new SlotItemHandler(h, i, SLOTX_START + (i - rowSize) * Const.SQ, SLOTY + Const.SQ));
-            //}
-        });
-        layoutPlayerInventorySlots(8, 84);
-        this.trackAllIntFields(tile, TilePeatFarm.Fields.values().length);
-        trackEnergy(tile);
-    }
+  public int getEnergy() {
+    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+  }
 
-    public int getEnergy() {
-        return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-    }
-
-    @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.peat_farm);
-    }
+  @Override
+  public boolean canInteractWith(PlayerEntity playerIn) {
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.peat_farm);
+  }
 }

@@ -68,15 +68,14 @@ public class BlockCrafter extends BlockBase {
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), h.getStackInSlot(i));
           }
         });
-        }
       }
+    }
     worldIn.updateComparatorOutputLevel(pos, this);
     super.onReplaced(state, worldIn, pos, newState, isMoving);
   }
 
   @Override
   public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state) {
-
     super.onPlayerDestroy(worldIn, pos, state);
   }
 
