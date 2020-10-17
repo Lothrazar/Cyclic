@@ -25,7 +25,11 @@ public class UtilItemStack {
   }
 
   public static void repairItem(ItemStack s) {
-    s.setDamage(s.getDamage() - 1);
+    repairItem(s, 1);
+  }
+
+  public static void repairItem(ItemStack s, int amount) {
+    s.setDamage(Math.max(0, s.getDamage() - amount));
   }
 
   public static void damageItem(ItemStack s) {

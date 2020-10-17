@@ -203,6 +203,7 @@ public class ItemRegistry {
     r.register(new TileTransporterEmptyItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("tile_transporter_empty"));
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ElevationWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("elevation_wand"));
+    r.register(new ItemTeleporter(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("teleport_wand"));
     if (ConfigManager.BOOMERANGS.get()) {
       r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_stun"));
       r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_carry"));
