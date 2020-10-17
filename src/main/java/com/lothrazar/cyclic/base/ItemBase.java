@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Quaternion;
@@ -66,6 +67,10 @@ public class ItemBase extends Item {
         UtilItemStack.repairItem(stackToRepair);
       }
     }
+  }
+
+  public float getChargedPercent(ItemStack stack, int chargeTimer) {
+    return BowItem.getArrowVelocity(this.getUseDuration(stack) - chargeTimer);
   }
 
   @Override
