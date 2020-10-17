@@ -17,7 +17,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -70,7 +69,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   public EnumBatteryPercent calculateRoundedPercentFilled() {
     int percent = (int) Math.floor((this.getEnergy() * 1.0F) / MAX * 10.0) * 10;
-//    System.out.printf("%d / %d = %d percent%n", this.getEnergy(), MAX, percent);
+    //    ut.printf("%d / %d = %d percent%n", this.getEnergy(), MAX, percent);
     if (percent >= 100)
       return EnumBatteryPercent.ONEHUNDRED;
     else if (percent >= 90)
@@ -209,7 +208,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
       break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-        break;
+      break;
     }
   }
 }

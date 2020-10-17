@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -84,7 +85,6 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         en.extractEnergy(cost, false);
       }
       else {
-        //        System.out.println("     server    this.status = " + this.status);
         this.status = UncraftStatusEnum.CANT;
       }
     }
@@ -170,7 +170,6 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         if (r.isEmpty()) {
           break;
         }
-        //        System.out.println("Found a result to insert" + r);
         r = inv.insertItem(i, r.copy(), false);
       }
     }
@@ -186,6 +185,8 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         }
       }
     }
+    if (!dropMe.isEmpty())
+      ModCyclic.LOGGER.info("No recipe found " + dropMe);
     return null;
   }
 

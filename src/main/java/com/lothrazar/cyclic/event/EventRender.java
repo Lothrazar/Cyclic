@@ -170,7 +170,7 @@ public class EventRender {
         }
       }
       catch (Throwable t) {
-        ModCyclic.LOGGER.trace("Block at {} with state {} threw exception, whilst rendering", coordinate, renderBlockState, t);
+        ModCyclic.LOGGER.info(String.format("Block at {} with state {} threw exception, whilst rendering", coordinate, renderBlockState, t));
       }
       matrix.pop();
     }

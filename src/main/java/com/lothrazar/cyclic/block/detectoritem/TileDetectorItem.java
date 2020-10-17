@@ -81,7 +81,7 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
         // from the notifyNeighborsOfStateChange(...)
         // door was doing a get state on pos.up() , so its top half..
         //this catch means no game crash 
-        ModCyclic.LOGGER.info("Detector: State change error in adjacent block ", e);
+        ModCyclic.LOGGER.error("Detector: State change error in adjacent block ", e);
       }
     }
   }

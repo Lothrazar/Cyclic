@@ -56,6 +56,7 @@ public class ConfigManager {
   public static BooleanValue COMMANDWORLDSPAWN;
   public static BooleanValue COMMANDGETHELP;
   private static ConfigValue<List<String>> BEHEADING_SKINS;
+  public static BooleanValue LOGINFO;
 
   private static void buildDefaultHeadList() {
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
@@ -111,6 +112,8 @@ public class ConfigManager {
     GEMGEAR = CFG.comment("Disable the endgame gear").define(category + "gemObsidianGear", true);
     NETHERBRICK = CFG.comment("Disable 5 netherbrick tools").define(category + "netherbrickGear", true);
     ENCHANTMENTS = CFG.comment("Disable all 11 enchantments").define(category + "enchantments", true);
+    category = "logging.";
+    LOGINFO = CFG.comment("Enable unblock info logs; very spammy").define(category + "info", false);
     category = "energy.";
     category = "energy.fuel.";
     PEATPOWER = CFG.comment("Power gained burning one of this")

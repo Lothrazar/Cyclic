@@ -162,7 +162,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     //      updateTargetPos(shape);
     //    }
     if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
-      //      ModCyclic.LOGGER.info(" target valid, ismining true ? " + targetPos);
       isCurrentlyMining = true;
       //then keep current target
     }
@@ -189,9 +188,8 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         boolean harvested = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
         if (!harvested) {
           //            world.destroyBlock(targetPos, true, fakePlayer.get()); 
-          harvested = world.getBlockState(targetPos)
-              .removedByPlayer(world, pos, fakePlayer.get(), true, world.getFluidState(pos));
-          //          ModCyclic.LOGGER.info(" hacked ? " + targetPos + " removed");
+          harvested = world.getBlockState(targetPos).removedByPlayer(world, pos, fakePlayer.get(), true, world.getFluidState(pos));
+          ModCyclic.LOGGER.info("Miner:removedByPlayer hacky workaround " + targetPos);
         }
         if (harvested) {
           // success 
@@ -199,22 +197,21 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
           resetProgress();
         }
         else {
-          //          ModCyclic.LOGGER.info(" FAILED ? " + targetPos + " removed");
-          world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(),
-              targetPos, (int) (curBlockDamage * 10.0F) - 1);
+          world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
     }
-    else {//is mining is false
-      //      ModCyclic.LOGGER.info(" why not mining ? " + targetPos);
-      world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(),
-          targetPos, (int) (curBlockDamage * 10.0F) - 1);
+    else {//is mining is false 
+      world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
     }
     return false;
   }
 
+  /***
+   * Unbreakable blocks and fluid blocks are not valid. Otherwise checks if player:canHarvestBlock using its equipped item
+   */
   private boolean isTargetValid() {
-    if (targetPos == null || world.isAirBlock(targetPos)) {
+    if (targetPos == null || world.isAirBlock(targetPos) || fakePlayer == null) {
       return false;//dont mine air or liquid. 
     }
     //is this valid
@@ -222,39 +219,21 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     if (blockSt.hardness < 0) {
       return false;//unbreakable 
     }
-    if (fakePlayer != null) {
-      //water logged is 
-      if (blockSt.getFluidState() != null && blockSt.getFluidState().isEmpty() == false) {
-        //am i PURE liquid? or just a WATERLOGGED block
-        if (blockSt.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
-          //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
-          return false;
-        }
+    //water logged is 
+    if (blockSt.getFluidState() != null && blockSt.getFluidState().isEmpty() == false) {
+      //am i PURE liquid? or just a WATERLOGGED block
+      if (blockSt.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
+        ModCyclic.LOGGER.info(targetPos + " Mining FLUID is not valid  " + blockSt);
+        //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
+        return false;
       }
-      //its a solid non-air, non-fluid block (but might be like waterlogged stairs or something)
-      return blockSt.canHarvestBlock(world, targetPos, fakePlayer.get());
     }
-    //TODO: Fix this once forge is fixed
-    //but its busted
-    //  Set<ToolType> tools = tool.getItem().getToolTypes(tool);
-    //    ItemStack tool = fakePlayer.get().getHeldItem(Hand.MAIN_HAND);
-    //aww this isnt working, many things like WOOD PLANKS have harvestTool = null, meaning "axe" valid tools still have not effective come back
-    //    ModCyclic.LOGGER.info(shapeIndex + ":" + tool + " not effective on " + block + "??" + block.getBlock().getHarvestTool(block));
-    //  boolean isToolEffective = false;
-    //    if (tools.size() == 0)
-    //      isToolEffective = true;//if item is not a tool, treat like empty hand = "badly effective everywhere"
-    //    else
-    //      for (ToolType t : tools) {
-    //        if (block.isToolEffective(t)) {
-    //          isToolEffective = true;
-    //          break;
-    //        }
-    //      }
-    //    if (!isToolEffective) {
-    //      ModCyclic.LOGGER.info(shapeIndex + ":" + tool + " not effective on " + block + "??" + block.getBlock().getHarvestTool(block));
-    //    }
-    //i guess any non fluid
-    return world.getFluidState(targetPos) != null;
+    //its a solid non-air, non-fluid block (but might be like waterlogged stairs or something)
+    boolean canHarvest = blockSt.canHarvestBlock(world, targetPos, fakePlayer.get());
+    if (!canHarvest) {
+      ModCyclic.LOGGER.info(targetPos + " Mining target is not valid  " + blockSt);
+    }
+    return canHarvest;
   }
 
   private void updateTargetPos(List<BlockPos> shape) {

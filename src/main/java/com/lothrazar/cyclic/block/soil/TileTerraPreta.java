@@ -89,13 +89,13 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
       try {//no need to literally increase internal growth numbers, just force more  update ticks 
         //        world.scheduleBlockUpdate(current, block, world.rand.nextInt(30) + 20, 1);
         if (!world.isRemote && world instanceof ServerWorld) {
-          ModCyclic.LOGGER.info("growth from TP");
+          ModCyclic.LOGGER.info(current + " triggered from TP " + block);
           block.randomTick(bState, (ServerWorld) world, current, world.rand);
           //          block.updateTick(world, current, bState, world.rand);
         }
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("Sprinkler by Cyclic has encountered an error while growing a plant, contact both mod authors    " + block, e);
+        ModCyclic.LOGGER.error("TerraPreta by Cyclic has encountered an error while growing a plant, contact both mod authors    " + block, e);
       }
     }
   }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
@@ -44,8 +45,8 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     btnRedstone.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    //    if (container.tile.getStatus() == UncraftStatusEnum.CANT) {
-    //    System.out.println("screeoln status" + container.tile.getField(1));
+    if (container.tile.getStatus() == UncraftStatusEnum.CANT)
+      ModCyclic.LOGGER.info("TODO: put this on screen: status" + container.tile.getField(TileUncraft.Fields.STATUS.ordinal()));
     //    String name = UtilChat.lang("block." + ModCyclic.MODID +
     //        ".uncrafter." + container.tile.getStatus().name().toLowerCase());
     //    int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;

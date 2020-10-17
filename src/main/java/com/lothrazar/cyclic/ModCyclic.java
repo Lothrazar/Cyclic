@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.event.ItemEvents;
@@ -28,7 +27,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class ModCyclic {
 
   public static final String MODID = "cyclic";
-  public static final Logger LOGGER = LogManager.getLogger();
+  public static final CyclicLogger LOGGER = new CyclicLogger(LogManager.getLogger());
   public static final IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
   public ModCyclic() {
