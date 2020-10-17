@@ -153,16 +153,19 @@ public class UtilPlaceBlocks {
     return world.setBlockState(pos, Blocks.AIR.getDefaultState());// world.destroyBlock(pos, false);
   }
 
-  public static void placeTorchSafely(World world, BlockPos blockPos) {
+  public static boolean placeTorchSafely(World world, BlockPos blockPos) {
     Direction actual = findFirstSolidFace(world, blockPos, Direction.DOWN);
     if (actual == null)
-      return;
+      return false;
     if (actual.getAxis().isHorizontal()) {
       world.setBlockState(blockPos, Blocks.WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING, actual));
+      return true;
     }
     else if (actual != Direction.DOWN) {
       world.setBlockState(blockPos, Blocks.TORCH.getDefaultState());
+      return true;
     }
+    return false;
   }
 
   @Nullable

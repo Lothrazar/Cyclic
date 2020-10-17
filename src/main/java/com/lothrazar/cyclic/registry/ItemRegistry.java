@@ -180,7 +180,7 @@ public class ItemRegistry {
     r.register(new IceWand(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("spell_ice"));
     r.register(new ItemTorchThrower(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("torch_launcher"));
     r.register(new AutoTorchItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256 * 4)).setRegistryName("charm_torch"));
-    r.register(new AutoCaveTorchItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256 * 4)).setRegistryName("charm_cave_torch"));
+    r.register(new AutoCaveTorchItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256 * 4)).setRegistryName("charm_torch_cave"));
     r.register(new EnderWingItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("charm_home"));
     r.register(new EnderWingSp(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("charm_world"));
     r.register(new EvokerFangItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("evoker_fang"));

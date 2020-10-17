@@ -535,6 +535,9 @@
     "item.cyclic.charm_torch": "Torch Charm",
     "item.cyclic.charm_torch.tooltip": "Torches the darkness while in your inventory",
     "item.cyclic.charm_torch.guide": "Whenever this detects darkness at your feet, it places a torch there and drains some durability.  Right click in your inventory to turn it off.",
+    "item.cyclic.charm_torch_cave": "Caving Torch Charm",
+    "item.cyclic.charm_torch_cave.tooltip": "Torches your surroundings while in your inventory",
+    "item.cyclic.charm_torch_cave.guide": "Detects darkness in an area around you and places torches where necessary, draining some durability.  Right click in your inventory to turn it off.",
 
     "item.tool_harvest_crops": "Garden Scythe",
     "item.tool_harvest_crops.tooltip": "Harvest and replant large areas based on data tag",

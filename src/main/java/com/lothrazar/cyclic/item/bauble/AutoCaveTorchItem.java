@@ -24,17 +24,18 @@
 package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 public class AutoCaveTorchItem extends ItemBase {
 
@@ -42,14 +43,16 @@ public class AutoCaveTorchItem extends ItemBase {
     super(properties);
   }
 
-  public static final int lightLimit = 9;
-  private static final int MAX_DISTANCE_SQ = (int) Math.pow(30, 2);
-  private static final int MIN_SPACING_SQ = (int) Math.pow(9, 2);
+  public static final int LIGHT_LIMIT = 9;
+  private static final int MAX_DISTANCE_SQ = (int) Math.pow(16, 2);
+  private static final int MAX_LIST_SIZE = 200;
   private static int timer = 0;
+  private boolean ticking = false;
+  private LinkedHashSet<BlockPos> blockHashList = new LinkedHashSet<>();
 
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof PlayerEntity == false) {
+    if (!(entityIn instanceof PlayerEntity)) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entityIn;
@@ -60,20 +63,46 @@ public class AutoCaveTorchItem extends ItemBase {
       stack.setDamage(stack.getMaxDamage());
       return;
     }
-    if (++timer >= 40) {
+    timer--;
+    Iterator iter;
+    if (timer <= 0 && !ticking) {
+      ticking = true;
       BlockPos pos = entityIn.getPosition();
-      List<BlockPos> shape = UtilShape.caveInterior(world, pos, player.getHorizontalFacing());
-      BlockPos lastPos = null;
-      for (BlockPos blockPos : shape) {
-        if (player.getDistanceSq(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < MAX_DISTANCE_SQ
-                && world.getLight(blockPos) <= lightLimit
-                && world.isAirBlock(blockPos)
-                && (lastPos == null || blockPos.distanceSq(lastPos.getX(), lastPos.getY(), lastPos.getZ(), true) >= MIN_SPACING_SQ)) {
-          UtilPlaceBlocks.placeTorchSafely(world, blockPos);
-          lastPos = blockPos;
+      if (world.getLightValue(pos) <= LIGHT_LIMIT) {
+        blockHashList.addAll(UtilShape.caveInterior(world, pos, player.getHorizontalFacing(), MAX_LIST_SIZE / 2));
+        blockHashList.removeIf(blockPos -> player.getDistanceSq(blockPos.getX(), blockPos.getY(), blockPos.getZ()) > MAX_DISTANCE_SQ);
+        if (blockHashList.size() > MAX_LIST_SIZE) { //if we're moving too fast and adding a bunch of torches, trim until under max size
+          int i = blockHashList.size();
+          iter = blockHashList.iterator();
+          while (iter.hasNext()) {
+            iter.next();
+            iter.remove();
+            if (--i <= MAX_LIST_SIZE)
+              break;
+          }
         }
       }
-      timer = 0;
+
+      iter = blockHashList.iterator();
+      while (iter.hasNext()) {
+        BlockPos testPos = (BlockPos) iter.next();
+        if (shouldPlaceTorch(world, testPos)) {
+          if (UtilPlaceBlocks.placeTorchSafely(world, testPos))
+          UtilItemStack.damageItem(player, stack);
+          iter.remove();
+          timer = 2; //lag compensation -- wait a tick before trying to place next torch
+          break;
+        }
+      }
+      ticking = false;
     }
+
+    if (!ticking) {
+      tryRepairWith(stack, player, Blocks.TORCH.asItem());
+    }
+  }
+
+  private boolean shouldPlaceTorch(World world, BlockPos pos) {
+    return world.getLight(pos) <= LIGHT_LIMIT && world.isAirBlock(pos);
   }
 }

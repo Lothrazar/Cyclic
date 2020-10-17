@@ -274,22 +274,22 @@ public class UtilShape {
     return shape;
   }
 
-  public static List<BlockPos> caveInterior(World world, BlockPos posCurrent, Direction pfacing) {
+  public static List<BlockPos> caveInterior(World world, BlockPos posCurrent, Direction pfacing, int distance) {
     List<BlockPos> shape = new ArrayList<>();
     if (pfacing == Direction.WEST || pfacing == Direction.EAST) {
-      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.NORTH));
-      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.SOUTH));
+      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.NORTH, distance / 2));
+      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.SOUTH, distance / 2));
     }
     else if (pfacing == Direction.NORTH || pfacing == Direction.SOUTH) {
-      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.EAST));
-      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.WEST));
+      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.EAST, distance / 2));
+      shape.addAll(caveInteriorHalf(world, posCurrent, Direction.WEST, distance / 2));
     }
     return shape.stream().distinct().collect(Collectors.toList());
   }
 
   //fetch half of a "cave" using the cavewalking algorithm
-  private static List<BlockPos> caveInteriorHalf(World world, BlockPos posCurrent, Direction direction) {
-    return caveWalk(world, posCurrent, direction, Direction.DOWN, 200);
+  private static List<BlockPos> caveInteriorHalf(World world, BlockPos posCurrent, Direction direction, int distance) {
+    return caveWalk(world, posCurrent, direction, Direction.DOWN, distance);
   }
 
   public static List<BlockPos> caveWalk(World world, BlockPos startPos, Direction facing, Direction stickySurface, int distance) {

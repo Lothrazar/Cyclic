@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cic",
+    "tat",
+    "cic"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:coal_block"
+    },
+    "t": {
+      "item": "minecraft:torch"
+    },
+    "i": {
+      "item": "cyclic:gem_amber"
+    },
+    "a": {
+      "item": "cyclic:charm_torch"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_torch_cave"
+  }
+}
