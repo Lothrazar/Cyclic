@@ -38,6 +38,7 @@ public class ModCyclic {
     //why is this event so freakin weird 
     //https://github.com/Minecraft-Forge-Tutorials/Custom-Json-Recipes/blob/master/src/main/java/net/darkhax/customrecipeexample/CustomRecipesMod.java
     FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
+    MinecraftForge.EVENT_BUS.addListener(WorldGenEvents::onBiomeLoadingEvent);
   }
 
   private void setup(final FMLCommonSetupEvent event) {
