@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.block.breaker.ContainerBreaker;
 import com.lothrazar.cyclic.block.clock.ContainerClock;
 import com.lothrazar.cyclic.block.collectfluid.ContainerFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.ContainerItemCollector;
+import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclic.block.crate.ContainerCrate;
 import com.lothrazar.cyclic.block.detectorentity.ContainerDetector;
 import com.lothrazar.cyclic.block.detectoritem.ContainerDetectorItem;
@@ -133,6 +134,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerUncraft(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("uncrafter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCrafter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("crafter"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":breaker")
@@ -182,6 +186,8 @@ public class ContainerScreenRegistry {
   //
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static ContainerType<ContainerUncraft> uncraft;
+  @ObjectHolder(ModCyclic.MODID + ":crafter")
+  public static ContainerType<ContainerCrafter> crafter;
   @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
   public static ContainerType<ContainerAnvilMagma> anvil_magma;
   @ObjectHolder(ModCyclic.MODID + ":beacon")
