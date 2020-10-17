@@ -13,15 +13,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class WorldGenEvents {
 
-  public static BlockClusterFeatureConfig CYAN_FLOWER = null;
+  public static final BlockClusterFeatureConfig CYAN_FLOWER = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.flower_cyan.getDefaultState()),
+      new SimpleBlockPlacer())).tries(64).xSpread(20).ySpread(128).zSpread(20).build();
 
   @SubscribeEvent
-  public static void onBiomeLoadingEvent(BiomeLoadingEvent event) {
-    if (CYAN_FLOWER == null) {
-      CYAN_FLOWER = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.flower_cyan.getDefaultState()),
-          new SimpleBlockPlacer())).tries(64).xSpread(20).ySpread(128).zSpread(20).build();
-    }
-    //
+  public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
+    //spawn depend on biome type
     if (event.getCategory() == Biome.Category.FOREST
         || event.getCategory() == Biome.Category.PLAINS
         || event.getCategory() == Biome.Category.TAIGA
