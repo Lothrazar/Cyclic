@@ -7,11 +7,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.Property;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static net.minecraft.block.WallTorchBlock.HORIZONTAL_FACING;
 
 public class UtilPlaceBlocks {
 
@@ -145,5 +151,33 @@ public class UtilPlaceBlocks {
   public static boolean destroyBlock(World world, BlockPos pos) {
     world.removeTileEntity(pos);
     return world.setBlockState(pos, Blocks.AIR.getDefaultState());// world.destroyBlock(pos, false);
+  }
+
+  public static boolean placeTorchSafely(World world, BlockPos blockPos) {
+    Direction actual = findFirstSolidFace(world, blockPos, Direction.DOWN);
+    if (actual == null)
+      return false;
+    if (actual.getAxis().isHorizontal()) {
+      world.setBlockState(blockPos, Blocks.WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING, actual));
+      return true;
+    }
+    else if (actual != Direction.DOWN) {
+      world.setBlockState(blockPos, Blocks.TORCH.getDefaultState());
+      return true;
+    }
+    return false;
+  }
+
+  @Nullable
+  public static Direction findFirstSolidFace(World world, BlockPos blockPos, Direction prefer) {
+    Direction actual = null;
+    Direction[] alternatives = {Direction.DOWN, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH, Direction.UP};
+    if (world.getBlockState(blockPos.offset(prefer)).isSolid()) actual = prefer;
+    else {
+      for (Direction dir : alternatives) {
+        if (world.getBlockState(blockPos.offset(dir)).isSolid()) actual = dir;
+      }
+    }
+    return actual == null ? null : actual.getOpposite();
   }
 }
