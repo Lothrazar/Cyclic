@@ -52,6 +52,10 @@
 			#Beheading enchant add player skin head drop, add any mob id and any skin
 			BeheadingEntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
 
+	[cyclic.logging]
+		#Enable unblock info logs; very spammy
+		info = true
+
 	[cyclic.peat]
 		#Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)
 		#Range: 0.0010000000474974513 ~ 1.0
@@ -60,6 +64,27 @@
 	[cyclic.energy]
 
 		[cyclic.energy.cost]
+			#Power per use
+			#Range: 0 ~ 64000
+			disenchanter = 1500
+			#Power per repair 
+			#Range: 0 ~ 64000
+			anvil = 250
+			#Power per use
+			#Range: 0 ~ 64000
+			dropper = 50
+			#Power per use
+			#Range: 0 ~ 64000
+			peat_farm = 500
+			#Power per use
+			#Range: 0 ~ 64000
+			miner = 10
+			#Power per use
+			#Range: 0 ~ 64000
+			collector_fluid = 500
+			#Power per recipe
+			#Range: 0 ~ 64000
+			melter = 5000
 			#Power per use
 			#Range: 0 ~ 64000
 			harvester = 250
@@ -74,28 +99,16 @@
 			beacon = 10
 			#Power per use
 			#Range: 0 ~ 64000
-			disenchanter = 1500
-			#Power per repair 
-			#Range: 0 ~ 64000
-			anvil = 250
-			#Power per use
-			#Range: 0 ~ 64000
-			dropper = 50
+			crafter = 500
 			#Power per recipe
 			#Range: 0 ~ 64000
 			solidifier = 5000
-			#Power per use
-			#Range: 0 ~ 64000
-			miner = 10
-			#Power per recipe
-			#Range: 0 ~ 64000
-			melter = 5000
 
 		[cyclic.energy.fuel]
 			#Power gained burning one of this
 			#Range: 1 ~ 64000
 			peat_fuel_enriched = 1024
-			#Power to repair one tick of durability
+			#Power gained burning one of this
 			#Range: 1 ~ 64000
 			peat_fuel = 256
 
