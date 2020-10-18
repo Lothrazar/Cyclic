@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.emerald_carrot_jump",
   "icon": "cyclic:emerald_carrot_jump",
-  "category": "cyclic:carrots",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

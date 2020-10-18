@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.heart",
   "icon": "cyclic:heart",
-  "category": "cyclic:misc",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

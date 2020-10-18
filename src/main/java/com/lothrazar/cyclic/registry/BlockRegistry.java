@@ -63,8 +63,6 @@ import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessTransmit;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -200,14 +198,6 @@ public class BlockRegistry {
   public static Block crafter;
   @ObjectHolder(ModCyclic.MODID + ":fireplace")
   public static Block fireplace;
-  public static Feature<NoFeatureConfig> windy_worldgen;
-
-  @SubscribeEvent
-  public static void registerAll(RegistryEvent.Register<Feature<?>> event) {
-    IForgeRegistry<Feature<?>> r = event.getRegistry();
-    //do features
-    //    windy_worldgen = register(r, new WindyGardenFeature(new CyanFlowerBlockStateProvider()));
-  }
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {

@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.sleeping_mat",
+  "icon": "cyclic:sleeping_mat",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.sleeping_mat.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sleeping_mat"
+    }
+  ]
+}

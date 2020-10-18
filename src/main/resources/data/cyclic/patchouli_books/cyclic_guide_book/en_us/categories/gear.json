@@ -1,5 +1,5 @@
 {
-  "name": "Gear",
-  "description": "The gear of Cyclic",
+  "name": "guide.category.gear",
+  "description": "guide.category.gear.desc",
   "icon": "cyclic:crystal_chestplate"
 }

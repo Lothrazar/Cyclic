@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.diamond_carrot_health",
   "icon": "cyclic:diamond_carrot_health",
-  "category": "cyclic:carrots",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

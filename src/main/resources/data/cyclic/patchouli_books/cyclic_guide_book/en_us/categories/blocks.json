@@ -1,5 +1,5 @@
 {
-  "name": "Blocks",
-  "description": "The blocks of Cyclic",
+  "name": "guide.category.blocks",
+  "description": "guide.category.blocks.desc",
   "icon": "cyclic:dark_glass"
 }

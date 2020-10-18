@@ -1,7 +1,7 @@
 {
   "name": "block.cyclic.terra_preta",
   "icon": "cyclic:terra_preta",
-  "category": "cyclic:misc",
+  "category": "cyclic:blocks",
   "pages": [
     {
       "type": "text",

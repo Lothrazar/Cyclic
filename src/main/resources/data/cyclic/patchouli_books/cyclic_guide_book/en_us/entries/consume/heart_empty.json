@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.heart_empty",
   "icon": "cyclic:heart_empty",
-  "category": "cyclic:misc",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

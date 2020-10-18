@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.redstone_carrot_speed",
   "icon": "cyclic:redstone_carrot_speed",
-  "category": "cyclic:carrots",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

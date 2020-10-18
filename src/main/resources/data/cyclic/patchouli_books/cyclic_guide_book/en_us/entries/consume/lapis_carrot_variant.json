@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.lapis_carrot_variant",
   "icon": "cyclic:lapis_carrot_variant",
-  "category": "cyclic:carrots",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

@@ -1,5 +1,5 @@
 {
-  "name": "Machines",
-  "description": "The machines of Cyclic",
+  "name": "guide.category.machines",
+  "description": "guide.category.machines.desc",
   "icon": "cyclic:user"
 }

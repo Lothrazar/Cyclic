@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.experience_food",
   "icon": "cyclic:experience_food",
-  "category": "cyclic:misc",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",
