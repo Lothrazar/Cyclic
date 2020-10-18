@@ -4,8 +4,10 @@
   "category": "cyclic:blocks",
   "pages": [
     {
-      "type": "text",
-      "text": "block.cyclic.flower_cyan.guide"
+      "type": "spotlight",
+      "text": "block.cyclic.flower_cyan.guide",
+      "item": "cyclic:flower_cyan",
+      "link_recipe": true
     },
     {
       "type": "crafting",

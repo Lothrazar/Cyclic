@@ -1,6 +1,6 @@
 {
-  "name": "item.cyclic.gem_obsidian",
-  "icon": "cyclic:gem_obsidian",
+  "name": "item.cyclic.gem_amber",
+  "icon": "cyclic:gem_amber",
   "category": "cyclic:misc",
   "pages": [
     {
@@ -9,8 +9,8 @@
     },
     {
       "type": "spotlight",
-      "item": "cyclic:gem_obsidian",
-      "text": "item.cyclic.gem_obsidian.guide",
+      "item": "cyclic:gem_amber",
+      "text": "item.cyclic.gem_amber.guide",
       "link_recipe": true
     }
   ]

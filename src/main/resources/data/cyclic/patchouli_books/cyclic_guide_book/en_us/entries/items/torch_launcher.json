@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.torch_launcher",
+  "icon": "cyclic:torch_launcher",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.torch_launcher.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:torch_launcher"
+    }
+  ]
+}

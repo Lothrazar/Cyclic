@@ -1376,16 +1376,15 @@
     "extended.toolbelt": "key to open in tool-belt mode",
 
     "item.cyclic.gem.guide.title": "Gems",
-    "item.cyclic.gem.guide": "Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l) using various fluids and items.",
+    "item.cyclic.gem_obsidian.guide": "Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l). They are used as a crafting material in many things",
+    "item.cyclic.gem_amber.guide": "Amber Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l).  They are used as a crafting material in many things",
 
     "item.cyclic.gem_obsidian": "Crystallized Obsidian",
-    "item.cyclic.gem_obsidian.tooltip": "Crafting material",
-    "item.cyclic.gem_obsidian.guide": "Crafting material",
+    "item.cyclic.gem_obsidian.tooltip": "Crafting material", 
 
     "item.cyclic.gem_amber": "Crystallized Amber",
-    "item.cyclic.gem_amber.tooltip": "Crafting material",
-    "item.cyclic.gem_amber.guide": "Crafting material",
-
+    "item.cyclic.gem_amber.tooltip": "Crafting material", 
+    
     "item.cyclic.crystal_sword": "Crystal Sword",
     "item.cyclic.crystal_pickaxe": "Crystal Pickaxe",
     "item.cyclic.crystal_shovel": "Crystal Shovel",
