@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.plate_launch_redstone",
+  "icon": "cyclic:plate_launch_redstone",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.plate_launch_redstone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:plate_launch_redstone"
+    }
+  ]
+}

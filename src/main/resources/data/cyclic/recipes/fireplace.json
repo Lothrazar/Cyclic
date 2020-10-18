@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "brb",
+    "brb",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:brick_slab"
+    },
+    "r": {
+      "tag": "minecraft:netherrack"
+    }
+  },
+  "result": {
+    "item": "cyclic:fireplace",
+    "count": 1
+  }
+}

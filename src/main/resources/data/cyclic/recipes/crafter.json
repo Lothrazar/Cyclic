@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pcp",
+    "xdx",
+    "pcp"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:crafting_table"
+    },
+    "d": {
+      "item": "cyclic:gem_amber"
+    },
+    "x": {
+      "tag": "minecraft:sticky_piston"
+    },
+    "p": {
+      "item": "minecraft:purple_concrete"
+    }
+  },
+  "result": {
+    "item": "cyclic:crafter",
+    "count": 1
+  }
+}

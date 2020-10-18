@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.experience_food",
+  "icon": "cyclic:experience_food",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.experience_food.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:experience_food"
+    }
+  ]
+}

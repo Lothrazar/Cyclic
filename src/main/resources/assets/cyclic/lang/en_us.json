@@ -638,6 +638,7 @@
     "block.cyclic.trash.warning": "Warning! DELETES all items",
     "block.cyclic.crafter": "Crafting Machine",
     "block.cyclic.crafter.tooltip": "Automated 3x3 crafting",
+    "block.cyclic.crafter.guide": "Set the recipe, and this will autocraft as many as it can.  Input into the sides, output from top and bottom slots.  ",
     "block.cyclic.beacon": "Pharos Beacon",
     "block.cyclic.beacon.tooltip": "Use potions to generate beacon effects",
     "block.cyclic.beacon.guide": "The Pharos Beacon takes power and potions as input and automatically applies potion effects to the selected type of entity in a radius around itself.$(br2)Can target players, mobs, animals, etc.",
