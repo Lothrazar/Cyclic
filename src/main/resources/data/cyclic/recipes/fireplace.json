@@ -10,7 +10,7 @@
       "item": "minecraft:brick_slab"
     },
     "r": {
-      "tag": "minecraft:netherrack"
+      "item": "minecraft:netherrack"
     }
   },
   "result": {
