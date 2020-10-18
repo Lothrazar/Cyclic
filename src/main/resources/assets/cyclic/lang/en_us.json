@@ -1121,7 +1121,7 @@
     
     "item.cyclic.biomass.tooltip": "For bio energy",
     "item.cyclic.biomass": "Biomass",
-    "item.cyclic.biomass.guide": "Combine with various organic material in a $(l:machines/metler)Melter$(/l) to create $(l:misc/fluid_biomass)Fluid Biomass$(/l)",
+    "item.cyclic.biomass.guide": "Combine with various organic material in a $(l:machines/melter)Melter$(/l) to create $(l:misc/fluid_biomass)Fluid Biomass$(/l)",
     "item.cyclic.peat_fuel": "Peat",
     "item.cyclic.peat_fuel.tooltip": "Smelted peat.  Use in a generator.",
     "item.cyclic.peat_fuel.guide": "Peat Fuel is smelted from $(l:blocks/saturated_peat_bog)Saturated Peat Deposits$(/l) and used in the $(l:machines/peat_generator)Peat Generator$(/l) to generate energy.$(br2)It can also be combined with $(l:misc/fluid_biomass)Fluid Biomass$(/l) in a $(l:machines/solidifier)Solidification Chamber$(/l) to create $(l:misc/peat_fuel_enriched)Enriched Peat$(/l).",

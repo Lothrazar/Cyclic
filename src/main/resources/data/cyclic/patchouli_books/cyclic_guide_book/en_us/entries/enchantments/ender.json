@@ -1,0 +1,15 @@
+{
+  "name": "enchantment.cyclic.ender",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:ender\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.ender.desc"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:ender\",lvl:1}]}"
+    }
+  ]
+}
