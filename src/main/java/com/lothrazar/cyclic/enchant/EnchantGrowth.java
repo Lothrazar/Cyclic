@@ -36,7 +36,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -58,10 +57,8 @@ public class EnchantGrowth extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    //anything that goes on your feet
-    boolean yes = stack.getItem() == Items.BOOK ||
-        stack.getItem() instanceof HoeItem;
-    return yes;
+    //TODO: boots too?
+    return stack.getItem() instanceof HoeItem;
   }
 
   @SubscribeEvent

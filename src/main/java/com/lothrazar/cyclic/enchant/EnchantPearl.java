@@ -8,7 +8,6 @@ import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -38,9 +37,7 @@ public class EnchantPearl extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    boolean yes = stack.getItem() == Items.BOOK ||
-        stack.getItem() instanceof SwordItem;
-    return yes;
+    return stack.getItem() instanceof SwordItem;
   }
 
   @Override

@@ -1,7 +1,23 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ConfigManager;
-import com.lothrazar.cyclic.enchant.*;
+import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
+import com.lothrazar.cyclic.enchant.EnchantBeheading;
+import com.lothrazar.cyclic.enchant.EnchantCurse;
+import com.lothrazar.cyclic.enchant.EnchantDisarm;
+import com.lothrazar.cyclic.enchant.EnchantExcavation;
+import com.lothrazar.cyclic.enchant.EnchantGrowth;
+import com.lothrazar.cyclic.enchant.EnchantLaunch;
+import com.lothrazar.cyclic.enchant.EnchantLifeLeech;
+import com.lothrazar.cyclic.enchant.EnchantMagnet;
+import com.lothrazar.cyclic.enchant.EnchantMultishot;
+import com.lothrazar.cyclic.enchant.EnchantPearl;
+import com.lothrazar.cyclic.enchant.EnchantQuickdraw;
+import com.lothrazar.cyclic.enchant.EnchantReach;
+import com.lothrazar.cyclic.enchant.EnchantStep;
+import com.lothrazar.cyclic.enchant.EnchantTraveller;
+import com.lothrazar.cyclic.enchant.EnchantVenom;
+import com.lothrazar.cyclic.enchant.EnchantXp;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;

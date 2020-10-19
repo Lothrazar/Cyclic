@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.enchant;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
@@ -7,12 +9,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
 import net.minecraftforge.common.MinecraftForge;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EnchantDisarm extends EnchantBase {
 
@@ -34,8 +33,7 @@ public class EnchantDisarm extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    return stack.getItem() == Items.BOOK
-        || stack.getItem() instanceof SwordItem;
+    return stack.getItem() instanceof SwordItem;
   }
 
   @Override

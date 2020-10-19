@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.enchant;
 
+import java.util.Collections;
+import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilEnchant;
 import net.minecraft.enchantment.EnchantmentType;
@@ -8,12 +10,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.common.MinecraftForge;
-import java.util.Collections;
-import java.util.List;
 
 public class EnchantCurse extends EnchantBase {
 
@@ -35,8 +34,7 @@ public class EnchantCurse extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    return stack.getItem() == Items.BOOK
-        || stack.getItem() instanceof ArmorItem;
+    return stack.getItem() instanceof ArmorItem;
   }
 
   @Override

@@ -51,7 +51,7 @@ public class EnchantMultishot extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    return stack.getItem() instanceof BowItem || stack.getItem() == Items.BOOK;
+    return stack.getItem() instanceof BowItem;
   }
 
   @Override

@@ -32,7 +32,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,9 +59,8 @@ public class EnchantTraveller extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    boolean yes = stack.getItem() == Items.BOOK ||
-        (stack.getItem() instanceof ArmorItem)
-            && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
+    boolean yes = (stack.getItem() instanceof ArmorItem)
+        && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
     return yes;
   }
 

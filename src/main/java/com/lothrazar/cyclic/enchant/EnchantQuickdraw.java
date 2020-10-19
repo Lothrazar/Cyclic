@@ -32,7 +32,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -48,8 +47,7 @@ public class EnchantQuickdraw extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    return stack.getItem() instanceof BowItem
-        || stack.getItem() == Items.BOOK;
+    return stack.getItem() instanceof BowItem;
   }
 
   @Override

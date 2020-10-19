@@ -39,7 +39,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -67,9 +66,8 @@ public class EnchantLaunch extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    //anything that goes on your feet
-    boolean yes = stack.getItem() == Items.BOOK ||
-        stack.getItem() instanceof ElytraItem ||
+    //anything that goes on your feet 
+    boolean yes = stack.getItem() instanceof ElytraItem ||
         (stack.getItem() instanceof ArmorItem)
             && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.FEET;
     return yes;
