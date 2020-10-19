@@ -30,6 +30,12 @@
       "item": "#output",
       "x": 80,
       "y": 40
+    },
+    {
+      "type": "item",
+      "item": "#output_strong",
+      "x": 80,
+      "y": 60
     }
   ]
 }

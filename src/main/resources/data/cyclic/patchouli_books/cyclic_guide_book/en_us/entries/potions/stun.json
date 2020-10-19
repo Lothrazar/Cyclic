@@ -10,8 +10,8 @@
     {
       "type": "cyclic:brewing",
       "ingredient": "minecraft:clay",
-      "base_potion": "minecraft:potion{Potion:\"minecraft:awkward\"}",
-      "output": "minecraft:potion{Potion:\"cyclic:stun\"}"
+      "base_potion": "minecraft:potion#3{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#3{Potion:\"cyclic:stun\"}"
     }
   ]
 }

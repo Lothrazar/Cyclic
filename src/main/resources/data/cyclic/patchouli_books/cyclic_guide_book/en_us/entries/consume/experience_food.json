@@ -4,12 +4,12 @@
   "category": "cyclic:consume",
   "pages": [
     {
-      "type": "text",
+      "type": "spotlight",
+      "item": "cyclic:experience_food",
       "text": "item.cyclic.experience_food.guide"
     },
     {
-      "type": "spotlight",
-      "item": "cyclic:experience_food",
+      "type": "text",
       "text": "item.cyclic.experience_food.guide0"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.magic_net",
   "icon": "cyclic:magic_net",
-  "category": "cyclic:items",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

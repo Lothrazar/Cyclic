@@ -10,14 +10,9 @@
     {
       "type": "cyclic:brewing",
       "ingredient": "minecraft:emerald",
-      "base_potion": "minecraft:potion{Potion:\"minecraft:awkward\"}",
-      "output": "minecraft:potion{Potion:\"cyclic:strong_haste\"}"
-    },
-    {
-      "type": "cyclic:brewing",
-      "ingredient": "minecraft:redstone",
-      "base_potion": "minecraft:potion{Potion:\"cyclic:haste\"}",
-      "output": "minecraft:potion{Potion:\"cyclic:strong_haste\"}"
+      "base_potion": "minecraft:potion#3{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#3{Potion:\"cyclic:haste\"}",
+      "output_strong": "minecraft:potion#3{Potion:\"cyclic:strong_haste\"}"
     }
   ]
 }

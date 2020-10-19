@@ -10,8 +10,8 @@
     {
       "type": "cyclic:brewing",
       "ingredient": "minecraft:dried_kelp_block",
-      "base_potion": "minecraft:potion{Potion:\"minecraft:awkward\"}",
-      "output": "minecraft:potion{Potion:\"cyclic:swimspeed\"}"
+      "base_potion": "minecraft:potion#3{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#3{Potion:\"cyclic:swimspeed\"}"
     }
   ]
 }
