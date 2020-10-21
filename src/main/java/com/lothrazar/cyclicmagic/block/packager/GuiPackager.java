@@ -34,7 +34,7 @@ public class GuiPackager extends GuiBaseContainer {
   public GuiPackager(InventoryPlayer inventoryPlayer, TileEntityPackager tileEntity) {
     super(new ContainerPackager(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityPackager.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockPackager.FUEL_COST);
     energyBar.setX(this.xSize / 2 - 8).setY(16).setWidth(14);
   }
 

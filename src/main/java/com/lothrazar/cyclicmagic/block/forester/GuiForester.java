@@ -47,7 +47,7 @@ public class GuiForester extends GuiBaseContainer {
     setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityForester.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityForester.Fields.RENDERPARTICLES.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockForester.FUEL_COST);
     energyBar.setWidth(16).setX(150);
   }
 

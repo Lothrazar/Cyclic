@@ -42,7 +42,7 @@ public class GuiCrafter extends GuiBaseContainer {
     tileCrafter = tileEntity;
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockCrafter.FUEL_COST);
     energyBar.setHeight(82).setWidth(14).setY(28).setX(150);
   }
 

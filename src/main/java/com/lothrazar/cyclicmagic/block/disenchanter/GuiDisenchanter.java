@@ -45,7 +45,7 @@ public class GuiDisenchanter extends GuiBaseContainer {
     this.ySize = getScreenSize().height();
     this.fieldRedstoneBtn = TileEntityDisenchanter.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityDisenchanter.Fields.TIMER.ordinal(), TileEntityDisenchanter.TIMER_FULL);
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockDisenchanter.FUEL_COST);
     energyBar.setX(156).setY(22);
   }
 

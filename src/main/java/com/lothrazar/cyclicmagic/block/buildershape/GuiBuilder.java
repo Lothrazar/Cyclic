@@ -51,7 +51,7 @@ public class GuiBuilder extends GuiBaseContainer {
     setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockStructureBuilder.FUEL_COST);
     energyBar.setWidth(10).setY(4).setX(160).setHeight(42);
   }
 

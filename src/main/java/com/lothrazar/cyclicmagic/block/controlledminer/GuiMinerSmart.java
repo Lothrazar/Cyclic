@@ -51,7 +51,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     te = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockMinerSmart.FUEL_COST);
     energyBar.setHeight(50).setY(12);
   }
 

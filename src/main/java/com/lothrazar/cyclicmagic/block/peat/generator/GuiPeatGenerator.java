@@ -35,7 +35,7 @@ public class GuiPeatGenerator extends GuiBaseContainer {
   public GuiPeatGenerator(InventoryPlayer inventoryPlayer, TileEntityPeatGenerator te) {
     super(new ContainerPeatGenerator(inventoryPlayer, te), te);
     this.progressBar = new ProgressBar(this, 10, 72, TileEntityPeatGenerator.Fields.TIMER.ordinal(), TileEntityPeatGenerator.TIMER_FULL);
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, true);
     energyBar.setWidth(16).setY(8).setX(150);
   }
 

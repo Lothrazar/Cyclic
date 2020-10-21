@@ -42,7 +42,7 @@ public class GuiFisher extends GuiBaseContainer {
     super(new ContainerFisher(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityFishing.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockFishing.FUEL_COST);
   }
 
   @SideOnly(Side.CLIENT)

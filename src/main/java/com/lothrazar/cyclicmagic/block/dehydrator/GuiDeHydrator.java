@@ -42,7 +42,7 @@ public class GuiDeHydrator extends GuiBaseContainer {
   public GuiDeHydrator(InventoryPlayer inventoryPlayer, TileEntityDeHydrator tileEntity) {
     super(new ContainerDeHydrator(inventoryPlayer, tileEntity), tileEntity);
     fieldRedstoneBtn = TileEntityDeHydrator.Fields.REDSTONE.ordinal();
-    energyBar = new EnergyBar(this);
+    energyBar = new EnergyBar(this, BlockDeHydrator.FUEL_COST);
     energyBar.setX(84).setY(16).setWidth(14).setHeight(50);
     fluidBar = new FluidBar(this, 110, 16);
     fluidBar.setHeight(52);

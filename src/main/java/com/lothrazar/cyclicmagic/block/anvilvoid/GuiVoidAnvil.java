@@ -11,7 +11,7 @@ public class GuiVoidAnvil extends GuiBaseContainer {
 
   public GuiVoidAnvil(InventoryPlayer inventoryPlayer, TileEntityVoidAnvil tile) {
     super(new ContainerVoidAnvil(inventoryPlayer, tile), tile);
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockVoidAnvil.FUEL_COST);
     energyBar.setWidth(16).setX(this.xSize / 2 - 8 - 1);
     this.fieldRedstoneBtn = TileEntityVoidAnvil.Fields.REDSTONE.ordinal();
   }

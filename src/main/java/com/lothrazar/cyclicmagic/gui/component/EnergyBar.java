@@ -7,20 +7,23 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyBar {
 
-  //  public boolean isOutsideContainer = true;
   private int x = 156;
   private int y = 16;
   private int width = 10;//inner
   private int height = 60;//inner
   private int border = 1;
   private GuiBaseContainer parent;
+  private boolean visible = true;
 
-  public EnergyBar(GuiBaseContainer p) {
+  public EnergyBar(GuiBaseContainer p, boolean alwaysVisible) {
     parent = p;
+    visible = alwaysVisible;
   }
 
-  public int getX() {
-    return x;
+  public EnergyBar(GuiBaseContainer p, int cost) {
+    parent = p;
+    //    this.cost = cost;
+    visible = (cost > 0);
   }
 
   public EnergyBar setX(int x) {
@@ -28,17 +31,9 @@ public class EnergyBar {
     return this;
   }
 
-  public int getY() {
-    return y;
-  }
-
   public EnergyBar setY(int y) {
     this.y = y;
     return this;
-  }
-
-  public int getWidth() {
-    return width;
   }
 
   public EnergyBar setWidth(int width) {
@@ -46,17 +41,9 @@ public class EnergyBar {
     return this;
   }
 
-  public int getHeight() {
-    return height;
-  }
-
   public EnergyBar setHeight(int height) {
     this.height = height;
     return this;
-  }
-
-  public int getBorder() {
-    return border;
   }
 
   public EnergyBar setBorder(int border) {
@@ -65,29 +52,35 @@ public class EnergyBar {
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {
-    return parent.getGuiLeft() + getX() < mouseX && mouseX < parent.getGuiLeft() + getX() + getWidth()
-        && parent.getGuiTop() + getY() < mouseY && mouseY < parent.getGuiTop() + getY() + getHeight();
+    if (!visible) {
+      return false;
+    }
+    return parent.getGuiLeft() + this.x < mouseX && mouseX < parent.getGuiLeft() + this.x + width
+        && parent.getGuiTop() + this.y < mouseY && mouseY < parent.getGuiTop() + this.y + height;
   }
 
   public void draw(IEnergyStorage energy) {
+    if (!visible) {
+      return;
+    }
     int u = 0, v = 0;
     float percent = ((float) energy.getEnergyStored()) / ((float) energy.getMaxEnergyStored());
-    //must store fuelXY for tooltip?
-    int outerLength = this.getHeight() + 2 * this.getBorder();
-    int outerWidth = this.getWidth() + 2 * this.getBorder();
+    //border area 
+    int outerLength = this.height + 2 * this.border;
+    int outerWidth = this.width + 2 * this.border;
     //draw the outer container
     parent.mc.getTextureManager().bindTexture(Const.Res.ENERGY_CTR);
     Gui.drawModalRectWithCustomSizedTexture(
-        parent.getGuiLeft() + this.getX(),
-        parent.getGuiTop() + this.getY(), u, v,
+        parent.getGuiLeft() + this.x,
+        parent.getGuiTop() + this.y, u, v,
         outerWidth, outerLength,
         outerWidth, outerLength);
-    //draw the inner actual thing
+    //draw the inner
     parent.mc.getTextureManager().bindTexture(Const.Res.ENERGY_INNER);
     Gui.drawModalRectWithCustomSizedTexture(
-        parent.getGuiLeft() + this.getX() + this.getBorder(),
-        parent.getGuiTop() + this.getY() + this.getBorder(), u, v,
-        this.getWidth(), (int) (this.getHeight() * percent),
-        this.getWidth(), this.getHeight());
+        parent.getGuiLeft() + this.x + this.border,
+        parent.getGuiTop() + this.y + this.border, u, v,
+        this.width, (int) (this.height * percent),
+        this.width, this.height);
   }
 }

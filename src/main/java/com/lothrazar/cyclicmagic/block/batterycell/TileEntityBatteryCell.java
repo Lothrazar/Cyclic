@@ -30,7 +30,7 @@ public class TileEntityBatteryCell extends TileEntityBaseMachineInvo implements 
   public TileEntityBatteryCell(int capacity) {
     super(1);
     this.capacity = capacity;
-    this.initEnergy(new EnergyStore(capacity), 0);
+    this.initEnergy(new EnergyStore(capacity));
     this.setSlotsForBoth();
     poweredSides = new HashMap<EnumFacing, Boolean>();
     for (EnumFacing f : EnumFacing.values()) {

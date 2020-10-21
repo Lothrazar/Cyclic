@@ -12,7 +12,7 @@ public class TileEntityBatteryInfinite extends TileEntityBaseMachineInvo impleme
 
   public TileEntityBatteryInfinite() {
     super(0);
-    this.initEnergy(new EnergyStore(CAPACITY, CAPACITY, CAPACITY), 0);
+    this.initEnergy(new EnergyStore(CAPACITY, CAPACITY, CAPACITY));
   }
 
   @Override

@@ -52,7 +52,7 @@ public class GuiUser extends GuiBaseContainer {
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), 1);
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockUser.FUEL_COST);
     energyBar.setHeight(50).setX(156).setY(6);
   }
 

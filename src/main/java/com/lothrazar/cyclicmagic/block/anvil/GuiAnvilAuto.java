@@ -37,7 +37,7 @@ public class GuiAnvilAuto extends GuiBaseContainer {
   public GuiAnvilAuto(InventoryPlayer inventoryPlayer, TileEntityAnvilAuto tileEntity) {
     super(new ContainerAnvilAuto(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityAnvilAuto.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockAnvilAuto.FUEL_COST);
     energyBar.setWidth(16).setX(this.xSize / 2 - 8 - 1);
   }
 

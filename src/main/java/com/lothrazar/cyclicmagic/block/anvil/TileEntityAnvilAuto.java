@@ -85,8 +85,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
     switch (Fields.values()[id]) {
       case REDSTONE:
         return needsRedstone;
-      //      case FUEL:
-      //        return this.getEnergyCurrent();
     }
     return -1;
   }
@@ -97,9 +95,6 @@ public class TileEntityAnvilAuto extends TileEntityBaseMachineInvo implements IT
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
-      //      case FUEL:
-      //        this.setEnergyCurrent(value);
-      //      break;
     }
   }
 

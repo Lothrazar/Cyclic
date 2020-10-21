@@ -75,8 +75,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
       tank = new FluidTankBase(MENERGY);
     }
     if (hasEnergy) {
-      initEnergy(new EnergyStore(MENERGY), 0);
-      this.setEnergyCost(0);
+      initEnergy(new EnergyStore(MENERGY));
     }
     itemTransport = hasItems;
     fluidTransport = hasFluid;

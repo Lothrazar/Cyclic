@@ -42,7 +42,7 @@ public class GuiDropperExact extends GuiBaseContainer {
     super(new ContainerDropperExact(inventoryPlayer, tileEntity));
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityDropperExact.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockDropperExact.FUEL_COST);
     energyBar.setX(156);
   }
 

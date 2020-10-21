@@ -51,7 +51,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.xSize = getScreenSize().width();
     this.ySize = getScreenSize().height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockPatternBuilder.FUEL_COST);
     energyBar.setX(158).setY(4).setHeight(42);
   }
 

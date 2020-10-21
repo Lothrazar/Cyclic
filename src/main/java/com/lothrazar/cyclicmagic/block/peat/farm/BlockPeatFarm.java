@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.block.peat.farm;
 
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
+import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.ForgeGuiHandler;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -41,16 +42,29 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidUtil;
 
-public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe {
+public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
 
+  public static int FUEL_COST = 64;
   private Block peat_generator;
 
   public BlockPeatFarm(Block peat_generator) {
     super(Material.IRON);
     this.setGuiId(ForgeGuiHandler.GUI_INDEX_PEATFARM);
     this.peat_generator = peat_generator;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    //    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 64, 0, 500000, Const.ConfigText.fuelCost);
+    //    UtilRepairItem.syncConfig(config);
+  }
+
+  private String getContentName() {
+    return "peat_farm";
   }
 
   @Override

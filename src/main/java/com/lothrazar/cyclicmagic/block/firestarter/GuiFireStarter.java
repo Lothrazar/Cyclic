@@ -21,7 +21,7 @@ public class GuiFireStarter extends GuiBaseContainer {
   public GuiFireStarter(InventoryPlayer inventoryPlayer, TileEntityFireStarter tile) {
     super(new ContainerFireStarter(inventoryPlayer, tile), tile);
     this.fieldRedstoneBtn = TileEntityFireStarter.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockFireStarter.FUEL_COST);
     energyBar.setWidth(16).setX(this.xSize - 26);
   }
 

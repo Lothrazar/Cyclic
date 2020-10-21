@@ -44,7 +44,6 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
 
   public static final int TANK_FULL = Fluid.BUCKET_VOLUME * 20;
   public static final int TIMER_FULL = 5;
-  private static final int PER_TICK = 64;
 
   public static enum Fields {
     REDSTONE, TIMER;
@@ -90,7 +89,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
       blockPointer = 0;//start over when turned off
       return;
     }
-    energyStorage.extractEnergy(PER_TICK, false);
+    energyStorage.extractEnergy(BlockPeatFarm.FUEL_COST, false);
     if (energyStorage.getEnergyStored() == 0) {
       return;
     }
@@ -102,7 +101,6 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
     //now loop for build/harvest 
     if (blockPointer < outer.size()) {
       BlockPos target = outer.get(blockPointer);
-      //  ModCyclic.logger.error("?"+blockPointer+"  "+target);
       boolean placeWater = (target.getX() - pos.getX()) % 3 == 0
           && (target.getZ() - pos.getZ()) % 3 == 0;
       //based on pattern, try to place either water or the block
@@ -118,7 +116,6 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
     }
     else {
       blockPointer = 0;
-      //    ModCyclic.logger.error("RESET");
     }
   }
 

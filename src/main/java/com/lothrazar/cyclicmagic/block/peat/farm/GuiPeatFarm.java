@@ -36,7 +36,7 @@ public class GuiPeatFarm extends GuiBaseContainer {
   public GuiPeatFarm(InventoryPlayer inventoryPlayer, TileEntityPeatFarm te) {
     super(new ContainerPeatFarm(inventoryPlayer, te), te);
     this.fieldRedstoneBtn = TileEntityPeatFarm.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockPeatFarm.FUEL_COST);
     energyBar.setX(152);
     this.fluidBar = new FluidBar(this, 120, 16);
     fluidBar.setCapacity(TileEntityPeatFarm.TANK_FULL);

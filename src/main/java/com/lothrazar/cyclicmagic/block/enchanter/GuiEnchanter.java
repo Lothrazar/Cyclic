@@ -42,7 +42,7 @@ public class GuiEnchanter extends GuiBaseContainer {
     super(new ContainerEnchanter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityEnchanter.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockEnchanter.FUEL_COST);
     energyBar.setX(152);
     this.fluidBar = new FluidBar(this, this.xSize / 2 - 8 - 1, 16);
     fluidBar.setCapacity(TileEntityAnvilAuto.TANK_FULL);

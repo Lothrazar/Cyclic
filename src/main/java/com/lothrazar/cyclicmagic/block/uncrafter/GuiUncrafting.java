@@ -46,7 +46,7 @@ public class GuiUncrafting extends GuiBaseContainer {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileEntityUncrafter.Fields.REDSTONE.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockUncrafting.FUEL_COST);
     energyBar.setHeight(76).setX(148).setY(24).setWidth(16);
     this.progressBar = new ProgressBar(this, 10,
         ContainerUncrafting.SLOTY_INPUT + 3 * Const.SQ + Const.PAD,

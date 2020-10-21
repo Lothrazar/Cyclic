@@ -41,7 +41,7 @@ public class GuiBattery extends GuiBaseContainer {
 
   public GuiBattery(InventoryPlayer inventoryPlayer, TileEntityBaseMachineInvo te) {
     super(new ContainerBattery(inventoryPlayer, te), te);
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, true);
     energyBar.setWidth(16).setY(8).setX(150);
     checkboxes = new CheckboxFacingComponent(this);
     checkboxes.setX(40);

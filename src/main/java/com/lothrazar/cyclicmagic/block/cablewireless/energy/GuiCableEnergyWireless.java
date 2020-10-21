@@ -53,7 +53,7 @@ public class GuiCableEnergyWireless extends GuiBaseContainer {
     this.setScreenSize(ScreenSize.LARGE);
     this.fieldRedstoneBtn = TileCableEnergyWireless.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileCableEnergyWireless.Fields.RENDERPARTICLES.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, true);
     energyBar.setWidth(16).setY(18).setX(this.getScreenSize().width() - 24);
   }
 

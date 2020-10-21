@@ -146,10 +146,15 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         this.invHandler.canExtract(index);
   }
 
+  protected void initEnergy(EnergyStore store) {
+    initEnergy(store, 0);
+    this.hasEnergy = true;
+  }
+
   protected void initEnergy(EnergyStore store, int energyCost) {
     this.energyStorage = store;
-    this.hasEnergy = true;
-    this.setEnergyCost(energyCost);
+    this.energyCost = energyCost;
+    this.hasEnergy = energyCost > 0;
   }
 
   public int getEnergyMax() {
@@ -500,8 +505,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         && this.getSizeInventory() > 0) {
       return true;
     }
-    if (capability == CapabilityEnergy.ENERGY
-        && this.energyStorage != null) {
+    if (this.hasEnergy && capability == CapabilityEnergy.ENERGY && this.energyStorage != null) {
       return true;
     }
     return super.hasCapability(capability, facing);
@@ -513,7 +517,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return (T) invHandler;
     }
-    if (this.hasEnergy && capability == CapabilityEnergy.ENERGY) {
+    if (this.hasEnergy && capability == CapabilityEnergy.ENERGY && this.energyStorage != null) {
       return CapabilityEnergy.ENERGY.cast(energyStorage);
     }
     return super.getCapability(capability, facing);
@@ -667,10 +671,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         sidesOut.add(s);
     Collections.shuffle(sidesOut);
     return sidesOut;
-  }
-
-  public void setEnergyCost(int energyCost) {
-    this.energyCost = energyCost;
   }
 
   @Override

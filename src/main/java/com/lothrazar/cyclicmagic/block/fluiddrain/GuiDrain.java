@@ -41,7 +41,7 @@ public class GuiDrain extends GuiBaseContainer {
     super(new ContainerDrain(inventoryPlayer, tileEntity), tileEntity);
     this.fieldRedstoneBtn = TileEntityFluidDrain.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityFluidDrain.Fields.RENDERPARTICLES.ordinal();
-    this.energyBar = new EnergyBar(this);
+    this.energyBar = new EnergyBar(this, BlockFluidDrain.FUEL_COST);
     energyBar.setX(152).setY(18).setWidth(14);
     this.fluidBar = new FluidBar(this, 126, 18);
     fluidBar.setCapacity(TileEntityFluidDrain.TANK_FULL);
