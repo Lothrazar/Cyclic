@@ -4,7 +4,7 @@
     "modid": "cyclicmagic",
     "name": "Cyclic",
     "description": "Items, inventory features, world generation, simple machines, gameplay tweaks, new villagers, key bindings, and more. See config to disable absolutely anything.  Report issues and suggestions to https://github.com/Lothrazar/Cyclic/issues https://twitter.com/lothrazar ",
-    "version": "1.20.7",
+    "version": "1.20.8",
     "mcversion": "1.12.2",
     "url": " https://github.com/Lothrazar/Cyclic/",
     "updateUrl": "http://minecraft.curseforge.com/projects/cyclic",

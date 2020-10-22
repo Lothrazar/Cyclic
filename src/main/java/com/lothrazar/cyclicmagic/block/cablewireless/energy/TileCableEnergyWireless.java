@@ -36,7 +36,7 @@ public class TileCableEnergyWireless extends TileEntityBaseMachineInvo implement
 
   public TileCableEnergyWireless() {
     super(SLOT_COUNT);
-    this.initEnergy(new EnergyStore(MENERGY), 0);
+    this.initEnergy(new EnergyStore(MENERGY));
   }
 
   @Override

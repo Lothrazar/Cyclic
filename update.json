@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.30",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12.2-latest": "1.20.7",
-    "1.12.2-recommended": "1.20.7"
+    "1.12.2-latest": "1.20.8",
+    "1.12.2-recommended": "1.20.8"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -343,5 +343,6 @@
 	,"1.20.5":"Optimize BaseEnchant calls to EnchantmentHelper and HashMap (merge PR Ricket).  Fix merchant almanac bug.  Fixed Cyclic Fluid Node Transfer Rate does not change with GUI.  Fix compatibility crash with Just a Few Fish mod.  Fix a pattern replicator block server crash bug.  Missing texture added for potion effect 'stunned'.  New config SprinklerAnimationsAllowed.  Experience pylon fill and drain logic overhauled to fix bugs; player can sneak on the pylon to drain into it.  If a player currently has the cyclic bounce potion effect bounching, and is using Multi-jump enchant as well, the horizontal momentum given from the multi-jump click is greatly reduced to avoid combining with the bounce enchant and becoming overkill.  "
 	,"1.20.6":"Auto crafter now correctly moves container items to output slots and refills them (such as full buckets in cake recipe).  Boomerang fixed to not break certain strong blocks such as Reinforced glass from securitycraft when thrown.  Also Boomerang by default will no longer break blocks when flying (config boomerang.doesBreakBlocks to restore old way).  (trunksbomb) Fix Pattern Replicator to not cause out of bounds exception  "
 	,"1.20.7":"If a block has its fuelcost config set to zero, it now will also hide the energy display in GUI screen, and block capability connections.  New config added for energy cost to run machine I:peat_farm=64 [range: 0 ~ 500000, default: 64] in cyclicmagic.cfg file (prevously was hardcoded 64 default).  "
+	,"1.20.8":"Fixed crash introduced in 1.20.7 energy cable"
   }
 }
