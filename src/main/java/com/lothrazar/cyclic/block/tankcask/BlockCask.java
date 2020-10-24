@@ -46,6 +46,9 @@ public class BlockCask extends BlockBase {
     return new TileCask();
   }
 
+  /**
+   * TODO: share code with BlockFluidTank and BlockCask
+   */
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!world.isRemote) {
@@ -53,7 +56,6 @@ public class BlockCask extends BlockBase {
       if (tankHere != null) {
         IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getFace()).orElse(null);
         if (handler != null) {
-          //          FluidStack tankFluidBefore = tankHere.getFluid().copy();
           if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
             //success so display new amount
             if (handler.getFluidInTank(0) != null) {

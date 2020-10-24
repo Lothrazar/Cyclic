@@ -19,8 +19,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockMelter extends BlockBase {
 
   public BlockMelter(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F)
-        .notSolid());
+    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F).notSolid());
     this.setHasGui();
   }
 

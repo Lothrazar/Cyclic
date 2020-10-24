@@ -94,6 +94,9 @@ public class BlockFluidTank extends BlockBase {
     return new TileTank();
   }
 
+  /**
+   * TODO: share code with BlockFluidTank and BlockCask
+   */
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!world.isRemote) {
