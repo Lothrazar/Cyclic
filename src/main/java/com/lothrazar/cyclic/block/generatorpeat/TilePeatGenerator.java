@@ -102,7 +102,10 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    if (this.isBurning() && !this.isFull() && fuelRate > 0) {
+    if (this.isFull()) {
+      return;
+    }
+    if (this.isBurning() && fuelRate > 0) {
       --this.burnTime;
       this.addEnergy(fuelRate);
       return;
@@ -110,20 +113,16 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     fuelRate = 0;
     IEnergyStorage energyActual = energy.orElse(null);
     if (this.energy.isPresent() && energyActual != null) {
-      if (energyActual.getEnergyStored() < 0) {
-        //fix legacy bad data
-        //        CustomEnergyStorage fix = (CustomEnergyStorage) energyActual;
-        //        fix.setEnergy(0);
-      }
-      if (world.isRemote == false) {
-        //server side
-      }
       //now we can add power
       //burnTime is zero grab another
       inventory.ifPresent(h -> {
         ItemStack stack = h.getStackInSlot(0);
         if (stack.getItem() instanceof PeatItem) {
           PeatItem peat = (PeatItem) stack.getItem();
+          if (energyActual.getEnergyStored() + peat.getPeatFuelValue() > energyActual.getMaxEnergyStored()) {
+            //not enough room for even 1 tick, dont eat the item
+            return;
+          }
           fuelRate = peat.getPeatFuelValue();
           h.extractItem(0, 1, false);
           this.burnTime = BURNTIME;

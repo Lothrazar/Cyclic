@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
+import com.lothrazar.cyclic.item.AppleChocolate;
 import com.lothrazar.cyclic.item.CarbonPaperItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
@@ -69,12 +70,16 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Food;
+import net.minecraft.item.Foods;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -84,6 +89,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  private static final int FIVESEC = 20 * 5;
+  private static final int ONEMIN = 20 * 60;
   @ObjectHolder(ModCyclic.MODID + ":gem_amber")
   public static Item gem_amber;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
@@ -136,7 +143,6 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.solidifier, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("solidifier"));
     r.register(new BlockItem(BlockRegistry.peat_farm, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_farm"));
     r.register(new BlockItem(BlockRegistry.melter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("melter"));
-    //    r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("placer"));
     r.register(new BlockItem(BlockRegistry.breaker, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("breaker"));
     r.register(new BlockItem(BlockRegistry.user, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("user"));
@@ -194,6 +200,7 @@ public class ItemRegistry {
     r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(9000)).setRegistryName("mattock"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sleeping_mat"));
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024 * 1024)).setRegistryName("shears_obsidian"));
+    //weak flint n steel 
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("shears_flint"));
     r.register(new WrenchItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("wrench"));
     r.register(new ScytheBrush(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("scythe_brush"));
@@ -230,6 +237,28 @@ public class ItemRegistry {
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ElevationWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("elevation_wand"));
     r.register(new ItemTeleporter(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("teleport_wand"));
+    /// apples
+    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(16)
+        .effect(new EffectInstance(Effects.HEALTH_BOOST, ONEMIN, 4), 1)
+        .effect(new EffectInstance(Effects.RESISTANCE, ONEMIN, 4), 1)//20*60 is 60 seconds
+        .build())).setRegistryName("apple_diamond"));
+    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(6)
+        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
+        .effect(new EffectInstance(Effects.NIGHT_VISION, ONEMIN, 1), 1)
+        .effect(new EffectInstance(Effects.WATER_BREATHING, ONEMIN, 1), 1)
+        .build())).setRegistryName("apple_lapis"));
+    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(12)
+        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
+        .effect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, ONEMIN, 1), 1)
+        .effect(new EffectInstance(Effects.CONDUIT_POWER, ONEMIN, 1), 1)
+        .build())).setRegistryName("apple_iron"));
+    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(12)
+        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
+        .effect(new EffectInstance(Effects.HASTE, ONEMIN, 2), 1)
+        .effect(new EffectInstance(Effects.SLOW_FALLING, ONEMIN, 1), 1)
+        .build())).setRegistryName("apple_emerald"));
+    //TODO: tgest onItemUseFinish method, entityLiving.curePotionEffects(stack) just like milk
+    r.register(new AppleChocolate(new Item.Properties().group(MaterialRegistry.itemgrp).food(Foods.APPLE)).setRegistryName("apple_chocolate"));
     if (ConfigManager.BOOMERANGS.get()) {
       r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_stun"));
       r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_carry"));
