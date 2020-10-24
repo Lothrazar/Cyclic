@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.base;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -28,7 +30,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -50,14 +54,21 @@ public abstract class BlockBase extends Block {
   }
 
   private boolean hasGui;
+  private boolean hasFluidInteract = true;
 
-  protected void setHasGui() {
+  protected BlockBase setHasGui() {
     this.hasGui = true;
+    return this;
+  }
+
+  protected BlockBase setHasFluidInteract() {
+    this.hasFluidInteract = true;
+    return this;
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (this.hasGui) {
       if (!world.isRemote) {
         TileEntity tileEntity = world.getTileEntity(pos);
@@ -70,7 +81,41 @@ public abstract class BlockBase extends Block {
       }
       return ActionResultType.SUCCESS;
     }
-    return super.onBlockActivated(state, world, pos, player, hand, result);
+    if (hasFluidInteract) {
+      if (!world.isRemote) {
+        TileEntity tankHere = world.getTileEntity(pos);
+        if (tankHere != null) {
+          IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getFace()).orElse(null);
+          if (handler != null) {
+            if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
+              //success so display new amount
+              if (handler.getFluidInTank(0) != null) {
+                player.sendStatusMessage(new TranslationTextComponent(getFluidRatioName(handler)), true);
+              }
+              //and also play the fluid sound
+              if (player instanceof ServerPlayerEntity) {
+                UtilSound.playSoundFromServer((ServerPlayerEntity) player, SoundEvents.ITEM_BUCKET_FILL);
+              }
+            }
+            else {
+              player.sendStatusMessage(new TranslationTextComponent(getFluidRatioName(handler)), true);
+            }
+          }
+        }
+      }
+      if (FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
+        return ActionResultType.SUCCESS;
+      }
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, hit);
+  }
+
+  public static String getFluidRatioName(IFluidHandler handler) {
+    String ratio = handler.getFluidInTank(0).getAmount() + "/" + handler.getTankCapacity(0);
+    if (!handler.getFluidInTank(0).isEmpty()) {
+      ratio += " " + handler.getFluidInTank(0).getDisplayName().getString();
+    }
+    return ratio;
   }
 
   @SuppressWarnings("deprecation")

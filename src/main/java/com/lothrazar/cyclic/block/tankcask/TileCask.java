@@ -1,15 +1,19 @@
 package com.lothrazar.cyclic.block.tankcask;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -19,13 +23,23 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileCask extends TileEntityBase implements ITickableTileEntity {
 
+  private Map<Direction, Boolean> poweredSides;
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = CAPACITY / 2;
   public FluidTankBase tank;
+  private int flowing = 0;
+
+  static enum Fields {
+    FLOWING, N, E, S, W, U, D;
+  }
 
   public TileCask() {
     super(TileRegistry.cask);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+    poweredSides = new HashMap<Direction, Boolean>();
+    for (Direction f : Direction.values()) {
+      poweredSides.put(f, false);
+    }
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -34,13 +48,20 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    CompoundNBT fluid = tag.getCompound("fluid");
-    tank.readFromNBT(fluid);
+    for (Direction f : Direction.values()) {
+      poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
+    }
+    this.flowing = (tag.getInt("flowing"));
+    tank.readFromNBT(tag.getCompound("fluid"));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    for (Direction f : Direction.values()) {
+      tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
+    }
+    tag.putInt("flowing", this.flowing);
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
@@ -56,7 +77,64 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+      case D:
+        return this.getSideField(Direction.DOWN);
+      case E:
+        return this.getSideField(Direction.EAST);
+      case N:
+        return this.getSideField(Direction.NORTH);
+      case S:
+        return this.getSideField(Direction.SOUTH);
+      case U:
+        return this.getSideField(Direction.UP);
+      case W:
+        return this.getSideField(Direction.WEST);
+      case FLOWING:
+        return flowing;
+    }
+    return -1;
+  }
+
+  @Override
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case FLOWING:
+        flowing = value;
+      break;
+      case D:
+        this.setSideField(Direction.DOWN, value % 2);
+      break;
+      case E:
+        this.setSideField(Direction.EAST, value % 2);
+      break;
+      case N:
+        this.setSideField(Direction.NORTH, value % 2);
+      break;
+      case S:
+        this.setSideField(Direction.SOUTH, value % 2);
+      break;
+      case U:
+        this.setSideField(Direction.UP, value % 2);
+      break;
+      case W:
+        this.setSideField(Direction.WEST, value % 2);
+      break;
+    }
+  }
+
+  public boolean getSideHasPower(Direction side) {
+    return this.poweredSides.get(side);
+  }
+
+  public int getSideField(Direction side) {
+    return this.getSideHasPower(side) ? 1 : 0;
+  }
+
+  public void setSideField(Direction side, int pow) {
+    this.poweredSides.put(side, (pow == 1));
+  }
 
   @Override
   public void setFluid(FluidStack fluid) {
@@ -66,13 +144,21 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void tick() {
     //drain below but only to one of myself
-    TileEntity below = this.world.getTileEntity(this.pos.down());
-    if (below != null && below instanceof TileCask) {
-      UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
+    if (this.flowing == 1)
+      tickCableFlow();
+  }
+
+  private List<Integer> rawList = IntStream.rangeClosed(
+      0,
+      5).boxed().collect(Collectors.toList());
+
+  private void tickCableFlow() {
+    Collections.shuffle(rawList);
+    for (Integer i : rawList) {
+      Direction exportToSide = Direction.values()[i];
+      if (this.poweredSides.get(exportToSide)) {
+        this.moveFluids(exportToSide, TRANSFER_FLUID_PER_TICK / 4, tank);
+      }
     }
-    //TESTING ONLY  
-    //    if (below != null && below instanceof TileCableFluid) {
-    //      UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
-    //    }
   }
 }

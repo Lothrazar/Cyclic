@@ -25,8 +25,10 @@ package com.lothrazar.cyclic.block.peatfarm;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
@@ -54,5 +56,10 @@ public class BlockPeatFarm extends BlockBase {
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new TilePeatFarm();
+  }
+
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    builder.add(LIT);
   }
 }

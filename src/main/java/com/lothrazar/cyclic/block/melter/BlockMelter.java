@@ -3,10 +3,12 @@ package com.lothrazar.cyclic.block.melter;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -56,5 +58,10 @@ public class BlockMelter extends BlockBase {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
     ScreenManager.registerFactory(ContainerScreenRegistry.melter, ScreenMelter::new);
     ClientRegistry.bindTileEntityRenderer(TileRegistry.melter, RenderMelter::new);
+  }
+
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    builder.add(LIT);
   }
 }
