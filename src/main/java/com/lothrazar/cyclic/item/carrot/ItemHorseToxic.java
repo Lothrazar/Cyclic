@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item.horse;
+package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilItemStack;

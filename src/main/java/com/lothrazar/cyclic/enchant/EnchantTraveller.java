@@ -72,8 +72,9 @@ public class EnchantTraveller extends EnchantBase {
   @SubscribeEvent
   public void onEnderTeleportEvent(EnderTeleportEvent event) {
     int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlotType.LEGS);
-    if (level > 0)
-      event.setAttackDamage(0.1F);
+    if (level > 0) {
+      event.setAttackDamage(0F);
+    }
   }
 
   @SubscribeEvent

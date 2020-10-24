@@ -21,39 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item.horse;
+package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseRedstoneSpeed extends ItemEntityInteractable {
+public class ItemHorseLapisVariant extends ItemEntityInteractable {
 
-  public static final int SPEED_MAX = 50;
-  private static final double SPEED_AMT = 0.004;
-
-  public ItemHorseRedstoneSpeed(Properties prop) {
+  public ItemHorseLapisVariant(Properties prop) {
     super(prop);
   }
 
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
-        && event.getTarget() instanceof HorseEntity) {
+        && event.getTarget() instanceof HorseEntity
+        //        && event.getWorld().isRemote == false
+        && !event.getPlayer().getCooldownTracker().hasCooldown(this)) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
-      double speed = ahorse.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
-      double newSpeed = speed + SPEED_AMT;
-      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
-        ahorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
-        event.setCanceled(true);
-        event.setCancellationResult(ActionResultType.SUCCESS);
-        event.getItemStack().shrink(1);
-        UtilEntity.eatingHorse(ahorse);
-      }
+      int seed = event.getWorld().rand.nextInt(7);
+      //setHorseVariant
+      //  access transformers
+      ahorse.getDataManager().set(HorseEntity.HORSE_VARIANT, (seed | event.getWorld().rand.nextInt(5) << 8));
+      event.setCanceled(true);
+      event.setCancellationResult(ActionResultType.SUCCESS);
+      event.getPlayer().getCooldownTracker().setCooldown(this, 10);
+      event.getItemStack().shrink(1);
+      UtilEntity.eatingHorse(ahorse);
     }
   }
 }

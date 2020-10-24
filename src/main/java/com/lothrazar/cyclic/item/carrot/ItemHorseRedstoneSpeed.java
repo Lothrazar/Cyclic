@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item.horse;
+package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -30,29 +30,28 @@ import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseHealthDiamondCarrot extends ItemEntityInteractable {
+public class ItemHorseRedstoneSpeed extends ItemEntityInteractable {
 
-  public static final int HEARTS_MAX = 40;
+  public static final int SPEED_MAX = 50;
+  private static final double SPEED_AMT = 0.004;
 
-  public ItemHorseHealthDiamondCarrot(Properties prop) {
+  public ItemHorseRedstoneSpeed(Properties prop) {
     super(prop);
   }
 
   @Override
   public void interactWith(EntityInteract event) {
-    if (event.getItemStack().getItem() instanceof ItemHorseHealthDiamondCarrot
+    if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof HorseEntity) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
-      float mh = (float) ahorse.getAttribute(Attributes.MAX_HEALTH).getValue();
-      if (mh < 2 * ItemHorseHealthDiamondCarrot.HEARTS_MAX) { // 20 hearts == 40 health points
-        ahorse.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mh + 2);
+      double speed = ahorse.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
+      double newSpeed = speed + SPEED_AMT;
+      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
+        ahorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         event.setCanceled(true);
         event.setCancellationResult(ActionResultType.SUCCESS);
         event.getItemStack().shrink(1);
-        ahorse.func_230254_b_(event.getPlayer(), event.getHand());
-        //processInteract
-        //trigger eatingHorse
         UtilEntity.eatingHorse(ahorse);
       }
     }

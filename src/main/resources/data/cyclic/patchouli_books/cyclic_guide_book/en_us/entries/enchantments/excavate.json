@@ -1,6 +1,6 @@
 {
   "name": "enchantment.cyclic.excavate",
-  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:excavate\",lvl:1}]}",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:excavate\",lvl:5}]}",
   "category": "cyclic:enchantments",
   "pages": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:excavate\",lvl:1}]}"
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:excavate\",lvl:5}]}"
     }
   ]
 }

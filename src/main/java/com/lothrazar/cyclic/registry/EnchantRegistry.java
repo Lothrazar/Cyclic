@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
+import com.lothrazar.cyclic.enchant.EnchantBeekeeper;
 import com.lothrazar.cyclic.enchant.EnchantBeheading;
 import com.lothrazar.cyclic.enchant.EnchantCurse;
 import com.lothrazar.cyclic.enchant.EnchantDisarm;
@@ -50,6 +51,7 @@ public class EnchantRegistry {
       r.register(new EnchantDisarm(Enchantment.Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("disarm"));
       r.register(new EnchantCurse(Enchantment.Rarity.RARE, EnchantmentType.ARMOR, EquipmentSlotType.CHEST).setRegistryName("curse"));
       r.register(new EnchantPearl(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName("ender"));
+      r.register(new EnchantBeekeeper(Enchantment.Rarity.VERY_RARE, EnchantmentType.ARMOR_HEAD, EquipmentSlotType.HEAD).setRegistryName("beekeeper"));
     }
   }
 }

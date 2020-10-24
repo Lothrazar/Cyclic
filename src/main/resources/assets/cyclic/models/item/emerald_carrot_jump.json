@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/emerald_carrot_jump"
+        "layer0": "cyclic:items/carrot_emerald"
     }
 }

@@ -21,37 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item.horse;
+package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseLapisVariant extends ItemEntityInteractable {
+public class ItemHorseEmeraldJump extends ItemEntityInteractable {
 
-  public ItemHorseLapisVariant(Properties prop) {
+  private static final int JUMP_MAX = 10;
+  private static final double JUMP_AMT = 0.008;
+
+  public ItemHorseEmeraldJump(Properties prop) {
     super(prop);
   }
 
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
-        && event.getTarget() instanceof HorseEntity
-        //        && event.getWorld().isRemote == false
-        && !event.getPlayer().getCooldownTracker().hasCooldown(this)) {
+        && event.getTarget() instanceof HorseEntity) {
       // lets go 
       HorseEntity ahorse = (HorseEntity) event.getTarget();
-      int seed = event.getWorld().rand.nextInt(7);
-      //setHorseVariant
-      //  access transformers
-      ahorse.getDataManager().set(HorseEntity.HORSE_VARIANT, (seed | event.getWorld().rand.nextInt(5) << 8));
-      event.setCanceled(true);
-      event.setCancellationResult(ActionResultType.SUCCESS);
-      event.getPlayer().getCooldownTracker().setCooldown(this, 10);
-      event.getItemStack().shrink(1);
-      UtilEntity.eatingHorse(ahorse);
+      Attribute attr = UtilEntity.getAttributeJump(ahorse);
+      double current = attr.getDefaultValue();//.getValue();
+      double newSpeed = current + JUMP_AMT;
+      if (UtilEntity.getJumpTranslated(newSpeed) < JUMP_MAX) {
+        //TODO: 1.16 make it like health   attr.setBaseValue(newSpeed);
+        attr.clampValue(newSpeed);
+        event.setCanceled(true);
+        event.setCancellationResult(ActionResultType.SUCCESS);
+        event.getItemStack().shrink(1);
+        UtilEntity.eatingHorse(ahorse);
+      }
     }
   }
 }

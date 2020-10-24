@@ -245,6 +245,11 @@
     "enchantment.cyclic.ender.desc": "Throws an Ender Pearl with your sword, consuming durability. Cooldown decreases with level.",
     "enchantment.cyclic.ender.guide": "Throws an Ender Pearl with your sword, consuming durability. Cooldown decreases with level.  Can apply to swords only ",
 
+    "enchantment.cyclic.beekeeper": "Beekeeping",
+    "enchantment.cyclic.beekeeper.desc": "Protection against thorny and flying damage.",
+    "enchantment.cyclic.beekeeper.guide": "Protection against thorny and flying damage.  First level prevent bee, bat, and llama spit damage.  Level II or higher prevents phantom damage.  ",
+
+
     "fluid.cyclic.biomass": "Biomass",
     "fluid.cyclic.biomass.guide": "Combine solid $(l:misc/biomass)Biomass$(/l) with various organic material in a $(l:machines/metler)Melter$(/l) to create Fluid Biomass.",
     "fluid.cyclic.honey": "Honey",
