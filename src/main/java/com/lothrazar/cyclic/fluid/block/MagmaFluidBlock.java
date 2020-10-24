@@ -89,6 +89,7 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     return ParticleTypes.DRIPPING_LAVA;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
     if (entityIn instanceof LivingEntity) {
@@ -103,8 +104,4 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     }
     super.onEntityCollision(state, worldIn, pos, entityIn);
   }
-  //  @Override
-  //  public int tickRate(IWorldReader worldIn) {
-  //    return super.tickRate(worldIn) * 8;
-  //  }
 }

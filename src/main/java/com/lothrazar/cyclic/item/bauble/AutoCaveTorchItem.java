@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
@@ -33,9 +35,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 
 public class AutoCaveTorchItem extends ItemBase {
 
@@ -64,7 +63,7 @@ public class AutoCaveTorchItem extends ItemBase {
       return;
     }
     timer--;
-    Iterator iter;
+    Iterator<BlockPos> iter;
     if (timer <= 0 && !ticking) {
       ticking = true;
       BlockPos pos = entityIn.getPosition();
@@ -82,13 +81,12 @@ public class AutoCaveTorchItem extends ItemBase {
           }
         }
       }
-
       iter = blockHashList.iterator();
       while (iter.hasNext()) {
-        BlockPos testPos = (BlockPos) iter.next();
+        BlockPos testPos = iter.next();
         if (shouldPlaceTorch(world, testPos)) {
           if (UtilPlaceBlocks.placeTorchSafely(world, testPos))
-          UtilItemStack.damageItem(player, stack);
+            UtilItemStack.damageItem(player, stack);
           iter.remove();
           timer = 2; //lag compensation -- wait a tick before trying to place next torch
           break;
@@ -96,7 +94,6 @@ public class AutoCaveTorchItem extends ItemBase {
       }
       ticking = false;
     }
-
     if (!ticking) {
       tryRepairWith(stack, player, Blocks.TORCH.asItem());
     }

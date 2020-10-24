@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.placer;
 
 import com.lothrazar.cyclic.base.ContainerBase;
-import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;

@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.peatfarm;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;

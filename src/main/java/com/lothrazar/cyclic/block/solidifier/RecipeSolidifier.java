@@ -163,7 +163,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   private static Set<String> hashes = new HashSet<>();
 
-  private static void addRecipe(RecipeSolidifier r) {
+  private static void addRecipe(RecipeSolidifier<?> r) {
     ResourceLocation id = r.getId();
     if (hashes.contains(id.toString())) {
       ModCyclic.LOGGER.info("Warn: Duplicate solidifier recipe id " + id.toString());

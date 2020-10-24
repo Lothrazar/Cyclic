@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.placer;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;

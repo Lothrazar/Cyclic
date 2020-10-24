@@ -49,7 +49,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   @Override
   protected void init() {
     super.init();
-    int x, y, w, h;
+    int x, y;
     energy.guiLeft = timer.guiLeft = guiLeft;
     energy.guiTop = timer.guiTop = guiTop;
     energy.visible = TileCrafter.POWERCONF.get() > 0;

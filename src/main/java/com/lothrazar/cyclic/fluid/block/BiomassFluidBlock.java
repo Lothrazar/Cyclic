@@ -17,6 +17,7 @@ public class BiomassFluidBlock extends FlowingFluidBlock {
     super(supplier, props);
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
     if (entityIn instanceof LivingEntity && worldIn.rand.nextDouble() < 000.1F) {
@@ -25,8 +26,4 @@ public class BiomassFluidBlock extends FlowingFluidBlock {
     }
     super.onEntityCollision(state, worldIn, pos, entityIn);
   }
-  //  @Override
-  //  public int tickRate(IWorldReader worldIn) {
-  //    return super.tickRate(worldIn) + 1;
-  //  }
 }

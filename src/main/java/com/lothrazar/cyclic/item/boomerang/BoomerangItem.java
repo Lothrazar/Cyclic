@@ -13,9 +13,6 @@ import net.minecraft.world.World;
 
 public class BoomerangItem extends ItemBase {
 
-  private static final float INACCURACY_DEFAULT = 1.0F;
-  private static final float PITCHOFFSET = 0.0F;
-  private static final float VELOCITY_MAX = 1.5F;
   private static final int TICKS_USING = 93000;
 
   public static enum Boomer {
@@ -54,7 +51,7 @@ public class BoomerangItem extends ItemBase {
       return;//not enough force to go with any realistic path 
     }
     //    float amountCharged = percentageCharged * MAX_CHARGE;
-    float velocityFactor = percentageCharged * 1.5F;
+    //    float velocityFactor = percentageCharged * 1.5F;
     if (entity instanceof PlayerEntity == false) {
       return;
     }

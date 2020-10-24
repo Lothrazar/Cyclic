@@ -10,7 +10,6 @@ import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;

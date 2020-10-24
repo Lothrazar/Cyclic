@@ -12,7 +12,6 @@ import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.clock.TileRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
-import com.lothrazar.cyclic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;

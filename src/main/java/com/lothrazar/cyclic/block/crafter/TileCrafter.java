@@ -23,6 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -32,7 +39,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapedRecipe;
+import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -47,10 +57,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class TileCrafter extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static final int MAX = 64000;
@@ -290,10 +298,10 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   private boolean tryMatchShapelessRecipe(ArrayList<ItemStack> itemStacks, ShapelessRecipe recipe) {
     ArrayList<ItemStack> itemStacksCopy = (ArrayList<ItemStack>) itemStacks.clone();
     for (Ingredient ingredient : recipe.getIngredients()) {
-      Iterator iter = itemStacksCopy.iterator();
+      Iterator<ItemStack> iter = itemStacksCopy.iterator();
       boolean matched = false;
       while (iter.hasNext()) {
-        ItemStack itemStack = (ItemStack) iter.next();
+        ItemStack itemStack = iter.next();
         if (ingredient.test(itemStack)) {
           iter.remove();
           matched = true;

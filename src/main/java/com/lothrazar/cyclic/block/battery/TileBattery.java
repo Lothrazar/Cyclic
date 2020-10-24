@@ -27,6 +27,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
+@SuppressWarnings("unchecked")
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   private Map<Direction, Boolean> poweredSides;
@@ -35,7 +36,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   static final int MAX = 6400000;
 
   static enum Fields {
-    FLOWING, N, E, S, W, U, D, PERCENT;
+    FLOWING, N, E, S, W, U, D;
   }
 
   public TileBattery() {

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import static net.minecraft.block.WallTorchBlock.HORIZONTAL_FACING;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.Block;
@@ -7,17 +8,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.Property;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static net.minecraft.block.WallTorchBlock.HORIZONTAL_FACING;
 
 public class UtilPlaceBlocks {
 

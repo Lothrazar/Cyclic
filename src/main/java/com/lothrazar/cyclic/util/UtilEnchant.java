@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.util;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraftforge.registries.ForgeRegistries;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.annotation.Nullable;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class UtilEnchant {
 

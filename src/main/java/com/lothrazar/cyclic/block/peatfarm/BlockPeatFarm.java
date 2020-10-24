@@ -24,18 +24,13 @@
 package com.lothrazar.cyclic.block.peatfarm;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.user.ScreenUser;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;

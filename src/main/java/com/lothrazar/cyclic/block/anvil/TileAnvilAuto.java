@@ -139,9 +139,9 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
       if (work) {
         UtilItemStack.repairItem(stack);
         boolean done = stack.getDamage() == 0;
-        if (done && inv.getStackInSlot(1).isEmpty()) {
-          inv.insertItem(1, stack.copy(), false);
-          inv.extractItem(0, stack.getCount(), false);
+        if (done && inv.getStackInSlot(OUT).isEmpty()) {
+          inv.insertItem(OUT, stack.copy(), false);
+          inv.extractItem(IN, stack.getCount(), false);
         }
       }
     });

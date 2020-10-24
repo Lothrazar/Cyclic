@@ -31,7 +31,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
         UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack);
       }
       else {
-        UtilRender.renderBlank(te.getPos(), te.getShape(), matrixStack, stack);
+        UtilRender.renderAsBlock(te.getPos(), te.getShape(), matrixStack, stack, 0.5F, 1.0F);
       }
     }
   }

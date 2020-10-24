@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
