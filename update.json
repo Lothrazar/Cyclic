@@ -1,10 +1,10 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
   "promos": {
-    "1.16.2-latest": "0.8.3",
-    "1.16.2-recommended": "0.8.3"
+    "1.16.3-latest": "0.8.3",
+    "1.16.3-recommended": "0.8.3"
   },
-  "1.16.2": {
+  "1.16.3": {
   	"0.6.1":"Ported ",
   	"0.6.2":"Fixed crash in harvester GUI.  Remove logspam in Disenchanter.  Patch StackOverflowError in Excavate enchant when level is high.  Fixed projectiles thrown from items not flying.   Fan now can blow through non-solid blocks.  Fan has a GUI to control speed and range.  Beheading mob heads config list added.  Beheading enchant is able to drops skulls from wither boss equal to its level.  Fixed some resource and file not found warnings in startup console.   "
   	,"0.7.0":"Fixed 'lost connection: Took too long to log in' on servers.  Water scepter thing works on water-logged blocks.  Upgraded GUI of several blocks.  Ported from 1.12: Pharos Beacon, Creative battery, Creative item tester, Dice, Dropper, Forester, Miner, Text Projector, Uncrafter.  New blocks: Terra Preta, Mason blocks.  "
@@ -13,5 +13,6 @@
 	,"0.8.1":"Fixed foreseter crash; it now uses data tag minecraft:saplings to identify what is plantable.  ( trunksbomb ) Patchouli guidebook added.  New enchantments: Gloom, Auto Smelt, Disarming.  Battery now renders on the side how much power is stored.  Ported from 1.12: Rod of elevation; Peat Farmer; Water Candle; Vision Helmet.  Many items can now be used in midair, clicking a block not required (heart items, wings). "
   	,"0.8.2":"Trash Void now accepts fluids as it did in 1.12.  Fixed bug where Miner could get stuck on non-mineable block, or on liquid, also it sometimes would skip valid blocks.  Fluid collector now correctly pays energy cost when processing.  Fixed bug in forester where it wasnt mining the bottom log of the tree.  Fixed an issue where player would fall through Scaffolding blocks and sit inside them, they are correctly solid now.  ( trunksbomb ) New Ender enchantment for swords: what used to be block now spawns an ender pearl. "
   	,"0.8.3":"Auto-Smelting enchantment can now be applied to other mining tools such as Axes.  Updated pachoulli guidebook with more entries.  Emerald tools now use sticks instead of diamonds.  Used player->floatingTickCount to prevent player from being 'kicked for flying' when using climbing and levitating objects such as Fan, Air charm, etc.  Cyan Rose now spawns in the following biome-types: FOREST, PLAINS, TAIGA, EXTREME_HILLS.  Improved the mod logger to remove log-spam; added a config to unblock that is off by default.  ( trunksbomb ) Added Fireplace block.  Added Crafting Machine.  Added Ender Scepter.  Added Caving Torch Charm."
+  	,"":""
   }
 }
