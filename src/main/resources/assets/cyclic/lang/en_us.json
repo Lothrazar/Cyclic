@@ -293,13 +293,7 @@
     "guide.category.world": "World Generation",
     "guide.title": "Cyclic Guide",
     "guide.landing_text": "Learn about everything Cyclic adds!",
-    "item.apple_emerald.guide": "Resets all expired trades on a villager - trades that have a red X on them.  Or cures a zombie villager.",
-    "item.apple_emerald.merchant": "Trades Unlocked:",
-    "item.apple_emerald": "Emerald Apple",
-    "item.apple_emerald.tooltip": "Unlock blocked villager trades (with red X); or cures zombie villagers",
-    "item.apple_lapis.guide": "Tames any un-tameable horse.",
-    "item.apple_lapis": "Lapis Apple",
-    "item.apple_lapis.tooltip": "Tame undead horses",
+
     "item.book_ender.guide": "A magical book that stores your current location as a waypoint.  Teleport to the waypoint at a later at the cost of experience, based on distance (configurable).  Cannot cross dimensions, but it can store locations in any dimension.",
     "item.book_ender": "Ender Book",
     "item.book_ender.tooltip": "Saved Waypoints:",
@@ -459,6 +453,35 @@
     "item.cyclic.heart_empty": "Empty Heart Container",
     "item.cyclic.heart_empty.tooltip": "-1 Heart +500 Experience",
     "item.cyclic.heart_empty.guide": "When consumed, permanently removes 1 heart from the player but grants a hefty dose of experience for your loss.$(br)Be careful! You can reduce your hearts permanently down to just one if you keep eating these.",
+
+
+    "item.cyclic.apple_chocolate": "Chocolate Milk Apple",
+    "item.cyclic.apple_chocolate.tooltip": "Clears harmful effects",
+    "item.cyclic.apple_chocolate.guide": "Similar to milk, when eaten it clears out potion effects.  However it only removes harmful ones like poison, and not beneficial ones such as regeneration or night vision. ",
+ 
+ 
+    "item.cyclic.apple_diamond": "Diamond Apple",
+    "item.cyclic.apple_diamond.tooltip": "Major defense buffs",
+    "item.cyclic.apple_diamond.guide": "60 seconds worth of Resistance V and health boost V for short tough fights",
+    
+    "item.cyclic.apple_lapis": "Lapis Apple",
+    "item.cyclic.apple_lapis.tooltip": "Utility buffs",
+    "item.cyclic.apple_lapis.guide": "Utility buffs include swim speed, conduit, water breathing, night vision.",
+
+
+    "item.cyclic.apple_iron": "Iron Apple",
+    "item.cyclic.apple_iron.tooltip": "Minor defense buffs",
+    "item.cyclic.apple_iron.guide": "Lower levels of health boost and resistance",
+    
+    
+    "item.cyclic.apple_emerald": "Emerald Apple",
+    "item.cyclic.apple_emerald.tooltip": "Explorative buffs",
+    "item.cyclic.apple_emerald.guide": "Exlorative buffs include haste, luck, slow falling.",
+    
+    
+    "item.cyclic.ender_carrot": "Ender Carrot",
+    "item.cyclic.ender_carrot.tooltip": "Ender Carrot",
+    "item.cyclic.ender_carrot.guide": "Ender Carrot",
 
     "item.cyclic.toxic_carrot": "Toxic Carrot",
     "item.cyclic.toxic_carrot.tooltip": "Zombify your horse",

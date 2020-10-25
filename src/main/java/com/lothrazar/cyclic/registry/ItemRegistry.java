@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
+import com.lothrazar.cyclic.item.AppleBuffs;
 import com.lothrazar.cyclic.item.AppleChocolate;
 import com.lothrazar.cyclic.item.CarbonPaperItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
@@ -49,6 +50,7 @@ import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEmeraldJump;
+import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.carrot.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.carrot.ItemHorseLapisVariant;
 import com.lothrazar.cyclic.item.carrot.ItemHorseRedstoneSpeed;
@@ -237,28 +239,38 @@ public class ItemRegistry {
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ElevationWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("elevation_wand"));
     r.register(new ItemTeleporter(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("teleport_wand"));
-    /// apples
-    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(16)
+    /// apples 
+    int h = Foods.APPLE.getHealing();
+    float s = Foods.APPLE.getSaturation();
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s)
         .effect(new EffectInstance(Effects.HEALTH_BOOST, ONEMIN, 4), 1)
         .effect(new EffectInstance(Effects.RESISTANCE, ONEMIN, 4), 1)//20*60 is 60 seconds
+        .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_diamond"));
-    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(6)
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s * 4)
         .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
         .effect(new EffectInstance(Effects.NIGHT_VISION, ONEMIN, 1), 1)
         .effect(new EffectInstance(Effects.WATER_BREATHING, ONEMIN, 1), 1)
-        .build())).setRegistryName("apple_lapis"));
-    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(12)
-        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
         .effect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, ONEMIN, 1), 1)
         .effect(new EffectInstance(Effects.CONDUIT_POWER, ONEMIN, 1), 1)
+        .fastToEat().setAlwaysEdible()
+        .build())).setRegistryName("apple_lapis"));
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s)
+        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
+        .effect(new EffectInstance(Effects.HEALTH_BOOST, ONEMIN, 2), 1)
+        .effect(new EffectInstance(Effects.RESISTANCE, ONEMIN, 2), 1)//20*60 is 60 seconds
+        .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_iron"));
-    r.register(new Item(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(12)
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h * 3).saturation(s)
         .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
         .effect(new EffectInstance(Effects.HASTE, ONEMIN, 2), 1)
+        .effect(new EffectInstance(Effects.LUCK, ONEMIN, 1), 1)
         .effect(new EffectInstance(Effects.SLOW_FALLING, ONEMIN, 1), 1)
+        .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_emerald"));
     //TODO: tgest onItemUseFinish method, entityLiving.curePotionEffects(stack) just like milk
-    r.register(new AppleChocolate(new Item.Properties().group(MaterialRegistry.itemgrp).food(Foods.APPLE)).setRegistryName("apple_chocolate"));
+    r.register(new AppleChocolate(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s * 2)
+        .fastToEat().setAlwaysEdible().build())).setRegistryName("apple_chocolate"));
     if (ConfigManager.BOOMERANGS.get()) {
       r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_stun"));
       r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_carry"));
@@ -296,6 +308,7 @@ public class ItemRegistry {
       r.register(new CharmOverpowered(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("charm_ultimate"));
     }
     if (ConfigManager.CARROTS.get()) {
+      r.register(new ItemHorseEnder(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("carrot_ender"));
       r.register(new ItemHorseHealthDiamondCarrot(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("diamond_carrot_health"));
       r.register(new ItemHorseRedstoneSpeed(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("redstone_carrot_speed"));
       r.register(new ItemHorseEmeraldJump(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_carrot_jump"));
