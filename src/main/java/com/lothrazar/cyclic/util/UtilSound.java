@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.util;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SPlaySoundEffectPacket;
 import net.minecraft.util.SoundCategory;
@@ -11,7 +10,7 @@ import net.minecraft.world.World;
 
 public class UtilSound {
 
-  public static void playSound(PlayerEntity entityIn, SoundEvent soundIn) {
+  public static void playSound(Entity entityIn, SoundEvent soundIn) {
     playSound(entityIn, entityIn.getPosition(), soundIn);
   }
 
