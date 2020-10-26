@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.apple_lapis",
+  "icon": "cyclic:apple_lapis",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.apple_lapis.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:apple_lapis"
+    }
+  ]
+}

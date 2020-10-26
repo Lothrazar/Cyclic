@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.apple_diamond",
+  "icon": "cyclic:apple_diamond",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.apple_diamond.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:apple_diamond"
+    }
+  ]
+}

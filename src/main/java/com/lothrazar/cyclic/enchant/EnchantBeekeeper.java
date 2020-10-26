@@ -29,7 +29,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -44,6 +46,9 @@ public class EnchantBeekeeper extends EnchantBase {
   public int getMaxLevel() {
     return 2;
   }
+
+  BabyEntitySpawnEvent event;// if nearby beekeeper, more spawn? bee extends animal where this is fired so?
+  LivingSetAttackTargetEvent event2;//when bee targets a player.? 
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onLivingDamageEvent(LivingDamageEvent event) {

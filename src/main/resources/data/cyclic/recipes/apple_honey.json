@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ha"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:apple"
+    },
+    "h": {
+      "item": "minecraft:honey_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:apple_honey",
+    "count": 1
+  }
+}

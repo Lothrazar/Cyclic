@@ -455,9 +455,13 @@
     "item.cyclic.heart_empty.guide": "When consumed, permanently removes 1 heart from the player but grants a hefty dose of experience for your loss.$(br)Be careful! You can reduce your hearts permanently down to just one if you keep eating these.",
 
 
-    "item.cyclic.apple_chocolate": "Chocolate Milk Apple",
+    "item.cyclic.apple_chocolate": "Chocolate Apple",
     "item.cyclic.apple_chocolate.tooltip": "Clears harmful effects",
     "item.cyclic.apple_chocolate.guide": "Similar to milk, when eaten it clears out potion effects.  However it only removes harmful ones like poison, and not beneficial ones such as regeneration or night vision. ",
+ 
+    "item.cyclic.apple_honey": "Honey Apple",
+    "item.cyclic.apple_honey.tooltip": "",
+    "item.cyclic.apple_honey.guide": "Rich food that has no effects.  Used for crafting.  ",
  
  
     "item.cyclic.apple_diamond": "Diamond Apple",
@@ -1005,6 +1009,8 @@
     "potion.potency.4": "V",
     "potion.potency.3": "IV",
     "potion.potency.2": "III",
+    "potion.potency.1": "II",
+    "potion.potency.0": "I",
 
     "potion.butter.oops": "Butterfingers!  Dropped something when you moved.",
     "potion.effect.slowfall": "Potion of Slowfall",

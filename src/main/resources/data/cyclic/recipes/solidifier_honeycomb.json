@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:honeycomb"
+  },
+  "inputMiddle": {
+    "item": "minecraft:honeycomb"
+  },
+  "inputBottom": {
+    "item": "minecraft:honeycomb"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:honeycomb_block",
+	"count": 1
+  }
+}

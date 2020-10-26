@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -25,16 +26,20 @@ public class AppleBuffs extends ItemBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    List<Pair<EffectInstance, Float>> eff = this.getFood().getEffects();
-    for (Pair<EffectInstance, Float> entry : eff) {
-      if (entry.getFirst() == null || entry.getFirst().getEffectName() == null) {
-        continue;
+    if (this.getFood() != null && this.getFood().getEffects() != null) {
+      List<Pair<EffectInstance, Float>> eff = this.getFood().getEffects();
+      for (Pair<EffectInstance, Float> entry : eff) {
+        EffectInstance effCurrent = entry.getFirst();
+        if (effCurrent == null || effCurrent.getPotion() == null) {
+          continue;
+        }
+        TranslationTextComponent t = new TranslationTextComponent(effCurrent.getPotion().getName());
+        t.appendString(" " + UtilChat.lang("potion.potency." + effCurrent.getAmplifier()));
+        t.mergeStyle(TextFormatting.DARK_GRAY);
+        tooltip.add(t);
       }
-      TranslationTextComponent t = new TranslationTextComponent(entry.getFirst().getEffectName());
-      t.mergeStyle(TextFormatting.GRAY);
-      tooltip.add(t);
     }
-    super.addInformation(stack, worldIn, tooltip, flagIn);
+    //    super.addInformation(stack, worldIn, tooltip, flagIn);
   }
 
   @Override

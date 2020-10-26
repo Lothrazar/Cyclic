@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cdc",
+    "ckc",
+    "cdc"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:golden_carrot"
+    },
+    "d": {
+      "item": "minecraft:ender_pearl"
+    },
+    "k": {
+      "item": "minecraft:cake"
+    }
+  },
+  "result": {
+    "item": "cyclic:carrot_ender",
+    "count": 6
+  }
+}

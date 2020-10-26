@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.carrot_ender",
+  "icon": "cyclic:carrot_ender",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carrot_ender.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carrot_ender"
+    }
+  ]
+}

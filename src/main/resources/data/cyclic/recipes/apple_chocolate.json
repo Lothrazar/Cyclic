@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "cac",
+    "csc"
+  ],
+  "key": {
+    "a": {
+      "item": "cyclic:apple_honey"
+    },
+    "c": {
+      "item": "minecraft:cocoa_beans"
+    },
+    "s": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "item": "cyclic:apple_chocolate",
+    "count": 1
+  }
+}

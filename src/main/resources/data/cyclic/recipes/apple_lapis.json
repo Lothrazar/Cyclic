@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "cac",
+    "ccc"
+  ],
+  "key": {
+    "a": {
+      "item": "cyclic:apple_honey"
+    },
+    "c": {
+      "item": "minecraft:lapis_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:apple_lapis",
+    "count": 1
+  }
+}

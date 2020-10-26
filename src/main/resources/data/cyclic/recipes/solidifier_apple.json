@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:apple"
+  },
+  "inputMiddle": {
+    "item": "minecraft:apple"
+  },
+  "inputBottom": {
+    "item": "minecraft:apple"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 300
+  },
+  "result": {
+    "item": "cyclic:apple_honey",
+	"count": 3
+  }
+}
