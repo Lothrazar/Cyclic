@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ctc",
+    "cac",
+    "ctc"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:green_dye"
+    },
+    "c": {
+      "item": "minecraft:iron_nugget"
+    },
+	"t": {
+		"item":"minecraft:stone_button"
+	}
+  },
+  "result": {
+    "item": "cyclic:settings_data",
+    "count": 1
+  }
+}

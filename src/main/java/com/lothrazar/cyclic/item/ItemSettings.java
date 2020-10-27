@@ -1,24 +1,50 @@
 package com.lothrazar.cyclic.item;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemSettings extends ItemBase {
 
   private static final String NBT_SETSAVED = "settingsSaved";
 
   public ItemSettings(Properties properties) {
-    super(properties);
+    super(properties.maxStackSize(1));
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    CompoundNBT stackdata = stack.getOrCreateTag();
+    if (stackdata.contains("id")) {
+      String tiledataID = stackdata.getString("id");
+      TranslationTextComponent t = new TranslationTextComponent(tiledataID);
+      t.mergeStyle(TextFormatting.DARK_GRAY);
+      tooltip.add(t);
+    }
+    else {
+      TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
+      t.mergeStyle(TextFormatting.GRAY);
+      tooltip.add(t);
+    }
   }
 
   @Override
@@ -26,11 +52,15 @@ public class ItemSettings extends ItemBase {
     PlayerEntity player = context.getPlayer();
     Hand hand = context.getHand();
     BlockPos pos = context.getPos();
-    Direction side = context.getFace();
+    //    Direction side = context.getFace();
     ItemStack held = player.getHeldItem(hand);
     player.swingArm(hand);
     TileEntity tile = player.world.getTileEntity(pos);
     //am i doing a READ or a WRITE
+    if (player.world.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
+      //      Blocks.BEDROCK.isu
+      held.setTag(null);//clear
+    }
     //
     CompoundNBT stackdata = held.getOrCreateTag();
     if (stackdata == null || stackdata.isEmpty()) {
