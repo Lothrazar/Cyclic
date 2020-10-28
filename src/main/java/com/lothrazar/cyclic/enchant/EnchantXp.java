@@ -2,13 +2,12 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -26,23 +25,24 @@ public class EnchantXp extends EnchantBase {
 
   @SubscribeEvent
   public void handleBlockBreakEvent(BlockEvent.BreakEvent event) {
-    int level = getCurrentLevelTool(event.getPlayer());
+    int level = getCurrentLevelTool(event.getPlayer().getHeldItemMainhand());
     if (level <= 0) {
       return;
     }
-    giveRandomExp(level, event.getPlayer());
+    event.setExpToDrop(event.getExpToDrop() + event.getPlayer().world.rand.nextInt(getMaxLevel()) * (level + 1));
   }
 
-  @Override
-  public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-    super.onEntityDamaged(user, target, level);
-    if (user instanceof PlayerEntity && target != null && !target.isAlive()) {
-      giveRandomExp(level, (PlayerEntity) user);
+  @SubscribeEvent
+  public void handleEntityDropEvent(LivingExperienceDropEvent event) {
+    int level = getCurrentLevelTool(event.getAttackingPlayer().getHeldItemMainhand());
+    if (level <= 0) {
+      return;
     }
+    event.setDroppedExperience(event.getDroppedExperience() + getRandomExpAmount(level, event.getAttackingPlayer().world));
   }
 
-  private void giveRandomExp(int level, PlayerEntity p) {
-    p.giveExperiencePoints(p.world.rand.nextInt(getMaxLevel()) * (level + 1));
+  private int getRandomExpAmount(int level, World world) {
+    return world.rand.nextInt(getMaxLevel()) * (level + 1);
   }
 
   @Override
