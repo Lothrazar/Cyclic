@@ -203,7 +203,7 @@ public class UtilWorld {
       increment = 1;
     BlockPos posCurrent;
     BlockPos posPrevious = pos;
-    for (int y = pos.getY(); y < Const.WORLDHEIGHT && y > 0; y+=increment) {
+    for (int y = pos.getY(); y < Const.WORLDHEIGHT && y > 0; y += increment) {
       posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
       if (!world.isAirBlock(posCurrent))
         return posPrevious;

@@ -304,7 +304,6 @@ public class UtilShape {
     while (pos != stopPos && iterations < distance) {
       nextStraightPos = pos.offset(facing);
       nextWrapPos = nextStraightPos.offset(stickySurface); //try to walk to the next surface of the same block we're on
-
       if (world.getBlockState(nextStraightPos).isSolid()) {
         //change heading, stickySurface to cling to new block
         nextStep = nextStepChangeDirection(facing, stickySurface);
@@ -346,6 +345,7 @@ public class UtilShape {
   }
 
   private static class Pair<T, U> {
+
     public final T facing;
     public final U stickySurface;
 

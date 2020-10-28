@@ -25,7 +25,10 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
 
   private int range = 7;
   private int speed = 5;
-  private static final int MIN_RANGE = 1;
+  public static final int MIN_RANGE = 1;
+  public static final int MAX_RANGE = 64;
+  public static final int MIN_SPEED = 1;
+  public static final int MAX_SPEED = 20;
 
   static enum Fields {
     REDSTONE, RANGE, SPEED;
@@ -214,11 +217,11 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
     switch (f) {
       case RANGE:
         range = value;
-        if (range < 1) {
-          range = 1;
+        if (range < MIN_RANGE) {
+          range = MIN_RANGE;
         }
-        if (range > 64) {
-          range = 64;
+        if (range > MAX_RANGE) {
+          range = MAX_RANGE;
         }
       break;
       case REDSTONE:
@@ -226,11 +229,11 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
       break;
       case SPEED:
         speed = value;
-        if (speed < 1) {
-          speed = 1;
+        if (speed < MIN_SPEED) {
+          speed = MIN_SPEED;
         }
-        if (speed > 61) {
-          speed = 16;
+        if (speed > MAX_SPEED) {
+          speed = MAX_SPEED;
         }
       break;
     }

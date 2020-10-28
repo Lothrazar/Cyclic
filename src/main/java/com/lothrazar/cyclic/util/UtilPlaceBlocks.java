@@ -166,7 +166,7 @@ public class UtilPlaceBlocks {
   @Nullable
   public static Direction findFirstSolidFace(World world, BlockPos blockPos, Direction prefer) {
     Direction actual = null;
-    Direction[] alternatives = {Direction.DOWN, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH, Direction.UP};
+    Direction[] alternatives = { Direction.DOWN, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH, Direction.UP };
     if (world.getBlockState(blockPos.offset(prefer)).isSolid()) actual = prefer;
     else {
       for (Direction dir : alternatives) {

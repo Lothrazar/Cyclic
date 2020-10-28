@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,16 +34,12 @@ public class ItemSettings extends ItemBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    super.addInformation(stack, worldIn, tooltip, flagIn);
     CompoundNBT stackdata = stack.getOrCreateTag();
     if (stackdata.contains("id")) {
       String tiledataID = stackdata.getString("id");
-      TranslationTextComponent t = new TranslationTextComponent(tiledataID);
+      TranslationTextComponent t = new TranslationTextComponent("[" + tiledataID + "]");
       t.mergeStyle(TextFormatting.DARK_GRAY);
-      tooltip.add(t);
-    }
-    else {
-      TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
-      t.mergeStyle(TextFormatting.GRAY);
       tooltip.add(t);
     }
   }
@@ -60,6 +57,7 @@ public class ItemSettings extends ItemBase {
     if (player.world.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
       //      Blocks.BEDROCK.isu
       held.setTag(null);//clear
+      UtilChat.addChatMessage(player, getTranslationKey() + ".deleted");
     }
     //
     CompoundNBT stackdata = held.getOrCreateTag();
@@ -71,12 +69,13 @@ public class ItemSettings extends ItemBase {
         CompoundNBT tiledata = new CompoundNBT();
         //generic style
         tile.write(tiledata);
-        String[] wipers = new String[] { "x", "y", "z", "id", "ForgeData", "ForgeCaps" };
+        String[] wipers = new String[] { "x", "y", "z", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer" };
         for (String wipe : wipers) {
           tiledata.remove(wipe);
         }
         tiledata.putBoolean(NBT_SETSAVED, true);
         held.setTag(tiledata);
+        UtilChat.addChatMessage(player, getTranslationKey() + ".savednew");
       }
     }
     else if (stackdata.getBoolean(NBT_SETSAVED)) {
@@ -92,7 +91,6 @@ public class ItemSettings extends ItemBase {
         String tiledataID = stackdata.getString("id");
         //go merge and let it read
         if (tiledataID.equalsIgnoreCase(stackdataID)) {
-          stackdata.remove(NBT_SETSAVED);
           stackdata = stackdata.copy();
           stackdata.remove(NBT_SETSAVED);
           stackdata.remove("id");
@@ -102,6 +100,7 @@ public class ItemSettings extends ItemBase {
           //
           //
           tile.read(player.world.getBlockState(pos), tiledata);
+          UtilChat.addChatMessage(player, getTranslationKey() + ".written");
         }
       }
     }

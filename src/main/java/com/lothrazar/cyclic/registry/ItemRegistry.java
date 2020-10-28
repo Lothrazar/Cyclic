@@ -92,8 +92,6 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
-  private static final int FIVESEC = 20 * 5;
-  private static final int ONEMIN = 20 * 60;
   @ObjectHolder(ModCyclic.MODID + ":gem_amber")
   public static Item gem_amber;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
@@ -129,6 +127,7 @@ public class ItemRegistry {
   @ObjectHolder(ModCyclic.MODID + ":elevation_wand")
   public static Item elevation_wand;
 
+  @SuppressWarnings("deprecation")
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
@@ -242,6 +241,7 @@ public class ItemRegistry {
     r.register(new ItemTeleporter(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("teleport_wand"));
     r.register(new ItemSettings(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("settings_data"));
     /// apples 
+    final int ONEMIN = 20 * 60;
     int h = Foods.APPLE.getHealing();
     float s = Foods.APPLE.getSaturation();
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h * 4).saturation(s * 4)

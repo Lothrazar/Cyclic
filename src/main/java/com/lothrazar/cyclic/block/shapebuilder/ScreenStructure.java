@@ -53,7 +53,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     GuiSliderInteger SIZE = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 64, container.tile.getField(f)));
     SIZE.setTooltip("buildertype.size.tooltip");
-    ///
+    //
     //
     //    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
     //        container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
