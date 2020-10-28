@@ -27,11 +27,14 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -49,11 +52,44 @@ public class EnchantBeekeeper extends EnchantBase {
 
   BabyEntitySpawnEvent event;// if nearby beekeeper, more spawn? bee extends animal where this is fired so?
   LivingSetAttackTargetEvent event2;//when bee targets a player.? 
+  //  @SubscribeEvent
+  //  public void onBabyEntitySpawnEvent(BabyEntitySpawnEvent event) {
+  //    // instanceof BeeEntity 
+  //    if (event.getChild().getType() == EntityType.BEE && event.getCausedByPlayer() != null) {
+  //      //
+  //      int level = this.getCurrentArmorLevel(event.getCausedByPlayer());
+  //      if (level > 0) {
+  //        //spawn new one
+  //        ModCyclic.LOGGER.info("Breeed extra bee");
+  //        BeeEntity newbee = EntityType.BEE.create(event.getChild().world);
+  //        newbee.setLocationAndAngles(event.getChild().getPosX(), event.getChild().getPosY(), event.getChild().getPosZ(), 0, 0);
+  //        //        newbee.setLocationAndAngles(x, y, z, yaw, pitch);
+  //        //        newbee = new BeeEntity(null, null);
+  //        event.getChild().world.addEntity(newbee);
+  //      }
+  //    }
+  //  }
+
+  @SubscribeEvent
+  public void onLivingSetAttackTargetEvent(LivingSetAttackTargetEvent event) {
+    if (event.getTarget() instanceof PlayerEntity && event.getEntityLiving().getType() == EntityType.BEE) {
+      int level = this.getCurrentArmorLevel(event.getTarget());
+      if (level > 0) {
+        BeeEntity bee = (BeeEntity) event.getEntityLiving();
+        bee.setAggroed(false);
+        bee.setAngerTime(0);
+        bee.setAngerTarget(null);
+        //        ModCyclic.LOGGER.info("no hurt me");
+        event.setResult(Result.DENY);
+      }
+    }
+  }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onLivingDamageEvent(LivingDamageEvent event) {
     int level = this.getCurrentArmorLevel(event.getEntityLiving());
-    if (level >= 1) {
+    if (level >= 1 && event.getSource() != null
+        && event.getSource().getImmediateSource() != null) {
       // Beekeeper I+
       Entity esrc = event.getSource().getImmediateSource();
       if (esrc.getType() == EntityType.BEE ||
