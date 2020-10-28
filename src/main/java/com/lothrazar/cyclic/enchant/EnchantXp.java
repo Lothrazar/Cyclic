@@ -29,7 +29,7 @@ public class EnchantXp extends EnchantBase {
     if (level <= 0) {
       return;
     }
-    event.setExpToDrop(event.getExpToDrop() + event.getPlayer().world.rand.nextInt(getMaxLevel()) * (level + 1));
+    event.setExpToDrop(event.getExpToDrop() + getRandomExpAmount(level, event.getPlayer().world));
   }
 
   @SubscribeEvent
