@@ -31,9 +31,8 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //
-    x = guiLeft + 120;
-    int width = 50;
-    //    StructCommands shape = StructCommands.CLEAR;
+    int width = 42;
+    x = guiLeft + 126 - width;
     for (StructCommands shape : StructCommands.values()) {
       ButtonMachine btnShape = addButton(new ButtonMachine(x, y, width, 20,
           shape.name(), (p) -> {
@@ -44,6 +43,11 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
           }));
       btnShape.setTooltip("block.cyclic.computer_shape.command");
       y += 20;
+      //
+      if (shape.ordinal() == 2) {
+        x += width;
+        y = guiTop + 6;
+      }
     }
   }
 

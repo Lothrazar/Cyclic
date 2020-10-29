@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cyclic:settings_data"
+    }
+  ],
+  "result": {
+    "item": "cyclic:settings_data",
+    "count": 1
+  }
+}

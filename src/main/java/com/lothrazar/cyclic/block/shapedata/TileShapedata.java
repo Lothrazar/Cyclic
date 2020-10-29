@@ -40,7 +40,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
 
   static enum StructCommands {
     //TODO: need new packet
-    READ, CLEAR, FILL, FLATTEN, STASH, APPLY, MERGE;
+    READ, CLEAR, FILL, COPY, PASTE;
   }
 
   /**
@@ -60,20 +60,20 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     }
     ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getOrCreateTag());
     switch (cmd) {
-      case APPLY:
+      case PASTE:
       break;
       case CLEAR:
       //delete data in slotcard
       break;
       case FILL:
       break;
-      case FLATTEN:
-      break;
-      case MERGE:
-      break;
+      //      case FLAT:
+      //      break;
+      //      case MERGE:
+      //      break;
       case READ:
       break;
-      case STASH:
+      case COPY:
       break;
       default:
       break;
