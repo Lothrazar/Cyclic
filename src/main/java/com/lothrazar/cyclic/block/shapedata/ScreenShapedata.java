@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.shapedata;
 
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.Fields;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.StructCommands;
@@ -16,6 +18,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
 
   private ButtonMachineRedstone btnRender;
+  Map<StructCommands, ButtonMachine> map = new HashMap<>();
 
   public ScreenShapedata(ContainerShapedata screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -42,6 +45,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
                     shape.ordinal(), container.tile.getPos()));
           }));
       btnShape.setTooltip("block.cyclic.computer_shape.command");
+      map.put(shape, btnShape);
       y += 20;
       //
       if (shape.ordinal() == 2) {
@@ -61,8 +65,12 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
-    this.drawName(ms, title.getString());
+    //    this.drawName(ms, title.getString());
     btnRender.onValueUpdate(container.tile);
+    for (StructCommands shape : StructCommands.values()) {
+      ButtonMachine btnShape = map.get(shape);
+      btnShape.active = container.tile.isAvailable(shape);
+    }
   }
 
   @Override

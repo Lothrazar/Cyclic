@@ -6,7 +6,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -27,14 +26,16 @@ public class RenderShapedata extends TileEntityRenderer<TileShapedata> {
       return;
     }
     if (1 == te.getField(TileShapedata.Fields.RENDER.ordinal())) {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty()) {
+      if (te.getTarget(0) != null)
         UtilRender.renderOutline(te.getPos(), te.getTarget(0), matrixStack, 0.7F, Color.BLUE);
+      if (te.getTarget(1) != null)
         UtilRender.renderOutline(te.getPos(), te.getTarget(1), matrixStack, 0.7F, Color.RED);
-      }
-      else {
-        //              UtilRender.renderAsBlock(te.getPos(), te.getShape(), matrixStack, stack, 0.5F, 1.0F);
-      }
+      //      ItemStack stack = inv.getStackInSlot(0);
+      //      if (stack.isEmpty()) {
+      //      }
+      //      else {
+      //        //              UtilRender.renderAsBlock(te.getPos(), te.getShape(), matrixStack, stack, 0.5F, 1.0F);
+      //      }
     }
   }
 }

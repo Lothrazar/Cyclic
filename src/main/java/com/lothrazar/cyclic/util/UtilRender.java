@@ -462,9 +462,12 @@ public class UtilRender {
     IVertexBuilder builder;
     builder = buffer.getBuffer(FakeBlockRenderTypes.SOLID_COLOUR);
     for (BlockPos e : coords) {
-      if (!world.isAirBlock(e)) {
+      if (e == null) {
         continue;
       }
+      //      if (!world.isAirBlock(e)) {
+      //        continue;
+      //      }
       matrix.push();
       float ctr = (1 - scale) / 2;
       matrix.translate(e.getX() + ctr, e.getY() + ctr, e.getZ() + ctr);

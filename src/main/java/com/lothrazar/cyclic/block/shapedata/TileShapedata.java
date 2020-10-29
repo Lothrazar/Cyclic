@@ -63,7 +63,8 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
       case PASTE:
       break;
       case CLEAR:
-      //delete data in slotcard
+        //delete data in slotcard
+        shapeCard.setTag(null);
       break;
       case FILL:
       break;
@@ -85,7 +86,12 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(4) {
+    return new ItemStackHandler(3) {
+
+      @Override
+      public int getSlotLimit(int slot) {
+        return 1;
+      }
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
@@ -154,6 +160,22 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     //        stack.shrink(1);
     //      }
     //    });
+  }
+
+  public boolean isAvailable(StructCommands shape) {
+    IItemHandler inv = this.inventory.orElse(null);
+    if (inv == null) {
+      return false;
+    }
+    ItemStack stack = inv.getStackInSlot(SLOT_CARD);
+    if (stack.isEmpty()) {
+      return false;
+    }
+    if (stack.getTag() == null) {
+      //cannot clear if already clear
+      return shape != StructCommands.CLEAR;
+    }
+    return true;
   }
 
   public BlockPos getTarget(int s) {

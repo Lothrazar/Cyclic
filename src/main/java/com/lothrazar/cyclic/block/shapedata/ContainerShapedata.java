@@ -23,10 +23,11 @@ public class ContainerShapedata extends ContainerBase {
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      for (int s = 0; s < h.getSlots(); s++) {
-        addSlot(new SlotItemHandler(h, s, 8 + 18 * s, 29));
-      }
+      addSlot(new SlotItemHandler(h, 0, 9, 29 + 18));
+      addSlot(new SlotItemHandler(h, 1, 9 + 18, 29));
+      addSlot(new SlotItemHandler(h, 2, 71, 39));
     });
+    this.trackAllIntFields(tile, TileShapedata.Fields.values().length);
     layoutPlayerInventorySlots(8, 84);
   }
 
