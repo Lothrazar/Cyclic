@@ -76,6 +76,7 @@ public class LocationGpsCard extends ItemBase {
     held.getOrCreateTag().putDouble("hity", vec.y - pos.getY());
     held.getOrCreateTag().putDouble("hitz", vec.z - pos.getZ());
     return ActionResultType.SUCCESS;
+    //this.write 
   }
 
   public static BlockPosDim getPosition(ItemStack item) {
@@ -83,6 +84,7 @@ public class LocationGpsCard extends ItemBase {
     if (pos == null) {
       return null;
     }
+    //    this.read 
     CompoundNBT tag = item.getOrCreateTag();
     BlockPosDim dim = new BlockPosDim(pos, tag.getString(NBT_DIM));
     try {

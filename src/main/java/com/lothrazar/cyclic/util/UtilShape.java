@@ -105,6 +105,26 @@ public class UtilShape {
     return rectHollow(pos, radius, radius);
   }
 
+  public static List<BlockPos> rect(final BlockPos pos, final BlockPos target) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    //
+    int xMin = Math.min(pos.getX(), target.getX());
+    int yMin = Math.min(pos.getY(), target.getY());
+    int zMin = Math.min(pos.getZ(), target.getZ());
+    int xMax = Math.max(pos.getX(), target.getX());
+    int yMax = Math.max(pos.getY(), target.getY());
+    int zMax = Math.max(pos.getZ(), target.getZ());
+    for (int x = xMin; x <= xMax; x++) {
+      for (int z = zMin; z <= zMax; z++) {
+        for (int y = yMin; y <= yMax; y++) {
+          //now go max height on each pillar for sort order
+          shape.add(new BlockPos(x, y, z));
+        }
+      }
+    }
+    return shape;
+  }
+
   public static List<BlockPos> rectHollow(final BlockPos pos, int radiusX, int radiusZ) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -354,4 +374,17 @@ public class UtilShape {
       this.stickySurface = stickySurface;
     }
   }
+  /**
+   * only if NOT air block. any air blocks not returned
+   */
+  //  public static List<BlockPos> filterAir(World world, List<BlockPos> shape) {
+  //    List<BlockPos> sh = new ArrayList<BlockPos>();
+  //    //
+  //    for (BlockPos p : shape) {
+  //      if (!world.isAirBlock(p)) {
+  //        sh.add(p);
+  //      }
+  //    }
+  //    return sh;
+  //  }
 }

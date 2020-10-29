@@ -1,13 +1,16 @@
 package com.lothrazar.cyclic.block.shapedata;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.data.BuildShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -58,26 +61,29 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
     }
-    ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getOrCreateTag());
+    ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getTag());
+    BlockPos invA = getTarget(SLOT_A);
+    BlockPos invB = getTarget(SLOT_B);
+    List<BlockPos> shape = UtilShape.rect(invA, invB);
     switch (cmd) {
-      case PASTE:
-      break;
       case CLEAR:
         //delete data in slotcard
         shapeCard.setTag(null);
       break;
-      case FILL:
+      case READ:
+        //        shape = UtilShape.filterAir(world, shape);
+        BuildShape build = new BuildShape(world, shape);
+        build.write(shapeCard);
+      /// shape set
+      break;
+      case COPY:
+      break;
+      case PASTE:
       break;
       //      case FLAT:
       //      break;
       //      case MERGE:
       //      break;
-      case READ:
-      break;
-      case COPY:
-      break;
-      default:
-      break;
     }
   }
 
