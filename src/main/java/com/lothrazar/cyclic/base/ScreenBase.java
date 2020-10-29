@@ -85,7 +85,8 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     for (IGuiEventListener widget : this.children) {
       if (widget instanceof IHasTooltip && widget.isMouseOver(mouseX, mouseY)) {
         IHasTooltip txt = (IHasTooltip) widget;
-        this.func_243308_b(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        if (txt.getTooltip() != null)
+          this.func_243308_b(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
       }
     }
   }

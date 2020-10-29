@@ -6,8 +6,10 @@ import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
+import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -15,14 +17,18 @@ import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -41,6 +47,44 @@ public class ItemEvents {
       AttributeModifier healthModifier = original.getModifier(HeartItem.healthModifierUuid);
       if (healthModifier != null)
         event.getPlayer().getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(healthModifier);
+    }
+  }
+
+  @SubscribeEvent
+  public void onEntityUpdate(LivingUpdateEvent event) {
+    LivingEntity liv = event.getEntityLiving();
+    if (//!liv.world.isRemote &&
+    liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
+        && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
+      // 
+      if (liv.isInWater()
+          && liv.canBreatheUnderwater() == false
+          && liv.getAir() < liv.getMaxAir()
+          && !liv.isPotionActive(Effects.WATER_BREATHING)) {
+        liv.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 20 * 60, 4));
+        liv.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, 20 * 60, 1));
+        ItemHorseEnder.onSuccess(liv);
+      }
+      if (liv.isBurning()
+          && !liv.isPotionActive(Effects.FIRE_RESISTANCE)) {
+        liv.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 20 * 60, 4));
+        liv.extinguish();
+        ItemHorseEnder.onSuccess(liv);
+      }
+      if (liv.fallDistance > 12
+          && !liv.isPotionActive(Effects.SLOW_FALLING)) {
+        liv.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20 * 60, 4));
+        //        if (liv.getPassengers().size() > 0) {
+        //          liv.getPassengers().get(0).addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20 * 60, 1));
+        //        }
+        ItemHorseEnder.onSuccess(liv);
+      }
+      if (liv.getHealth() < 6
+          && !liv.isPotionActive(Effects.ABSORPTION)) {
+        liv.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20 * 60, 4));
+        liv.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 20 * 60, 4));
+        ItemHorseEnder.onSuccess(liv);
+      }
     }
   }
   //

@@ -25,7 +25,6 @@ package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
-import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -33,13 +32,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.SoundEvents;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemHorseEnder extends ItemEntityInteractable {
 
@@ -49,51 +44,18 @@ public class ItemHorseEnder extends ItemEntityInteractable {
     super(prop);
   }
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    LivingEntity liv = event.getEntityLiving();
-    if (//!liv.world.isRemote &&
-    liv.getPersistentData().contains(NBT_KEYACTIVE)
-        && liv.getPersistentData().getInt(NBT_KEYACTIVE) > 0) {
-      // 
-      if (liv.isInWater()
-          && liv.canBreatheUnderwater() == false
-          && liv.getAir() < liv.getMaxAir()
-          && !liv.isPotionActive(Effects.WATER_BREATHING)) {
-        liv.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 20 * 60, 4));
-        liv.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, 20 * 60, 1));
-        onSuccess(liv);
-      }
-      if (liv.isBurning()
-          && !liv.isPotionActive(Effects.FIRE_RESISTANCE)) {
-        liv.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 20 * 60, 4));
-        liv.extinguish();
-        onSuccess(liv);
-      }
-      if (liv.fallDistance > 12
-          && !liv.isPotionActive(Effects.SLOW_FALLING)) {
-        liv.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20 * 60, 4));
-        //        if (liv.getPassengers().size() > 0) {
-        //          liv.getPassengers().get(0).addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20 * 60, 1));
-        //        }
-        onSuccess(liv);
-      }
-      if (liv.getHealth() < 6
-          && !liv.isPotionActive(Effects.ABSORPTION)) {
-        liv.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20 * 60, 4));
-        liv.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 20 * 60, 4));
-        onSuccess(liv);
-      }
-    }
-  }
-
-  private void onSuccess(LivingEntity liv) {
+  public static void onSuccess(LivingEntity liv) {
     UtilSound.playSound(liv, SoundEvents.ENTITY_GENERIC_DRINK);
     UtilParticle.spawnParticle(liv.world, ParticleTypes.CRIT, liv.getPosition(), 3);
     increment(liv, -1);
     //    ModCyclic.LOGGER.info("carrot_ender triggered down " + liv.getPersistentData().getInt(NBT_KEYACTIVE));
     //    int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
     //    UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);
+  }
+
+  private static void increment(LivingEntity ahorse, int val) {
+    int old = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
+    ahorse.getPersistentData().putInt(NBT_KEYACTIVE, old + val);
   }
 
   @Override
@@ -118,10 +80,5 @@ public class ItemHorseEnder extends ItemEntityInteractable {
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
       UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);
     }
-  }
-
-  private void increment(LivingEntity ahorse, int val) {
-    int old = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
-    ahorse.getPersistentData().putInt(NBT_KEYACTIVE, old + val);
   }
 }

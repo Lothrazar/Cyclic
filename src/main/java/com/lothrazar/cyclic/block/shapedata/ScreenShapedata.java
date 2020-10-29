@@ -26,20 +26,25 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
     super.init();
     int x, y;
     x = guiLeft + 8;
-    y = guiTop + 8;
+    y = guiTop + 6;
     btnRender = addButton(new ButtonMachineRedstone(x, y, TileShapedata.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //
-    x = 140;
-    StructCommands shape = StructCommands.CLEAR;
-    ButtonMachine btnShape = addButton(new ButtonMachine(x, y, 20, 40,
-        shape.name(), (p) -> {
-          //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-          PacketRegistry.INSTANCE.sendToServer(
-              new PacketTileData(Fields.COMMAND.ordinal(),
-                  shape.ordinal(), container.tile.getPos()));
-        }));
+    x = guiLeft + 120;
+    int width = 50;
+    //    StructCommands shape = StructCommands.CLEAR;
+    for (StructCommands shape : StructCommands.values()) {
+      ButtonMachine btnShape = addButton(new ButtonMachine(x, y, width, 20,
+          shape.name(), (p) -> {
+            //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
+            PacketRegistry.INSTANCE.sendToServer(
+                new PacketTileData(Fields.COMMAND.ordinal(),
+                    shape.ordinal(), container.tile.getPos()));
+          }));
+      btnShape.setTooltip("block.cyclic.computer_shape.command");
+      y += 20;
+    }
   }
 
   @Override

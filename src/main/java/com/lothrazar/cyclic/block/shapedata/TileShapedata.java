@@ -53,6 +53,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     if (inv == null) {
       return;
     }
+    ModCyclic.LOGGER.info("apply " + cmd);
     ItemStack shapeCard = inv.getStackInSlot(SLOT_CARD);
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
@@ -183,7 +184,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
         if (value >= StructCommands.values().length) {
           value = 0;
         }
-        StructCommands cmd = StructCommands.values()[field];
+        StructCommands cmd = StructCommands.values()[value];
         this.execute(cmd);
       break;
       case RENDER:
