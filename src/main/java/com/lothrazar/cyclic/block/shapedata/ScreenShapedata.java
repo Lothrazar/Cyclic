@@ -1,6 +1,13 @@
 package com.lothrazar.cyclic.block.shapedata;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.block.shapedata.TileShapedata.Fields;
+import com.lothrazar.cyclic.block.shapedata.TileShapedata.StructCommands;
+import com.lothrazar.cyclic.gui.ButtonMachine;
+import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.TextureEnum;
+import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -8,8 +15,31 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
 
+  private ButtonMachineRedstone btnRender;
+
   public ScreenShapedata(ContainerShapedata screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
+  }
+
+  @Override
+  public void init() {
+    super.init();
+    int x, y;
+    x = guiLeft + 8;
+    y = guiTop + 8;
+    btnRender = addButton(new ButtonMachineRedstone(x, y, TileShapedata.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+    //
+    //
+    x = 140;
+    StructCommands shape = StructCommands.CLEAR;
+    ButtonMachine btnShape = addButton(new ButtonMachine(x, y, 20, 40,
+        shape.name(), (p) -> {
+          //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
+          PacketRegistry.INSTANCE.sendToServer(
+              new PacketTileData(Fields.COMMAND.ordinal(),
+                  shape.ordinal(), container.tile.getPos()));
+        }));
   }
 
   @Override
@@ -23,6 +53,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
+    btnRender.onValueUpdate(container.tile);
   }
 
   @Override

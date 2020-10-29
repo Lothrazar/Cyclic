@@ -9,22 +9,59 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
+import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.gui.screen.inventory.HorseInventoryScreen;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class EventRender {
+
+  @OnlyIn(Dist.CLIENT)
+  @SubscribeEvent
+  public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
+    //
+    if (event.getGui() instanceof HorseInventoryScreen
+        && ModCyclic.proxy.getClientPlayer() != null
+        && ModCyclic.proxy.getClientPlayer().getRidingEntity() != null) {
+      //      ModCyclic.LOGGER.info("ender teleport gui screen " + event.getGui());
+      // 
+      //      HorseInventoryScreen hs = (HorseInventoryScreen) event.getGui();
+      Entity liv = ModCyclic.proxy.getClientPlayer().getRidingEntity();
+      if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
+          && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
+        //
+        int ct = liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE);
+        //        String test = UtilChat.lang("cyclic.carrot_ender.count") + ct;
+        ExtendedButton bt2 = new ExtendedButton(event.getGui().width / 2 + 68,
+            event.getGui().height / 2 - 80,
+            //cyclic.carrot_ender.charges
+            18, 14, new StringTextComponent("" + ct), b -> {
+              //              if(event.i)
+              UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), "item.cyclic.carrot_ender.tooltip");
+              //                  test);
+            }) {};
+        //        bt2.active = false;
+        event.addWidget(bt2);
+      }
+    }
+  }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent

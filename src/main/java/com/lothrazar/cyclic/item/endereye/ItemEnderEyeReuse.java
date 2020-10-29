@@ -30,8 +30,8 @@ public class ItemEnderEyeReuse extends ItemBase {
       ServerWorld sw = (ServerWorld) worldIn;
       ChunkGenerator chunkGenerator = sw.getChunkProvider().getChunkGenerator();
       //      chunkGenerator.func_235956_a_(p_235956_1_, p_235956_2_, p_235956_3_, p_235956_4_, p_235956_5_)
-      //findNearestStructure
-      BlockPos blockpos = chunkGenerator.func_235956_a_(sw, Structure.field_236375_k_, new BlockPos(player.getPosition()), 100, false);
+      //findNearestStructure 
+      BlockPos blockpos = chunkGenerator.func_235956_a_(sw, Structure.STRONGHOLD, new BlockPos(player.getPosition()), 100, false);
       if (blockpos != null) {
         double posX = player.getPosX();
         double posY = player.getPosY();
