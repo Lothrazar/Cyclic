@@ -34,6 +34,7 @@ import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
 import com.lothrazar.cyclic.block.screen.TileScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
+import com.lothrazar.cyclic.block.shapedata.TileShapedata;
 import com.lothrazar.cyclic.block.soil.TileTerraPreta;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.tank.TileTank;
@@ -101,8 +102,11 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileFisher::new, BlockRegistry.fisher).build(null).setRegistryName("fisher"));
     r.register(TileEntityType.Builder.create(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
+    r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":computer_shape")
+  public static TileEntityType<TileShapedata> computer_shape;
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static TileEntityType<TileTerraPreta> terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")

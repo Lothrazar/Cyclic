@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -441,14 +442,15 @@ public class UtilRender {
     matrix.pop();
   }
 
+  public static void renderOutline(BlockPos view, BlockPos pos, MatrixStack matrix, float scale, Color color) {
+    List<BlockPos> coords = new ArrayList<>();
+    coords.add(pos);
+    renderOutline(view, coords, matrix, scale, color);
+  }
+
   /**
    * Used by fluid TESRs
    * 
-   * @param view
-   * @param coords
-   * @param matrix
-   * @param scale
-   * @param color
    */
   public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix, float scale, Color color) {
     //    IRenderTypeBuffer.getImpl(ibuffer);
@@ -481,7 +483,7 @@ public class UtilRender {
 
   public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix) {
     renderOutline(view, coords, matrix,
-        0.7F, // defaults
+        0.7F,
         Color.BLUE);
   }
 

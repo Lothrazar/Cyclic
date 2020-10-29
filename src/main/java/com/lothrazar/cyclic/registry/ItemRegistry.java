@@ -41,8 +41,8 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.carrot.ItemHorseLapisVariant;
 import com.lothrazar.cyclic.item.carrot.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.carrot.ItemHorseToxic;
-import com.lothrazar.cyclic.item.datacard.ItemSettings;
-import com.lothrazar.cyclic.item.datacard.LocationGpsItem;
+import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
+import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.elemental.FireScepter;
 import com.lothrazar.cyclic.item.elemental.IceWand;
@@ -133,6 +133,7 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.computer_shape, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("computer_shape"));
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("flower_cyan"));
     r.register(new BlockItem(BlockRegistry.mason_cobble, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_cobble"));
     r.register(new BlockItem(BlockRegistry.mason_stone, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_stone"));
@@ -200,7 +201,7 @@ public class ItemRegistry {
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemgrp), PeatItemType.ENRICHED).setRegistryName("peat_fuel_enriched"));
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.itemgrp), PeatItemType.BIOMASS).setRegistryName("biomass"));
     // basic tools
-    r.register(new LocationGpsItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("location"));
+    r.register(new LocationGpsCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("location"));
     r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(9000)).setRegistryName("mattock"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sleeping_mat"));
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024 * 1024)).setRegistryName("shears_obsidian"));
@@ -241,7 +242,7 @@ public class ItemRegistry {
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ElevationWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("elevation_wand"));
     r.register(new TeleporterWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("teleport_wand"));
-    r.register(new ItemSettings(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("settings_data"));
+    r.register(new SettingsCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("settings_data"));
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("shape_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024)).setRegistryName("scythe_harvest"));
     /// apples 

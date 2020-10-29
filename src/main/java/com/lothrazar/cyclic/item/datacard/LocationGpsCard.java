@@ -25,12 +25,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LocationGpsItem extends ItemBase {
+public class LocationGpsCard extends ItemBase {
 
   private static final String NBT_SIDE = "side";
   private static final String NBT_DIM = "dim";
 
-  public LocationGpsItem(Properties properties) {
+  public LocationGpsCard(Properties properties) {
     super(properties);
   }
 

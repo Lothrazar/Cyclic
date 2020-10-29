@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class StructureDiskItem extends ItemBase {
+public class StructureDiskCard extends ItemBase {
 
   private static final String NBTSTRUCTURE = "structure";
 
-  public StructureDiskItem(Properties properties) {
+  public StructureDiskCard(Properties properties) {
     super(properties);
   }
 

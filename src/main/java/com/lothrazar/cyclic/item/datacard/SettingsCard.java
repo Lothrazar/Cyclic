@@ -23,11 +23,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ItemSettings extends ItemBase {
+public class SettingsCard extends ItemBase {
 
   private static final String NBT_SETSAVED = "settingsSaved";
 
-  public ItemSettings(Properties properties) {
+  public SettingsCard(Properties properties) {
     super(properties.maxStackSize(1));
   }
 

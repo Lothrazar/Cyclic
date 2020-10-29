@@ -51,6 +51,7 @@ import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.screen.BlockScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
+import com.lothrazar.cyclic.block.shapedata.BlockShapedata;
 import com.lothrazar.cyclic.block.soil.BlockTerraPreta;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
@@ -198,10 +199,13 @@ public class BlockRegistry {
   public static Block crafter;
   @ObjectHolder(ModCyclic.MODID + ":fireplace")
   public static Block fireplace;
+  @ObjectHolder(ModCyclic.MODID + ":computer_shape")
+  public static Block computer_shape;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockShapedata(Block.Properties.create(Material.PLANTS)).setRegistryName("computer_shape"));
     r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));
     r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true).setRegistryName("scaffold_fragile"));
     r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), false).setRegistryName("scaffold_responsive"));

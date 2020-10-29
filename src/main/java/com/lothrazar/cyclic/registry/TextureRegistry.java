@@ -12,14 +12,14 @@ public class TextureRegistry {
   public static final ResourceLocation INVENTORY_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_large.png");
   public static final ResourceLocation INVENTORY_LARGE_PLAIN = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_large_plain.png");
   public static final ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot.png");
-  public static final ResourceLocation SLOT_DISK = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_disk.png");
+  //  public static final ResourceLocation SLOT_DISK = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_disk.png");
   public static final ResourceLocation SLOT_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_large.png");
   public static final ResourceLocation SLOT_BOOK = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_book.png");
   public static final ResourceLocation SLOT_GPS = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_gps.png");
+  public static final ResourceLocation SLOT_SHAPE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_shape.png");
   public static final ResourceLocation ENERGY_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_ctr.png");
   public static final ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
   public static final ResourceLocation WIDGETS = new ResourceLocation(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");
   public static final ResourceLocation FLUID_WIDGET = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
-  public static final ResourceLocation TIMER = new ResourceLocation(ModCyclic.MODID, "textures/gui/timer_melter.png");
-  public static final ResourceLocation CARROT_ENDER = new ResourceLocation(ModCyclic.MODID, "textures/items/carrot_ender.png");
+  //  public static final ResourceLocation CARROT_ENDER = new ResourceLocation(ModCyclic.MODID, "textures/items/carrot_ender.png"); 
 }

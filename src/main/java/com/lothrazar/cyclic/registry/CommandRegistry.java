@@ -22,7 +22,6 @@ import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
 public class CommandRegistry {
 
@@ -30,7 +29,7 @@ public class CommandRegistry {
   public static final List<ICyclicCommand> COMMANDS = new ArrayList<>();
 
   @SubscribeEvent
-  public void tarting(RegisterCommandsEvent event) {
+  public void onRegisterCommandsEvent(RegisterCommandsEvent event) {
     COMMANDS.add(new CommandGetHome());
     COMMANDS.add(new CommandHealth());
     COMMANDS.add(new CommandHome());
@@ -46,11 +45,6 @@ public class CommandRegistry {
     r.register(LiteralArgumentBuilder.<CommandSource> literal(ModCyclic.MODID)
         .then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(this::execute))
         .executes(this::execute));
-  }
-
-  @SubscribeEvent
-  public void serverStarting(FMLServerStartingEvent event) {
-    //ok
   }
 
   private int execute(CommandContext<CommandSource> ctx) throws CommandSyntaxException {

@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
-import com.lothrazar.cyclic.item.datacard.LocationGpsItem;
+import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -25,12 +25,6 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EventRender {
-  //  public interface IRenderAreaHeld {
-  //
-  //    public Map<BlockPos, Color> getCoords();
-  //
-  //    public float alpha();
-  //  }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -78,8 +72,8 @@ public class EventRender {
     }
     ///////////////////// LocationGpsItem
     stack = player.getHeldItemMainhand();
-    if (stack.getItem() instanceof LocationGpsItem) {
-      BlockPosDim loc = LocationGpsItem.getPosition(stack);
+    if (stack.getItem() instanceof LocationGpsCard) {
+      BlockPosDim loc = LocationGpsCard.getPosition(stack);
       if (loc != null) {
         if (loc.getDimension() == null ||
             loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world)))

@@ -33,7 +33,7 @@ public class TimerBar {
 
   public void draw(MatrixStack ms, float energ) {
     //    Screen.blit(relX, relY, 0, 0, width, height, width, height);
-    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.TIMER);
+    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.PROGRESS);
     float pct = Math.min(energ / capacity, 1.0F);
     Screen.blit(ms, guiLeft + x, guiTop + y,
         0, 0,

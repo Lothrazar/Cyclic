@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
 import com.lothrazar.cyclic.block.screen.ContainerScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.ContainerStructure;
+import com.lothrazar.cyclic.block.shapedata.ContainerShapedata;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
@@ -137,8 +138,13 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerCrafter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("crafter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerShapedata(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("computer_shape"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":computer_shape")
+  public static ContainerType<ContainerShapedata> computer_shape;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static ContainerType<ContainerBreaker> breaker;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
