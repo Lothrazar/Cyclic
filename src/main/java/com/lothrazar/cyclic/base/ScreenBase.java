@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.base;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.IHasTooltip;
@@ -75,9 +76,10 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
   public void drawButtonTooltips(MatrixStack ms, int mouseX, int mouseY) {
     for (Widget btn : this.buttons) {
       if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)) {
-        //        btn.too
         btn.renderToolTip(ms, mouseX, mouseY);
-        this.func_243308_b(ms, ((IHasTooltip) btn).getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        List<ITextComponent> localTooltip = ((IHasTooltip) btn).getTooltip();
+        if (localTooltip != null)
+          this.func_243308_b(ms, localTooltip, mouseX - guiLeft, mouseY - guiTop);
       }
     }
     for (IGuiEventListener widget : this.children) {

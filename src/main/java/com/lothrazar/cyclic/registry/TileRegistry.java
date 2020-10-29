@@ -140,7 +140,7 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static TileEntityType<TilePeatGenerator> peat_generator;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")
-  public static TileEntityType<TilePeatGenerator> peat_farm;
+  public static TileEntityType<TilePeatFarm> peat_farm;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
   public static TileEntityType<TileHarvester> harvesterTile;
   @ObjectHolder(ModCyclic.MODID + ":breaker")

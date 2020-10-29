@@ -16,6 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantPearl extends EnchantBase {
@@ -47,8 +48,8 @@ public class EnchantPearl extends EnchantBase {
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public void something(PlayerInteractEvent.RightClickItem event) {
-    if (!event.getWorld().isRemote) {
+  public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+    if (!event.getWorld().isRemote && event.getResult() != Result.DENY) {
       int level = EnchantmentHelper.getEnchantmentLevel(this, event.getItemStack());
       if (level > 0) {
         int adjustedCooldown = COOLDOWN / level;
@@ -63,6 +64,9 @@ public class EnchantPearl extends EnchantBase {
         event.getWorld().playSound((PlayerEntity) null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (event.getWorld().rand.nextFloat() * 0.4F + 0.8F));
         event.getWorld().addEntity(pearl);
         event.getItemStack().damageItem(DURABILITY_DAMAGE, player, (e) -> {});
+        //block propogation of event 
+        event.setResult(Result.DENY);
+        event.setCanceled(true);
       }
     }
   }

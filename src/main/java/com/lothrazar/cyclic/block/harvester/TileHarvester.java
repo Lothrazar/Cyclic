@@ -33,6 +33,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -82,8 +83,10 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       if (cap.getEnergyStored() < cost && cost > 0) {
         break;//too broke
       }
-      if (this.tryHarvestSingle(target)) {
+      if (tryHarvestSingle(this.world, target)) {
         cap.extractEnergy(cost, false);
+        laserTarget = target;
+        laserTimer = 15;
         break;
       }
     }
@@ -99,7 +102,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     return TileEntity.INFINITE_EXTENT_AABB;
   }
 
-  private boolean tryHarvestSingle(BlockPos posCurrent) {
+  public static boolean tryHarvestSingle(World world, BlockPos posCurrent) {
     BlockState blockState = world.getBlockState(posCurrent);
     if (TileHarvester.simpleBreakDrop(blockState)) {
       UtilItemStack.drop(world, posCurrent, blockState.getBlock());
@@ -139,12 +142,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         UtilWorld.dropItemStackInWorld(world, posCurrent, drop);
       }
     }
-    world.setBlockState(posCurrent, blockState.with(propInt, minAge));
-    laserTarget = posCurrent;
-    laserTimer = 15;
-    world.notifyBlockUpdate(posCurrent, getBlockState(), getBlockState(), 3);
-    UtilWorld.flagUpdate(world, pos, this.getBlockState(), this.getBlockState());
-    this.markDirty();
+    BlockState newState = blockState.with(propInt, minAge);
+    world.setBlockState(posCurrent, newState);
+    world.notifyBlockUpdate(posCurrent, newState, newState, 3);
+    //        UtilWorld.flagUpdate(world, pos, this.getBlockState(), this.getBlockState());
+    //    this.markDirty();
     return true;
   }
 

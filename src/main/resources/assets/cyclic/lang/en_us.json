@@ -27,6 +27,10 @@
     "block.cyclic.flower_cyan.tooltip": "A lost legacy",
     "block.cyclic.flower_cyan.guide": "A lost legacy",
     
+    "item.cyclic.scythe_harvest":"Garden Scythe",
+    "item.cyclic.scythe_harvest.tooltip":"Harvest the area",
+    "item.cyclic.scythe_harvest.guide":"Harvest the area on use.  Sneak to harvest a smaller area.  Uses the same logic as the Harvester block. ",
+    
     
     "item.cyclic.settings_data":"Settings Data Card",
     "item.cyclic.settings_data.tooltip":"Copy settings between cyclic machines",
@@ -1309,7 +1313,7 @@
     "item.cyclic.netherbrick_shovel": "Nether Shovel",
     "item.cyclic.netherbrick_hoe": "Nether Hoe",
 
-    "item.cyclic.location": "GPS Marker",
+    "item.cyclic.location": "GPS Data Card",
     "item.cyclic.location.tooltip": "Saves the location of a block",
     "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.$(br2)Markers with saved locations can be used in multiple machines from this mod.",
     "item.location.saved": "Saved ",

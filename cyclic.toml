@@ -1,5 +1,7 @@
 
-#Feature toggles; each of these will disable the registration of some content (items/enchants)
+#####################################################################################
+# Feature toggles; each of these will disable the registration of some content (items/enchants)
+#####################################################################################
 [cyclic]
 	#Disable the endgame gear
 	gemObsidianGear = true
@@ -28,6 +30,9 @@
 	#Disable the 5 carrot items that upgrade horses
 	carrots = true
 
+	#####################################################################################
+	# Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  
+	#####################################################################################
 	[cyclic.command]
 		#True means only players with OP can use this /cyclic command
 		help = false
@@ -46,69 +51,93 @@
 		#True means only players with OP can use this /cyclic command
 		hunger = true
 
+	#####################################################################################
+	# Enchantment related configs
+	#####################################################################################
 	[cyclic.enchant]
 
 		[cyclic.enchant.beheading]
 			#Beheading enchant add player skin head drop, add any mob id and any skin
 			BeheadingEntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
 
+	#####################################################################################
+	# Logging related configs
+	#####################################################################################
 	[cyclic.logging]
 		#Enable unblock info logs; very spammy
-		info = true
+		info = false
 
-	[cyclic.peat]
-		#Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)
-		#Range: 0.0010000000474974513 ~ 1.0
-		conversionChance = 0.07999999821186066
+	#####################################################################################
+	# Item specific configs
+	#####################################################################################
+	[cyclic.items]
 
+		#Peat blocks
+		[cyclic.items.peat]
+			#Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)
+			#Range: 0.0010000000474974513 ~ 1.0
+			conversionChance = 0.07999999821186066
+
+		#Heart items
+		[cyclic.items.heart]
+			#Experience given when eating a poisoned heart
+			#Range: 0 ~ 99999
+			experience = 500
+
+	#####################################################################################
+	# Energy related configs for machines and items
+	#####################################################################################
 	[cyclic.energy]
 
+		#Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).
 		[cyclic.energy.cost]
-			#Power per use
+			#################
+			#Power per use disenchanter
 			#Range: 0 ~ 64000
 			disenchanter = 1500
-			#Power per repair 
+			#Power per repair anvil
 			#Range: 0 ~ 64000
 			anvil = 250
-			#Power per use
+			#Power per use dropper
 			#Range: 0 ~ 64000
 			dropper = 50
-			#Power per use
+			#Power per use peat_farm
 			#Range: 0 ~ 64000
 			peat_farm = 500
-			#Power per use
+			#Power per use miner
 			#Range: 0 ~ 64000
 			miner = 10
-			#Power per use
+			#Power per use collector_fluid
 			#Range: 0 ~ 64000
 			collector_fluid = 500
-			#Power per recipe
+			#Power per recipe melter
 			#Range: 0 ~ 64000
 			melter = 5000
-			#Power per use
+			#Power per use harvester
 			#Range: 0 ~ 64000
 			harvester = 250
-			#Power per use
+			#Power per use uncraft
 			#Range: 0 ~ 64000
 			uncraft = 1000
-			#Power per use
+			#Power per use forester
 			#Range: 0 ~ 64000
 			forester = 50
-			#Power per tick
+			#Power per tick beacon
 			#Range: 0 ~ 64000
 			beacon = 10
-			#Power per use
+			#Power per use crafter
 			#Range: 0 ~ 64000
 			crafter = 500
-			#Power per recipe
+			#Power per recipe solidifier
 			#Range: 0 ~ 64000
 			solidifier = 5000
 
+		# Fuel gained by consuming items
 		[cyclic.energy.fuel]
 			#Power gained burning one of this
 			#Range: 1 ~ 64000
 			peat_fuel_enriched = 1024
-			#Power gained burning one of this
+			# Power gained burning one of this
 			#Range: 1 ~ 64000
 			peat_fuel = 256
 

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " rd",
+    " ir",
+    "i  "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:stick"
+    },
+    "d": {
+      "item": "minecraft:iron_hoe"
+    },
+    "r": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "cyclic:scythe_harvest",
+    "count": 1
+  }
+}

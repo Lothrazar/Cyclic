@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.item.FireEntity;
-import com.lothrazar.cyclic.item.LightningEntity;
-import com.lothrazar.cyclic.item.SnowEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
+import com.lothrazar.cyclic.item.elemental.FireEntity;
+import com.lothrazar.cyclic.item.elemental.LightningEntity;
+import com.lothrazar.cyclic.item.elemental.SnowEntity;
 import com.lothrazar.cyclic.item.endereye.EyeOfEnderEntityNodrop;
 import com.lothrazar.cyclic.item.findspawner.EntityDungeonEye;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;

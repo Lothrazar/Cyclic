@@ -23,11 +23,11 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class ItemTeleporter extends ItemBase {
+public class TeleporterWandItem extends ItemBase {
 
   private static final int TICKS_USING = 93000;
 
-  public ItemTeleporter(Properties properties) {
+  public TeleporterWandItem(Properties properties) {
     super(properties);
   }
 

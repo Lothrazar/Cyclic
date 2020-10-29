@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.equipment;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

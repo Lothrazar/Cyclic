@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.block.peatfarm;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
@@ -34,6 +35,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockPeatFarm extends BlockBase {
 
@@ -45,6 +47,7 @@ public class BlockPeatFarm extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.peat_farm, RenderPeatFarm::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.peat_farm, ScreenPeatFarm::new);
   }
 

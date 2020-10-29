@@ -184,7 +184,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     return Block.getBlockFromItem(stack.getItem()) == unbaked;
   }
 
-  private List<BlockPos> getShape() {
+  List<BlockPos> getShape() {
     List<BlockPos> outer = UtilShape.squareHorizontalHollow(this.pos, 7);
     outer.addAll(UtilShape.squareHorizontalHollow(this.pos, 5));
     return outer;

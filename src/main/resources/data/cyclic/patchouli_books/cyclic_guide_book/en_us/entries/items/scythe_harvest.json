@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.scythe_harvest",
+  "icon": "cyclic:scythe_harvest",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scythe_harvest.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scythe_harvest"
+    }
+  ]
+}

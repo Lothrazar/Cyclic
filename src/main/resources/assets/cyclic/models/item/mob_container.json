@@ -1,8 +1,8 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/mob_container_layer0",
-        "layer1": "cyclic:items/mob_container_layer1",
-        "layer2": "cyclic:items/mob_container_layer2"
+        "layer0": "cyclic:items/magicnet/mob_container_layer0",
+        "layer1": "cyclic:items/magicnet/mob_container_layer1",
+        "layer2": "cyclic:items/magicnet/mob_container_layer2"
     }
 }

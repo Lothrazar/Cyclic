@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;

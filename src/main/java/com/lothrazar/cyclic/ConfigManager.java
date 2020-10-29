@@ -57,6 +57,7 @@ public class ConfigManager {
   public static BooleanValue COMMANDGETHELP;
   private static ConfigValue<List<String>> BEHEADING_SKINS;
   public static BooleanValue LOGINFO;
+  public static IntValue HEARTXPMINUS;
 
   private static void buildDefaultHeadList() {
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
@@ -97,62 +98,86 @@ public class ConfigManager {
 
   private static void initConfig() {
     buildDefaultHeadList();
-    CFG.comment("Feature toggles; each of these will disable the registration of some content (items/enchants)").push(ModCyclic.MODID);
-    String category = "";
-    CABLES = CFG.comment("Disable the cables aka pipes").define(category + "cables", true);
-    BOOMERANGS = CFG.comment("Disable the 3 boomerang items").define(category + "boomerangs", true);
-    SPIKES = CFG.comment("Disable the 3 spike blocks").define(category + "spikes", true);
-    SCAFFOLD = CFG.comment("Disable the 3 scaffolding blocks").define(category + "scaffolding", true);
-    CARROTS = CFG.comment("Disable the 5 carrot items that upgrade horses").define(category + "carrots", true);
-    HEARTS = CFG.comment("Disable 2 heart items that increase and decrease max health").define(category + "hearts", true);
-    GLOVE = CFG.comment("Disable the completely balanced climbing glove").define(category + "glove", true);
-    CHARMS = CFG.comment("Disable 6 charms (four basic, the ultimate, and the anti-gravity)").define(category + "charms", true);
-    EMERALD = CFG.comment("Disable 9 items, emerald armor and tools").define(category + "emeraldGear", true);
-    SANDSTONE = CFG.comment("Disable 5 sandstone tools").define(category + "sandstoneGear", true);
-    GEMGEAR = CFG.comment("Disable the endgame gear").define(category + "gemObsidianGear", true);
-    NETHERBRICK = CFG.comment("Disable 5 netherbrick tools").define(category + "netherbrickGear", true);
-    ENCHANTMENTS = CFG.comment("Disable all 11 enchantments").define(category + "enchantments", true);
-    category = "logging.";
-    LOGINFO = CFG.comment("Enable unblock info logs; very spammy").define(category + "info", false);
-    category = "energy.";
-    category = "energy.fuel.";
-    PEATPOWER = CFG.comment("Power gained burning one of this")
-        .defineInRange(category + "peat_fuel", 256, 1, 64000);
+    final String WALL = "####################################################################################";
+    final String WALLSM = "################"; //    CFG.translation(translationKey)
+    CFG.comment(WALL,
+        " Feature toggles; each of these will disable the registration of some content (items/enchants)", WALL)
+        .push(ModCyclic.MODID);
+    //
+    //
+    CABLES = CFG.comment("Disable the cables aka pipes").define("cables", true);
+    BOOMERANGS = CFG.comment("Disable the 3 boomerang items").define("boomerangs", true);
+    SPIKES = CFG.comment("Disable the 3 spike blocks").define("spikes", true);
+    SCAFFOLD = CFG.comment("Disable the 3 scaffolding blocks").define("scaffolding", true);
+    CARROTS = CFG.comment("Disable the 5 carrot items that upgrade horses").define("carrots", true);
+    HEARTS = CFG.comment("Disable 2 heart items that increase and decrease max health").define("hearts", true);
+    GLOVE = CFG.comment("Disable the completely balanced climbing glove").define("glove", true);
+    CHARMS = CFG.comment("Disable 6 charms (four basic, the ultimate, and the anti-gravity)").define("charms", true);
+    EMERALD = CFG.comment("Disable 9 items, emerald armor and tools").define("emeraldGear", true);
+    SANDSTONE = CFG.comment("Disable 5 sandstone tools").define("sandstoneGear", true);
+    GEMGEAR = CFG.comment("Disable the endgame gear").define("gemObsidianGear", true);
+    NETHERBRICK = CFG.comment("Disable 5 netherbrick tools").define("netherbrickGear", true);
+    ENCHANTMENTS = CFG.comment("Disable all 11 enchantments").define("enchantments", true);
+    //
+    CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL).push("command");
+    COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);
+    COMMANDGETHELP = CFG.comment("True means only players with OP can use this /cyclic command").define("help", false);
+    COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define("health", true);
+    COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("home", true);
+    COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define("hunger", true);
+    COMMANDNBT = CFG.comment("True means only players with OP can use this /cyclic command").define("nbtprint", false);
+    COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define("pingnether", false);
+    COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define("worldspawn", true);
+    CFG.pop();//command
+    CFG.comment(WALL, " Logging related configs", WALL).push("logging");
+    LOGINFO = CFG.comment("Enable unblock info logs; very spammy").define("info", false);
+    CFG.pop();//logging 
+    CFG.comment(WALL, " Energy related configs for machines and items", WALL).push("energy");
+    CFG.comment(" Fuel gained by consuming items").push("fuel");
+    PEATPOWER = CFG.comment(" Power gained burning one of this")
+        .defineInRange("peat_fuel", 256, 1, 64000);
     PEATERICHPOWER = CFG.comment("Power gained burning one of this")
-        .defineInRange(category + "peat_fuel_enriched", 256 * 4, 1, 64000);
-    category = "energy.cost.";
-    TileDisenchant.POWERCONF = CFG.comment("Power per use").defineInRange(category + "disenchanter", 1500, 0, 64000);
-    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair ").defineInRange(category + "anvil", 250, 0, 64000);
-    TileMelter.POWERCONF = CFG.comment("Power per recipe").defineInRange(category + "melter", 5000, 0, 64000);
-    TileSolidifier.POWERCONF = CFG.comment("Power per recipe").defineInRange(category + "solidifier", 5000, 0, 64000);
-    TileDropper.POWERCONF = CFG.comment("Power per use").defineInRange(category + "dropper", 50, 0, 64000);
-    TileForester.POWERCONF = CFG.comment("Power per use").defineInRange(category + "forester", 50, 0, 64000);
-    TileHarvester.POWERCONF = CFG.comment("Power per use").defineInRange(category + "harvester", 250, 0, 64000);
-    TilePotion.POWERCONF = CFG.comment("Power per tick").defineInRange(category + "beacon", 10, 0, 64000);
-    TileMiner.POWERCONF = CFG.comment("Power per use").defineInRange(category + "miner", 10, 0, 64000);
-    TileUncraft.POWERCONF = CFG.comment("Power per use").defineInRange(category + "uncraft", 1000, 0, 64000);
-    TileFluidCollect.POWERCONF = CFG.comment("Power per use").defineInRange(category + "collector_fluid", 500, 0, 64000);
-    TilePeatFarm.POWERCONF = CFG.comment("Power per use").defineInRange(category + "peat_farm", 500, 0, 64000);
-    TileCrafter.POWERCONF = CFG.comment("Power per use").defineInRange(category + "crafter", 500, 0, 64000);
-    category = "peat.";
+        .defineInRange("peat_fuel_enriched", 256 * 4, 1, 64000);
+    CFG.pop();//fuel
+    CFG.comment("Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).").push("cost");
+    TileDisenchant.POWERCONF = CFG.comment(WALLSM, "Power per use disenchanter").defineInRange("disenchanter", 1500, 0, 64000);
+    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
+    TileMelter.POWERCONF = CFG.comment("Power per recipe melter").defineInRange("melter", 5000, 0, 64000);
+    TileSolidifier.POWERCONF = CFG.comment("Power per recipe solidifier").defineInRange("solidifier", 5000, 0, 64000);
+    TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper", 50, 0, 64000);
+    TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester", 50, 0, 64000);
+    TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester", 250, 0, 64000);
+    TilePotion.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon", 10, 0, 64000);
+    TileMiner.POWERCONF = CFG.comment("Power per use miner").defineInRange("miner", 10, 0, 64000);
+    TileUncraft.POWERCONF = CFG.comment("Power per use uncraft").defineInRange("uncraft", 1000, 0, 64000);
+    TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid", 500, 0, 64000);
+    TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm", 500, 0, 64000);
+    TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter", 500, 0, 64000);
+    CFG.pop();//cost
+    CFG.pop();//energy
+    CFG.comment(WALL, " Item specific configs", WALL).push("items");
+    CFG.comment("Peat blocks").push("peat");
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
-        .defineInRange(category + "conversionChance",
+        .defineInRange("conversionChance",
             0.08000000000000F,
             0.0010000000000F, 1F);
-    category = "command.";
-    COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "gethome", false);
-    COMMANDGETHELP = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "help", false);
-    COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "health", true);
-    COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "home", true);
-    COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "hunger", true);
-    COMMANDNBT = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "nbtprint", false);
-    COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "pingnether", false);
-    COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define(category + "worldspawn", true);
-    //enchant subclasses
-    category = "enchant.beheading.";
-    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define(category + "BeheadingEntityMHF", defaultBeheading);
-    // done
-    CFG.pop();
+    CFG.pop();//peat
+    CFG.comment("Heart items").push("heart");
+    HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart")
+        .defineInRange("experience",
+            500,
+            0, 99999);
+    CFG.pop();//heart
+    CFG.pop();//items
+    CFG.comment(WALL, " Enchantment related configs", WALL).push("enchant");
+    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheading."
+        + "BeheadingEntityMHF", defaultBeheading);
+    CFG.pop();//enchant
+    //
+    //
+    //
+    //
+    CFG.pop();//ROOT
     COMMON_CONFIG = CFG.build();
   }
 

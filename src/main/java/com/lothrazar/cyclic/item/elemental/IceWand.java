@@ -21,73 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.elemental;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilShape;
-import net.minecraft.block.BlockState;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class WaterSpreaderItem extends ItemBase {
+public class IceWand extends ItemBase {
 
-  public WaterSpreaderItem(Properties properties) {
+  public IceWand(Properties properties) {
     super(properties);
   }
 
-  private static final int COOLDOWN = 28;
-  private static final int RADIUS = 3;
+  private static final int RADIUS = 2;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
-    // 
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
     if (side != null) {
       pos = pos.offset(side);
     }
-    spreadWaterFromCenter(context.getWorld(), player, pos);
-    player.swingArm(context.getHand());
+    if (spreadWaterFromCenter(context.getWorld(), pos.offset(side))) {
+      //but the real sound
+      UtilSound.playSound(player, Blocks.PACKED_ICE.getDefaultState().getSoundType().getBreakSound());
+      UtilItemStack.damageItem(player, context.getItem());
+    }
     return super.onItemUse(context);
   }
 
-  private boolean spreadWaterFromCenter(World world, PlayerEntity player, BlockPos posCenter) {
+  private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
     int count = 0;
-    for (BlockPos pos : UtilShape.squareHorizontalFull(posCenter, RADIUS)) {
-      if (world.hasWater(pos) && world.getBlockState(pos).getBlock() == Blocks.WATER) {
-        world.setBlockState(pos, Blocks.WATER.getDefaultState());
-        count++;
+    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
+    for (BlockPos pos : water) {
+      FluidState fluidState = world.getBlockState(pos).getFluidState();
+      if (fluidState != null &&
+          fluidState.getFluidState() != null &&
+          fluidState.getFluidState().getLevel() >= 8) {
+        world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
       }
-      else {
-        BlockState state = world.getBlockState(pos);
-        if (state.hasProperty(BlockStateProperties.WATERLOGGED)
-            && !state.get(BlockStateProperties.WATERLOGGED).booleanValue()
-            && this.isWaterNextdoor(world, pos)) {
-          //  flow it into the loggable
-          state = state.with(BlockStateProperties.WATERLOGGED, true);
-          world.setBlockState(pos, state);
-          count++;
-        }
-      }
+      count++;
     }
-    boolean success = count > 0;
-    if (success) {//particles are on each location, sound is just once
-      UtilEntity.setCooldownItem(player, this, COOLDOWN);
-      //      UtilSound.playSound(player, SoundEvents.ENTITY_PLAYER_SPLASH);
-    }
-    return success;
-  }
-
-  private boolean isWaterNextdoor(World world, BlockPos pos) {
-    return world.hasWater(pos.north()) || world.hasWater(pos.south()) ||
-        world.hasWater(pos.east()) || world.hasWater(pos.west());
+    return count > 0;
   }
 }

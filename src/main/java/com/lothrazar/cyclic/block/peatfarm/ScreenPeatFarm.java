@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,6 +17,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
   private EnergyBar energy;
   private FluidBar fluid;
   private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineRedstone btnRender;
 
   public ScreenPeatFarm(ContainerPeatFarm screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -33,6 +35,8 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TilePeatFarm.Fields.RENDER.ordinal(),
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 
   @Override
@@ -49,6 +53,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
     btnRedstone.onValueUpdate(container.tile);
+    btnRender.onValueUpdate(container.tile);
   }
 
   @Override

@@ -41,9 +41,9 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 public class ContainerPeatFarm extends ContainerBase {
 
   static final int SLOTY_FLUID = 39;
-  static final int SLOTX_START = 16;
+  static final int SLOTX_START = 8;
   static final int MID_SPACING = 52;
-  public static final int SLOTY = 36;
+  public static final int SLOTY = 54;
   protected TilePeatFarm tile;
 
   public ContainerPeatFarm(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
@@ -57,9 +57,6 @@ public class ContainerPeatFarm extends ContainerBase {
       for (int i = 0; i < rowSize; i++) {
         addSlot(new SlotItemHandler(h, i, SLOTX_START + i * Const.SQ, SLOTY));
       }
-      //for (int i = rowSize; i < 2 * rowSize; i++) {
-      //    addSlot(new SlotItemHandler(h, i, SLOTX_START + (i - rowSize) * Const.SQ, SLOTY + Const.SQ));
-      //}
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePeatFarm.Fields.values().length);

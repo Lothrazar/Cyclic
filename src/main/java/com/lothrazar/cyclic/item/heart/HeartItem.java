@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.heart;
 
 import java.util.UUID;
 import com.lothrazar.cyclic.base.ItemBase;
@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class HeartItem extends ItemBase {
 
   private static final int MAX = 100;
-  static final int COOLDOWN = 60;
+  static final int COOLDOWN = 10;
   public static final UUID healthModifierUuid = UUID.fromString("06d30aa2-eff2-4a81-b92b-a1cb95f115c6");
 
   public HeartItem(Properties properties) {
