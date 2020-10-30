@@ -91,15 +91,19 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
           shapeCard.setTag(null);//paste and not merge so overwrite
           this.copiedShape.write(shapeCard);
           ModCyclic.LOGGER.info(cmd + " success");
-          this.copiedShape = null;
+          //          this.copiedShape = null;
         }
       break;
       case MERGE:
         //from BUFFER to CARD
         //only works on NOT EMPTY cards
-        if (this.copiedShape != null) {
+        if (this.copiedShape != null && cardShape.getShape().size() > 0) {
           //
-          ModCyclic.LOGGER.info(cmd + "TODO  success");
+          List<BlockPos> list = this.copiedShape.getShape();
+          list.addAll(cardShape.getShape());
+          cardShape.setShape(list);
+          cardShape.write(shapeCard);
+          ModCyclic.LOGGER.info(cmd + " success");
           //          this.copiedShape = null;
         }
       break;

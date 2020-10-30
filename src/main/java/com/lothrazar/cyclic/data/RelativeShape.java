@@ -105,4 +105,9 @@ public class RelativeShape {
     CompoundNBT tag = shapeCard.getOrCreateTag();
     write(tag);
   }
+
+  public void setShape(List<BlockPos> list) {
+    this.shape = list;
+    this.count = this.shape.size();
+  }
 }
