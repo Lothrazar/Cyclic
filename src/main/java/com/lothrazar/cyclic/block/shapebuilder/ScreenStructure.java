@@ -122,5 +122,6 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     energy.draw(ms, container.getEnergy());
     this.drawSlot(ms, 60, 20);
+    this.drawSlot(ms, 7, 131, TextureRegistry.SLOT_SHAPE, 18);
   }
 }

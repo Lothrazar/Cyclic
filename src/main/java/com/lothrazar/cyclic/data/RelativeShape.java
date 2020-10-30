@@ -22,14 +22,26 @@ public class RelativeShape {
     shape = new ArrayList<>();
   }
 
+  /**
+   * Does not compute any offset, takes list as is. assumes it is pre-offset from some other center
+   * 
+   * @param sh
+   */
   public RelativeShape(List<BlockPos> sh) {
     shape = sh;
   }
 
+  /**
+   * if world is null, it will not check for air blocks. if world is provided. will delete any spots of air. Does change all positions to offset from center
+   * 
+   * @param world
+   * @param options
+   * @param center
+   */
   public RelativeShape(World world, List<BlockPos> options, BlockPos center) {
     this();
     for (BlockPos pos : options) {
-      if (!world.isAirBlock(pos)) {
+      if (world == null || !world.isAirBlock(pos)) {
         shape.add(pos.add(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
       }
     }
