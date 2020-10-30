@@ -8,39 +8,29 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BuildShape {
+public class RelativeShape {
 
   //  @Nullable
   private String structure = null;
   //corner small always has the lowest Y point, 
   //if same y level, whoever has smallest sum of x+z, closest to negative infinity
-  //  private BlockPos cornerSmall;
-  //  private BlockPos cornerLarge; 
   //should not allow points outside corners
   private List<BlockPos> shape;
   private int count;
 
-  public BuildShape() {
+  public RelativeShape() {
     shape = new ArrayList<>();
   }
 
-  public BuildShape(ItemStack stack) {
-    this();
-    //    shape = pos;
-    //    count = shape.size();
+  public RelativeShape(List<BlockPos> sh) {
+    shape = sh;
   }
 
-  public BuildShape(List<BlockPos> pos) {
-    this();
-    shape = pos;
-    count = shape.size();
-  }
-
-  public BuildShape(World world, List<BlockPos> options) {
+  public RelativeShape(World world, List<BlockPos> options, BlockPos center) {
     this();
     for (BlockPos pos : options) {
       if (!world.isAirBlock(pos)) {
-        shape.add(pos);
+        shape.add(pos.add(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
       }
     }
     count = shape.size();
@@ -62,8 +52,7 @@ public class BuildShape {
     return shape;
   }
 
-  public static BuildShape read(ItemStack item) {
-    CompoundNBT tag = item.getOrCreateTag();
+  public static RelativeShape read(CompoundNBT tag) {
     if (tag.getBoolean(ShapeCard.VALID_SHAPE) == false) {
       return null;
     }
@@ -72,12 +61,17 @@ public class BuildShape {
     for (int i = 0; i < count; i++) {
       shapeList.add(new BlockPos(tag.getInt("x" + i), tag.getInt("y" + i), tag.getInt("z" + i)));
     }
-    BuildShape shape = new BuildShape(shapeList);
+    RelativeShape shape = new RelativeShape();
+    shape.shape = shapeList;
     return shape;
   }
 
-  public void write(ItemStack shapeCard) {
-    CompoundNBT tag = shapeCard.getOrCreateTag();
+  public static RelativeShape read(ItemStack item) {
+    CompoundNBT tag = item.getOrCreateTag();
+    return read(tag);
+  }
+
+  public CompoundNBT write(CompoundNBT tag) {
     int i = 0;
     int count = 0;
     for (BlockPos p : shape) {
@@ -91,5 +85,11 @@ public class BuildShape {
     }
     tag.putInt("count", count);
     tag.putBoolean(ShapeCard.VALID_SHAPE, true);
+    return tag;
+  }
+
+  public void write(ItemStack shapeCard) {
+    CompoundNBT tag = shapeCard.getOrCreateTag();
+    write(tag);
   }
 }

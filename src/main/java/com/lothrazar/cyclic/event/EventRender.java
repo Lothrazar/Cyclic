@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
+import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilRender;
@@ -122,6 +124,15 @@ public class EventRender {
             loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world)))
           //    TODO: null dimensions test.  but if its saved and equal then ok 
           mappos.put(loc.getPos(), Color.BLUE);
+      }
+    }
+    if (stack.getItem() instanceof ShapeCard) {
+      RelativeShape shape = RelativeShape.read(stack);
+      if (shape != null) {
+        //            loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world)))
+        //    TODO: null dimensions test.  but if its saved and equal then ok 
+        for (BlockPos s : shape.getShape())
+          mappos.put(s, Color.BLUE);
       }
     }
     // other items added here

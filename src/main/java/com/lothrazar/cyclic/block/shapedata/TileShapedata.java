@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.data.BuildShape;
+import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -36,14 +36,16 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   private static final int SLOT_B = 1;
   private static final int SLOT_CARD = 2;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private RelativeShape copiedShape;
+  private int stashToggle;
 
   static enum Fields {
-    RENDER, COMMAND;
+    RENDER, COMMAND, STASH;
   }
 
   static enum StructCommands {
     //TODO: need new packet
-    READ, CLEAR, FILL, COPY, PASTE;
+    READ, MERGE, COPY, PASTE;
   }
 
   /**
@@ -56,7 +58,6 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     if (inv == null) {
       return;
     }
-    ModCyclic.LOGGER.info("apply " + cmd);
     ItemStack shapeCard = inv.getStackInSlot(SLOT_CARD);
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
@@ -65,25 +66,42 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     BlockPos invA = getTarget(SLOT_A);
     BlockPos invB = getTarget(SLOT_B);
     List<BlockPos> shape = UtilShape.rect(invA, invB);
+    RelativeShape worldShape = new RelativeShape(world, shape, this.pos);
+    RelativeShape cardShape = RelativeShape.read(shapeCard);
     switch (cmd) {
-      case CLEAR:
-        //delete data in slotcard
-        shapeCard.setTag(null);
-      break;
       case READ:
-        //        shape = UtilShape.filterAir(world, shape);
-        BuildShape build = new BuildShape(world, shape);
-        build.write(shapeCard);
+        //read from WORLD to CARD
+        //only works if all three cards set
+        worldShape.write(shapeCard);
+        ModCyclic.LOGGER.info(cmd + " success");
       /// shape set
       break;
       case COPY:
+        //copy shape from CARD to BUFFER
+        //only works
+        this.copiedShape = new RelativeShape(cardShape.getShape());
+        ModCyclic.LOGGER.info(cmd + " success");
       break;
       case PASTE:
+        //from BUFFER to CARD
+        //only works on EMPTY CARDS
+        if (this.copiedShape != null && shapeCard.getTag() != null) {
+          //
+          shapeCard.setTag(null);//paste and not merge so overwrite
+          this.copiedShape.write(shapeCard);
+          ModCyclic.LOGGER.info(cmd + " success");
+          this.copiedShape = null;
+        }
       break;
-      //      case FLAT:
-      //      break;
-      //      case MERGE:
-      //      break;
+      case MERGE:
+        //from BUFFER to CARD
+        //only works on NOT EMPTY cards
+        if (this.copiedShape != null) {
+          //
+          ModCyclic.LOGGER.info(cmd + "TODO  success");
+          //          this.copiedShape = null;
+        }
+      break;
     }
   }
 
@@ -131,11 +149,21 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    if (tag.contains("copiedShape")) {
+      CompoundNBT cs = (CompoundNBT) tag.get("copiedShape");
+      this.copiedShape = RelativeShape.read(cs);
+    }
+    stashToggle = tag.getInt("stashToggle");
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("stashToggle", stashToggle);
+    if (this.copiedShape != null) {
+      CompoundNBT copiedShapeTags = this.copiedShape.write(new CompoundNBT());
+      tag.put("copiedShape", copiedShapeTags);
+    }
     inventory.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
@@ -145,8 +173,11 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
-    BlockPos invA = getTarget(SLOT_A);
-    BlockPos invB = getTarget(SLOT_B);
+    if (world.isRemote == false) {
+      stashToggle = (this.copiedShape == null) ? 0 : 1;
+    }
+    //    BlockPos invA = getTarget(SLOT_A);
+    //    BlockPos invB = getTarget(SLOT_B);
     //
     //
     //    BlockPos targetPos = new BlockPos(65, 68, -130);
@@ -179,7 +210,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     }
     if (stack.getTag() == null) {
       //cannot clear if already clear
-      return shape != StructCommands.CLEAR;
+      //      return shape != StructCommands.CLEAR;
     }
     return true;
   }
@@ -201,6 +232,8 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
         return 0;
       case RENDER:
         return this.render;
+      case STASH:
+        return stashToggle;
     }
     return super.getField(field);
   }
@@ -208,6 +241,9 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
+      case STASH:
+        stashToggle = value;
+      break;
       case COMMAND:
         if (value >= StructCommands.values().length) {
           value = 0;

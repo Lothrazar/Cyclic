@@ -66,6 +66,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     //    this.drawName(ms, title.getString());
+    this.drawName(ms, "" + container.tile.getField(TileShapedata.Fields.STASH.ordinal()));
     btnRender.onValueUpdate(container.tile);
     for (StructCommands shape : StructCommands.values()) {
       ButtonMachine btnShape = map.get(shape);

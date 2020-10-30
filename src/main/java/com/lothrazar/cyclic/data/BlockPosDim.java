@@ -23,13 +23,6 @@ public class BlockPosDim {
     this.setPos(pos);
     this.setDimension(dimension);
   }
-  //  public BlockPosDim(int idx, PlayerEntity p, String d) {
-  //    setX(p.getPosX());
-  //    setY(p.getPosY());
-  //    setZ(p.getPosZ());
-  //    setDimension(p.dimension.getId());
-  //    setDisplay(d);
-  //  }
 
   @Override
   public String toString() {

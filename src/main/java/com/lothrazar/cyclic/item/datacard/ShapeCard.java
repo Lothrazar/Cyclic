@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.datacard;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.data.BuildShape;
+import com.lothrazar.cyclic.data.RelativeShape;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -24,7 +24,7 @@ public class ShapeCard extends ItemBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    BuildShape shape = BuildShape.read(stack);
+    RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
       tooltip.add(new TranslationTextComponent(
           getTranslationKey() + ".count"
