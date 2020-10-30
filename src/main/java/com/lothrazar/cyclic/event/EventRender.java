@@ -126,13 +126,14 @@ public class EventRender {
           mappos.put(loc.getPos(), Color.BLUE);
       }
     }
+    ///////////////////////////////////////ShapeCard
     if (stack.getItem() instanceof ShapeCard) {
       RelativeShape shape = RelativeShape.read(stack);
       if (shape != null) {
-        //            loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world)))
-        //    TODO: null dimensions test.  but if its saved and equal then ok 
-        for (BlockPos s : shape.getShape())
-          mappos.put(s, Color.BLUE);
+        BlockPos here = player.getPosition();
+        for (BlockPos s : shape.getShape()) {
+          mappos.put(here.add(s), Color.ORANGE);
+        }
       }
     }
     // other items added here
