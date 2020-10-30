@@ -82,5 +82,9 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
     this.drawSlot(ms, 8 + 18, 28, TextureRegistry.SLOT_GPS, 18);
     this.drawSlot(ms, 70, 38, TextureRegistry.SLOT_SHAPE, 18);
     //    this.drawSlot(ms, 60, 68, TextureRegistry.SLOT_SHAPE, 18);
+    int hasStash = container.tile.getField(TileShapedata.Fields.STASH.ordinal());
+    if (hasStash == 1) {
+      this.drawSlot(ms, 107, 63, TextureRegistry.SHAPE_STASH, 18);
+    }
   }
 }
