@@ -456,7 +456,7 @@ public class UtilRender {
     //    IRenderTypeBuffer.getImpl(ibuffer);
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    World world = ModCyclic.proxy.getClientWorld();
+    // World world = ModCyclic.proxy.getClientWorld();
     matrix.push();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;

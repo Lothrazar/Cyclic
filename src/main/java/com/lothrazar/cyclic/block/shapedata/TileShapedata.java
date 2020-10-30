@@ -61,7 +61,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
     }
-    ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getTag());
+    //  ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getTag());
     RelativeShape cardShape = RelativeShape.read(shapeCard);
     switch (cmd) {
       case READ:
@@ -181,29 +181,14 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     if (world.isRemote == false) {
       hasStashIfOne = (this.copiedShape == null) ? 0 : 1;
     }
-    //    BlockPos invA = getTarget(SLOT_A);
-    //    BlockPos invB = getTarget(SLOT_B);
-    //
-    //
-    //    BlockPos targetPos = new BlockPos(65, 68, -130);
-    //    if (this.requiresRedstone() && !this.isPowered()) {
-    //      return;
-    //    }
-    //    inventory.ifPresent(inv -> {
-    //      ItemStack stack = inv.getStackInSlot(0);
-    //      if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
-    //        return;
-    //      }
-    //      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
-    //      BlockPos offset = pos.offset(dir);
-    //      BlockState state = Block.getBlockFromItem(stack.getItem()).getDefaultState();
-    //      if (world.isAirBlock(offset) &&
-    //          world.setBlockState(offset, state)) {
-    //        stack.shrink(1);
-    //      }
-    //    });
   }
 
+  /**
+   * is command available for use
+   * 
+   * @param shape
+   * @return
+   */
   public boolean isAvailable(StructCommands shape) {
     IItemHandler inv = this.inventory.orElse(null);
     if (inv == null) {
@@ -248,7 +233,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   public int getField(int field) {
     switch (Fields.values()[field]) {
       case COMMAND:
-        return 0;
+        return 0;//unused 
       case RENDER:
         return this.render;
       case STASH:
