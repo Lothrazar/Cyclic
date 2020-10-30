@@ -44,7 +44,6 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   }
 
   static enum StructCommands {
-    //TODO: need new packet
     READ, MERGE, COPY, PASTE;
   }
 

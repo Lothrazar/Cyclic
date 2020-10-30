@@ -63,6 +63,7 @@ public class RelativeShape {
     }
     RelativeShape shape = new RelativeShape();
     shape.shape = shapeList;
+    shape.count = shapeList.size();
     return shape;
   }
 
