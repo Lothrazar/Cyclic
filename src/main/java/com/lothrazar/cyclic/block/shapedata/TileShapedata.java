@@ -37,7 +37,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   private static final int SLOT_CARD = 2;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private RelativeShape copiedShape;
-  private int stashToggle;
+  private int hasStashIfOne;
 
   static enum Fields {
     RENDER, COMMAND, STASH;
@@ -63,18 +63,20 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
       return;
     }
     ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getTag());
-    BlockPos invA = getTarget(SLOT_A);
-    BlockPos invB = getTarget(SLOT_B);
-    List<BlockPos> shape = UtilShape.rect(invA, invB);
-    RelativeShape worldShape = new RelativeShape(world, shape, this.pos);
     RelativeShape cardShape = RelativeShape.read(shapeCard);
     switch (cmd) {
       case READ:
-        //read from WORLD to CARD
-        //only works if all three cards set
-        worldShape.write(shapeCard);
-        ModCyclic.LOGGER.info(cmd + " success");
-      /// shape set
+        BlockPos invA = getTarget(SLOT_A);
+        BlockPos invB = getTarget(SLOT_B);
+        if (invA != null && invB != null) {
+          List<BlockPos> shape = UtilShape.rect(invA, invB);
+          RelativeShape worldShape = new RelativeShape(world, shape, this.pos);
+          //read from WORLD to CARD
+          //only works if all three cards set
+          worldShape.write(shapeCard);
+          ModCyclic.LOGGER.info(cmd + " success");
+          /// shape set
+        }
       break;
       case COPY:
         //copy shape from CARD to BUFFER
@@ -153,13 +155,13 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
       CompoundNBT cs = (CompoundNBT) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
     }
-    stashToggle = tag.getInt("stashToggle");
+    hasStashIfOne = tag.getInt("stashToggle");
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    tag.putInt("stashToggle", stashToggle);
+    tag.putInt("stashToggle", hasStashIfOne);
     if (this.copiedShape != null) {
       CompoundNBT copiedShapeTags = this.copiedShape.write(new CompoundNBT());
       tag.put("copiedShape", copiedShapeTags);
@@ -174,7 +176,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   @Override
   public void tick() {
     if (world.isRemote == false) {
-      stashToggle = (this.copiedShape == null) ? 0 : 1;
+      hasStashIfOne = (this.copiedShape == null) ? 0 : 1;
     }
     //    BlockPos invA = getTarget(SLOT_A);
     //    BlockPos invB = getTarget(SLOT_B);
@@ -208,9 +210,23 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     if (stack.isEmpty()) {
       return false;
     }
-    if (stack.getTag() == null) {
-      //cannot clear if already clear
-      //      return shape != StructCommands.CLEAR;
+    boolean cardEmpty = stack.getTag() == null
+        || !stack.getTag().getBoolean(ShapeCard.VALID_SHAPE);
+    BlockPos invA = getTarget(SLOT_A);
+    BlockPos invB = getTarget(SLOT_B);
+    boolean hasTargets = invA != null && invB != null;
+    switch (shape) {
+      case COPY:
+        //dont check stash, copy always overwrites. just need a red card
+        return !cardEmpty;
+      case MERGE:
+        //both card and stash have valid shapes to merge
+        return !cardEmpty && this.hasStashIfOne == 1;
+      case PASTE:
+        //pasting my shape into an empty card
+        return cardEmpty && this.hasStashIfOne == 1;
+      case READ:
+        return cardEmpty && hasTargets;
     }
     return true;
   }
@@ -233,7 +249,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
       case RENDER:
         return this.render;
       case STASH:
-        return stashToggle;
+        return hasStashIfOne;
     }
     return super.getField(field);
   }
@@ -242,7 +258,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case STASH:
-        stashToggle = value;
+        hasStashIfOne = value;
       break;
       case COMMAND:
         if (value >= StructCommands.values().length) {

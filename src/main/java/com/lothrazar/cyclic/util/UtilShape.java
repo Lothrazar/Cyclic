@@ -108,6 +108,9 @@ public class UtilShape {
   public static List<BlockPos> rect(final BlockPos pos, final BlockPos target) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     //
+    if (pos == null || target == null) {
+      return shape;
+    }
     int xMin = Math.min(pos.getX(), target.getX());
     int yMin = Math.min(pos.getY(), target.getY());
     int zMin = Math.min(pos.getZ(), target.getZ());

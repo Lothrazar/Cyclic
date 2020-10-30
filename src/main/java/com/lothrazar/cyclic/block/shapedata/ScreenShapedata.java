@@ -34,8 +34,9 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //
+    y = guiTop + 2;
     int width = 42;
-    x = guiLeft + 126 - width;
+    x = guiLeft + 126;
     for (StructCommands shape : StructCommands.values()) {
       ButtonMachine btnShape = addButton(new ButtonMachine(x, y, width, 20,
           shape.name(), (p) -> {
@@ -48,10 +49,10 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
       map.put(shape, btnShape);
       y += 20;
       //
-      if (shape.ordinal() == 2) {
-        x += width;
-        y = guiTop + 6;
-      }
+      //      if (shape.ordinal() == 1) {
+      //        x += width;
+      //        y = guiTop + 6;
+      //      }
     }
   }
 
