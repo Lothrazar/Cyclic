@@ -24,9 +24,10 @@ public class ContainerStructure extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      addSlot(new SlotItemHandler(h, TileStructure.SLOT_BUILD, 61, 21));
+      addSlot(new SlotItemHandler(h, TileStructure.SLOT_SHAPE, 8, 132));
+      addSlot(new SlotItemHandler(h, TileStructure.SLOT_GPS, 152, 132));
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 61, 21));
-      addSlot(new SlotItemHandler(h, 1, 8, 132));
     });
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileStructure.Fields.values().length);

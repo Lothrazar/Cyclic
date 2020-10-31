@@ -7,14 +7,17 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilPlayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -65,22 +68,45 @@ public class ShapeCard extends ItemBase {
   }
 
   @Override
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    ModCyclic.LOGGER.info("oni rightclicik");
+    return super.onItemRightClick(worldIn, playerIn, handIn);
+  }
+
+  @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     ItemStack stack = context.getItem();
+    PlayerEntity player = context.getPlayer();
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
-      BlockState target = BuilderActionType.getBlockState(stack);
-      if (target != null) {
-        ModCyclic.LOGGER.info("TODO build " + shape.getCount());
-        BlockPos pos = context.getPos();
-        Direction side = context.getFace();
-        //target state empty?
+      BlockState targetState = BuilderActionType.getBlockState(stack);
+      if (targetState != null) {
+        final BlockPos centerPos = player.getPosition();
+        //        Direction side = context.getFace(); 
         BlockPos posBuild = null;
+        World world = context.getWorld();
         for (BlockPos s : shape.getShape()) {
-          posBuild = pos.add(s);
-          //TODO: 
-          //          success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, targetState);
-          context.getWorld().setBlockState(posBuild, target, 1);
+          posBuild = centerPos.add(s);
+          if (World.isOutsideBuildHeight(posBuild) || !world.isAirBlock(posBuild)) {
+            //if outside, or not air, then continue
+            continue;
+          }
+          int slot = -1;
+          if (!player.isCreative()) {
+            //not creative
+            slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
+            if (slot < 0) {
+              //cannot find material
+              ModCyclic.LOGGER.info("not creative, no mats " + posBuild);
+              break;//stop looping
+            }
+          }
+          //     TODO:      success = UtilPlaceBlocks.placeStateSafe(world, player, cworld);
+          if (world.setBlockState(posBuild, targetState, 1)) {
+            //
+            ModCyclic.LOGGER.info("  build at" + posBuild);
+            UtilPlayer.decrStackSize(player, slot);
+          }
         }
       }
     }
