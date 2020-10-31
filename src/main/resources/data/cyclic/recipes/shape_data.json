@@ -7,7 +7,7 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:dyes/green"
+      "tag": "forge:dyes/red"
     },
     "c": {
       "item": "minecraft:iron_nugget"
@@ -17,7 +17,7 @@
 	}
   },
   "result": {
-    "item": "cyclic:settings_data",
+    "item": "cyclic:shape_data",
     "count": 4
   }
 }
