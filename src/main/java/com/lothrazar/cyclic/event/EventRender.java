@@ -131,6 +131,8 @@ public class EventRender {
       RelativeShape shape = RelativeShape.read(stack);
       if (shape != null) {
         BlockPos here = player.getPosition();
+        //TODO: offsetTo
+        //        shape.offsetTo(pos)
         for (BlockPos s : shape.getShape()) {
           mappos.put(here.add(s), Color.ORANGE);
         }

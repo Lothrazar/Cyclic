@@ -10,7 +10,7 @@ public enum BuilderActionType {
 
   SINGLE, X3, X5, X7, X9, X91, X19;
 
-  private static final String NBTBLOCKSTATE = "blockstate";
+  public static final String NBTBLOCKSTATE = "blockstate";
   private final static String NBT = "ActionType";
   private final static String NBTTIMEOUT = "timeout";
 

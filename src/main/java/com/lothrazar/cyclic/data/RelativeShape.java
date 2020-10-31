@@ -110,4 +110,12 @@ public class RelativeShape {
     this.shape = list;
     this.count = this.shape.size();
   }
+  //
+  //  public List<BlockPos> offsetTo(BlockPos pos) {
+  //    List<BlockPos> shapeList = new ArrayList<>();
+  //    for (BlockPos s : shape) {
+  //      shapeList.add(pos.add(s));
+  //    }
+  //    return shapeList;
+  //  }
 }

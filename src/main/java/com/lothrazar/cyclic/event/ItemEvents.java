@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
+import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
@@ -158,6 +159,11 @@ public class ItemEvents {
       return;
     }
     World world = player.getEntityWorld();
+    if (held.getItem() instanceof ShapeCard) {
+      BlockState target = world.getBlockState(event.getPos());
+      ShapeCard.setBlockState(held, target);
+      UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
+    }
     if (held.getItem() instanceof BuilderItem) {
       if (BuilderActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times

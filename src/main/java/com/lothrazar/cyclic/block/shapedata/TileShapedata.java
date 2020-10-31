@@ -44,7 +44,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   }
 
   static enum StructCommands {
-    READ, MERGE, COPY, PASTE;
+    READ, COPY, MERGE, PASTE;
   }
 
   /**
