@@ -245,40 +245,41 @@ public class ItemRegistry {
     r.register(new SettingsCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("settings_data"));
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("shape_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024)).setRegistryName("scythe_harvest"));
-    ///////////////////////// apples 
-    final int SMALLPOTIONMIN = 20 * 90;// 1:30
-    final int THREEMIN = 3 * 20 * 60;// 3:00
+    ///////////////////////// apples  
+    final int SMALLPOT = 20 * 90;// 1:30
+    final int LARGEPOT = 3 * 20 * 60;// 3:00
     int h = Foods.APPLE.getHealing();
     float s = Foods.APPLE.getSaturation();
+    //honey is basic. fast to eat, gives lots of food but no potion effects 
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h * 4).saturation(s * 4)
         .fastToEat()
         .build())).setRegistryName("apple_honey"));
-    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(1)
-        .effect(new EffectInstance(Effects.HEALTH_BOOST, SMALLPOTIONMIN, 4), 1)
-        .effect(new EffectInstance(Effects.RESISTANCE, SMALLPOTIONMIN, 4), 1)//20*60 is 60 seconds
-        .fastToEat().setAlwaysEdible()
-        .build())).setRegistryName("apple_diamond"));
+    //iron and lapis are basic ones
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s * 4)
-        //        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
-        .effect(new EffectInstance(Effects.NIGHT_VISION, THREEMIN, 0), 1)
-        .effect(new EffectInstance(Effects.WATER_BREATHING, THREEMIN, 0), 1)
-        .effect(new EffectInstance(Effects.CONDUIT_POWER, THREEMIN, 0), 1)
-        .effect(new EffectInstance(Effects.LUCK, THREEMIN, 0), 1)
-        .effect(new EffectInstance(Effects.SLOW_FALLING, THREEMIN, 0), 1)
+        .effect(new EffectInstance(Effects.NIGHT_VISION, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.WATER_BREATHING, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.CONDUIT_POWER, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.SLOW_FALLING, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.SPEED, LARGEPOT, 0), 1)
         //        .effect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, FIVEMIN, 0), 1)
         .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_lapis"));
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s)
-        //        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
-        .effect(new EffectInstance(Effects.HEALTH_BOOST, SMALLPOTIONMIN, 2), 1)
-        .effect(new EffectInstance(Effects.RESISTANCE, SMALLPOTIONMIN, 2), 1)//20*60 is 60 seconds
+        .effect(new EffectInstance(Effects.HEALTH_BOOST, LARGEPOT, 2), 1)
+        .effect(new EffectInstance(Effects.RESISTANCE, LARGEPOT, 2), 1)
         .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_iron"));
+    //stronger ones 
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(1)
+        .effect(new EffectInstance(Effects.HEALTH_BOOST, SMALLPOT, 4), 1)
+        .effect(new EffectInstance(Effects.RESISTANCE, SMALLPOT, 4), 1)
+        .fastToEat().setAlwaysEdible()
+        .build())).setRegistryName("apple_diamond"));
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h * 3).saturation(s)
-        //        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
-        .effect(new EffectInstance(Effects.HASTE, SMALLPOTIONMIN, 2), 1)
-        .effect(new EffectInstance(Effects.LUCK, SMALLPOTIONMIN, 1), 1)
-        .effect(new EffectInstance(Effects.SLOW_FALLING, SMALLPOTIONMIN, 1), 1)
+        .effect(new EffectInstance(Effects.HASTE, SMALLPOT, 2), 1)
+        .effect(new EffectInstance(Effects.LUCK, SMALLPOT, 1), 1)
+        .effect(new EffectInstance(Effects.STRENGTH, SMALLPOT, 1), 1)
+        .effect(new EffectInstance(Effects.SLOW_FALLING, SMALLPOT, 1), 1)
         .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_emerald"));
     r.register(new AppleChocolate(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s * 4)
