@@ -12,11 +12,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -68,15 +66,9 @@ public class ShapeCard extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
     ModCyclic.LOGGER.info("oni rightclicik");
-    return super.onItemRightClick(worldIn, playerIn, handIn);
-  }
-
-  @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    ItemStack stack = context.getItem();
-    PlayerEntity player = context.getPlayer();
+    ItemStack stack = player.getHeldItem(hand);
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
       BlockState targetState = BuilderActionType.getBlockState(stack);
@@ -84,7 +76,6 @@ public class ShapeCard extends ItemBase {
         final BlockPos centerPos = player.getPosition();
         //        Direction side = context.getFace(); 
         BlockPos posBuild = null;
-        World world = context.getWorld();
         for (BlockPos s : shape.getShape()) {
           posBuild = centerPos.add(s);
           if (World.isOutsideBuildHeight(posBuild) || !world.isAirBlock(posBuild)) {
@@ -110,6 +101,13 @@ public class ShapeCard extends ItemBase {
         }
       }
     }
-    return super.onItemUse(context);
+    player.swingArm(hand);
+    return super.onItemRightClick(world, player, hand);
   }
+  //
+  //  @Override
+  //  public ActionResultType onItemUse(ItemUseContext context) {
+  //  
+  //    return super.onItemUse(context);
+  //  }
 }
