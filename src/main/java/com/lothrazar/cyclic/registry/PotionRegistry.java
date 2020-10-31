@@ -52,14 +52,15 @@ public class PotionRegistry {
     r.register(new Potion(ModCyclic.MODID + "_strong_haste", new EffectInstance(Effects.HASTE, 1800, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste"));
     r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(PotionEffects.stun, 1800)).setRegistryName(ModCyclic.MODID + ":stun"));
     r.register(new Potion(ModCyclic.MODID + "_swimspeed", new EffectInstance(PotionEffects.swimspeed, 3600)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
-    //
+    r.register(new Potion(ModCyclic.MODID + "_absorption", new EffectInstance(Effects.ABSORPTION, 3600)).setRegistryName(ModCyclic.MODID + ":absorption"));
+    //    Effects.SATURATION 
     //    Effects.ABSORPTION
     //    Effects.LEVITATION
-    // wither
-    // hunger
-    //
-    //    Effects.BLINDNESS?
-    //
+    //    Effects.WITHER
+    //    Effects.HUNGER 
+    //    Effects.BLINDNESS
+    //    Effects.DOLPHINS_GRACE 
+    //    Effects.GLOWING 
   }
 
   public static class PotionEffects {
