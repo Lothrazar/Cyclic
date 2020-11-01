@@ -1,8 +1,8 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
   "promos": {
-    "1.16.3-latest": "0.8.4",
-    "1.16.3-recommended": "0.8.4"
+    "1.16.3-latest": "0.8.3",
+    "1.16.3-recommended": "0.8.3"
   },
   "1.16.3": {
   	"0.6.1":"Ported ",
