@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ctc",
     "cac",
-    "ctc"
+    "cpc",
+    "cac"
   ],
   "key": {
     "a": {
@@ -12,8 +12,8 @@
     "c": {
       "item": "minecraft:iron_nugget"
     },
-	"t": {
-		"item":"minecraft:stone_button"
+	"p": {
+		"item":"cyclic:carbon_paper"
 	}
   },
   "result": {

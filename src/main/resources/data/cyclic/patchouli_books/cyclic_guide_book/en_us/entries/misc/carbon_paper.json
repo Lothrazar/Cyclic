@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.carbon_paper",
   "icon": "cyclic:carbon_paper",
-  "category": "cyclic:consume",
+  "category": "cyclic:misc",
   "pages": [
     {
       "type": "text",
