@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block;
 
 import net.minecraft.block.Block;
 
-public class BlockMason extends Block {
+public class MasonBlock extends Block {
 
-  public BlockMason(Properties properties) {
+  public MasonBlock(Properties properties) {
     super(properties.setRequiresTool());
   }
 }

@@ -15,14 +15,14 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class BlockLaunch extends BlockBase {
+public class LaunchBlock extends BlockBase {
 
   private final static float ANGLE = 90;
   protected static final VoxelShape PRESSED_AABB = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
   boolean sneakPlayerAvoid = true;
   boolean doRedstone;
 
-  public BlockLaunch(Properties properties, boolean doRedstone) {
+  public LaunchBlock(Properties properties, boolean doRedstone) {
     super(properties.doesNotBlockMovement().hardnessAndResistance(0.5F));
     this.doRedstone = doRedstone;
   }

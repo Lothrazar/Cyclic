@@ -9,7 +9,8 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:excavate\",lvl:5}]}"
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:excavate\",lvl:5}]}",
+      "link_recipe": true
     }
   ]
 }

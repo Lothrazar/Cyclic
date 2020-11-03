@@ -11,9 +11,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
-public class BlockDarkGlass extends BlockBase {
+public class DarkGlassBlock extends BlockBase {
 
-  public BlockDarkGlass(Properties properties) {
+  public DarkGlassBlock(Properties properties) {
     super(properties.hardnessAndResistance(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS)
         .notSolid());
   }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aa",
+    "aa"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:apple"
+    }
+  },
+  "result": {
+    "item": "cyclic:apple_sprout",
+    "count": 2
+  }
+}

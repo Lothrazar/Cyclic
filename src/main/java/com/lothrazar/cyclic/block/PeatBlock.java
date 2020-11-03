@@ -14,12 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class BlockPeat extends BlockBase {
+public class PeatBlock extends BlockBase {
 
   public static int FUEL_WEAK = 256;
   public static int FUEL_STRONG = 4096;
 
-  public BlockPeat(Properties properties) {
+  public PeatBlock(Properties properties) {
     super(properties.tickRandomly().hardnessAndResistance(2.1F));
   }
 

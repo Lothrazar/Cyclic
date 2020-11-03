@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.base.BlockBase;
 
-public class BlockPeatFuel extends BlockBase {
+public class PeatFuelBlock extends BlockBase {
 
-  public BlockPeatFuel(Properties properties) {
+  public PeatFuelBlock(Properties properties) {
     super(properties.hardnessAndResistance(1.4F));
   }
 }

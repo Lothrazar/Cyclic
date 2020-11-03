@@ -56,7 +56,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.Event;
 
-public class BlockWaterCandle extends BlockBase {
+public class WaterCandleBlock extends BlockBase {
 
   private static int TICK_RATE = 50;
   private static int RADIUS = 5;
@@ -67,7 +67,7 @@ public class BlockWaterCandle extends BlockBase {
       16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
   private static final double CHANCE_SOUND = 0.3;
 
-  public BlockWaterCandle(Properties properties) {
+  public WaterCandleBlock(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).notSolid().tickRandomly());
     this.setDefaultState(this.stateContainer.getBaseState().with(LIT, false));
   }

@@ -128,11 +128,14 @@ public class ItemRegistry {
   public static Item glowing_helmet;
   @ObjectHolder(ModCyclic.MODID + ":elevation_wand")
   public static Item elevation_wand;
+  @ObjectHolder(ModCyclic.MODID + ":apple_sprout")
+  public static Item apple_sprout;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.apple_sprout, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout"));
     r.register(new BlockItem(BlockRegistry.computer_shape, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("computer_shape"));
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("flower_cyan"));
     r.register(new BlockItem(BlockRegistry.mason_cobble, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_cobble"));

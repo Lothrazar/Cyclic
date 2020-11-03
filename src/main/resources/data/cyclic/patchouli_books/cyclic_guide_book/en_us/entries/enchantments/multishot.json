@@ -9,7 +9,8 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:multishot\",lvl:1}]}"
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:multishot\",lvl:1}]}",
+      "link_recipe": true
     }
   ]
 }

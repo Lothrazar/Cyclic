@@ -23,6 +23,8 @@ public class ClientProxy implements IProxy {
     for (BlockBase b : BlockRegistry.blocks) {
       b.registerClient();
     }
+    //since it extends CropsBlock and not base class
+    //    RenderTypeLookup.setRenderLayer(BlockRegistry.apple_sprout, RenderType.getCutoutMipped());
     this.initColours();
   }
 

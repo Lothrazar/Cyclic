@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockSpikes extends BlockBase {
+public class SpikesBlock extends BlockBase {
 
   private static final double CURSE_CHANCE = 0.2;
   private static final int CURSE_TIME = 8 * 20;
@@ -59,7 +59,7 @@ public class BlockSpikes extends BlockBase {
       15.0D, 1.0D, 15.0D);
   private EnumSpikeType type;
 
-  public BlockSpikes(Properties properties, EnumSpikeType type) {
+  public SpikesBlock(Properties properties, EnumSpikeType type) {
     super(properties.hardnessAndResistance(1.1F).notSolid());
     this.type = type;
   }

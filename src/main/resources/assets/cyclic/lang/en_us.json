@@ -25,7 +25,16 @@
     "block.cyclic.cask.guide": "The Cask is a small tank for storing fluids.$(br2)Fluids can be inserted and removed both by pipes and by buckets and other handheld fluid containers.",
     "block.cyclic.flower_cyan": "Cyan Rose",
     "block.cyclic.flower_cyan.tooltip": "A lost legacy",
-    "block.cyclic.flower_cyan.guide": "A lost legacy",
+    "block.cyclic.flower_cyan.guide": "A lost legacy from a lost version of Minecraft.  Spawns alone in biomes of Category (forest, plains, taiga, extreme hills).  ",
+    
+    "block.cyclic.apple_sprout": "Apple Sprout",
+    "block.cyclic.apple_sprout.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout.guide": "Plant below a leaf block to grow an apple.  ",
+    
+    "block.cyclic.apple_sprout_chocolate": "Apple Sprout",
+    "block.cyclic.apple_sprout_chocolate.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_chocolate.guide": "Plant below a leaf block to grow an apple.  ",
+    
     
     "item.cyclic.scythe_harvest":"Garden Scythe",
     "item.cyclic.scythe_harvest.tooltip":"Harvest the area",
@@ -35,14 +44,13 @@
     "item.cyclic.location.tooltip": "Saves the location of a block",
     "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.$(br2)Markers with saved locations can be used in multiple machines from this mod such as  $(l:machines/structure)Shape Builder$(/l) .",
     "item.location.saved": "Saved ",
-       
     
-    "block.cyclic.computer_shape":"Shape Constructor",
+    "block.cyclic.computer_shape":"Shape Computer",
     "block.cyclic.computer_shape.tooltip":"Read buildings into a Shape Card",
     "block.cyclic.computer_shape.guide":"Place two  $(l:misc/location)GPS Card$(/l) cards and one  $(l:misc/shape_data)Shape Card$(/l), then you can read, copy, paste, and merge shapes together. ",
     
     "item.cyclic.shape_data":"Shape Data Card",
-    "item.cyclic.shape_data.tooltip":"Builds in-world after setup in a Shape Constructor",
+    "item.cyclic.shape_data.tooltip":"Builds in-world after setup in a Shape Computer",
     "item.cyclic.shape_data.guide":"Place in a $(l:machines/computer_shape)Shape Computer$(/l) or a $(l:machines/structure)Shape Builder$(/l) to load with data, then click on a block to load its block",
     
     "item.cyclic.settings_data":"Settings Data Card",

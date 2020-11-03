@@ -1,0 +1,17 @@
+{
+  "name": "block.cyclic.apple_sprout",
+  "icon": "cyclic:apple_sprout",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "spotlight",
+      "text": "block.cyclic.apple_sprout.guide",
+      "item": "cyclic:apple_sprout",
+      "link_recipe": true
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:apple_sprout"
+    }
+  ]
+}

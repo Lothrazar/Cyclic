@@ -18,9 +18,9 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockFireplace extends BlockBase {
+public class FireplaceBlock extends BlockBase {
 
-  public BlockFireplace(Properties properties) {
+  public FireplaceBlock(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
     this.setDefaultState(this.getDefaultState().with(LIT, false));
   }
