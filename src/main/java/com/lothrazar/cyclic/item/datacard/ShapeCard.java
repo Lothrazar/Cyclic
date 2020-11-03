@@ -42,8 +42,7 @@ public class ShapeCard extends ItemBase {
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
-      tooltip.add(new TranslationTextComponent(
-          getTranslationKey() + ".count" + shape.getCount()));
+      tooltip.add(new TranslationTextComponent(getTranslationKey() + ".count" + shape.getCount()));
       BlockState target = BuilderActionType.getBlockState(stack);
       String block = "scepter.cyclic.nothing";
       if (target != null) {
@@ -67,7 +66,6 @@ public class ShapeCard extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-    ModCyclic.LOGGER.info("oni rightclicik");
     ItemStack stack = player.getHeldItem(hand);
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
@@ -89,6 +87,7 @@ public class ShapeCard extends ItemBase {
             if (slot < 0) {
               //cannot find material
               ModCyclic.LOGGER.info("not creative, no mats " + posBuild);
+              UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.empty");
               break;//stop looping
             }
           }
@@ -100,14 +99,14 @@ public class ShapeCard extends ItemBase {
           }
         }
       }
+      else {// no state selected
+        UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.state");
+      }
+    }
+    else {
+      UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.nothing");
     }
     player.swingArm(hand);
     return super.onItemRightClick(world, player, hand);
   }
-  //
-  //  @Override
-  //  public ActionResultType onItemUse(ItemUseContext context) {
-  //  
-  //    return super.onItemUse(context);
-  //  }
 }

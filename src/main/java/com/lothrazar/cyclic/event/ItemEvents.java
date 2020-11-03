@@ -159,11 +159,13 @@ public class ItemEvents {
       return;
     }
     World world = player.getEntityWorld();
-    if (held.getItem() instanceof ShapeCard) {
+    ///////////// shape
+    if (held.getItem() instanceof ShapeCard && player.isCrouching()) {
       BlockState target = world.getBlockState(event.getPos());
       ShapeCard.setBlockState(held, target);
       UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
     }
+    ///////////////// builders
     if (held.getItem() instanceof BuilderItem) {
       if (BuilderActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
@@ -186,6 +188,7 @@ public class ItemEvents {
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
       }
     }
+    ////////////////////////// wrench
     if (held.getItem() instanceof CableWrench && WrenchActionType.getTimeout(held) == 0) {
       //mode 
       if (!world.isRemote) {
