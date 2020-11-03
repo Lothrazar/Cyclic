@@ -360,11 +360,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public void clear() {}
 
   public void setFieldString(int field, String value) {
-    //for string field system
+    //for string field  
   }
 
   public String getFieldString(int field) {
-    //for string field system
+    //for string field  
     return null;
   }
 

@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.data;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
@@ -18,17 +20,18 @@ public class RelativeShape {
   private List<BlockPos> shape;
   private int count;
 
+  public RelativeShape(RelativeShape other) {
+    this.shape = other.shape;
+    this.count = other.count;
+  }
+
   public RelativeShape() {
     shape = new ArrayList<>();
   }
 
-  /**
-   * Does not compute any offset, takes list as is. assumes it is pre-offset from some other center
-   * 
-   * @param sh
-   */
-  public RelativeShape(List<BlockPos> sh) {
-    shape = sh;
+  public void merge(RelativeShape other) {
+    shape.addAll(other.shape);
+    count = shape.size();
   }
 
   /**
@@ -40,11 +43,14 @@ public class RelativeShape {
    */
   public RelativeShape(World world, List<BlockPos> options, BlockPos center) {
     this();
-    for (BlockPos pos : options) {
-      if (world == null || !world.isAirBlock(pos)) {
-        shape.add(pos.add(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
+    if (world != null)
+      for (BlockPos pos : options) {
+        BlockState bs = world.getBlockState(pos);
+        if (bs.getBlock() != Blocks.AIR) {
+          shape.add(pos.add(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
+          //          states.add(bs);
+        }
       }
-    }
     count = shape.size();
   }
 
@@ -110,12 +116,4 @@ public class RelativeShape {
     this.shape = list;
     this.count = this.shape.size();
   }
-  //
-  //  public List<BlockPos> offsetTo(BlockPos pos) {
-  //    List<BlockPos> shapeList = new ArrayList<>();
-  //    for (BlockPos s : shape) {
-  //      shapeList.add(pos.add(s));
-  //    }
-  //    return shapeList;
-  //  }
 }

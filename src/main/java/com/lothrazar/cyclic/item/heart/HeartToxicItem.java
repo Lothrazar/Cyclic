@@ -35,10 +35,8 @@ public class HeartToxicItem extends ItemBase {
     double addedHealth = 0;
     if (oldHealthModifier.getAmount() <= -18) {
       addedHealth = -18;
-      //      System.out.println(" NOTHING  )" + oldHealthModifier.getAmount());
     }
     else {
-      //      System.out.println(" eat and exp");
       addedHealth = (oldHealthModifier == null) ? -2.0D : oldHealthModifier.getAmount() - 2.0D;
       //actually DO the eating of the thing
       playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
@@ -48,7 +46,6 @@ public class HeartToxicItem extends ItemBase {
       playerIn.giveExperiencePoints(ConfigManager.HEARTXPMINUS.get());
     }
     //    ModCyclic.LOGGER.info(" oldHealthModifier.getAmount()" + oldHealthModifier.getAmount());
-    //    System.out.println(" oldHealthModifier.getAmount()" + oldHealthModifier.getAmount());
     //replace the modifier on the main attribute
     healthAttribute.removeModifier(HeartItem.healthModifierUuid);
     AttributeModifier healthModifier = new AttributeModifier(HeartItem.healthModifierUuid, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);

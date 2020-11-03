@@ -80,7 +80,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
       case COPY:
         //copy shape from CARD to BUFFER
         //only works
-        this.copiedShape = new RelativeShape(cardShape.getShape());
+        this.copiedShape = new RelativeShape(cardShape);
         ModCyclic.LOGGER.info(cmd + " success");
       break;
       case PASTE:
@@ -98,10 +98,8 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
         //from BUFFER to CARD
         //only works on NOT EMPTY cards
         if (this.copiedShape != null && cardShape.getShape().size() > 0) {
-          //
-          List<BlockPos> list = this.copiedShape.getShape();
-          list.addAll(cardShape.getShape());
-          cardShape.setShape(list);
+          //  
+          cardShape.merge(this.copiedShape);
           cardShape.write(shapeCard);
           ModCyclic.LOGGER.info(cmd + " success");
           //          this.copiedShape = null;
