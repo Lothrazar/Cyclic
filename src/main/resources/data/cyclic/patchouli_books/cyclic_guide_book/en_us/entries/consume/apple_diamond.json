@@ -4,12 +4,14 @@
   "category": "cyclic:consume",
   "pages": [
     {
-      "type": "text",
-      "text": "item.cyclic.apple_diamond.guide"
+      "type": "spotlight",
+      "text": "item.cyclic.apple_diamond.guide",
+      "item": "cyclic:apple_diamond",
+      "link_recipe": true
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:apple_diamond"
+      "recipe": "cyclic:apple_sprout_diamond"
     }
   ]
 }

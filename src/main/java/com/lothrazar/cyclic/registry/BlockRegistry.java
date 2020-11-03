@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.AppleCropBlock;
 import com.lothrazar.cyclic.block.DarkGlassBlock;
 import com.lothrazar.cyclic.block.FireplaceBlock;
+import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.LaunchBlock;
 import com.lothrazar.cyclic.block.MasonBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
@@ -15,7 +16,6 @@ import com.lothrazar.cyclic.block.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.SpikesBlock;
 import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
 import com.lothrazar.cyclic.block.WaterCandleBlock;
-import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
@@ -204,10 +204,16 @@ public class BlockRegistry {
   public static Block computer_shape;
   @ObjectHolder(ModCyclic.MODID + ":apple_sprout")
   public static Block apple_sprout;
+  @ObjectHolder(ModCyclic.MODID + ":apple_sprout_emerald")
+  public static Block apple_sprout_emerald;
+  @ObjectHolder(ModCyclic.MODID + ":apple_sprout_diamond")
+  public static Block apple_sprout_diamond;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_emerald"));
+    r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_diamond"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), true).setRegistryName("apple_sprout"));
     r.register(new BlockShapedata(Block.Properties.create(Material.IRON)).setRegistryName("computer_shape"));
     r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));

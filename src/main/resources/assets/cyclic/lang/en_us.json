@@ -31,6 +31,14 @@
     "block.cyclic.apple_sprout.tooltip": "Apple growing on a leaf",
     "block.cyclic.apple_sprout.guide": "Plant below a leaf block to grow an apple.  ",
     
+    "block.cyclic.apple_sprout_emerald": "Emerald Apple Sprout",
+    "block.cyclic.apple_sprout_emerald.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_emerald.guide": "Plant below a leaf block to grow an emerald apple.  ",
+    
+    "block.cyclic.apple_sprout_diamond": "Diamond Apple Sprout",
+    "block.cyclic.apple_sprout_diamond.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_diamond.guide": "Plant below a leaf block to grow a diamond apple.  ",
+    
     "block.cyclic.apple_sprout_chocolate": "Apple Sprout",
     "block.cyclic.apple_sprout_chocolate.tooltip": "Apple growing on a leaf",
     "block.cyclic.apple_sprout_chocolate.guide": "Plant below a leaf block to grow an apple.  ",
