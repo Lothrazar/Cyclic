@@ -315,7 +315,7 @@ public class UtilRender {
   }
 
   /**
-   * Used by fluid TESRs
+   * Used by TESRs
    * 
    */
   public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix, float scale, Color color) {
@@ -360,12 +360,20 @@ public class UtilRender {
     return (BlockRayTraceResult) player.pick(range, 0F, false);
   }
 
+  /**
+   * for ITEMS held by the PLAYER rendering cubes in world
+   * 
+   * @param evt
+   * @param coords
+   * @param alpha
+   */
   @OnlyIn(Dist.CLIENT)
   public static void renderColourCubes(RenderWorldLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
     PlayerEntity player = ModCyclic.proxy.getClientPlayer();
     if (player == null) {
       return;
     }
+    float scale = 1.01F;
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
     Vector3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
@@ -378,7 +386,7 @@ public class UtilRender {
       matrix.push();
       matrix.translate(posCurr.getX(), posCurr.getY(), posCurr.getZ());
       matrix.translate(-0.005f, -0.005f, -0.005f);
-      matrix.scale(1.01f, 1.01f, 1.01f);
+      matrix.scale(scale, scale, scale);
       matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
       UtilRender.renderCube(matrix.getLast().getMatrix(), builder, posCurr, coords.get(posCurr), alpha);
       matrix.pop();

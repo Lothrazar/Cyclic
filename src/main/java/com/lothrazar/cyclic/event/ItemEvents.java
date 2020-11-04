@@ -105,7 +105,7 @@ public class ItemEvents {
     }
     else if (world.getBlockState(pos).getBlock() == BlockRegistry.flower_cyan) {
       event.setResult(Result.ALLOW);
-      if (world.rand.nextDouble() < 0.5)
+      if (world.rand.nextDouble() < 0.5)//TODO: config
         UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.flower_cyan));
     }
   }
@@ -114,7 +114,7 @@ public class ItemEvents {
   public void onBedCheck(SleepingLocationCheckEvent event) {
     if (event.getEntity() instanceof PlayerEntity) {
       PlayerEntity p = (PlayerEntity) event.getEntity();
-      if (p.getPersistentData().getBoolean("cyclic_sleeping")) {
+      if (p.getPersistentData().getBoolean("cyclic_sleeping")) { // TODO: const in sleeping mat
         event.setResult(Result.ALLOW);
       }
     }
