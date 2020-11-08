@@ -31,19 +31,6 @@ public class ConfigManager {
   private static List<String> defaultBeheading = new ArrayList<>();
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
-  public static BooleanValue SCAFFOLD;
-  public static BooleanValue EMERALD;
-  public static BooleanValue SANDSTONE;
-  public static BooleanValue GEMGEAR;
-  public static BooleanValue NETHERBRICK;
-  public static BooleanValue ENCHANTMENTS;
-  public static BooleanValue CHARMS;
-  public static BooleanValue GLOVE;
-  public static BooleanValue HEARTS;
-  public static BooleanValue CARROTS;
-  public static BooleanValue SPIKES;
-  public static BooleanValue BOOMERANGS;
-  public static BooleanValue CABLES;
   public static IntValue PEATERICHPOWER;
   public static IntValue PEATPOWER;
   public static DoubleValue PEATCHANCE;
@@ -101,23 +88,9 @@ public class ConfigManager {
     final String WALL = "####################################################################################";
     final String WALLSM = "################"; //    CFG.translation(translationKey)
     CFG.comment(WALL,
-        " Feature toggles; each of these will disable the registration of some content (items/enchants)", WALL)
+        "Features with configurable properties are split into categories", WALL)
         .push(ModCyclic.MODID);
-    //
-    //
-    CABLES = CFG.comment("Disable the cables aka pipes").define("cables", true);
-    BOOMERANGS = CFG.comment("Disable the 3 boomerang items").define("boomerangs", true);
-    SPIKES = CFG.comment("Disable the 3 spike blocks").define("spikes", true);
-    SCAFFOLD = CFG.comment("Disable the 3 scaffolding blocks").define("scaffolding", true);
-    CARROTS = CFG.comment("Disable the 5 carrot items that upgrade horses").define("carrots", true);
-    HEARTS = CFG.comment("Disable 2 heart items that increase and decrease max health").define("hearts", true);
-    GLOVE = CFG.comment("Disable the completely balanced climbing glove").define("glove", true);
-    CHARMS = CFG.comment("Disable 6 charms (four basic, the ultimate, and the anti-gravity)").define("charms", true);
-    EMERALD = CFG.comment("Disable 9 items, emerald armor and tools").define("emeraldGear", true);
-    SANDSTONE = CFG.comment("Disable 5 sandstone tools").define("sandstoneGear", true);
-    GEMGEAR = CFG.comment("Disable the endgame gear").define("gemObsidianGear", true);
-    NETHERBRICK = CFG.comment("Disable 5 netherbrick tools").define("netherbrickGear", true);
-    ENCHANTMENTS = CFG.comment("Disable all 11 enchantments").define("enchantments", true);
+    //  
     //
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL).push("command");
     COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);
@@ -130,7 +103,7 @@ public class ConfigManager {
     COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define("worldspawn", true);
     CFG.pop();//command
     CFG.comment(WALL, " Logging related configs", WALL).push("logging");
-    LOGINFO = CFG.comment("Enable unblock info logs; very spammy").define("info", false);
+    LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop();//logging 
     CFG.comment(WALL, " Energy related configs for machines and items", WALL).push("energy");
     CFG.comment(" Fuel gained by consuming items").push("fuel");
