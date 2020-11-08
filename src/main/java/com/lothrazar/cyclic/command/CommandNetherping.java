@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.List;
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
@@ -20,7 +20,7 @@ public class CommandNetherping implements ICyclicCommand {
 
   @Override
   public boolean needsOp() {
-    return ConfigManager.COMMANDPINGNETHER.get();
+    return ConfigRegistry.COMMANDPINGNETHER.get();
   }
 
   @Override

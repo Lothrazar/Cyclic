@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.base.ItemBase;
 
 public class PeatItem extends ItemBase {
@@ -21,9 +21,9 @@ public class PeatItem extends ItemBase {
       case BIOMASS:
         return 1;
       case NORM:
-        return ConfigManager.PEATPOWER.get();
+        return ConfigRegistry.PEATPOWER.get();
       case ENRICHED:
-        return ConfigManager.PEATERICHPOWER.get();
+        return ConfigRegistry.PEATERICHPOWER.get();
       default:
         return 0;
     }

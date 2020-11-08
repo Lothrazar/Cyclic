@@ -33,7 +33,7 @@ public class ModCyclic {
 
   public ModCyclic() {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-    ConfigManager.setup(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
+    ConfigRegistry.setup(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
     FluidRegistry.setup();
     //why is this event so freakin weird 
     //https://github.com/Minecraft-Forge-Tutorials/Custom-Json-Recipes/blob/master/src/main/java/net/darkhax/customrecipeexample/CustomRecipesMod.java

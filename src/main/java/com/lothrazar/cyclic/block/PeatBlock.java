@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -48,7 +48,7 @@ public class PeatBlock extends BlockBase {
    * 
    */
   private void tryBake(World world, BlockPos pos, int waters) {
-    if (world.rand.nextDouble() < ConfigManager.PEATCHANCE.get().doubleValue() * waters) {
+    if (world.rand.nextDouble() < ConfigRegistry.PEATCHANCE.get().doubleValue() * waters) {
       world.setBlockState(pos, BlockRegistry.peat_baked.getDefaultState());
     }
   }

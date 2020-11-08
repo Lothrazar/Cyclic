@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.List;
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
@@ -17,7 +17,7 @@ public class CommandNbt implements ICyclicCommand {
 
   @Override
   public boolean needsOp() {
-    return ConfigManager.COMMANDNBT.get();
+    return ConfigRegistry.COMMANDNBT.get();
   }
 
   @Override

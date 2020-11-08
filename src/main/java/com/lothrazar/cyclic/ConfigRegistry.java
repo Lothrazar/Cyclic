@@ -26,7 +26,7 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class ConfigManager {
+public class ConfigRegistry {
 
   private static List<String> defaultBeheading = new ArrayList<>();
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
