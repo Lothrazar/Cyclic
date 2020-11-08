@@ -46,7 +46,7 @@ public class EventRender {
   //    int posZ = (int) mc.player.lastTickPosZ;
   //    mc.fontRenderer.drawString(event.getMatrixStack(), "Hello world!", width / 2, height / 2, 0xFFFFFF);
   //  }
-  //  @OnlyIn(Dist.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
     //

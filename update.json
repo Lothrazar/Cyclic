@@ -1,8 +1,8 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
   "promos": {
-    "1.16.3-latest": "0.8.3",
-    "1.16.3-recommended": "0.8.3"
+    "1.16.3-latest": "0.9.1",
+    "1.16.3-recommended": "0.9.1"
   },
   "1.16.3": {
   	"0.6.1":"Ported ",
@@ -14,5 +14,6 @@
   	,"0.8.2":"Trash Void now accepts fluids as it did in 1.12.  Fixed bug where Miner could get stuck on non-mineable block, or on liquid, also it sometimes would skip valid blocks.  Fluid collector now correctly pays energy cost when processing.  Fixed bug in forester where it wasnt mining the bottom log of the tree.  Fixed an issue where player would fall through Scaffolding blocks and sit inside them, they are correctly solid now.  ( trunksbomb ) New Ender enchantment for swords: what used to be block now spawns an ender pearl. "
   	,"0.8.3":"Auto-Smelting enchantment can now be applied to other mining tools such as Axes.  Updated pachoulli guidebook with more entries.  Emerald tools now use sticks instead of diamonds.  Used player->floatingTickCount to prevent player from being 'kicked for flying' when using climbing and levitating objects such as Fan, Air charm, etc.  Cyan Rose now spawns in the following biome-types: FOREST, PLAINS, TAIGA, EXTREME_HILLS.  Improved the mod logger to remove log-spam; added a config to unblock that is off by default.  ( trunksbomb ) Added Fireplace block.  Added Crafting Machine.  Added Ender Scepter.  Added Caving Torch Charm."
   	,"0.9.0":"Removed the config toggles that un-register items, this is not supported by mojang or forge it simply throws MissingMappings crash exceptions (to remove content, delete recipes in a data pack and hide from JEI).  Terra Preta no longer works on blocks that are immune to bonemeal (if they have canUseBonemeal() -> false).  Shape builder update: optional shape slot and GPS slot, the GPS slot will change the center of the target build, default is still the machine; the shape slot will READ in the current shape while the machine is running (break and replace existing machines).  New Shape computer added to write builds in the world onto data cards.Shape data card can build structures in the world relative to the player Harvest Scythe added.  Ender enchantment updated so it will not shoot the pearl if you successfully open a chest.  Added settings data card item. Renamed GPS Marker to GPS Data Card.  Added ender carrot.   Added chocolate, honey, and metal apples.   Added more default honey recipes.  Fixed fan transparency bug.  Fan GUI updated.  Fixed bug where Peat generator was eating items when full.  Beekeeper enchant added.  ( trunksbomb ) Fixed Experience Enchant triggers when enchanted item is held in the offhand and blocks are broken with the mainhand. "
+  	,"0.9.1":"Hotfix for server crash"
   }
 }
