@@ -33,7 +33,7 @@ public class HeartToxicItem extends ItemBase {
     //get attribute modif by id
     AttributeModifier oldHealthModifier = healthAttribute.getModifier(HeartItem.healthModifierUuid);
     double addedHealth = 0;
-    if (oldHealthModifier.getAmount() <= -18) {
+    if (oldHealthModifier != null && oldHealthModifier.getAmount() <= -18) {
       addedHealth = -18;
     }
     else {
