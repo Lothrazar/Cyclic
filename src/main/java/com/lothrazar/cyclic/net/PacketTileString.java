@@ -44,7 +44,8 @@ public class PacketTileString extends PacketBase {
     p.field = buf.readInt();
     CompoundNBT tags = buf.readCompoundTag();
     p.pos = new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z"));
-    p.value = buf.readString();
+    //something in vanilla or forge marks this as CLIENT ONLY. unless i give it a max length
+    p.value = buf.readString(32767);
     return p;
   }
 
