@@ -53,7 +53,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantExcavation extends EnchantBase {
 
-  private static final int POWER_PER_LEVEL = 7;
+  private static final int POWER_PER_LEVEL = 8;
 
   public EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
@@ -72,9 +72,9 @@ public class EnchantExcavation extends EnchantBase {
 
   private int getHarvestMax(int level) {
     if (level <= 5)
-      return level * POWER_PER_LEVEL;
+      return (level + 1) * POWER_PER_LEVEL + 10;
     //reduce power if ench is past level 5
-    return 5 * POWER_PER_LEVEL + level * 2;
+    return 6 * POWER_PER_LEVEL + level * 5;
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -85,7 +85,8 @@ public class EnchantExcavation extends EnchantBase {
       return;
     }
     BlockPos pos = event.getPos();
-    Block block = event.getState().getBlock();
+    BlockState eventState = event.getState();
+    Block block = eventState.getBlock();
     //is this item stack enchanted with ME?
     ItemStack stackHarvestingWith = player.getHeldItem(player.swingingHand);
     int level = this.getCurrentLevelTool(stackHarvestingWith);
@@ -93,8 +94,9 @@ public class EnchantExcavation extends EnchantBase {
       return;
     }
     //don't fire if the tool is not capable of breaking the block (ie stone pickaxe on diamond ore)
-    if (!stackHarvestingWith.canHarvestBlock(event.getState()))
+    if (!ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {//!stackHarvestingWith.canHarvestBlock(event.getState())) { 
       return;
+    }
     // if I am using an axe on stone or dirt, doesn't trigger
     boolean isAnySingleOk = false;//if i am a tool valid on 2 things, and both of 2 blocks are present, we are just ok
     for (ToolType type : stackHarvestingWith.getItem().getToolTypes(stackHarvestingWith)) {

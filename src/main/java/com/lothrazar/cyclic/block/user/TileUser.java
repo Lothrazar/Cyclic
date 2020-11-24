@@ -75,8 +75,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     try {
       TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
       ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, this.pos.offset(this.getCurrentFacing()), Hand.MAIN_HAND);
-      if (result == ActionResultType.SUCCESS) {
-        //        ModCyclic.LOGGER.info("user result " + result);
+      if (result == ActionResultType.SUCCESS || result == ActionResultType.CONSUME) {
+        //        ModCyclic.LOGGER.info(result + " consume ? save item? " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
+        TileEntityBase.syncEquippedItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
         //        this.markDirty();
       }
     }

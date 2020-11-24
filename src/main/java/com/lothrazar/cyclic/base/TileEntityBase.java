@@ -67,6 +67,17 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     fp.get().setHeldItem(hand, item);
   }
 
+  public static void syncEquippedItem(LazyOptional<IItemHandler> i,
+      WeakReference<FakePlayer> fp, int slot, Hand hand) {
+    if (fp == null) {
+      return;
+    }
+    i.ifPresent(inv -> {
+      inv.extractItem(slot, 64, false);//delete and overwrite
+      inv.insertItem(slot, fp.get().getHeldItem(hand), false);
+    });
+  }
+
   public static void tryEquipItem(LazyOptional<IItemHandler> i,
       WeakReference<FakePlayer> fp, int slot, Hand hand) {
     if (fp == null) {
@@ -96,6 +107,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     //processRightClick
     ActionResultType result = fakePlayer.get().interactionManager.func_219441_a(fakePlayer.get(), world,
         fakePlayer.get().getHeldItem(hand), hand, blockraytraceresult);
+    //it becomes CONSUME result 1 bucket. then later i guess it doesnt save, and then its water_bucket again
     return result;
   }
 
