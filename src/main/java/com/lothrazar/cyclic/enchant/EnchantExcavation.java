@@ -37,6 +37,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShearsItem;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -62,6 +63,11 @@ public class EnchantExcavation extends EnchantBase {
   @Override
   public int getMaxLevel() {
     return 5;
+  }
+
+  @Override
+  public boolean canApply(ItemStack stack) {
+    return super.canApply(stack) || stack.getItem() instanceof ShearsItem;
   }
 
   private int getHarvestMax(int level) {

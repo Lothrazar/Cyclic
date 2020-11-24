@@ -25,12 +25,45 @@
     "block.cyclic.cask.guide": "The Cask is a small tank for storing fluids.$(br2)Fluids can be inserted and removed both by pipes and by buckets and other handheld fluid containers.",
     "block.cyclic.flower_cyan": "Cyan Rose",
     "block.cyclic.flower_cyan.tooltip": "A lost legacy",
-    "block.cyclic.flower_cyan.guide": "A lost legacy",
+    "block.cyclic.flower_cyan.guide": "A lost legacy from a lost version of Minecraft.  Spawns alone in biomes of Category (forest, plains, taiga, extreme hills).  ",
+    
+    "block.cyclic.apple_sprout": "Apple Sprout",
+    "block.cyclic.apple_sprout.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout.guide": "Plant below a leaf block to grow an apple.  ",
+    
+    "block.cyclic.apple_sprout_emerald": "Emerald Apple Sprout",
+    "block.cyclic.apple_sprout_emerald.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_emerald.guide": "Plant below a leaf block to grow an emerald apple.  ",
+    
+    "block.cyclic.apple_sprout_diamond": "Diamond Apple Sprout",
+    "block.cyclic.apple_sprout_diamond.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_diamond.guide": "Plant below a leaf block to grow a diamond apple.  ",
+    
+    "block.cyclic.apple_sprout_chocolate": "Apple Sprout",
+    "block.cyclic.apple_sprout_chocolate.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_chocolate.guide": "Plant below a leaf block to grow an apple.  ",
+    
     
     "item.cyclic.scythe_harvest":"Garden Scythe",
     "item.cyclic.scythe_harvest.tooltip":"Harvest the area",
-    "item.cyclic.scythe_harvest.guide":"Harvest the area on use.  Sneak to harvest a smaller area.  Uses the same logic as the Harvester block. ",
+    "item.cyclic.scythe_harvest.guide":"Harvest the area on use.  Sneak to harvest a smaller area.  Uses the same logic as the $(l:machines/harvester)Harvester$(/l) block. ",
     
+    "item.cyclic.location": "GPS Data Card",
+    "item.cyclic.location.tooltip": "Saves the location of a block",
+    "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.$(br2)Markers with saved locations can be used in multiple machines from this mod such as  $(l:machines/structure)Shape Builder$(/l) .",
+    "item.location.saved": "Saved ",
+    
+    "block.cyclic.computer_shape":"Shape Computer",
+    "block.cyclic.computer_shape.tooltip":"Read buildings into a Shape Card",
+    "block.cyclic.computer_shape.guide":"Place two  $(l:misc/location)GPS Card$(/l) cards and one  $(l:misc/shape_data)Shape Card$(/l), then you can read, copy, paste, and merge shapes together. ",
+    
+    "item.cyclic.shape_data":"Shape Data Card",
+    "item.cyclic.shape_data.tooltip":"Builds in-world after setup in a Shape Computer",
+    "item.cyclic.shape_data.guide":"Place in a $(l:machines/computer_shape)Shape Computer$(/l) or a $(l:machines/structure)Shape Builder$(/l) to load with data, then click on a block to load its block",
+    
+    "item.cyclic.shape_data.state":"Empty block, select one with a click first",
+    "item.cyclic.shape_data.empty":"Out of materials",
+    "item.cyclic.shape_data.nothing":"Card requires a shape and a selected block",
     
     "item.cyclic.settings_data":"Settings Data Card",
     "item.cyclic.settings_data.tooltip":"Copy settings between cyclic machines",
@@ -791,16 +824,14 @@
     "button.screen.item": "Items",
     "button.screen.fluid": "Fluid",
     "button.screen.energy": "Energy",
-    "block.apple": "Apple Sprout",
-    "block.apple.tooltip": "Plant below a leaf to grow",
-    "block.apple.guide": "A seedling of an apple that grows below any block registered in the leaf ore dictionary.  Can grow with bonemeal, and requires a certain light level to grow.  Small chance of dropping a golden apple.",
+    
     "block.cyclic.library_ctrl": "Ender Library",
     "block.cyclic.library_ctrl.tooltip": "Surround this with Ender Bookshelves to deposit",
     "block.cyclic.library_ctrl.guide": "The controller block for Ender Bookshelves.  Surround it with Ender Bookshelves so it can connect and it will distribute enchantments.  Can be automated by piping in enchanted books and pulling out empty books.",
     "block.cyclic.library": "Ender Bookshelf",
     "block.cyclic.library.tooltip": "Four drawers of deep enchantment storage",
     "block.cyclic.library.guide": "Use enchanted books on any corner.  Each corner stores many copies of that same enchantment.  Use a book on it to withdraw.  Hold a Redstone Torch in your hand and hit it to toggle display modes.",
-    "block.builder_block.guide": "Pick a shape and a size, and this will auto build a structure.  Shapes available include are Facing (wall), Square, Circle, Solid, Stairway, Sphere, and others.",
+ 
     "block.cyclic.structure": "Shape Builder",
     "block.cyclic.structure.tooltip": "Automate building simple shapes",
     "block.builder_pattern.flip": "Flip Regions (purple is source, white is target)",
@@ -1313,10 +1344,6 @@
     "item.cyclic.netherbrick_shovel": "Nether Shovel",
     "item.cyclic.netherbrick_hoe": "Nether Hoe",
 
-    "item.cyclic.location": "GPS Data Card",
-    "item.cyclic.location.tooltip": "Saves the location of a block",
-    "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.$(br2)Markers with saved locations can be used in multiple machines from this mod.",
-    "item.location.saved": "Saved ",
 
     "wireless.target": "Detect target block",
     "wireless.empty": "Bind a location to a GPS Marker",

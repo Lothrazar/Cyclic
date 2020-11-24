@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.apple;
 
 import java.util.Iterator;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,16 +21,14 @@ public class AppleChocolate extends ItemBase {
     return super.onItemUseFinish(stack, worldIn, entityLiving);
   }
 
-  public boolean curePotionEffects(LivingEntity entityLiving, ItemStack curativeItem) {
+  private boolean curePotionEffects(LivingEntity entityLiving, ItemStack curativeItem) {
     boolean ret = false;
     Iterator<EffectInstance> itr = entityLiving.getActivePotionMap().values().iterator();
     while (itr.hasNext()) {
       EffectInstance effect = itr.next();
       if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.living.PotionEvent.PotionRemoveEvent(entityLiving, effect))) continue;
       if (effect.getPotion().isBeneficial() == false) {
-        //dont remove beneficial potions though such as speed, fire prot, night vision
-        //        _this.onFinishedPotionEffect(effect);
-        ModCyclic.LOGGER.info("!!!chocolate eaten nuke " + effect.getEffectName());
+        //dont remove beneficial potions though such as speed, fire prot, night vision 
         effect.getPotion().removeAttributesModifiersFromEntity(entityLiving, entityLiving.getAttributeManager(), effect.getAmplifier());
         itr.remove();
         ret = true;

@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.carbon_paper",
+  "icon": "cyclic:carbon_paper",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carbon_paper.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carbon_paper"
+    }
+  ]
+}

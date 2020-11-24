@@ -1,23 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " o ",
-    " s ",
-    " r "
+    "cac",
+    "cpc",
+    "cac"
   ],
   "key": {
-    "o": {
+    "a": {
       "tag": "forge:dyes/blue"
     },
-    "s": {
-      "item": "minecraft:paper"
+    "c": {
+      "item": "minecraft:iron_nugget"
     },
-    "r": {
-      "item": "minecraft:redstone_torch"
-    }
+	"p": {
+		"item":"cyclic:carbon_paper"
+	}
   },
   "result": {
     "item": "cyclic:location",
-    "count": 1
+    "count": 4
   }
 }

@@ -34,8 +34,9 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //
+    y = guiTop + 2;
     int width = 42;
-    x = guiLeft + 126 - width;
+    x = guiLeft + 126;
     for (StructCommands shape : StructCommands.values()) {
       ButtonMachine btnShape = addButton(new ButtonMachine(x, y, width, 20,
           shape.name(), (p) -> {
@@ -48,10 +49,10 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
       map.put(shape, btnShape);
       y += 20;
       //
-      if (shape.ordinal() == 2) {
-        x += width;
-        y = guiTop + 6;
-      }
+      //      if (shape.ordinal() == 1) {
+      //        x += width;
+      //        y = guiTop + 6;
+      //      }
     }
   }
 
@@ -66,6 +67,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     //    this.drawName(ms, title.getString());
+    //    this.drawName(ms, "" + container.tile.getField(TileShapedata.Fields.STASH.ordinal()));
     btnRender.onValueUpdate(container.tile);
     for (StructCommands shape : StructCommands.values()) {
       ButtonMachine btnShape = map.get(shape);
@@ -80,5 +82,9 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
     this.drawSlot(ms, 8 + 18, 28, TextureRegistry.SLOT_GPS, 18);
     this.drawSlot(ms, 70, 38, TextureRegistry.SLOT_SHAPE, 18);
     //    this.drawSlot(ms, 60, 68, TextureRegistry.SLOT_SHAPE, 18);
+    int hasStash = container.tile.getField(TileShapedata.Fields.STASH.ordinal());
+    if (hasStash == 1) {
+      this.drawSlot(ms, 107, 63, TextureRegistry.SHAPE_STASH, 18);
+    }
   }
 }

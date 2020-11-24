@@ -6,6 +6,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.data.RelativeShape;
+import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
+import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -38,6 +42,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileStructure extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static final int SLOT_BUILD = 0;
+  protected static final int SLOT_SHAPE = 1;
+  protected static final int SLOT_GPS = 2;
   public static final int maxHeight = 100;
 
   static enum Fields {
@@ -45,7 +52,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   static final int MAX = 64000;
-  static final int SLOT_BUILD = 0;
   //  static final int SLOT_SHAPE = 1;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -100,7 +106,18 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    return new ItemStackHandler(3) {
+
+      @Override
+      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        if (slot == SLOT_BUILD)
+          return Block.getBlockFromItem(stack.getItem()) != null;
+        else if (slot == SLOT_SHAPE)
+          return stack.getItem() instanceof ShapeCard;
+        else // if SLOT_GPS
+          return stack.getItem() instanceof LocationGpsCard;
+      }
+    };
   }
 
   @Override
@@ -183,14 +200,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     if (inv == null) {
       return;
     }
-    ItemStack stack = inv.getStackInSlot(0);
-    if (stack.isEmpty()) {
-      return;
-    }
-    Block stuff = Block.getBlockFromItem(stack.getItem());
-    if (stuff == null) {
-      return;
-    }
     List<BlockPos> shape = this.getShape();
     if (shape.size() == 0) {
       return;
@@ -202,8 +211,26 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     if (en == null) {
       return;
     }
-    final int repair = 10;
     BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
+    //does my shape exist? if so copy to it
+    if (SLOT_SHAPE < inv.getSlots()) {
+      ItemStack shapeCard = inv.getStackInSlot(SLOT_SHAPE);
+      if (shapeCard.getItem() instanceof ShapeCard) {
+        //copy 
+        shapeCard.setTag(null);//overwrite
+        RelativeShape worldShape = new RelativeShape(null, shape, this.pos);
+        worldShape.write(shapeCard);
+      }
+    }
+    ItemStack stack = inv.getStackInSlot(SLOT_BUILD);
+    //    if (stack.isEmpty()) {
+    //      return;
+    //    }
+    Block stuff = Block.getBlockFromItem(stack.getItem());
+    if (stuff == null) {
+      return;
+    }
+    final int repair = 10;
     for (int i = 0; i < spotsSkippablePerTrigger; i++) {
       if (en.getEnergyStored() < repair) {
         break;
@@ -214,10 +241,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
           && world.isAirBlock(nextPos)) { // check if this spot is even valid
         BlockState placeState = stuff.getDefaultState();
         if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-          //rotations if any
-          //          for (int j = 0; j < this.rotations; j++) {
-          //            UtilPlaceBlocks.rotateBlockValidState(world, null, nextPos, this.getCurrentFacing());
-          //          }
           //build success
           this.incrementPosition(shape);
           stack.shrink(1);
@@ -249,7 +272,16 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private BlockPos getPosTarget() {
-    return this.getPos();//.add(this.offsetX, this.offsetY, this.offsetZ);
+    IItemHandler inv = this.inventory.orElse(null);
+    if (inv != null && SLOT_GPS < inv.getSlots()) {
+      //before going to nextpos
+      //do we have a center offset
+      BlockPosDim loc = LocationGpsCard.getPosition(inv.getStackInSlot(SLOT_GPS));
+      if (loc != null && loc.getPos() != null) {
+        return loc.getPos();
+      }
+    }
+    return this.getPos();
   }
 
   public BlockPos getTargetFacing() {

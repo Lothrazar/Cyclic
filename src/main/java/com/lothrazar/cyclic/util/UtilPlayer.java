@@ -43,7 +43,7 @@ public class UtilPlayer {
   }
 
   public static void decrStackSize(PlayerEntity player, int slot) {
-    if (player.isCreative() == false) {
+    if (player.isCreative() == false && slot >= 0) {
       player.inventory.decrStackSize(slot, 1);
     }
   }

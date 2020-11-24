@@ -9,7 +9,8 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:beekeeper\",lvl:2}]}"
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:beekeeper\",lvl:2}]}",
+      "link_recipe": true
     }
   ]
 }

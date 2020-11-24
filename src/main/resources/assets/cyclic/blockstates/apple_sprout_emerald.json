@@ -1,0 +1,13 @@
+{
+    "variants": {
+        
+ "age=0": { "model": "cyclic:block/apple/apple_emerald_0" },
+ "age=1": { "model": "cyclic:block/apple/apple_emerald_1" },    
+ "age=2": { "model": "cyclic:block/apple/apple_emerald_2" },     
+ "age=3": { "model": "cyclic:block/apple/apple_emerald_3" },      
+ "age=4": { "model": "cyclic:block/apple/apple_emerald_4" },      
+ "age=5": { "model": "cyclic:block/apple/apple_emerald_5" },    
+ "age=6": { "model": "cyclic:block/apple/apple_emerald_6" },   
+ "age=7": { "model": "cyclic:block/apple/apple_emerald_7" }
+    }
+}

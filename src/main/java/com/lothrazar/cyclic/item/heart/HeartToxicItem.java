@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.heart;
 
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -32,23 +33,19 @@ public class HeartToxicItem extends ItemBase {
     //get attribute modif by id
     AttributeModifier oldHealthModifier = healthAttribute.getModifier(HeartItem.healthModifierUuid);
     double addedHealth = 0;
-    if (oldHealthModifier.getAmount() <= -18) {
+    if (oldHealthModifier != null && oldHealthModifier.getAmount() <= -18) {
       addedHealth = -18;
-      //      System.out.println(" NOTHING  )" + oldHealthModifier.getAmount());
     }
     else {
-      //      System.out.println(" eat and exp");
       addedHealth = (oldHealthModifier == null) ? -2.0D : oldHealthModifier.getAmount() - 2.0D;
       //actually DO the eating of the thing
       playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
       playerIn.getHeldItem(handIn).shrink(1);
       UtilSound.playSound(playerIn, SoundRegistry.fill);
       playerIn.getFoodStats().addStats(3, 1);
-      playerIn.giveExperiencePoints(ConfigManager.HEARTXPMINUS.get());
+      playerIn.giveExperiencePoints(ConfigRegistry.HEARTXPMINUS.get());
     }
-    //    ModCyclic.LOGGER.info(" addedHealth " + addedHealth);
     //    ModCyclic.LOGGER.info(" oldHealthModifier.getAmount()" + oldHealthModifier.getAmount());
-    //    System.out.println(" oldHealthModifier.getAmount()" + oldHealthModifier.getAmount());
     //replace the modifier on the main attribute
     healthAttribute.removeModifier(HeartItem.healthModifierUuid);
     AttributeModifier healthModifier = new AttributeModifier(HeartItem.healthModifierUuid, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
@@ -56,6 +53,7 @@ public class HeartToxicItem extends ItemBase {
     //
     //finish up
     //    }
+    ModCyclic.LOGGER.info(" getMaxHealth " + playerIn.getMaxHealth());
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }

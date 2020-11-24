@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.BlockDarkGlass;
-import com.lothrazar.cyclic.block.BlockFireplace;
-import com.lothrazar.cyclic.block.BlockLaunch;
-import com.lothrazar.cyclic.block.BlockMason;
-import com.lothrazar.cyclic.block.BlockPeat;
-import com.lothrazar.cyclic.block.BlockPeatFuel;
-import com.lothrazar.cyclic.block.BlockSound;
-import com.lothrazar.cyclic.block.BlockSpikes;
-import com.lothrazar.cyclic.block.BlockSpikes.EnumSpikeType;
-import com.lothrazar.cyclic.block.BlockWaterCandle;
+import com.lothrazar.cyclic.block.AppleCropBlock;
+import com.lothrazar.cyclic.block.DarkGlassBlock;
+import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
+import com.lothrazar.cyclic.block.LaunchBlock;
+import com.lothrazar.cyclic.block.MasonBlock;
+import com.lothrazar.cyclic.block.PeatBlock;
+import com.lothrazar.cyclic.block.PeatFuelBlock;
+import com.lothrazar.cyclic.block.SoundmufflerBlock;
+import com.lothrazar.cyclic.block.SpikesBlock;
+import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
+import com.lothrazar.cyclic.block.WaterCandleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
@@ -99,9 +100,9 @@ public class BlockRegistry {
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static BlockPeatGenerator peat_generator;
   @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
-  public static BlockPeat peat_unbaked;
+  public static PeatBlock peat_unbaked;
   @ObjectHolder(ModCyclic.MODID + ":peat_baked")
-  public static BlockPeatFuel peat_baked;
+  public static PeatFuelBlock peat_baked;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")
   public static BlockPeatFarm peat_farm;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
@@ -111,7 +112,7 @@ public class BlockRegistry {
   @ObjectHolder(ModCyclic.MODID + ":soundproofing")
   public static Block soundproofing;
   @ObjectHolder(ModCyclic.MODID + ":dark_glass")
-  public static BlockDarkGlass dark_glass;
+  public static DarkGlassBlock dark_glass;
   @ObjectHolder(ModCyclic.MODID + ":trash")
   public static BlockTrash trash;
   @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
@@ -201,24 +202,33 @@ public class BlockRegistry {
   public static Block fireplace;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
   public static Block computer_shape;
+  @ObjectHolder(ModCyclic.MODID + ":apple_sprout")
+  public static Block apple_sprout;
+  @ObjectHolder(ModCyclic.MODID + ":apple_sprout_emerald")
+  public static Block apple_sprout_emerald;
+  @ObjectHolder(ModCyclic.MODID + ":apple_sprout_diamond")
+  public static Block apple_sprout_diamond;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
-    r.register(new BlockShapedata(Block.Properties.create(Material.PLANTS)).setRegistryName("computer_shape"));
+    r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_emerald"));
+    r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_diamond"));
+    r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), true).setRegistryName("apple_sprout"));
+    r.register(new BlockShapedata(Block.Properties.create(Material.IRON)).setRegistryName("computer_shape"));
     r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));
     r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true).setRegistryName("scaffold_fragile"));
     r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), false).setRegistryName("scaffold_responsive"));
     r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD)).setRegistryName("scaffold_replace"));
-    r.register(new BlockDarkGlass(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
-    r.register(new BlockMason(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_cobble"));
-    r.register(new BlockMason(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_stone"));
-    r.register(new BlockMason(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_iron"));
-    r.register(new BlockMason(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_steel"));
-    r.register(new BlockMason(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_plate"));
+    r.register(new DarkGlassBlock(Block.Properties.create(Material.EARTH)).setRegistryName("dark_glass"));
+    r.register(new MasonBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_cobble"));
+    r.register(new MasonBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_stone"));
+    r.register(new MasonBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_iron"));
+    r.register(new MasonBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_steel"));
+    r.register(new MasonBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_plate"));
     r.register(new BlockPeatGenerator(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
-    r.register(new BlockPeat(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
-    r.register(new BlockPeatFuel(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
+    r.register(new PeatBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
+    r.register(new PeatFuelBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
     r.register(new BlockPeatFarm(Block.Properties.create(Material.ROCK)).setRegistryName("peat_farm"));
     r.register(new BlockTerraPreta(Block.Properties.create(Material.EARTH)).setRegistryName("terra_preta"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
@@ -248,7 +258,7 @@ public class BlockRegistry {
     r.register(new BlockAnvilMagma(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
     //
-    r.register(new BlockSound(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
+    r.register(new SoundmufflerBlock(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));
     r.register(new BlockWirelessRec(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_receiver"));
     r.register(new BlockWirelessTransmit(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_transmitter"));
@@ -264,14 +274,14 @@ public class BlockRegistry {
     r.register(new BlockCableEnergy(Block.Properties.create(Material.WOOL).sound(SoundType.STONE)).setRegistryName("energy_pipe"));
     r.register(new BlockCableItem(Block.Properties.create(Material.WOOL).sound(SoundType.STONE)).setRegistryName("item_pipe"));
     r.register(new BlockCableFluid(Block.Properties.create(Material.WOOL).sound(SoundType.STONE)).setRegistryName("fluid_pipe"));
-    r.register(new BlockLaunch(Block.Properties.create(Material.ROCK), false).setRegistryName("plate_launch"));
-    r.register(new BlockLaunch(Block.Properties.create(Material.ROCK), true).setRegistryName("plate_launch_redstone"));
-    r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
-    r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
-    r.register(new BlockSpikes(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
+    r.register(new LaunchBlock(Block.Properties.create(Material.ROCK), false).setRegistryName("plate_launch"));
+    r.register(new LaunchBlock(Block.Properties.create(Material.ROCK), true).setRegistryName("plate_launch_redstone"));
+    r.register(new SpikesBlock(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
+    r.register(new SpikesBlock(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
+    r.register(new SpikesBlock(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
     r.register(new BlockBatteryInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
-    r.register(new BlockWaterCandle(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
-    r.register(new BlockFireplace(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
+    r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
+    r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
   }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.shape_data",
+  "icon": "cyclic:shape_data",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.shape_data.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shape_data"
+    }
+  ]
+}

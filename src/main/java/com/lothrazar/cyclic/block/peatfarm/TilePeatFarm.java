@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.BlockPeatFuel;
+import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -205,7 +205,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
       BlockState state = Block.getBlockFromItem(itemStack.getItem()).getDefaultState();
       if (itemStack.getCount() == 0)
         continue;
-      if (world.getBlockState(target).getBlock() instanceof BlockPeatFuel) {
+      if (world.getBlockState(target).getBlock() instanceof PeatFuelBlock) {
         world.destroyBlock(target, true);
       }
       if ((world.isAirBlock(target)

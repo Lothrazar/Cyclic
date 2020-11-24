@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
@@ -133,6 +132,9 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.apple_sprout, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout"));
+    r.register(new BlockItem(BlockRegistry.apple_sprout_diamond, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout_diamond"));
+    r.register(new BlockItem(BlockRegistry.apple_sprout_emerald, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout_emerald"));
     r.register(new BlockItem(BlockRegistry.computer_shape, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("computer_shape"));
     r.register(new BlockItem(BlockRegistry.flower_cyan, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("flower_cyan"));
     r.register(new BlockItem(BlockRegistry.mason_cobble, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_cobble"));
@@ -245,126 +247,103 @@ public class ItemRegistry {
     r.register(new SettingsCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("settings_data"));
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("shape_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024)).setRegistryName("scythe_harvest"));
-    /// apples 
-    final int ONEMIN = 20 * 60;
+    ///////////////////////// apples  
+    final int SMALLPOT = 20 * 90;// 1:30
+    final int LARGEPOT = 3 * 20 * 60;// 3:00
     int h = Foods.APPLE.getHealing();
     float s = Foods.APPLE.getSaturation();
+    //honey is basic. fast to eat, gives lots of food but no potion effects 
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h * 4).saturation(s * 4)
         .fastToEat()
         .build())).setRegistryName("apple_honey"));
-    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(1)
-        .effect(new EffectInstance(Effects.HEALTH_BOOST, ONEMIN, 4), 1)
-        .effect(new EffectInstance(Effects.RESISTANCE, ONEMIN, 4), 1)//20*60 is 60 seconds
-        .fastToEat().setAlwaysEdible()
-        .build())).setRegistryName("apple_diamond"));
+    //iron and lapis are basic ones
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s * 4)
-        //        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
-        .effect(new EffectInstance(Effects.NIGHT_VISION, ONEMIN, 0), 1)
-        .effect(new EffectInstance(Effects.WATER_BREATHING, ONEMIN, 0), 1)
-        .effect(new EffectInstance(Effects.CONDUIT_POWER, ONEMIN, 0), 1)
-        .effect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, ONEMIN, 0), 1)
+        .effect(new EffectInstance(Effects.NIGHT_VISION, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.WATER_BREATHING, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.CONDUIT_POWER, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.SLOW_FALLING, LARGEPOT, 0), 1)
+        .effect(new EffectInstance(Effects.SPEED, LARGEPOT, 0), 1)
+        //        .effect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, FIVEMIN, 0), 1)
         .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_lapis"));
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s)
-        //        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
-        .effect(new EffectInstance(Effects.HEALTH_BOOST, ONEMIN, 2), 1)
-        .effect(new EffectInstance(Effects.RESISTANCE, ONEMIN, 2), 1)//20*60 is 60 seconds
+        .effect(new EffectInstance(Effects.HEALTH_BOOST, LARGEPOT, 2), 1)
+        .effect(new EffectInstance(Effects.RESISTANCE, LARGEPOT, 2), 1)
         .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_iron"));
+    //stronger ones 
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(1).saturation(1)
+        .effect(new EffectInstance(Effects.HEALTH_BOOST, SMALLPOT, 4), 1)
+        .effect(new EffectInstance(Effects.RESISTANCE, SMALLPOT, 4), 1)
+        .fastToEat().setAlwaysEdible()
+        .build())).setRegistryName("apple_diamond"));
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h * 3).saturation(s)
-        //        .effect(new EffectInstance(Effects.ABSORPTION, FIVESEC, 1), 1)//5 seconds is same as gold apple
-        .effect(new EffectInstance(Effects.HASTE, ONEMIN, 2), 1)
-        .effect(new EffectInstance(Effects.LUCK, ONEMIN, 1), 1)
-        .effect(new EffectInstance(Effects.SLOW_FALLING, ONEMIN, 1), 1)
+        .effect(new EffectInstance(Effects.HASTE, SMALLPOT, 2), 1)
+        .effect(new EffectInstance(Effects.LUCK, SMALLPOT, 1), 1)
+        .effect(new EffectInstance(Effects.STRENGTH, SMALLPOT, 1), 1)
+        .effect(new EffectInstance(Effects.SLOW_FALLING, SMALLPOT, 1), 1)
         .fastToEat().setAlwaysEdible()
         .build())).setRegistryName("apple_emerald"));
-    //TODO: tgest onItemUseFinish method, entityLiving.curePotionEffects(stack) just like milk
     r.register(new AppleChocolate(new Item.Properties().group(MaterialRegistry.itemgrp).food(new Food.Builder().hunger(h).saturation(s * 4)
         .fastToEat().setAlwaysEdible().build())).setRegistryName("apple_chocolate"));
-    if (ConfigManager.BOOMERANGS.get()) {
-      r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_stun"));
-      r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_carry"));
-      r.register(new BoomerangItem(Boomer.DAMAGE, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_damage"));
-    }
-    if (ConfigManager.SCAFFOLD.get()) {
-      r.register(new ItemScaffolding(BlockRegistry.scaffold_replace,
-          new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("scaffold_replace"));
-      r.register(new ItemScaffolding(BlockRegistry.scaffold_fragile,
-          new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("scaffold_fragile"));
-      r.register(new ItemScaffolding(BlockRegistry.scaffold_responsive,
-          new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("scaffold_responsive"));
-    }
-    if (ConfigManager.SPIKES.get()) {
-      r.register(new BlockItem(BlockRegistry.spikes_iron, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("spikes_iron"));
-      r.register(new BlockItem(BlockRegistry.spikes_curse, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("spikes_curse"));
-      r.register(new BlockItem(BlockRegistry.spikes_fire, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("spikes_fire"));
-    }
-    if (ConfigManager.CABLES.get()) {
-      r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("energy_pipe"));
-      r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("item_pipe"));
-      r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("fluid_pipe"));
-      r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("cable_wrench"));
-    }
-    if (ConfigManager.GLOVE.get()) {
-      r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("glove_climb"));
-    }
-    if (ConfigManager.CHARMS.get()) {
-      r.register(new FlippersItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("flippers"));
-      r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024 * 4)).setRegistryName("antigravity"));
-      r.register(new CharmVoid(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_void"));
-      r.register(new CharmAntidote(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_antidote"));
-      r.register(new CharmFire(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_fire"));
-      r.register(new CharmWither(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_wither"));
-      r.register(new CharmOverpowered(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("charm_ultimate"));
-    }
-    if (ConfigManager.CARROTS.get()) {
-      r.register(new ItemHorseEnder(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("carrot_ender"));
-      r.register(new ItemHorseHealthDiamondCarrot(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("diamond_carrot_health"));
-      r.register(new ItemHorseRedstoneSpeed(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("redstone_carrot_speed"));
-      r.register(new ItemHorseEmeraldJump(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_carrot_jump"));
-      r.register(new ItemHorseLapisVariant(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("lapis_carrot_variant"));
-      r.register(new ItemHorseToxic(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("toxic_carrot"));
-    }
-    if (ConfigManager.GEMGEAR.get()) {
-      r.register(new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("crystal_sword"));
-      r.register(new PickaxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_pickaxe"));
-      r.register(new AxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_axe"));
-      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_hoe"));
-      r.register(new ShovelItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_shovel"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_boots"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_helmet"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.CHEST, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_chestplate"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.LEGS, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_leggings"));
-      r.register(new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, EquipmentSlotType.HEAD, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("glowing_helmet"));
-    }
-    if (ConfigManager.EMERALD.get()) {
-      r.register(new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("emerald_sword"));
-      r.register(new PickaxeItem(MaterialRegistry.ToolMats.EMERALD, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_pickaxe"));
-      r.register(new AxeItem(MaterialRegistry.ToolMats.EMERALD, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_axe"));
-      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_hoe"));
-      r.register(new ShovelItem(MaterialRegistry.ToolMats.EMERALD, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_shovel"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.FEET, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_boots"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.HEAD, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_helmet"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.CHEST, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_chestplate"));
-      r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.LEGS, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_leggings"));
-    }
-    if (ConfigManager.SANDSTONE.get()) {
-      r.register(new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_sword"));
-      r.register(new PickaxeItem(MaterialRegistry.ToolMats.SANDSTONE, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_pickaxe"));
-      r.register(new AxeItem(MaterialRegistry.ToolMats.SANDSTONE, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_axe"));
-      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_hoe"));
-      r.register(new ShovelItem(MaterialRegistry.ToolMats.SANDSTONE, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_shovel"));
-    }
-    if (ConfigManager.NETHERBRICK.get()) {
-      r.register(new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_sword"));
-      r.register(new PickaxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_pickaxe"));
-      r.register(new AxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_axe"));
-      r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_hoe"));
-      r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_shovel"));
-    }
-    if (ConfigManager.HEARTS.get()) {
-      r.register(new HeartItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart"));
-      r.register(new HeartToxicItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart_empty"));
-    }
+    ////////////////////////////////////////
+    r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_stun"));
+    r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_carry"));
+    r.register(new BoomerangItem(Boomer.DAMAGE, new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("boomerang_damage"));
+    r.register(new ItemScaffolding(BlockRegistry.scaffold_replace, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("scaffold_replace"));
+    r.register(new ItemScaffolding(BlockRegistry.scaffold_fragile, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("scaffold_fragile"));
+    r.register(new ItemScaffolding(BlockRegistry.scaffold_responsive, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("scaffold_responsive"));
+    r.register(new BlockItem(BlockRegistry.spikes_iron, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("spikes_iron"));
+    r.register(new BlockItem(BlockRegistry.spikes_curse, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("spikes_curse"));
+    r.register(new BlockItem(BlockRegistry.spikes_fire, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("spikes_fire"));
+    r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("energy_pipe"));
+    r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("item_pipe"));
+    r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("fluid_pipe"));
+    r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("cable_wrench"));
+    r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("glove_climb"));
+    r.register(new FlippersItem(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("flippers"));
+    r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024 * 4)).setRegistryName("antigravity"));
+    r.register(new CharmVoid(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_void"));
+    r.register(new CharmAntidote(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_antidote"));
+    r.register(new CharmFire(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_fire"));
+    r.register(new CharmWither(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(64)).setRegistryName("charm_wither"));
+    r.register(new CharmOverpowered(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(256)).setRegistryName("charm_ultimate"));
+    r.register(new ItemHorseEnder(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("carrot_ender"));
+    r.register(new ItemHorseHealthDiamondCarrot(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("diamond_carrot_health"));
+    r.register(new ItemHorseRedstoneSpeed(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("redstone_carrot_speed"));
+    r.register(new ItemHorseEmeraldJump(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_carrot_jump"));
+    r.register(new ItemHorseLapisVariant(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("lapis_carrot_variant"));
+    r.register(new ItemHorseToxic(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("toxic_carrot"));
+    r.register(new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("crystal_sword"));
+    r.register(new PickaxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_pickaxe"));
+    r.register(new AxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_axe"));
+    r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_hoe"));
+    r.register(new ShovelItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_shovel"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_boots"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_helmet"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.CHEST, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_chestplate"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlotType.LEGS, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("crystal_leggings"));
+    r.register(new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, EquipmentSlotType.HEAD, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("glowing_helmet"));
+    r.register(new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("emerald_sword"));
+    r.register(new PickaxeItem(MaterialRegistry.ToolMats.EMERALD, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_pickaxe"));
+    r.register(new AxeItem(MaterialRegistry.ToolMats.EMERALD, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_axe"));
+    r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_hoe"));
+    r.register(new ShovelItem(MaterialRegistry.ToolMats.EMERALD, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_shovel"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.FEET, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_boots"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.HEAD, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_helmet"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.CHEST, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_chestplate"));
+    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlotType.LEGS, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("emerald_leggings"));
+    r.register(new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_sword"));
+    r.register(new PickaxeItem(MaterialRegistry.ToolMats.SANDSTONE, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_pickaxe"));
+    r.register(new AxeItem(MaterialRegistry.ToolMats.SANDSTONE, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_axe"));
+    r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_hoe"));
+    r.register(new ShovelItem(MaterialRegistry.ToolMats.SANDSTONE, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("sandstone_shovel"));
+    r.register(new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_sword"));
+    r.register(new PickaxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 1, -2.8F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_pickaxe"));
+    r.register(new AxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_axe"));
+    r.register(new HoeItem(ItemTier.NETHERITE, -4, 0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_hoe"));
+    r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("netherbrick_shovel"));
+    r.register(new HeartItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart"));
+    r.register(new HeartToxicItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(16)).setRegistryName("heart_empty"));
   }
 }

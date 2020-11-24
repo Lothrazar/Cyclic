@@ -82,14 +82,16 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
     }
     Block block = bState.getBlock();
     if (block instanceof IPlantable || block instanceof IGrowable) {
-      if (block instanceof IGrowable &&
-          ((IGrowable) block).canGrow(world, current, bState, world.isRemote) == false) {
-        return;//its at full growth, stahp
+      IGrowable crop = ((IGrowable) block);
+      if (block instanceof IGrowable) {
+        if (crop.canGrow(world, current, bState, world.isRemote) == false
+            || crop.canUseBonemeal(world, world.rand, current, bState)) {
+          return;//its at full growth, stahp
+        }
       }
       try {//no need to literally increase internal growth numbers, just force more  update ticks 
         //        world.scheduleBlockUpdate(current, block, world.rand.nextInt(30) + 20, 1);
         if (!world.isRemote && world instanceof ServerWorld) {
-          ModCyclic.LOGGER.info(current + " triggered from TP " + block);
           block.randomTick(bState, (ServerWorld) world, current, world.rand);
           //          block.updateTick(world, current, bState, world.rand);
         }

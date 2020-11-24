@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.computer_shape",
+  "icon": "cyclic:computer_shape",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.computer_shape.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:computer_shape"
+    }
+  ]
+}

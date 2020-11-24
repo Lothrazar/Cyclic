@@ -1,0 +1,13 @@
+{
+    "variants": {
+        
+ "age=0": { "model": "cyclic:block/apple/apple_0" },
+ "age=1": { "model": "cyclic:block/apple/apple_1" },    
+ "age=2": { "model": "cyclic:block/apple/apple_2" },     
+ "age=3": { "model": "cyclic:block/apple/apple_3" },      
+ "age=4": { "model": "cyclic:block/apple/apple_4" },      
+ "age=5": { "model": "cyclic:block/apple/apple_5" },    
+ "age=6": { "model": "cyclic:block/apple/apple_6" },   
+ "age=7": { "model": "cyclic:block/apple/apple_7" }
+    }
+}

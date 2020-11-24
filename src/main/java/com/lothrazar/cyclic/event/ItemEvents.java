@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
+import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
@@ -104,7 +105,7 @@ public class ItemEvents {
     }
     else if (world.getBlockState(pos).getBlock() == BlockRegistry.flower_cyan) {
       event.setResult(Result.ALLOW);
-      if (world.rand.nextDouble() < 0.5)
+      if (world.rand.nextDouble() < 0.5)//TODO: config
         UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.flower_cyan));
     }
   }
@@ -113,7 +114,7 @@ public class ItemEvents {
   public void onBedCheck(SleepingLocationCheckEvent event) {
     if (event.getEntity() instanceof PlayerEntity) {
       PlayerEntity p = (PlayerEntity) event.getEntity();
-      if (p.getPersistentData().getBoolean("cyclic_sleeping")) {
+      if (p.getPersistentData().getBoolean("cyclic_sleeping")) { // TODO: const in sleeping mat
         event.setResult(Result.ALLOW);
       }
     }
@@ -158,6 +159,13 @@ public class ItemEvents {
       return;
     }
     World world = player.getEntityWorld();
+    ///////////// shape
+    if (held.getItem() instanceof ShapeCard && player.isCrouching()) {
+      BlockState target = world.getBlockState(event.getPos());
+      ShapeCard.setBlockState(held, target);
+      UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
+    }
+    ///////////////// builders
     if (held.getItem() instanceof BuilderItem) {
       if (BuilderActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
@@ -180,6 +188,7 @@ public class ItemEvents {
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
       }
     }
+    ////////////////////////// wrench
     if (held.getItem() instanceof CableWrench && WrenchActionType.getTimeout(held) == 0) {
       //mode 
       if (!world.isRemote) {

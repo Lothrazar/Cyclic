@@ -4,12 +4,14 @@
   "category": "cyclic:consume",
   "pages": [
     {
-      "type": "text",
-      "text": "item.cyclic.apple_emerald.guide"
+      "type": "spotlight",
+      "text": "item.cyclic.apple_emerald.guide",
+      "item": "cyclic:apple_emerald",
+      "link_recipe": true
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:apple_emerald"
+      "recipe": "cyclic:apple_sprout_emerald"
     }
   ]
 }

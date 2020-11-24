@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.List;
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
@@ -17,7 +17,7 @@ public class CommandHelp implements ICyclicCommand {
 
   @Override
   public boolean needsOp() {
-    return ConfigManager.COMMANDGETHELP.get();
+    return ConfigRegistry.COMMANDGETHELP.get();
   }
 
   @Override

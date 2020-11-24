@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.List;
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +15,7 @@ public class CommandHunger implements ICyclicCommand {
 
   @Override
   public boolean needsOp() {
-    return ConfigManager.COMMANDHUNGER.get();
+    return ConfigRegistry.COMMANDHUNGER.get();
   }
 
   @Override

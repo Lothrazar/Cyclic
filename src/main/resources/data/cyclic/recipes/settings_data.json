@@ -1,23 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ctc",
     "cac",
-    "ctc"
+    "cpc",
+    "cac"
   ],
   "key": {
     "a": {
-      "item": "minecraft:green_dye"
+      "tag": "forge:dyes/green"
     },
     "c": {
       "item": "minecraft:iron_nugget"
     },
-	"t": {
-		"item":"minecraft:stone_button"
+	"p": {
+		"item":"cyclic:carbon_paper"
 	}
   },
   "result": {
     "item": "cyclic:settings_data",
-    "count": 1
+    "count": 4
   }
 }

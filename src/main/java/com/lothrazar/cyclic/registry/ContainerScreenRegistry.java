@@ -160,7 +160,7 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":battery")
   public static ContainerType<ContainerBattery> batteryCont;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static ContainerType<ContainerItemCollector> collectortileContainer;
+  public static ContainerType<ContainerItemCollector> collector;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static ContainerType<ContainerGenerator> generatorCont;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")

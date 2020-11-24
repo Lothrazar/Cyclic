@@ -175,140 +175,6 @@ public class UtilRender {
       builder.addVertexData(matrixEntry, bakedquad, r, g, b, alpha, combinedLights, combinedOverlay);
     }
   }
-  //
-  //  public static class LaserConfig {
-  //
-  //    public static final int MAX_TIMER = 100;
-  //
-  //    public LaserConfig(BlockPos first, BlockPos second,
-  //        double rotationTime, float alpha, double beamWidth, float[] color) {
-  //      this.first = first;
-  //      this.second = second;
-  //      this.rotationTime = rotationTime;
-  //      this.alpha = alpha;
-  //      this.beamWidth = beamWidth;
-  //      this.color = color;
-  //    }
-  //
-  //    BlockPos first;
-  //    BlockPos second;
-  //    double rotationTime;
-  //    float alpha;
-  //    double beamWidth;
-  //    float[] color;
-  //    public int timer = LaserConfig.MAX_TIMER;
-  //    public OffsetEnum xOffset = OffsetEnum.CENTER;
-  //    public OffsetEnum yOffset = OffsetEnum.CENTER;
-  //    public OffsetEnum zOffset = OffsetEnum.CENTER;
-  //
-  //    @Override
-  //    public String toString() {
-  //      return second + " : " + first;
-  //    }
-  //  }
-  //
-  //  public static final int MAX_LIGHT_X = 0xF000F0;
-  //  public static final int MAX_LIGHT_Y = MAX_LIGHT_X;
-  //
-  //  @OnlyIn(Dist.CLIENT)
-  //  public static void renderLaser(LaserConfig conf, MatrixStack matrixStack) {
-  //    if (conf.first == null || conf.second == null) {
-  //      return;
-  //    }
-  //    double offsetX = conf.xOffset.getOffset();
-  //    double offsetY = conf.yOffset.getOffset();
-  //    double offsetZ = conf.zOffset.getOffset();
-  //    UtilRender.renderLaser(
-  //        conf.first.getX() + offsetX, conf.first.getY() + offsetY, conf.first.getZ() + offsetZ,
-  //        conf.second.getX() + offsetX, conf.second.getY() + offsetY, conf.second.getZ() + offsetZ,
-  //        conf.rotationTime, conf.alpha, conf.beamWidth, conf.color, conf.timer, matrixStack);
-  //  }
-  //I got this function from ActuallyAdditions by Ellpeck 
-  // source https://github.com/Ellpeck/ActuallyAdditions/blob/08d0e8b7fb463054e3f392ddbb2a2ca2e2877000/src/main/java/de/ellpeck/actuallyadditions/mod/util/AssetUtil.java#L257
-  // who in turn left their source where they got it, copied verabitm: 
-  //Thanks to feldim2425 for this.
-  //I can't do rendering code. Ever.
-  //  @OnlyIn(Dist.CLIENT)
-  //  public static void renderLaser(double firstX, double firstY, double firstZ,
-  //      double secondX, double secondY, double secondZ,
-  //      double rotationTime, float alpha, double beamWidth, float[] color, double timer, MatrixStack matrixStack) {
-  //    Tessellator tessy = Tessellator.getInstance();
-  //    BufferBuilder buffer = tessy.getBuffer();
-  //    World world = Minecraft.getInstance().world;
-  //    float r = color[0];
-  //    float g = color[1];
-  //    float b = color[2];
-  //    Vector3d vecFirst = new Vector3d(firstX, firstY, firstZ);
-  //    Vector3d vecSecond = new Vector3d(secondX, secondY, secondZ);
-  //    Vector3d combinedVec = vecSecond.subtract(vecFirst);
-  //    //    world.getGameTime()getTotalWorldTime
-  //    double rot = rotationTime > 0 ? (360D * ((world.getGameTime() % rotationTime) / rotationTime)) : 0;
-  //    double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z));
-  //    double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
-  //    float length = (float) combinedVec.length();
-  //    length = (float) (length * (timer / (LaserConfig.MAX_TIMER * 1.0F)));
-  //    RenderSystem.pushMatrix();
-  //    RenderSystem.rotatef((float) (180 * yaw / Math.PI), 0, 1, 0);
-  //    RenderSystem.rotatef((float) (180 * pitch / Math.PI), 0, 0, 1);
-  //    RenderSystem.rotatef((float) rot, 1, 0, 0);
-  //    PlayerEntity player = ModCyclic.proxy.getClientPlayer();
-  //    ActiveRenderInfo renderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
-  //    double staticPlayerX = player.lastTickPosX;
-  //    double staticPlayerY = player.lastTickPosY;
-  //    double staticPlayerZ = player.lastTickPosZ;
-  //    staticPlayerX = renderInfo.getProjectedView().getX();
-  //    staticPlayerY = renderInfo.getProjectedView().getY();
-  //    staticPlayerZ = renderInfo.getProjectedView().getZ();
-  //    //    RenderSystem.translated(firstX - staticPlayerX, firstY - staticPlayerY, firstZ - staticPlayerZ);
-  //    //    
-  //    //    
-  //    //    
-  //    matrixStack.push(); // push
-  //    matrixStack.translate(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ); // translate back to camera
-  //    Matrix4f matrix4f = matrixStack.getLast().getMatrix(); // get final transformation matrix, handy to get yaw+pitch transformation
-  //    RenderSystem.multMatrix(matrix4f);
-  //    //    RenderSystem.translated(secondX - staticPlayerX, secondY - staticPlayerY, secondZ - staticPlayerZ);
-  //    //    GL11.glTranslated(staticPlayerX, staticPlayerY, staticPlayerZ);
-  //    //        RenderSystem.translated(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
-  //    RenderSystem.disableTexture();
-  //    //    RenderSystem.disableTexture2D();
-  //    RenderSystem.disableLighting();
-  //    RenderSystem.enableBlend();
-  //    RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
-  //    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-  //    //    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-  //    for (double i = 0; i < 4; i++) {//four corners of the quad
-  //      float width = (float) (beamWidth * (i / 4.0F));
-  //      // pos == .pos
-  //      //          tex == .tex// for UR
-  //      //func_227885_a_ == color
-  //      // .lightmap(MAX_LIGHT_X, MAX_LIGHT_Y) ==  I DONT KNOW maybe tex(MAX_LIGHT_X, MAX_LIGHT_Y).
-  //      buffer.pos(length, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(length, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(length, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(length, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(length, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(length, width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(length, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, -width, width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(0, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //      buffer.pos(length, -width, -width).lightmap(0, 0).color(r, g, b, alpha).endVertex();
-  //    }
-  //    tessy.draw();
-  //    matrixStack.pop(); // pop
-  //    RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-  //    RenderSystem.disableBlend();
-  //    RenderSystem.enableLighting();
-  //    RenderSystem.disableTexture();
-  //    //    RenderSystem.enableTexture2D();
-  //    RenderSystem.popMatrix();
-  //  }
 
   /**
    * Used for in-world fluid rendering Source reference from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x
@@ -449,14 +315,14 @@ public class UtilRender {
   }
 
   /**
-   * Used by fluid TESRs
+   * Used by TESRs
    * 
    */
   public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix, float scale, Color color) {
     //    IRenderTypeBuffer.getImpl(ibuffer);
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    World world = ModCyclic.proxy.getClientWorld();
+    // World world = ModCyclic.proxy.getClientWorld();
     matrix.push();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;
@@ -494,12 +360,20 @@ public class UtilRender {
     return (BlockRayTraceResult) player.pick(range, 0F, false);
   }
 
+  /**
+   * for ITEMS held by the PLAYER rendering cubes in world
+   * 
+   * @param evt
+   * @param coords
+   * @param alpha
+   */
   @OnlyIn(Dist.CLIENT)
   public static void renderColourCubes(RenderWorldLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
     PlayerEntity player = ModCyclic.proxy.getClientPlayer();
     if (player == null) {
       return;
     }
+    float scale = 1.01F;
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
     Vector3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
@@ -512,7 +386,7 @@ public class UtilRender {
       matrix.push();
       matrix.translate(posCurr.getX(), posCurr.getY(), posCurr.getZ());
       matrix.translate(-0.005f, -0.005f, -0.005f);
-      matrix.scale(1.01f, 1.01f, 1.01f);
+      matrix.scale(scale, scale, scale);
       matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
       UtilRender.renderCube(matrix.getLast().getMatrix(), builder, posCurr, coords.get(posCurr), alpha);
       matrix.pop();

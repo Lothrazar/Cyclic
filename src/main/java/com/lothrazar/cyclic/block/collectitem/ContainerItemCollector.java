@@ -17,7 +17,7 @@ public class ContainerItemCollector extends ContainerBase {
   TileItemCollector tile;
 
   public ContainerItemCollector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.collectortileContainer, windowId);
+    super(ContainerScreenRegistry.collector, windowId);
     tile = (TileItemCollector) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = new InvWrapper(playerInventory);
@@ -34,6 +34,7 @@ public class ContainerItemCollector extends ContainerBase {
       }
     });
     layoutPlayerInventorySlots(8, 84);
+    this.trackAllIntFields(tile, TileItemCollector.Fields.values().length);
   }
 
   @Override

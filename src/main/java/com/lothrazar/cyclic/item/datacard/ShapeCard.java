@@ -2,10 +2,21 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.data.BuildShape;
+import com.lothrazar.cyclic.data.RelativeShape;
+import com.lothrazar.cyclic.item.builder.BuilderActionType;
+import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilPlayer;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -21,14 +32,23 @@ public class ShapeCard extends ItemBase {
     super(properties);
   }
 
+  public static void setBlockState(ItemStack wand, BlockState target) {
+    CompoundNBT encoded = NBTUtil.writeBlockState(target);
+    wand.getOrCreateTag().put(BuilderActionType.NBTBLOCKSTATE, encoded);
+  }
+
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    BuildShape shape = BuildShape.read(stack);
+    RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
-      tooltip.add(new TranslationTextComponent(
-          getTranslationKey() + ".count"
-              + shape.getCount()));
+      tooltip.add(new TranslationTextComponent(getTranslationKey() + ".count" + shape.getCount()));
+      BlockState target = BuilderActionType.getBlockState(stack);
+      String block = "scepter.cyclic.nothing";
+      if (target != null) {
+        block = target.getBlock().getTranslationKey();
+      }
+      tooltip.add(new TranslationTextComponent(TextFormatting.AQUA + UtilChat.lang(block)));
       if (flagIn.isAdvanced()) {
         //        String side = "S: " + dim.getSide().toString().toUpperCase();
         //        tooltip.add(new TranslationTextComponent(side));
@@ -42,5 +62,51 @@ public class ShapeCard extends ItemBase {
       t.mergeStyle(TextFormatting.GRAY);
       tooltip.add(t);
     }
+  }
+
+  @Override
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    ItemStack stack = player.getHeldItem(hand);
+    RelativeShape shape = RelativeShape.read(stack);
+    if (shape != null) {
+      BlockState targetState = BuilderActionType.getBlockState(stack);
+      if (targetState != null) {
+        final BlockPos centerPos = player.getPosition();
+        //        Direction side = context.getFace(); 
+        BlockPos posBuild = null;
+        for (BlockPos s : shape.getShape()) {
+          posBuild = centerPos.add(s);
+          if (World.isOutsideBuildHeight(posBuild) || !world.isAirBlock(posBuild)) {
+            //if outside, or not air, then continue
+            continue;
+          }
+          int slot = -1;
+          if (!player.isCreative()) {
+            //not creative
+            slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
+            if (slot < 0) {
+              //cannot find material
+              ModCyclic.LOGGER.info("not creative, no mats " + posBuild);
+              UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.empty");
+              break;//stop looping
+            }
+          }
+          //     TODO:      success = UtilPlaceBlocks.placeStateSafe(world, player, cworld);
+          if (world.setBlockState(posBuild, targetState, 1)) {
+            //
+            ModCyclic.LOGGER.info("  build at" + posBuild);
+            UtilPlayer.decrStackSize(player, slot);
+          }
+        }
+      }
+      else {// no state selected
+        UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.state");
+      }
+    }
+    else {
+      UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.nothing");
+    }
+    player.swingArm(hand);
+    return super.onItemRightClick(world, player, hand);
   }
 }

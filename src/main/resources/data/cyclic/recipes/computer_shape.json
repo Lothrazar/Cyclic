@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ipi",
+    "fof",
+    "ipi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:redstone_block"
+    },
+    "p": {
+      "item": "minecraft:furnace"
+    },
+    "f": {
+      "item": "cyclic:fan"
+    },
+    "o": {
+      "item": "minecraft:observer"
+    }
+  },
+  "result": {
+    "item": "cyclic:computer_shape",
+    "count": 1
+  }
+}

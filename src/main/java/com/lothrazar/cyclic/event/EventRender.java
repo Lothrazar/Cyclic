@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
+import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilRender;
@@ -44,7 +46,7 @@ public class EventRender {
   //    int posZ = (int) mc.player.lastTickPosZ;
   //    mc.fontRenderer.drawString(event.getMatrixStack(), "Hello world!", width / 2, height / 2, 0xFFFFFF);
   //  }
-  //  @OnlyIn(Dist.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
     //
@@ -122,6 +124,18 @@ public class EventRender {
             loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world)))
           //    TODO: null dimensions test.  but if its saved and equal then ok 
           mappos.put(loc.getPos(), Color.BLUE);
+      }
+    }
+    ///////////////////////////////////////ShapeCard
+    if (stack.getItem() instanceof ShapeCard) {
+      RelativeShape shape = RelativeShape.read(stack);
+      if (shape != null) {
+        BlockPos here = player.getPosition();
+        //TODO: offsetTo
+        //        shape.offsetTo(pos)
+        for (BlockPos s : shape.getShape()) {
+          mappos.put(here.add(s), Color.ORANGE);
+        }
       }
     }
     // other items added here

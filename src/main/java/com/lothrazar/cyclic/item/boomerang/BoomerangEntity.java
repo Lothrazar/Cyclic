@@ -262,12 +262,12 @@ public class BoomerangEntity extends ProjectileItemEntity {
     if (owner == entityHit) {
       //player catch it on return 
       dropAsItem();
-      //      ModCyclic.LOGGER.info("Drop by catching ");
       return;
     }
     switch (this.boomerangType) {
       case CARRY:
-        entityHit.startRiding(this);
+        if (!entityHit.world.isRemote)
+          entityHit.startRiding(this);
       break;
       case DAMAGE:
         if (entityHit instanceof LivingEntity) {

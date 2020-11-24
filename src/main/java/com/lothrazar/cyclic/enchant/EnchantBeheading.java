@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import java.util.Map;
-import com.lothrazar.cyclic.ConfigManager;
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
@@ -88,7 +88,7 @@ public class EnchantBeheading extends EnchantBase {
       String key = target.getType().getRegistryName().toString();
       ////we allow all these, which include config, to override the vanilla skulls below
       //first do my wacky class mapping// TODO delete and go to minecraft:blah
-      Map<String, String> mappedBeheading = ConfigManager.getMappedBeheading();
+      Map<String, String> mappedBeheading = ConfigRegistry.getMappedBeheading();
       if (mappedBeheading.containsKey(key)) {
         UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mappedBeheading.get(key)));
       }

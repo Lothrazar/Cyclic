@@ -34,6 +34,9 @@ public class EnchantXp extends EnchantBase {
 
   @SubscribeEvent
   public void handleEntityDropEvent(LivingExperienceDropEvent event) {
+    if (event.getAttackingPlayer() == null) {
+      return;
+    }
     int level = getCurrentLevelTool(event.getAttackingPlayer().getHeldItemMainhand());
     if (level <= 0) {
       return;

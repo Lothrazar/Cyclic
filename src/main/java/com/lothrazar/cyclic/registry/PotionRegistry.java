@@ -33,30 +33,36 @@ public class PotionRegistry {
   @SubscribeEvent
   public static void onPotEffectRegistry(RegistryEvent.Register<Effect> event) {
     IForgeRegistry<Effect> r = event.getRegistry();
-    register(r, new StunEffect(EffectType.HARMFUL, 0xcccc00), "stun");
-    register(r, new SwimEffect(EffectType.BENEFICIAL, 0x663300), "swimspeed");
+    PotionEffects.stun = register(r, new StunEffect(EffectType.HARMFUL, 0xcccc00), "stun");
+    PotionEffects.swimspeed = register(r, new SwimEffect(EffectType.BENEFICIAL, 0x663300), "swimspeed");
   }
 
-  private static void register(IForgeRegistry<Effect> r, TickableEffect pot, String name) {
+  private static TickableEffect register(IForgeRegistry<Effect> r, TickableEffect pot, String name) {
     pot.setRegistryName(new ResourceLocation(ModCyclic.MODID, name));
     r.register(pot);
     PotionEffects.effects.add(pot);
+    return pot;
   }
 
   @SubscribeEvent
   public static void onPotRegistry(RegistryEvent.Register<Potion> event) {
     IForgeRegistry<Potion> r = event.getRegistry();
+    //TODO: config options for potions?
     r.register(new Potion(ModCyclic.MODID + "_haste", new EffectInstance(Effects.HASTE, 3600)).setRegistryName(ModCyclic.MODID + ":haste"));
     r.register(new Potion(ModCyclic.MODID + "_strong_haste", new EffectInstance(Effects.HASTE, 1800, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste"));
     r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(PotionEffects.stun, 1800)).setRegistryName(ModCyclic.MODID + ":stun"));
     r.register(new Potion(ModCyclic.MODID + "_swimspeed", new EffectInstance(PotionEffects.swimspeed, 3600)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
-    //
-    //    Effects.ABSORPTION
     //    Effects.LEVITATION
+    //    Effects.WITHER
+    //    Effects.HUNGER 
+    //    Effects.BLINDNESS
+    //    Effects.DOLPHINS_GRACE 
+    //    Effects.GLOWING 
   }
 
   public static class PotionEffects {
 
+    //for events
     public static final List<TickableEffect> effects = new ArrayList<TickableEffect>();
     @ObjectHolder(ModCyclic.MODID + ":stun")
     public static TickableEffect stun;

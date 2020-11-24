@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.ConfigManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -14,8 +13,6 @@ public class LootModifierRegistry {
 
   @SubscribeEvent
   public static void registerModifierSerializers(@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-    if (ConfigManager.ENCHANTMENTS.get()) {
-      event.getRegistry().register(new EnchantAutoSmelt.Serializer().setRegistryName(ModCyclic.MODID + ":auto_smelt"));
-    }
+    event.getRegistry().register(new EnchantAutoSmelt.Serializer().setRegistryName(ModCyclic.MODID + ":auto_smelt"));
   }
 }
