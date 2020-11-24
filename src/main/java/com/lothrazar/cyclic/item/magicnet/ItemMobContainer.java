@@ -50,16 +50,18 @@ public class ItemMobContainer extends ItemBase {
       pos = pos.offset(context.getFace());
     }
     World world = context.getWorld();
-    Entity entity = ForgeRegistries.ENTITIES.getValue(
-        new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
-        .create(world);
-    //    entity.egg
-    entity.read(stack.getTag());
-    entity.setPosition(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
-    if (world.addEntity(entity)) {
-      stack.setTag(null);
-      stack.shrink(1);
-      return ActionResultType.SUCCESS;
+    if (!world.isRemote) {
+      Entity entity = ForgeRegistries.ENTITIES.getValue(
+              new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
+              .create(world);
+      //    entity.egg
+      entity.read(stack.getTag());
+      entity.setPosition(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
+      if (world.addEntity(entity)) {
+        stack.setTag(null);
+        stack.shrink(1);
+        return ActionResultType.SUCCESS;
+      }
     }
     return ActionResultType.PASS;
   }
