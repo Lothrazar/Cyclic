@@ -92,6 +92,9 @@ public class EnchantExcavation extends EnchantBase {
     if (level <= 0) {
       return;
     }
+    //don't fire if the tool is not capable of breaking the block (ie stone pickaxe on diamond ore)
+    if (!stackHarvestingWith.canHarvestBlock(event.getState()))
+      return;
     // if I am using an axe on stone or dirt, doesn't trigger
     boolean isAnySingleOk = false;//if i am a tool valid on 2 things, and both of 2 blocks are present, we are just ok
     for (ToolType type : stackHarvestingWith.getItem().getToolTypes(stackHarvestingWith)) {
