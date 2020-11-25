@@ -31,7 +31,7 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
     energy.guiTop = guiTop;
     int x = guiLeft + 132, y = guiTop + 8;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
-      container.tile.setFlowing((container.getFlowing() + 1) % 2);
+      container.tile.setFlowing((container.tile.getFlowing() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TilePeatGenerator.Fields.FLOWING.ordinal(), container.tile.getFlowing(), container.tile.getPos()));
     }));
     x = guiLeft + 8;
@@ -44,13 +44,13 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.getFlowing()));
-    btnToggle.setTextureId(container.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
+    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.tile.getFlowing()));
+    btnToggle.setTextureId(container.tile.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
     btnRedstone.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
@@ -60,6 +60,6 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, xSize / 2 - 9, 28);
-    energy.draw(ms, container.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
   }
 }

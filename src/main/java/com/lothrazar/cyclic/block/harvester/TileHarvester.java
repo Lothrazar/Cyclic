@@ -65,6 +65,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;

@@ -99,6 +99,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }

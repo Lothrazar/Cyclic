@@ -105,6 +105,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
 
   @Override
   public void tick() {
+    this.syncEnergy();
     this.init();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);

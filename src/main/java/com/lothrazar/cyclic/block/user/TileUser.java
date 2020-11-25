@@ -55,6 +55,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }

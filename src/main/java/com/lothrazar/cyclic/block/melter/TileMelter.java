@@ -57,6 +57,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
 
   @Override
   public void tick() {
+    this.syncEnergy();
     IEnergyStorage en = this.energy.orElse(null);
     if (en == null) {
       return;

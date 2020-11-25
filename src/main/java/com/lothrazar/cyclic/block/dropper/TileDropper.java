@@ -54,6 +54,7 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;

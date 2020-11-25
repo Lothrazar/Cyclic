@@ -395,8 +395,9 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     }
   }
 
-  public void syncEnergy() {
-    if (world.isRemote == false) {//if serverside then 
+  //fluid tanks have 'onchanged', energy caps do not
+  protected void syncEnergy() {
+    if (world.isRemote == false && world.getGameTime() % 20 == 0) {//if serverside then 
       IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
       if (energ != null)
         PacketRegistry.sendToAllClients(this.getWorld(), new PacketEnergySync(this.getPos(), energ.getEnergyStored()));

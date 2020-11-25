@@ -193,6 +193,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }

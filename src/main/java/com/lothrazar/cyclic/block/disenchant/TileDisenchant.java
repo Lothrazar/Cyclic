@@ -53,6 +53,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }

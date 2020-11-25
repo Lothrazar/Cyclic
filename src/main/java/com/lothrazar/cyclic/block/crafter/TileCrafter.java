@@ -111,8 +111,10 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
-    if (world.isRemote)
+    this.syncEnergy();
+    if (world.isRemote) {
       return;
+    }
     IEnergyStorage en = this.energy.orElse(null);
     IItemHandler inputHandler = this.input.orElse(null);
     IItemHandler previewHandler = this.preview.orElse(null);

@@ -61,6 +61,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;

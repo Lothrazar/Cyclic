@@ -80,6 +80,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;

@@ -8,8 +8,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -30,14 +28,6 @@ public class ContainerGenerator extends ContainerBase {
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
     this.trackAllIntFields(tile, TilePeatGenerator.Fields.values().length);
-  }
-
-  int getFlowing() {
-    return tile.getFlowing();
-  }
-
-  public int getEnergy() {
-    return tile.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override

@@ -128,6 +128,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;

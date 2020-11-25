@@ -64,6 +64,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void tick() {
+    this.syncEnergy();
     IEnergyStorage en = this.energyWrapper.orElse(null);
     if (en == null) {
       return;

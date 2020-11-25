@@ -36,6 +36,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public void tick() {
+    this.syncEnergy();
     this.tickDownIncomingPowerFaces();
     this.tickCableFlow();
   }

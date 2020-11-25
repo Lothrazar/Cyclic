@@ -69,6 +69,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
 
   @Override
   public void tick() {
+    this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       this.setLitProperty(false);
       return;
