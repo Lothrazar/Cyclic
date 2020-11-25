@@ -15,7 +15,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import static net.minecraft.block.BeehiveBlock.dropHoneyComb;
 
 public class ShearsMaterial extends ShearsItem {

@@ -6,7 +6,7 @@
   ],
   "key": {
     "l": {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     },
     "r": {
       "item": "minecraft:red_wool"

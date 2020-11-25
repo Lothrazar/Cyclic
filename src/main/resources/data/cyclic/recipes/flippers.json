@@ -10,7 +10,7 @@
       "item": "minecraft:clay_ball"
     },
     "b": {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     }
   },
   "result": {

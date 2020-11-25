@@ -13,7 +13,7 @@
       "item": "minecraft:flint"
     },
     "s": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     }
   },
   "result": {

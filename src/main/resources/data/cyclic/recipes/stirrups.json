@@ -13,7 +13,7 @@
       "item": "minecraft:lead"
     },
     "l": {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     }
   },
   "result": {

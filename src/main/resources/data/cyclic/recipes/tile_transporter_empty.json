@@ -10,10 +10,10 @@
       "item": "minecraft:clay"
     },
     "s": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "l": {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     }
   },
   "result": {
