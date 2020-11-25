@@ -151,9 +151,9 @@ public class UtilShape {
   public static List<BlockPos> getShape(AxisAlignedBB ab, int y) {
     List<BlockPos> shape = new ArrayList<>();
     int xMin = (int) ab.minX;
-    int xMax = (int) ab.maxX;
+    int xMax = (int) ab.maxX - 1;
     int zMin = (int) ab.minZ;
-    int zMax = (int) ab.maxZ;
+    int zMax = (int) ab.maxZ - 1;
     for (int x = xMin; x <= xMax; x++) {
       shape.add(new BlockPos(x, y, zMin));
       shape.add(new BlockPos(x, y, zMax));

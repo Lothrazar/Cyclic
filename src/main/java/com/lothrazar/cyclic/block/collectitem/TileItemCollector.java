@@ -112,7 +112,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
 
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), radius + 1);
+    return this.getPos().offset(this.getCurrentFacing(), radius);
   }
 
   public List<BlockPos> getShape() {
