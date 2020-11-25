@@ -36,6 +36,9 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public void tick() {
+    if (this.world.isRemote) {
+      return;//important to not desync cables
+    }
     this.tickDownIncomingPowerFaces();
     this.tickCableFlow();
   }
