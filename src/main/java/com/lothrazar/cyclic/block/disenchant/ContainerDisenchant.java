@@ -28,8 +28,8 @@ public class ContainerDisenchant extends ContainerBase {
       addSlot(new SlotItemHandler(h, 2, 124, 40));
     });
     layoutPlayerInventorySlots(8, 84);
-    this.trackAllIntFields(tile, TileDisenchant.Fields.values().length);
     trackEnergy(tile);
+    this.trackAllIntFields(tile, TileDisenchant.Fields.values().length);
   }
 
   @Override

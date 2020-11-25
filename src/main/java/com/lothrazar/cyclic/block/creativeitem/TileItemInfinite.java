@@ -89,4 +89,9 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
 
   @Override
   public void setField(int field, int value) {}
+
+  @Override
+  public int getField(int field) {
+    return 0;
+  }
 }

@@ -104,7 +104,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       case RENDER:
         return this.render;
     }
-    return super.getField(field);
+    return 0;
   }
 
   private IEnergyStorage createEnergy() {

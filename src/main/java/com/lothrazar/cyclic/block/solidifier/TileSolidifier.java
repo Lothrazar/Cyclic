@@ -119,7 +119,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       case RENDER:
         return this.render;
     }
-    return super.getField(field);
+    return 0;
   }
 
   @Override

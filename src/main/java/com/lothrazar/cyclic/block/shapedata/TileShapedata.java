@@ -237,7 +237,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
       case STASH:
         return hasStashIfOne;
     }
-    return super.getField(field);
+    return 0;
   }
 
   @Override

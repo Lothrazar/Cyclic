@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -31,30 +30,6 @@ public class ContainerGenerator extends ContainerBase {
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
     this.trackAllIntFields(tile, TilePeatGenerator.Fields.values().length);
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return tile.getBurnTime();
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setBurnTime(value);
-      }
-    });
-    trackInt(new IntReferenceHolder() {
-
-      @Override
-      public int get() {
-        return getFlowing();
-      }
-
-      @Override
-      public void set(int value) {
-        tile.setFlowing(value);
-      }
-    });
   }
 
   int getFlowing() {

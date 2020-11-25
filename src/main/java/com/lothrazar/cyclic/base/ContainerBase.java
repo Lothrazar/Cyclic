@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.base;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
@@ -34,14 +35,21 @@ public abstract class ContainerBase extends Container {
 
       @Override
       public void set(int value) {
+        if (value < 0) {
+          ModCyclic.LOGGER.info(tile + " Where did this bad value come from " + value);
+          return;
+        }
         if (tile.getWorld().isRemote) {//set energy on client when syncing from server (not the other way around)
           //          //tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h)
+          ModCyclic.LOGGER.info(tile + " client trying to sync energy " + value);
           IEnergyStorage en = tile.getCapability(CapabilityEnergy.ENERGY).orElse(null);
           if (en != null && en instanceof CustomEnergyStorage) {
             //i think this was causing out of bounds errors?
             ((CustomEnergyStorage) en).setEnergy(value);
           }
         }
+        else
+          ModCyclic.LOGGER.info(tile + " server trying to sync energy? " + value);
       }
     });
   }

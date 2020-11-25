@@ -27,4 +27,9 @@ public class TileWirelessRec extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public void setField(int field, int value) {}
+
+  @Override
+  public int getField(int field) {
+    return 0;
+  }
 }

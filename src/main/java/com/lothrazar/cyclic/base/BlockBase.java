@@ -73,6 +73,7 @@ public abstract class BlockBase extends Block {
       if (!world.isRemote) {
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof INamedContainerProvider) {
+          tileEntity.markDirty();
           NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
         }
         else {

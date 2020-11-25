@@ -6,6 +6,9 @@ import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.net.PacketEnergySync;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilFluid;
@@ -264,6 +267,9 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   protected void moveEnergy(Direction myFacingDir, int quantity) {
+    if (this.world.isRemote) {
+      return;//important to not desync cables
+    }
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
     if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
       return;
@@ -316,9 +322,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public abstract void setField(int field, int value);
 
-  public int getField(int field) {
-    return 0;
-  }
+  public abstract int getField(int field);
 
   public void setNeedsRedstone(int value) {
     this.needsRedstone = value % 2;
@@ -382,5 +386,20 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public int getEnergy() {
     return this.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+  }
+
+  public void setEnergy(int value) {
+    IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+    if (energ != null && energ instanceof CustomEnergyStorage) {
+      ((CustomEnergyStorage) energ).setEnergy(value);
+    }
+  }
+
+  public void syncEnergy() {
+    if (world.isRemote == false) {//if serverside then 
+      IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+      if (energ != null)
+        PacketRegistry.sendToAllClients(this.getWorld(), new PacketEnergySync(this.getPos(), energ.getEnergyStored()));
+    }
   }
 }

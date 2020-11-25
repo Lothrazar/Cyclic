@@ -128,4 +128,9 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
 
   @Override
   public void setField(int field, int value) {}
+
+  @Override
+  public int getField(int field) {
+    return 0;
+  }
 }

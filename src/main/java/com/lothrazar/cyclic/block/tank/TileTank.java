@@ -59,6 +59,11 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
   public void setField(int field, int value) {}
 
   @Override
+  public int getField(int field) {
+    return 0;
+  }
+
+  @Override
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
   }

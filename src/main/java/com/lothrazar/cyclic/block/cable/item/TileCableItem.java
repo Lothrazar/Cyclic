@@ -145,4 +145,9 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void setField(int field, int value) {}
+
+  @Override
+  public int getField(int field) {
+    return 0;
+  }
 }

@@ -188,7 +188,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       case RENDER:
         return this.render;
     }
-    return super.getField(field);
+    return 0;
   }
 
   @Override

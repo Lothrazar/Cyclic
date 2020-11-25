@@ -33,7 +33,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TilePeatGenerator extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static enum Fields {
-    FLOWING, REDSTONE, RENDER;
+    FLOWING, REDSTONE, RENDER, BURNTIME;
   }
 
   private static final int BURNTIME = 40;
@@ -119,7 +119,8 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
         ItemStack stack = h.getStackInSlot(0);
         if (stack.getItem() instanceof PeatItem) {
           PeatItem peat = (PeatItem) stack.getItem();
-          if (energyActual.getEnergyStored() + peat.getPeatFuelValue() > energyActual.getMaxEnergyStored()) {
+          int futureValue = energyActual.getEnergyStored() + peat.getPeatFuelValue() * BURNTIME;
+          if (futureValue > energyActual.getMaxEnergyStored()) {
             //not enough room for even 1 tick, dont eat the item
             return;
           }
@@ -192,6 +193,26 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       case RENDER:
         render = value % 2;
       break;
+      case BURNTIME:
+        this.setBurnTime(value);
+      break;
+      default:
+      break;
     }
+  }
+
+  @Override
+  public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case FLOWING:
+        return flowing;
+      case REDSTONE:
+        return this.needsRedstone;
+      case RENDER:
+        return render;
+      case BURNTIME:
+        return this.burnTime;
+    }
+    return 0;
   }
 }
