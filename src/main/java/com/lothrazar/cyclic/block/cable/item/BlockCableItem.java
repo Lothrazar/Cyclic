@@ -9,14 +9,19 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -27,6 +32,23 @@ public class BlockCableItem extends CableBase {
 
   public BlockCableItem(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
+  }
+
+  @Override
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    if (world.isRemote) {
+      TileEntity ent = world.getTileEntity(pos);
+      for (Direction d : Direction.values()) {
+        IItemHandler handlerHere = ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
+        //show current
+        if (handlerHere != null) {
+          ItemStack current = handlerHere.getStackInSlot(0);
+          if (!current.isEmpty())
+            player.sendMessage(new TranslationTextComponent(d.toString() + " " + current.getDisplayName()), player.getUniqueID());
+        }
+      }
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
   @Override

@@ -38,8 +38,11 @@ public class BlockCableEnergy extends CableBase {
       TileEntity ent = world.getTileEntity(pos);
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
       //show current
-      if (handlerHere != null)
-        player.sendStatusMessage(new TranslationTextComponent(handlerHere.getEnergyStored() + ""), true);
+      if (handlerHere != null) {
+        int st = handlerHere.getEnergyStored();
+        if (st > 0)
+          player.sendStatusMessage(new TranslationTextComponent(st + ""), true);
+      }
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);
   }

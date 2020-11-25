@@ -40,21 +40,13 @@ import net.minecraftforge.items.IItemHandler;
 public abstract class BlockBase extends Block {
 
   public static final BooleanProperty LIT = BooleanProperty.create("lit");
+  private boolean hasGui = false;
+  private boolean hasFluidInteract = false;
 
-  private static boolean hasCapabilityDir(Direction facing, IWorld world, BlockPos facingPos, Capability<?> cap) {
-    if (facing == null) {
-      return false;
-    }
-    TileEntity neighbor = world.getTileEntity(facingPos);
-    if (neighbor != null
-        && neighbor.getCapability(cap, facing.getOpposite()).orElse(null) != null) {
-      return true;
-    }
-    return false;
+  public BlockBase(Properties properties) {
+    super(properties);
+    BlockRegistry.blocks.add(this);
   }
-
-  private boolean hasGui;
-  private boolean hasFluidInteract = true;
 
   protected BlockBase setHasGui() {
     this.hasGui = true;
@@ -137,6 +129,20 @@ public abstract class BlockBase extends Block {
     }
   }
 
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
+    t.mergeStyle(TextFormatting.GRAY);
+    tooltip.add(t);
+  }
+
+  /**
+   * Override per block for render-ers/screens/etc
+   */
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {}
+
   public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     return hasCapabilityDir(facing, world, facingPos, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
   }
@@ -149,19 +155,15 @@ public abstract class BlockBase extends Block {
     return hasCapabilityDir(facing, world, facingPos, CapabilityEnergy.ENERGY);
   }
 
-  public BlockBase(Properties properties) {
-    super(properties);
-    BlockRegistry.blocks.add(this);
+  private static boolean hasCapabilityDir(Direction facing, IWorld world, BlockPos facingPos, Capability<?> cap) {
+    if (facing == null) {
+      return false;
+    }
+    TileEntity neighbor = world.getTileEntity(facingPos);
+    if (neighbor != null
+        && neighbor.getCapability(cap, facing.getOpposite()).orElse(null) != null) {
+      return true;
+    }
+    return false;
   }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
-    t.mergeStyle(TextFormatting.GRAY);
-    tooltip.add(t);
-  }
-
-  @OnlyIn(Dist.CLIENT)
-  public void registerClient() {}
 }
