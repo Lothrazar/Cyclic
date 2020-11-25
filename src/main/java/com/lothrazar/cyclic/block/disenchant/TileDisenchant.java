@@ -87,7 +87,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       //and input has at least one enchantment 
       //success happening
       UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
-      cap.extractEnergy(cost, true);
+      cap.extractEnergy(cost, false);
       //do all the moving over
       enchants.remove(keyMoved);
       ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
