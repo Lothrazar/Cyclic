@@ -39,7 +39,7 @@ public class EnchantCurse extends EnchantBase {
 
   @Override
   public void onUserHurt(LivingEntity user, Entity attacker, int level) {
-    if (!(attacker instanceof LivingEntity))
+    if (user.world.isRemote || !(attacker instanceof LivingEntity))
       return;
     //only allow activation once
     int totalLevels = getCurrentArmorLevelSlot(user, EquipmentSlotType.HEAD)
