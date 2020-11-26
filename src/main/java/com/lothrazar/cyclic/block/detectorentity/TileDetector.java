@@ -124,7 +124,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     double z = pos.getZ();
     AxisAlignedBB entityRange = new AxisAlignedBB(
         x - this.rangeX, y - this.rangeY, z - this.rangeZ,
-        x + this.rangeX, y + this.rangeY, z + this.rangeZ);
+        x + this.rangeX + 1, y + this.rangeY, z + this.rangeZ + 1);
     return entityRange;
   }
 
