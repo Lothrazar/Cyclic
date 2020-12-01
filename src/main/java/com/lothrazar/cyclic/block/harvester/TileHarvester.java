@@ -128,28 +128,17 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       //not grown
       return false;
     }
-    //what does the non-grown state drop
-    List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, (TileEntity) null);
-    List<ItemStack> seeds = Block.getDrops(blockState.getBlock().getDefaultState(),
-        (ServerWorld) world, posCurrent, (TileEntity) null);
-    boolean deleteSeed = drops.size() > 0;
-    ItemStack seed = ItemStack.EMPTY;
-    if (seeds != null && seeds.size() > 0) {
-      seed = seeds.get(0);
-    }
-    //  if it dropped more than one ( seed and a thing)
-    for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
-      final ItemStack drop = iterator.next();
-      if (deleteSeed && drop.getItem() == seed.getItem()
-          && drops.size() > 1) {
-        // Remove exactly one seed (consume for replanting)
-        drop.shrink(1);
-        deleteSeed = false;
-      } //else dont remove a seed if theres only 1 to start with
-      if (drop.getCount() > 0) {
-        UtilWorld.dropItemStackInWorld(world, posCurrent, drop);
+    //update behavior to address Issue #1600
+    List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, null);
+    drops.forEach((dropStack) -> {
+      if (dropStack.getItem() == blockState.getBlock().asItem()) {
+        dropStack.shrink(1);
       }
-    }
+      if (!dropStack.isEmpty()) {
+        UtilWorld.dropItemStackInWorld(world, posCurrent, dropStack);
+      }
+    });
+    blockState.spawnAdditionalDrops((ServerWorld) world, posCurrent, ItemStack.EMPTY);
     BlockState newState = blockState.with(propInt, minAge);
     world.setBlockState(posCurrent, newState);
     world.notifyBlockUpdate(posCurrent, newState, newState, 3);
