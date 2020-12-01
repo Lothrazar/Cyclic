@@ -108,23 +108,23 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         fakePlayer = setupBeforeTrigger((ServerWorld) world, "forester");
       }
       this.equipTool();
-      if (this.isSapling(dropMe)) {
-        //plant me  . if im on the lowest level
-        if (targetPos.getY() == this.pos.getY()) {
-          ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND);
-          if (result == ActionResultType.SUCCESS) {
-            //ok then DRAIN POWER 
-            en.extractEnergy(cost, false);
-          }
-        }
-      }
-      else if (this.isTree(dropMe)) {
+      if (this.isTree(dropMe)) {
         if (TileEntityBase.tryHarvestBlock(fakePlayer, world, targetPos)) {
-          //ok then DRAIN POWER  
+          //ok then DRAIN POWER
           en.extractEnergy(cost, false);
           //          ModCyclic.LOGGER.info("drain " + cost + "current" + en.getEnergyStored());
         }
       }
+      else if (this.isSapling(dropMe)) {
+          //plant me  . if im on the lowest level
+          if (targetPos.getY() == this.pos.getY()) {
+            ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND);
+            if (result == ActionResultType.SUCCESS) {
+              //ok then DRAIN POWER
+              en.extractEnergy(cost, false);
+            }
+          }
+        }
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Forester action item error", e);
