@@ -15,6 +15,7 @@ import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.StemBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -74,6 +75,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (this.laserTimer > 0) {
       laserTimer--;
     }
+    if (this.world.isRemote)
+      return;
     IEnergyStorage cap = this.energy.orElse(null);
     if (cap == null) {
       return;
@@ -109,6 +112,10 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       UtilItemStack.drop(world, posCurrent, blockState.getBlock());
       world.destroyBlock(posCurrent, false);
       return true;
+    }
+    //don't break stems see Issue #1601
+    if (world.getBlockState(posCurrent).getBlock() instanceof StemBlock) {
+      return false;
     }
     IntegerProperty propInt = TileHarvester.getAgeProp(blockState);
     if (propInt == null || !(world instanceof ServerWorld)) {
