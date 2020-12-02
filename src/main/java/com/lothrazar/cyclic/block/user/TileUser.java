@@ -18,6 +18,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
@@ -59,7 +60,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    if (!(world instanceof ServerWorld)) {
+    if (world.isRemote || !(world instanceof ServerWorld)) {
       return;
     }
     if (timer > 0) {
@@ -75,11 +76,11 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     }
     try {
       TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
-      ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, this.pos.offset(this.getCurrentFacing()), Hand.MAIN_HAND);
+      BlockPos target = this.pos.offset(this.getCurrentFacing());
+      ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND);
+      ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
       if (result == ActionResultType.SUCCESS || result == ActionResultType.CONSUME) {
-        //        ModCyclic.LOGGER.info(result + " consume ? save item? " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
         TileEntityBase.syncEquippedItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
-        //        this.markDirty();
       }
     }
     catch (Exception e) {
