@@ -52,6 +52,10 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       if (target instanceof PlayerEntity || !target.isAlive()) {
         return;
       }
+      //Wake up the mob in case they're sleeping in a bed see Issue #1599
+      if (target instanceof LivingEntity) {
+        ((LivingEntity)target).wakeUp();
+      }
       CompoundNBT compound = new CompoundNBT();
       target.writeUnlessPassenger(compound);
       String id = EntityType.getKey(target.getType()).toString();
