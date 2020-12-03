@@ -12,6 +12,7 @@ import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.RecipeRegistry;
+import com.lothrazar.cyclic.registry.WorldGenRegistry;
 import com.lothrazar.cyclic.setup.ClientProxy;
 import com.lothrazar.cyclic.setup.IProxy;
 import com.lothrazar.cyclic.setup.ServerProxy;
@@ -47,6 +48,7 @@ public class ModCyclic {
     CuriosRegistry.setup(event);
     PotionRegistry.setup(event);
     PacketRegistry.setup();
+    WorldGenRegistry.setup();
     proxy.setup();
     //TODO: maybe move all the following into the constructor, not here in setup? from forge discord 
     //but crashes when i do with NPE so 
