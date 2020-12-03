@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -98,10 +99,13 @@ public class EnchantExcavation extends EnchantBase {
       return;
     }
     // if I am using an axe on stone or dirt, doesn't trigger
-    boolean isAnySingleOk = false;//if i am a tool valid on 2 things, and both of 2 blocks are present, we are just ok
+    boolean isAnySingleOk = false;//if i am a toolqqq valid on 2 things, and both of 2 blocks are present, we are just ok
     for (ToolType type : stackHarvestingWith.getItem().getToolTypes(stackHarvestingWith)) {
       if (block.isToolEffective(world.getBlockState(pos), type)) {
         isAnySingleOk = true;
+      }
+      else {
+        ModCyclic.LOGGER.info(type.getName() + "  TOOL NOT EFFECTIVE ON " + world.getBlockState(pos));
       }
     }
     //starts at 1 for current one
@@ -112,6 +116,7 @@ public class EnchantExcavation extends EnchantBase {
         player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.getRandom(), null);
       }
     }
+    //else wtf why is this false for redstone ore
   }
 
   /**
@@ -180,6 +185,9 @@ public class EnchantExcavation extends EnchantBase {
       // java.util shit the bed not my problem 
     }
     for (Direction fac : targetFaces) {
+      Block target = world.getBlockState(start.offset(fac)).getBlock();
+      boolean match = target == blockIn;
+      ModCyclic.LOGGER.info(blockIn + " = " + target + " ?? " + match);
       if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
         list.add(start.offset(fac));
       }

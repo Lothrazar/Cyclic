@@ -18,10 +18,12 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -38,6 +40,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     REDSTONE, TIMER, TIMERDEL, RENDER;
   }
 
+  public static IntValue POWERCONF;
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
@@ -74,8 +77,37 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
         uuid = UUID.randomUUID();
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "user", uuid);
     }
+    IEnergyStorage en = this.energy.orElse(null);
+    final int repair = POWERCONF.get();
+    if (repair > 0 && en != null) {
+      //we need to pay a cost
+      if (en.getEnergyStored() < repair) {
+        //not enough cost
+        return;
+      }
+      //i dont care if result is SUCCESS or FAIL. still drain power every time. 
+      //user can turn off with redstone if they want to save power
+      en.extractEnergy(repair, false);
+    }
     try {
       TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
+      //start of SUPERHACK
+      ResourceLocation registryItem = fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getItem().getRegistryName();
+      if (registryItem.getNamespace().equalsIgnoreCase("mysticalagriculture")
+          && registryItem.getPath().contains("watering_can") &&
+          fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag() != null) {
+        //        boolean water = fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag().getBoolean("Water");
+        ModCyclic.LOGGER.info(registryItem + " id hack ");
+        //hack around mysttical ag id throttling   fail system 
+        //when they fill water, id is set. uses id and gametime 
+        //to reject actions to 'throttle'. but fakeplayer confuses this
+        fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag().putString("ID", UUID.randomUUID().toString());
+        //after this hack. they still return type FAIL
+        //but the plants grow and the watering DOES happen
+        //        https://github.com/BlakeBr0/MysticalAgriculture/blob/f60de3510c694082acf5ff63299f119ab4a9d9a9/src/main/java/com/blakebr0/mysticalagriculture/item/WateringCanItem.java#L144
+        //so successful hack
+      }
+      //end of SUPERHACK
       BlockPos target = this.pos.offset(this.getCurrentFacing());
       ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND);
       ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));

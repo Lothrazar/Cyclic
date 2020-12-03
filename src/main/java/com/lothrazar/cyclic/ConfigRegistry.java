@@ -20,6 +20,7 @@ import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
+import com.lothrazar.cyclic.block.user.TileUser;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -114,6 +115,7 @@ public class ConfigRegistry {
     CFG.pop();//fuel
     CFG.comment("Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).").push("cost");
     TileDisenchant.POWERCONF = CFG.comment(WALLSM, "Power per use disenchanter").defineInRange("disenchanter", 1500, 0, 64000);
+    TileUser.POWERCONF = CFG.comment(WALLSM, "Power per use user").defineInRange("user", 50, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
     TileMelter.POWERCONF = CFG.comment("Power per recipe melter").defineInRange("melter", 5000, 0, 64000);
     TileSolidifier.POWERCONF = CFG.comment("Power per recipe solidifier").defineInRange("solidifier", 5000, 0, 64000);
