@@ -14,7 +14,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerSolidifier extends ContainerBase {
 
@@ -24,7 +23,7 @@ public class ContainerSolidifier extends ContainerBase {
     super(ContainerScreenRegistry.solidifier, windowId);
     tile = (TileSolidifier) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 37, 17));
