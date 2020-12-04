@@ -52,7 +52,6 @@ public class ItemEnderEyeReuse extends ItemBase {
       BlockPos rsBlockPos;
 
       if (ModList.get().isLoaded(RS_MODID)) {
-        ForgeRegistries.STRUCTURE_FEATURES.getKeys().forEach(k -> System.out.printf("%s, ", k.getNamespace() + k.getPath()));
         if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_RESOURCE_LOCATION)) {
           rsStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_RESOURCE_LOCATION);
           rsBlockPos = chunkGenerator.func_235956_a_(sw, rsStronghold, new BlockPos(player.getPosition()), 100, false);
