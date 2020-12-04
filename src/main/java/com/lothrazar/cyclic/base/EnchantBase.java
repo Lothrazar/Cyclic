@@ -8,11 +8,13 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class EnchantBase extends Enchantment {
+public abstract class EnchantBase extends Enchantment {
 
   protected EnchantBase(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
     super(rarityIn, typeIn, slots);
   }
+
+  public abstract boolean isEnabled();
 
   protected int getCurrentLevelTool(ItemStack stack) {
     if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this)

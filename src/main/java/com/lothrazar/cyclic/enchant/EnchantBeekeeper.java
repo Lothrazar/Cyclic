@@ -30,6 +30,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -43,6 +44,14 @@ public class EnchantBeekeeper extends EnchantBase {
   public EnchantBeekeeper(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+  public static final String id = "beekeeper";
+
+  @Override
+  public boolean isEnabled() {
+    return CFG == null || CFG.get();
   }
 
   @Override

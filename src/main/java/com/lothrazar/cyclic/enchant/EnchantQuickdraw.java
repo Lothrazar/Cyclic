@@ -33,6 +33,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -43,6 +44,14 @@ public class EnchantQuickdraw extends EnchantBase {
   public EnchantQuickdraw(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+  public static final String id = "quickshot";
+
+  @Override
+  public boolean isEnabled() {
+    return CFG.get();
   }
 
   @Override

@@ -14,6 +14,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class TextBoxAutosave extends TextFieldWidget {
 
+  private static final int KEY_DELETE = 261;
+  private static final int KEY_BACKSPACE = 259;
   private BlockPos pos;
   private TileEntityBase tile;
 
@@ -35,14 +37,27 @@ public class TextBoxAutosave extends TextFieldWidget {
   }
 
   @Override
-  public boolean keyPressed(int key, int p_keyPressed_2_, int p_keyPressed_3_) {
-    saveValue();
-    return super.keyPressed(key, p_keyPressed_2_, p_keyPressed_3_);
+  public boolean charTyped(char chr, int p) {
+    boolean worked = super.charTyped(chr, p);
+    if (worked) {
+      saveValue();
+    }
+    return worked;
+  }
+
+  @Override
+  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    boolean spr = super.keyPressed(keyCode, scanCode, modifiers);
+    if (keyCode == KEY_BACKSPACE || keyCode == KEY_DELETE) {
+      saveValue();
+    }
+    return spr;
   }
 
   private void saveValue() {
-    tile.setFieldString(tileFieldId, getText());
-    PacketRegistry.INSTANCE.sendToServer(new PacketTileString(this.tileFieldId, this.getText(), pos));
+    String current = getText();
+    tile.setFieldString(tileFieldId, current);
+    PacketRegistry.INSTANCE.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
   }
 
   private int tileFieldId;

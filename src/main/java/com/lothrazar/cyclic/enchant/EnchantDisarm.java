@@ -11,6 +11,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EnchantDisarm extends EnchantBase {
@@ -20,6 +21,14 @@ public class EnchantDisarm extends EnchantBase {
   public EnchantDisarm(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+  public static final String id = "disarm";
+
+  @Override
+  public boolean isEnabled() {
+    return CFG.get();
   }
 
   @Override

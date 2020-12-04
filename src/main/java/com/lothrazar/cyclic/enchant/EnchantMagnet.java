@@ -29,6 +29,7 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,6 +39,14 @@ public class EnchantMagnet extends EnchantBase {
   public EnchantMagnet(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+  public static final String id = "magnet";
+
+  @Override
+  public boolean isEnabled() {
+    return CFG.get();
   }
 
   private static final int ITEM_HRADIUS = 4;

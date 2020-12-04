@@ -38,6 +38,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -51,6 +52,13 @@ public class EnchantBeheading extends EnchantBase {
 
   private static final int percentDrop = 20;
   private static final int percentPerLevel = 25;
+  public static final String id = "beheading";
+  public static BooleanValue CFG;
+
+  @Override
+  public boolean isEnabled() {
+    return CFG == null || CFG.get();
+  }
 
   @Override
   public int getMaxLevel() {

@@ -6,6 +6,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -16,6 +17,14 @@ public class EnchantXp extends EnchantBase {
   public EnchantXp(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... mainhand) {
     super(rarityIn, typeIn, mainhand);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+  public static final String id = "experience_boost";
+
+  @Override
+  public boolean isEnabled() {
+    return CFG == null || CFG.get();
   }
 
   @Override

@@ -32,6 +32,8 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.RedstoneOreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -45,6 +47,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
@@ -59,6 +62,14 @@ public class EnchantExcavation extends EnchantBase {
   public EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+  public static final String id = "excavate";
+
+  @Override
+  public boolean isEnabled() {
+    return CFG == null || CFG.get();
   }
 
   @Override
@@ -100,9 +111,21 @@ public class EnchantExcavation extends EnchantBase {
     }
     // if I am using an axe on stone or dirt, doesn't trigger
     boolean isAnySingleOk = false;//if i am a toolqqq valid on 2 things, and both of 2 blocks are present, we are just ok
+    BlockState stateHere = world.getBlockState(pos);
+    if (stateHere.getBlock() == Blocks.REDSTONE_ORE) {
+      stateHere = null;
+      stateHere = Blocks.REDSTONE_ORE.getDefaultState().with(RedstoneOreBlock.LIT, false);
+    }
     for (ToolType type : stackHarvestingWith.getItem().getToolTypes(stackHarvestingWith)) {
-      if (block.isToolEffective(world.getBlockState(pos), type)) {
+      if (block.isToolEffective(stateHere, type)) {
         isAnySingleOk = true;
+        break;
+      }
+      else if (stateHere.getBlock() == Blocks.REDSTONE_ORE && type == ToolType.PICKAXE) {
+        //hack because of BUG in vanilla/forge: no tools are effective on it REGARDLESS OF PROPERTY
+        //both lit false or true doesnt matter {minecraft:redstone_ore}[lit=true]
+        isAnySingleOk = true;
+        break;
       }
       else {
         ModCyclic.LOGGER.info(type.getName() + "  TOOL NOT EFFECTIVE ON " + world.getBlockState(pos));
@@ -187,7 +210,6 @@ public class EnchantExcavation extends EnchantBase {
     for (Direction fac : targetFaces) {
       Block target = world.getBlockState(start.offset(fac)).getBlock();
       boolean match = target == blockIn;
-      ModCyclic.LOGGER.info(blockIn + " = " + target + " ?? " + match);
       if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
         list.add(start.offset(fac));
       }

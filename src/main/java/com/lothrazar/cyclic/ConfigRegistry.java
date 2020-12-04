@@ -21,6 +21,24 @@ import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
+import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
+import com.lothrazar.cyclic.enchant.EnchantBeekeeper;
+import com.lothrazar.cyclic.enchant.EnchantBeheading;
+import com.lothrazar.cyclic.enchant.EnchantCurse;
+import com.lothrazar.cyclic.enchant.EnchantDisarm;
+import com.lothrazar.cyclic.enchant.EnchantExcavation;
+import com.lothrazar.cyclic.enchant.EnchantGrowth;
+import com.lothrazar.cyclic.enchant.EnchantLaunch;
+import com.lothrazar.cyclic.enchant.EnchantLifeLeech;
+import com.lothrazar.cyclic.enchant.EnchantMagnet;
+import com.lothrazar.cyclic.enchant.EnchantMultishot;
+import com.lothrazar.cyclic.enchant.EnchantPearl;
+import com.lothrazar.cyclic.enchant.EnchantQuickdraw;
+import com.lothrazar.cyclic.enchant.EnchantReach;
+import com.lothrazar.cyclic.enchant.EnchantStep;
+import com.lothrazar.cyclic.enchant.EnchantTraveller;
+import com.lothrazar.cyclic.enchant.EnchantVenom;
+import com.lothrazar.cyclic.enchant.EnchantXp;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -91,8 +109,31 @@ public class ConfigRegistry {
     CFG.comment(WALL,
         "Features with configurable properties are split into categories", WALL)
         .push(ModCyclic.MODID);
-    //  
     //
+    CFG.comment(WALL, "eeeee", WALL).push("enchantment");
+    //
+    //
+    EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.id, true);
+    EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.id, true);
+    EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.id, true);
+    EnchantCurse.CFG = CFG.comment("Set false to disable enchantment").define(EnchantCurse.id, true);
+    EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.id, true);
+    EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.id, true);
+    EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.id, true);
+    EnchantLaunch.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLifeLeech.id, true);
+    EnchantLifeLeech.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMagnet.id, true);
+    EnchantMagnet.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMultishot.id, true);
+    EnchantMultishot.CFG = CFG.comment("Set false to disable enchantment").define(EnchantPearl.id, true);
+    EnchantPearl.CFG = CFG.comment("Set false to disable enchantment").define(EnchantQuickdraw.id, true);
+    EnchantQuickdraw.CFG = CFG.comment("Set false to disable enchantment").define(EnchantReach.id, true);
+    EnchantReach.CFG = CFG.comment("Set false to disable enchantment").define(EnchantStep.id, true);
+    EnchantStep.CFG = CFG.comment("Set false to disable enchantment").define(EnchantStep.id, true);
+    EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.id, true);
+    EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.id, true);
+    EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.id, true);
+    //
+    //
+    CFG.pop();//ench
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL).push("command");
     COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);
     COMMANDGETHELP = CFG.comment("True means only players with OP can use this /cyclic command").define("help", false);

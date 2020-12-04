@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.IHasTooltip;
+import com.lothrazar.cyclic.gui.TextBoxAutosave;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -37,8 +38,16 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
       int mouseX = (int) (mc.mouseHelper.getMouseX() * mc.getMainWindow().getScaledWidth() / mc.getMainWindow().getWidth());
       int mouseY = (int) (mc.mouseHelper.getMouseY() * mc.getMainWindow().getScaledHeight() / mc.getMainWindow().getHeight());
       if (btn instanceof GuiSliderInteger && btn.isMouseOver(mouseX, mouseY)) {
-        //        btn.too   
         return btn.keyPressed(keyCode, scanCode, modifiers);
+      }
+    }
+    for (IGuiEventListener widget : this.children) {
+      if (widget instanceof TextBoxAutosave) {
+        //without this, txt boxes still work BUT:
+        //keybindings like E OPEN INVENTORY dont make trigger the textbox, oops
+        TextBoxAutosave txt = (TextBoxAutosave) widget;
+        if (txt.isFocused())
+          return txt.keyPressed(keyCode, scanCode, modifiers);
       }
     }
     return super.keyPressed(keyCode, scanCode, modifiers);

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.harvester;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,6 +14,7 @@ import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.block.StemBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -154,13 +154,27 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   public static IntegerProperty getAgeProp(BlockState blockState) {
+    if (blockState.getBlock() instanceof CropsBlock) {
+      CropsBlock crops = (CropsBlock) blockState.getBlock();
+      //better mod compatibility if they dont use 'age'
+      return crops.getAgeProperty();
+    }
+    String age = "age";
+    ResourceLocation bid = blockState.getBlock().getRegistryName();
+    if ("resynth".equalsIgnoreCase(bid.getNamespace())) {
+      //some silly old mods dont use age for compatibility
+      // https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/blob/a9f47439d103c1c17ca7a4ffd05c2dc0397e5e5f/src/main/java/com/ki11erwolf/resynth/plant/block/BlockBiochemicalPlant.java#L59
+      //so we hack it
+      age = "growth_stage";
+    }
     for (Property<?> p : blockState.getProperties()) {
       if (p != null && p.getName() != null
           && p instanceof IntegerProperty &&
-          p.getName().equalsIgnoreCase("age")) {
+          p.getName().equalsIgnoreCase(age)) {
         return (IntegerProperty) p;
       }
     }
+    //IGrowable is useless here, i tried. no way to tell if its fully grown, or what age/stage its in
     return null;
   }
 

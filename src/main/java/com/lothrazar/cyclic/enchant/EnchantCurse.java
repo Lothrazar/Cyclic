@@ -12,6 +12,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EnchantCurse extends EnchantBase {
@@ -25,6 +26,14 @@ public class EnchantCurse extends EnchantBase {
   public EnchantCurse(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+  public static final String id = "curse";
+
+  @Override
+  public boolean isEnabled() {
+    return CFG.get();
   }
 
   @Override

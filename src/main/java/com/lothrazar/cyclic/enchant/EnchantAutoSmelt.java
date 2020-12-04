@@ -40,6 +40,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -47,9 +48,18 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EnchantAutoSmelt extends EnchantBase {
 
+  public static final String id = "auto_smelt";
+
   public EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  public static BooleanValue CFG;
+
+  @Override
+  public boolean isEnabled() {
+    return CFG.get();
   }
 
   @Override
