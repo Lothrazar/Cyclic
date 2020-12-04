@@ -116,15 +116,15 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         }
       }
       else if (this.isSapling(dropMe)) {
-          //plant me  . if im on the lowest level
-          if (targetPos.getY() == this.pos.getY()) {
-            ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND);
-            if (result == ActionResultType.SUCCESS) {
-              //ok then DRAIN POWER
-              en.extractEnergy(cost, false);
-            }
+        //plant me  . if im on the lowest level
+        if (targetPos.getY() == this.pos.getY()) {
+          ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND);
+          if (result == ActionResultType.SUCCESS) {
+            //ok then DRAIN POWER
+            en.extractEnergy(cost, false);
           }
         }
+      }
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Forester action item error", e);
