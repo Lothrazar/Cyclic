@@ -21,6 +21,7 @@ import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
+import com.lothrazar.cyclic.enchant.*;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -147,6 +148,24 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Enchantment related configs", WALL).push("enchant");
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheading."
         + "BeheadingEntityMHF", defaultBeheading);
+    EnchantAutoSmelt.ENABLED = CFG.define("enchant_autosmelt", true);
+    EnchantBeekeeper.ENABLED = CFG.define("enchant_beekeeper", true);
+    EnchantBeheading.ENABLED = CFG.define("enchant_beheading", true);
+    EnchantCurse.ENABLED = CFG.define("enchant_curse", true);
+    EnchantDisarm.ENABLED = CFG.define("enchant_disarm", true);
+    EnchantExcavation.ENABLED = CFG.define("enchant_excavation", true);
+    EnchantGrowth.ENABLED = CFG.define("enchant_growth", true);
+    EnchantLaunch.ENABLED = CFG.define("enchant_launch", true);
+    EnchantLifeLeech.ENABLED = CFG.define("enchant_lifeleech", true);
+    EnchantMagnet.ENABLED = CFG.define("enchant_magnet", true);
+    EnchantMultishot.ENABLED = CFG.define("enchant_multishot", true);
+    EnchantPearl.ENABLED = CFG.define("enchant_pearl", true);
+    EnchantQuickdraw.ENABLED = CFG.define("enchant_quickdraw", true);
+    EnchantReach.ENABLED = CFG.define("enchant_reach", true);
+    EnchantStep.ENABLED = CFG.define("enchant_step", true);
+    EnchantTraveller.ENABLED = CFG.define("enchant_traveller", true);
+    EnchantVenom.ENABLED = CFG.define("enchant_venom", true);
+    EnchantXp.ENABLED = CFG.define("enchant_xp", true);
     CFG.pop();//enchant
     //
     //

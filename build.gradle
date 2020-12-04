@@ -16,7 +16,6 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 //apply plugin: 'org.spongepowered.mixin'
 
-import net.minecraftforge.gradle.common.task.SignJar
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
@@ -106,6 +105,8 @@ minecraft {
 //}
 
 dependencies {
+    implementation 'org.jetbrains:annotations:19.0.0'
+
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
@@ -185,21 +186,6 @@ publishing {
         }
     }
 }
-
-task signJar(type: SignJar, dependsOn: jar) {
-
-    // findProperty allows us to reference the property without it existing. 
-    // Using project.propName would cause the script to fail validation if 
-    // the property did not exist. 
-    keyStore = project.findProperty('keyStore')
-    alias = project.findProperty('keyStoreAlias')
-    storePass = project.findProperty('keyStorePass')
-    keyPass = project.findProperty('keyStoreKeyPass')
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
-}
-
-build.dependsOn signJar
 
 task copyJar(type: Copy) {
     from jar

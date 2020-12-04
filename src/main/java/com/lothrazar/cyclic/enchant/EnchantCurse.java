@@ -12,9 +12,12 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EnchantCurse extends EnchantBase {
+
+  public static ForgeConfigSpec.BooleanValue ENABLED;
 
   private static final double BASE_ACTIVATION_CHANCE = 0.1;
   private static final double BASE_APPLY_CHANCE = 0.3;

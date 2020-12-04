@@ -31,11 +31,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantStep extends EnchantBase {
+
+  public static ForgeConfigSpec.BooleanValue ENABLED;
 
   private static final String NBT_ON = ModCyclic.MODID + "_stepenchant";
 

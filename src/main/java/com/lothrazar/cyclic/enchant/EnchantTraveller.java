@@ -34,12 +34,15 @@ import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantTraveller extends EnchantBase {
+
+  public static ForgeConfigSpec.BooleanValue ENABLED;
 
   public static final List<String> PROTS = Arrays.asList(new String[] {
       "sting", DamageSource.FLY_INTO_WALL.damageType,
