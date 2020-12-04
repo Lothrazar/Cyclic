@@ -96,7 +96,7 @@
 
     "block.cyclic.unbreakable_block": "Unbreakable Block",
     "block.cyclic.unbreakable_block.tooltip": "Right-click with Redstone to toggle",
-    "block.cyclic.unbreakable_block.guide": "Place in the world and then right-click with Redstone dust in hand to toggle whether this block can be broken",
+    "block.cyclic.unbreakable_block.guide": "Place in the world and then right-click with Redstone dust, Redstone Torch, or a Redstone Block in hand to toggle whether this block can be broken.",
 
     "item.cyclic.flippers":"Flippers",
     "item.cyclic.flippers.tooltip":"Increase swim speed",

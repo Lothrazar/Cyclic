@@ -15,37 +15,59 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class UnbreakableBlock extends BlockBase {
 
-  public static final BooleanProperty ENABLED = BooleanProperty.create("enabled");
+  public static final BooleanProperty BREAKABLE = BooleanProperty.create("breakable");
 
   public UnbreakableBlock(Properties properties) {
     super(properties.hardnessAndResistance(50.0F, 1200.0F));
-    this.setDefaultState(this.stateContainer.getBaseState().with(ENABLED, true));
   }
 
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     ItemStack heldItemStack = player.getHeldItem(hand);
     Item heldItem = heldItemStack.getItem();
-    if (hand == Hand.MAIN_HAND && heldItem == Items.REDSTONE ||
+    if (state.hasProperty(BREAKABLE) &&
+            hand == Hand.MAIN_HAND &&
+            heldItem == Items.REDSTONE ||
             heldItem == Items.REDSTONE_TORCH ||
             heldItem == Items.REDSTONE_BLOCK) {
-      if (!world.isRemote && state.hasProperty(ENABLED)) {
-        state.hardness = state.get(ENABLED) ? 50F : -1.0F;
-        world.setBlockState(pos, state.with(ENABLED, !state.get(ENABLED)));
-      }
-      else if (world.isRemote)
-        UtilParticle.spawnParticle(world, RedstoneParticleData.REDSTONE_DUST, pos, 5);
+        toggle(state, world, pos);
       return ActionResultType.SUCCESS;
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
+  private void toggle(BlockState state, World world, BlockPos pos) {
+    setBreakable(state, world, pos, !state.get(BREAKABLE));
+  }
+
+  private void setBreakable(BlockState state, World world, BlockPos pos, boolean isBreakable) {
+    boolean oldBreakable = state.get(BREAKABLE);
+    world.setBlockState(pos, state.with(BREAKABLE, isBreakable));
+    if (world.isRemote && oldBreakable != isBreakable)
+      UtilParticle.spawnParticle(world, RedstoneParticleData.REDSTONE_DUST, pos, 5);
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    BlockState neighborState = worldIn.getBlockState(fromPos);
+    if (!isMoving && neighborState.hasProperty(BREAKABLE) && state.hasProperty(BREAKABLE))
+      setBreakable(state, worldIn, pos, neighborState.get(BREAKABLE));
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  public float getPlayerRelativeBlockHardness(BlockState state, PlayerEntity player, IBlockReader worldIn, BlockPos pos) {
+    return (state.hasProperty(BREAKABLE) && !state.get(BREAKABLE)) ? 0.0F : super.getPlayerRelativeBlockHardness(state, player, worldIn, pos);
+  }
+
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(ENABLED);
+    builder.add(BREAKABLE);
   }
 }
