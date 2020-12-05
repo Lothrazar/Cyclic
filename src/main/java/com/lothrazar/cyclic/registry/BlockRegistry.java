@@ -36,6 +36,7 @@ import com.lothrazar.cyclic.block.detectoritem.BlockDetectorItem;
 import com.lothrazar.cyclic.block.dice.BlockDice;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.dropper.BlockDropper;
+import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
@@ -208,6 +209,8 @@ public class BlockRegistry {
   public static Block apple_sprout_emerald;
   @ObjectHolder(ModCyclic.MODID + ":apple_sprout_diamond")
   public static Block apple_sprout_diamond;
+  @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
+  public static Block ender_shelf;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -283,5 +286,6 @@ public class BlockRegistry {
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
+    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK)).setRegistryName("ender_shelf"));
   }
 }

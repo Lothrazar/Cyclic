@@ -94,6 +94,10 @@
     "block.cyclic.water_candle.guide": "The Water Candle can be lit with Flint and Steel to increase the rate at which mobs naturally spawn nearby.$(br2)For the candle to work, mobs must be able to spawn naturally in its vicinity.$(br)In most cases, this means it must be dark enough to spawn mobs!",
     "block.cyclic.water_candle.guide0": "When lit, has a random chance to extinguish itself while spawning a mob. When this happens, you must relight the candle for it to continue spawning.",
 
+    "block.cyclic.ender_shelf":"Ender Shelf",
+    "block.cyclic.ender_shelf.tooltip": "Multiblock Enchantment Storage",
+    "block.cyclic.ender_shelf.guide": "",
+
     "item.cyclic.flippers":"Flippers",
     "item.cyclic.flippers.tooltip":"Increase swim speed",
     "item.cyclic.flippers.guide":"When worn, Flippers increase the player's swim speed.$(br2)Can be equipped as an accessory if the Curios mod is installed.",

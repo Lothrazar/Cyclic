@@ -21,6 +21,7 @@ import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
 import com.lothrazar.cyclic.block.dice.TileDice;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
@@ -103,6 +104,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
+    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
@@ -192,4 +194,6 @@ public class TileRegistry {
   public static TileEntityType<TileUncraft> uncrafter;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
   public static TileEntityType<TileCrafter> crafter;
+  @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
+  public static TileEntityType<TileEnderShelf> ender_shelf;
 }

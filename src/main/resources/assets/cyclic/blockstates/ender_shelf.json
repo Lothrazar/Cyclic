@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=north":	{ "model": "cyclic:block/ender_shelf"},
+		"facing=east":	{ "model": "cyclic:block/ender_shelf", "y": 90 },
+		"facing=south":	{ "model": "cyclic:block/ender_shelf" , "y": 180 },
+		"facing=west":	{ "model": "cyclic:block/ender_shelf", "y": 270 }
+    }
+}

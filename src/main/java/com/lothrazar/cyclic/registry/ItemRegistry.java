@@ -192,6 +192,7 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.water_candle, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("water_candle"));
     r.register(new BlockItem(BlockRegistry.fireplace, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("fireplace"));
     r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
+    r.register(new BlockItem(BlockRegistry.ender_shelf, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("ender_shelf"));
     // exp machines
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("experience_pylon"));
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("experience_food"));
