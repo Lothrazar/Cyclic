@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.base;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -8,13 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public abstract class ContainerBase extends Container {
 
   protected PlayerEntity playerEntity;
-  protected IItemHandler playerInventory;
+  protected PlayerInventory playerInventory;
   protected int startInv = 0;
   protected int endInv = 17;//must be set by extending class
   public static final int PLAYERSIZE = 4 * 9;//36
@@ -113,16 +112,16 @@ public abstract class ContainerBase extends Container {
     }
   }
 
-  private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
+  private int addSlotRange(PlayerInventory handler, int index, int x, int y, int amount, int dx) {
     for (int i = 0; i < amount; i++) {
-      addSlot(new SlotItemHandler(handler, index, x, y));
+      addSlot(new Slot(handler, index, x, y));
       x += dx;
       index++;
     }
     return index;
   }
 
-  private int addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
+  private int addSlotBox(PlayerInventory handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
     for (int j = 0; j < verAmount; j++) {
       index = addSlotRange(handler, index, x, y, horAmount, dx);
       y += dy;

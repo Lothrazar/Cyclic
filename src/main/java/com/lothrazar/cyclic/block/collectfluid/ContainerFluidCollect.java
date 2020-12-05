@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerFluidCollect extends ContainerBase {
 
@@ -20,7 +19,7 @@ public class ContainerFluidCollect extends ContainerBase {
     super(ContainerScreenRegistry.collector_fluid, windowId);
     tile = (TileFluidCollect) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 10, 51));

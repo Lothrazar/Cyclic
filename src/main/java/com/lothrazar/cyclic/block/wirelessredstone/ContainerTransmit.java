@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerTransmit extends ContainerBase {
 
@@ -20,7 +19,7 @@ public class ContainerTransmit extends ContainerBase {
     super(ContainerScreenRegistry.wireless_transmitter, windowId);
     tile = (TileWirelessTransmit) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
       for (int s = 0; s < h.getSlots(); s++) {

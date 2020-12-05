@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerFan extends ContainerBase {
 
@@ -18,7 +17,7 @@ public class ContainerFan extends ContainerBase {
     super(ContainerScreenRegistry.fan, windowId);
     tile = (TileFan) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileFan.Fields.values().length);
   }

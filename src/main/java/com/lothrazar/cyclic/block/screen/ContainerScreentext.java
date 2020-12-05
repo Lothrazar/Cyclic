@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerScreentext extends ContainerBase {
 
@@ -18,7 +17,7 @@ public class ContainerScreentext extends ContainerBase {
     super(ContainerScreenRegistry.screen, windowId);
     tile = (TileScreentext) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     this.trackAllIntFields(tile, TileScreentext.Fields.values().length);
     trackEnergy(tile);
   }
