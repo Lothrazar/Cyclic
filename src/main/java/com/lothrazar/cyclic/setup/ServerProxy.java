@@ -1,15 +1,7 @@
 package com.lothrazar.cyclic.setup;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraftforge.common.ForgeMod;
-
 public class ServerProxy implements IProxy {
 
   @Override
   public void setup() {}
-
-  @Override
-  public void setPlayerReach(PlayerEntity player, int currentReach) {
-    player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
-  }
 }

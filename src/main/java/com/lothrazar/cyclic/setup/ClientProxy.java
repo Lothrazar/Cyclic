@@ -6,12 +6,10 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @OnlyIn(Dist.CLIENT)
@@ -23,12 +21,6 @@ public class ClientProxy implements IProxy {
       b.registerClient();
     }
     this.initColours();
-  }
-
-  @Override
-  public void setPlayerReach(PlayerEntity player, int currentReach) {
-    //thank you ForgeMod for adding this when mojang removed
-    player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
   }
 
   private void initColours() {

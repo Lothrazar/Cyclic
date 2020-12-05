@@ -49,11 +49,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class UtilEntity {
+
+  public static void setPlayerReach(PlayerEntity player, int currentReach) {
+    //thank you ForgeMod for adding this when mojang removed
+    player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
+  }
 
   public static double getExpTotal(PlayerEntity player) {
     //  validateExpPositive(player);
