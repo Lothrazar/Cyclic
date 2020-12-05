@@ -4,18 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.AppleCropBlock;
-import com.lothrazar.cyclic.block.DarkGlassBlock;
-import com.lothrazar.cyclic.block.FireplaceBlock;
-import com.lothrazar.cyclic.block.FlowerSimpleBlock;
-import com.lothrazar.cyclic.block.LaunchBlock;
-import com.lothrazar.cyclic.block.MasonBlock;
-import com.lothrazar.cyclic.block.PeatBlock;
-import com.lothrazar.cyclic.block.PeatFuelBlock;
-import com.lothrazar.cyclic.block.SoundmufflerBlock;
-import com.lothrazar.cyclic.block.SpikesBlock;
+import com.lothrazar.cyclic.block.*;
 import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
-import com.lothrazar.cyclic.block.WaterCandleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
@@ -208,6 +198,8 @@ public class BlockRegistry {
   public static Block apple_sprout_emerald;
   @ObjectHolder(ModCyclic.MODID + ":apple_sprout_diamond")
   public static Block apple_sprout_diamond;
+  @ObjectHolder(ModCyclic.MODID + ":unbreakable_block")
+  public static Block unbreakable_block;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -283,5 +275,6 @@ public class BlockRegistry {
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
+    r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block"));
   }
 }
