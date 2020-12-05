@@ -47,99 +47,99 @@ public class ContainerScreenRegistry {
   public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
     IForgeRegistry<ContainerType<?>> r = event.getRegistry();
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerItemCollector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerItemCollector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("collector"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerGenerator(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerGenerator(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("peat_generator"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPeatFarm(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerPeatFarm(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("peat_farm"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerBattery(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerBattery(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("battery"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerHarvester(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerHarvester(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("harvester"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerAnvil(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerAnvil(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("anvil"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPlacer(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerPlacer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("placer"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerStructure(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerStructure(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("structure"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerMelter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerMelter(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("melter"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerSolidifier(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerSolidifier(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("solidifier"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerBreaker(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerBreaker(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("breaker"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerExpPylon(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerExpPylon(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("experience_pylon"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerUser(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerUser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("user"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDetector(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerDetector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("detector_entity"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDetectorItem(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerDetectorItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("detector_item"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDisenchant(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerDisenchant(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("disenchanter"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerTransmit(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerTransmit(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("wireless_transmitter"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerClock(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerClock(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("clock"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerCrate(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerCrate(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("crate"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPlacerFluid(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerPlacerFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("placer_fluid"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerFluidCollect(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerFluidCollect(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("collector_fluid"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerFan(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerFan(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fan"));
     //
     //
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPotion(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerPotion(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("beacon"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDropper(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerDropper(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("dropper"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerForester(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerForester(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("forester"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerMiner(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerMiner(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("miner"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerScreentext(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerScreentext(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("screen"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerAnvilMagma(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerAnvilMagma(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("anvil_magma"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerUncraft(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerUncraft(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("uncrafter"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerCrafter(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerCrafter(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("crafter"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerShapedata(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerShapedata(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("computer_shape"));
   }
 

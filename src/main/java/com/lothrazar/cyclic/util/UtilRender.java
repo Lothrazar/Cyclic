@@ -253,9 +253,10 @@ public class UtilRender {
    * Render this BLOCK right here in the world, start with alpha and scale near 1. Call from TESR perspective
    * 
    */
+  @OnlyIn(Dist.CLIENT)
   public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape,
       MatrixStack matrix, BlockState renderBlockState, float alpha, float scale) {
-    World world = ModCyclic.proxy.getClientWorld();
+    World world = Minecraft.getInstance().world;
     //render 
     Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
     //

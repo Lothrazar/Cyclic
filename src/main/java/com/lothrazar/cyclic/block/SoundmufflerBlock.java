@@ -5,11 +5,13 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilStuff;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.ITickableSound;
 import net.minecraft.client.audio.Sound;
 import net.minecraft.client.audio.SoundEventAccessor;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -32,11 +34,12 @@ public class SoundmufflerBlock extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void onPlaySound(PlaySoundEvent event) {
-    if (event.getResultSound() == null || event.getResultSound() instanceof ITickableSound || ModCyclic.proxy.getClientWorld() == null) {
+    ClientWorld clientWorld = Minecraft.getInstance().world;
+    if (event.getResultSound() == null || event.getResultSound() instanceof ITickableSound || clientWorld == null) {
       return;
     } //long term/repeating/music
     ISound sound = event.getResultSound();
-    List<BlockPos> blocks = UtilStuff.findBlocks(ModCyclic.proxy.getClientWorld(), new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this, RADIUS);
+    List<BlockPos> blocks = UtilStuff.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this, RADIUS);
     if (blocks == null || blocks.size() == 0) {
       return;
     }

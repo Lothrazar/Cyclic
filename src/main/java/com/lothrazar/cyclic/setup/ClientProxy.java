@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
@@ -23,14 +22,7 @@ public class ClientProxy implements IProxy {
     for (BlockBase b : BlockRegistry.blocks) {
       b.registerClient();
     }
-    //since it extends CropsBlock and not base class
-    //    RenderTypeLookup.setRenderLayer(BlockRegistry.apple_sprout, RenderType.getCutoutMipped());
     this.initColours();
-  }
-
-  @Override
-  public World getClientWorld() {
-    return Minecraft.getInstance().world;
   }
 
   @Override
