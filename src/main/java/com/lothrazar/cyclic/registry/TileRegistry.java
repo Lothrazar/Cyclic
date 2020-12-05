@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.UnbreakablePoweredTile;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -103,8 +104,11 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
+    r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
+  public static TileEntityType<UnbreakablePoweredTile> unbreakable_reactive;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
   public static TileEntityType<TileShapedata> computer_shape;
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
