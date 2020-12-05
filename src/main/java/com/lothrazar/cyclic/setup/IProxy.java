@@ -6,7 +6,5 @@ public interface IProxy {
 
   void setup();
 
-  PlayerEntity getClientPlayer();
-
   void setPlayerReach(PlayerEntity player, int currentReach);
 }

@@ -9,11 +9,6 @@ public class ServerProxy implements IProxy {
   public void setup() {}
 
   @Override
-  public PlayerEntity getClientPlayer() {
-    return null;
-  }
-
-  @Override
   public void setPlayerReach(PlayerEntity player, int currentReach) {
     player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
   }

@@ -104,7 +104,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
           tank.fill(new FluidStack(
               FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
           //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
-          UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+          UtilSound.playSound(p, p.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
           this.markDirty();
         }
       }

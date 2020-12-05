@@ -2,9 +2,10 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractSlider;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +14,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
 
   public static final int ARROW_LEFT = 263;
@@ -63,7 +67,9 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
     if (keyCode == ESC) {
       //close
-      ModCyclic.proxy.getClientPlayer().closeScreen();
+      ClientPlayerEntity pl = Minecraft.getInstance().player;
+      if (pl != null)
+        pl.closeScreen();
       return true;
     }
     if (keyCode == ARROW_LEFT || keyCode == ARROW_RIGHT) {

@@ -26,11 +26,6 @@ public class ClientProxy implements IProxy {
   }
 
   @Override
-  public PlayerEntity getClientPlayer() {
-    return Minecraft.getInstance().player;
-  }
-
-  @Override
   public void setPlayerReach(PlayerEntity player, int currentReach) {
     //thank you ForgeMod for adding this when mojang removed
     player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
