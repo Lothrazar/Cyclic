@@ -37,7 +37,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerCrafter extends ContainerBase {
 
@@ -74,7 +73,7 @@ public class ContainerCrafter extends ContainerBase {
     super(ContainerScreenRegistry.crafter, windowId);
     tile = (TileCrafter) clientWorld.getTileEntity(pos);
     this.playerEntity = clientPlayer;
-    this.playerInventory = new InvWrapper(inv);
+    this.playerInventory = inv;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
       int index = 0;
       //add input

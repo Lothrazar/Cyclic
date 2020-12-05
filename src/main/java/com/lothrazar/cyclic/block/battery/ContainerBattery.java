@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerBattery extends ContainerBase {
 
@@ -20,7 +19,7 @@ public class ContainerBattery extends ContainerBase {
     super(ContainerScreenRegistry.batteryCont, windowId);
     tile = (TileBattery) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
     this.trackAllIntFields(tile, TileBattery.Fields.values().length);
