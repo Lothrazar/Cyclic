@@ -33,6 +33,8 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import vazkii.botania.api.BotaniaAPI;
 
 public class EnchantMagnet extends EnchantBase {
 
@@ -69,7 +71,8 @@ public class EnchantMagnet extends EnchantBase {
     }
     //Ticking
     int level = getLevelAll(entity);
-    if (level > 0) {
+    boolean solegnoliaPresent = ModList.get().isLoaded("botania") && BotaniaAPI.instance().hasSolegnoliaAround(entity);
+    if (level > 0 && !solegnoliaPresent) {
       UtilEntity.moveEntityItemsInRegion(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }
   }
