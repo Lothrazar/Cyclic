@@ -15,6 +15,8 @@ import javax.annotation.Nonnull;
 public class TileEnderShelf extends TileEntityBase {
 
   private LazyOptional<EnderShelfItemHandler> inventory = LazyOptional.of(() -> new EnderShelfItemHandler(this));
+  private LazyOptional<EnderShelfItemHandler> fakeInventory = LazyOptional.of(() -> new EnderShelfItemHandler(this, true));
+
   public TileEnderShelf() {
     super(TileRegistry.ender_shelf);
   }
@@ -33,7 +35,9 @@ public class TileEnderShelf extends TileEntityBase {
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-        return inventory.cast();
+      if (side == Direction.DOWN)
+        return fakeInventory.cast();
+      return inventory.cast();
     }
 
     return super.getCapability(cap, side);

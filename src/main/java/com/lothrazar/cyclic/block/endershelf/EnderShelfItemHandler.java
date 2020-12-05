@@ -3,6 +3,10 @@ package com.lothrazar.cyclic.block.endershelf;
 import com.lothrazar.cyclic.net.PacketTileInventory;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEnchant;
+import com.lothrazar.cyclic.util.UtilShape;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -12,21 +16,33 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class EnderShelfItemHandler extends ItemStackHandler {
 
   public TileEnderShelf shelf;
+  private boolean fake;
+  private static final int MAX_MULTIBLOCK_DISTANCE = 8;
 
   public EnderShelfItemHandler(TileEnderShelf shelf) {
     super(6);
     this.shelf = shelf;
+    this.fake = false;
+  }
+
+  public EnderShelfItemHandler(TileEnderShelf shelf, boolean fake) {
+    super(6);
+    this.shelf = shelf;
+    this.fake = fake;
   }
 
   public ItemStack emptySlot(int slot) {
@@ -35,9 +51,26 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     return returnStack;
   }
 
+  @Nonnull
+  @Override
+  public ItemStack extractItem(int slot, int amount, boolean simulate) {
+    if (!fake)
+      return super.extractItem(slot, amount, simulate);
+
+    long rand = (long) (Math.random() * ForgeRegistries.ENCHANTMENTS.getValues().size());
+    Enchantment randomEnchant = ForgeRegistries.ENCHANTMENTS.getValues().stream().skip(rand).findAny().orElse(Enchantments.AQUA_AFFINITY);
+    int randLevel = Math.max(randomEnchant.getMinLevel(), (int) (Math.random() * randomEnchant.getMaxLevel()));
+    EnchantmentData ench = new EnchantmentData(randomEnchant, randLevel);
+    ItemStack book = EnchantedBookItem.getEnchantedItemStack(ench);
+    return book;
+  }
+
   @Override
   public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-    return !isFakeSlot(slot) && stack.getItem() == Items.ENCHANTED_BOOK && EnchantedBookItem.getEnchantments(stack).size() == 1;
+    return stack.getItem() == Items.ENCHANTED_BOOK &&
+            EnchantedBookItem.getEnchantments(stack).size() == 1 &&
+            (this.getStackInSlot(slot).isEmpty() ||
+                    UtilEnchant.doBookEnchantmentsMatch(stack, this.getStackInSlot(slot)));
   }
 
   @Override
@@ -48,7 +81,9 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   @Nonnull
   @Override
   public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-    //System.out.println("Trying to insert into slot " + slot);
+    //System.out.printf("Simulate: %s. Insert: %d of %s into slot %d. Currently has %d of %s in slot.%n", simulate,
+    //        stack.getCount(), stack.getOrCreateTag().getString(), slot,
+    //        this.getStackInSlot(slot).getCount(), this.getStackInSlot(slot).getOrCreateTag().getString());
     AtomicReference<ItemStack> remaining = new AtomicReference<>(ItemStack.EMPTY);
     if (isFakeSlot(slot)) { //The last slot is a "fake slot" for handling multiblock insert
       BlockPos newPos = findShelfForInsert(stack);
@@ -64,6 +99,8 @@ public class EnderShelfItemHandler extends ItemStackHandler {
           remaining.set(remaining2);
         });
       }
+      else
+        return stack;
     }
     //if (isFakeSlot(slot) && !remaining.get().isEmpty())
       //remaining.set(super.insertItem(slot, remaining.get(), simulate));
@@ -84,7 +121,8 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   }
 
   public BlockPos findShelfForInsert(ItemStack stack) {
-    Set<BlockPos> connectedShelves = findConnectedShelves(new HashSet<>(), this.shelf.getWorld(), this.shelf.getPos(), 0);
+    //Set<BlockPos> connectedShelves = findConnectedShelves(new HashSet<>(), this.shelf.getWorld(), this.shelf.getPos(), 0);
+    Set<BlockPos> connectedShelves = findConnectedShelves(this.shelf.getWorld(), this.shelf.getPos());
     Set<BlockPos> shelvesWithFreeSlots = new HashSet<>();
     BlockPos originalPos = this.shelf.getPos();
 
@@ -117,9 +155,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   }
 
   private Set<BlockPos> findConnectedShelves(Set<BlockPos> connectedShelves, World world, BlockPos currentPos, int distanceTravelled) {
-    if (distanceTravelled > 8)
-      return connectedShelves;
-    if (connectedShelves.contains(currentPos))
+    if (distanceTravelled > MAX_MULTIBLOCK_DISTANCE)
       return connectedShelves;
     if (!(world.getTileEntity(currentPos) instanceof TileEnderShelf))
       return connectedShelves;
@@ -134,6 +170,11 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     connectedShelves.addAll(findConnectedShelves(connectedShelves, world, currentPos.offset(Direction.SOUTH), distanceTravelled));
 
     return connectedShelves;
+  }
+
+  private Set<BlockPos> findConnectedShelves(World world, BlockPos currentPos) {
+    List<BlockPos> blocks = UtilShape.cubeSquareBase(currentPos, MAX_MULTIBLOCK_DISTANCE, MAX_MULTIBLOCK_DISTANCE);
+    return new HashSet<BlockPos>(blocks.stream().filter(pos -> world.getTileEntity(pos) instanceof TileEnderShelf).collect(Collectors.toSet()));
   }
 
   private int findMatchingSlot(TileEnderShelf shelf, ItemStack book) {
