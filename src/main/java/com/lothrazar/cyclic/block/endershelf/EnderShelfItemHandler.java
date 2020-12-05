@@ -19,10 +19,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -32,6 +29,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   public TileEnderShelf shelf;
   private boolean fake;
   private static final int MAX_MULTIBLOCK_DISTANCE = 8;
+  private static final int MAX_CUBOID_SIZE = MAX_MULTIBLOCK_DISTANCE / 2;
 
   public EnderShelfItemHandler(TileEnderShelf shelf) {
     super(6);
@@ -122,7 +120,11 @@ public class EnderShelfItemHandler extends ItemStackHandler {
 
   public BlockPos findShelfForInsert(ItemStack stack) {
     //Set<BlockPos> connectedShelves = findConnectedShelves(new HashSet<>(), this.shelf.getWorld(), this.shelf.getPos(), 0);
+    //Set<BlockPos> connectedShelves = findConnectedShelves(this.shelf.getWorld(), this.shelf.getPos());
+    System.out.println("+++++ STARTING SEARCH ++++++");
+    //Set<BlockPos> connectedShelves = findConnectedShelves(new HashMap<BlockPos, Integer>(), this.shelf.getWorld(), this.shelf.getPos(), 0).keySet();
     Set<BlockPos> connectedShelves = findConnectedShelves(this.shelf.getWorld(), this.shelf.getPos());
+    System.out.println("+++++ ENDING SEARCH ++++++");
     Set<BlockPos> shelvesWithFreeSlots = new HashSet<>();
     BlockPos originalPos = this.shelf.getPos();
 
@@ -154,6 +156,14 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     return finals;
   }
 
+  /**
+   * First try, creates lag, don't use it. Delete when the algorithm is settled.
+   * @param connectedShelves
+   * @param world
+   * @param currentPos
+   * @param distanceTravelled
+   * @return
+   */
   private Set<BlockPos> findConnectedShelves(Set<BlockPos> connectedShelves, World world, BlockPos currentPos, int distanceTravelled) {
     if (distanceTravelled > MAX_MULTIBLOCK_DISTANCE)
       return connectedShelves;
@@ -172,9 +182,52 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     return connectedShelves;
   }
 
+  /**
+   * Searches recursively up to MAX_MULTIBLOCK_DISTANCE for connected Shelves. Creates a kind of sphere shape
+   * @param connectedShelves
+   * @param world
+   * @param currentPos
+   * @param distanceTravelled
+   * @return
+   */
+  private Map<BlockPos, Integer> findConnectedShelves(Map<BlockPos, Integer> connectedShelves, World world, BlockPos currentPos, int distanceTravelled) {
+    if (distanceTravelled > MAX_MULTIBLOCK_DISTANCE)
+      return connectedShelves;
+    if (!(world.getTileEntity(currentPos) instanceof TileEnderShelf))
+      return connectedShelves;
+    if (connectedShelves.containsKey(currentPos) && connectedShelves.get(currentPos) > distanceTravelled) {
+      System.out.println("Been to " + currentPos.toString() + " before, was distance " + connectedShelves.get(currentPos) + ", now " + distanceTravelled);
+      connectedShelves.remove(currentPos);
+      connectedShelves.put(currentPos, distanceTravelled);
+      return connectedShelves;
+    }
+    System.out.println("New visit to " + currentPos.toString() + " at distance " + distanceTravelled);
+    connectedShelves.put(currentPos, distanceTravelled);
+    distanceTravelled++;
+    for (Direction direction : Direction.values()) {
+      Map<BlockPos, Integer> shelves;
+      if (!connectedShelves.containsKey(currentPos.offset(direction))) {
+        shelves = findConnectedShelves(connectedShelves, world, currentPos.offset(direction), distanceTravelled);
+        shelves.forEach((blockPos, distance) -> connectedShelves.merge(blockPos, distance, (distance1, distance2) -> distance1 <= distance2 ? distance1 : distance2));
+      }
+    }
+
+    System.out.println("Found " + connectedShelves.size() + " shelves");
+    System.out.println(connectedShelves.toString());
+    return connectedShelves;
+  }
+
+  /**
+   * Searches recursively up to MAX_MULTIBLOCK_DISTANCE for connected Shelves, then prunes any that
+   * are not in a cuboid of radius MAX_CUBOID_SIZE around the insertion block
+   * @param world
+   * @param currentPos
+   * @return
+   */
   private Set<BlockPos> findConnectedShelves(World world, BlockPos currentPos) {
-    List<BlockPos> blocks = UtilShape.cubeSquareBase(currentPos, MAX_MULTIBLOCK_DISTANCE, MAX_MULTIBLOCK_DISTANCE);
-    return new HashSet<BlockPos>(blocks.stream().filter(pos -> world.getTileEntity(pos) instanceof TileEnderShelf).collect(Collectors.toSet()));
+    Map<BlockPos, Integer> connectedShelves = findConnectedShelves(new HashMap<BlockPos, Integer>(), world, currentPos, 0);
+    List<BlockPos> validCuboid = UtilShape.cubeSquareBase(currentPos, MAX_CUBOID_SIZE, MAX_CUBOID_SIZE);
+    return connectedShelves.keySet().stream().filter(validCuboid::contains).collect(Collectors.toSet());
   }
 
   private int findMatchingSlot(TileEnderShelf shelf, ItemStack book) {
