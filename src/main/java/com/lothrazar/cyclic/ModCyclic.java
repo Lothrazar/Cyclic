@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.LogManager;
+import com.lothrazar.cyclic.compat.curios.CuriosRegistry;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
 import com.lothrazar.cyclic.event.WorldGenEvents;
 import com.lothrazar.cyclic.registry.CommandRegistry;
-import com.lothrazar.cyclic.registry.CuriosRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;

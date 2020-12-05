@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.jei;
+package com.lothrazar.cyclic.compat.jei;
 
 import java.util.ArrayList;
 import java.util.Collections;

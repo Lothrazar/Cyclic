@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.jei;
+package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
-public class CyclicJEI implements IModPlugin {
+public class CyclicPluginJEI implements IModPlugin {
 
   private ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "jei");
 
