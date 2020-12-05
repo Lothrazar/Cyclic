@@ -29,6 +29,12 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     this.shelf = shelf;
   }
 
+  public ItemStack emptySlot(int slot) {
+    ItemStack returnStack = this.getStackInSlot(slot);
+    this.stacks.set(slot, ItemStack.EMPTY);
+    return returnStack;
+  }
+
   @Override
   public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
     return !isFakeSlot(slot) && stack.getItem() == Items.ENCHANTED_BOOK && EnchantedBookItem.getEnchantments(stack).size() == 1;
@@ -36,13 +42,13 @@ public class EnderShelfItemHandler extends ItemStackHandler {
 
   @Override
   protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-    return isFakeSlot(slot) ? 0 : 64;
+    return isFakeSlot(slot) ? 0 : 16;
   }
 
   @Nonnull
   @Override
   public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-    System.out.println("Trying to insert into slot " + slot);
+    //System.out.println("Trying to insert into slot " + slot);
     AtomicReference<ItemStack> remaining = new AtomicReference<>(ItemStack.EMPTY);
     if (isFakeSlot(slot)) { //The last slot is a "fake slot" for handling multiblock insert
       BlockPos newPos = findShelfForInsert(stack);
@@ -59,9 +65,9 @@ public class EnderShelfItemHandler extends ItemStackHandler {
         });
       }
     }
-    if (isFakeSlot(slot) && !remaining.get().isEmpty())
-      remaining.set(super.insertItem(slot, remaining.get(), simulate));
-    else if (!isFakeSlot(slot))
+    //if (isFakeSlot(slot) && !remaining.get().isEmpty())
+      //remaining.set(super.insertItem(slot, remaining.get(), simulate));
+    if (!isFakeSlot(slot))
       remaining.set(super.insertItem(slot, stack, simulate));
     if (!this.shelf.getWorld().isRemote && !simulate) {
       PacketRegistry.sendToAllClients(this.shelf.getWorld(), new PacketTileInventory(this.shelf.getPos(), slot, this.getStackInSlot(slot), PacketTileInventory.TYPE.SET));
@@ -106,7 +112,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
       return false;
     }).findFirst();
     BlockPos finals = possibleOtherDestination.orElse(shelvesWithFreeSlots.stream().findFirst().orElse(originalPos));
-    System.out.println("Going to try " + finals.toString());
+    //System.out.println("Going to try " + finals.toString());
     return finals;
   }
 

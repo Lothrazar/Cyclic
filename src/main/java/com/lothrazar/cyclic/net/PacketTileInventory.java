@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -37,8 +38,15 @@ public class PacketTileInventory extends PacketBase {
       PlayerEntity player = ModCyclic.proxy.getClientPlayer();
       TileEntity tile = player.world.getTileEntity(message.blockPos);
       tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-        if (message.type == TYPE.SET)
-          h.extractItem(message.slot, h.getSlotLimit(message.slot), false);
+        if (message.type == TYPE.SET && h instanceof EnderShelfItemHandler) {
+          ItemStack was = h.getStackInSlot(message.slot);
+          ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
+          //System.out.printf("Extracting %d %s before inserting%n", h.getSlotLimit(message.slot), message.itemStack.getOrCreateTag().getString());
+          //System.out.printf("Was: %d of %s. Now %d of %s. Extracted %d of %s%n",
+          //        was.getCount(), was.getOrCreateTag().getString(),
+          //        h.getStackInSlot(message.slot).getCount(), h.getStackInSlot(message.slot).getOrCreateTag().getString(),
+          //        extracted.getCount(), extracted.getOrCreateTag().getString());
+        }
         h.insertItem(message.slot, message.itemStack, false);
       });
     });
@@ -51,7 +59,7 @@ public class PacketTileInventory extends PacketBase {
     p.slot = buf.readInt();
     p.itemStack = buf.readItemStack();
     p.type = buf.readEnumValue(TYPE.class);
-    System.out.printf("received from server: %s in slot %d, %s with tag %s with count %d%n", p.blockPos.toString(), p.slot, p.itemStack.getDisplayName().getString(), p.itemStack.getOrCreateTag().getString(), p.itemStack.getCount());
+    //System.out.printf("%s received from server: %s in slot %d, %s with tag %s with count %d%n", p.type.toString(), p.blockPos.toString(), p.slot, p.itemStack.getDisplayName().getString(), p.itemStack.getOrCreateTag().getString(), p.itemStack.getCount());
     return p;
   }
 
