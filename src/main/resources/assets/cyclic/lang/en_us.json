@@ -359,7 +359,7 @@
     "item.cyclic.carbon_paper.deleted": "Deleted sign data",
     "item.cyclic.carbon_paper.guide": "Carbon Paper can be used to copy the contents of one sign to another. The copied text can be cleaned off of the Carbon Paper by using it on a Cauldron.",
 
-    "item.cyclic.antigravity": "Anti-gravity Ring",
+    "item.cyclic.antigravity": "Anti-Gravity Ring",
     "item.cyclic.antigravity.tooltip": "Ignore gravity and walk on air",
     "item.cyclic.antigravity.guide": "When active, you can jump without falling at the expense of durability while you remain in the air.",
     "item.cyclic.charm_antidote": "Antidote Charm",
@@ -691,7 +691,7 @@
     "item.cyclic.spelunker.tooltip": "Search for underground caves",
     "item.cyclic.spelunker.guide": "Searches out for empty space behind the block you click on.  Works in any direction.  If you hit the top of a block it searches down, if you hit the side it searches behind.  Always in a straight line.  Great for finding caves while branch mining.",
 
-    "item.cyclic.torch_launcher": "Torch launcher",
+    "item.cyclic.torch_launcher": "Torch Launcher",
     "item.cyclic.torch_launcher.tooltip": "Spawns in a torch wherever it lands",
     "item.cyclic.torch_launcher.guide": "The Torch Launcher shoots a torch with considerable force in the direction you are facing, placing the torch wherever it lands.$(br2)Automatically consumes torches in your inventory to refill itself.",
     "item.cyclic.trade": "Merchant Almanac",
