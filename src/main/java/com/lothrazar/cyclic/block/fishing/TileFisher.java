@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.fishing;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -11,6 +12,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
@@ -27,6 +32,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
@@ -36,15 +43,20 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileFisher extends TileEntityBase implements ITickableTileEntity {
+public class TileFisher extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int RADIUS = 12;
   public static final INamedTag<Item> RODS = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "fishing_rods").toString());
   private static final double CHANCE = 0.1;
   LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
+  static enum Fields {
+    REDSTONE;
+  }
+
   public TileFisher() {
     super(TileRegistry.fisher);
+    this.needsRedstone = 0;
   }
 
   private IItemHandler createHandler() {
@@ -55,6 +67,17 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity {
         return stack.getItem().isIn(RODS);
       }
     };
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerFisher(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
@@ -134,10 +157,20 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
+    }
+  }
 
   @Override
   public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case REDSTONE:
+        return this.needsRedstone;
+    }
     return 0;
   }
 }

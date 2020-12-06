@@ -17,6 +17,7 @@ import com.lothrazar.cyclic.block.disenchant.ContainerDisenchant;
 import com.lothrazar.cyclic.block.dropper.ContainerDropper;
 import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.fan.ContainerFan;
+import com.lothrazar.cyclic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
 import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
@@ -141,8 +142,13 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerShapedata(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("computer_shape"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerFisher(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("fisher"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":fisher")
+  public static ContainerType<ContainerFisher> fisher;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
   public static ContainerType<ContainerShapedata> computer_shape;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
