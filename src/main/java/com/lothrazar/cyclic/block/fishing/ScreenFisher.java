@@ -28,7 +28,7 @@ public class ScreenFisher extends ScreenBase<ContainerFisher> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
   }
 
   @Override

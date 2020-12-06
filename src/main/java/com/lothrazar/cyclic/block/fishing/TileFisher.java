@@ -105,6 +105,9 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
 
   @Override
   public void tick() {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      return;
+    }
     inventory.ifPresent(inv -> {
       ItemStack stack = inv.getStackInSlot(0);
       if (stack.getItem().isIn(RODS)) {
