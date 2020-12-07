@@ -26,12 +26,6 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
     super(d);
   }
 
-  //  static final float[] laserColor = new float[] { 0.04F, 0.99F, 0F };
-  //  static final double rotationTime = 0;
-  //  static final double beamWidth = 0.02;
-  //  static final float alpha = 0.9F;
-  static final int count = 4;
-
   @Override
   public void render(TileLaser te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     //    if (te.getField(TileHarvester.Fields.RENDER.ordinal()) == 1) {
@@ -54,61 +48,38 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
     //    }
     matrixStackIn.push();
     Matrix4f positionMatrix2 = matrixStackIn.getLast().getMatrix();
-    long gameTime = tile.getWorld().getGameTime();
+    //    long gameTime = ;
     float diffX = 0.5F;//targetBlock.getX() + .5f - tile.getPos().getX();
     float diffY = 0.5F;//targetBlock.getY() + .5f - tile.getPos().getY();
     float diffZ = 0.5F;//targetBlock.getZ() + .5f - tile.getPos().getZ();  
     //    Direction facing = tile.getCurrentFacing();
-    Vector3f startLaser = new Vector3f(0.5F, 0.5F, 0.5F);
-    //    Vector3f startLaser = new Vector3f(0.5f + facing.getXOffset() / 2, .5f + facing.getYOffset() / 2, 0.5f + facing.getZOffset() / 2);
-    //    Vector3f endLaser = new Vector3f(diffX, diffY, diffZ);
-    //    float shotCooldown = 1.5F;//?? (1 - ((float) tile.getShootCooldown() / (tile.getMaxShootCooldown() + 1)));
-    //    if (shotCooldown > 0) {
-    //      Vector3f addition = new Vector3f(facing.getXOffset() * shotCooldown, facing.getYOffset() * shotCooldown, facing.getZOffset() * shotCooldown);
-    //      endLaser.add(addition);
-    //    }
-    /* if (tile.isMelting()) { builder = bufferIn.getBuffer(OurRenderTypes.LASER_MAIN_BEAM); drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 1, 0, 0, 1f, 0.5f, v, v + diffY * 1.5,
-     * tile); builder = bufferIn.getBuffer(OurRenderTypes.LASER_MAIN_CORE); drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 1, 1, 1, 1f, 0.25f, v, v + diffY - 2.5 * 1.5, tile); } else
-     * { builder = bufferIn.getBuffer(OurRenderTypes.LASER_MAIN_BEAM); drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 0, 1, 1, 1f, 0.5f, v, v + diffY * 1.5, tile); builder =
-     * bufferIn.getBuffer(OurRenderTypes.LASER_MAIN_CORE); drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 0, 0.65f, 1, 1f, 0.25f, v, v + diffY - 2.5 * 1.5, tile); } */
-    //startLaser = new Vector3f(diffX, diffY, diffZ);
-    //    Set<BlockPos> blocks = tile.getClearBlocksQueue();
-    //    for (BlockPos pos : blocks) {
+    Vector3f to = new Vector3f(0.5F, 0.5F, 0.5F);
     //this is the REAL targetblock, above is fake news
     BlockPos pos = tile.laserTarget;
+    BlockPos tilePos = tile.getPos();
     if (pos == null || pos.equals(BlockPos.ZERO)) {
-      pos = tile.getPos().up(6);//.west(5);//HACK TEST 
+      pos = tilePos.up(6);//.west(5);//HACK TEST 
       // return;
     }
     else {
       //      ModCyclic.LOGGER.info("VALID LASER " + pos);
     }
-    diffX = pos.getX() + .5f - tile.getPos().getX();
-    diffY = pos.getY() + .5f - tile.getPos().getY();
-    diffZ = pos.getZ() + .5f - tile.getPos().getZ();
-    Vector3f endLaser = new Vector3f(diffX, diffY, diffZ);
-    //      if (tile.isMelting()) {
-    IVertexBuilder builder;
-    double v = gameTime * 0.04;
-    builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_BEAM);
-    drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 1, 0, 0, 1f, 0.1f, v, v + diffY * 1.1, tile);
-    builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_CORE);
-    drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 1, 1, 1, 1f, 0.02f, v, v + diffY - 2.5 * 1.5, tile);
-    //      }
-    //      else {
-    //        builder = bufferIn.getBuffer(OurRenderTypes.LASER_MAIN_BEAM);
-    //        drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 0, 1, 1, 1f, 0.1f, v, v + diffY * 1.5, tile);
-    //        builder = bufferIn.getBuffer(OurRenderTypes.LASER_MAIN_CORE);
-    //        drawMiningLaser(builder, positionMatrix2, endLaser, startLaser, 0, 0.65f, 1, 1f, 0.05f, v, v + diffY - 2.5 * 1.5, tile);
-    //      }
-    //    }
+    diffX = pos.getX() + .5F - tilePos.getX();
+    diffY = pos.getY() + .5F - tilePos.getY();
+    diffZ = pos.getZ() + .5F - tilePos.getZ();
+    Vector3f from = new Vector3f(diffX, diffY, diffZ);
+    double v = tile.getWorld().getGameTime() * 0.04;
+    IVertexBuilder builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_BEAM);
+    drawMiningLaser(builder, positionMatrix2, from, to, tile.getRed(), tile.getGreen(), tile.getBlue(), tile.getAlpha(), tile.getThick(), v, v + diffY * 1.1, tile);
+    //        builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_CORE);
+    //        drawMiningLaser(builder, positionMatrix2, from, startLaser, 1, 1, 1, 1f, 0.02f, v, v + diffY - 2.5 * 1.5, tile);
     matrixStackIn.pop();
   }
 
-  public static Vector3f adjustBeamToEyes(Vector3f from, Vector3f to, TileLaser tile) {
+  public static Vector3f adjustBeamToEyes(Vector3f from, Vector3f to, BlockPos tile) {
     //This method takes the player's position into account, and adjusts the beam so that its rendered properly whereever you stand
     PlayerEntity player = Minecraft.getInstance().player;
-    Vector3f P = new Vector3f((float) player.getPosX() - tile.getPos().getX(), (float) player.getPosYEye() - tile.getPos().getY(), (float) player.getPosZ() - tile.getPos().getZ());
+    Vector3f P = new Vector3f((float) player.getPosX() - tile.getX(), (float) player.getPosYEye() - tile.getY(), (float) player.getPosZ() - tile.getZ());
     Vector3f PS = from.copy();
     PS.sub(P);
     Vector3f SE = to.copy();
@@ -120,7 +91,7 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
   }
 
   public static void drawMiningLaser(IVertexBuilder builder, Matrix4f positionMatrix, Vector3f from, Vector3f to, float r, float g, float b, float alpha, float thickness, double v1, double v2, TileLaser tile) {
-    Vector3f adjustedVec = adjustBeamToEyes(from, to, tile);
+    Vector3f adjustedVec = adjustBeamToEyes(from, to, tile.getPos());
     adjustedVec.mul(thickness); //Determines how thick the beam is
     Vector3f p1 = from.copy();
     p1.add(adjustedVec);
