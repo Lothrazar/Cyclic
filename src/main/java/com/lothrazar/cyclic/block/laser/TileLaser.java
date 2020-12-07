@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.data.OffsetEnum;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -23,6 +24,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -30,14 +32,16 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileLaser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  int laserTimer;
   private int red = 255;
   private int green = 0;
   private int blue = 0;
   private int alpha = 90;//1-100 will become 0-1
+  OffsetEnum xOffset = OffsetEnum.CENTER;
+  OffsetEnum yOffset = OffsetEnum.CENTER;
+  OffsetEnum zOffset = OffsetEnum.CENTER;
 
   public static enum Fields {
-    REDSTONE, TIMER, R, G, B, ALPHA;//, PULSE, EXTENDING, XOFF, YOFF, ZOFF;
+    REDSTONE, TIMER, R, G, B, ALPHA, XOFF, YOFF, ZOFF;//, PULSE, EXTENDING, ;
   }
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
@@ -89,11 +93,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   }
 
   @Override
-  public void tick() {
-    if (this.laserTimer > 0) {
-      laserTimer--;
-    }
-  }
+  public void tick() {}
 
   @Override
   @OnlyIn(Dist.CLIENT)
@@ -120,14 +120,12 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
       //        return isPulsing ? 1 : 0;
       //      case EXTENDING:
       //        return isExtending ? 1 : 0;
-      //      case XOFF:
-      //        return this.xOffset.ordinal();
-      //      case YOFF:
-      //        return this.yOffset.ordinal();
-      //      case ZOFF:
-      //        return this.zOffset.ordinal();
-      //      default:
-      //      break;
+      case XOFF:
+        return this.xOffset.ordinal();
+      case YOFF:
+        return this.yOffset.ordinal();
+      case ZOFF:
+        return this.zOffset.ordinal();
     }
     return -1;
   }
@@ -159,21 +157,21 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
       //      case EXTENDING:
       //        isExtending = (value == 1);
       //      break;
-      //      case XOFF:
-      //        if (value >= OffsetEnum.values().length)
-      //          value = 0;
-      //        this.xOffset = OffsetEnum.values()[value];
-      //      break;
-      //      case YOFF:
-      //        if (value >= OffsetEnum.values().length)
-      //          value = 0;
-      //        this.yOffset = OffsetEnum.values()[value];
-      //      break;
-      //      case ZOFF:
-      //        if (value >= OffsetEnum.values().length)
-      //          value = 0;
-      //        this.zOffset = OffsetEnum.values()[value];
-      //      break;
+      case XOFF:
+        if (value >= OffsetEnum.values().length)
+          value = 0;
+        this.xOffset = OffsetEnum.values()[value];
+      break;
+      case YOFF:
+        if (value >= OffsetEnum.values().length)
+          value = 0;
+        this.yOffset = OffsetEnum.values()[value];
+      break;
+      case ZOFF:
+        if (value >= OffsetEnum.values().length)
+          value = 0;
+        this.zOffset = OffsetEnum.values()[value];
+      break;
       //      default:
       //      break;
     }
@@ -181,7 +179,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    laserTimer = tag.getInt("lt");
+    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     red = tag.getInt("red");
     green = tag.getInt("green");
     blue = tag.getInt("blue");
@@ -191,7 +189,10 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    tag.putInt("lt", laserTimer);
+    inventory.ifPresent(h -> {
+      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      tag.put("inv", compound);
+    });
     tag.putInt("red", red);
     tag.putInt("green", green);
     tag.putInt("blue", blue);

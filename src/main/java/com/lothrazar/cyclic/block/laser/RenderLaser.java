@@ -39,14 +39,16 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
   public static void drawAllMiningLasers(TileLaser tile, MatrixStack matrixStackIn, float f, IRenderTypeBuffer bufferIn) {
     matrixStackIn.push();
     Matrix4f positionMatrix2 = matrixStackIn.getLast().getMatrix();
-    Vector3f to = new Vector3f(0.5F, 0.5F, 0.5F);
-    //this is the REAL targetblock, above is fake news
+    Vector3f to = new Vector3f(tile.xOffset.getOffset(), tile.yOffset.getOffset(), tile.zOffset.getOffset());
+    //target that is saved
+    //TODO: do this four more times, need a method split here
     BlockPos posTarget = tile.getPosTarget();
-    BlockPos tilePos = tile.getPos();
     if (posTarget == null || posTarget.equals(BlockPos.ZERO)) {
       //      posTarget = tilePos.up(6);//.west(5);//HACK TEST 
       return;
     }
+    //diff between target and tile, targets always centered
+    BlockPos tilePos = tile.getPos();
     float diffX = posTarget.getX() + .5F - tilePos.getX();
     float diffY = posTarget.getY() + .5F - tilePos.getY();
     float diffZ = posTarget.getZ() + .5F - tilePos.getZ();
