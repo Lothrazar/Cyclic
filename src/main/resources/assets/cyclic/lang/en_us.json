@@ -1405,9 +1405,9 @@
     "item.cyclic.boomerang_damage.tooltip": "Gathers items and attacks your enemies",
     "item.cyclic.boomerang_damage.guide": "Gathers items and attacks your enemies",
 
-    "block.laser": "Laser Cell",
-    "block.laser.tooltip": "Render harmless lasers",
-    "block.laser.guide": "Use GPS Markers to target lasers and heavily customize their appearance.",
+    "block.cyclic.laser": "Laser Cell",
+    "block.cyclic.laser.tooltip": "Render harmless lasers",
+    "block.cyclic.laser.guide": "Use GPS Markers to target lasers and heavily customize their appearance.",
 
     "block.water_candle": "Water Candle",
     "block.water_candle.tooltip": "Increase nearby spawns when lit",

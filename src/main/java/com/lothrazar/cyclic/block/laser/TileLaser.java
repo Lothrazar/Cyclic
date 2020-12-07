@@ -1,27 +1,35 @@
 package com.lothrazar.cyclic.block.laser;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilNBT;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileLaser extends TileEntityBase implements ITickableTileEntity {
+public class TileLaser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  BlockPos laserTarget;
   int laserTimer;
   private int red = 255;
   private int green = 0;
@@ -38,14 +46,33 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity {
     super(TileRegistry.laser);
   }
 
+  @Override
+  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return inventory.cast();
+    }
+    return super.getCapability(cap, side);
+  }
+
   private IItemHandler createHandler() {
-    return new ItemStackHandler(1) {
+    return new ItemStackHandler(4) {
 
       @Override
       public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return stack.getItem() instanceof LocationGpsCard;
       }
     };
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerLaser(i, world, pos, playerInventory, playerEntity);
   }
 
   BlockPos getPosTarget() {
@@ -66,7 +93,6 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity {
     if (this.laserTimer > 0) {
       laserTimer--;
     }
-    laserTarget = this.pos.up(3).west(7);//testing hack
   }
 
   @Override
@@ -113,7 +139,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity {
         this.timer = value;
       break;
       case REDSTONE:
-        this.needsRedstone = value;
+        this.needsRedstone = value % 2;
       break;
       case B:
         blue = value;
@@ -155,7 +181,6 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    this.laserTarget = UtilNBT.getBlockPos(tag);
     laserTimer = tag.getInt("lt");
     red = tag.getInt("red");
     green = tag.getInt("green");
@@ -166,10 +191,6 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    if (laserTarget == null) {
-      laserTarget = BlockPos.ZERO;
-    }
-    UtilNBT.putBlockPos(tag, laserTarget);
     tag.putInt("lt", laserTimer);
     tag.putInt("red", red);
     tag.putInt("green", green);

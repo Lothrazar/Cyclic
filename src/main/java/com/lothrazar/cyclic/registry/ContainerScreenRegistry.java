@@ -21,6 +21,7 @@ import com.lothrazar.cyclic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
 import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
+import com.lothrazar.cyclic.block.laser.ContainerLaser;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.miner.ContainerMiner;
 import com.lothrazar.cyclic.block.peatfarm.ContainerPeatFarm;
@@ -113,8 +114,6 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerFan(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fan"));
-    //
-    //
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerPotion(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("beacon"));
@@ -145,8 +144,13 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerFisher(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fisher"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerLaser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("laser"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":laser")
+  public static ContainerType<ContainerLaser> laser;
   @ObjectHolder(ModCyclic.MODID + ":fisher")
   public static ContainerType<ContainerFisher> fisher;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
