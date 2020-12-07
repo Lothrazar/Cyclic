@@ -32,6 +32,7 @@ import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
+import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -141,6 +142,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerShapedata(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
     }).setRegistryName("computer_shape"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerWorkbench(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+    }).setRegistryName("workbench"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
@@ -206,4 +210,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerMiner> miner;
   @ObjectHolder(ModCyclic.MODID + ":screen")
   public static ContainerType<ContainerScreentext> screen;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static ContainerType<ContainerWorkbench> workbench;
 }

@@ -45,6 +45,7 @@ import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessRec;
 import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessTransmit;
+import com.lothrazar.cyclic.block.workbench.TileWorkbench;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -105,6 +106,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
     r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
+    r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
@@ -196,4 +198,6 @@ public class TileRegistry {
   public static TileEntityType<TileUncraft> uncrafter;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
   public static TileEntityType<TileCrafter> crafter;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static TileEntityType<TileCrafter> workbench;
 }

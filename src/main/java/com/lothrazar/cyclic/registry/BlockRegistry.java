@@ -64,6 +64,7 @@ import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
 import com.lothrazar.cyclic.block.user.BlockUser;
 import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessTransmit;
+import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -214,6 +215,8 @@ public class BlockRegistry {
   public static Block unbreakable_block;
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
   public static Block unbreakable_reactive;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static Block workbench;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -289,6 +292,7 @@ public class BlockRegistry {
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
+    r.register(new BlockWorkbench(Block.Properties.create(Material.ROCK)).setRegistryName("workbench"));
     r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block"));//stable, only changes with player interaction
     r.register(new UnbreakablePoweredBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_reactive"));//reactive and unstable, ignores players and reads redstone powered state from world in TE
   }
