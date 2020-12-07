@@ -44,6 +44,7 @@ import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
 import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
+import com.lothrazar.cyclic.block.laser.BlockLaser;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
 import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
@@ -214,10 +215,13 @@ public class BlockRegistry {
   public static Block unbreakable_block;
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
   public static Block unbreakable_reactive;
+  @ObjectHolder(ModCyclic.MODID + ":laser")
+  public static Block laser;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockLaser(Block.Properties.create(Material.IRON)).setRegistryName("laser"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_emerald"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_diamond"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), true).setRegistryName("apple_sprout"));

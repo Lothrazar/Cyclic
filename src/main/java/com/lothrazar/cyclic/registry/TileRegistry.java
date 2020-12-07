@@ -28,6 +28,7 @@ import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.block.laser.TileLaser;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
@@ -105,6 +106,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
     r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
+    r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.laser).build(null).setRegistryName("laser"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
@@ -196,4 +198,7 @@ public class TileRegistry {
   public static TileEntityType<TileUncraft> uncrafter;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
   public static TileEntityType<TileCrafter> crafter;
+  //
+  @ObjectHolder(ModCyclic.MODID + ":laser")
+  public static TileEntityType<TileLaser> laser;
 }
