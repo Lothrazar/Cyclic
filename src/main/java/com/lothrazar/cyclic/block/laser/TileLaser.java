@@ -42,12 +42,13 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   private int red = 255;
   private int green = 0;
   private int blue = 0;
-  private int alpha = 90;//1-100 will become 0-1
-  private int thick = 30;//1-50 
+  private int alpha = 70;//1-100 will become 0-1
+  private int thick = 8;//1-20 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileLaser() {
     super(TileRegistry.laser);
+    this.needsRedstone = 0;
   }
 
   @Override
