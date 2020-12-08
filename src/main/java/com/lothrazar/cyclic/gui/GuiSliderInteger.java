@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
@@ -38,6 +40,18 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     this.min = min;
     this.max = max;
     setSliderValueActual((int) initialVal);
+  }
+
+  /**
+   * exact copy of super() but replaced hardcoded 20 with this.height
+   */
+  @Override
+  protected void renderBg(MatrixStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
+    minecraft.getTextureManager().bindTexture(WIDGETS_LOCATION);
+    RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    int i = (this.isHovered() ? 2 : 1) * 20;
+    this.blit(matrixStack, this.x + (int) (this.sliderValue * (this.width - 8)), this.y, 0, 46 + i, 4, this.height);
+    this.blit(matrixStack, this.x + (int) (this.sliderValue * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, this.height);
   }
 
   /**

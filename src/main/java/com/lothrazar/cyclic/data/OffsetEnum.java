@@ -26,12 +26,12 @@ public enum OffsetEnum {
 
   TOP, CENTER, BOTTOM;
 
-  public double getOffset() {
+  public float getOffset() {
     switch (this) {
       case CENTER:
-        return 0.5;
+        return 0.5F;
       case TOP:
-        return 1.0;
+        return 1;
       default:
       case BOTTOM:
         return 0;
