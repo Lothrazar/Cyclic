@@ -240,10 +240,9 @@ public class BlockRegistry {
     r.register(new PeatBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
     r.register(new PeatFuelBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
     r.register(new BlockPeatFarm(Block.Properties.create(Material.ROCK)).setRegistryName("peat_farm"));
-    r.register(new BlockTerraPreta(Block.Properties.create(Material.EARTH)).setRegistryName("terra_preta"));
+    r.register(new BlockTerraPreta(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("terra_preta"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
-    //    r.register(new BlockCrafter(Block.Properties.create(Material.ROCK)).setRegistryName("crafter"));
     r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
     r.register(new BlockCask(Block.Properties.create(Material.WOOD)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.WOOD)).setRegistryName("crate"));
