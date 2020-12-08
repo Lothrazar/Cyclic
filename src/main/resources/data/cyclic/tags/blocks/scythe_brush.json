@@ -1,15 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:underwater_bonemeals",
-    "#minecraft:coral_plants",
-	"minecraft:grass",
-	"minecraft:sugar_cane",
-	"minecraft:bamboo",
-	"minecraft:tall_grass",
-	"minecraft:fern",
-	"minecraft:dead_bush",
-	"minecraft:seagrass",
-	"minecraft:large_fern"
+    "#cyclic:plants"
   ]
 }

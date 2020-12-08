@@ -94,11 +94,11 @@
     "block.cyclic.water_candle.guide": "The Water Candle can be lit with Flint and Steel to increase the rate at which mobs naturally spawn nearby.$(br2)For the candle to work, mobs must be able to spawn naturally in its vicinity.$(br)In most cases, this means it must be dark enough to spawn mobs!",
     "block.cyclic.water_candle.guide0": "When lit, has a random chance to extinguish itself while spawning a mob. When this happens, you must relight the candle for it to continue spawning.",
 
-    "block.cyclic.unbreakable_block": "Unbreakable Block",
-    "block.cyclic.unbreakable_block.tooltip": "Right-click with Redstone to toggle",
+    "block.cyclic.unbreakable_block": "Stable Quantum Bedrock",
+    "block.cyclic.unbreakable_block.tooltip": "Right-click with Redstone to toggle Unbreakable state",
     "block.cyclic.unbreakable_block.guide": "Place in the world and then right-click with Redstone dust, Redstone Torch, or a Redstone Block in hand to toggle whether this block can be broken.",
 
-    "block.cyclic.unbreakable_reactive": "Reactive Unbreakable Block",
+    "block.cyclic.unbreakable_reactive": "Reactive Quantum Bedrock",
     "block.cyclic.unbreakable_reactive.tooltip": "Unbreakable while it has redstone power, can mine it otherwise",
     "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
 
