@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.laser;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -16,7 +17,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
- * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
+ * laser rendering by direwolf20-MC from this MIT project
+ * 
+ * 
+ * https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
  *
  */
 @OnlyIn(Dist.CLIENT)
@@ -31,37 +35,15 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
     if (te.requiresRedstone() && !te.isPowered()) {
       return;
     }
-    // fallback 
-    drawAllMiningLasers(te, matrixStack, partialTicks, iRenderTypeBuffer);
-    //        UtilRender.renderLaser(new LaserConfig(te.laserTarget, te.getPos(), rotationTime, alpha, beamWidth, laserColor), matrixStack);
-  }
-
-  public static void drawAllMiningLasers(TileLaser tile, MatrixStack matrixStackIn, float f, IRenderTypeBuffer bufferIn) {
-    matrixStackIn.push();
-    Matrix4f positionMatrix2 = matrixStackIn.getLast().getMatrix();
-    Vector3f to = new Vector3f(tile.xOffset.getOffset(), tile.yOffset.getOffset(), tile.zOffset.getOffset());
-    //target that is saved
-    //TODO: do this four more times, need a method split here
-    BlockPos posTarget = tile.getPosTarget();
-    if (posTarget == null || posTarget.equals(BlockPos.ZERO)) {
-      //      posTarget = tilePos.up(6);//.west(5);//HACK TEST 
-      return;
+    try {
+      draw(te, matrixStack, iRenderTypeBuffer);
     }
-    //diff between target and tile, targets always centered
-    BlockPos tilePos = tile.getPos();
-    float diffX = posTarget.getX() + .5F - tilePos.getX();
-    float diffY = posTarget.getY() + .5F - tilePos.getY();
-    float diffZ = posTarget.getZ() + .5F - tilePos.getZ();
-    Vector3f from = new Vector3f(diffX, diffY, diffZ);
-    double v = tile.getWorld().getGameTime() * 0.04;
-    IVertexBuilder builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_BEAM);
-    drawMiningLaser(builder, positionMatrix2, from, to, tile.getRed(), tile.getGreen(), tile.getBlue(), tile.getAlpha(), tile.getThick(), v, v + diffY * 1.1, tilePos);
-    //        builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_CORE);
-    //        drawMiningLaser(builder, positionMatrix2, from, startLaser, 1, 1, 1, 1f, 0.02f, v, v + diffY - 2.5 * 1.5, tile);
-    matrixStackIn.pop();
+    catch (Exception e) {
+      ModCyclic.LOGGER.error("RenderLaser.java ", e);
+    }
   }
 
-  public static Vector3f adjustBeamToEyes(Vector3f from, Vector3f to, BlockPos tile) {
+  private static Vector3f adjustBeamToEyes(Vector3f from, Vector3f to, BlockPos tile) {
     //This method takes the player's position into account, and adjusts the beam so that its rendered properly whereever you stand
     PlayerEntity player = Minecraft.getInstance().player;
     Vector3f P = new Vector3f((float) player.getPosX() - tile.getX(), (float) player.getPosYEye() - tile.getY(), (float) player.getPosZ() - tile.getZ());
@@ -75,7 +57,30 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
     return adjustedVec;
   }
 
-  public static void drawMiningLaser(IVertexBuilder builder, Matrix4f positionMatrix, Vector3f from, Vector3f to, float r, float g, float b, float alpha, float thickness, double v1, double v2, BlockPos tilePos) {
+  public static void draw(TileLaser tile, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn) throws Exception {
+    BlockPos posTarget = tile.getPosTarget();
+    if (posTarget == null || posTarget.equals(BlockPos.ZERO)) {
+      return;
+    }
+    //now render
+    matrixStackIn.push();
+    Matrix4f positionMatrix = matrixStackIn.getLast().getMatrix();
+    Vector3f to = new Vector3f(tile.xOffset.getOffset(), tile.yOffset.getOffset(), tile.zOffset.getOffset());
+    //diff between target and tile, targets always centered
+    BlockPos tilePos = tile.getPos();
+    float diffX = posTarget.getX() + .5F - tilePos.getX();
+    float diffY = posTarget.getY() + .5F - tilePos.getY();
+    float diffZ = posTarget.getZ() + .5F - tilePos.getZ();
+    Vector3f from = new Vector3f(diffX, diffY, diffZ);
+    double v1 = tile.getWorld().getGameTime() * 0.04;
+    IVertexBuilder builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_BEAM);
+    drawDirewolfLaser(builder, positionMatrix, from, to, tile.getRed(), tile.getGreen(), tile.getBlue(), tile.getAlpha(), tile.getThick(), v1, v1, tilePos);
+    //TODO: boolean to toggle core
+    drawDirewolfLaser(builder, positionMatrix, from, to, 1, 1, 1, tile.getAlpha(), 0.01F, v1, v1, tilePos);
+    matrixStackIn.pop();
+  }
+
+  public static void drawDirewolfLaser(IVertexBuilder builder, Matrix4f positionMatrix, Vector3f from, Vector3f to, float r, float g, float b, float alpha, float thickness, double v1, double v2, BlockPos tilePos) {
     Vector3f adjustedVec = adjustBeamToEyes(from, to, tilePos);
     adjustedVec.mul(thickness); //Determines how thick the beam is
     Vector3f p1 = from.copy();

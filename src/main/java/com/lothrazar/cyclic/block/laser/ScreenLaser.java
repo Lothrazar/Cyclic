@@ -14,6 +14,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
 
   public ScreenLaser(ContainerLaser screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
+    this.ySize = 256;
   }
 
   @Override
@@ -69,7 +70,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     this.drawSlot(ms, 151, 7, TextureRegistry.SLOT_GPS, 18);
   }
 }

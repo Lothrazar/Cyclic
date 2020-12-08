@@ -24,7 +24,7 @@ public class ContainerLaser extends ContainerBase {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 152, 8));
     });
-    layoutPlayerInventorySlots(8, 84);
+    layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileLaser.Fields.values().length);
   }
 
