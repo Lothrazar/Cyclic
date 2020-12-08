@@ -32,18 +32,18 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileLaser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  public static enum Fields {
+    REDSTONE, THICK, RED, GREEN, BLUE, ALPHA, XOFF, YOFF, ZOFF;
+  }
+
+  protected OffsetEnum xOffset = OffsetEnum.CENTER;
+  protected OffsetEnum yOffset = OffsetEnum.CENTER;
+  protected OffsetEnum zOffset = OffsetEnum.CENTER;
   private int red = 255;
   private int green = 0;
   private int blue = 0;
   private int alpha = 90;//1-100 will become 0-1
-  OffsetEnum xOffset = OffsetEnum.CENTER;
-  OffsetEnum yOffset = OffsetEnum.CENTER;
-  OffsetEnum zOffset = OffsetEnum.CENTER;
-
-  public static enum Fields {
-    REDSTONE, TIMER, R, G, B, ALPHA, XOFF, YOFF, ZOFF;//, PULSE, EXTENDING, ;
-  }
-
+  private int thick = 30;//1-50 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
 
   public TileLaser() {
@@ -104,22 +104,18 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        return this.timer;
+      case THICK:
+        return this.thick;
       case REDSTONE:
         return this.needsRedstone;
-      case B:
+      case BLUE:
         return blue;
-      case G:
+      case GREEN:
         return green;
-      case R:
+      case RED:
         return red;
       case ALPHA:
         return alpha;
-      //      case PULSE:
-      //        return isPulsing ? 1 : 0;
-      //      case EXTENDING:
-      //        return isExtending ? 1 : 0;
       case XOFF:
         return this.xOffset.ordinal();
       case YOFF:
@@ -133,30 +129,24 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-      case TIMER:
-        this.timer = value;
+      case THICK:
+        this.thick = value;
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
-      case B:
+      case BLUE:
         blue = value;
       break;
-      case G:
+      case GREEN:
         green = value;
       break;
-      case R:
+      case RED:
         red = value;
       break;
       case ALPHA:
         alpha = value;
       break;
-      //      case PULSE:
-      //        isPulsing = (value == 1);
-      //      break;
-      //      case EXTENDING:
-      //        isExtending = (value == 1);
-      //      break;
       case XOFF:
         if (value >= OffsetEnum.values().length)
           value = 0;
@@ -172,8 +162,6 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
           value = 0;
         this.zOffset = OffsetEnum.values()[value];
       break;
-      //      default:
-      //      break;
     }
   }
 
@@ -184,6 +172,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
     green = tag.getInt("green");
     blue = tag.getInt("blue");
     alpha = tag.getInt("alpha");
+    thick = tag.getInt("thick");
     super.read(bs, tag);
   }
 
@@ -197,6 +186,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
     tag.putInt("green", green);
     tag.putInt("blue", blue);
     tag.putInt("alpha", alpha);
+    tag.putInt("thick", thick);
     return super.write(tag);
   }
 
@@ -213,10 +203,12 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   }
 
   public float getAlpha() {
-    return alpha / 100F;
+    float a = alpha;
+    return a / 100F;
   }
 
   public float getThick() {
-    return 0.1F;
+    float t = thick;
+    return t / 100F;
   }
 }
