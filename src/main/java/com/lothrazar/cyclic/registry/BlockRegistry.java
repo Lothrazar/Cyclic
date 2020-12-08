@@ -211,6 +211,8 @@ public class BlockRegistry {
   public static Block apple_sprout_diamond;
   @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
   public static Block ender_shelf;
+  @ObjectHolder(ModCyclic.MODID + ":ender_controller")
+  public static Block ender_controller;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -286,6 +288,7 @@ public class BlockRegistry {
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
-    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK)).setRegistryName("ender_shelf"));
+    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), false).setRegistryName("ender_shelf"));
+    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), true).setRegistryName("ender_controller"));
   }
 }

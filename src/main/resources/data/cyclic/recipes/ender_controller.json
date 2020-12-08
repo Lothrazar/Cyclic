@@ -1,11 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " o ",
+    "eoe",
     "pbp",
-    " o "
+    "eoe"
   ],
   "key": {
+    "e": {
+      "item": "minecraft:ender_pearl"
+    },
     "o": {
       "tag": "forge:obsidian"
     },
@@ -13,7 +16,7 @@
       "item": "minecraft:purpur_block"
     },
     "b": {
-      "tag": "forge:bookshelves"
+      "item": "cyclic:ender_shelf"
     }
   },
   "result": {

@@ -9,7 +9,8 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:ender_shelf"
+      "recipe": "cyclic:ender_shelf",
+      "text": "block.cyclic.ender_shelf.guide0"
     }
   ]
 }

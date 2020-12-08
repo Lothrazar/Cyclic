@@ -10,6 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -27,12 +28,20 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
+import java.util.Set;
 
 public class BlockEnderShelf extends BlockBase {
+
+  public static BooleanProperty IS_CONTROLLER = BooleanProperty.create("is_controller");
+
   public BlockEnderShelf(Properties properties) {
-    super(properties);
+    this(properties, false);
   }
 
+  public BlockEnderShelf(Properties properties, boolean isController) {
+    super(properties.hardnessAndResistance(1.8F));
+    this.setDefaultState(this.getDefaultState().with(IS_CONTROLLER, isController));
+  }
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
@@ -41,7 +50,7 @@ public class BlockEnderShelf extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.HORIZONTAL_FACING);
+    builder.add(BlockStateProperties.HORIZONTAL_FACING).add(IS_CONTROLLER);
   }
 
   @Override
@@ -58,7 +67,39 @@ public class BlockEnderShelf extends BlockBase {
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
     if (entity != null) {
       world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilStuff.getFacingFromEntityHorizontal(pos, entity)), 2);
+      if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEnderShelf) {
+        TileEnderShelf shelf = (TileEnderShelf) world.getTileEntity(pos);
+        BlockPos controllerPos = null;
+        TileEnderShelf controller = null;
+        if (isController(state)) {
+          shelf.setControllerLocation(pos);
+          controllerPos = pos;
+          controller = shelf;
+        }
+        else if (isShelf(state)) {
+          controllerPos = EnderShelfHelper.findConnectedController(world, pos);
+          shelf.setControllerLocation(controllerPos);
+          controller = getTileEntity(world, controllerPos);
+        }
+        if (controllerPos != null && controller != null) {
+          Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos);
+          controller.setShelves(shelves);
+        }
+      }
     }
+  }
+
+  @Override
+  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    boolean isCurrentlyShelf = isShelf(state);
+    boolean isNewShelf = isShelf(newState);
+    TileEnderShelf te = getTileEntity(worldIn, pos);
+
+    if (isCurrentlyShelf && !isNewShelf && te != null && te.getControllerLocation() != null) {
+      //trigger controller reindex
+      te.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos));
+    }
+    super.onReplaced(state, worldIn, pos, newState, isMoving);
   }
 
   @Override
@@ -69,9 +110,9 @@ public class BlockEnderShelf extends BlockBase {
     Vector3d hitVec = hit.getHitVec();
     int slot = getSlotFromHitVec(pos, face, hitVec);
     if (world.getTileEntity(pos) instanceof TileEnderShelf) {
-      TileEnderShelf shelf = (TileEnderShelf) world.getTileEntity(pos);
+      TileEnderShelf shelf = getTileEntity(world, pos);
 
-      if (hand == Hand.MAIN_HAND && hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
+      if (isShelf(state) && hand == Hand.MAIN_HAND && hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
         if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
           shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
             if (h.getStackInSlot(slot) == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(h.getStackInSlot(slot), heldItem)) {
@@ -90,6 +131,12 @@ public class BlockEnderShelf extends BlockBase {
         }
 
       }
+      else if (isController(state) && hand == Hand.MAIN_HAND) {
+        if (heldItem.getItem() == Items.ENCHANTED_BOOK)
+          shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            player.setHeldItem(Hand.MAIN_HAND,  h.insertItem(0, heldItem, false));
+          });
+      }
     }
 
     return super.onBlockActivated(state, world, pos, player, hand, hit);
@@ -100,9 +147,21 @@ public class BlockEnderShelf extends BlockBase {
     double normalizedX = hitVec.getX() - pos.getX();
     if (face == Direction.EAST || face == Direction.WEST)
       normalizedX = hitVec.getZ() - pos.getZ();
-    int probableSlot = (int) Math.floor(normalizedY / 0.20);
-    //System.out.printf("%d Hit at %f, %f%n", probableSlot, normalizedX, normalizedY);
+    return (int) Math.floor(normalizedY / 0.20);
+  }
 
-    return probableSlot;
+  public static boolean isController(BlockState state) {
+    return state.getBlock().getRegistryName().equals(EnderShelfHelper.ENDER_CONTROLLER_REGISTRY_NAME);
+  }
+
+  public boolean isShelf(BlockState state) {
+    return state.getBlock().getRegistryName().equals(EnderShelfHelper.ENDER_SHELF_REGISTRY_NAME);
+  }
+
+  public TileEnderShelf getTileEntity(World world, BlockPos pos) {
+    if (pos == null)
+      return null;
+    BlockState state = world.getBlockState(pos);
+    return isShelf(state) || isController(state) ? (TileEnderShelf) world.getTileEntity(pos) : null;
   }
 }
