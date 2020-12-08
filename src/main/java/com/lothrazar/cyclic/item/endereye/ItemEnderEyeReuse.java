@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.endereye;
 
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -8,19 +9,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import javax.annotation.Nullable;
 
 public class ItemEnderEyeReuse extends ItemBase {
 
@@ -37,20 +37,16 @@ public class ItemEnderEyeReuse extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-
     ItemStack stack = player.getHeldItem(hand);
     if (!worldIn.isRemote && worldIn instanceof ServerWorld) {
       ServerWorld sw = (ServerWorld) worldIn;
       ChunkGenerator chunkGenerator = sw.getChunkProvider().getChunkGenerator();
-
       //compat with Repurposed Structures Mod see #1517
       Structure<?> vanillaStronghold = Structure.STRONGHOLD;
       Structure<?> rsStronghold;
       Structure<?> rsNetherStronghold;
-
       BlockPos closestBlockPos = chunkGenerator.func_235956_a_(sw, vanillaStronghold, new BlockPos(player.getPosition()), 100, false);
       BlockPos rsBlockPos;
-
       if (ModList.get().isLoaded(RS_MODID)) {
         if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_RESOURCE_LOCATION)) {
           rsStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_RESOURCE_LOCATION);
@@ -63,7 +59,6 @@ public class ItemEnderEyeReuse extends ItemBase {
           closestBlockPos = returnClosest(player.getPosition(), closestBlockPos, rsBlockPos);
         }
       }
-
       if (closestBlockPos != null) {
         double posX = player.getPosX();
         double posY = player.getPosY();

@@ -31,11 +31,11 @@ public class UnbreakableBlock extends BlockBase {
     ItemStack heldItemStack = player.getHeldItem(hand);
     Item heldItem = heldItemStack.getItem();
     if (state.hasProperty(BREAKABLE) &&
-            hand == Hand.MAIN_HAND &&
-            heldItem == Items.REDSTONE ||
-            heldItem == Items.REDSTONE_TORCH ||
-            heldItem == Items.REDSTONE_BLOCK) {
-        toggle(state, world, pos);
+        hand == Hand.MAIN_HAND &&
+        heldItem == Items.REDSTONE ||
+        heldItem == Items.REDSTONE_TORCH ||
+        heldItem == Items.REDSTONE_BLOCK) {
+      toggle(state, world, pos);
       return ActionResultType.SUCCESS;
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);
