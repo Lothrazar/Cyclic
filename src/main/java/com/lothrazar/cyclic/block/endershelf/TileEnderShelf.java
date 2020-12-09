@@ -64,8 +64,9 @@ public class TileEnderShelf extends TileEntityBase {
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     boolean isController = EnderShelfHelper.isController(this.getBlockState());
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      if (isController && side == Direction.DOWN)
-        return fakeInventory.cast();
+      //enable next two lines for dev feature, extract random enchanted books from bottom of Controller
+      //if (isController && side == Direction.DOWN)
+      //  return fakeInventory.cast();
       if (isController)
         return controllerInventory.cast();
       return inventory.cast();
