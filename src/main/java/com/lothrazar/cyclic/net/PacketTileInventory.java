@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.net;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -35,8 +36,11 @@ public class PacketTileInventory extends PacketBase {
 
   public static void handle(PacketTileInventory message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      PlayerEntity player = ModCyclic.proxy.getClientPlayer();
-      TileEntity tile = player.world.getTileEntity(message.blockPos);
+      if (Minecraft.getInstance().world == null) {
+        message.done(ctx);
+        return;
+      }
+      TileEntity tile = Minecraft.getInstance().world.getTileEntity(message.blockPos);
       if (tile != null)
       tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
         if (message.type == TYPE.SET && h instanceof EnderShelfItemHandler) {
