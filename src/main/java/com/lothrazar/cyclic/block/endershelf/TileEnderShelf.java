@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 
 public class TileEnderShelf extends TileEntityBase {
 
-  private LazyOptional<EnderShelfItemHandler> inventory = LazyOptional.of(() -> new EnderShelfItemHandler(this));
-  private LazyOptional<EnderShelfItemHandler> fakeInventory = LazyOptional.of(() -> new EnderShelfItemHandler(this, true));
-  private LazyOptional<EnderControllerItemHandler> controllerInventory = LazyOptional.of(() -> new EnderControllerItemHandler(this));
+  private final LazyOptional<EnderShelfItemHandler> inventory = LazyOptional.of(() -> new EnderShelfItemHandler(this));
+  private final LazyOptional<EnderShelfItemHandler> fakeInventory = LazyOptional.of(() -> new EnderShelfItemHandler(this, true));
+  private final LazyOptional<EnderControllerItemHandler> controllerInventory = LazyOptional.of(() -> new EnderControllerItemHandler(this));
   private BlockPos controllerLocation;
   private Set<BlockPos> connectedShelves;
 
@@ -62,11 +62,11 @@ public class TileEnderShelf extends TileEntityBase {
   @Nonnull
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    boolean isController = BlockEnderShelf.isController(this.getBlockState());
+    boolean isController = EnderShelfHelper.isController(this.getBlockState());
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       if (isController && side == Direction.DOWN)
         return fakeInventory.cast();
-      if (isController && side != Direction.DOWN)
+      if (isController)
         return controllerInventory.cast();
       return inventory.cast();
     }

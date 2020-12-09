@@ -4,7 +4,7 @@
     "particle": "cyclic:blocks/ender_shelf_side",
     "down": "cyclic:blocks/ender_shelf_side",
     "up": "cyclic:blocks/ender_shelf_side",
-    "north": "cyclic:blocks/ender_shelf_side",
+    "north": "cyclic:blocks/ender_controller_front",
     "south": "cyclic:blocks/ender_shelf_side",
     "west": "cyclic:blocks/ender_shelf_side",
     "east": "cyclic:blocks/ender_shelf_side"

@@ -105,6 +105,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
     r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
+    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
@@ -196,4 +197,6 @@ public class TileRegistry {
   public static TileEntityType<TileCrafter> crafter;
   @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
   public static TileEntityType<TileEnderShelf> ender_shelf;
+  @ObjectHolder(ModCyclic.MODID + ":ender_controller")
+  public static TileEntityType<TileEnderShelf> ender_controller;
 }

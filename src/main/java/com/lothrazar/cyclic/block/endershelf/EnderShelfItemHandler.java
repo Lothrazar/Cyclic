@@ -17,9 +17,7 @@ import javax.annotation.Nonnull;
 public class EnderShelfItemHandler extends ItemStackHandler {
 
   public TileEnderShelf shelf;
-  private boolean fake;
-  private static final int MAX_MULTIBLOCK_DISTANCE = 8;
-  private static final int MAX_CUBOID_SIZE = MAX_MULTIBLOCK_DISTANCE / 2;
+  private final boolean fake;
 
   public EnderShelfItemHandler(TileEnderShelf shelf) {
     super(5);
@@ -42,8 +40,15 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   @Nonnull
   @Override
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
-    if (!fake)
-      return super.extractItem(slot, amount, simulate);
+    if (this.shelf.getWorld() == null)
+      return ItemStack.EMPTY;
+
+    if (!fake) {
+      ItemStack extracted = super.extractItem(slot, amount, simulate);
+      if (!this.shelf.getWorld().isRemote && !simulate)
+        PacketRegistry.sendToAllClients(this.shelf.getWorld(), new PacketTileInventory(this.shelf.getPos(), slot, this.getStackInSlot(slot), PacketTileInventory.TYPE.SET));
+      return extracted;
+    }
 
     long rand = (long) (Math.random() * ForgeRegistries.ENCHANTMENTS.getValues().size());
     Enchantment randomEnchant = ForgeRegistries.ENCHANTMENTS.getValues().stream().skip(rand).findAny().orElse(Enchantments.AQUA_AFFINITY);
@@ -69,9 +74,20 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   @Nonnull
   @Override
   public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+    if (this.shelf.getWorld() == null)
+      return stack;
+
     ItemStack remaining = super.insertItem(slot, stack, simulate);
     if (!this.shelf.getWorld().isRemote && !simulate)
       PacketRegistry.sendToAllClients(this.shelf.getWorld(), new PacketTileInventory(this.shelf.getPos(), slot, this.getStackInSlot(slot), PacketTileInventory.TYPE.SET));
     return remaining;
+  }
+
+  public int firstSlotWithItem() {
+    for (int i = 0; i < this.getSlots(); i++) {
+      if (!this.getStackInSlot(i).isEmpty())
+        return i;
+    }
+    return -1;
   }
 }
