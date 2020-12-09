@@ -24,14 +24,16 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -47,13 +49,18 @@ public class PacketFluidSync extends PacketBase {
 
   public static void handle(PacketFluidSync message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      PlayerEntity player = ModCyclic.proxy.getClientPlayer();
-      TileEntity te = player.world.getTileEntity(message.pos);
-      if (te instanceof TileEntityBase) {
-        ((TileEntityBase) te).setFluid(message.fluid);
-      }
+      doWork(message);
     });
     message.done(ctx);
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  private static void doWork(PacketFluidSync message) {
+    ClientWorld world = Minecraft.getInstance().world;
+    TileEntity te = world.getTileEntity(message.pos);
+    if (te instanceof TileEntityBase) {
+      ((TileEntityBase) te).setFluid(message.fluid);
+    }
   }
 
   public static PacketFluidSync decode(PacketBuffer buf) {

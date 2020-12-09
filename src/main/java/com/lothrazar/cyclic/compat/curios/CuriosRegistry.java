@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.registry;
+package com.lothrazar.cyclic.compat.curios;
 
 import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.util.ResourceLocation;

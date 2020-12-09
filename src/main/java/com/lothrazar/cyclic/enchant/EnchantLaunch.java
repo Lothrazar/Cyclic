@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -107,7 +106,7 @@ public class EnchantLaunch extends EnchantBase {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
-    PlayerEntity player = ModCyclic.proxy.getClientPlayer();
+    PlayerEntity player = Minecraft.getInstance().player;
     if (player == null || player.getRidingEntity() instanceof BoatEntity) {
       return;
     }

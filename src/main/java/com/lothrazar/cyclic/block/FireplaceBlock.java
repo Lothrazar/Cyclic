@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block;
 
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilStuff;
@@ -35,8 +34,8 @@ public class FireplaceBlock extends BlockBase {
       //use case: facing obsidian or wood plank instead of air
     }
     if (isPowered && !state.get(LIT)) { //set fire
-      if (setFire(worldIn, posFire, false)) {
-        UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), pos, SoundEvents.ITEM_FLINTANDSTEEL_USE);
+      if (setFire(worldIn, posFire, false) && worldIn.isRemote) {
+        UtilSound.playSound(pos, SoundEvents.ITEM_FLINTANDSTEEL_USE);
       }
     }
     else if (!isPowered && state.get(LIT)) { //put out fire

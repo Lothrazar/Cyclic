@@ -22,6 +22,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,8 +31,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockDice extends BlockBase {
 
+  private static final double BOUNDS = 1;
+  private static final VoxelShape AABB = Block.makeCuboidShape(BOUNDS, BOUNDS, BOUNDS,
+      16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
+
   public BlockDice(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).notSolid());
+  }
+
+  @Override
+  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    return AABB;
   }
 
   @Override
@@ -67,7 +78,8 @@ public class BlockDice extends BlockBase {
     TileEntity tile = world.getTileEntity(pos);
     if (hand == Hand.MAIN_HAND && tile instanceof TileDice) {
       ((TileDice) tile).startSpinning();
-      UtilSound.playSound(player, SoundRegistry.dice_mike_koenig);
+      if (world.isRemote)
+        UtilSound.playSound(pos, SoundRegistry.dice_mike_koenig);
       return ActionResultType.SUCCESS;
     }
     return super.onBlockActivated(state, world, pos, player, hand, result);

@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.unbreakable_block",
+  "icon": "cyclic:unbreakable_block",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.unbreakable_block.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:unbreakable_block"
+    }
+  ]
+}

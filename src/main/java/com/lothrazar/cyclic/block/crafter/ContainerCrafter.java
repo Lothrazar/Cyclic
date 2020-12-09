@@ -37,7 +37,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerCrafter extends ContainerBase {
 
@@ -51,30 +50,11 @@ public class ContainerCrafter extends ContainerBase {
   public static final int PREVIEW_START_X = 70;
   public static final int PREVIEW_START_Y = 35;
 
-  @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    if (slotId == TileCrafter.PREVIEW_SLOT)
-      return ItemStack.EMPTY;
-    if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
-      ItemStack ghostStack = player.inventory.getItemStack().copy();
-      ghostStack.setCount(1);
-      inventorySlots.get(slotId).putStack(ghostStack);
-      tile.shouldSearch = true;
-      return ItemStack.EMPTY;
-    }
-    return super.slotClick(slotId, dragType, clickTypeIn, player);
-  }
-
-  @Override
-  public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-    return slotIn.getSlotIndex() != TileCrafter.PREVIEW_SLOT && super.canMergeSlot(stack, slotIn);
-  }
-
   public ContainerCrafter(int windowId, World clientWorld, BlockPos pos, PlayerInventory inv, PlayerEntity clientPlayer) {
     super(ContainerScreenRegistry.crafter, windowId);
     tile = (TileCrafter) clientWorld.getTileEntity(pos);
     this.playerEntity = clientPlayer;
-    this.playerInventory = new InvWrapper(inv);
+    this.playerInventory = inv;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
       int index = 0;
       //add input
@@ -121,6 +101,25 @@ public class ContainerCrafter extends ContainerBase {
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileCrafter.Fields.values().length);
     trackEnergy(tile);
+  }
+
+  @Override
+  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    if (slotId == TileCrafter.PREVIEW_SLOT)
+      return ItemStack.EMPTY;
+    if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
+      ItemStack ghostStack = player.inventory.getItemStack().copy();
+      ghostStack.setCount(1);
+      inventorySlots.get(slotId).putStack(ghostStack);
+      tile.shouldSearch = true;
+      return ItemStack.EMPTY;
+    }
+    return super.slotClick(slotId, dragType, clickTypeIn, player);
+  }
+
+  @Override
+  public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
+    return slotIn.getSlotIndex() != TileCrafter.PREVIEW_SLOT && super.canMergeSlot(stack, slotIn);
   }
 
   @Override

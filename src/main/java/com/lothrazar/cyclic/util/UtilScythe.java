@@ -34,6 +34,8 @@ import net.minecraft.world.World;
 
 public class UtilScythe {
 
+  //  private static final INamedTag<Block> plants = BlockTags.makeWrapperTag("minecraft:plants");
+  //  private static final INamedTag<Block> fplants = BlockTags.makeWrapperTag("forge:plants");
   private static final INamedTag<Block> SBRUSH = BlockTags.makeWrapperTag(ScytheType.BRUSH.type().toString());
   private static final INamedTag<Block> SLEAVES = BlockTags.makeWrapperTag(ScytheType.LEAVES.type().toString());
   private static final INamedTag<Block> SFORAGE = BlockTags.makeWrapperTag(ScytheType.FORAGE.type().toString());
@@ -155,7 +157,7 @@ public class UtilScythe {
         doBreak = blockState.isIn(SLEAVES);
       break;
       case BRUSH:
-        doBreak = blockState.isIn(SBRUSH);
+        doBreak = blockState.isIn(SBRUSH);//SBRUSH
       break;
       case FORAGE:
         doBreak = blockState.isIn(SFORAGE);

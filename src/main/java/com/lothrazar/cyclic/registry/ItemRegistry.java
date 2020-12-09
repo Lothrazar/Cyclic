@@ -132,6 +132,7 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.laser, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("laser"));
     r.register(new BlockItem(BlockRegistry.apple_sprout, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout"));
     r.register(new BlockItem(BlockRegistry.apple_sprout_diamond, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout_diamond"));
     r.register(new BlockItem(BlockRegistry.apple_sprout_emerald, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout_emerald"));
@@ -192,6 +193,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.water_candle, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("water_candle"));
     r.register(new BlockItem(BlockRegistry.fireplace, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("fireplace"));
     r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
+    r.register(new BlockItem(BlockRegistry.unbreakable_block, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("unbreakable_block"));
+    r.register(new BlockItem(BlockRegistry.unbreakable_reactive, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("unbreakable_reactive"));
     r.register(new BlockItem(BlockRegistry.ender_shelf, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("ender_shelf"));
     r.register(new BlockItem(BlockRegistry.ender_controller, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("ender_controller"));
     // exp machines

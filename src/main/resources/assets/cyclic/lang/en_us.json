@@ -94,6 +94,14 @@
     "block.cyclic.water_candle.guide": "The Water Candle can be lit with Flint and Steel to increase the rate at which mobs naturally spawn nearby.$(br2)For the candle to work, mobs must be able to spawn naturally in its vicinity.$(br)In most cases, this means it must be dark enough to spawn mobs!",
     "block.cyclic.water_candle.guide0": "When lit, has a random chance to extinguish itself while spawning a mob. When this happens, you must relight the candle for it to continue spawning.",
 
+    "block.cyclic.unbreakable_block": "Stable Quantum Bedrock",
+    "block.cyclic.unbreakable_block.tooltip": "Right-click with Redstone to toggle Unbreakable state",
+    "block.cyclic.unbreakable_block.guide": "Place in the world and then right-click with Redstone dust, Redstone Torch, or a Redstone Block in hand to toggle whether this block can be broken.",
+
+    "block.cyclic.unbreakable_reactive": "Reactive Quantum Bedrock",
+    "block.cyclic.unbreakable_reactive.tooltip": "Unbreakable while it has redstone power, can mine it otherwise",
+    "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
+
     "block.cyclic.ender_shelf":"Ender Shelf",
     "block.cyclic.ender_shelf.tooltip": "Multiblock Enchantment Storage",
     "block.cyclic.ender_shelf.guide": "Can be used standalone or as part of a multiblock structure with at least one $(l:blocks/ender_controller)Ender Shelf Controller$(/l). Each shelf has 5 slots that you can right click on to insert an Enchanted Book for storage.",
@@ -360,7 +368,7 @@
     "item.cyclic.carbon_paper.deleted": "Deleted sign data",
     "item.cyclic.carbon_paper.guide": "Carbon Paper can be used to copy the contents of one sign to another. The copied text can be cleaned off of the Carbon Paper by using it on a Cauldron.",
 
-    "item.cyclic.antigravity": "Anti-gravity Ring",
+    "item.cyclic.antigravity": "Anti-Gravity Ring",
     "item.cyclic.antigravity.tooltip": "Ignore gravity and walk on air",
     "item.cyclic.antigravity.guide": "When active, you can jump without falling at the expense of durability while you remain in the air.",
     "item.cyclic.charm_antidote": "Antidote Charm",
@@ -692,7 +700,7 @@
     "item.cyclic.spelunker.tooltip": "Search for underground caves",
     "item.cyclic.spelunker.guide": "Searches out for empty space behind the block you click on.  Works in any direction.  If you hit the top of a block it searches down, if you hit the side it searches behind.  Always in a straight line.  Great for finding caves while branch mining.",
 
-    "item.cyclic.torch_launcher": "Torch launcher",
+    "item.cyclic.torch_launcher": "Torch Launcher",
     "item.cyclic.torch_launcher.tooltip": "Spawns in a torch wherever it lands",
     "item.cyclic.torch_launcher.guide": "The Torch Launcher shoots a torch with considerable force in the direction you are facing, placing the torch wherever it lands.$(br2)Automatically consumes torches in your inventory to refill itself.",
     "item.cyclic.trade": "Merchant Almanac",
@@ -817,6 +825,7 @@
     "cyclic.screen.blue": "Blue",
     "cyclic.screen.red": "Red",
     "cyclic.screen.green": "Green",
+    "cyclic.screen.thick": "Thickness",
     "cyclic.gui.sliderkeys": "Arrow keys; hold shift/alt",
     "cyclic.gui.empty":"Empty",
     
@@ -1406,9 +1415,9 @@
     "item.cyclic.boomerang_damage.tooltip": "Gathers items and attacks your enemies",
     "item.cyclic.boomerang_damage.guide": "Gathers items and attacks your enemies",
 
-    "block.laser": "Laser Cell",
-    "block.laser.tooltip": "Render harmless lasers",
-    "block.laser.guide": "Use GPS Markers to target lasers and heavily customize their appearance.",
+    "block.cyclic.laser": "Laser Cell",
+    "block.cyclic.laser.tooltip": "Render harmless lasers",
+    "block.cyclic.laser.guide": "Use GPS Markers to target lasers and heavily customize their appearance.",
 
     "block.water_candle": "Water Candle",
     "block.water_candle.tooltip": "Increase nearby spawns when lit",

@@ -12,7 +12,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerStructure extends ContainerBase {
 
@@ -22,7 +21,7 @@ public class ContainerStructure extends ContainerBase {
     super(ContainerScreenRegistry.structure, windowId);
     tile = (TileStructure) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       addSlot(new SlotItemHandler(h, TileStructure.SLOT_BUILD, 61, 21));
       addSlot(new SlotItemHandler(h, TileStructure.SLOT_SHAPE, 8, 132));

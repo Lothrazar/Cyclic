@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ooo",
+    "oro",
+    "ooo"
+  ],
+  "key": {
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "r": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "result": {
+    "item": "cyclic:unbreakable_reactive",
+    "count": 2
+  }
+}

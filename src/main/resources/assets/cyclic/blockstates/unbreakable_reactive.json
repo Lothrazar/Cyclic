@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "breakable=true": { "model": "cyclic:block/unbreakable_reactive" },
+        "breakable=false": { "model": "minecraft:block/bedrock" }
+    }
+}

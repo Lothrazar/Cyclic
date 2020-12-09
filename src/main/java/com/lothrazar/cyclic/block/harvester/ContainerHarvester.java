@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ContainerHarvester extends ContainerBase {
 
@@ -19,7 +18,7 @@ public class ContainerHarvester extends ContainerBase {
     super(ContainerScreenRegistry.harvester, windowId);
     tile = (TileHarvester) world.getTileEntity(pos);
     this.playerEntity = player;
-    this.playerInventory = new InvWrapper(playerInventory);
+    this.playerInventory = playerInventory;
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileHarvester.Fields.values().length);
     trackEnergy(tile);

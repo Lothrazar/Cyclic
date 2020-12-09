@@ -15,6 +15,8 @@ import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.SpikesBlock;
 import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
+import com.lothrazar.cyclic.block.UnbreakableBlock;
+import com.lothrazar.cyclic.block.UnbreakablePoweredBlock;
 import com.lothrazar.cyclic.block.WaterCandleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
@@ -43,6 +45,7 @@ import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
 import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
+import com.lothrazar.cyclic.block.laser.BlockLaser;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
 import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
@@ -209,6 +212,12 @@ public class BlockRegistry {
   public static Block apple_sprout_emerald;
   @ObjectHolder(ModCyclic.MODID + ":apple_sprout_diamond")
   public static Block apple_sprout_diamond;
+  @ObjectHolder(ModCyclic.MODID + ":unbreakable_block")
+  public static Block unbreakable_block;
+  @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
+  public static Block unbreakable_reactive;
+  @ObjectHolder(ModCyclic.MODID + ":laser")
+  public static Block laser;
   @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
   public static Block ender_shelf;
   @ObjectHolder(ModCyclic.MODID + ":ender_controller")
@@ -217,6 +226,7 @@ public class BlockRegistry {
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockLaser(Block.Properties.create(Material.IRON)).setRegistryName("laser"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_emerald"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_diamond"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), true).setRegistryName("apple_sprout"));
@@ -235,10 +245,9 @@ public class BlockRegistry {
     r.register(new PeatBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
     r.register(new PeatFuelBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
     r.register(new BlockPeatFarm(Block.Properties.create(Material.ROCK)).setRegistryName("peat_farm"));
-    r.register(new BlockTerraPreta(Block.Properties.create(Material.EARTH)).setRegistryName("terra_preta"));
+    r.register(new BlockTerraPreta(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("terra_preta"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
-    //    r.register(new BlockCrafter(Block.Properties.create(Material.ROCK)).setRegistryName("crafter"));
     r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
     r.register(new BlockCask(Block.Properties.create(Material.WOOD)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.WOOD)).setRegistryName("crate"));
@@ -288,6 +297,8 @@ public class BlockRegistry {
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
+    r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block"));//stable, only changes with player interaction
+    r.register(new UnbreakablePoweredBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_reactive"));//reactive and unstable, ignores players and reads redstone powered state from world in TE
     r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), false).setRegistryName("ender_shelf"));
     r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), true).setRegistryName("ender_controller"));
   }

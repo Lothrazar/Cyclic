@@ -11,13 +11,13 @@
 	"elements": [
 		{
 			"name": "Base",
-			"from": [ 1, 0, 1 ], 
-			"to": [ 15, 2, 15 ], 
+			"from": [ 0, 0, 0 ], 
+			"to": [ 16, 2, 16 ], 
 			"faces": {
-				"north": { "texture": "#side" },
-				"east": { "texture": "#side" },
-				"south": { "texture": "#side" },
-				"west": { "texture": "#side" },
+				"north": { "texture": "#base_up" },
+				"east": { "texture": "#base_up" },
+				"south": { "texture": "#base_up" },
+				"west": { "texture": "#base_up" },
 				"up": { "texture": "#base_up" },
 				"down": { "texture": "#down", "cullface": "down" }
 			}

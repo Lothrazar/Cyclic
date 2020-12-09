@@ -2,10 +2,10 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.net.PacketTileString;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +27,7 @@ public class TextBoxAutosave extends TextFieldWidget {
     this.setTextColor(16777215);
     this.pos = pos;
     this.tileFieldId = field;
-    this.tile = (TileEntityBase) ModCyclic.proxy.getClientWorld().getTileEntity(pos);
+    this.tile = (TileEntityBase) Minecraft.getInstance().world.getTileEntity(pos);
   }
 
   @Override
