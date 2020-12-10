@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " o ",
+    "pbp",
+    " o "
+  ],
+  "key": {
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "p": {
+      "item": "minecraft:purpur_block"
+    },
+    "b": {
+      "tag": "forge:bookshelves"
+    }
+  },
+  "result": {
+    "item": "cyclic:ender_shelf",
+    "count": 1
+  }
+}

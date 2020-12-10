@@ -38,6 +38,7 @@ import com.lothrazar.cyclic.block.detectoritem.BlockDetectorItem;
 import com.lothrazar.cyclic.block.dice.BlockDice;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.dropper.BlockDropper;
+import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
@@ -217,6 +218,10 @@ public class BlockRegistry {
   public static Block unbreakable_reactive;
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static Block laser;
+  @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
+  public static Block ender_shelf;
+  @ObjectHolder(ModCyclic.MODID + ":ender_controller")
+  public static Block ender_controller;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -294,5 +299,7 @@ public class BlockRegistry {
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
     r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block"));//stable, only changes with player interaction
     r.register(new UnbreakablePoweredBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_reactive"));//reactive and unstable, ignores players and reads redstone powered state from world in TE
+    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), false).setRegistryName("ender_shelf"));
+    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), true).setRegistryName("ender_controller"));
   }
 }

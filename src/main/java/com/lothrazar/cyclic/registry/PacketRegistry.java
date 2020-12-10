@@ -6,13 +6,7 @@ import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.random.PacketRandomize;
 import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
-import com.lothrazar.cyclic.net.PacketEnergySync;
-import com.lothrazar.cyclic.net.PacketFluidSync;
-import com.lothrazar.cyclic.net.PacketItemToggle;
-import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
-import com.lothrazar.cyclic.net.PacketRotateBlock;
-import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.net.PacketTileString;
+import com.lothrazar.cyclic.net.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -45,6 +39,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketRandomize.class, PacketRandomize::encode, PacketRandomize::decode, PacketRandomize::handle);
     INSTANCE.registerMessage(id++, PacketTileString.class, PacketTileString::encode, PacketTileString::decode, PacketTileString::handle);
     INSTANCE.registerMessage(id++, PacketEnergySync.class, PacketEnergySync::encode, PacketEnergySync::decode, PacketEnergySync::handle);
+    INSTANCE.registerMessage(id++, PacketTileInventory.class, PacketTileInventory::encode, PacketTileInventory::decode, PacketTileInventory::handle);
   }
 
   public static void sendToAllClients(World world, PacketBase packet) {

@@ -102,6 +102,15 @@
     "block.cyclic.unbreakable_reactive.tooltip": "Unbreakable while it has redstone power, can mine it otherwise",
     "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
 
+    "block.cyclic.ender_shelf":"Ender Shelf",
+    "block.cyclic.ender_shelf.tooltip": "Multiblock Enchantment Storage",
+    "block.cyclic.ender_shelf.guide": "Can be used standalone or as part of a multiblock structure with at least one $(l:blocks/ender_controller)Ender Shelf Controller$(/l). Each shelf has 5 slots that you can right click on to insert an Enchanted Book for storage.",
+    "block.cyclic.ender_shelf.guide0": "Enchanted Books must have just one enchantment to be inserted. Use a $(l:machines/disenchanter)Disenchanter$(/l) to strip books down to single enchantments if necessary.",
+
+    "block.cyclic.ender_controller":"Ender Shelf Controller",
+    "block.cyclic.ender_controller.tooltip": "Multiblock Enchantment Storage Controller",
+    "block.cyclic.ender_controller.guide": "When combined with at least one $(l:blocks/ender_shelf)Ender Shelf$(/l), allows for automated insertion/extraction of Enchanted books.",
+
     "item.cyclic.flippers":"Flippers",
     "item.cyclic.flippers.tooltip":"Increase swim speed",
     "item.cyclic.flippers.guide":"When worn, Flippers increase the player's swim speed.$(br2)Can be equipped as an accessory if the Curios mod is installed.",
