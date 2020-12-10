@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.block.clock.TileRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
+import com.lothrazar.cyclic.block.conveyor.TileConveyor;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
@@ -107,6 +108,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
     r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
     r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.laser).build(null).setRegistryName("laser"));
+    r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.conveyor).build(null).setRegistryName("conveyor"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
@@ -198,6 +200,8 @@ public class TileRegistry {
   public static TileEntityType<TileUncraft> uncrafter;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
   public static TileEntityType<TileCrafter> crafter;
+  @ObjectHolder(ModCyclic.MODID + ":conveyor")
+  public static TileEntityType<TileConveyor> conveyor;
   //
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static TileEntityType<TileLaser> laser;

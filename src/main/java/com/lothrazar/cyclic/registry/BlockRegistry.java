@@ -29,6 +29,7 @@ import com.lothrazar.cyclic.block.cable.item.BlockCableItem;
 import com.lothrazar.cyclic.block.clock.BlockRedstoneClock;
 import com.lothrazar.cyclic.block.collectfluid.BlockFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.BlockItemCollector;
+import com.lothrazar.cyclic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
 import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
@@ -217,6 +218,8 @@ public class BlockRegistry {
   public static Block unbreakable_reactive;
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static Block laser;
+  @ObjectHolder(ModCyclic.MODID + ":conveyor")
+  public static Block conveyor;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -260,6 +263,7 @@ public class BlockRegistry {
     r.register(new BlockStructure(Block.Properties.create(Material.ROCK)).setRegistryName("structure"));
     r.register(new BlockUncraft(Block.Properties.create(Material.IRON)).setRegistryName("uncrafter"));
     r.register(new BlockCrafter(Block.Properties.create(Material.IRON)).setRegistryName("crafter"));
+    r.register(new BlockConveyor(Block.Properties.create(Material.IRON)).setRegistryName("conveyor"));
     //
     r.register(new BlockFluidTank(Block.Properties.create(Material.ROCK)).setRegistryName("tank"));
     //

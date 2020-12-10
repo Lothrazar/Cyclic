@@ -102,6 +102,11 @@
     "block.cyclic.unbreakable_reactive.tooltip": "Unbreakable while it has redstone power, can mine it otherwise",
     "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
 
+    "block.cyclic.conveyor": "Conveyor Belt",
+    "block.cyclic.conveyor.tooltip": "Conveyor Belt",
+    "block.cyclic.conveyor.guide": "Moves entities",
+
+
     "item.cyclic.flippers":"Flippers",
     "item.cyclic.flippers.tooltip":"Increase swim speed",
     "item.cyclic.flippers.guide":"When worn, Flippers increase the player's swim speed.$(br2)Can be equipped as an accessory if the Curios mod is installed.",
