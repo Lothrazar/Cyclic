@@ -127,7 +127,7 @@ public class BlockConveyor extends BlockBase {
       c.setMotion(e.getMotion());
       c.setNoDespawn();
       c.setDefaultPickupDelay();
-      
+      e.setItem(ItemStack.EMPTY);
       e.remove();
     }
 

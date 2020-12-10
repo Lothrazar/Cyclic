@@ -9,10 +9,12 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class ConveyorItemRenderer extends EntityRenderer<ConveyorItemEntity> {
+public class ConveyorItemRenderer<T extends Entity & IRendersAsItem> extends EntityRenderer<ConveyorItemEntity> {
 
   private final ItemRenderer renderer;
 
