@@ -625,15 +625,17 @@
     "item.cyclic.stone_minecart.guide": "Think of this as a single-slot chest.  The Stone Minecart can carry any block.  Just use another block or an empty hand to swap blocks in an out (also works with Automated User).  Powered activator rail will pop the block out as well.",
     "item.cyclic.stone_minecart": "Stone Minecart",
     "item.cyclic.stone_minecart.tooltip": "Carry one block, unload with activator rail",
+
+    "item.cyclic.storage_bag": "Storage Bag",
+    "item.cyclic.storage_bag.tooltip":  "A magical storage bag.",
+    "item.cyclic.storage_bag.guide": "",
+
     "item.cyclic.storage_bag.deposit": "Dump",
     "item.cyclic.storage_bag.disabled": "Hit deposit is disabled, left click to enable",
-    "item.cyclic.storage_bag.guide": "A simple bag that can hold anything, a portable chest.  Optionally can auto deposit by hitting containers.  Change the items colour in the GUI.",
     "item.cyclic.storage_bag.merge": "Merge",
-    "item.cyclic.storage_bag": "Storage Bag",
     "item.cyclic.storage_bag.nothing": "Nothing",
     "item.cyclic.storage_bag.success": "Items moved:",
     "item.cyclic.storage_bag.tooltip2": "Hit Deposit Mode:",
-    "item.cyclic.storage_bag.tooltip": "Item Stacks:",
     "item.cyclic.storage_bag.toggle": "Toggle Hit Deposit Mode",
 
     "item.cyclic.storage_bag.togglepickup": "Toggle auto-pickup",
@@ -731,6 +733,7 @@
     "item.cyclic.elevation_wand": "Rod of Elevation",
     "item.cyclic.elevation_wand.tooltip":  "Teleport yourself or the target entity up to the nearest surface above",
     "item.cyclic.elevation_wand.guide": "Teleporter that works only vertically, and only if it can find an empty space with a surface above.  Works on yourself, or target another entity.",
+
     "key.categories.inventorycontrol": "Cyclic Keybindings",
     "key.columnbardown": "Row Shift Down",
     "key.columnbarup": "Row Shift Up",

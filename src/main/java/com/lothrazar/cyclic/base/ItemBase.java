@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.base;
 
 import java.util.List;
 import javax.annotation.Nullable;
+
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,6 +29,7 @@ public class ItemBase extends Item {
 
   public ItemBase(Properties properties) {
     super(properties);
+    ItemRegistry.items.add(this);
   }
 
   protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball) {
@@ -80,4 +83,7 @@ public class ItemBase extends Item {
     t.mergeStyle(TextFormatting.GRAY);
     tooltip.add(t);
   }
+
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {}
 }

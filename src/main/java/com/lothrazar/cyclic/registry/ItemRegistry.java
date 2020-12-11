@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
@@ -65,6 +66,7 @@ import com.lothrazar.cyclic.item.scythe.ScytheBrush;
 import com.lothrazar.cyclic.item.scythe.ScytheForage;
 import com.lothrazar.cyclic.item.scythe.ScytheHarvest;
 import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
+import com.lothrazar.cyclic.item.storagebag.StorageBagItem;
 import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
@@ -90,9 +92,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":gem_amber")
   public static Item gem_amber;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
@@ -127,6 +133,8 @@ public class ItemRegistry {
   public static Item glowing_helmet;
   @ObjectHolder(ModCyclic.MODID + ":elevation_wand")
   public static Item elevation_wand;
+  @ObjectHolder(ModCyclic.MODID + ":storage_bag")
+  public static Item storage_bag;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -252,7 +260,8 @@ public class ItemRegistry {
     r.register(new SettingsCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("settings_data"));
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("shape_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024)).setRegistryName("scythe_harvest"));
-    ///////////////////////// apples  
+    r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("storage_bag"));
+    ///////////////////////// apples
     final int SMALLPOT = 20 * 90;// 1:30
     final int LARGEPOT = 3 * 20 * 60;// 3:00
     int h = Foods.APPLE.getHealing();
