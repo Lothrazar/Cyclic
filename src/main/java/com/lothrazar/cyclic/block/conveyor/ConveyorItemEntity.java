@@ -5,6 +5,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -43,6 +46,9 @@ public class ConveyorItemEntity extends ItemEntity {
   public void tick() {
     if (this.world == null)
       return;
+    if (this.world.isRemote) {
+      int i = 0;
+    }
 
     if (!(this.world.getBlockState(this.getPosition()).getBlock() instanceof BlockConveyor)) {
       this.spawnRegularStack();
@@ -53,11 +59,54 @@ public class ConveyorItemEntity extends ItemEntity {
   private void spawnRegularStack() {
     ItemEntity e = new ItemEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ(), this.getItem());
     this.world.addEntity(e);
+    this.setItem(ItemStack.EMPTY);
     this.remove();
   }
 
   @Override
   public void onCollideWithPlayer(PlayerEntity entityIn) {
     //Do nothing
+  }
+
+  @Override
+  public IPacket<?> createSpawnPacket() {
+    return new SSpawnObjectPacket(this);
+  }
+
+  @Override
+  public void writeAdditional(CompoundNBT compound) {
+    compound.putInt("Lifespan", lifespan);
+    if (this.getThrowerId() != null) {
+      compound.putUniqueId("Thrower", this.getThrowerId());
+    }
+
+    if (this.getOwnerId() != null) {
+      compound.putUniqueId("Owner", this.getOwnerId());
+    }
+
+    if (!this.getItem().isEmpty()) {
+      compound.put("Item", this.getItem().write(new CompoundNBT()));
+    }
+  }
+
+  @Override
+  public void readAdditional(CompoundNBT compound) {
+    this.setNoDespawn();
+    this.setInfinitePickupDelay();
+    if (compound.contains("Lifespan")) lifespan = compound.getInt("Lifespan");
+
+    if (compound.hasUniqueId("Owner")) {
+      this.setOwnerId(compound.getUniqueId("Owner"));
+    }
+
+    if (compound.hasUniqueId("Thrower")) {
+      this.setThrowerId(compound.getUniqueId("Thrower"));
+    }
+
+    CompoundNBT compoundnbt = compound.getCompound("Item");
+    this.setItem(ItemStack.read(compoundnbt));
+    if (this.getItem().isEmpty()) {
+      this.remove();
+    }
   }
 }

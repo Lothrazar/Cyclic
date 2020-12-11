@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import javafx.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -20,18 +20,24 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlockConveyor extends BlockBase {
 
   protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+  protected static final VoxelShape BOTTOM = Block.makeCuboidShape(0.0D,0.0D, 0.0D, 0.0D, 8.0D, 16.0D);
+  protected static final VoxelShape TOP = Block.makeCuboidShape(0.0D,8.0D, 0.0D, 0.0D, 16.0D, 8.0D);
+  protected static final VoxelShape STAIR = VoxelShapes.combine(BOTTOM, TOP, IBooleanFunction.OR);
   public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
   public static final EnumProperty<Speed> SPEED = EnumProperty.create("speed", Speed.class);
 
@@ -75,7 +81,6 @@ public class BlockConveyor extends BlockBase {
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-
     return SHAPE;
   }
 
@@ -93,7 +98,7 @@ public class BlockConveyor extends BlockBase {
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (hand == Hand.OFF_HAND)
       return ActionResultType.PASS;
-    Pair<Type, Direction> nextState = nextState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
+    Pair<Type, Direction> nextState = nextConnectedState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
     world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
     return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
@@ -121,14 +126,17 @@ public class BlockConveyor extends BlockBase {
     if (!world.isRemote && entity instanceof ItemEntity && !(entity instanceof ConveyorItemEntity)) {
       ItemEntity e = (ItemEntity)entity;
 
-      ConveyorItemEntity c = new ConveyorItemEntity(world, e.getPosX(), e.getPosY(), e.getPosZ(), e.getItem());
-      world.addEntity(c);
-      c.setThrowerId(e.getThrowerId());
-      c.setMotion(e.getMotion());
-      c.setNoDespawn();
-      c.setDefaultPickupDelay();
-      e.setItem(ItemStack.EMPTY);
-      e.remove();
+      //I wanted to make it a custom entity that will just ride on the conveyor somewhat stationary but it's proving problematic
+      //ConveyorItemEntity c = new ConveyorItemEntity(world, e.getPosX(), e.getPosY(), e.getPosZ(), e.getItem());
+      //ItemEntity e2 = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PUMPKIN, 1));
+      //world.addEntity(e2);
+      //world.addEntity(c);
+      //c.setThrowerId(e.getThrowerId());
+      //c.setMotion(e.getMotion());
+      //c.setNoDespawn();
+      //c.setDefaultPickupDelay();
+      //e.setItem(ItemStack.EMPTY);
+      //e.remove();
     }
 
     super.onEntityCollision(state, world, pos, entity);
@@ -143,11 +151,27 @@ public class BlockConveyor extends BlockBase {
     Pair<Type, Direction> pair = new Pair<>(t, d);
     if (STATE_PAIRS.contains(pair)) {
       int index = STATE_PAIRS.indexOf(pair) + 1;
-      index = index >= STATE_PAIRS.size() ? index % STATE_PAIRS.size() : index;
-      return STATE_PAIRS.get(index);
+      return nextState(STATE_PAIRS, index);
     }
 
-    return STATE_PAIRS.get(0);
+    return pair;
+  }
+  public static Pair<Type, Direction> nextConnectedState(Type t, Direction d) {
+    List<Pair<Type, Direction>> connectedStates = STATE_PAIRS.stream().filter(pair -> pair.getValue() == d).collect(Collectors.toList());
+    Pair<Type, Direction> pair = new Pair<>(t, d);
+    if (connectedStates.contains(pair)) {
+      int index = connectedStates.indexOf(pair) + 1;
+      return nextState(connectedStates, index);
+    }
+    return pair;
+  }
+
+  private static Pair<Type, Direction> nextState(List<Pair<Type, Direction>> list, int index) {
+    return list.get(nextIndex(list, index));
+  }
+
+  private static int nextIndex(List<Pair<Type, Direction>> list, int index) {
+    return index >= list.size() ? index % list.size() : index;
   }
 
   public static List<Pair<Type, Direction>> generateStatePairs() {

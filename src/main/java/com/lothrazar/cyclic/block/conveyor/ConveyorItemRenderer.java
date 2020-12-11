@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.conveyor;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.culling.ClippingHelper;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -38,5 +39,11 @@ public class ConveyorItemRenderer<T extends Entity & IRendersAsItem> extends Ent
   @Override
   public ResourceLocation getEntityTexture(ConveyorItemEntity entity) {
     return AtlasTexture.LOCATION_BLOCKS_TEXTURE;
+  }
+
+  @Override
+  public boolean shouldRender(ConveyorItemEntity livingEntityIn, ClippingHelper camera, double camX, double camY, double camZ) {
+    ConveyorItemEntity stack = livingEntityIn;
+    return true;
   }
 }
