@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.item.random.PacketRandomize;
 import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.*;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -40,6 +41,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketTileString.class, PacketTileString::encode, PacketTileString::decode, PacketTileString::handle);
     INSTANCE.registerMessage(id++, PacketEnergySync.class, PacketEnergySync::encode, PacketEnergySync::decode, PacketEnergySync::handle);
     INSTANCE.registerMessage(id++, PacketTileInventory.class, PacketTileInventory::encode, PacketTileInventory::decode, PacketTileInventory::handle);
+    INSTANCE.registerMessage(id++, PacketItemStackNBT.class, PacketItemStackNBT::encode, PacketItemStackNBT::decode, PacketItemStackNBT::handle);
   }
 
   public static void sendToAllClients(World world, PacketBase packet) {

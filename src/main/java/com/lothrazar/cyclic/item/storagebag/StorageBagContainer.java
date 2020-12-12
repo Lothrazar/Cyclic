@@ -17,20 +17,28 @@ import net.minecraftforge.items.SlotItemHandler;
 public class StorageBagContainer extends ContainerBase {
 
   public ItemStack bag;
+  public int slot;
   public int slots;
   public CompoundNBT nbt;
 
   public StorageBagContainer(int i, PlayerInventory playerInventory, PlayerEntity player) {
     super(ContainerScreenRegistry.storage_bag, i);
-    if (player.getHeldItemMainhand().getItem() instanceof StorageBagItem)
+    if (player.getHeldItemMainhand().getItem() instanceof StorageBagItem) {
       this.bag = player.getHeldItemMainhand();
-    else if (player.getHeldItemOffhand().getItem() instanceof StorageBagItem)
+      this.slot = player.inventory.currentItem;
+    }
+    else if (player.getHeldItemOffhand().getItem() instanceof StorageBagItem) {
       this.bag = player.getHeldItemOffhand();
+      this.slot = 40;
+    }
     else {
       for (int x = 0; x < playerInventory.getSizeInventory(); x++) {
         ItemStack stack = playerInventory.getStackInSlot(x);
-        if (stack.getItem() instanceof StorageBagItem)
+        if (stack.getItem() instanceof StorageBagItem) {
           bag = stack;
+          slot = x;
+          break;
+        }
       }
     }
     this.nbt = bag.getOrCreateTag();
