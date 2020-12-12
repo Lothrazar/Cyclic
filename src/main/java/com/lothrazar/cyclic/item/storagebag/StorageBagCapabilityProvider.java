@@ -19,7 +19,12 @@ public class StorageBagCapabilityProvider implements ICapabilitySerializable<Com
   private ItemStack bag;
   private int slots;
 
-  private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(slots));
+  private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(slots) {
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      return !(stack.getItem() instanceof StorageBagItem) && super.isItemValid(slot, stack);
+    }
+  });
 
   public StorageBagCapabilityProvider(ItemStack stack, int slots) {
     this.bag = stack;
