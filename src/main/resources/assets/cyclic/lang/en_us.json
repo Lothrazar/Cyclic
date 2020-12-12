@@ -628,7 +628,7 @@
 
     "item.cyclic.storage_bag": "Storage Bag",
     "item.cyclic.storage_bag.tooltip":  "A magical storage bag.",
-    "item.cyclic.storage_bag.guide": "",
+    "item.cyclic.storage_bag.guide": "The Storage Bag can be used as a portable inventory. Right-click with the bag in hand to open it.$(br2)The bag can be set to pickup items, refill your hotbar, or to deposit its items into any inventory on right-click.",
 
     "item.cyclic.storage_bag.disabled": "Disabled",
     "item.cyclic.storage_bag.disabled.button": "--",

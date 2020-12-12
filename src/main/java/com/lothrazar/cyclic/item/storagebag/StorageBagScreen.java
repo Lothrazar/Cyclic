@@ -1,22 +1,18 @@
 package com.lothrazar.cyclic.item.storagebag;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketItemStackNBT;
-import com.lothrazar.cyclic.net.PacketTileInventory;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +24,7 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
 
   public StorageBagScreen(StorageBagContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
+    this.ySize = 256;
   }
 
   @Override
@@ -93,27 +90,25 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
 
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int x, int y) {
-    drawString(ms, this.container.bag.getTranslationKey(),
-            (this.getXSize() - this.font.getStringWidth(this.container.bag.getTranslationKey())) / 2,
-            6.0F);
+
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE);
     this.minecraft.getTextureManager().bindTexture(TextureRegistry.INVENTORY_SIDEBAR);
     Screen.blit(ms, this.guiLeft - 24, this.guiTop, 0, 0, 27, 101, 27, 101);
 
-    this.container.bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      for (int i = 0; i < h.getSlots(); i++) {
-        int row = (int) i / 9;
-        int col = i % 9;
-        int xPos = 7 + col * Const.SQ;
-        int yPos = 18 + row * Const.SQ;
-
-        this.drawSlot(ms, xPos, yPos);
-      }
-    });
+    //this.container.bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    //  for (int i = 0; i < h.getSlots(); i++) {
+    //    int row = (int) i / 9;
+    //    int col = i % 9;
+    //    int xPos = 7 + col * Const.SQ;
+    //    int yPos = 18 + row * Const.SQ;
+//
+    //    this.drawSlot(ms, xPos, yPos);
+    //  }
+    //});
   }
 
   private class ToggleButton extends Button {

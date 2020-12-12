@@ -37,6 +37,8 @@ public class StorageBagItem extends ItemBase {
 
   public static final int REFILL_TICKS = 4;
   public int timer = 0;
+  private int slots;
+
   public enum PickupMode implements IStringSerializable {
     NOTHING, EVERYTHING, FILTER;
 
@@ -76,6 +78,11 @@ public class StorageBagItem extends ItemBase {
 
   public StorageBagItem(Properties properties) {
     super(properties);
+  }
+
+  public StorageBagItem(Properties properties, int slots) {
+    this(properties);
+    this.slots = slots;
   }
 
   @Override
@@ -150,7 +157,6 @@ public class StorageBagItem extends ItemBase {
   @Nullable
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-    int slots = 27;
     return new StorageBagCapabilityProvider(stack, slots);
   }
 

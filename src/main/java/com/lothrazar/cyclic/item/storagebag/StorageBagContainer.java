@@ -56,11 +56,11 @@ public class StorageBagContainer extends ContainerBase {
         int col = j % 9;
 
         int xPos = 8 + col * Const.SQ;
-        int yPos = 19 + row * Const.SQ;
+        int yPos = 8 + row * Const.SQ;
         this.addSlot(new SlotItemHandler(h, j, xPos, yPos));
       }
     });
-    layoutPlayerInventorySlots(8, 84);
+    layoutPlayerInventorySlots(8, 174);
   }
 
   @Override

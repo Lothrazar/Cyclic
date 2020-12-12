@@ -220,7 +220,7 @@ public class ItemEvents {
       }
       if (resultStack != null)
         event.getItem().setItem(resultStack);
-      if (resultStack != null && resultStack.getCount() != event.getItem().getItem().getCount())
+      if (resultStack != null && resultStack.getCount() != stack.getCount())
         event.setResult(Result.ALLOW);
       else
         event.setResult(Result.DEFAULT);
