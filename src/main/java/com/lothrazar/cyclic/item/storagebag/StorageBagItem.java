@@ -3,23 +3,31 @@ package com.lothrazar.cyclic.item.storagebag;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -77,6 +85,61 @@ public class StorageBagItem extends ItemBase {
     }
 
     return super.onItemRightClick(worldIn, playerIn, handIn);
+  }
+
+  @Override
+  public ActionResultType onItemUse(ItemUseContext context) {
+    BlockPos pos = context.getPos();
+    Direction face = context.getFace();
+    TileEntity te = context.getWorld().getTileEntity(pos);
+    ItemStack bag = context.getItem();
+    DepositMode mode = getDepositMode(bag);
+    ItemStackHandler handler = getInventory(bag);
+    if (handler != null && te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
+      IItemHandler teHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).orElse(null);
+      Set<Item> itemsInTargetInventory = new HashSet<>();
+      if (teHandler != null) {
+        for (int j = 0; j < teHandler.getSlots(); j++) {
+          itemsInTargetInventory.add(teHandler.getStackInSlot(j).getItem());
+        }
+      }
+      for (int i = 0; i < handler.getSlots(); i++) {
+        ItemStack stack = handler.getStackInSlot(i);
+        ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
+        if (!stack.isEmpty()) {
+          if (mode == DepositMode.DUMP || (mode == DepositMode.MERGE && itemsInTargetInventory.contains(stack.getItem()))) {
+            remaining = ItemHandlerHelper.insertItem(teHandler, stack, false);
+            handler.setStackInSlot(i, remaining);
+          }
+        }
+      }
+      return ActionResultType.SUCCESS;
+    }
+    return ActionResultType.PASS;
+  }
+
+  @Override
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    super.addInformation(stack, worldIn, tooltip, flagIn);
+    CompoundNBT nbt = stack.getOrCreateTag();
+    String pickupMode = nbt.getString("pickup_mode");
+    String depositMode = nbt.getString("deposit_mode");
+    String refillMode = nbt.getString("refill_mode");
+    if (!pickupMode.equals(""))
+      tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
+              new TranslationTextComponent(String.format(
+                      pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
+              .mergeStyle(TextFormatting.GREEN));
+    if (!depositMode.equals(""))
+      tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
+              new TranslationTextComponent(String.format(
+                      depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
+              .mergeStyle(TextFormatting.BLUE));
+    if (!refillMode.equals(""))
+      tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
+              new TranslationTextComponent(String.format(
+                      refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
+              .mergeStyle(TextFormatting.RED));
   }
 
   @Override

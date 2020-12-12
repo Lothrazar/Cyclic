@@ -37,33 +37,46 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
 
     ToggleButton pickup = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y,
             nbt, StringNBT.valueOf("pickup_mode"), StringNBT.valueOf("nothing"),
-            new TranslationTextComponent("item.cyclic.storage_bag.pickup.nothing.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.pickup.nothing"), (p) -> {});
-    pickup.addState(new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything"),
+            new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
+                    new TranslationTextComponent("item.cyclic.storage_bag.disabled")), (p) -> {});
+    pickup.addState(
+            new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
+                    new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything")),
             StringNBT.valueOf("everything"), (p) -> {});
-    pickup.addState(new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter"),
+    pickup.addState(
+            new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
+                    new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter")),
             StringNBT.valueOf("filter"), (p) -> {});
 
     ToggleButton dump = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y + BUTTON_GAP,
             nbt, StringNBT.valueOf("deposit_mode"), StringNBT.valueOf("nothing"),
-            new TranslationTextComponent("item.cyclic.storage_bag.deposit.nothing.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.deposit.nothing"), (p) -> {});
+            new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
+                    new TranslationTextComponent("item.cyclic.storage_bag.disabled")), (p) -> {});
 
-    dump.addState(new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump"),
+    dump.addState(
+            new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
+                    new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump")),
             StringNBT.valueOf("dump"), (p) -> {});
-    dump.addState(new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge"),
+    dump.addState(
+            new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
+                    new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge")),
             StringNBT.valueOf("merge"), (p) -> {});
 
     ToggleButton refill = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y + BUTTON_GAP * 2,
             nbt, StringNBT.valueOf("refill_mode"), StringNBT.valueOf("nothing"),
-            new TranslationTextComponent("item.cyclic.storage_bag.refill.nothing.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.refill.nothing"), (p) -> {});
-    refill.addState(new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar.button"),
-            new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar"),
+            new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
+                    new TranslationTextComponent("item.cyclic.storage_bag.disabled")), (p) -> {});
+    refill.addState(
+            new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar.button"),
+            new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
+                    new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar")),
             StringNBT.valueOf("hotbar"), (p) -> {});
 
     this.addButton(pickup);
