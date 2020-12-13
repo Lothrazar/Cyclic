@@ -1,18 +1,31 @@
 package com.lothrazar.cyclic.item.storagebag;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -25,14 +38,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
-import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-
 public class StorageBagItem extends ItemBase {
 
   public static final int REFILL_TICKS = 4;
@@ -40,39 +45,32 @@ public class StorageBagItem extends ItemBase {
   private int slots;
 
   public enum PickupMode implements IStringSerializable {
+
     NOTHING, EVERYTHING, FILTER;
 
     @Override
     public String getString() {
-      if (this == EVERYTHING)
-        return "everything";
-      if (this == FILTER)
-        return "filter";
-      return "nothing";
+      return this.name().toLowerCase();
     }
   }
 
   public enum DepositMode implements IStringSerializable {
+
     NOTHING, DUMP, MERGE;
 
     @Override
     public String getString() {
-      if (this == DUMP)
-        return "dump";
-      if (this == MERGE)
-        return "merge";
-      return "nothing";
+      return this.name().toLowerCase();
     }
   }
 
   public enum RefillMode implements IStringSerializable {
+
     NOTHING, HOTBAR;
 
     @Override
     public String getString() {
-      if (this == HOTBAR)
-        return "hotbar";
-      return "nothing";
+      return this.name().toLowerCase();
     }
   }
 
@@ -90,18 +88,41 @@ public class StorageBagItem extends ItemBase {
     if (!worldIn.isRemote && !playerIn.isCrouching()) {
       NetworkHooks.openGui((ServerPlayerEntity) playerIn, new StorageBagContainerProvider(), playerIn.getPosition());
     }
-
     return super.onItemRightClick(worldIn, playerIn, handIn);
+  }
+
+  private final static String NBT_COLOUR = "COLOUR";
+
+  public static int getColour(ItemStack stack) {
+    CompoundNBT tags = stack.getOrCreateTag();
+    if (tags.contains(NBT_COLOUR) == false) {
+      return DyeColor.BROWN.getColorValue();//BROWN as default for normal look
+    }
+    return tags.getInt(NBT_COLOUR);
   }
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     BlockPos pos = context.getPos();
     Direction face = context.getFace();
-    TileEntity te = context.getWorld().getTileEntity(pos);
+    World world = context.getWorld();
+    TileEntity te = world.getTileEntity(pos);
     ItemStack bag = context.getItem();
     DepositMode mode = getDepositMode(bag);
     ItemStackHandler handler = getInventory(bag);
+    CauldronBlock y;
+    if (world.getBlockState(pos).getBlock() instanceof CauldronBlock) {
+      // TODO: remove color if dyed
+      //                if (i > 0 && item instanceof IDyeableArmorItem) {
+      //      IDyeableArmorItem idyeablearmoritem = (IDyeableArmorItem)item;
+      //      if (idyeablearmoritem.hasColor(itemstack) && !worldIn.isRemote) {
+      //         idyeablearmoritem.removeColor(itemstack);
+      //         this.setWaterLevel(worldIn, pos, state, i - 1);
+      //         player.addStat(Stats.CLEAN_ARMOR);
+      //         return ActionResultType.SUCCESS;
+      //      }
+      //   }
+    }
     if (handler != null && te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
       IItemHandler teHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).orElse(null);
       Set<Item> itemsInTargetInventory = new HashSet<>();
@@ -134,19 +155,19 @@ public class StorageBagItem extends ItemBase {
     String refillMode = nbt.getString("refill_mode");
     if (!pickupMode.equals(""))
       tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
-              new TranslationTextComponent(String.format(
-                      pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
-              .mergeStyle(TextFormatting.GREEN));
+          new TranslationTextComponent(String.format(
+              pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
+                  .mergeStyle(TextFormatting.GREEN));
     if (!depositMode.equals(""))
       tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
-              new TranslationTextComponent(String.format(
-                      depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
-              .mergeStyle(TextFormatting.BLUE));
+          new TranslationTextComponent(String.format(
+              depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
+                  .mergeStyle(TextFormatting.BLUE));
     if (!refillMode.equals(""))
       tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
-              new TranslationTextComponent(String.format(
-                      refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
-              .mergeStyle(TextFormatting.RED));
+          new TranslationTextComponent(String.format(
+              refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
+                  .mergeStyle(TextFormatting.RED));
   }
 
   @Override
@@ -163,25 +184,26 @@ public class StorageBagItem extends ItemBase {
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
     timer++;
-    if (timer < REFILL_TICKS)
+    if (timer < REFILL_TICKS) {
       return;
+    }
     timer = 0;
     if (!world.isRemote && entity instanceof PlayerEntity) {
       if (getRefillMode(stack) == RefillMode.HOTBAR) {
         tryRefillHotbar(stack, (PlayerEntity) entity);
       }
     }
-
   }
 
   private void tryRefillHotbar(ItemStack bag, PlayerEntity player) {
     ItemStackHandler handler = getInventory(bag);
-    if (handler == null)
+    if (handler == null) {
       return;
-
+    }
     for (int i = 0; i < Math.min(9, player.inventory.getSizeInventory()); i++) { //hotbar is 0-8, but do a Math.min in case some mod reduces inventory size? Idk, why not.
       ItemStack stack = player.inventory.getStackInSlot(i);
-      if (!stack.isEmpty() && stack.getCount() < stack.getMaxStackSize()) {
+      if (!stack.isEmpty()) {
+        //we found a non
         int slot = getLastSlotWithStack(bag, stack);
         if (slot != -1) {
           boolean success = refillHotbar(bag, player, slot, i);
@@ -201,7 +223,6 @@ public class StorageBagItem extends ItemBase {
       ItemStack extracted = handler.extractItem(bagSlot, 1, true);
       success = player.inventory.add(invSlot, extracted);
     }
-
     return success;
   }
 
@@ -215,7 +236,7 @@ public class StorageBagItem extends ItemBase {
   public static ItemStack tryInsert(ItemStack bag, ItemStack stack) {
     AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(stack, stack.getCount()));
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-        returnStack.set(ItemHandlerHelper.insertItem(h, stack, false));
+      returnStack.set(ItemHandlerHelper.insertItem(h, stack, false));
     });
     return returnStack.get();
   }
@@ -236,17 +257,17 @@ public class StorageBagItem extends ItemBase {
     });
     return hasItem.get();
   }
-
-  private static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
-    AtomicInteger slot = new AtomicInteger(-1);
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      for (int i = 0; i < h.getSlots(); i++) {
-        if (h.getStackInSlot(i).getItem() == stack.getItem())
-          slot.set(i);
-      }
-    });
-    return slot.get();
-  }
+  //unused but possibly useful
+  //  private static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
+  //    AtomicInteger slot = new AtomicInteger(-1);
+  //    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+  //      for (int i = 0; i < h.getSlots(); i++) {
+  //        if (h.getStackInSlot(i).getItem() == stack.getItem())
+  //          slot.set(i);
+  //      }
+  //    });
+  //    return slot.get();
+  //  }
 
   private static int getLastSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
@@ -294,14 +315,14 @@ public class StorageBagItem extends ItemBase {
     }
     return slots;
   }
-
-  private static int getFirstBagSlot(PlayerEntity player) {
-    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-      if (isBag(player.inventory.getStackInSlot(i)))
-        return i;
-    }
-    return -1;
-  }
+  //unused but possibly useful
+  //  private static int getFirstBagSlot(PlayerEntity player) {
+  //    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+  //      if (isBag(player.inventory.getStackInSlot(i)))
+  //        return i;
+  //    }
+  //    return -1;
+  //  }
 
   private static boolean isBag(ItemStack stack) {
     return stack.getItem() instanceof StorageBagItem;
