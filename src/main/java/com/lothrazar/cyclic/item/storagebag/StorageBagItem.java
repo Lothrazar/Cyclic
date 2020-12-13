@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -93,6 +92,11 @@ public class StorageBagItem extends ItemBase {
 
   private final static String NBT_COLOUR = "COLOUR";
 
+  public static void setColour(ItemStack stack, DyeColor col) {
+    CompoundNBT tags = stack.getOrCreateTag();
+    tags.putInt(NBT_COLOUR, col.getColorValue());
+  }
+
   public static int getColour(ItemStack stack) {
     CompoundNBT tags = stack.getOrCreateTag();
     if (tags.contains(NBT_COLOUR) == false) {
@@ -110,19 +114,6 @@ public class StorageBagItem extends ItemBase {
     ItemStack bag = context.getItem();
     DepositMode mode = getDepositMode(bag);
     ItemStackHandler handler = getInventory(bag);
-    CauldronBlock y;
-    if (world.getBlockState(pos).getBlock() instanceof CauldronBlock) {
-      // TODO: remove color if dyed
-      //                if (i > 0 && item instanceof IDyeableArmorItem) {
-      //      IDyeableArmorItem idyeablearmoritem = (IDyeableArmorItem)item;
-      //      if (idyeablearmoritem.hasColor(itemstack) && !worldIn.isRemote) {
-      //         idyeablearmoritem.removeColor(itemstack);
-      //         this.setWaterLevel(worldIn, pos, state, i - 1);
-      //         player.addStat(Stats.CLEAN_ARMOR);
-      //         return ActionResultType.SUCCESS;
-      //      }
-      //   }
-    }
     if (handler != null && te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
       IItemHandler teHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).orElse(null);
       Set<Item> itemsInTargetInventory = new HashSet<>();
