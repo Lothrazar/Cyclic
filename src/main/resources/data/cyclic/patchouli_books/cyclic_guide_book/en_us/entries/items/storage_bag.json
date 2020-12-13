@@ -9,7 +9,8 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:storage_bag"
+      "recipe": "cyclic:storage_bag",
+      "text": "item.cyclic.storage_bag.guide0"
     }
   ]
 }
