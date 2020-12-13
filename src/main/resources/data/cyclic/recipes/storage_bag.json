@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ldl",
+    "lcl",
+    "ldl"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "c": {
+      "item": "cyclic:crate"
+    }
+  },
+  "result": {
+    "item": "cyclic:storage_bag",
+    "count": 1
+  }
+}

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
@@ -16,6 +17,9 @@ public class ClientRegistry {
   public static void setup() {
     for (BlockBase b : BlockRegistry.blocks) {
       b.registerClient();
+    }
+    for (ItemBase i : ItemRegistry.items) {
+      i.registerClient();
     }
     initColours();
   }

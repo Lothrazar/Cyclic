@@ -34,6 +34,7 @@ import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
+import com.lothrazar.cyclic.item.storagebag.StorageBagContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -147,6 +148,7 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerLaser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("laser"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new StorageBagContainer(windowId, inv, inv.player))).setRegistryName("storage_bag"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":laser")
@@ -216,4 +218,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerMiner> miner;
   @ObjectHolder(ModCyclic.MODID + ":screen")
   public static ContainerType<ContainerScreentext> screen;
+  @ObjectHolder(ModCyclic.MODID + ":storage_bag")
+  public static ContainerType<StorageBagContainer> storage_bag;
 }

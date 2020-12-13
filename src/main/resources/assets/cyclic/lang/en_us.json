@@ -625,21 +625,31 @@
     "item.cyclic.stone_minecart.guide": "Think of this as a single-slot chest.  The Stone Minecart can carry any block.  Just use another block or an empty hand to swap blocks in an out (also works with Automated User).  Powered activator rail will pop the block out as well.",
     "item.cyclic.stone_minecart": "Stone Minecart",
     "item.cyclic.stone_minecart.tooltip": "Carry one block, unload with activator rail",
-    "item.cyclic.storage_bag.deposit": "Dump",
-    "item.cyclic.storage_bag.disabled": "Hit deposit is disabled, left click to enable",
-    "item.cyclic.storage_bag.guide": "A simple bag that can hold anything, a portable chest.  Optionally can auto deposit by hitting containers.  Change the items colour in the GUI.",
-    "item.cyclic.storage_bag.merge": "Merge",
-    "item.cyclic.storage_bag": "Storage Bag",
-    "item.cyclic.storage_bag.nothing": "Nothing",
-    "item.cyclic.storage_bag.success": "Items moved:",
-    "item.cyclic.storage_bag.tooltip2": "Hit Deposit Mode:",
-    "item.cyclic.storage_bag.tooltip": "Item Stacks:",
-    "item.cyclic.storage_bag.toggle": "Toggle Hit Deposit Mode",
 
-    "item.cyclic.storage_bag.togglepickup": "Toggle auto-pickup",
-    "item.cyclic.storage_bag.pickup.filter": "Gather items matching contents",
-    "item.cyclic.storage_bag.pickup.everything": "Gather everything picked up",
-    "item.cyclic.storage_bag.pickup.nothing": "Bag will gather nothing",
+    "item.cyclic.storage_bag": "Storage Bag",
+    "item.cyclic.storage_bag.tooltip":  "A magical storage bag.",
+    "item.cyclic.storage_bag.guide": "The Storage Bag can be used as a portable inventory. Right-click with the bag in hand to open it.$(br2)The bag can be set to pickup items, refill your hotbar, or to deposit its items into any inventory on right-click.",
+
+    "item.cyclic.storage_bag.disabled": "Disabled",
+    "item.cyclic.storage_bag.disabled.button": "--",
+
+    "item.cyclic.storage_bag.deposit.merge": "Merge",
+    "item.cyclic.storage_bag.deposit.merge.button": "Me",
+    "item.cyclic.storage_bag.deposit.dump": "Dump",
+    "item.cyclic.storage_bag.deposit.dump.button": "Du",
+
+    "item.cyclic.storage_bag.pickup.filter": "Filter",
+    "item.cyclic.storage_bag.pickup.filter.button": "Fi",
+    "item.cyclic.storage_bag.pickup.everything": "Everything",
+    "item.cyclic.storage_bag.pickup.everything.button": "Ev",
+
+    "item.cyclic.storage_bag.refill.hotbar": "Hotbar",
+    "item.cyclic.storage_bag.refill.hotbar.button": "Re",
+
+    "item.cyclic.storage_bag.success": "Items moved: %d",
+    "item.cyclic.storage_bag.tooltip.deposit": "Hit Deposit Mode: %s",
+    "item.cyclic.storage_bag.tooltip.pickup": "Pickup Mode: %s",
+    "item.cyclic.storage_bag.tooltip.refill": "Refill mode: %s",
 
     "item.cyclic.sword_ender.guide": "Unbreakable sword with a special right-click ability to launch an ender pearl",
     "item.cyclic.sword_ender": "Sword of Evasion",
@@ -731,6 +741,7 @@
     "item.cyclic.elevation_wand": "Rod of Elevation",
     "item.cyclic.elevation_wand.tooltip":  "Teleport yourself or the target entity up to the nearest surface above",
     "item.cyclic.elevation_wand.guide": "Teleporter that works only vertically, and only if it can find an empty space with a surface above.  Works on yourself, or target another entity.",
+
     "key.categories.inventorycontrol": "Cyclic Keybindings",
     "key.columnbardown": "Row Shift Down",
     "key.columnbarup": "Row Shift Up",
