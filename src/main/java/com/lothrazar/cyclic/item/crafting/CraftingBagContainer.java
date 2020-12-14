@@ -36,6 +36,7 @@ public class CraftingBagContainer extends ContainerBase {
     super(ContainerScreenRegistry.crafting_bag, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
+    this.endInv = 10;
     //result first
     this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     //
@@ -49,16 +50,6 @@ public class CraftingBagContainer extends ContainerBase {
       this.bag = player.getHeldItemOffhand();
       this.slot = 40;
     }
-    //    else {
-    //      for (int x = 0; x < playerInventory.getSizeInventory(); x++) {
-    //        ItemStack stack = playerInventory.getStackInSlot(x);
-    //        if (stack.getItem() instanceof CraftingBagItem) {
-    //          bag = stack;
-    //          slot = x;
-    //          break;
-    //        }
-    //      }
-    //    }
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * 18, 17 + i * 18));
