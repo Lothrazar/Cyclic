@@ -64,21 +64,20 @@ public class StorageBagContainer extends ContainerBase {
   @Nonnull
   @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    if (slotId < 0 || slotId >= this.inventorySlots.size()) {
-      return ItemStack.EMPTY;
-    }
-    ItemStack myBag = this.inventorySlots.get(slotId).getStack();
-    if (myBag.getItem() instanceof StorageBagItem) {
-      // if its a normal click with a Dye item, then update stack color
-      if (clickTypeIn == ClickType.PICKUP) {
-        ItemStack mouseStack = player.inventory.getItemStack();
-        if (mouseStack.getItem() instanceof DyeItem) {
-          DyeItem dye = (DyeItem) mouseStack.getItem();
-          StorageBagItem.setColour(myBag, dye.getDyeColor());
+    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
+      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
+      if (myBag.getItem() instanceof StorageBagItem) {
+        // if its a normal click with a Dye item, then update stack color
+        if (clickTypeIn == ClickType.PICKUP) {
+          ItemStack mouseStack = player.inventory.getItemStack();
+          if (mouseStack.getItem() instanceof DyeItem) {
+            DyeItem dye = (DyeItem) mouseStack.getItem();
+            StorageBagItem.setColour(myBag, dye.getDyeColor());
+          }
         }
+        //lock the bag in place by returning empty
+        return ItemStack.EMPTY;
       }
-      //lock the bag in place by returning empty
-      return ItemStack.EMPTY;
     }
     return super.slotClick(slotId, dragType, clickTypeIn, player);
   }

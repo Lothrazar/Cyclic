@@ -126,13 +126,12 @@ public class CraftingBagContainer extends ContainerBase {
   @Nonnull
   @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    if (slotId < 0 || slotId >= this.inventorySlots.size()) {
-      return ItemStack.EMPTY;
-    }
-    ItemStack myBag = this.inventorySlots.get(slotId).getStack();
-    if (myBag.getItem() instanceof CraftingBagItem) {
-      //lock the bag in place by returning empty
-      return ItemStack.EMPTY;
+    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
+      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
+      if (myBag.getItem() instanceof CraftingBagItem) {
+        //lock the bag in place by returning empty
+        return ItemStack.EMPTY;
+      }
     }
     return super.slotClick(slotId, dragType, clickTypeIn, player);
   }
