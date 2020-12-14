@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.storagebag;
+package com.lothrazar.cyclic.item.crafting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -11,21 +11,21 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class StorageBagCapabilityProvider implements ICapabilitySerializable<CompoundNBT> {
+public class CraftingBagCapabilityProvider implements ICapabilitySerializable<CompoundNBT> {
 
   //  private ItemStack bag;
-  private int slots;
+  private int slots = 10;
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(slots) {
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-      return !(stack.getItem() instanceof StorageBagItem) && super.isItemValid(slot, stack);
+      return !(stack.getItem() instanceof CraftingBagItem) && super.isItemValid(slot, stack);
     }
   });
 
-  public StorageBagCapabilityProvider(ItemStack stack, int slots) {
+  public CraftingBagCapabilityProvider(ItemStack stack, int slots) {
     //    this.bag = stack;
-    this.slots = slots;
+    //    this.slots = slots;
   }
 
   @Nonnull

@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
@@ -41,6 +43,7 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.carrot.ItemHorseLapisVariant;
 import com.lothrazar.cyclic.item.carrot.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.carrot.ItemHorseToxic;
+import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
@@ -92,9 +95,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
@@ -135,6 +135,8 @@ public class ItemRegistry {
   public static Item elevation_wand;
   @ObjectHolder(ModCyclic.MODID + ":storage_bag")
   public static Item storage_bag;
+  @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
+  public static Item crafting_bag;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -261,6 +263,7 @@ public class ItemRegistry {
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("shape_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024)).setRegistryName("scythe_harvest"));
     r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
+    r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
     ///////////////////////// apples
     final int SMALLPOT = 20 * 90;// 1:30
     final int LARGEPOT = 3 * 20 * 60;// 3:00
