@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 public class CraftingStickContainer extends ContainerBase {
 
   private final CraftingInventory craftMatrix = new CraftingInventory(this, 3, 3);
-  private final CraftResultInventory craftResult = new CraftResultInventory();
+  final CraftResultInventory craftResult = new CraftResultInventory();
 
   //does NOT save inventory into the stack, very simple and plain
   public CraftingStickContainer(int id, PlayerInventory playerInventory, PlayerEntity player) {

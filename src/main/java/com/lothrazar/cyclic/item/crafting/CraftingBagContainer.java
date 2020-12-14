@@ -25,7 +25,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class CraftingBagContainer extends ContainerBase {
 
   private final CraftingInventory craftMatrix = new CraftingInventory(this, 3, 3);
-  private final CraftResultInventory craftResult = new CraftResultInventory();
+  final CraftResultInventory craftResult = new CraftResultInventory();
   //
   public ItemStack bag;
   public int slot;

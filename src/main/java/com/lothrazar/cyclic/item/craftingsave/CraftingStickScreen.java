@@ -18,8 +18,18 @@ public class CraftingStickScreen extends ScreenBase<CraftingStickContainer> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
   }
-  //  @Override
-  //  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int x, int y) {}
+
+  @Override
+  public void init() {
+    super.init();
+    //    this.addButton(new ExtendedButton(guiLeft + 84, guiTop + 62, 8, 8, new StringTextComponent(ForgeI18n.parseMessage("")), b -> {
+    //      //pressed
+    //      for (int i = 1; i <= 9; i++) {
+    //        this.container.transferStackInSlot(Minecraft.getInstance().player, i);
+    //      }
+    //      this.container.craftResult.clear();
+    //    }));
+  }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
