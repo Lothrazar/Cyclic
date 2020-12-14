@@ -18,6 +18,7 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
   protected void init() {
     super.init();
     CompoundNBT nbt = this.container.bag.getOrCreateTag();
+    net.minecraft.inventory.container.WorkbenchContainer xyz;
   }
 
   @Override

@@ -14,7 +14,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class CraftingBagCapabilityProvider implements ICapabilitySerializable<CompoundNBT> {
 
   //  private ItemStack bag;
-  private int slots = 10;
+  private final int slots = 9;
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(slots) {
 
     @Override
