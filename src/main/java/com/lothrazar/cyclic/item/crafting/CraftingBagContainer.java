@@ -59,7 +59,6 @@ public class CraftingBagContainer extends ContainerBase {
     this.nbt = bag.getOrCreateTag();
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.slots = h.getSlots();
-      this.endInv = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {

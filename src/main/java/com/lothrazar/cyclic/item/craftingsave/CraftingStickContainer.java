@@ -29,7 +29,7 @@ public class CraftingStickContainer extends ContainerBase {
     super(ContainerScreenRegistry.crafting_stick, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.endInv = 9;
+    this.endInv = 10;
     this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
