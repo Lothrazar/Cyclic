@@ -35,6 +35,7 @@ import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
+import com.lothrazar.cyclic.item.craftingsave.CraftingStickContainer;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -157,6 +158,7 @@ public class ContainerScreenRegistry {
     //
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new StorageBagContainer(windowId, inv, inv.player))).setRegistryName("storage_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player))).setRegistryName("crafting_stick"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":laser")
@@ -229,4 +231,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<StorageBagContainer> storage_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
   public static ContainerType<CraftingBagContainer> crafting_bag;
+  @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
+  public static ContainerType<CraftingStickContainer> crafting_stick;
 }

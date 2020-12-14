@@ -44,6 +44,7 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseLapisVariant;
 import com.lothrazar.cyclic.item.carrot.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.carrot.ItemHorseToxic;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
+import com.lothrazar.cyclic.item.craftingsave.CraftingStickItem;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
@@ -264,6 +265,7 @@ public class ItemRegistry {
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024)).setRegistryName("scythe_harvest"));
     r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
+    r.register(new CraftingStickItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_stick"));
     ///////////////////////// apples
     final int SMALLPOT = 20 * 90;// 1:30
     final int LARGEPOT = 3 * 20 * 60;// 3:00

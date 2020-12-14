@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "cyclic:items/crafting_bag"
+    }
+}

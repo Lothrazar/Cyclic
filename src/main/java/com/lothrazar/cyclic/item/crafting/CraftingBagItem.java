@@ -19,7 +19,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class CraftingBagItem extends ItemBase {
 
@@ -41,38 +40,6 @@ public class CraftingBagItem extends ItemBase {
     }
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
-  // 
-  //  @Override
-  //  public ActionResultType onItemUse(ItemUseContext context) {
-  //    BlockPos pos = context.getPos();
-  //    Direction face = context.getFace();
-  //    World world = context.getWorld();
-  //    TileEntity te = world.getTileEntity(pos);
-  //    ItemStack bag = context.getItem();
-  //    DepositMode mode = getDepositMode(bag);
-  //    ItemStackHandler handler = getInventory(bag);
-  //    if (handler != null && te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
-  //      IItemHandler teHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).orElse(null);
-  //      Set<Item> itemsInTargetInventory = new HashSet<>();
-  //      if (teHandler != null) {
-  //        for (int j = 0; j < teHandler.getSlots(); j++) {
-  //          itemsInTargetInventory.add(teHandler.getStackInSlot(j).getItem());
-  //        }
-  //      }
-  //      for (int i = 0; i < handler.getSlots(); i++) {
-  //        ItemStack stack = handler.getStackInSlot(i);
-  //        ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
-  //        if (!stack.isEmpty()) {
-  //          if (mode == DepositMode.DUMP || (mode == DepositMode.MERGE && itemsInTargetInventory.contains(stack.getItem()))) {
-  //            remaining = ItemHandlerHelper.insertItem(teHandler, stack, false);
-  //            handler.setStackInSlot(i, remaining);
-  //          }
-  //        }
-  //      }
-  //      return ActionResultType.SUCCESS;
-  //    }
-  //    return ActionResultType.PASS;
-  //  }
 
   @Override
   public void registerClient() {
@@ -84,13 +51,12 @@ public class CraftingBagItem extends ItemBase {
   public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
     return new CraftingBagCapabilityProvider(stack, slots);
   }
-
-  @Nullable
-  private static ItemStackHandler getInventory(ItemStack bag) {
-    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent())
-      return (ItemStackHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
-    return null;
-  }
+  //  @Nullable
+  //  private static ItemStackHandler getInventory(ItemStack bag) {
+  //    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent())
+  //      return (ItemStackHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
+  //    return null;
+  //  }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack stack) {
     AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(stack, stack.getCount()));

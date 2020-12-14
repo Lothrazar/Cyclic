@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.crafting_stick",
+  "icon": "cyclic:crafting_stick",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.crafting_stick.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:crafting_stick"
+    }
+  ]
+}

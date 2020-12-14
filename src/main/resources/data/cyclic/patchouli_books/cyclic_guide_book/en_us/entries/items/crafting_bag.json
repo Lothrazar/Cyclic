@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.crafting_bag",
+  "icon": "cyclic:crafting_bag",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.crafting_bag.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:crafting_bag"
+    }
+  ]
+}

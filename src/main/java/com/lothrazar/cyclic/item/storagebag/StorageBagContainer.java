@@ -9,7 +9,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -18,7 +17,7 @@ public class StorageBagContainer extends ContainerBase {
   public ItemStack bag;
   public int slot;
   public int slots;
-  public CompoundNBT nbt;
+  //  public CompoundNBT nbt;
 
   public StorageBagContainer(int i, PlayerInventory playerInventory, PlayerEntity player) {
     super(ContainerScreenRegistry.storage_bag, i);
@@ -40,7 +39,7 @@ public class StorageBagContainer extends ContainerBase {
         }
       }
     }
-    this.nbt = bag.getOrCreateTag();
+    //    this.nbt = bag.getOrCreateTag();
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {

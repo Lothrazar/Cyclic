@@ -7,6 +7,7 @@ public class TextureRegistry {
 
   public static final ResourceLocation PROGRESS = new ResourceLocation(ModCyclic.MODID, "textures/gui/progress.png");
   public static final ResourceLocation PROGRESS_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/progress_ctr.png");
+  public static final ResourceLocation V_CRAFTING = new ResourceLocation("minecraft", "textures/gui/container/crafting_table.png");
   public static final ResourceLocation INVENTORY = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory.png");
   public static final ResourceLocation INVENTORY_PLAIN = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_plain.png");
   public static final ResourceLocation INVENTORY_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_large.png");
