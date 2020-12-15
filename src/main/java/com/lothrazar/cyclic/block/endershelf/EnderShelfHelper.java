@@ -1,5 +1,10 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -9,12 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
-
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class EnderShelfHelper {
 
@@ -78,10 +77,10 @@ public class EnderShelfHelper {
   @Nullable
   public static EnderShelfItemHandler getShelfHandler(TileEntity te) {
     if (te != null &&
-            te.getBlockState().getBlock().getRegistryName() != null &&
-            te.getBlockState().getBlock().getRegistryName().equals(ENDER_SHELF_REGISTRY_NAME) &&
-            te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
-            te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderShelfItemHandler)
+        te.getBlockState().getBlock().getRegistryName() != null &&
+        te.getBlockState().getBlock().getRegistryName().equals(ENDER_SHELF_REGISTRY_NAME) &&
+        te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
+        te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderShelfItemHandler)
       return (EnderShelfItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
     return null;
   }
@@ -89,10 +88,10 @@ public class EnderShelfHelper {
   @Nullable
   public static EnderControllerItemHandler getControllerHandler(TileEntity te) {
     if (te != null &&
-            te.getBlockState().getBlock().getRegistryName() != null &&
-            te.getBlockState().getBlock().getRegistryName().equals(ENDER_CONTROLLER_REGISTRY_NAME) &&
-            te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
-            te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderControllerItemHandler)
+        te.getBlockState().getBlock().getRegistryName() != null &&
+        te.getBlockState().getBlock().getRegistryName().equals(ENDER_CONTROLLER_REGISTRY_NAME) &&
+        te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
+        te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderControllerItemHandler)
       return (EnderControllerItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
     return null;
   }

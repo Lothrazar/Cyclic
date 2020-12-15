@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.event;
 
+import java.util.Set;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.cable.WrenchActionType;
@@ -31,13 +32,15 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.Set;
 
 public class ItemEvents {
 
@@ -212,10 +215,12 @@ public class ItemEvents {
         switch (StorageBagItem.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = StorageBagItem.tryInsert(bag, stack);
-            break;
+          break;
           case FILTER:
             resultStack = StorageBagItem.tryFilteredInsert(bag, stack);
-            break;
+          break;
+          case NOTHING:
+          break;
         }
       }
       if (resultStack != null)

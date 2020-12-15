@@ -1,15 +1,14 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.util.UtilEnchant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EnderControllerItemHandler extends ItemStackHandler {
 
@@ -72,7 +71,6 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   private ItemStack extractItemElsewhere(int amount, boolean simulate) {
     if (this.controller.getShelves().size() == 0)
       return ItemStack.EMPTY;
-
     if (this.controller.getWorld() != null) {
       int slot = -1;
       EnderShelfItemHandler handler = null;
@@ -85,11 +83,9 @@ public class EnderControllerItemHandler extends ItemStackHandler {
             break;
         }
       }
-
       if (slot != -1)
         return handler.extractItem(slot, amount, simulate);
     }
     return ItemStack.EMPTY;
   }
-
 }

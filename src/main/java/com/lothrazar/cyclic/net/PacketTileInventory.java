@@ -1,18 +1,15 @@
 package com.lothrazar.cyclic.net;
 
-import com.lothrazar.cyclic.ModCyclic;
+import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
-
-import java.util.function.Supplier;
 
 public class PacketTileInventory extends PacketBase {
 
@@ -42,13 +39,13 @@ public class PacketTileInventory extends PacketBase {
       }
       TileEntity tile = Minecraft.getInstance().world.getTileEntity(message.blockPos);
       if (tile != null)
-      tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-        if (message.type == TYPE.SET && h instanceof EnderShelfItemHandler) {
-          ItemStack was = h.getStackInSlot(message.slot);
-          ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
-        }
-        h.insertItem(message.slot, message.itemStack, false);
-      });
+        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+          if (message.type == TYPE.SET && h instanceof EnderShelfItemHandler) {
+            ItemStack was = h.getStackInSlot(message.slot);
+            ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
+          }
+          h.insertItem(message.slot, message.itemStack, false);
+        });
     });
     message.done(ctx);
   }

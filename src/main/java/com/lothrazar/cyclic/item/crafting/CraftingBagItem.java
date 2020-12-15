@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item.crafting;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
@@ -65,28 +64,6 @@ public class CraftingBagItem extends ItemBase {
     });
     return returnStack.get();
   }
-
-  private static boolean bagHasItem(ItemStack bag, ItemStack stack) {
-    AtomicBoolean hasItem = new AtomicBoolean(false);
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      for (int i = 0; i < h.getSlots(); i++) {
-        if (h.getStackInSlot(i).getItem() == stack.getItem())
-          hasItem.set(true);
-      }
-    });
-    return hasItem.get();
-  }
-  //unused but possibly useful
-  //  private static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
-  //    AtomicInteger slot = new AtomicInteger(-1);
-  //    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-  //      for (int i = 0; i < h.getSlots(); i++) {
-  //        if (h.getStackInSlot(i).getItem() == stack.getItem())
-  //          slot.set(i);
-  //      }
-  //    });
-  //    return slot.get();
-  //  }
 
   public static Set<Integer> getAllBagSlots(PlayerEntity player) {
     Set<Integer> slots = new HashSet<>();

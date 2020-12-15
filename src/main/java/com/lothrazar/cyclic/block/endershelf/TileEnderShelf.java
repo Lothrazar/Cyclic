@@ -1,5 +1,11 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -14,14 +20,9 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-import javax.annotation.Nonnull;
-import java.util.*;
-import java.util.stream.Collectors;
-
 public class TileEnderShelf extends TileEntityBase {
 
   private final LazyOptional<EnderShelfItemHandler> inventory = LazyOptional.of(() -> new EnderShelfItemHandler(this));
-  private final LazyOptional<EnderShelfItemHandler> fakeInventory = LazyOptional.of(() -> new EnderShelfItemHandler(this, true));
   private final LazyOptional<EnderControllerItemHandler> controllerInventory = LazyOptional.of(() -> new EnderControllerItemHandler(this));
   private BlockPos controllerLocation;
   private Set<BlockPos> connectedShelves;
@@ -33,9 +34,7 @@ public class TileEnderShelf extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {
-
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {
@@ -71,7 +70,6 @@ public class TileEnderShelf extends TileEntityBase {
         return controllerInventory.cast();
       return inventory.cast();
     }
-
     return super.getCapability(cap, side);
   }
 
@@ -95,10 +93,8 @@ public class TileEnderShelf extends TileEntityBase {
       tag.put("inv", compound);
     });
     ListNBT shelves = new ListNBT();
-    int index = 0;
     for (BlockPos pos : this.connectedShelves) {
       shelves.add(NBTUtil.writeBlockPos(pos));
-      index++;
     }
     tag.put("shelves", shelves);
     return super.write(tag);

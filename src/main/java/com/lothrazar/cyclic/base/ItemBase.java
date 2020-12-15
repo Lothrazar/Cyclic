@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.base;
 
 import java.util.List;
 import javax.annotation.Nullable;
-
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.client.util.ITooltipFlag;
