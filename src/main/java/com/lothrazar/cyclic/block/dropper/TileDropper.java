@@ -26,7 +26,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -38,8 +37,10 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
 
   static final int MAX = 64000;
   public static IntValue POWERCONF;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private ItemStackHandler inventory = new ItemStackHandler(1);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int dropCount = 1;
   private int delay = 10;
   private int hOffset = 0;
@@ -60,11 +61,8 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
       return;
     }
     timer--;
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
     final int cost = POWERCONF.get();
-    if (en == null || inv == null
-        || en.getEnergyStored() < cost) {
+    if (energy.getEnergyStored() < cost) {
       if (cost > 0) {
         setLitProperty(false);
         return;//out of energy so keep it rendered as off
@@ -75,29 +73,21 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
       return;
     }
     timer = delay;
-    ItemStack dropMe = inv.getStackInSlot(0).copy();
+    ItemStack dropMe = inventory.getStackInSlot(0).copy();
     BlockPos target = getTargetPos();
     int amtDrop = Math.min(this.dropCount, dropMe.getCount());
     if (amtDrop > 0) {
-      en.extractEnergy(cost, false);
+      energy.extractEnergy(cost, false);
       dropMe.setCount(amtDrop);
       UtilItemStack.dropItemStackMotionless(world, target, dropMe);
-      inv.getStackInSlot(0).shrink(amtDrop);
-    } //      this.decrStackSize(slotCurrent, amtDrop);
+      inventory.getStackInSlot(0).shrink(amtDrop);
+    }
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
   }
 
   @Override
@@ -114,18 +104,18 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.delay = tag.getInt("delay");
     this.dropCount = tag.getInt("dropCount");
     this.hOffset = tag.getInt("hOffset");
@@ -134,14 +124,8 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("delay", delay);
     tag.putInt("dropCount", dropCount);
     tag.putInt("hOffset", hOffset);
