@@ -17,7 +17,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -79,9 +78,7 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public void setField(int field, int value) {
-
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {

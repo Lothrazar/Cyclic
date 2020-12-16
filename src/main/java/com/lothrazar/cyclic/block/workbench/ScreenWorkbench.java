@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
+
   public ScreenWorkbench(ContainerWorkbench screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
   }
@@ -27,16 +28,15 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-
     for (int colPos = 0; colPos < ContainerWorkbench.GRID_NUM_ROWS; colPos++) {
       for (int rowPos = 0; rowPos < ContainerWorkbench.GRID_NUM_ROWS; rowPos++) {
         this.drawSlot(ms,
-              ContainerWorkbench.GRID_START_X - 1 + colPos * Const.SQ,
-                ContainerWorkbench.GRID_START_Y - 1 + rowPos * Const.SQ);
+            ContainerWorkbench.GRID_START_X - 1 + colPos * Const.SQ,
+            ContainerWorkbench.GRID_START_Y - 1 + rowPos * Const.SQ);
       }
     }
     this.drawSlot(ms,
-            ContainerWorkbench.OUTPUT_START_X - 1,
-            ContainerWorkbench.OUTPUT_START_Y - 1);
+        ContainerWorkbench.OUTPUT_START_X - 1,
+        ContainerWorkbench.OUTPUT_START_Y - 1);
   }
 }
