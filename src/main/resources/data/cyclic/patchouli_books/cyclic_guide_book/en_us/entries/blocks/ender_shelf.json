@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.ender_shelf",
+  "icon": "cyclic:ender_shelf",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.ender_shelf.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:ender_shelf",
+      "text": "block.cyclic.ender_shelf.guide0"
+    }
+  ]
+}

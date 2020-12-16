@@ -16,6 +16,18 @@
 	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
     "item.cyclic.experience_food.guide": "Created by using a piece of Sugar on a filled Experience Pylon. Eat the confection to gain the experience held within, or use it on an Experience Pylon to put experience back into the pylon.",
     "item.cyclic.experience_food.guide0": "Can also be created by combining Fluid Experience and Sugar in a $(l:machines/solidifier)Solidification Chamber$(/l), and turned back into Fluid Experience in a $(l:machines/melter)Melting Chamber$(/l).",
+
+
+		"item.cyclic.crafting_stick": "Crafting Stick",
+		"item.cyclic.crafting_stick.tooltip": "Handheld crafting table",
+		"item.cyclic.crafting_stick.guide": "Handheld crafting table.  Does not preserve its inventory",
+
+		"item.cyclic.crafting_bag": "Advanced Crafting Stick",
+		"item.cyclic.crafting_bag.tooltip": "Saves inventory",
+		"item.cyclic.crafting_bag.guide": "Handheld crafting table with an inventory that is saved in itself like a backpack",
+
+
+
 	"block.cyclic.experience_pylon.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.collector.tooltip": "Picks up nearby items",
@@ -94,13 +106,22 @@
     "block.cyclic.water_candle.guide": "The Water Candle can be lit with Flint and Steel to increase the rate at which mobs naturally spawn nearby.$(br2)For the candle to work, mobs must be able to spawn naturally in its vicinity.$(br)In most cases, this means it must be dark enough to spawn mobs!",
     "block.cyclic.water_candle.guide0": "When lit, has a random chance to extinguish itself while spawning a mob. When this happens, you must relight the candle for it to continue spawning.",
 
-    "block.cyclic.unbreakable_block": "Unbreakable Block",
-    "block.cyclic.unbreakable_block.tooltip": "Right-click with Redstone to toggle",
+    "block.cyclic.unbreakable_block": "Stable Quantum Bedrock",
+    "block.cyclic.unbreakable_block.tooltip": "Right-click with Redstone to toggle Unbreakable state",
     "block.cyclic.unbreakable_block.guide": "Place in the world and then right-click with Redstone dust, Redstone Torch, or a Redstone Block in hand to toggle whether this block can be broken.",
 
-    "block.cyclic.unbreakable_reactive": "Reactive Unbreakable Block",
+    "block.cyclic.unbreakable_reactive": "Reactive Quantum Bedrock",
     "block.cyclic.unbreakable_reactive.tooltip": "Unbreakable while it has redstone power, can mine it otherwise",
     "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
+
+    "block.cyclic.ender_shelf":"Ender Shelf",
+    "block.cyclic.ender_shelf.tooltip": "Multiblock Enchantment Storage",
+    "block.cyclic.ender_shelf.guide": "Can be used standalone or as part of a multiblock structure with at least one $(l:blocks/ender_controller)Ender Shelf Controller$(/l). Each shelf has 5 slots that you can right click on to insert an Enchanted Book for storage.",
+    "block.cyclic.ender_shelf.guide0": "Enchanted Books must have just one enchantment to be inserted. Use a $(l:machines/disenchanter)Disenchanter$(/l) to strip books down to single enchantments if necessary.",
+
+    "block.cyclic.ender_controller":"Ender Shelf Controller",
+    "block.cyclic.ender_controller.tooltip": "Multiblock Enchantment Storage Controller",
+    "block.cyclic.ender_controller.guide": "When combined with at least one $(l:blocks/ender_shelf)Ender Shelf$(/l), allows for automated insertion/extraction of Enchanted books.",
 
     "block.cyclic.workbench": "Workbench",
     "block.cyclic.workbench.tooltip": "A Crafting Table that keeps its inventory when closed",
@@ -363,7 +384,7 @@
     "item.cyclic.carbon_paper.deleted": "Deleted sign data",
     "item.cyclic.carbon_paper.guide": "Carbon Paper can be used to copy the contents of one sign to another. The copied text can be cleaned off of the Carbon Paper by using it on a Cauldron.",
 
-    "item.cyclic.antigravity": "Anti-gravity Ring",
+    "item.cyclic.antigravity": "Anti-Gravity Ring",
     "item.cyclic.antigravity.tooltip": "Ignore gravity and walk on air",
     "item.cyclic.antigravity.guide": "When active, you can jump without falling at the expense of durability while you remain in the air.",
     "item.cyclic.charm_antidote": "Antidote Charm",
@@ -620,21 +641,32 @@
     "item.cyclic.stone_minecart.guide": "Think of this as a single-slot chest.  The Stone Minecart can carry any block.  Just use another block or an empty hand to swap blocks in an out (also works with Automated User).  Powered activator rail will pop the block out as well.",
     "item.cyclic.stone_minecart": "Stone Minecart",
     "item.cyclic.stone_minecart.tooltip": "Carry one block, unload with activator rail",
-    "item.cyclic.storage_bag.deposit": "Dump",
-    "item.cyclic.storage_bag.disabled": "Hit deposit is disabled, left click to enable",
-    "item.cyclic.storage_bag.guide": "A simple bag that can hold anything, a portable chest.  Optionally can auto deposit by hitting containers.  Change the items colour in the GUI.",
-    "item.cyclic.storage_bag.merge": "Merge",
-    "item.cyclic.storage_bag": "Storage Bag",
-    "item.cyclic.storage_bag.nothing": "Nothing",
-    "item.cyclic.storage_bag.success": "Items moved:",
-    "item.cyclic.storage_bag.tooltip2": "Hit Deposit Mode:",
-    "item.cyclic.storage_bag.tooltip": "Item Stacks:",
-    "item.cyclic.storage_bag.toggle": "Toggle Hit Deposit Mode",
 
-    "item.cyclic.storage_bag.togglepickup": "Toggle auto-pickup",
-    "item.cyclic.storage_bag.pickup.filter": "Gather items matching contents",
-    "item.cyclic.storage_bag.pickup.everything": "Gather everything picked up",
-    "item.cyclic.storage_bag.pickup.nothing": "Bag will gather nothing",
+    "item.cyclic.storage_bag": "Storage Bag",
+    "item.cyclic.storage_bag.tooltip":  "A magical storage bag.",
+    "item.cyclic.storage_bag.guide": "The Storage Bag can be used as a portable inventory. Right-click with the bag in hand to open it.$(br2)The bag can be set to pickup items, refill your hotbar, or to deposit its items into any inventory on right-click. ",
+    "item.cyclic.storage_bag.guide0":"To change the color of your bag, first open it, pickup some Dye with your mouse, and place it on top of the bag.  This will not consume the dye or move the bag, but it will set the bag item color.",
+
+    "item.cyclic.storage_bag.disabled": "Disabled",
+    "item.cyclic.storage_bag.disabled.button": "--",
+
+    "item.cyclic.storage_bag.deposit.merge": "Merge",
+    "item.cyclic.storage_bag.deposit.merge.button": "Me",
+    "item.cyclic.storage_bag.deposit.dump": "Dump",
+    "item.cyclic.storage_bag.deposit.dump.button": "Du",
+
+    "item.cyclic.storage_bag.pickup.filter": "Filter",
+    "item.cyclic.storage_bag.pickup.filter.button": "Fi",
+    "item.cyclic.storage_bag.pickup.everything": "Everything",
+    "item.cyclic.storage_bag.pickup.everything.button": "Ev",
+
+    "item.cyclic.storage_bag.refill.hotbar": "Hotbar",
+    "item.cyclic.storage_bag.refill.hotbar.button": "Re",
+
+    "item.cyclic.storage_bag.success": "Items moved: %d",
+    "item.cyclic.storage_bag.tooltip.deposit": "Hit Deposit Mode: %s",
+    "item.cyclic.storage_bag.tooltip.pickup": "Pickup Mode: %s",
+    "item.cyclic.storage_bag.tooltip.refill": "Refill mode: %s",
 
     "item.cyclic.sword_ender.guide": "Unbreakable sword with a special right-click ability to launch an ender pearl",
     "item.cyclic.sword_ender": "Sword of Evasion",
@@ -695,7 +727,7 @@
     "item.cyclic.spelunker.tooltip": "Search for underground caves",
     "item.cyclic.spelunker.guide": "Searches out for empty space behind the block you click on.  Works in any direction.  If you hit the top of a block it searches down, if you hit the side it searches behind.  Always in a straight line.  Great for finding caves while branch mining.",
 
-    "item.cyclic.torch_launcher": "Torch launcher",
+    "item.cyclic.torch_launcher": "Torch Launcher",
     "item.cyclic.torch_launcher.tooltip": "Spawns in a torch wherever it lands",
     "item.cyclic.torch_launcher.guide": "The Torch Launcher shoots a torch with considerable force in the direction you are facing, placing the torch wherever it lands.$(br2)Automatically consumes torches in your inventory to refill itself.",
     "item.cyclic.trade": "Merchant Almanac",
@@ -726,6 +758,7 @@
     "item.cyclic.elevation_wand": "Rod of Elevation",
     "item.cyclic.elevation_wand.tooltip":  "Teleport yourself or the target entity up to the nearest surface above",
     "item.cyclic.elevation_wand.guide": "Teleporter that works only vertically, and only if it can find an empty space with a surface above.  Works on yourself, or target another entity.",
+
     "key.categories.inventorycontrol": "Cyclic Keybindings",
     "key.columnbardown": "Row Shift Down",
     "key.columnbarup": "Row Shift Up",
@@ -820,6 +853,7 @@
     "cyclic.screen.blue": "Blue",
     "cyclic.screen.red": "Red",
     "cyclic.screen.green": "Green",
+    "cyclic.screen.thick": "Thickness",
     "cyclic.gui.sliderkeys": "Arrow keys; hold shift/alt",
     "cyclic.gui.empty":"Empty",
     
@@ -1409,9 +1443,9 @@
     "item.cyclic.boomerang_damage.tooltip": "Gathers items and attacks your enemies",
     "item.cyclic.boomerang_damage.guide": "Gathers items and attacks your enemies",
 
-    "block.laser": "Laser Cell",
-    "block.laser.tooltip": "Render harmless lasers",
-    "block.laser.guide": "Use GPS Markers to target lasers and heavily customize their appearance.",
+    "block.cyclic.laser": "Laser Cell",
+    "block.cyclic.laser.tooltip": "Render harmless lasers",
+    "block.cyclic.laser.guide": "Use GPS Markers to target lasers and heavily customize their appearance.",
 
     "block.water_candle": "Water Candle",
     "block.water_candle.tooltip": "Increase nearby spawns when lit",

@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -76,12 +76,12 @@ public class EnchantReach extends EnchantBase {
 
   private void turnReachOff(PlayerEntity player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, false);
-    ModCyclic.proxy.setPlayerReach(player, REACH_VANILLA);
+    UtilEntity.setPlayerReach(player, REACH_VANILLA);
   }
 
   private void turnReachOn(PlayerEntity player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, true);//.setInteger(NBT_REACH_ON, 1);
-    ModCyclic.proxy.setPlayerReach(player, REACH_BOOST);
+    UtilEntity.setPlayerReach(player, REACH_BOOST);
     //    player.stepHeight = 0.5F * 2;
   }
 

@@ -26,7 +26,6 @@ package com.lothrazar.cyclic.util;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Vector3;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
@@ -49,11 +48,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class UtilEntity {
+
+  public static void setPlayerReach(PlayerEntity player, int currentReach) {
+    //thank you ForgeMod for adding this when mojang removed
+    player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
+  }
 
   public static double getExpTotal(PlayerEntity player) {
     //  validateExpPositive(player);
@@ -82,8 +87,8 @@ public class UtilEntity {
 
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
   private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
-  public static final UUID HEALTH_MODIFIER_ID = UUID.fromString("60b1b9b5-dc5d-43a2-aa4e-655353070dbe");
-  public static final String HEALTH_MODIFIER_NAME = "Cyclic Health Modifier";
+  //  public static final UUID HEALTH_MODIFIER_ID = UUID.fromString("60b1b9b5-dc5d-43a2-aa4e-655353070dbe");
+  //  public static final String HEALTH_MODIFIER_NAME = "Cyclic Health Modifier";
   private final static float ITEMSPEEDFAR = 0.9F;
   private final static float ITEMSPEEDCLOSE = 0.2F;
 

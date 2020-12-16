@@ -8,7 +8,6 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.render.RenderResizableCuboid;
@@ -19,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -253,14 +253,16 @@ public class UtilRender {
    * Render this BLOCK right here in the world, start with alpha and scale near 1. Call from TESR perspective
    * 
    */
+  @OnlyIn(Dist.CLIENT)
   public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape,
       MatrixStack matrix, BlockState renderBlockState, float alpha, float scale) {
-    World world = ModCyclic.proxy.getClientWorld();
+    World world = Minecraft.getInstance().world;
     //render 
     Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
     //
     double range = 6F;
-    BlockRayTraceResult lookingAt = (BlockRayTraceResult) ModCyclic.proxy.getClientPlayer().pick(range, 0F, false);
+    ClientPlayerEntity player = Minecraft.getInstance().player;
+    BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, false);
     if (world.isAirBlock(lookingAt.getPos())) {
       return;
     }
@@ -369,7 +371,7 @@ public class UtilRender {
    */
   @OnlyIn(Dist.CLIENT)
   public static void renderColourCubes(RenderWorldLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
-    PlayerEntity player = ModCyclic.proxy.getClientPlayer();
+    ClientPlayerEntity player = Minecraft.getInstance().player;
     if (player == null) {
       return;
     }

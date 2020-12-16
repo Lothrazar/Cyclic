@@ -24,7 +24,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockFan extends BlockBase {
 
-  protected static final VoxelShape SHAPE = Block.makeCuboidShape(1D, 0.0D, 1D, 15D, 14.5D, 15D);
+  private static final double BOUNDS = 4;
+  private static final VoxelShape AABB = Block.makeCuboidShape(BOUNDS, 0, BOUNDS,
+      16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
 
   public BlockFan(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).notSolid());
@@ -38,7 +40,7 @@ public class BlockFan extends BlockBase {
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return SHAPE;
+    return AABB;
   }
 
   @Override

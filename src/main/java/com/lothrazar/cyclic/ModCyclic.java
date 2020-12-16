@@ -7,19 +7,17 @@ import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
 import com.lothrazar.cyclic.event.WorldGenEvents;
+import com.lothrazar.cyclic.registry.ClientRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.RecipeRegistry;
 import com.lothrazar.cyclic.registry.WorldGenRegistry;
-import com.lothrazar.cyclic.setup.ClientProxy;
-import com.lothrazar.cyclic.setup.IProxy;
-import com.lothrazar.cyclic.setup.ServerProxy;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -30,10 +28,10 @@ public class ModCyclic {
 
   public static final String MODID = "cyclic";
   public static final CyclicLogger LOGGER = new CyclicLogger(LogManager.getLogger());
-  public static final IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
   public ModCyclic() {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+    FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
     ConfigRegistry.setup(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
     FluidRegistry.setup();
     //why is this event so freakin weird 
@@ -43,13 +41,16 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new EventRender());
   }
 
+  private void setupClient(final FMLClientSetupEvent event) {
+    ClientRegistry.setup();
+  }
+
   private void setup(final FMLCommonSetupEvent event) {
     //now all blocks/items exist
     CuriosRegistry.setup(event);
     PotionRegistry.setup(event);
     PacketRegistry.setup();
     WorldGenRegistry.setup();
-    proxy.setup();
     //TODO: maybe move all the following into the constructor, not here in setup? from forge discord 
     //but crashes when i do with NPE so 
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());

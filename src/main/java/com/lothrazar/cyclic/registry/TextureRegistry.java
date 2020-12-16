@@ -7,6 +7,7 @@ public class TextureRegistry {
 
   public static final ResourceLocation PROGRESS = new ResourceLocation(ModCyclic.MODID, "textures/gui/progress.png");
   public static final ResourceLocation PROGRESS_CTR = new ResourceLocation(ModCyclic.MODID, "textures/gui/progress_ctr.png");
+  public static final ResourceLocation V_CRAFTING = new ResourceLocation("minecraft", "textures/gui/container/crafting_table.png");
   public static final ResourceLocation INVENTORY = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory.png");
   public static final ResourceLocation INVENTORY_PLAIN = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_plain.png");
   public static final ResourceLocation INVENTORY_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_large.png");
@@ -21,4 +22,5 @@ public class TextureRegistry {
   public static final ResourceLocation ENERGY_INNER = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_inner.png");
   public static final ResourceLocation WIDGETS = new ResourceLocation(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");
   public static final ResourceLocation FLUID_WIDGET = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
+  public static final ResourceLocation INVENTORY_SIDEBAR = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_sidebar.png");
 }

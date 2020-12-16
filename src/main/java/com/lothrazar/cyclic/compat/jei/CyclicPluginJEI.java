@@ -8,6 +8,8 @@ import com.lothrazar.cyclic.block.melter.ScreenMelter;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
+import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
+import com.lothrazar.cyclic.item.craftingsave.CraftingStickContainer;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -70,5 +72,11 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
         10, 9, //recipeSLotStart, recipeSlotCount
         30, 4 * 9);// inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(CraftingBagContainer.class, VanillaRecipeCategoryUid.CRAFTING,
+        1, 9, //recipeSLotStart, recipeSlotCount
+        10, 4 * 9);// inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(CraftingStickContainer.class, VanillaRecipeCategoryUid.CRAFTING,
+        1, 9, //recipeSLotStart, recipeSlotCount
+        10, 4 * 9);// inventorySlotStart, inventorySlotCount
   }
 }

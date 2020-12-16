@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.laser",
+  "icon": "cyclic:laser",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.laser.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:laser"
+    }
+  ]
+}

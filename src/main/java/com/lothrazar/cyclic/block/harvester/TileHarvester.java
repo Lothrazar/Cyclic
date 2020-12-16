@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -51,8 +50,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public static IntValue POWERCONF;
   private int radius = 9;
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  BlockPos laserTarget;
-  int laserTimer;
   private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
 
@@ -72,11 +69,9 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return;
     }
     setLitProperty(true);
-    if (this.laserTimer > 0) {
-      laserTimer--;
-    }
-    if (this.world.isRemote)
+    if (this.world.isRemote) {
       return;
+    }
     IEnergyStorage cap = this.energy.orElse(null);
     if (cap == null) {
       return;
@@ -89,8 +84,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       }
       if (tryHarvestSingle(this.world, target)) {
         cap.extractEnergy(cost, false);
-        laserTarget = target;
-        laserTimer = 15;
         break;
       }
     }
@@ -215,19 +208,12 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    this.laserTarget = UtilNBT.getBlockPos(tag);
-    laserTimer = tag.getInt("lt");
     energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    if (laserTarget == null) {
-      laserTarget = BlockPos.ZERO;
-    }
-    UtilNBT.putBlockPos(tag, laserTarget);
-    tag.putInt("lt", laserTimer);
     energy.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);

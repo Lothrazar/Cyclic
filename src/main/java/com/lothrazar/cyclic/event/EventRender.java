@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
@@ -18,6 +17,7 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.HorseInventoryScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,10 +50,11 @@ public class EventRender {
   @SubscribeEvent
   public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
     //
+    PlayerEntity player = Minecraft.getInstance().player;
     if (event.getGui() instanceof HorseInventoryScreen
-        && ModCyclic.proxy.getClientPlayer() != null
-        && ModCyclic.proxy.getClientPlayer().getRidingEntity() != null) {
-      Entity liv = ModCyclic.proxy.getClientPlayer().getRidingEntity();
+        && player != null
+        && player.getRidingEntity() != null) {
+      Entity liv = player.getRidingEntity();
       if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
           && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
         //
@@ -63,7 +64,7 @@ public class EventRender {
             //cyclic.carrot_ender.charges
             18, 14, new StringTextComponent("" + ct), b -> {
               //              if(event.i)
-              UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), "item.cyclic.carrot_ender.tooltip");
+              UtilChat.addChatMessage(player, "item.cyclic.carrot_ender.tooltip");
               //                  test);
             }) {};
         event.addWidget(bt2);
@@ -74,7 +75,7 @@ public class EventRender {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void renderOverlay(RenderWorldLastEvent evt) {
-    PlayerEntity player = ModCyclic.proxy.getClientPlayer();
+    PlayerEntity player = Minecraft.getInstance().player;
     if (player == null) {
       return;
     }
