@@ -37,6 +37,7 @@ import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.craftingsave.CraftingStickContainer;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainer;
+import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -148,6 +149,9 @@ public class ContainerScreenRegistry {
       return new ContainerShapedata(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("computer_shape"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerWorkbench(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("workbench"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerFisher(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fisher"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
@@ -233,4 +237,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<CraftingBagContainer> crafting_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
   public static ContainerType<CraftingStickContainer> crafting_stick;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static ContainerType<ContainerWorkbench> workbench;
 }
