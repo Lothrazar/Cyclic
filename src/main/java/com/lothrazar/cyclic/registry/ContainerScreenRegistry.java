@@ -149,7 +149,7 @@ public class ContainerScreenRegistry {
       return new ContainerShapedata(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("computer_shape"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerWorkbench(windowId, ModCyclic.proxy.getClientWorld(), data.readBlockPos(), inv, ModCyclic.proxy.getClientPlayer());
+      return new ContainerWorkbench(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("workbench"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerFisher(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
