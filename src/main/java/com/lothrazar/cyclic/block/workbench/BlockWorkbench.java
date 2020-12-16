@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockWorkbench extends BlockBase {
   public BlockWorkbench(Properties properties) {
-    super(properties);
+    super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
   }
 
