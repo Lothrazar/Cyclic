@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.craftingsave;
+package com.lothrazar.cyclic.item.craftingsimple;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;

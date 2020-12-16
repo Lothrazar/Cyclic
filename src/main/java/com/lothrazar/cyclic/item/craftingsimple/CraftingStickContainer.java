@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.craftingsave;
+package com.lothrazar.cyclic.item.craftingsimple;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;

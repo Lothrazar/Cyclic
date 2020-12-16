@@ -44,7 +44,7 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseLapisVariant;
 import com.lothrazar.cyclic.item.carrot.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.carrot.ItemHorseToxic;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
-import com.lothrazar.cyclic.item.craftingsave.CraftingStickItem;
+import com.lothrazar.cyclic.item.craftingsimple.CraftingStickItem;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;

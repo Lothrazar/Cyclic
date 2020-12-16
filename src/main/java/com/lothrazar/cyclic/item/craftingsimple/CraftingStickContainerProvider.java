@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.craftingsave;
+package com.lothrazar.cyclic.item.craftingsimple;
 
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.PlayerEntity;

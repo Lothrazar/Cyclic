@@ -35,7 +35,7 @@ import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
-import com.lothrazar.cyclic.item.craftingsave.CraftingStickContainer;
+import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainer;
 import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import net.minecraft.inventory.container.ContainerType;
