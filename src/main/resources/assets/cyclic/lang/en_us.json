@@ -16,18 +16,18 @@
 	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
     "item.cyclic.experience_food.guide": "Created by using a piece of Sugar on a filled Experience Pylon. Eat the confection to gain the experience held within, or use it on an Experience Pylon to put experience back into the pylon.",
     "item.cyclic.experience_food.guide0": "Can also be created by combining Fluid Experience and Sugar in a $(l:machines/solidifier)Solidification Chamber$(/l), and turned back into Fluid Experience in a $(l:machines/melter)Melting Chamber$(/l).",
-	
-	
+
+
 		"item.cyclic.crafting_stick": "Crafting Stick",
 		"item.cyclic.crafting_stick.tooltip": "Handheld crafting table",
 		"item.cyclic.crafting_stick.guide": "Handheld crafting table.  Does not preserve its inventory",
-		
+
 		"item.cyclic.crafting_bag": "Advanced Crafting Stick",
 		"item.cyclic.crafting_bag.tooltip": "Saves inventory",
 		"item.cyclic.crafting_bag.guide": "Handheld crafting table with an inventory that is saved in itself like a backpack",
-	
-	
-	
+
+
+
 	"block.cyclic.experience_pylon.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.collector.tooltip": "Picks up nearby items",
@@ -122,6 +122,10 @@
     "block.cyclic.ender_controller":"Ender Shelf Controller",
     "block.cyclic.ender_controller.tooltip": "Multiblock Enchantment Storage Controller",
     "block.cyclic.ender_controller.guide": "When combined with at least one $(l:blocks/ender_shelf)Ender Shelf$(/l), allows for automated insertion/extraction of Enchanted books.",
+
+    "block.cyclic.workbench": "Workbench",
+    "block.cyclic.workbench.tooltip": "A Crafting Table that keeps its inventory when closed",
+    "block.cyclic.workbench.guide": "A simple Crafting Table that keeps its inventory when closed.",
 
     "item.cyclic.flippers":"Flippers",
     "item.cyclic.flippers.tooltip":"Increase swim speed",

@@ -47,6 +47,7 @@ import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessRec;
 import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessTransmit;
+import com.lothrazar.cyclic.block.workbench.TileWorkbench;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -110,6 +111,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.laser).build(null).setRegistryName("laser"));
     r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
     r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
+    r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
@@ -208,4 +210,6 @@ public class TileRegistry {
   //
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static TileEntityType<TileLaser> laser;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static TileEntityType<TileCrafter> workbench;
 }
