@@ -17,7 +17,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -30,8 +29,9 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     N, E, S, W, U, D;
   }
 
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private Map<Direction, Boolean> poweredSides;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileBatteryInfinite() {
     super(TileRegistry.battery_infinite);
@@ -53,14 +53,10 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     this.poweredSides.put(side, (pow == 1));
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX / 4);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -70,7 +66,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
     }
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }
 
@@ -79,10 +75,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
     }
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }
 
@@ -93,12 +86,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
 
   @Override
   public void tick() {
-    //recharge
-    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    if (handlerHere == null) {
-      return;
-    }
-    handlerHere.receiveEnergy(MAX / 4, false);
+    energy.receiveEnergy(MAX / 4, false);
     //now go
     this.tickCableFlow();
   }

@@ -31,7 +31,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -48,8 +47,10 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private int height = MAX_HEIGHT / 2;
   private int size = 5;
   static final int MAX = 64000;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(1);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -62,14 +63,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   public TileMiner() {
     super(TileRegistry.miner);
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
   }
 
   @Override
@@ -92,10 +85,10 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -105,8 +98,8 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     size = tag.getInt("size");
     height = tag.getInt("height");
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
@@ -115,14 +108,8 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     tag.putInt("size", size);
     tag.putInt("height", height);
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -136,7 +123,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     if ((world instanceof ServerWorld) && fakePlayer == null)
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "miner");
     try {
-      TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
+      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
       //TODO: does this target block match filter
       List<BlockPos> shape = getShape();
       //        resetProgress(); 
@@ -171,8 +158,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       resetProgress();
     }
     Integer cost = POWERCONF.get();
-    IEnergyStorage cap = this.energy.orElse(null);
-    if (cap.getEnergyStored() < cost && cost > 0) {
+    if (energy.getEnergyStored() < cost && cost > 0) {
       return false;
     }
     //currentlyMining may have changed, and we are still turned on:
@@ -194,7 +180,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         }
         if (harvested) {
           // success 
-          cap.extractEnergy(cost, false);
+          energy.extractEnergy(cost, false);
           resetProgress();
         }
         else {

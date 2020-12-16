@@ -27,7 +27,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -39,8 +38,10 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
 
   static final int MAX = 64000;
   public static IntValue POWERCONF;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(1 + 8 + 8);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   static enum Fields {
     REDSTONE, STATUS;
@@ -61,19 +62,17 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     if (timer > 0) {
       return;
     }
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
-    if (en == null || inv == null || world.getServer() == null) {
+    if (world.getServer() == null) {
       this.status = UncraftStatusEnum.EMPTY;
       return;
     }
     final int cost = POWERCONF.get();
-    if (en.getEnergyStored() < cost && cost > 0) {
+    if (energy.getEnergyStored() < cost && cost > 0) {
       return;//broke
     }
     //    int RADIUS = 2;
     //
-    ItemStack dropMe = inv.getStackInSlot(0).copy();
+    ItemStack dropMe = inventory.getStackInSlot(0).copy();
     if (dropMe.isEmpty()) {
       this.status = UncraftStatusEnum.EMPTY;
     }
@@ -82,8 +81,8 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
       if (match != null) {
         this.status = UncraftStatusEnum.MATCH;
-        uncraftRecipe(inv, match);
-        en.extractEnergy(cost, false);
+        uncraftRecipe(match);
+        energy.extractEnergy(cost, false);
       }
       else {
         this.status = UncraftStatusEnum.CANT;
@@ -108,29 +107,21 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     return new ContainerUncraft(i, world, pos, playerInventory, playerEntity);
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1 + 8 + 8);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
     super.read(bs, tag);
   }
@@ -138,18 +129,12 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("ucstats", status.ordinal());
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
-  private void uncraftRecipe(IItemHandler inv, IRecipe<?> match) {
+  private void uncraftRecipe(IRecipe<?> match) {
     List<ItemStack> result = new ArrayList<>();
     for (Ingredient ing : match.getIngredients()) {
       if (ing.getMatchingStacks().length == 0) {
@@ -165,13 +150,13 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         continue;
       }
       //pay cost 
-      inv.extractItem(0, match.getRecipeOutput().getCount(), false);
+      inventory.extractItem(0, match.getRecipeOutput().getCount(), false);
       //give result items 
-      for (int i = 1; i < inv.getSlots(); i++) {
+      for (int i = 1; i < inventory.getSlots(); i++) {
         if (r.isEmpty()) {
           break;
         }
-        r = inv.insertItem(i, r.copy(), false);
+        r = inventory.insertItem(i, r.copy(), false);
       }
     }
   }

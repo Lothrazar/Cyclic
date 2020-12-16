@@ -209,8 +209,7 @@ public class EnchantExcavation extends EnchantBase {
     }
     for (Direction fac : targetFaces) {
       Block target = world.getBlockState(start.offset(fac)).getBlock();
-      boolean match = target == blockIn;
-      if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
+      if (target == blockIn) {
         list.add(start.offset(fac));
       }
     }

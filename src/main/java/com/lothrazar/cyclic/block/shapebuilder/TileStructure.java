@@ -31,8 +31,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -42,6 +42,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileStructure extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  public static IntValue POWERCONF;
   static final int SLOT_BUILD = 0;
   protected static final int SLOT_SHAPE = 1;
   protected static final int SLOT_GPS = 2;
@@ -53,8 +54,21 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   static final int MAX = 64000;
   //  static final int SLOT_SHAPE = 1;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(3) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      if (slot == SLOT_BUILD)
+        return Block.getBlockFromItem(stack.getItem()) != null;
+      else if (slot == SLOT_SHAPE)
+        return stack.getItem() instanceof ShapeCard;
+      else // if SLOT_GPS
+        return stack.getItem() instanceof LocationGpsCard;
+    }
+  };
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   // START of build settings
   private BuildStructureType buildType = BuildStructureType.FACING;
   private int buildSize = 3;
@@ -68,8 +82,8 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     int t = tag.getInt("buildType");
     buildType = BuildStructureType.values()[t];
     buildSize = tag.getInt("buildSize");
@@ -84,14 +98,8 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     tag.putInt("buildSize", buildSize);
     tag.putInt("height", height);
     tag.putInt("shapeIndex", shapeIndex);
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -99,25 +107,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   @OnlyIn(Dist.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(3) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        if (slot == SLOT_BUILD)
-          return Block.getBlockFromItem(stack.getItem()) != null;
-        else if (slot == SLOT_SHAPE)
-          return stack.getItem() instanceof ShapeCard;
-        else // if SLOT_GPS
-          return stack.getItem() instanceof LocationGpsCard;
-      }
-    };
   }
 
   @Override
@@ -134,10 +123,10 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -197,10 +186,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    IItemHandler inv = this.inventory.orElse(null);
-    if (inv == null) {
-      return;
-    }
     List<BlockPos> shape = this.getShape();
     if (shape.size() == 0) {
       return;
@@ -208,14 +193,10 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
       this.shapeIndex = 0;
     }
-    IEnergyStorage en = this.energy.orElse(null);
-    if (en == null) {
-      return;
-    }
     BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
     //does my shape exist? if so copy to it
-    if (SLOT_SHAPE < inv.getSlots()) {
-      ItemStack shapeCard = inv.getStackInSlot(SLOT_SHAPE);
+    if (SLOT_SHAPE < inventory.getSlots()) {
+      ItemStack shapeCard = inventory.getStackInSlot(SLOT_SHAPE);
       if (shapeCard.getItem() instanceof ShapeCard) {
         //copy 
         shapeCard.setTag(null);//overwrite
@@ -223,7 +204,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         worldShape.write(shapeCard);
       }
     }
-    ItemStack stack = inv.getStackInSlot(SLOT_BUILD);
+    ItemStack stack = inventory.getStackInSlot(SLOT_BUILD);
     //    if (stack.isEmpty()) {
     //      return;
     //    }
@@ -231,10 +212,10 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     if (stuff == null) {
       return;
     }
-    final int repair = 10;
+    int cost = POWERCONF.get();
     for (int i = 0; i < spotsSkippablePerTrigger; i++) {
-      if (en.getEnergyStored() < repair) {
-        break;
+      if (energy.getEnergyStored() < cost && cost > 0) {
+        break;//if repair is free dont break
       }
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
@@ -245,7 +226,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
           //build success
           this.incrementPosition(shape);
           stack.shrink(1);
-          en.extractEnergy(repair, false);
+          energy.extractEnergy(cost, false);
         }
         break;//ok , target position is valid, we can build only into air
       }
@@ -273,11 +254,10 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   private BlockPos getPosTarget() {
-    IItemHandler inv = this.inventory.orElse(null);
-    if (inv != null && SLOT_GPS < inv.getSlots()) {
+    if (SLOT_GPS < inventory.getSlots()) {
       //before going to nextpos
       //do we have a center offset
-      BlockPosDim loc = LocationGpsCard.getPosition(inv.getStackInSlot(SLOT_GPS));
+      BlockPosDim loc = LocationGpsCard.getPosition(inventory.getStackInSlot(SLOT_GPS));
       if (loc != null && loc.getPos() != null) {
         return loc.getPos();
       }

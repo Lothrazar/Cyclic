@@ -22,16 +22,15 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-@SuppressWarnings("unchecked")
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   private Map<Direction, Boolean> poweredSides;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private int flowing = 0;
   static final int MAX = 6400000;
 
@@ -100,14 +99,10 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     this.poweredSides.put(side, (pow == 1));
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX / 4);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -118,7 +113,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
     }
     setFlowing(tag.getInt("flowing"));
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }
 
@@ -128,10 +123,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
       tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
     }
     tag.putInt("flowing", getFlowing());
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }
 

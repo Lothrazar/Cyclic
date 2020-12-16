@@ -26,7 +26,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -40,17 +39,15 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     REDSTONE, TIMER, TIMERDEL, RENDER;
   }
 
+  ItemStackHandler inventory = new ItemStackHandler(1);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static IntValue POWERCONF;
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timerDelay = 20;
   static final int MAX = 640000;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX / 4);
-  }
 
   public TileUser() {
     super(TileRegistry.user);
@@ -77,20 +74,19 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
         uuid = UUID.randomUUID();
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "user", uuid);
     }
-    IEnergyStorage en = this.energy.orElse(null);
     final int repair = POWERCONF.get();
-    if (repair > 0 && en != null) {
+    if (repair > 0) {
       //we need to pay a cost
-      if (en.getEnergyStored() < repair) {
+      if (energy.getEnergyStored() < repair) {
         //not enough cost
         return;
       }
       //i dont care if result is SUCCESS or FAIL. still drain power every time. 
       //user can turn off with redstone if they want to save power
-      en.extractEnergy(repair, false);
+      energy.extractEnergy(repair, false);
     }
     try {
-      TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
+      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
       //start of SUPERHACK
       ResourceLocation registryItem = fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getItem().getRegistryName();
       if (registryItem.getNamespace().equalsIgnoreCase("mysticalagriculture")
@@ -112,7 +108,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND);
       ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
       if (result == ActionResultType.SUCCESS || result == ActionResultType.CONSUME) {
-        TileEntityBase.syncEquippedItem(inventory, fakePlayer, 0, Hand.MAIN_HAND);
+        TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
       }
     }
     catch (Exception e) {
@@ -154,17 +150,13 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     return 0;
   }
 
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -172,8 +164,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     timerDelay = tag.getInt("delay");
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("uuid"))
       uuid = tag.getUniqueId("uuid");
     super.read(bs, tag);
@@ -182,14 +174,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("delay", timerDelay);
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     if (uuid != null)
       tag.putUniqueId("uuid", uuid);
     return super.write(tag);

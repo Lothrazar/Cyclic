@@ -83,7 +83,7 @@ public class UtilRender {
     float uDif = uMax - uMin;
     float vDif = vMax - vMin;
     RenderSystem.enableBlend();
-    RenderSystem.enableAlphaTest();
+    //    RenderSystem.enableAlphaTest();
     BufferBuilder vertexBuffer = Tessellator.getInstance().getBuffer();
     vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
     for (int xTile = 0; xTile <= xTileCount; xTile++) {
@@ -113,7 +113,7 @@ public class UtilRender {
     }
     vertexBuffer.finishDrawing();
     WorldVertexBufferUploader.draw(vertexBuffer);
-    RenderSystem.disableAlphaTest();
+    //    RenderSystem.disableAlphaTest();
     RenderSystem.disableBlend();
   }
 

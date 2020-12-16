@@ -31,6 +31,7 @@ public class PacketTileInventory extends PacketBase {
 
   public PacketTileInventory() {}
 
+  @SuppressWarnings("unused")
   public static void handle(PacketTileInventory message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       if (Minecraft.getInstance().world == null) {
@@ -41,7 +42,7 @@ public class PacketTileInventory extends PacketBase {
       if (tile != null)
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
           if (message.type == TYPE.SET && h instanceof EnderShelfItemHandler) {
-            ItemStack was = h.getStackInSlot(message.slot);
+            //            ItemStack was = h.getStackInSlot(message.slot);
             ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
           }
           h.insertItem(message.slot, message.itemStack, false);

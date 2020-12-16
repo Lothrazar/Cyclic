@@ -24,7 +24,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -44,7 +43,14 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   private int blue = 0;
   private int alpha = 70;//1-100 will become 0-1
   private int thick = 8;//1-20 
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  ItemStackHandler inventory = new ItemStackHandler(4) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      return stack.getItem() instanceof LocationGpsCard;
+    }
+  };
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileLaser() {
     super(TileRegistry.laser);
@@ -54,19 +60,9 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(4) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return stack.getItem() instanceof LocationGpsCard;
-      }
-    };
   }
 
   @Override
@@ -81,14 +77,11 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   }
 
   BlockPos getPosTarget() {
-    IItemHandler inv = this.inventory.orElse(null);
-    if (inv != null) {
-      //before going to nextpos
-      //do we have a center offset
-      BlockPosDim loc = LocationGpsCard.getPosition(inv.getStackInSlot(0));
-      if (loc != null && loc.getPos() != null) {
-        return loc.getPos();
-      }
+    //before going to nextpos
+    //do we have a center offset
+    BlockPosDim loc = LocationGpsCard.getPosition(inventory.getStackInSlot(0));
+    if (loc != null && loc.getPos() != null) {
+      return loc.getPos();
     }
     return this.getPos();
   }
@@ -168,7 +161,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     red = tag.getInt("red");
     green = tag.getInt("green");
     blue = tag.getInt("blue");
@@ -179,10 +172,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("red", red);
     tag.putInt("green", green);
     tag.putInt("blue", blue);

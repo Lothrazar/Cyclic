@@ -24,7 +24,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -35,12 +34,25 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileAnvilAuto extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   public static IntValue POWERCONF;
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(2) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      if (slot == IN)
+        return stack.isRepairable() &&
+            stack.getDamage() > 0;
+      return true;
+    }
+  };
+  //
+  //
   private static final int OUT = 1;
   private static final int IN = 0;
   public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
   static final int MAX = 64000;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -48,23 +60,6 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
   public TileAnvilAuto() {
     super(TileRegistry.anvil);
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(2) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        if (slot == IN)
-          return stack.isRepairable() &&
-              stack.getDamage() > 0;
-        return true;
-      }
-    };
   }
 
   @Override
@@ -82,31 +77,25 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY
         && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -118,34 +107,31 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
       return;
     }
     setLitProperty(true);
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
-        return;
+    //
+    ItemStack stack = inventory.getStackInSlot(0);
+    if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
+      return;
+    }
+    final int repair = POWERCONF.get();
+    boolean work = false;
+    if (repair > 0 &&
+        energy.getEnergyStored() >= repair &&
+        stack.isRepairable() &&
+        stack.getDamage() > 0) {
+      //we can repair so steal some power 
+      //ok drain power  
+      energy.extractEnergy(repair, false);
+      work = true;
+    }
+    //shift to other slot
+    if (work) {
+      UtilItemStack.repairItem(stack);
+      boolean done = stack.getDamage() == 0;
+      if (done && inventory.getStackInSlot(OUT).isEmpty()) {
+        inventory.insertItem(OUT, stack.copy(), false);
+        inventory.extractItem(IN, stack.getCount(), false);
       }
-      IEnergyStorage en = this.energy.orElse(null);
-      final int repair = POWERCONF.get();
-      boolean work = false;
-      if (repair > 0 &&
-          en != null &&
-          en.getEnergyStored() >= repair &&
-          stack.isRepairable() &&
-          stack.getDamage() > 0) {
-        //we can repair so steal some power 
-        //ok drain power  
-        en.extractEnergy(repair, false);
-        work = true;
-      }
-      //shift to other slot
-      if (work) {
-        UtilItemStack.repairItem(stack);
-        boolean done = stack.getDamage() == 0;
-        if (done && inv.getStackInSlot(OUT).isEmpty()) {
-          inv.insertItem(OUT, stack.copy(), false);
-          inv.extractItem(IN, stack.getCount(), false);
-        }
-      }
-    });
+    }
   }
 
   @Override

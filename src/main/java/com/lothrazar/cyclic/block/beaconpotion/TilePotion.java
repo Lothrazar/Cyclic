@@ -25,7 +25,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -44,8 +43,16 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   private static final int MAX_RADIUS = 64;
   public static IntValue POWERCONF;
   private int radius = MAX_RADIUS;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      return stack.hasEffect();
+    }
+  };
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   /** Primary potion effect given by this beacon. */
   private List<EffectInstance> effects = new ArrayList<>();
   EntityFilterType entityFilter = EntityFilterType.PLAYERS;
@@ -69,44 +76,27 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
     if (effects.size() == 0) {
       timer = 0;
     }
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
     final int repair = POWERCONF.get();
-    if (en == null || inv == null
-        || en.getEnergyStored() < repair) {
+    if (energy.getEnergyStored() < repair) {
       if (repair > 0)
         return;
     }
     timer--;
     if (timer > 0) {// && timer % 60 == 0
-      tryAffectEntities(en, repair);
+      tryAffectEntities(repair);
       return;
     }
     //timer is <=zero, delete all effects
     effects.clear();
     //
-    ItemStack s = inv.getStackInSlot(0);
+    ItemStack s = inventory.getStackInSlot(0);
     if (s.isEmpty()) {
       return;
     }
     List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(s);
     if (newEffects.size() > 0) {
-      pullFromItem(inv, newEffects);
+      pullFromItem(newEffects);
     }
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return stack.hasEffect();
-      }
-    };
   }
 
   @Override
@@ -123,10 +113,10 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -135,8 +125,8 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   public void read(BlockState bs, CompoundNBT tag) {
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("Effects", 9)) {
       ListNBT listnbt = tag.getList("Effects", 10);
       this.effects.clear();
@@ -154,15 +144,9 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("radius", radius);
     tag.putInt("entityFilter", entityFilter.ordinal());
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
-    //    CompoundNBT pots = new CompoundNBT();
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
+    //
     if (!this.effects.isEmpty()) {
       ListNBT listnbt = new ListNBT();
       for (EffectInstance effectinstance : this.effects) {
@@ -173,7 +157,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
     return super.write(tag);
   }
 
-  private void pullFromItem(IItemHandler inv, List<EffectInstance> newEffects) {
+  private void pullFromItem(List<EffectInstance> newEffects) {
     //add new effects
     this.timer = TICKS_PER_DURATION;
     setLitProperty(true);
@@ -185,16 +169,16 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
         maxDur = Math.max(eff.getDuration(), maxDur);
       }
     }
-    inv.extractItem(0, 1, false);
+    inventory.extractItem(0, 1, false);
   }
 
-  private void tryAffectEntities(IEnergyStorage en, final int repair) {
+  private void tryAffectEntities(final int repair) {
     if (timer % TICKS_FIRE_PER == 0
         && effects.size() > 0
-        && en.getEnergyStored() >= repair) {
+        && energy.getEnergyStored() >= repair) {
       int affected = affectEntities();
       if (affected > 0)
-        en.extractEnergy(repair, false);
+        energy.extractEnergy(repair, false);
     }
   }
 

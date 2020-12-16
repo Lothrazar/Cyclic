@@ -22,7 +22,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -37,8 +36,10 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   }
 
   private static final int BURNTIME = 40;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  ItemStackHandler inventory = new ItemStackHandler(1);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MENERGY, MENERGY / 2);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTime;
   private int flowing = 1;
   private int fuelRate = 0;
@@ -48,21 +49,13 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     this.setNeedsRedstone(0);
   }
 
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MENERGY, MENERGY / 2);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -72,8 +65,8 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     setFlowing(tag.getInt("flowing"));
     burnTime = tag.getInt("burnTime");
     fuelRate = tag.getInt("fuelRate");
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
@@ -82,14 +75,8 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     tag.putInt("flowing", getFlowing());
     tag.putInt("burnTime", burnTime);
     tag.putInt("fuelRate", fuelRate);
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -112,24 +99,19 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       return;
     }
     fuelRate = 0;
-    IEnergyStorage energyActual = energy.orElse(null);
-    if (this.energy.isPresent() && energyActual != null) {
-      //now we can add power
-      //burnTime is zero grab another
-      inventory.ifPresent(h -> {
-        ItemStack stack = h.getStackInSlot(0);
-        if (stack.getItem() instanceof PeatItem) {
-          PeatItem peat = (PeatItem) stack.getItem();
-          int futureValue = energyActual.getEnergyStored() + peat.getPeatFuelValue() * BURNTIME;
-          if (futureValue > energyActual.getMaxEnergyStored()) {
-            //not enough room for even 1 tick, dont eat the item
-            return;
-          }
-          fuelRate = peat.getPeatFuelValue();
-          h.extractItem(0, 1, false);
-          this.burnTime = BURNTIME;
-        }
-      });
+    //now we can add power
+    //burnTime is zero grab another 
+    ItemStack stack = inventory.getStackInSlot(0);
+    if (stack.getItem() instanceof PeatItem) {
+      PeatItem peat = (PeatItem) stack.getItem();
+      int futureValue = energy.getEnergyStored() + peat.getPeatFuelValue() * BURNTIME;
+      if (futureValue > energy.getMaxEnergyStored()) {
+        //not enough room for even 1 tick, dont eat the item
+        return;
+      }
+      fuelRate = peat.getPeatFuelValue();
+      inventory.extractItem(0, 1, false);
+      this.burnTime = BURNTIME;
     }
     if (this.getFlowing() == 1)
       this.tickCableFlow();
@@ -147,12 +129,11 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   }
 
   public boolean isFull() {
-    CustomEnergyStorage e = (CustomEnergyStorage) energy.cast().orElse(null);
-    return e == null || e.getEnergyStored() >= e.getMaxEnergyStored();
+    return energy.getEnergyStored() >= energy.getMaxEnergyStored();
   }
 
   private void addEnergy(int i) {
-    energy.ifPresent(e -> ((CustomEnergyStorage) e).addEnergy(i));
+    energy.addEnergy(i);
   }
 
   public int getBurnTime() {

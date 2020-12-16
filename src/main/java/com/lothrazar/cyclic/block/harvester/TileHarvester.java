@@ -39,7 +39,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -49,7 +48,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
   public static IntValue POWERCONF;
   private int radius = 9;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
 
@@ -72,18 +72,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (this.world.isRemote) {
       return;
     }
-    IEnergyStorage cap = this.energy.orElse(null);
-    if (cap == null) {
-      return;
-    }
     for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
       BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius), radius);
       Integer cost = POWERCONF.get();
-      if (cap.getEnergyStored() < cost && cost > 0) {
+      if (energy.getEnergyStored() < cost && cost > 0) {
         break;//too broke
       }
       if (tryHarvestSingle(this.world, target)) {
-        cap.extractEnergy(cost, false);
+        energy.extractEnergy(cost, false);
         break;
       }
     }
@@ -194,30 +190,23 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     }
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX / 4);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }
 

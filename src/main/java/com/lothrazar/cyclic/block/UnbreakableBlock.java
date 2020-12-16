@@ -53,7 +53,6 @@ public class UnbreakableBlock extends BlockBase {
   }
 
   @Override
-  @SuppressWarnings("deprecation")
   public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     BlockState neighborState = worldIn.getBlockState(fromPos);
     if (!isMoving && neighborState.hasProperty(BREAKABLE) && state.hasProperty(BREAKABLE))

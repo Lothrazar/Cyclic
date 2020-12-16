@@ -115,7 +115,8 @@ public class BlockEnderShelf extends BlockBase {
           shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
             if (h.getStackInSlot(slot) == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(h.getStackInSlot(slot), heldItem)) {
               if (!world.isRemote) {
-                ItemStack remaining = h.insertItem(slot, heldItem, false);
+                //                ItemStack remaining = 
+                h.insertItem(slot, heldItem, false);
               }
               player.setHeldItem(hand, ItemStack.EMPTY);
             }
@@ -140,9 +141,9 @@ public class BlockEnderShelf extends BlockBase {
 
   private int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {
     double normalizedY = hitVec.getY() - pos.getY();
-    double normalizedX = hitVec.getX() - pos.getX();
-    if (face == Direction.EAST || face == Direction.WEST)
-      normalizedX = hitVec.getZ() - pos.getZ();
+    //    double normalizedX = hitVec.getX() - pos.getX();
+    //    if (face == Direction.EAST || face == Direction.WEST)
+    //      normalizedX = hitVec.getZ() - pos.getZ();
     return (int) Math.floor(normalizedY / 0.20);
   }
 

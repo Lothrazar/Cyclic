@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -25,7 +24,8 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
   private static final int MAX = 8000;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileCableEnergy() {
     super(TileRegistry.energy_pipeTile);
@@ -61,15 +61,11 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     }
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
       if (!CableBase.isCableBlocked(this.getBlockState(), side))
-        return energy.cast();
+        return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -79,8 +75,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, tag.getInt(f.getString() + "_incenergy"));
     }
-    CompoundNBT energyTag = tag.getCompound("energy");
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }
 
@@ -89,10 +84,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     for (Direction f : Direction.values()) {
       tag.putInt(f.getString() + "_incenergy", mapIncomingEnergy.get(f));
     }
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }
 
