@@ -18,6 +18,7 @@ import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
+import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
@@ -169,6 +170,7 @@ public class ConfigRegistry {
     TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid", 500, 0, 64000);
     TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm", 500, 0, 64000);
     TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter", 500, 0, 64000);
+    TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure", 10, 0, 64000);
     CFG.pop();//cost
     CFG.pop();//energy
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
