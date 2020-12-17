@@ -9,18 +9,8 @@ import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
-import com.lothrazar.cyclic.item.CarbonPaperItem;
-import com.lothrazar.cyclic.item.ElevationWandItem;
-import com.lothrazar.cyclic.item.EnderBagItem;
-import com.lothrazar.cyclic.item.EvokerFangItem;
-import com.lothrazar.cyclic.item.GemstoneItem;
-import com.lothrazar.cyclic.item.LeverRemote;
-import com.lothrazar.cyclic.item.PeatItem;
+import com.lothrazar.cyclic.item.*;
 import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
-import com.lothrazar.cyclic.item.SleepingMatItem;
-import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
-import com.lothrazar.cyclic.item.StirrupsItem;
-import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.apple.AppleBuffs;
 import com.lothrazar.cyclic.item.apple.AppleChocolate;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
@@ -138,6 +128,8 @@ public class ItemRegistry {
   public static Item storage_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
   public static Item crafting_bag;
+  @ObjectHolder(ModCyclic.MODID + ":antimatter_wand")
+  public static Item antimatter_wand;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -267,6 +259,7 @@ public class ItemRegistry {
     r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
     r.register(new CraftingStickItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_stick"));
+    r.register(new AntimatterEvaporatorWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("antimatter_wand"));
     ///////////////////////// apples
     final int SMALLPOT = 20 * 90;// 1:30
     final int LARGEPOT = 3 * 20 * 60;// 3:00

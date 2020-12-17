@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.antimatter_wand",
+  "icon": "cyclic:antimatter_wand",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.antimatter_wand.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:antimatter_wand"
+    }
+  ]
+}
