@@ -759,6 +759,14 @@
     "item.cyclic.elevation_wand.tooltip":  "Teleport yourself or the target entity up to the nearest surface above",
     "item.cyclic.elevation_wand.guide": "Teleporter that works only vertically, and only if it can find an empty space with a surface above.  Works on yourself, or target another entity.",
 
+    "item.cyclic.antimatter_wand": "Antimatter Evaporator",
+    "item.cyclic.antimatter_wand.tooltip":  "Right-Click to evaporate liquids",
+    "item.cyclic.antimatter_wand.tooltip0": "Fluid Mode: %s",
+    "item.cyclic.antimatter_wand.mode.water": "Water",
+    "item.cyclic.antimatter_wand.mode.lava": "Lava",
+    "item.cyclic.antimatter_wand.mode.generic": "Generic",
+    "item.cyclic.antimatter_wand.guide": "Left-click to cycle between Water, Lava, and Generic Fluid modes. Right-click to clear a 9x9 area of the selected fluid type from the world.",
+
     "key.categories.inventorycontrol": "Cyclic Keybindings",
     "key.columnbardown": "Row Shift Down",
     "key.columnbarup": "Row Shift Up",
