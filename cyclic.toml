@@ -5,7 +5,7 @@
 [cyclic]
 
 	#####################################################################################
-	#eeeee
+	# Enchantment related configs
 	#####################################################################################
 	[cyclic.enchantment]
 		#Set false to disable enchantment
@@ -24,6 +24,8 @@
 		excavate = true
 		#Set false to disable enchantment
 		magnet = true
+		#Beheading enchant add player skin head drop, add any mob id and any skin
+		beheadingEntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
 		#Set false to disable enchantment
 		multishot = true
 		#Set false to disable enchantment
@@ -42,15 +44,6 @@
 		growth = true
 		#Set false to disable enchantment
 		step = true
-
-	#####################################################################################
-	# Enchantment related configs
-	#####################################################################################
-	[cyclic.enchant]
-
-		[cyclic.enchant.beheading]
-			#Beheading enchant add player skin head drop, add any mob id and any skin
-			BeheadingEntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
 
 	#####################################################################################
 	# Logging related configs
@@ -102,9 +95,10 @@
 	#####################################################################################
 	[cyclic.energy]
 
+		#####################################################################################
 		#Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).
+		#####################################################################################
 		[cyclic.energy.cost]
-			#################
 			#Power per use disenchanter
 			#Range: 0 ~ 64000
 			disenchanter = 1500
@@ -123,6 +117,9 @@
 			#Power per use collector_fluid
 			#Range: 0 ~ 64000
 			collector_fluid = 500
+			#Power per tick while in use
+			#Range: 0 ~ 64000
+			structure = 10
 			#Power per recipe melter
 			#Range: 0 ~ 64000
 			melter = 5000
@@ -141,15 +138,16 @@
 			#Power per use crafter
 			#Range: 0 ~ 64000
 			crafter = 500
-			#Power per recipe solidifier
-			#Range: 0 ~ 64000
-			solidifier = 5000
-			#################
 			#Power per use user
 			#Range: 0 ~ 64000
 			user = 50
+			#Power per recipe solidifier
+			#Range: 0 ~ 64000
+			solidifier = 5000
 
+		#####################################################################################
 		# Fuel gained by consuming items
+		#####################################################################################
 		[cyclic.energy.fuel]
 			#Power gained burning one of this
 			#Range: 1 ~ 64000

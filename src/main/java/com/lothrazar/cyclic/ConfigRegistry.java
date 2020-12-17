@@ -104,15 +104,13 @@ public class ConfigRegistry {
   }
 
   private static void initConfig() {
-    buildDefaultHeadList();
     final String WALL = "####################################################################################";
-    final String WALLSM = "################"; //    CFG.translation(translationKey)
+    //    final String WALLSM = "################"; //    CFG.translation(translationKey)
     CFG.comment(WALL,
         "Features with configurable properties are split into categories", WALL)
         .push(ModCyclic.MODID);
     //
-    CFG.comment(WALL, "eeeee", WALL).push("enchantment");
-    //
+    CFG.comment(WALL, " Enchantment related configs", WALL).push("enchantment");
     //
     EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.id, true);
     EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.id, true);
@@ -132,10 +130,12 @@ public class ConfigRegistry {
     EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.id, true);
     EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.id, true);
     EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.id, true);
-    //
+    buildDefaultHeadList();
+    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheadingEntityMHF", defaultBeheading);
     //
     CFG.pop();//ench
-    CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL).push("command");
+    CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
+        .push("command");
     COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);
     COMMANDGETHELP = CFG.comment("True means only players with OP can use this /cyclic command").define("help", false);
     COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define("health", true);
@@ -149,15 +149,16 @@ public class ConfigRegistry {
     LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop();//logging 
     CFG.comment(WALL, " Energy related configs for machines and items", WALL).push("energy");
-    CFG.comment(" Fuel gained by consuming items").push("fuel");
+    CFG.comment(WALL, " Fuel gained by consuming items", WALL).push("fuel");
     PEATPOWER = CFG.comment(" Power gained burning one of this")
         .defineInRange("peat_fuel", 256, 1, 64000);
     PEATERICHPOWER = CFG.comment("Power gained burning one of this")
         .defineInRange("peat_fuel_enriched", 256 * 4, 1, 64000);
     CFG.pop();//fuel
-    CFG.comment("Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).").push("cost");
-    TileDisenchant.POWERCONF = CFG.comment(WALLSM, "Power per use disenchanter").defineInRange("disenchanter", 1500, 0, 64000);
-    TileUser.POWERCONF = CFG.comment(WALLSM, "Power per use user").defineInRange("user", 50, 0, 64000);
+    CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
+        .push("cost");
+    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("disenchanter", 1500, 0, 64000);
+    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 50, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
     TileMelter.POWERCONF = CFG.comment("Power per recipe melter").defineInRange("melter", 5000, 0, 64000);
     TileSolidifier.POWERCONF = CFG.comment("Power per recipe solidifier").defineInRange("solidifier", 5000, 0, 64000);
@@ -187,10 +188,6 @@ public class ConfigRegistry {
             0, 99999);
     CFG.pop();//heart
     CFG.pop();//items
-    CFG.comment(WALL, " Enchantment related configs", WALL).push("enchant");
-    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheading."
-        + "BeheadingEntityMHF", defaultBeheading);
-    CFG.pop();//enchant
     //
     //
     //
