@@ -1119,7 +1119,7 @@
   "chest_sack.error.pickup": "在存储时遇到了一个错误——动作已被撤销（查看日志以获知更多信息）",
   "chest_sack.error.place": "在放置时遇到了一个错误——动作已被撤销（查看日志以获知更多信息）",
   "chest_sack.error.null": "未找到方块实体",
-  "chest_sack.error.blacklist": "在存储时遇到了一个错误——该方块已被加入配置文件的黑名单中",
+  "chest_sack.error.config": "在存储时遇到了一个错误——该方块已被加入配置文件的黑名单中",
   "block.auto_packager": "打包机",
   "block.auto_packager.tooltip": "支持自定义合成的打包机",
   "block.auto_packager.guide": "能将类似于铁锭和金锭的物品打包成块，支持使用 CraftTweaker 添加的自定义合成。",

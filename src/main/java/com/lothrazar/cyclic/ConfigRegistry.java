@@ -40,6 +40,7 @@ import com.lothrazar.cyclic.enchant.EnchantStep;
 import com.lothrazar.cyclic.enchant.EnchantTraveller;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
+import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -50,6 +51,7 @@ public class ConfigRegistry {
 
   private static List<String> defaultBeheading = new ArrayList<>();
   private static List<String> defaultUnc = new ArrayList<>();
+  private static List<String> defaultTransportSack = new ArrayList<>();
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
   public static IntValue PEATERICHPOWER;
@@ -119,6 +121,12 @@ public class ConfigRegistry {
     defaultUnc.add("techreborn:uumatter");
     defaultUnc.add("projecte:*");
     //
+    //bag cannot pickup these. 
+    defaultTransportSack.add("minecraft:spawner");
+    defaultTransportSack.add("parabox:parabox");
+    defaultTransportSack.add("extracells:fluidcrafter");
+    defaultTransportSack.add("extracells:ecbaseblock");
+    defaultTransportSack.add("extracells:fluidfiller");
   }
 
   static {
@@ -133,7 +141,8 @@ public class ConfigRegistry {
         "Features with configurable properties are split into categories", WALL)
         .push(ModCyclic.MODID);
     //
-    CFG.comment(WALL, " Enchantment related configs", WALL).push("enchantment");
+    CFG.comment(WALL, " Enchantment related configs", WALL)
+        .push("enchantment");
     //
     EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.id, true);
     EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.id, true);
@@ -154,10 +163,11 @@ public class ConfigRegistry {
     EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.id, true);
     EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.id, true);
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheadingEntityMHF", defaultBeheading);
+    CFG.pop();//enchantment
     //
-    CFG.pop();//ench
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
+    //
     COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);
     COMMANDGETHELP = CFG.comment("True means only players with OP can use this /cyclic command").define("help", false);
     COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define("health", true);
@@ -167,10 +177,16 @@ public class ConfigRegistry {
     COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define("pingnether", false);
     COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define("worldspawn", true);
     CFG.pop();//command
-    CFG.comment(WALL, " Logging related configs", WALL).push("logging");
+    //
+    CFG.comment(WALL, " Logging related configs", WALL)
+        .push("logging");
+    //
     LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop();//logging 
-    CFG.comment(WALL, " Energy related configs for machines and items", WALL).push("energy");
+    //
+    CFG.comment(WALL, " Energy related configs for machines and items", WALL)
+        .push("energy");
+    //
     CFG.comment(WALL, " Fuel gained by consuming items", WALL).push("fuel");
     PEATPOWER = CFG.comment(" Power gained burning one of this")
         .defineInRange("peat_fuel", 256, 1, 64000);
@@ -196,7 +212,14 @@ public class ConfigRegistry {
     TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure", 10, 0, 64000);
     CFG.pop();//cost
     CFG.pop();//energy
+    //
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
+    //
+    CFG.comment("Sack of Holding settings").push("tile_transporter");
+    TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
+        .define("disable_pickup", defaultTransportSack);
+    CFG.pop();
+    //
     CFG.comment("Peat blocks").push("peat");
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
         .defineInRange("conversionChance",
@@ -205,21 +228,18 @@ public class ConfigRegistry {
     CFG.pop();//peat
     CFG.comment("Heart items").push("heart");
     HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart")
-        .defineInRange("experience",
-            500,
-            0, 99999);
+        .defineInRange("experience", 500, 0, 99999);
     CFG.pop();//heart
     CFG.pop();//items
-    CFG.comment(WALL, " Block specific configs", WALL).push("blocks");
     //
+    CFG.comment(WALL, " Block specific configs", WALL)
+        .push("blocks");
     //
     CFG.comment("Uncrafter settings").push("uncrafter");
-    //
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", true);
     TileUncraft.IGNORELIST = CFG.comment("Block these from being un-crafted").define("ignore_list", defaultUnc);
     TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);
-    //
     CFG.pop();//uncrafter
     CFG.pop();//blocks
     //
