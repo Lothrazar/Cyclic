@@ -30,13 +30,13 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
     int x = guiLeft + 114;
     int y = guiTop + 62;
     int size = 14;
-    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.button.craftempty", b -> {
+    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.gui.craft.empty", b -> {
       //pressed
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
     }));
     //
     x += 22;
-    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_BALANCE, "cyclic.button.craftbalance", b -> {
+    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_BALANCE, "cyclic.gui.craft.balance", b -> {
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
     }));
   }
