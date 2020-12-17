@@ -23,7 +23,7 @@ public class ContainerUncraft extends ContainerBase {
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 80, 19));
+      addSlot(new SlotItemHandler(h, 0, 39, 19));
       //the main slot
       //the rows 
       int index = 1;

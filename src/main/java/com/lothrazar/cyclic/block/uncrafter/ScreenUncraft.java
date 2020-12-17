@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -36,7 +37,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
@@ -45,22 +46,19 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     btnRedstone.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    if (container.tile.getStatus() == UncraftStatusEnum.CANT)
-      ModCyclic.LOGGER.info("TODO: put this on screen: status" + container.tile.getField(TileUncraft.Fields.STATUS.ordinal()));
-    //    String name = UtilChat.lang("block." + ModCyclic.MODID +
-    //        ".uncrafter." + container.tile.getStatus().name().toLowerCase());
-    //    int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;
-    //    drawString(ms, name,
-    //        center + 15,
-    //        12.0F);
-    //    }
+    if (container.tile.getStatus() != UncraftStatusEnum.EMPTY) {
+      String name = UtilChat.lang(
+          ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
+      int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;
+      drawString(ms, name, center + 29, 22);
+    }
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, container.tile.getEnergy());
-    this.drawSlot(ms, xSize / 2 - 9, 18);
+    this.drawSlot(ms, 38, 18);
     for (int i = 0; i < 8; i++) {
       this.drawSlot(ms, 7 + i * Const.SQ, 44);
       this.drawSlot(ms, 7 + i * Const.SQ, 44 + Const.SQ);

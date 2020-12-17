@@ -868,6 +868,9 @@
     "cyclic.gui.craftempty":"Empty the grid",
     "cyclic.gui.craftbalance":"Balance largest stack in grid",
     
+    "cyclic.gui.uncrafter.config":"Blocked by config",
+    "cyclic.gui.uncrafter.norecipe":"No recipe",
+    "cyclic.gui.uncrafter.match":"Match",
     
     "cyclic.screen.style0": "Normal",
     "cyclic.screen.style1": "%",
@@ -1502,6 +1505,8 @@
 	"block.cyclic.mason_iron":"Mason Iron",
 	"block.cyclic.mason_steel":"Mason Steel",
 	"block.cyclic.mason_plate":"Mason Plate",    
+	
+	
 
 
     

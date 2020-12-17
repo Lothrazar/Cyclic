@@ -49,6 +49,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class ConfigRegistry {
 
   private static List<String> defaultBeheading = new ArrayList<>();
+  private static List<String> defaultUnc = new ArrayList<>();
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
   public static IntValue PEATERICHPOWER;
@@ -66,7 +67,7 @@ public class ConfigRegistry {
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
 
-  private static void buildDefaultHeadList() {
+  private static void buildDefaults() {
     //http://minecraft.gamepedia.com/Player.dat_format#Player_Heads
     //mhf https://twitter.com/Marc_IRL/status/542330244473311232  https://pastebin.com/5mug6EBu
     //other https://www.planetminecraft.com/blog/minecraft-playerheads-2579899/
@@ -97,9 +98,31 @@ public class ConfigRegistry {
     defaultBeheading.add("minecraft:snow_golem:MHF_SnowGolem");
     defaultBeheading.add("minecraft:silverfish:MHF_Silverfish");
     defaultBeheading.add("minecraft:endermite:MHF_Endermite");
+    //
+    // uncrafter defaults for balance
+    //
+    //most of these are ported direct from 1.12 defaults, idk if these mods or items exist anymore
+    defaultUnc.add("minecraft:elytra");
+    defaultUnc.add("minecraft:beacon");
+    defaultUnc.add("minecraft:magma");//potion balance
+    defaultUnc.add("minecraft:tipped_arrow");
+    defaultUnc.add("minecraft:cobweb");//mods like botania add recipes
+    defaultUnc.add("minecraft:*_dye");//getting flowers etc feels bad
+    //    defaultUnc.add("minecraft:*_banner");
+    defaultUnc.add("minecraft:stick");//block cheaty way to get bamboo
+    defaultUnc.add("minecraft:netherite_ingot");
+    defaultUnc.add("cyclic:gem_*");
+    defaultUnc.add("forge:bucketfilled");
+    defaultUnc.add("progressiveautomation:*");
+    defaultUnc.add("spectrite:spectrite_arrow");
+    defaultUnc.add("spectrite:spectrite_arrow_special");
+    defaultUnc.add("techreborn:uumatter");
+    defaultUnc.add("projecte:*");
+    //
   }
 
   static {
+    buildDefaults();
     initConfig();
   }
 
@@ -130,7 +153,6 @@ public class ConfigRegistry {
     EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.id, true);
     EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.id, true);
     EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.id, true);
-    buildDefaultHeadList();
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheadingEntityMHF", defaultBeheading);
     //
     CFG.pop();//ench
@@ -188,9 +210,18 @@ public class ConfigRegistry {
             0, 99999);
     CFG.pop();//heart
     CFG.pop();//items
+    CFG.comment(WALL, " Block specific configs", WALL).push("blocks");
     //
     //
+    CFG.comment("Uncrafter settings").push("uncrafter");
     //
+    TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items")
+        .define("nbt_ignored", true);
+    TileUncraft.IGNORELIST = CFG.comment("Block these from being un-crafted").define("ignore_list", defaultUnc);
+    TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);
+    //
+    CFG.pop();//uncrafter
+    CFG.pop();//blocks
     //
     CFG.pop();//ROOT
     COMMON_CONFIG = CFG.build();

@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilString;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,6 +26,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -38,6 +41,9 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
 
   static final int MAX = 64000;
   public static IntValue POWERCONF;
+  public static BooleanValue IGNORE_NBT;
+  public static ConfigValue<List<String>> IGNORELIST;
+  public static ConfigValue<Integer> TIMER;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(1 + 8 + 8);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
@@ -54,39 +60,34 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   @Override
   public void tick() {
     this.syncEnergy();
+    ItemStack dropMe = inventory.getStackInSlot(0).copy();
+    if (dropMe.isEmpty()) {
+      this.status = UncraftStatusEnum.EMPTY;
+      return;
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
-      return;
-    }
-    timer--;
-    if (timer > 0) {
-      return;
-    }
-    if (world.getServer() == null) {
-      this.status = UncraftStatusEnum.EMPTY;
       return;
     }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
       return;//broke
     }
-    //    int RADIUS = 2;
-    //
-    ItemStack dropMe = inventory.getStackInSlot(0).copy();
-    if (dropMe.isEmpty()) {
-      this.status = UncraftStatusEnum.EMPTY;
+    setLitProperty(true);
+    //only tick down if we have enough energy and have a valid item
+    timer--;
+    if (timer > 0) {
+      return;
     }
-    else {
-      setLitProperty(true);
-      IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
-      if (match != null) {
-        this.status = UncraftStatusEnum.MATCH;
-        uncraftRecipe(match);
-        energy.extractEnergy(cost, false);
-      }
-      else {
-        this.status = UncraftStatusEnum.CANT;
-      }
+    if (world.isRemote || world.getServer() == null) {
+      return;
+    }
+    IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
+    if (match != null) {
+      this.status = UncraftStatusEnum.MATCH;
+      uncraftRecipe(match);
+      energy.extractEnergy(cost, false);
+      timer = TIMER.get();
     }
   }
 
@@ -171,21 +172,43 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         }
       }
     }
-    if (!dropMe.isEmpty())
-      ModCyclic.LOGGER.info("No recipe found " + dropMe);
+    //    if (!dropMe.isEmpty())
+    //      ModCyclic.LOGGER.info("No recipe found " + dropMe);
     return null;
   }
 
   // matches count and has enough
-  public static boolean recipeMatches(ItemStack stack, IRecipe<?> recipe) {
+  private boolean recipeMatches(ItemStack stack, IRecipe<?> recipe) {
+    //    if (stack.getTag() != null && stack.getTag().keySet().size() == 1 && stack.getTag().keySet().contains(Const.NBT_REPAIR_COST)) {
+    //      //what is it
+    //      stack.setTag(null);
+    //    }
     // do items match
     if (stack.isEmpty() ||
-        stack.getItem() != recipe.getRecipeOutput().getItem()) {
+        recipe.getRecipeOutput().isEmpty() ||
+        recipe.getRecipeOutput().getCount() > stack.getCount()) {
+      this.status = UncraftStatusEnum.NORECIPE;
       return false;
     }
-    //data tags match, and we have enough quantity 
-    return ItemStack.areItemStackTagsEqual(stack, recipe.getRecipeOutput())
-        && recipe.getRecipeOutput().getCount() <= stack.getCount();
+    //check config
+    if (UtilString.isInList(TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
+      //      ModCyclic.LOGGER.info("Uncrafter: blocked by config list " + stack);
+      this.status = UncraftStatusEnum.CONFIG;
+      return false;
+    }
+    //both itemstacks are non-empty, and we have enough quantity
+    boolean matches = false;
+    if (TileUncraft.IGNORE_NBT.get()) {
+      ModCyclic.LOGGER.info("Uncrafter NBT ignored " + stack.getTag());
+      matches = stack.getItem() == recipe.getRecipeOutput().getItem();
+    }
+    else {
+      matches = stack.getItem() == recipe.getRecipeOutput().getItem() &&
+          ItemStack.areItemStackTagsEqual(stack, recipe.getRecipeOutput());
+    }
+    if (!matches)
+      this.status = UncraftStatusEnum.NORECIPE;
+    return matches;
   }
 
   @Override

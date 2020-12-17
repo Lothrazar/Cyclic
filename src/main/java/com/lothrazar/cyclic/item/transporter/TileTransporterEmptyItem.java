@@ -48,7 +48,7 @@ import net.minecraft.world.World;
 
 public class TileTransporterEmptyItem extends ItemBase {
 
-  private static List<String> blacklistAll;
+  private static List<String> ignoredList;
 
   public TileTransporterEmptyItem(Properties prop) {
     super(prop);
@@ -68,7 +68,7 @@ public class TileTransporterEmptyItem extends ItemBase {
       return ActionResultType.FAIL;
     }
     ResourceLocation blockId = state.getBlock().getRegistryName();
-    if (UtilString.isInList(blacklistAll, blockId)) {
+    if (UtilString.isInList(ignoredList, blockId)) {
       UtilChat.sendStatusMessage(player, "chest_sack.error.blacklist");
       return ActionResultType.FAIL;
     }
