@@ -74,8 +74,7 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
-    //energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
   }
 
   @Override

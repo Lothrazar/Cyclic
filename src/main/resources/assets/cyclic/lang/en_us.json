@@ -857,6 +857,9 @@
     "cyclic.gui.sliderkeys": "Arrow keys; hold shift/alt",
     "cyclic.gui.empty":"Empty",
     
+    "cyclic.gui.craftempty":"Empty the grid",
+    "cyclic.gui.craftbalance":"Balance largest stack in grid",
+    
     
     "cyclic.screen.style0": "Normal",
     "cyclic.screen.style1": "%",

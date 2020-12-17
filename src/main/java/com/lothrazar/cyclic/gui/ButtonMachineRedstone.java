@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class ButtonMachineRedstone extends ButtonMachine {
 
+  BlockPos tilePos;
   private TextureEnum textureOne;
   private TextureEnum textureZero;
   private String tooltipPrefix;

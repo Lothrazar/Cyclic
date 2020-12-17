@@ -1,6 +1,11 @@
 package com.lothrazar.cyclic.item.crafting;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.data.CraftingActionEnum;
+import com.lothrazar.cyclic.gui.ButtonTextured;
+import com.lothrazar.cyclic.gui.TextureEnum;
+import com.lothrazar.cyclic.net.PacketCraftAction;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,16 +27,24 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
   @Override
   public void init() {
     super.init();
-    //it works but its fkn broken, it only hits clientside lol
-    //TODO for later i guess
-    //    this.addButton(new ExtendedButton(guiLeft + 84, guiTop + 62, 8, 8, new StringTextComponent(ForgeI18n.parseMessage("")), b -> {
-    //      //pressed
-    //      this.container.craftResult.clear();
-    //      for (int i = 1; i <= 9; i++) {
-    //        ModCyclic.LOGGER.info("transfer attempt ");
-    //        this.container.transferStackInSlot(Minecraft.getInstance().player, i);
-    //      }
-    //    }));
+    int x = guiLeft + 114;
+    int y = guiTop + 62;
+    int size = 14;
+    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.button.craftempty", b -> {
+      //pressed
+      PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
+    }));
+    //
+    x += 22;
+    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_BALANCE, "cyclic.button.craftbalance", b -> {
+      PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
+    }));
+  }
+
+  @Override
+  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
+    this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 
   @Override

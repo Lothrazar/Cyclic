@@ -4,6 +4,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
+import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,10 +23,10 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class CraftingBagContainer extends ContainerBase {
+public class CraftingBagContainer extends ContainerBase implements IContainerCraftingAction {
 
   private final CraftingInventory craftMatrix = new CraftingInventory(this, 3, 3);
-  final CraftResultInventory craftResult = new CraftResultInventory();
+  private final CraftResultInventory craftResult = new CraftResultInventory();
   //
   public ItemStack bag;
   public int slot;
@@ -134,5 +135,15 @@ public class CraftingBagContainer extends ContainerBase {
       }
     }
     return super.slotClick(slotId, dragType, clickTypeIn, player);
+  }
+
+  @Override
+  public CraftingInventory getCraftMatrix() {
+    return this.craftMatrix;
+  }
+
+  @Override
+  public CraftResultInventory getCraftResult() {
+    return this.craftResult;
   }
 }

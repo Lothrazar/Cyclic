@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.workbench;
 import java.util.Optional;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,7 +26,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory> {
+public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
+    implements IContainerCraftingAction {
 
   private TileWorkbench tile;
   public static final int GRID_START_X = 52;
@@ -187,5 +189,15 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory> {
       inventoryResult.setInventorySlotContents(0, itemstack);
       sp.connection.sendPacket(new SSetSlotPacket(id, 0, itemstack));
     }
+  }
+
+  @Override
+  public CraftingInventory getCraftMatrix() {
+    return this.craftMatrix;
+  }
+
+  @Override
+  public CraftResultInventory getCraftResult() {
+    return this.craftResult;
   }
 }
