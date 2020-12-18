@@ -54,7 +54,7 @@ public class EnderWingSp extends ItemBase {
       BlockPos spawn = new BlockPos(worldInfo.getSpawnX(), worldInfo.getSpawnY(), worldInfo.getSpawnZ());
       //     BlockPos spawn = playerIn.getBedPosition().orElse(null);
       if (spawn != null) {
-        UtilEntity.teleportWallSafe(playerIn, worldIn, spawn);
+        UtilEntity.enderTeleportEvent(playerIn, worldIn, spawn);
         UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
         UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
         playerIn.getCooldownTracker().setCooldown(this, cooldown);

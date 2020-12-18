@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.eye_teleport",
+  "icon": "cyclic:eye_teleport",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.eye_teleport.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:eye_teleport"
+    }
+  ]
+}

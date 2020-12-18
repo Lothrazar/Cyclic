@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "eee",
+    "ere",
+    "eee"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:ender_eye"
+    },
+    "r": {
+      "item": "forge:storage_blocks/redstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:eye_teleport",
+    "count": 1
+  }
+}

@@ -75,8 +75,8 @@ public abstract class CharmBase extends ItemBase {
   }
 
   private void tryVoidTick(ItemStack stack, World worldIn, Entity entityIn) {
-    if (this.voidProt && entityIn.getPosition().getY() < yLowest) {
-      UtilEntity.teleportWallSafe(entityIn, worldIn,
+    if (this.voidProt && entityIn.getPosition().getY() < yLowest && entityIn instanceof LivingEntity) {
+      UtilEntity.enderTeleportEvent((LivingEntity) entityIn, worldIn,
           new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
       if (entityIn instanceof LivingEntity)
         UtilItemStack.damageItem((LivingEntity) entityIn, stack);

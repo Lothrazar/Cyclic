@@ -88,32 +88,12 @@ public class EnderWingItem extends ItemBase {
           if (needsTeleport) {
             UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
             playerIn.getCooldownTracker().setCooldown(this, cooldown);
-            UtilEntity.teleportWallSafe(playerIn, spawnWorld, pos);
+            UtilEntity.enderTeleportEvent(playerIn, spawnWorld, pos);
             UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
           }
         }
         else {
           UtilChat.sendStatusMessage(playerIn, "command.cyclic.home.obstructed");
-          // ======= old way
-          //     if (playerIn.getCooldownTracker().hasCooldown(this)) {
-          //       return super.onItemRightClick(worldIn, playerIn, handIn);
-          //     }
-          //     boolean isOverworld = worldIn.getDimensionKey() == World.OVERWORLD;
-          //     if (!isOverworld) {
-          //       UtilChat.sendStatusMessage(playerIn, "command.home.overworld");
-          //     }
-          //     else {
-          //       BlockPos pos = playerIn.getBedPosition().orElse(null);
-          //       if (pos == null) {
-          //         UtilChat.sendStatusMessage(playerIn, "command.gethome.bed");
-          //       }
-          //       else {
-          //         UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
-          //         if (!worldIn.isRemote()) {
-          //           UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
-          //           playerIn.getCooldownTracker().setCooldown(this, cooldown);
-          //           UtilEntity.teleportWallSafe(playerIn, worldIn, pos);
-          // >>>>>>> trunk/1.16
         }
       }
     }

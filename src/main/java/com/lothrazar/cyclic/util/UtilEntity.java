@@ -105,7 +105,7 @@ public class UtilEntity {
    *
    * @return true if teleport was a success
    */
-  public static boolean enderTeleportEvent(LivingEntity player, World world, double x, double y, double z) {
+  private static boolean enderTeleportEvent(LivingEntity player, World world, double x, double y, double z) {
     EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
     boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
     if (wasCancelled == false) {
@@ -120,10 +120,10 @@ public class UtilEntity {
    * @return true if teleport was a success
    */
   public static boolean enderTeleportEvent(LivingEntity player, World world, BlockPos target) {
-    return enderTeleportEvent(player, world, target.getX(), target.getY(), target.getZ());
+    return enderTeleportEvent(player, world, target.getX() + .5F, target.getY() + .5F, target.getZ() + .5F);
   }
 
-  public static void teleportWallSafe(LivingEntity player, World world, double x, double y, double z) {
+  private static void teleportWallSafe(LivingEntity player, World world, double x, double y, double z) {
     BlockPos coords = new BlockPos(x, y, z);
     //    world.update
     //    world.markBlockRangeForRenderUpdate(coords, coords);
@@ -132,7 +132,7 @@ public class UtilEntity {
     moveEntityWallSafe(player, world);
   }
 
-  public static void teleportWallSafe(Entity entityIn, World world, BlockPos coords) {
+  private static void teleportWallSafe(Entity entityIn, World world, BlockPos coords) {
     teleportWallSafe(entityIn, world, coords.getX(), coords.getY(), coords.getZ());
   }
 

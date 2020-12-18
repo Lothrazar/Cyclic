@@ -77,7 +77,7 @@ public class TeleporterWandItem extends ItemBase {
         Direction face = ((BlockRayTraceResult) rt0).getFace();
         BlockPos pos = ((BlockRayTraceResult) rt0).getPos().offset(face);
         BlockPos currentPlayerPos = player.getPosition();
-        UtilEntity.teleportWallSafe(player, player.world, pos);
+        UtilEntity.enderTeleportEvent(player, player.world, pos);
         if (player.getPosition() != currentPlayerPos) {
           UtilParticle.spawnParticleBeam(worldIn, ParticleTypes.PORTAL, currentPlayerPos, player.getPosition(), 50);
           worldIn.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));

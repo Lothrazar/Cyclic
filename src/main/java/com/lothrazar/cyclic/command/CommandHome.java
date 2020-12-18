@@ -28,7 +28,7 @@ public class CommandHome implements ICyclicCommand {
       UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");
       return 0;
     }
-    UtilEntity.teleportWallSafe(player, player.world, bedLocation);
+    UtilEntity.enderTeleportEvent(player, player.world, bedLocation);
     return 1;
   }
 }
