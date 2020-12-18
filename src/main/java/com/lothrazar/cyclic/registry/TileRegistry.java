@@ -25,6 +25,7 @@ import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.eye.TileEye;
+import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
@@ -63,7 +64,8 @@ public class TileRegistry {
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
     r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.terra_preta).build(null).setRegistryName("terra_preta"));
-    r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.eye).build(null).setRegistryName("eye"));
+    r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.eye_redstone).build(null).setRegistryName("eye_redstone"));
+    r.register(TileEntityType.Builder.create(TileEyeTp::new, BlockRegistry.eye_teleport).build(null).setRegistryName("eye_teleport"));
     //
     r.register(TileEntityType.Builder.create(TileAnvilMagma::new, BlockRegistry.anvil_magma).build(null).setRegistryName("anvil_magma"));
     r.register(TileEntityType.Builder.create(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));
@@ -116,8 +118,10 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
   }
 
-  @ObjectHolder(ModCyclic.MODID + ":eye")
-  public static TileEntityType<TileEye> eye;
+  @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
+  public static TileEntityType<TileEye> eye_redstone;
+  @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
+  public static TileEntityType<TileEyeTp> eye_teleport;
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
   public static TileEntityType<UnbreakablePoweredTile> unbreakable_reactive;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")

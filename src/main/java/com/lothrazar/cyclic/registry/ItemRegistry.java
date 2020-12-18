@@ -157,6 +157,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.mason_steel, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_steel"));
     r.register(new BlockItem(BlockRegistry.mason_iron, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_iron"));
     r.register(new BlockItem(BlockRegistry.mason_plate, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_plate"));
+    r.register(new BlockItem(BlockRegistry.eye_redstone, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("eye_redstone"));
+    r.register(new BlockItem(BlockRegistry.eye_teleport, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("eye_teleport"));
     //
     r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("battery"));
     r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_generator"));
