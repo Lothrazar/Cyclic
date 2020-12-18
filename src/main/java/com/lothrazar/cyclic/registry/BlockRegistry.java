@@ -40,6 +40,7 @@ import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.dropper.BlockDropper;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
+import com.lothrazar.cyclic.block.eye.BlockEye;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
@@ -225,6 +226,8 @@ public class BlockRegistry {
   public static Block ender_controller;
   @ObjectHolder(ModCyclic.MODID + ":workbench")
   public static Block workbench;
+  @ObjectHolder(ModCyclic.MODID + ":eye")
+  public static Block eye;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -254,6 +257,7 @@ public class BlockRegistry {
     r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
     r.register(new BlockCask(Block.Properties.create(Material.WOOD)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.WOOD)).setRegistryName("crate"));
+    r.register(new BlockEye(Block.Properties.create(Material.WOOD)).setRegistryName("eye"));
     //
     r.register(new BlockPlacer(Block.Properties.create(Material.ROCK)).setRegistryName("placer"));
     r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
