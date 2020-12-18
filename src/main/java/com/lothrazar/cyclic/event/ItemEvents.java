@@ -203,7 +203,7 @@ public class ItemEvents {
       UtilChat.sendStatusMessage(player, UtilChat.lang(WrenchActionType.getName(held)));
     }
     if (held.getItem() instanceof AntimatterEvaporatorWandItem) {
-        AntimatterEvaporatorWandItem.toggleMode(player, held);
+      AntimatterEvaporatorWandItem.toggleMode(player, held);
     }
   }
 

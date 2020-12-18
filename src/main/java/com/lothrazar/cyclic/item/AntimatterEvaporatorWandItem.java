@@ -1,5 +1,9 @@
 package com.lothrazar.cyclic.item;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -11,7 +15,10 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -20,11 +27,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class AntimatterEvaporatorWandItem extends ItemBase {
 
   public static final int COOLDOWN = 15;
@@ -32,6 +34,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
   private static final List<Fluid> VALID_LAVA = new ArrayList<>();
 
   public enum Mode implements IStringSerializable {
+
     WATER, LAVA, GENERIC;
 
     @Override
@@ -57,6 +60,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       return WATER;
     }
   }
+
   public AntimatterEvaporatorWandItem(Properties properties) {
     super(properties);
     VALID_WATER.add(Fluids.WATER);
@@ -67,7 +71,6 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
-
     BlockPos pos = context.getPos();
     World world = context.getWorld();
     Direction face = context.getFace();
@@ -89,7 +92,6 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     }
     if (removed.get() && world.isRemote)
       UtilSound.playSound(pos, SoundEvents.ITEM_BUCKET_FILL);
-
     return ActionResultType.SUCCESS;
   }
 
@@ -112,8 +114,8 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
 
   private static TranslationTextComponent getModeTooltip(ItemStack stack) {
     return new TranslationTextComponent("item.cyclic.antimatter_wand.tooltip0",
-            new TranslationTextComponent(String.format("item.cyclic.antimatter_wand.mode.%s",
-                    Mode.values()[stack.getOrCreateTag().getInt("mode")].getString())));
+        new TranslationTextComponent(String.format("item.cyclic.antimatter_wand.mode.%s",
+            Mode.values()[stack.getOrCreateTag().getInt("mode")].getString())));
   }
 
   public static void toggleMode(PlayerEntity player, ItemStack stack) {
