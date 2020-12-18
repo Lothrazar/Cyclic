@@ -78,12 +78,15 @@ public class PacketCraftAction extends PacketBase {
         c.getCraftResult().clear();
       break;
       case SPREAD:
-        balanceLargestSlot(c);
+        balanceLargestSlot(c, false);
+      break;
+      case SPREADMATCH:
+        balanceLargestSlot(c, true);
       break;
     }
   }
 
-  private static void balanceLargestSlot(IContainerCraftingAction c) {
+  private static void balanceLargestSlot(IContainerCraftingAction c, boolean onlyExisting) {
     //step 1: find the stack with the largest size.
     ItemStack biggest = ItemStack.EMPTY;
     int foundSlot = -1;
@@ -102,10 +105,10 @@ public class PacketCraftAction extends PacketBase {
     int totalQuantity = 0;
     for (int i = 0; i <= 8; i++) {
       ItemStack tmp = c.getCraftMatrix().getStackInSlot(i);
-      if (tmp.isEmpty()) {
+      if (tmp.isEmpty() && !onlyExisting) {
         slotTargest.add(i);
       }
-      else if (Container.areItemsAndTagsEqual(tmp, biggest)) {
+      if (Container.areItemsAndTagsEqual(tmp, biggest)) {
         slotTargest.add(i);
         totalQuantity += tmp.getCount();
       }

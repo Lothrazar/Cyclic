@@ -860,7 +860,8 @@
     "cyclic.gui.empty":"Empty",
     
     "cyclic.gui.craft.empty":"Empty the grid",
-    "cyclic.gui.craft.balance":"Balance largest stack in grid",
+    "cyclic.gui.craft.balance":"Balance largest stack",
+    "cyclic.gui.craft.match":"Balance & match largest stack",
     
     "cyclic.gui.uncrafter.config":"Blocked by config",
     "cyclic.gui.uncrafter.norecipe":"No recipe",
