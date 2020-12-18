@@ -27,7 +27,7 @@ public class CraftingStickScreen extends ScreenBase<CraftingStickContainer> {
   @Override
   public void init() {
     super.init();
-    int x = guiLeft + 114;
+    int x = guiLeft + 108;
     int y = guiTop + 62;
     int size = 14;
     this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.gui.craft.empty", b -> {
@@ -35,9 +35,13 @@ public class CraftingStickScreen extends ScreenBase<CraftingStickContainer> {
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
     }));
     //
-    x += 22;
+    x += 18;
     this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_BALANCE, "cyclic.gui.craft.balance", b -> {
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
+    }));
+    x += 18;
+    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_MATCH, "cyclic.gui.craft.match", b -> {
+      PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREADMATCH));
     }));
   }
 

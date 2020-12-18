@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.workbench;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -10,15 +12,12 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class TileWorkbench extends TileEntityBase implements INamedContainerProvider {
 
@@ -27,7 +26,8 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
 
   @Override
   public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+    return this.getBlockState().getBlock().getTranslatedName();
+    //        return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
   @Nullable

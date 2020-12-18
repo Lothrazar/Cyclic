@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.workbench;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.gui.ButtonTextured;
 import com.lothrazar.cyclic.gui.TextureEnum;
@@ -28,7 +27,7 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
   @Override
   public void init() {
     super.init();
-    int x = guiLeft + 114;
+    int x = guiLeft + 108;
     int y = guiTop + 62;
     int size = 14;
     this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.gui.craft.empty", b -> {
@@ -36,31 +35,26 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
     }));
     //
-    x += 22;
+    x += 18;
     this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_BALANCE, "cyclic.gui.craft.balance", b -> {
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
+    }));
+    x += 18;
+    this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_MATCH, "cyclic.gui.craft.match", b -> {
+      PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREADMATCH));
     }));
   }
 
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    //    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
+    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
     //    this.drawName(ms, title.getString());
     this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY);
-    for (int colPos = 0; colPos < ContainerWorkbench.GRID_NUM_ROWS; colPos++) {
-      for (int rowPos = 0; rowPos < ContainerWorkbench.GRID_NUM_ROWS; rowPos++) {
-        this.drawSlot(ms,
-            ContainerWorkbench.GRID_START_X - 1 + colPos * Const.SQ,
-            ContainerWorkbench.GRID_START_Y - 1 + rowPos * Const.SQ);
-      }
-    }
-    this.drawSlot(ms,
-        ContainerWorkbench.OUTPUT_START_X - 1,
-        ContainerWorkbench.OUTPUT_START_Y - 1);
+    //previous was fine, but this references exactly the 'minecraft:' vanilla crafting table
+    this.drawBackground(ms, TextureRegistry.V_CRAFTING);
   }
 }

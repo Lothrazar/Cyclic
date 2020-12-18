@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item.craftingsimple;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.ContainerBase;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,7 +35,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
     this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * 18, 17 + i * 18));
+        addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * Const.SQ, 17 + i * Const.SQ));
       }
     }
     layoutPlayerInventorySlots(8, 84);

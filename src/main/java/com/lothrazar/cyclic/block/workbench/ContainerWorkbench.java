@@ -30,10 +30,10 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
     implements IContainerCraftingAction {
 
   private TileWorkbench tile;
-  public static final int GRID_START_X = 52;
-  public static final int GRID_START_Y = 20;
+  public static final int GRID_START_X = 30;
+  public static final int GRID_START_Y = 17;
   public static final int OUTPUT_START_X = 124;
-  public static final int OUTPUT_START_Y = 38;
+  public static final int OUTPUT_START_Y = 35;
   public static final int GRID_NUM_ROWS = 3;
   private final CraftingInventory craftMatrix = new CraftingInventory(this, GRID_NUM_ROWS, GRID_NUM_ROWS);
   private final CraftResultInventory craftResult = new CraftResultInventory();
