@@ -23,12 +23,16 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -74,41 +78,74 @@ public class PacketCraftAction extends PacketBase {
         c.getCraftResult().clear();
       break;
       case SPREAD:
-        //find the first stack that we can. take that stack and spread it equally
-        ItemStack biggest = ItemStack.EMPTY;
-        int foundSlot = -1;
-        int countEmpty = 0;
-        for (int i = 0; i <= 8; i++) {
-          //
-          ItemStack tmp = c.getCraftMatrix().getStackInSlot(i);
-          if (tmp.isEmpty()) {
-            countEmpty++;
-          }
-          if (!tmp.isEmpty() && tmp.getCount() > biggest.getCount()) {
-            foundSlot = i;
-            biggest = tmp;
-          }
-        }
-        if (!biggest.isEmpty()) {
-          //ok. mow we can split it
-          //
-          //use myself plus all the empties
-          int slotsUsedForBalancing = countEmpty + 1;
-          int avg = biggest.getCount() / slotsUsedForBalancing;
-          if (avg == 0) {
-            return;
-          }
-          for (int j = 0; j <= 8; j++) {
-            if (j != foundSlot) {
-              ItemStack tmp = c.getCraftMatrix().getStackInSlot(j);
-              //split
-              //              ItemStack splitty = ;
-              if (tmp.isEmpty())
-                c.getCraftMatrix().setInventorySlotContents(j, biggest.split(avg));
-            }
-          }
-        }
+        balanceLargestSlot(c);
       break;
     }
   }
+
+  private static void balanceLargestSlot(IContainerCraftingAction c) {
+    //step 1: find the stack with the largest size.
+    ItemStack biggest = ItemStack.EMPTY;
+    int foundSlot = -1;
+    for (int i = 0; i <= 8; i++) {
+      ItemStack tmp = c.getCraftMatrix().getStackInSlot(i);
+      if (!tmp.isEmpty() && tmp.getCount() > biggest.getCount()) {
+        foundSlot = i;
+        biggest = tmp;
+      }
+    }
+    if (biggest.isEmpty()) {
+      return;
+    }
+    //step 2: find all stacks that are allowed to merge with that. (keep track of both types of slots)
+    Set<Integer> slotTargest = new HashSet<>();//including biggest
+    int totalQuantity = 0;
+    for (int i = 0; i <= 8; i++) {
+      ItemStack tmp = c.getCraftMatrix().getStackInSlot(i);
+      if (tmp.isEmpty()) {
+        slotTargest.add(i);
+      }
+      else if (Container.areItemsAndTagsEqual(tmp, biggest)) {
+        slotTargest.add(i);
+        totalQuantity += tmp.getCount();
+      }
+    }
+    ModCyclic.LOGGER.info(biggest.getItem() + "  totalQuantity" + totalQuantity);
+    //step 3: extract all of those allowed to merge including original
+    //step 4: flatten them out, with the remainder left over
+    //ok. mow we can split it
+    //
+    //use myself plus all the empties
+    int slotsUsedForBalancing = slotTargest.size();
+    int avg = totalQuantity / slotsUsedForBalancing;
+    int remainder = totalQuantity % slotsUsedForBalancing;
+    ModCyclic.LOGGER.info("  slotsUsedForBalancing " + slotsUsedForBalancing);
+    ModCyclic.LOGGER.info("  avg " + avg);
+    ModCyclic.LOGGER.info("  remainder  " + remainder);
+    if (avg == 0) {
+      return;
+    }
+    for (int slot : slotTargest) {
+      //remove everything and reset
+      int size = (slot == foundSlot) ? avg + remainder : avg;
+      c.getCraftMatrix().setInventorySlotContents(slot, new ItemStack(biggest.getItem(), size));
+    }
+    //    for (int j = 0; j <= 8; j++) {
+    //      if (j != foundSlot) {
+    //        ItemStack inMatrix = c.getCraftMatrix().getStackInSlot(j);
+    //        //split 
+    //        if (inMatrix.isEmpty())
+    //          c.getCraftMatrix().setInventorySlotContents(j, biggest.split(avg));
+    //        else if (Container.areItemsAndTagsEqual(inMatrix, biggest)) {
+    //          ModCyclic.LOGGER.info(j + "merge into partial? " + inMatrix);
+    //          int targetSpace = inMatrix.getMaxStackSize() - inMatrix.getCount();
+    //          //does it have enough tho
+    //          ItemStack mergeMe = biggest.split(Math.min(avg, targetSpace));
+    //          c.getCraftMatrix().setInventorySlotContents(j, mergeMe);
+    //          //
+    //        }
+    //      }
+    //    }
+  }
+  //?v2?
 }
