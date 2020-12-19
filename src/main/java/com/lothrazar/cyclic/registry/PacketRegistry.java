@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.net.PacketFluidSync;
+import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemStackNBT;
 import com.lothrazar.cyclic.net.PacketItemToggle;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
@@ -39,6 +40,7 @@ public class PacketRegistry {
     int id = 0;
     INSTANCE.registerMessage(id++, PacketPlayerFalldamage.class, PacketPlayerFalldamage::encode, PacketPlayerFalldamage::decode, PacketPlayerFalldamage::handle);
     INSTANCE.registerMessage(id++, PacketItemToggle.class, PacketItemToggle::encode, PacketItemToggle::decode, PacketItemToggle::handle);
+    INSTANCE.registerMessage(id++, PacketItemGui.class, PacketItemGui::encode, PacketItemGui::decode, PacketItemGui::handle);
     INSTANCE.registerMessage(id++, PacketRotateBlock.class, PacketRotateBlock::encode, PacketRotateBlock::decode, PacketRotateBlock::handle);
     INSTANCE.registerMessage(id++, PacketScythe.class, PacketScythe::encode, PacketScythe::decode, PacketScythe::handle);
     INSTANCE.registerMessage(id++, PacketTileData.class, PacketTileData::encode, PacketTileData::decode, PacketTileData::handle);

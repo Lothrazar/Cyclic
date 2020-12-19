@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.item.storagebag.StorageBagItem;
+import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemToggle;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -31,12 +32,12 @@ public class ClientInputEvents {
           ItemStack maybeCharm = slotHit.getStack();
           if (maybeCharm.getItem() instanceof IHasClickToggle) {
             PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.slotNumber));
-            //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
             event.setCanceled(true);
+            //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
           }
           else if (maybeCharm.getItem() instanceof StorageBagItem) {
-            //
-            //            NetworkHooks.openGui((ServerPlayerEntity) playerIn, new StorageBagContainerProvider(), playerIn.getPosition());
+            PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.slotNumber));
+            event.setCanceled(true);
           }
         }
       }
