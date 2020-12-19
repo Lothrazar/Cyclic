@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.bedrock;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;

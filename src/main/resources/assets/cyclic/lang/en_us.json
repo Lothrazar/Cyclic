@@ -366,7 +366,7 @@
     "guide.category.potions": "Potions",
     "guide.category.potions.desc": "Potions can all be brewed normally in a brewing stand based on awkward base potions.",
     "guide.category.world": "World Generation",
-    "guide.title": "Cyclic Guide",
+    "guide.title": "Cyclic Guidebook",
     "guide.landing_text": "Learn about everything Cyclic adds!",
 
     "item.book_ender.guide": "A magical book that stores your current location as a waypoint.  Teleport to the waypoint at a later at the cost of experience, based on distance (configurable).  Cannot cross dimensions, but it can store locations in any dimension.",

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.apple;
+package com.lothrazar.cyclic.block.apple;
 
 import java.util.Iterator;
 import com.lothrazar.cyclic.base.ItemBase;

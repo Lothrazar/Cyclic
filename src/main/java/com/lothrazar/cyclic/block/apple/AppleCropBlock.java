@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.apple;
 
 import java.util.Random;
 import com.lothrazar.cyclic.base.BlockBase;

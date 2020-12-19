@@ -55,6 +55,12 @@
 			#Maximum distance to activate
 			#Range: 2 ~ 256
 			range = 64
+			#Exp cost on teleport
+			#Range: 0 ~ 500
+			exp = 0
+			#Hunger cost on teleport
+			#Range: 0 ~ 20
+			hunger = 2
 
 		#Uncrafter settings
 		[cyclic.blocks.uncrafter]

@@ -32,8 +32,8 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
-    if (world.isRemote || world.getGameTime() % 10 != 0) {
-      return;// the %10 means only check every half second
+    if (world.isRemote) {
+      return;//  || world.getGameTime() % 5 != 0
     }
     PlayerEntity player = getLookingPlayer(RANGE.get(), true);
     if (this.canTp(player)) {
@@ -47,6 +47,9 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
   private boolean canTp(PlayerEntity player) {
     if (player == null) {
       return false;
+    }
+    if (player.isCreative()) {
+      return true;
     }
     if (EXP.get() > 0 && UtilPlayer.getExpTotal(player) < EXP.get()) {
       return false;

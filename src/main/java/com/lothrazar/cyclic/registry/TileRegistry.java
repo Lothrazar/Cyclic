@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.UnbreakablePoweredTile;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredTile;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;

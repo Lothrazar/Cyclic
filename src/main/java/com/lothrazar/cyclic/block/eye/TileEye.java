@@ -27,8 +27,8 @@ public class TileEye extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
-    if (world.isRemote || world.getGameTime() % 10 != 0) {
-      return;
+    if (world.isRemote) {
+      return;// || world.getGameTime() % 3 != 0
     }
     //
     boolean playerFound = getLookingPlayer(RANGE.get(), false) != null;
