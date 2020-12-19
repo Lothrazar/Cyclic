@@ -42,6 +42,7 @@ import com.lothrazar.cyclic.enchant.EnchantStep;
 import com.lothrazar.cyclic.enchant.EnchantTraveller;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
+import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -217,6 +218,10 @@ public class ConfigRegistry {
     //
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
     //
+    CFG.comment("Wand settings").push("teleport_wand");
+    TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 128, 16, 256);
+    CFG.pop();
+    //
     CFG.comment("Sack of Holding settings").push("tile_transporter");
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
         .define("disable_pickup", defaultTransportSack);
@@ -238,12 +243,14 @@ public class ConfigRegistry {
         .push("blocks");
     //
     CFG.comment("Ender Anchor settings").push("eye_teleport");
-    TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 64, 2, 256);
+    TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 32, 2, 256);
     TileEyeTp.HUNGER = CFG.comment("Hunger cost on teleport").defineInRange("hunger", 1, 0, 20);
     TileEyeTp.EXP = CFG.comment("Exp cost on teleport").defineInRange("exp", 0, 0, 500);
+    TileEyeTp.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)").defineInRange("frequency", 5, 1, 20);
     CFG.pop();
     CFG.comment("Ender Trigger settings").push("eye_redstone");
-    TileEye.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 64, 2, 256);
+    TileEye.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 32, 2, 256);
+    TileEye.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)").defineInRange("frequency", 5, 1, 20);
     CFG.pop();
     //
     CFG.comment("Uncrafter settings").push("uncrafter");

@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -50,7 +51,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   private int radius = 9;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private static final int ATTEMPTS_PERTICK = 16;
   static final int MAX = 640000;
 
   static enum Fields {
@@ -72,16 +72,18 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (this.world.isRemote) {
       return;
     }
-    for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
-      BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius), radius);
-      Integer cost = POWERCONF.get();
-      if (energy.getEnergyStored() < cost && cost > 0) {
-        break;//too broke
-      }
-      if (tryHarvestSingle(this.world, target)) {
-        energy.extractEnergy(cost, false);
-        break;
-      }
+    final int cost = POWERCONF.get();
+    if (energy.getEnergyStored() < cost && cost > 0) {
+      return;
+    }
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    timer = Const.TICKS_PER_SEC / 2;//could config, but 2x per sec is enough
+    BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius), radius);
+    if (tryHarvestSingle(this.world, target)) {
+      energy.extractEnergy(cost, false);
     }
   }
 

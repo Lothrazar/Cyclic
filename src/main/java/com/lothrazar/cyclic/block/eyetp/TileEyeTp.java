@@ -15,6 +15,7 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
   public static IntValue RANGE;
   public static IntValue HUNGER;
   public static IntValue EXP;
+  public static IntValue FREQUENCY;
 
   public TileEyeTp() {
     super(TileRegistry.eye_teleport);
@@ -35,6 +36,11 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
     if (world.isRemote) {
       return;//  || world.getGameTime() % 5 != 0
     }
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    timer = FREQUENCY.get();
     PlayerEntity player = getLookingPlayer(RANGE.get(), true);
     if (this.canTp(player)) {
       boolean success = UtilEntity.enderTeleportEvent(player, world, this.pos.up());

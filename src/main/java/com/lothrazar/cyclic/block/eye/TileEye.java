@@ -10,6 +10,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class TileEye extends TileEntityBase implements ITickableTileEntity {
 
   public static IntValue RANGE;
+  public static IntValue FREQUENCY;
 
   public TileEye() {
     super(TileRegistry.eye_redstone);
@@ -30,6 +31,12 @@ public class TileEye extends TileEntityBase implements ITickableTileEntity {
     if (world.isRemote) {
       return;// || world.getGameTime() % 3 != 0
     }
+    //    ModCyclic.LOGGER.info(pos + "eye tick " + timer);
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    timer = FREQUENCY.get();
     //
     boolean playerFound = getLookingPlayer(RANGE.get(), false) != null;
     this.setLitProperty(playerFound);
