@@ -239,6 +239,8 @@ public class ConfigRegistry {
     //
     CFG.comment("Ender Anchor settings").push("eye_teleport");
     TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 64, 2, 256);
+    TileEyeTp.HUNGER = CFG.comment("Hunger cost on teleport").defineInRange("hunger", 1, 0, 20);
+    TileEyeTp.EXP = CFG.comment("Exp cost on teleport").defineInRange("exp", 0, 0, 500);
     CFG.pop();
     CFG.comment("Ender Trigger settings").push("eye_redstone");
     TileEye.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 64, 2, 256);

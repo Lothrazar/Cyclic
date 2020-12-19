@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -94,7 +94,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class,
         new AxisAlignedBB(this.getPos().up()));
     for (PlayerEntity p : players) {
-      double myTotal = UtilEntity.getExpTotal(p);
+      double myTotal = UtilPlayer.getExpTotal(p);
       if (p.isCrouching() && myTotal > 0) {
         //go
         int addMeXp = 1;
