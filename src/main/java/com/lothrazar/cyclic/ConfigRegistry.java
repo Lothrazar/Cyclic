@@ -13,6 +13,8 @@ import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
+import com.lothrazar.cyclic.block.eye.TileEye;
+import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.melter.TileMelter;
@@ -234,6 +236,13 @@ public class ConfigRegistry {
     //
     CFG.comment(WALL, " Block specific configs", WALL)
         .push("blocks");
+    //
+    CFG.comment("Ender Anchor settings").push("eye_teleport");
+    TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 64, 2, 256);
+    CFG.pop();
+    CFG.comment("Ender Trigger settings").push("eye_redstone");
+    TileEye.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 64, 2, 256);
+    CFG.pop();
     //
     CFG.comment("Uncrafter settings").push("uncrafter");
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items")

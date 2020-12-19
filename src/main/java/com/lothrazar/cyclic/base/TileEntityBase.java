@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.base;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
@@ -25,8 +26,11 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
@@ -49,6 +53,29 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
+  }
+
+  protected PlayerEntity getLookingPlayer(int maxRange, boolean mustCrouch) {
+    List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(this.pos.getX() - maxRange, this.pos.getY() - maxRange, this.pos.getZ() - maxRange, this.pos.getX() + maxRange, this.pos.getY() + maxRange, this.pos.getZ() + maxRange));
+    for (PlayerEntity player : players) {
+      if (mustCrouch && !player.isCrouching()) {
+        continue;//check the next one
+      }
+      //am i looking
+      Vector3d positionEyes = player.getEyePosition(1F);
+      Vector3d look = player.getLook(1F);
+      //take the player eye position. draw a vector from the eyes, in the direction they are looking
+      //of LENGTH equal to the range
+      Vector3d visionWithLength = positionEyes.add(look.x * maxRange, look.y * maxRange, look.z * maxRange);
+      //ray trayce from eyes, along the vision vec
+      BlockRayTraceResult rayTrace = this.world.rayTraceBlocks(new RayTraceContext(positionEyes, visionWithLength, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
+      //
+      if (this.pos.equals(rayTrace.getPos())) {
+        //at least one is enough, stop looping
+        return player;
+      }
+    }
+    return null;
   }
 
   public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {

@@ -26,7 +26,13 @@
 		"item.cyclic.crafting_bag.tooltip": "Saves inventory",
 		"item.cyclic.crafting_bag.guide": "Handheld crafting table with an inventory that is saved in itself like a backpack",
 
+		"block.cyclic.eye_teleport":"Ender Anchor",
+		"block.cyclic.eye_teleport.tooltip":"Look and crouch to teleport onto it",
+		"block.cyclic.eye_teleport.guide":"Whenever a player is looking at this while crouching, the player is teleported on top of this block.  If solid blocks are above it, there is some leeway where you will appear above all of those blocks.  Same logic as $(l:items/teleport_wand)Ender Scepter$(/l). ",
 
+		"block.cyclic.eye_redstone":"Ender Trigger",
+		"block.cyclic.eye_redstone.tooltip":"Redstone powered while a player is looking",
+		"block.cyclic.eye_redstone.guide":"This block detects nearby players, and checks their eye position to see if the player is looking at the block.  Whenever its being looked at, the blockstate is updated and it produces redstone power. ",
 
 	"block.cyclic.experience_pylon.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",

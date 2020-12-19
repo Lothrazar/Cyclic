@@ -6,11 +6,11 @@
     "eee"
   ],
   "key": {
-    "c": {
+    "e": {
       "item": "minecraft:ender_eye"
     },
     "r": {
-      "item": "forge:storage_blocks/redstone"
+      "item": "cyclic:eye_redstone"
     }
   },
   "result": {

@@ -6,11 +6,11 @@
     "eee"
   ],
   "key": {
-    "c": {
+    "e": {
       "item": "minecraft:ender_pearl"
     },
     "r": {
-      "item": "forge:storage_blocks/redstone"
+      "tag": "forge:storage_blocks/redstone"
     }
   },
   "result": {

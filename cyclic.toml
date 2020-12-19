@@ -46,16 +46,48 @@
 		step = true
 
 	#####################################################################################
+	# Block specific configs
+	#####################################################################################
+	[cyclic.blocks]
+
+		#Ender Anchor settings
+		[cyclic.blocks.eye_teleport]
+			#Maximum distance to activate
+			#Range: 2 ~ 256
+			range = 64
+
+		#Uncrafter settings
+		[cyclic.blocks.uncrafter]
+			#When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items
+			nbt_ignored = true
+			#Ticks used for each uncraft
+			#Range: 1 ~ 9999
+			ticks = 60
+			#Block these from being un-crafted
+			ignore_list = ["minecraft:elytra", "minecraft:beacon", "minecraft:magma", "minecraft:tipped_arrow", "minecraft:cobweb", "minecraft:*_dye", "minecraft:*_banner", "minecraft:stick", "minecraft:netherite_ingot", "cyclic:gem_*", "forge:bucketfilled", "progressiveautomation:*", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
+
+		#Ender Trigger settings
+		[cyclic.blocks.eye_redstone]
+			#Maximum distance to activate
+			#Range: 2 ~ 256
+			range = 64
+
+	#####################################################################################
 	# Logging related configs
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = false
+		info = true
 
 	#####################################################################################
 	# Item specific configs
 	#####################################################################################
 	[cyclic.items]
+
+		#Sack of Holding settings
+		[cyclic.items.tile_transporter]
+			#Block these from being picked up
+			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
 
 		#Peat blocks
 		[cyclic.items.peat]
