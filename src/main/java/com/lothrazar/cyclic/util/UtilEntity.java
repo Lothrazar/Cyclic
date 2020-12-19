@@ -132,10 +132,6 @@ public class UtilEntity {
     moveEntityWallSafe(player, world);
   }
 
-  private static void teleportWallSafe(Entity entityIn, World world, BlockPos coords) {
-    teleportWallSafe(entityIn, world, coords.getX(), coords.getY(), coords.getZ());
-  }
-
   public static void moveEntityWallSafe(Entity entity, World world) {
     //    world.checkBlockCollision(bb)
     //    world.hasNoCollisions(p_226669_1_)

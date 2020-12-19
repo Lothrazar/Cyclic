@@ -39,15 +39,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
 
     @Override
     public String getString() {
-      switch (this) {
-        case WATER:
-          return "water";
-        case LAVA:
-          return "lava";
-        case GENERIC:
-          return "generic";
-      }
-      return "water";
+      return this.name().toLowerCase();
     }
 
     public Mode getNext() {
@@ -56,6 +48,8 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
           return LAVA;
         case LAVA:
           return GENERIC;
+        case GENERIC:
+          return WATER;
       }
       return WATER;
     }

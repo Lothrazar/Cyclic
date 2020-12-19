@@ -19,6 +19,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+@SuppressWarnings("unchecked")
 public class TileWorkbench extends TileEntityBase implements INamedContainerProvider {
 
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(9));
