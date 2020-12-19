@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.util.UtilShape;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -29,7 +30,8 @@ public class ScytheHarvest extends ItemBase {
     if (side != null) {
       pos = pos.offset(side);
     }
-    int radius = (context.getPlayer().isCrouching()) ? RADIUS_SNEAKING : RADIUS;
+    PlayerEntity player = context.getPlayer();
+    int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
     //
     int counts = 0;
     for (BlockPos p : getShape(pos, radius)) {
@@ -41,8 +43,8 @@ public class ScytheHarvest extends ItemBase {
     }
     //
     //
-    context.getPlayer().swingArm(context.getHand());
-    context.getItem().damageItem(counts, context.getPlayer(), (e) -> {});
+    player.swingArm(context.getHand());
+    context.getItem().damageItem(counts, player, (e) -> {});
     return super.onItemUse(context);
   }
 }

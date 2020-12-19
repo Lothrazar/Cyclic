@@ -84,8 +84,15 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
         removed.set(true);
       });
     }
-    if (removed.get() && world.isRemote)
-      UtilSound.playSound(pos, SoundEvents.ITEM_BUCKET_FILL);
+    //
+    //
+    if (removed.get()) {
+      PlayerEntity player = context.getPlayer();
+      player.swingArm(context.getHand());
+      context.getItem().damageItem(1, player, (e) -> {});
+      if (world.isRemote)
+        UtilSound.playSound(pos, SoundEvents.ITEM_BUCKET_FILL);
+    }
     return ActionResultType.SUCCESS;
   }
 

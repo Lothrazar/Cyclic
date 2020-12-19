@@ -272,7 +272,7 @@ public class ItemRegistry {
     r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
     r.register(new CraftingStickItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_stick"));
-    r.register(new AntimatterEvaporatorWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("antimatter_wand"));
+    r.register(new AntimatterEvaporatorWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).maxDamage(1024)).setRegistryName("antimatter_wand"));
     ///////////////////////// apples
     final int SMALLPOT = 20 * 90;// 1:30
     final int LARGEPOT = 3 * 20 * 60;// 3:00
