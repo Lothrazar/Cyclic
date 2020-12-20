@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.DarkGlassBlock;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
+import com.lothrazar.cyclic.block.GhostBlock;
 import com.lothrazar.cyclic.block.LaunchBlock;
 import com.lothrazar.cyclic.block.MasonBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
@@ -231,6 +232,8 @@ public class BlockRegistry {
   public static Block eye_redstone;
   @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
   public static Block eye_teleport;
+  @ObjectHolder(ModCyclic.MODID + ":ghost")
+  public static Block ghost;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -282,6 +285,7 @@ public class BlockRegistry {
     r.register(new BlockAnvilAuto(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil"));
     r.register(new BlockAnvilMagma(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
+    r.register(new GhostBlock(Block.Properties.create(Material.ROCK)).setRegistryName("ghost"));
     //
     r.register(new SoundmufflerBlock(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));

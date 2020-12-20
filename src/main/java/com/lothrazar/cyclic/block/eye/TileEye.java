@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.util.FakePlayer;
 
 public class TileEye extends TileEntityBase implements ITickableTileEntity {
 
@@ -30,14 +29,12 @@ public class TileEye extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void tick() {
     if (world.isRemote) {
-      return;// || world.getGameTime() % 3 != 0
+      return;
     }
-    //    ModCyclic.LOGGER.info(pos + "eye tick " + timer);
     timer--;
     if (timer > 0) {
       return;
     }
-    FakePlayer test;
     timer = FREQUENCY.get();
     //
     boolean playerFound = getLookingPlayer(RANGE.get(), false) != null;
