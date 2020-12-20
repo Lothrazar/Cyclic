@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
@@ -102,7 +103,25 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
       if (p.isCrouching() && myTotal > 0) {
         //go
         int addMeXp = 1;
+        //now wait.
+        //depending what level the player is, increase how much we pull per tick
+        ModCyclic.LOGGER.info(" p level " + p.experienceLevel);
+        if (p.experienceLevel > 100) {
+          addMeXp = 600;
+        }
+        else if (p.experienceLevel > 50) {
+          addMeXp = 200;
+        }
+        else if (p.experienceLevel > 30) {
+          addMeXp = 50;
+        }
+        else if (p.experienceLevel > 5) {
+          addMeXp = 10;
+        }
+        else addMeXp = 1;//smallest 
+        //
         int addMeFluid = addMeXp * FLUID_PER_EXP;
+        //at level 100+ this is way too slow
         if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
           p.giveExperiencePoints(-1 * addMeXp);
           tank.fill(new FluidStack(
