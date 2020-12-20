@@ -47,16 +47,20 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public TileExpPylon() {
     super(TileRegistry.experience_pylontile);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+    this.needsRedstone = 0;//default ON
   }
 
   @Override
   public void tick() {
+    if (!world.isRemote) {
+      //ignore on/off state, for player standing on top collecting exp
+      collectPlayerExperience();
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
+    //if turned on, collect from the world
     collectLocalExperience();
-    if (!world.isRemote)
-      collectPlayerExperience();
   }
 
   public Predicate<FluidStack> isFluidValid() {

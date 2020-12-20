@@ -19,6 +19,7 @@ public class ContainerExpPylon extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     layoutPlayerInventorySlots(8, 84);
+    this.trackAllIntFields(tile, TileExpPylon.Fields.values().length);
   }
 
   @Override
