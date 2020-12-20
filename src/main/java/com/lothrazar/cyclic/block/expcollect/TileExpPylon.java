@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
@@ -104,10 +103,12 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
         //go
         int addMeXp = 1;
         //now wait.
-        //depending what level the player is, increase how much we pull per tick
-        ModCyclic.LOGGER.info(" p level " + p.experienceLevel);
+        //depending what level the player is, increase how much we pull per tick 
+        if (p.experienceLevel > 300) {
+          addMeXp = 1800;
+        }
         if (p.experienceLevel > 100) {
-          addMeXp = 600;
+          addMeXp = 900;
         }
         else if (p.experienceLevel > 50) {
           addMeXp = 200;

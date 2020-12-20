@@ -28,7 +28,7 @@ import net.minecraft.util.ResourceLocation;
 public class CyclicPluginJEI implements IModPlugin {
 
   private static final int PLAYER_INV_SIZE = 4 * 9;
-  private ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "jei");
+  private static final ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "jei");
 
   @Override
   public ResourceLocation getPluginUid() {

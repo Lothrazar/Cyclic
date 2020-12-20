@@ -31,7 +31,7 @@ public class ContainerSolidifier extends ContainerBase {
       addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
     });
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
-      addSlot(new SlotItemHandler(h, 0, 121, 31));
+      addSlot(new SlotItemHandler(h, 3, 121, 31));
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileSolidifier.Fields.values().length);
