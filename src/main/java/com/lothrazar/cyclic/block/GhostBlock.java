@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -22,7 +23,13 @@ public class GhostBlock extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());//getTranslucent());
+    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());//slime block / ice etcuses translucent());
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+    return false;
   }
 
   @Override
@@ -30,10 +37,12 @@ public class GhostBlock extends BlockBase {
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1;//same as GlassBlock
   }
-  //  @Override
-  //  public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-  //    return VoxelShapes.empty();//this makes it TOTALLY INVISIBLE OOOOOO
-  //  }
+
+  @Override
+  public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+    return VoxelShapes.empty();//this makes it TOTALLY INVISIBLE OOOOOO
+    //    return VoxelShapes.fullCube();
+  }
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
