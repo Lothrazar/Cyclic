@@ -45,8 +45,8 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
     }
     Block block = bState.getBlock();
     if (block instanceof IPlantable || block instanceof IGrowable) {
-      IGrowable crop = ((IGrowable) block);
       if (block instanceof IGrowable) {
+        IGrowable crop = ((IGrowable) block);
         if (crop.canGrow(world, current, bState, world.isRemote) == false
             || crop.canUseBonemeal(world, world.rand, current, bState)) {
           return;//its at full growth, stahp

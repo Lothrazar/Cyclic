@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.TridentItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
@@ -46,6 +47,7 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
       boolean success = UtilEntity.enderTeleportEvent(player, world, this.pos.up());
       if (success) {
         this.payCost(player);
+        TridentItem x;
       }
     }
   }

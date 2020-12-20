@@ -12,6 +12,7 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
@@ -63,6 +64,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   public TileAnvilMagma() {
     super(TileRegistry.anvil_magma);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+    this.needsRedstone = 0;//default on
   }
 
   @Override
@@ -76,27 +78,37 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
       return;
     }
-    final int repair = 100;
+    final int repair = 100;//not power, fluid.
+    boolean work = false;
     if (tank != null &&
         tank.getFluidAmount() >= repair &&
         stack.isRepairable() &&
         stack.getDamage() > 0) {
       //we can repair so steal some power 
       //ok drain power  
-      UtilItemStack.repairItem(stack);
+      work = true;
       tank.drain(repair, FluidAction.EXECUTE);
     }
     //shift to other slot
-    if ((stack.getDamage() == 0 || !stack.isRepairable())
-        && inventory.getStackInSlot(1).isEmpty()) {
+    if (work) {
+      UtilItemStack.repairItem(stack);
+      boolean done = stack.getDamage() == 0;
       //
-      inventory.insertItem(1, stack.copy(), false);
-      inventory.extractItem(0, stack.getCount(), false);
+      if (done && inventory.getStackInSlot(OUT).isEmpty()) {
+        inventory.insertItem(1, stack.copy(), false);
+        inventory.extractItem(0, stack.getCount(), false);
+      }
     }
   }
 
   public Predicate<FluidStack> isFluidValid() {
-    return p -> p.getFluid() == FluidMagmaHolder.STILL.get();
+    return p -> {
+      Fluid fluid = p.getFluid();
+      return fluid == FluidMagmaHolder.STILL.get()
+      //          || fluid == Fluids.LAVA
+      //          || fluid == Fluids.FLOWING_LAVA
+      ;
+    };
   }
 
   @Override

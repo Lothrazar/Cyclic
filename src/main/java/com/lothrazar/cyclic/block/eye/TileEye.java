@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.util.FakePlayer;
 
 public class TileEye extends TileEntityBase implements ITickableTileEntity {
 
@@ -36,6 +37,7 @@ public class TileEye extends TileEntityBase implements ITickableTileEntity {
     if (timer > 0) {
       return;
     }
+    FakePlayer test;
     timer = FREQUENCY.get();
     //
     boolean playerFound = getLookingPlayer(RANGE.get(), false) != null;

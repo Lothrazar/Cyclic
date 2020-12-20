@@ -25,7 +25,7 @@ public class ContainerSolidifier extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots();
+      this.endInv = h.getSlots() + 1;//for shiftclick out of the out slot
       addSlot(new SlotItemHandler(h, 0, 37, 17));
       addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
       addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));

@@ -88,8 +88,8 @@
     "item.cyclic.settings_data.guide":"Copy settings between cyclic machines.  Hit on bedrock to wipe data clean.  After data is copied, can only be put onto blocks with the same id.",
 
     "block.cyclic.terra_preta":"Terra Preta",
-    "block.cyclic.terra_preta.tooltip":"Place below farmland for improved growth",
-    "block.cyclic.terra_preta.guide":"Place Terra Preta below farmland to increase the speed at which crops grow.",
+    "block.cyclic.terra_preta.tooltip":"Place below farmland for sprinkler-like growth",
+    "block.cyclic.terra_preta.guide":"Place Terra Preta below farmland to increase the speed at which crops grow.  Works just like a sprinkler except there are no particles, and it only targets the block above. ",
 
     "block.cyclic.crate": "Crate",
     "block.cyclic.crate.tooltip": "Reinforced item storage",
@@ -807,8 +807,8 @@
     "block.cyclic.anvil.tooltip": "Repair using Energy",
     "block.cyclic.anvil.guide": "The Powered Diamond Anvil repairs equipment using Energy",
     "block.cyclic.anvil_magma": "Magma Anvil",
-    "block.cyclic.anvil_magma.tooltip": "Repair using Magma",
-    "block.cyclic.anvil_magma.guide": "The Magma Anvil repairs equipment using Magma",
+    "block.cyclic.anvil_magma.tooltip": "Repair using liquid Magma",
+    "block.cyclic.anvil_magma.guide": "The Magma Anvil repairs equipment using liquid Magma.  Pipe it in from a tank or something else",
     "block.cyclic.enchanter": "Powered Enchanter",
     "block.cyclic.enchanter.tooltip": "Add enchantments using experience fluid and energy",
     "block.cyclic.enchanter.guide": "Feed in experience as a fluid, and then add any enchantable item. Can be automated with pipes & hoppers.",
