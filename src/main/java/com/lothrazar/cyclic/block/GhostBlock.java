@@ -30,11 +30,10 @@ public class GhostBlock extends BlockBase {
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1;//same as GlassBlock
   }
-
-  @Override
-  public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-    return VoxelShapes.empty();//same as Glass Block
-  }
+  //  @Override
+  //  public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+  //    return VoxelShapes.empty();//this makes it TOTALLY INVISIBLE OOOOOO
+  //  }
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
