@@ -77,9 +77,8 @@ public abstract class ContainerBase extends Container {
     try {
       //if last machine slot is 17, endInv is 18
       int playerStart = endInv;
-      int playerEnd = endInv + PLAYERSIZE;//53 = 17 + 36 
-      //player is 18 to 53
-      //TILE is [0, 17]
+      int playerEnd = endInv + PLAYERSIZE;//53 = 17 + 36  
+      //standard logic based on start/end
       ItemStack itemstack = ItemStack.EMPTY;
       Slot slot = this.inventorySlots.get(index);
       if (slot != null && slot.getHasStack()) {

@@ -69,8 +69,8 @@ public class CyclicPluginJEI implements IModPlugin {
         0, 2, //recipeSLotStart, recipeSlotCount
         2, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.id,
-        0, 3, //recipeSLotStart, recipeSlotCount
-        3, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+        1, 4, //recipeSLotStart, recipeSlotCount
+        4, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
         10, 9, //recipeSLotStart, recipeSlotCount
         30, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
