@@ -29,7 +29,7 @@ public class GhostBlock extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-    return false;
+    return side == Direction.UP;
   }
 
   @Override
@@ -40,8 +40,8 @@ public class GhostBlock extends BlockBase {
 
   @Override
   public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-    return VoxelShapes.empty();//this makes it TOTALLY INVISIBLE OOOOOO
-    //    return VoxelShapes.fullCube();
+    //    return VoxelShapes.empty();//this makes it TOTALLY INVISIBLE OOOOOO
+    return VoxelShapes.fullCube();
   }
 
   @Override
