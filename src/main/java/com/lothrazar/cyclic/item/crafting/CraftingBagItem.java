@@ -21,15 +21,8 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 public class CraftingBagItem extends ItemBase {
 
-  private int slots;
-
   public CraftingBagItem(Properties properties) {
     super(properties);
-  }
-
-  public CraftingBagItem(Properties properties, int slots) {
-    this(properties);
-    this.slots = slots;
   }
 
   @Override
@@ -48,7 +41,7 @@ public class CraftingBagItem extends ItemBase {
   @Nullable
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-    return new CraftingBagCapabilityProvider(stack, slots);
+    return new CraftingBagCapabilityProvider();
   }
   //  @Nullable
   //  private static ItemStackHandler getInventory(ItemStack bag) {

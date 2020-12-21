@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sis",
+    "iri",
+    "sis"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:string"
+    },
+    "i": {
+      "item": "minecraft:iron_nugget"
+    },
+    "r": {
+      "item": "minecraft:gray_dye"
+    }
+  },
+  "result": {
+    "item": "cyclic:ghost",
+    "count": 8
+  }
+}

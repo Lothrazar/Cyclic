@@ -234,6 +234,8 @@ public class BlockRegistry {
   public static Block eye_teleport;
   @ObjectHolder(ModCyclic.MODID + ":ghost")
   public static Block ghost;
+  @ObjectHolder(ModCyclic.MODID + ":ghost_phantom")
+  public static Block ghost_phantom;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -285,7 +287,8 @@ public class BlockRegistry {
     r.register(new BlockAnvilAuto(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil"));
     r.register(new BlockAnvilMagma(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
-    r.register(new GhostBlock(Block.Properties.create(Material.ROCK)).setRegistryName("ghost"));
+    r.register(new GhostBlock(Block.Properties.create(Material.ROCK), false).setRegistryName("ghost"));
+    r.register(new GhostBlock(Block.Properties.create(Material.ROCK), true).setRegistryName("ghost_phantom"));
     //
     r.register(new SoundmufflerBlock(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));

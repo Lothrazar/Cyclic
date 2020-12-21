@@ -29,7 +29,7 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
     super.init();
     int x = guiLeft + 108;
     int y = guiTop + 62;
-    int size = 14;
+    final int size = 14;
     this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.gui.craft.empty", b -> {
       //pressed
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));

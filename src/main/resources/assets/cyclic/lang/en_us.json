@@ -30,6 +30,14 @@
 		"block.cyclic.eye_teleport.tooltip":"Look and crouch to teleport onto it",
 		"block.cyclic.eye_teleport.guide":"Whenever a player is looking at this while crouching, the player is teleported on top of this block.  If solid blocks are above it, there is some leeway where you will appear above all of those blocks.  Same logic as $(l:items/teleport_wand)Ender Scepter$(/l).  Can cost hunger and experience based on config values. ",
 
+		"block.cyclic.ghost":"Ghost Block",
+		"block.cyclic.ghost.tooltip":"Phases out when powered",
+		"block.cyclic.ghost.guide":"While this block has redstone power, it is not selectable or breakable, and all entities pass through it.  It is also completely invisible.  Remove the power to break it. ",
+		
+		"block.cyclic.ghost_phantom":"Phantom Block",
+		"block.cyclic.ghost_phantom.tooltip":"Vanishing barrier powered by redstone",
+		"block.cyclic.ghost_phantom.guide":"While this block has redstone power, it is not selectable or breakable, and all entities pass through it.  Remove the power to break it. ",
+
 		"block.cyclic.eye_redstone":"Ender Trigger",
 		"block.cyclic.eye_redstone.tooltip":"Redstone powered while a player is looking",
 		"block.cyclic.eye_redstone.guide":"This block detects nearby players, and checks their eye position to see if the player is looking at the block.  Whenever its being looked at, the blockstate is updated and it produces redstone power. ",

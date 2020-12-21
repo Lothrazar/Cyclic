@@ -16,8 +16,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GhostBlock extends BlockBase {
 
-  public GhostBlock(Properties properties) {
-    super(properties.hardnessAndResistance(10.0F, 1200.0F).notSolid());
+  private boolean isInvisible;
+
+  public GhostBlock(Properties properties, boolean isInvisible) {
+    super(properties.hardnessAndResistance(40.0F, 1200.0F).notSolid());
+    this.isInvisible = isInvisible;
   }
 
   @Override
@@ -27,43 +30,44 @@ public class GhostBlock extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
-  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-    return side == Direction.UP;
-  }
-
-  @Override
   @Deprecated
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return 1;//same as GlassBlock
+    return isPassable(worldIn, pos) ? 1 : 0;
   }
 
   @Override
-  public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-    //    return VoxelShapes.empty();//this makes it TOTALLY INVISIBLE OOOOOO
-    return VoxelShapes.fullCube();
+  public VoxelShape getRayTraceShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    return isPassable(worldIn, pos) ? VoxelShapes.empty() : VoxelShapes.fullCube();
   }
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
     return true;
   }
-  //  @Override
-  //  @Deprecated
-  //  @OnlyIn(Dist.CLIENT)
-  //  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
-  //    return 1.0F;
-  //  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+    if (isInvisible) {
+      return true;
+    }
+    return adjacentBlockState.getBlock() == this;//cant do ispassable here, no world
+  }
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    return isPassable(worldIn, pos) ? VoxelShapes.empty() : VoxelShapes.fullCube();
+  }
+
+  private boolean isPassable(IBlockReader worldIn, BlockPos pos) {
+    boolean powered = false;
     if ((worldIn instanceof World) == false) {
       //on world exit/save it can do this
       //      ModCyclic.LOGGER.error("no world " + worldIn);
-      return VoxelShapes.fullCube();
+      return powered;
     }
     World world = (World) worldIn;//
-    boolean powered = world.getRedstonePowerFromNeighbors(pos) > 0;
-    return powered ? VoxelShapes.empty() : VoxelShapes.fullCube();
+    powered = world.getRedstonePowerFromNeighbors(pos) > 0;
+    return powered;
   }
 }

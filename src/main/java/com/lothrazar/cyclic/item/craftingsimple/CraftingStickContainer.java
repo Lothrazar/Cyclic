@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.craftingsimple;
 
 import java.util.Optional;
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
@@ -12,23 +11,25 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.play.server.SSetSlotPacket;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public class CraftingStickContainer extends ContainerBase implements IContainerCraftingAction {
 
   private final CraftingInventory craftMatrix = new CraftingInventory(this, 3, 3);
   final CraftResultInventory craftResult = new CraftResultInventory();
+  private Hand hand;
 
   //does NOT save inventory into the stack, very simple and plain
-  public CraftingStickContainer(int id, PlayerInventory playerInventory, PlayerEntity player) {
+  public CraftingStickContainer(int id, PlayerInventory playerInventory, PlayerEntity player, Hand hand) {
     super(ContainerScreenRegistry.crafting_stick, id);
+    this.hand = hand;
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;
@@ -74,21 +75,20 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return true;
+    return hand != null && playerIn.getHeldItem(hand).getItem() instanceof CraftingStickItem;//todo: true IF im holding the stick
   }
-
-  @Nonnull
-  @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
-      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
-      if (myBag.getItem() instanceof CraftingStickItem) {
-        //lock the bag in place by returning empty
-        return ItemStack.EMPTY;
-      }
-    }
-    return super.slotClick(slotId, dragType, clickTypeIn, player);
-  }
+  //  @Nonnull
+  //  @Override
+  //  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+  //    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
+  //      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
+  //      if (myBag.getItem() instanceof CraftingStickItem) {
+  //        //lock the bag in place by returning empty
+  //        return ItemStack.EMPTY;
+  //      }
+  //    }
+  //    return super.slotClick(slotId, dragType, clickTypeIn, player);
+  //  }
 
   @Override
   public CraftingInventory getCraftMatrix() {

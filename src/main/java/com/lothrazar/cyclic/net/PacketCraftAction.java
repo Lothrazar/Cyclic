@@ -39,7 +39,6 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketCraftAction extends PacketBase {
 
-  //  private BlockPos pos = BlockPos.ZERO;
   private CraftingActionEnum action;
 
   public PacketCraftAction(CraftingActionEnum s) {
@@ -133,22 +132,5 @@ public class PacketCraftAction extends PacketBase {
       int size = (slot == foundSlot) ? avg + remainder : avg;
       c.getCraftMatrix().setInventorySlotContents(slot, new ItemStack(biggest.getItem(), size));
     }
-    //    for (int j = 0; j <= 8; j++) {
-    //      if (j != foundSlot) {
-    //        ItemStack inMatrix = c.getCraftMatrix().getStackInSlot(j);
-    //        //split 
-    //        if (inMatrix.isEmpty())
-    //          c.getCraftMatrix().setInventorySlotContents(j, biggest.split(avg));
-    //        else if (Container.areItemsAndTagsEqual(inMatrix, biggest)) {
-    //          ModCyclic.LOGGER.info(j + "merge into partial? " + inMatrix);
-    //          int targetSpace = inMatrix.getMaxStackSize() - inMatrix.getCount();
-    //          //does it have enough tho
-    //          ItemStack mergeMe = biggest.split(Math.min(avg, targetSpace));
-    //          c.getCraftMatrix().setInventorySlotContents(j, mergeMe);
-    //          //
-    //        }
-    //      }
-    //    }
   }
-  //?v2?
 }

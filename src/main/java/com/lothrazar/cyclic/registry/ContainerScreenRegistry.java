@@ -162,7 +162,7 @@ public class ContainerScreenRegistry {
     //
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new StorageBagContainer(windowId, inv, inv.player))).setRegistryName("storage_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player))).setRegistryName("crafting_stick"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":laser")

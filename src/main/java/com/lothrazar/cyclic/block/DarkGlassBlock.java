@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SlimeBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -17,8 +16,6 @@ public class DarkGlassBlock extends BlockBase {
   public DarkGlassBlock(Properties properties) {
     super(properties.hardnessAndResistance(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS)
         .notSolid());
-    SlimeBlock y;
-    //    Blocks.SLIME_BLOCK.delegate
   }
 
   @Override
