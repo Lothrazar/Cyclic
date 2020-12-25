@@ -12,6 +12,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -25,10 +26,10 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(9));
   private LazyOptional<IItemHandler> output = LazyOptional.of(() -> new ItemStackHandler(1));
 
+  @Nonnull
   @Override
   public ITextComponent getDisplayName() {
-    return this.getBlockState().getBlock().getTranslatedName();
-    //        return new StringTextComponent(getType().getRegistryName().getPath());
+    return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
   @Nullable
