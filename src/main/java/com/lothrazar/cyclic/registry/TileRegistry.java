@@ -218,5 +218,5 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static TileEntityType<TileLaser> laser;
   @ObjectHolder(ModCyclic.MODID + ":workbench")
-  public static TileEntityType<TileCrafter> workbench;
+  public static TileEntityType<TileWorkbench> workbench;
 }
