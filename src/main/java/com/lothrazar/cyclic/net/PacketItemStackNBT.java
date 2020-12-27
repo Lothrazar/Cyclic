@@ -62,7 +62,7 @@ public class PacketItemStackNBT extends PacketBase {
     packet.slot = buffer.readInt();
     packet.type = buffer.readByte();
     packet.stack = buffer.readItemStack();
-    packet.nbtKey = StringNBT.valueOf(buffer.readString());
+    packet.nbtKey = StringNBT.valueOf(buffer.readString(32767));
     switch (packet.type) {
       case 1: //Byte
         packet.nbtValue = ByteNBT.valueOf(buffer.readByte());
@@ -86,7 +86,7 @@ public class PacketItemStackNBT extends PacketBase {
         packet.nbtValue = new ByteArrayNBT(buffer.readByteArray());
       break;
       case 8: //String
-        packet.nbtValue = StringNBT.valueOf(buffer.readString());
+        packet.nbtValue = StringNBT.valueOf(buffer.readString(32767));
       break;
       case 9: //List... not sure of best way to handle this one since there's no constructor/setter. Look at other implementations?
         packet.nbtValue = new ListNBT();
