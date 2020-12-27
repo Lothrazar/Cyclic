@@ -32,8 +32,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RedstoneOreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -50,7 +48,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -105,39 +102,15 @@ public class EnchantExcavation extends EnchantBase {
     if (level <= 0) {
       return;
     }
-    //don't fire if the tool is not capable of breaking the block (ie stone pickaxe on diamond ore)
-    if (!ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {//!stackHarvestingWith.canHarvestBlock(event.getState())) { 
-      return;
-    }
-    // if I am using an axe on stone or dirt, doesn't trigger
-    boolean isAnySingleOk = false;//if i am a toolqqq valid on 2 things, and both of 2 blocks are present, we are just ok
-    BlockState stateHere = world.getBlockState(pos);
-    if (stateHere.getBlock() == Blocks.REDSTONE_ORE) {
-      stateHere = null;
-      stateHere = Blocks.REDSTONE_ORE.getDefaultState().with(RedstoneOreBlock.LIT, false);
-    }
-    for (ToolType type : stackHarvestingWith.getItem().getToolTypes(stackHarvestingWith)) {
-      if (block.isToolEffective(stateHere, type)) {
-        isAnySingleOk = true;
-        break;
-      }
-      else if (stateHere.getBlock() == Blocks.REDSTONE_ORE && type == ToolType.PICKAXE) {
-        //hack because of BUG in vanilla/forge: no tools are effective on it REGARDLESS OF PROPERTY
-        //both lit false or true doesnt matter {minecraft:redstone_ore}[lit=true]
-        isAnySingleOk = true;
-        break;
-      }
-      else {
-        ModCyclic.LOGGER.info(type.getName() + "  TOOL NOT EFFECTIVE ON " + world.getBlockState(pos));
-      }
-    }
-    //starts at 1 for current one
-    if (isAnySingleOk) {
+    if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
       int harvested = this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
       if (harvested > 0) {
         //damage but also respect the unbreaking chant  
         player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.getRandom(), null);
       }
+    }
+    else {
+      ModCyclic.LOGGER.info(stackHarvestingWith + "  TOOL NOT EFFECTIVE ON " + world.getBlockState(pos));
     }
     //else wtf why is this false for redstone ore
   }
