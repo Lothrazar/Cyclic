@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.AppleCropBlock;
 import com.lothrazar.cyclic.block.DarkGlassBlock;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
+import com.lothrazar.cyclic.block.GhostBlock;
 import com.lothrazar.cyclic.block.LaunchBlock;
 import com.lothrazar.cyclic.block.MasonBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
@@ -15,13 +15,14 @@ import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.SpikesBlock;
 import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
-import com.lothrazar.cyclic.block.UnbreakableBlock;
-import com.lothrazar.cyclic.block.UnbreakablePoweredBlock;
 import com.lothrazar.cyclic.block.WaterCandleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
+import com.lothrazar.cyclic.block.apple.AppleCropBlock;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.beaconpotion.BlockPotion;
+import com.lothrazar.cyclic.block.bedrock.UnbreakableBlock;
+import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredBlock;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.BlockCableEnergy;
 import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
@@ -39,7 +40,10 @@ import com.lothrazar.cyclic.block.detectoritem.BlockDetectorItem;
 import com.lothrazar.cyclic.block.dice.BlockDice;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.dropper.BlockDropper;
+import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
+import com.lothrazar.cyclic.block.eye.BlockEye;
+import com.lothrazar.cyclic.block.eyetp.BlockEyeTp;
 import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
@@ -66,6 +70,7 @@ import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
 import com.lothrazar.cyclic.block.user.BlockUser;
 import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessTransmit;
+import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -220,6 +225,21 @@ public class BlockRegistry {
   public static Block laser;
   @ObjectHolder(ModCyclic.MODID + ":conveyor")
   public static Block conveyor;
+  @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
+  public static Block ender_shelf;
+  @ObjectHolder(ModCyclic.MODID + ":ender_controller")
+  public static Block ender_controller;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static Block workbench;
+  @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
+  public static Block eye_redstone;
+  @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
+  public static Block eye_teleport;
+  @ObjectHolder(ModCyclic.MODID + ":ghost")
+  public static Block ghost;
+  @ObjectHolder(ModCyclic.MODID + ":ghost_phantom")
+  public static Block ghost_phantom;
+
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -249,6 +269,8 @@ public class BlockRegistry {
     r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));
     r.register(new BlockCask(Block.Properties.create(Material.WOOD)).setRegistryName("cask"));
     r.register(new BlockCrate(Block.Properties.create(Material.WOOD)).setRegistryName("crate"));
+    r.register(new BlockEye(Block.Properties.create(Material.WOOD)).setRegistryName("eye_redstone"));
+    r.register(new BlockEyeTp(Block.Properties.create(Material.WOOD)).setRegistryName("eye_teleport"));
     //
     r.register(new BlockPlacer(Block.Properties.create(Material.ROCK)).setRegistryName("placer"));
     r.register(new BlockBreaker(Block.Properties.create(Material.ROCK)).setRegistryName("breaker"));
@@ -270,6 +292,8 @@ public class BlockRegistry {
     r.register(new BlockAnvilAuto(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil"));
     r.register(new BlockAnvilMagma(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
+    r.register(new GhostBlock(Block.Properties.create(Material.ROCK), false).setRegistryName("ghost"));
+    r.register(new GhostBlock(Block.Properties.create(Material.ROCK), true).setRegistryName("ghost_phantom"));
     //
     r.register(new SoundmufflerBlock(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));
@@ -296,7 +320,10 @@ public class BlockRegistry {
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
+    r.register(new BlockWorkbench(Block.Properties.create(Material.ROCK)).setRegistryName("workbench"));
     r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block"));//stable, only changes with player interaction
     r.register(new UnbreakablePoweredBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_reactive"));//reactive and unstable, ignores players and reads redstone powered state from world in TE
+    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), false).setRegistryName("ender_shelf"));
+    r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), true).setRegistryName("ender_controller"));
   }
 }

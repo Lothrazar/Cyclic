@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.UnbreakablePoweredTile;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredTile;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
@@ -23,7 +23,10 @@ import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
 import com.lothrazar.cyclic.block.dice.TileDice;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
+import com.lothrazar.cyclic.block.eye.TileEye;
+import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
@@ -47,6 +50,7 @@ import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessRec;
 import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessTransmit;
+import com.lothrazar.cyclic.block.workbench.TileWorkbench;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -61,10 +65,11 @@ public class TileRegistry {
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
     r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.terra_preta).build(null).setRegistryName("terra_preta"));
+    r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.eye_redstone).build(null).setRegistryName("eye_redstone"));
+    r.register(TileEntityType.Builder.create(TileEyeTp::new, BlockRegistry.eye_teleport).build(null).setRegistryName("eye_teleport"));
     //
     r.register(TileEntityType.Builder.create(TileAnvilMagma::new, BlockRegistry.anvil_magma).build(null).setRegistryName("anvil_magma"));
     r.register(TileEntityType.Builder.create(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));
-    //    r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileBatteryInfinite::new, BlockRegistry.battery_infinite).build(null).setRegistryName("battery_infinite"));
     r.register(TileEntityType.Builder.create(TileItemInfinite::new, BlockRegistry.item_infinite).build(null).setRegistryName("item_infinite"));
     r.register(TileEntityType.Builder.create(TileDice::new, BlockRegistry.dice).build(null).setRegistryName("dice"));
@@ -108,9 +113,19 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
     r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
     r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.laser).build(null).setRegistryName("laser"));
+
     r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.conveyor).build(null).setRegistryName("conveyor"));
+
+    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
+    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
+    r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
+
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
+  public static TileEntityType<TileEye> eye_redstone;
+  @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
+  public static TileEntityType<TileEyeTp> eye_teleport;
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
   public static TileEntityType<UnbreakablePoweredTile> unbreakable_reactive;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
@@ -200,9 +215,18 @@ public class TileRegistry {
   public static TileEntityType<TileUncraft> uncrafter;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
   public static TileEntityType<TileCrafter> crafter;
+
   @ObjectHolder(ModCyclic.MODID + ":conveyor")
   public static TileEntityType<TileConveyor> conveyor;
+
+  @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
+  public static TileEntityType<TileEnderShelf> ender_shelf;
+  @ObjectHolder(ModCyclic.MODID + ":ender_controller")
+  public static TileEntityType<TileEnderShelf> ender_controller;
+
   //
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static TileEntityType<TileLaser> laser;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static TileEntityType<TileWorkbench> workbench;
 }

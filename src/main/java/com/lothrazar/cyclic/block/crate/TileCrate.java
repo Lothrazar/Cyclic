@@ -14,7 +14,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -22,14 +21,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCrate extends TileEntityBase implements INamedContainerProvider {
 
-  private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
+  ItemStackHandler inventory = new ItemStackHandler(9 * 9);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileCrate() {
     super(TileRegistry.crate);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(9 * 9);
   }
 
   @Override
@@ -46,24 +42,20 @@ public class TileCrate extends TileEntityBase implements INamedContainerProvider
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return handler.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    CompoundNBT invTag = tag.getCompound("inv");
-    handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(invTag));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    handler.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 

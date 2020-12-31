@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -39,7 +40,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -49,8 +49,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
   public static IntValue POWERCONF;
   private int radius = 9;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private static final int ATTEMPTS_PERTICK = 16;
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   static final int MAX = 640000;
 
   static enum Fields {
@@ -72,20 +72,18 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (this.world.isRemote) {
       return;
     }
-    IEnergyStorage cap = this.energy.orElse(null);
-    if (cap == null) {
+    final int cost = POWERCONF.get();
+    if (energy.getEnergyStored() < cost && cost > 0) {
       return;
     }
-    for (int i = 0; i < ATTEMPTS_PERTICK; i++) {
-      BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius), radius);
-      Integer cost = POWERCONF.get();
-      if (cap.getEnergyStored() < cost && cost > 0) {
-        break;//too broke
-      }
-      if (tryHarvestSingle(this.world, target)) {
-        cap.extractEnergy(cost, false);
-        break;
-      }
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    timer = Const.TICKS_PER_SEC / 2;//could config, but 2x per sec is enough
+    BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius), radius);
+    if (tryHarvestSingle(this.world, target)) {
+      energy.extractEnergy(cost, false);
     }
   }
 
@@ -194,30 +192,23 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     }
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX / 4);
-  }
-
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }
 

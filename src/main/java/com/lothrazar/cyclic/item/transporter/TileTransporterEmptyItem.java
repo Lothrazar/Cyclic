@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.item.transporter;
 
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -45,10 +46,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class TileTransporterEmptyItem extends ItemBase {
 
-  private static List<String> blacklistAll;
+  public static ConfigValue<List<String>> IGNORELIST;
 
   public TileTransporterEmptyItem(Properties prop) {
     super(prop);
@@ -61,15 +63,16 @@ public class TileTransporterEmptyItem extends ItemBase {
     World world = context.getWorld();
     TileEntity tile = world.getTileEntity(pos);
     BlockState state = world.getBlockState(pos);
-    //    ModCyclic.log("hardness" + state.getPlayerRelativeBlockHardness(player, world, pos));  
+    ModCyclic.LOGGER.info(state.getBlock().getRegistryName() + "");//
+    //
     if (state == null || tile == null || state.getBlock() == null
-        || state.getBlock().getRegistryName() == null) {//so it works on EXU2 machines  || tile instanceof IInventory == false
+        || state.getBlock().getRegistryName() == null) {
       UtilChat.sendStatusMessage(player, "chest_sack.error.null");
       return ActionResultType.FAIL;
     }
     ResourceLocation blockId = state.getBlock().getRegistryName();
-    if (UtilString.isInList(blacklistAll, blockId)) {
-      UtilChat.sendStatusMessage(player, "chest_sack.error.blacklist");
+    if (UtilString.isInList(IGNORELIST.get(), blockId)) {
+      UtilChat.sendStatusMessage(player, "chest_sack.error.config");
       return ActionResultType.FAIL;
     }
     UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT);//SoundRegistry.chest_sack_capture);

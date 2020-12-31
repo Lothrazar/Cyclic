@@ -1,0 +1,12 @@
+{
+    "variants": {
+		"facing=north,is_controller=true":	{ "model": "cyclic:block/ender_controller"},
+		"facing=north,is_controller=false":	{ "model": "cyclic:block/ender_shelf"},
+		"facing=east,is_controller=true":	{ "model": "cyclic:block/ender_controller", "y": 90 },
+		"facing=east,is_controller=false":	{ "model": "cyclic:block/ender_shelf", "y": 90 },
+		"facing=south,is_controller=true":	{ "model": "cyclic:block/ender_controller" , "y": 180 },
+		"facing=south,is_controller=false":	{ "model": "cyclic:block/ender_shelf" , "y": 180 },
+		"facing=west,is_controller=true":	{ "model": "cyclic:block/ender_controller", "y": 270 },
+		"facing=west,is_controller=false":	{ "model": "cyclic:block/ender_shelf", "y": 270 }
+    }
+}

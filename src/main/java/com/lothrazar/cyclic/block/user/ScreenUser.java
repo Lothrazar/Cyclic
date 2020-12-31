@@ -43,7 +43,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
@@ -57,7 +57,8 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    energy.draw(ms, container.tile.getEnergy());
     this.drawSlot(ms, 9, 34);
+    if (TileUser.POWERCONF.get() > 0)
+      energy.draw(ms, container.tile.getEnergy());
   }
 }

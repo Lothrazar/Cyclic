@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.ghost_phantom",
+  "icon": "cyclic:ghost",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.ghost_phantom.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:ghost_phantom"
+    }
+  ]
+}

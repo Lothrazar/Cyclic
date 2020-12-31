@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -28,7 +27,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePlacer extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  ItemStackHandler inventory = new ItemStackHandler(1);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   static enum Fields {
     REDSTONE;
@@ -45,23 +45,17 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
       return;
     }
     setLitProperty(true);
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
-        return;
-      }
-      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
-      BlockPos offset = pos.offset(dir);
-      BlockState state = Block.getBlockFromItem(stack.getItem()).getDefaultState();
-      if (world.isAirBlock(offset) &&
-          world.setBlockState(offset, state)) {
-        stack.shrink(1);
-      }
-    });
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1);
+    ItemStack stack = inventory.getStackInSlot(0);
+    if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
+      return;
+    }
+    Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
+    BlockPos offset = pos.offset(dir);
+    BlockState state = Block.getBlockFromItem(stack.getItem()).getDefaultState();
+    if (world.isAirBlock(offset) &&
+        world.setBlockState(offset, state)) {
+      stack.shrink(1);
+    }
   }
 
   @Override
@@ -78,23 +72,20 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 

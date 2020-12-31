@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.tank;
 
-import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
@@ -25,11 +24,7 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
 
   public TileTank() {
     super(TileRegistry.tank);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-  }
-
-  public Predicate<FluidStack> isFluidValid() {
-    return p -> true;
+    tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
   @Override

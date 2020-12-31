@@ -51,7 +51,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -70,8 +69,16 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   static final int MAX = 64000;
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(6) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      return Block.getBlockFromItem(stack.getItem()) == BlockRegistry.peat_unbaked;
+    }
+  };
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public static final int TIMER_FULL = 1 * 10;
   private static final int PER_TICK = 1;
   private int blockPointer = 0;
@@ -113,16 +120,12 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
       return;
     }
     setLitProperty(true);
-    IEnergyStorage cap = this.energy.orElse(null);
-    if (cap == null) {
-      return;
-    }
     if (this.timer > 0) {
       this.timer--;
       return;
     }
     final int cost = POWERCONF.get();
-    if (cap.getEnergyStored() < cost && cost > 0) {
+    if (energy.getEnergyStored() < cost && cost > 0) {
       return;//broke
     }
     for (int i = 0; i < PER_TICK; i++) {
@@ -132,10 +135,10 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
             && (target.getZ() - pos.getZ()) % 3 == 0;
         if (placeWater) {
           if (tryPlaceWater(target))
-            cap.extractEnergy(cost, false);
+            energy.extractEnergy(cost, false);
         }
         else if (tryPlacePeat(target))
-          cap.extractEnergy(cost, false);
+          energy.extractEnergy(cost, false);
         blockPointer++;
       }
       else
@@ -200,7 +203,6 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   }
 
   private boolean tryPlacePeat(BlockPos target) {
-    IItemHandler inventory = this.inventory.orElse(null);
     for (int i = 0; i < inventory.getSlots(); i++) {
       ItemStack itemStack = inventory.getStackInSlot(i);
       BlockState state = Block.getBlockFromItem(itemStack.getItem()).getDefaultState();
@@ -234,36 +236,22 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return tankWrapper.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
-      return energy.cast();
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(6) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return Block.getBlockFromItem(stack.getItem()) == BlockRegistry.peat_unbaked;
-      }
-    };
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     tank.readFromNBT(tag.getCompound("fluid"));
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
@@ -272,14 +260,8 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 }

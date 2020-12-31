@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/eye_redstone" },
+        "lit=true": { "model": "cyclic:block/eye_redstone_on" }
+    }
+}

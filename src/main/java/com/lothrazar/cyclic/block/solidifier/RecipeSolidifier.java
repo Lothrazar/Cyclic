@@ -111,6 +111,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "solidifier"));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;

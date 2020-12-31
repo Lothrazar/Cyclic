@@ -21,7 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -33,8 +32,9 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     REDSTONE, RENDER;
   }
 
+  ItemStackHandler inventory = new ItemStackHandler(2 * 9);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int radius = 8;
-  private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
   public TileItemCollector() {
     super(TileRegistry.collectortile);
@@ -54,23 +54,18 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     });
     if (list.size() > 0) {
       ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
-      IItemHandler h = handler.orElse(null);
       ItemStack remainder = stackEntity.getItem();
-      for (int i = 0; i < h.getSlots(); i++) {
+      for (int i = 0; i < inventory.getSlots(); i++) {
         if (remainder.isEmpty()) {
           break;
         }
-        remainder = h.insertItem(i, remainder, false);
+        remainder = inventory.insertItem(i, remainder, false);
       }
       stackEntity.setItem(remainder);
       if (remainder.isEmpty()) {
         stackEntity.remove();//kill it
       }
     }
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(2 * 9);
   }
 
   @Override
@@ -87,7 +82,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return handler.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -95,18 +90,14 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     radius = tag.getInt("radius");
-    CompoundNBT invTag = tag.getCompound("inv");
-    handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(invTag));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("radius", radius);
-    handler.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 

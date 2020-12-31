@@ -43,7 +43,7 @@ public class ElevationWandItem extends ItemBase {
       //play sound at old locaiton on leaving
       UtilSound.playSound(target, target.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
       if (!world.isRemote) {
-        UtilEntity.teleportWallSafe(target, world, destination);
+        UtilEntity.enderTeleportEvent(target, world, destination);
         stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity) playerIn);
       }
       //play sound att new location also, may be far away

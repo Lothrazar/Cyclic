@@ -37,7 +37,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -48,7 +47,14 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   private static final int RADIUS = 12;
   public static final INamedTag<Item> RODS = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "fishing_rods").toString());
   private static final double CHANCE = 0.1;
-  LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  ItemStackHandler inventory = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      return stack.getItem().isIn(RODS);
+    }
+  };
+  LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   static enum Fields {
     REDSTONE;
@@ -57,16 +63,6 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   public TileFisher() {
     super(TileRegistry.fisher);
     this.needsRedstone = 0;
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return stack.getItem().isIn(RODS);
-      }
-    };
   }
 
   @Override
@@ -83,23 +79,20 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -108,23 +101,21 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.getItem().isIn(RODS)) {
-        int x = pos.getX() + world.rand.nextInt(RADIUS * 2) - RADIUS;
-        int y = pos.getY();
-        int z = pos.getZ() + world.rand.nextInt(RADIUS * 2) - RADIUS;
-        BlockPos center = new BlockPos(x, y, z);
-        if (this.isWater(center)) {
-          try {
-            this.doFishing(stack, center);
-          } //loot tables are explosive
-          catch (Exception e) {
-            ModCyclic.LOGGER.error("Fishing Block: Loot table failed", e);
-          }
+    ItemStack stack = inventory.getStackInSlot(0);
+    if (stack.getItem().isIn(RODS)) {
+      int x = pos.getX() + world.rand.nextInt(RADIUS * 2) - RADIUS;
+      int y = pos.getY();
+      int z = pos.getZ() + world.rand.nextInt(RADIUS * 2) - RADIUS;
+      BlockPos center = new BlockPos(x, y, z);
+      if (this.isWater(center)) {
+        try {
+          this.doFishing(stack, center);
+        } //loot tables are explosive
+        catch (Exception e) {
+          ModCyclic.LOGGER.error("Fishing Block: Loot table failed", e);
         }
       }
-    });
+    }
   }
 
   private boolean isWater(BlockPos center) {

@@ -48,42 +48,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class UtilEntity {
-
-  public static void setPlayerReach(PlayerEntity player, int currentReach) {
-    //thank you ForgeMod for adding this when mojang removed
-    player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
-  }
-
-  public static double getExpTotal(PlayerEntity player) {
-    //  validateExpPositive(player);
-    int level = player.experienceLevel;
-    // numeric reference:
-    // http://minecraft.gamepedia.com/Experience#Leveling_up
-    double totalExp = getXpForLevel(level);
-    double progress = Math.round(player.xpBarCap() * player.experience);
-    totalExp += (int) progress;
-    return totalExp;
-  }
-
-  public static int getXpForLevel(int level) {
-    // numeric reference:
-    // http://minecraft.gamepedia.com/Experience#Leveling_up
-    int totalExp = 0;
-    if (level <= 15)
-      totalExp = level * level + 6 * level;
-    else if (level <= 30)
-      totalExp = (int) (2.5 * level * level - 40.5 * level + 360);
-    else
-      // level >= 31
-      totalExp = (int) (4.5 * level * level - 162.5 * level + 2220);
-    return totalExp;
-  }
 
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
   private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
@@ -92,20 +61,11 @@ public class UtilEntity {
   private final static float ITEMSPEEDFAR = 0.9F;
   private final static float ITEMSPEEDCLOSE = 0.2F;
 
-  public static void teleportWallSafe(Entity player, World world, double x, double y, double z) {
-    BlockPos coords = new BlockPos(x, y, z);
-    //    world.markBlockRangeForRenderUpdate(coords, coords);
-    //    world.notifyBlockUpdate(pos, oldState, newState, flags);
-    world.getChunk(coords).setModified(true);
-    player.setPositionAndUpdate(x, y, z);
-    moveEntityWallSafe(player, world);
-  }
-
   /**
    *
    * @return true if teleport was a success
    */
-  public static boolean enderTeleportEvent(LivingEntity player, World world, double x, double y, double z) {
+  private static boolean enderTeleportEvent(LivingEntity player, World world, double x, double y, double z) {
     EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
     boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
     if (wasCancelled == false) {
@@ -120,20 +80,16 @@ public class UtilEntity {
    * @return true if teleport was a success
    */
   public static boolean enderTeleportEvent(LivingEntity player, World world, BlockPos target) {
-    return enderTeleportEvent(player, world, target.getX(), target.getY(), target.getZ());
+    return enderTeleportEvent(player, world, target.getX() + .5F, target.getY() + .5F, target.getZ() + .5F);
   }
 
-  public static void teleportWallSafe(LivingEntity player, World world, double x, double y, double z) {
+  private static void teleportWallSafe(LivingEntity player, World world, double x, double y, double z) {
     BlockPos coords = new BlockPos(x, y, z);
     //    world.update
     //    world.markBlockRangeForRenderUpdate(coords, coords);
     world.getChunk(coords).setModified(true);
     player.setPositionAndUpdate(x, y, z);
     moveEntityWallSafe(player, world);
-  }
-
-  public static void teleportWallSafe(Entity entityIn, World world, BlockPos coords) {
-    teleportWallSafe(entityIn, world, coords.getX(), coords.getY(), coords.getZ());
   }
 
   public static void moveEntityWallSafe(Entity entity, World world) {

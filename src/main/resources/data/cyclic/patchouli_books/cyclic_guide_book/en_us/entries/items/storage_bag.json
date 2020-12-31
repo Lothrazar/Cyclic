@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.storage_bag",
+  "icon": "cyclic:storage_bag",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.storage_bag.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:storage_bag",
+      "text": "item.cyclic.storage_bag.guide0"
+    }
+  ]
+}

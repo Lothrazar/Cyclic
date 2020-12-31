@@ -21,7 +21,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -41,8 +40,10 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
   public static IntValue POWERCONF;
   public FluidTankBase tank;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(2);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private RecipeMelter currentRecipe;
   public final static int TIMER_FULL = Const.TICKS_PER_SEC * 3;
 
@@ -58,10 +59,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   @Override
   public void tick() {
     this.syncEnergy();
-    IEnergyStorage en = this.energy.orElse(null);
-    if (en == null) {
-      return;
-    }
     this.findMatchingRecipe();
     if (currentRecipe == null) {
       return;
@@ -71,12 +68,12 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       timer = 0;
     }
     final int cost = POWERCONF.get();
-    if (en.getEnergyStored() < cost && cost > 0) {
+    if (energy.getEnergyStored() < cost && cost > 0) {
       return;//broke
     }
     if (timer == 0 && this.tryProcessRecipe()) {
       this.timer = TIMER_FULL;
-      en.extractEnergy(cost, false);
+      energy.extractEnergy(cost, false);
     }
   }
 
@@ -108,14 +105,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     return 0;
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(2);
-  }
-
   public Predicate<FluidStack> isFluidValid() {
     return p -> true;
   }
@@ -134,8 +123,8 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     tank.readFromNBT(tag.getCompound("fluid"));
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
@@ -144,14 +133,8 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -161,10 +144,10 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       return LazyOptional.of(() -> tank).cast();
     }
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
@@ -183,7 +166,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   public ItemStack getStackInputSlot(int slot) {
-    IItemHandler inv = inventory.orElse(null);
+    IItemHandler inv = inventoryCap.orElse(null);
     return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
   }
 
@@ -200,12 +183,11 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private boolean tryProcessRecipe() {
-    //    IItemHandler itemsHere = this.inventory.orElse(null);
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
       //ok it has room for all the fluid none will be wasted
-      this.getStackInputSlot(0).shrink(1);
-      this.getStackInputSlot(1).shrink(1);
+      inventory.getStackInSlot(0).shrink(1);
+      inventory.getStackInSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
       return true;
     }

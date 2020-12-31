@@ -8,6 +8,9 @@ import com.lothrazar.cyclic.block.melter.ScreenMelter;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
+import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
+import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
+import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -24,7 +27,8 @@ import net.minecraft.util.ResourceLocation;
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {
 
-  private ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "jei");
+  private static final int PLAYER_INV_SIZE = 4 * 9;
+  private static final ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "jei");
 
   @Override
   public ResourceLocation getPluginUid() {
@@ -63,12 +67,21 @@ public class CyclicPluginJEI implements IModPlugin {
   public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
     registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.id,
         0, 2, //recipeSLotStart, recipeSlotCount
-        2, 4 * 9);// inventorySlotStart, inventorySlotCount
+        2, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.id,
-        0, 3, //recipeSLotStart, recipeSlotCount
-        3, 4 * 9);// inventorySlotStart, inventorySlotCount
+        1, 4, //recipeSLotStart, recipeSlotCount
+        4, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
         10, 9, //recipeSLotStart, recipeSlotCount
-        30, 4 * 9);// inventorySlotStart, inventorySlotCount
+        30, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(CraftingBagContainer.class, VanillaRecipeCategoryUid.CRAFTING,
+        1, 9, //recipeSLotStart, recipeSlotCount
+        10, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(CraftingStickContainer.class, VanillaRecipeCategoryUid.CRAFTING,
+        1, 9, //recipeSLotStart, recipeSlotCount
+        10, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(ContainerWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
+        1, 9, //recipeSLotStart, recipeSlotCount
+        10, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
   }
 }

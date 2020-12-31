@@ -14,7 +14,10 @@ import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -24,12 +27,13 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileCableFluid extends TileEntityBase implements ITickableTileEntity {
 
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 2;
-  private Map<Direction, LazyOptional<IFluidHandler>> flow = Maps.newHashMap();
+  private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
@@ -38,7 +42,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     }
   }
 
-  private IFluidHandler createHandler() {
+  private FluidTankBase createHandler() {
     FluidTankBase h = new FluidTankBase(this, CAPACITY, isFluidValid());
     return h;
   }
@@ -64,8 +68,31 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     }
     //
     BlockPos target = this.pos.offset(extractSide);
-    UtilFluid.tryFillPositionFromTank(world, pos, extractSide,
-        UtilFluid.getTank(world, target, extractSide.getOpposite()), CAPACITY);
+    Direction incomingSide = extractSide.getOpposite();
+    IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
+    boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, CAPACITY);
+    FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
+    //    ModCyclic.LOGGER.info(" sideHandler.incomingSide()  from " + incomingSide);
+    if (!success && world.hasWater(target) && sideHandler != null
+        && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME
+    //
+    ) {
+      //source water block. or waterlogged slab
+      //
+      BlockState targetState = world.getBlockState(target);
+      if (targetState.getBlock() == Blocks.WATER) {
+        //
+        if (world.setBlockState(target, Blocks.AIR.getDefaultState()))
+          sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      }
+      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
+          && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
+            //
+            targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
+            if (world.setBlockState(target, targetState))
+              sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          }
+    }
   }
 
   private void normalFlow() {
@@ -102,7 +129,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   public void read(BlockState bs, CompoundNBT tag) {
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
-      fluidh = (FluidTankBase) flow.get(dir).orElse(null);
+      fluidh = flow.get(dir).orElse(null);
       if (tag.contains("fluid" + dir.toString())) {
         fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
       }
@@ -114,7 +141,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   public CompoundNBT write(CompoundNBT tag) {
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
-      fluidh = (FluidTankBase) flow.get(dir).orElse(null);
+      fluidh = flow.get(dir).orElse(null);
       CompoundNBT fluidtag = new CompoundNBT();
       if (fluidh != null) {
         fluidh.writeToNBT(fluidtag);

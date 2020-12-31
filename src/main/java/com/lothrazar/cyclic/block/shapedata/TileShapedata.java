@@ -24,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -35,7 +34,22 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   private static final int SLOT_A = 0;
   private static final int SLOT_B = 1;
   private static final int SLOT_CARD = 2;
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  ItemStackHandler inventory = new ItemStackHandler(3) {
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      if (slot == SLOT_A || slot == SLOT_B)
+        return stack.getItem() instanceof LocationGpsCard;
+      else
+        return stack.getItem() instanceof ShapeCard;
+    }
+  };
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private RelativeShape copiedShape;
   private int hasStashIfOne;
 
@@ -53,11 +67,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
    * @param cmd
    */
   public void execute(StructCommands cmd) {
-    IItemHandler inv = this.inventory.orElse(null);
-    if (inv == null) {
-      return;
-    }
-    ItemStack shapeCard = inv.getStackInSlot(SLOT_CARD);
+    ItemStack shapeCard = inventory.getStackInSlot(SLOT_CARD);
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
     }
@@ -112,24 +122,6 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     super(TileRegistry.computer_shape);
   }
 
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(3) {
-
-      @Override
-      public int getSlotLimit(int slot) {
-        return 1;
-      }
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        if (slot == SLOT_A || slot == SLOT_B)
-          return stack.getItem() instanceof LocationGpsCard;
-        else
-          return stack.getItem() instanceof ShapeCard;
-      }
-    };
-  }
-
   @Override
   public ITextComponent getDisplayName() {
     return new StringTextComponent(getType().getRegistryName().getPath());
@@ -144,14 +136,14 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("copiedShape")) {
       CompoundNBT cs = (CompoundNBT) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
@@ -167,10 +159,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
       CompoundNBT copiedShapeTags = this.copiedShape.write(new CompoundNBT());
       tag.put("copiedShape", copiedShapeTags);
     }
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -188,11 +177,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
    * @return
    */
   public boolean isAvailable(StructCommands shape) {
-    IItemHandler inv = this.inventory.orElse(null);
-    if (inv == null) {
-      return false;
-    }
-    ItemStack stack = inv.getStackInSlot(SLOT_CARD);
+    ItemStack stack = inventory.getStackInSlot(SLOT_CARD);
     if (stack.isEmpty()) {
       return false;
     }
@@ -218,11 +203,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   }
 
   public BlockPos getTarget(int s) {
-    IItemHandler inv = this.inventory.orElse(null);
-    if (inv == null) {
-      return null;
-    }
-    ItemStack stackA = inv.getStackInSlot(s);
+    ItemStack stackA = inventory.getStackInSlot(s);
     BlockPosDim loc = LocationGpsCard.getPosition(stackA);
     return loc == null ? null : loc.getPos();
   }

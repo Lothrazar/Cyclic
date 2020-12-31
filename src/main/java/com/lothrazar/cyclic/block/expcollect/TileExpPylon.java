@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -47,16 +47,20 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public TileExpPylon() {
     super(TileRegistry.experience_pylontile);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+    this.needsRedstone = 0;//default ON
   }
 
   @Override
   public void tick() {
+    if (!world.isRemote) {
+      //ignore on/off state, for player standing on top collecting exp
+      collectPlayerExperience();
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
+    //if turned on, collect from the world
     collectLocalExperience();
-    if (!world.isRemote)
-      collectPlayerExperience();
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -94,11 +98,31 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class,
         new AxisAlignedBB(this.getPos().up()));
     for (PlayerEntity p : players) {
-      double myTotal = UtilEntity.getExpTotal(p);
+      double myTotal = UtilPlayer.getExpTotal(p);
       if (p.isCrouching() && myTotal > 0) {
         //go
         int addMeXp = 1;
+        //now wait.
+        //depending what level the player is, increase how much we pull per tick 
+        if (p.experienceLevel > 300) {
+          addMeXp = 1800;
+        }
+        if (p.experienceLevel > 100) {
+          addMeXp = 900;
+        }
+        else if (p.experienceLevel > 50) {
+          addMeXp = 200;
+        }
+        else if (p.experienceLevel > 30) {
+          addMeXp = 50;
+        }
+        else if (p.experienceLevel > 5) {
+          addMeXp = 10;
+        }
+        else addMeXp = 1;//smallest 
+        //
         int addMeFluid = addMeXp * FLUID_PER_EXP;
+        //at level 100+ this is way too slow
         if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
           p.giveExperiencePoints(-1 * addMeXp);
           tank.fill(new FluidStack(

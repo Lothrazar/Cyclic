@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.Nullable;
+import net.minecraft.item.EnchantedBookItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -34,5 +37,13 @@ public class UtilEnchant {
         effectsList.add(effect);
     }
     return effectsList;
+  }
+
+  public static boolean doBookEnchantmentsMatch(ItemStack stack1, ItemStack stack2) {
+    if (stack1.getItem() == Items.ENCHANTED_BOOK && stack2.getItem() == Items.ENCHANTED_BOOK) {
+      if (EnchantedBookItem.getEnchantments(stack1).equals(EnchantedBookItem.getEnchantments(stack2)))
+        return true;
+    }
+    return false;
   }
 }

@@ -1,14 +1,17 @@
 package com.lothrazar.cyclic.event;
 
+import java.util.Set;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.heart.HeartItem;
+import com.lothrazar.cyclic.item.storagebag.StorageBagItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -31,6 +34,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -197,6 +201,38 @@ public class ItemEvents {
       UtilSound.playSound(player, SoundRegistry.tool_mode);
       WrenchActionType.setTimeout(held);
       UtilChat.sendStatusMessage(player, UtilChat.lang(WrenchActionType.getName(held)));
+    }
+    if (held.getItem() instanceof AntimatterEvaporatorWandItem) {
+      AntimatterEvaporatorWandItem.toggleMode(player, held);
+    }
+  }
+
+  @SubscribeEvent
+  public void onPlayerPickup(EntityItemPickupEvent event) {
+    if (event.getEntityLiving() instanceof PlayerEntity) {
+      PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+      ItemStack stack = event.getItem().getItem();
+      ItemStack resultStack = null;
+      Set<Integer> bagSlots = StorageBagItem.getAllBagSlots(player);
+      for (Integer i : bagSlots) {
+        ItemStack bag = player.inventory.getStackInSlot(i);
+        switch (StorageBagItem.getPickupMode(bag)) {
+          case EVERYTHING:
+            resultStack = StorageBagItem.tryInsert(bag, stack);
+          break;
+          case FILTER:
+            resultStack = StorageBagItem.tryFilteredInsert(bag, stack);
+          break;
+          case NOTHING:
+          break;
+        }
+      }
+      if (resultStack != null)
+        event.getItem().setItem(resultStack);
+      if (resultStack != null && resultStack.getCount() != stack.getCount())
+        event.setResult(Result.ALLOW);
+      else
+        event.setResult(Result.DEFAULT);
     }
   }
 }

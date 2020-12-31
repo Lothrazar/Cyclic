@@ -37,7 +37,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -53,8 +52,18 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private static final int MAX_SIZE = 9;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;
   static final int MAX = 64000;
-  private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  //
+  //
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  ItemStackHandler inventory = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      return isSapling(stack);
+    }
+  };
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private int shapeIndex = 0;
   BlockPos targetPos = null;
@@ -86,11 +95,8 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       return;
     }
     setLitProperty(true);
-    IEnergyStorage en = this.energy.orElse(null);
-    IItemHandler inv = this.inventory.orElse(null);
     final int cost = POWERCONF.get();
-    if (en == null || inv == null
-        || en.getEnergyStored() < cost) {
+    if (energy.getEnergyStored() < cost) {
       if (cost > 0)
         return;
     }
@@ -101,7 +107,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
     updateTargetPos(shape);
     skipSomeAirBlocks(shape);
-    ItemStack dropMe = inv.getStackInSlot(0).copy();
+    ItemStack dropMe = inventory.getStackInSlot(0).copy();
     //only saplings at my level, the rest is harvesting
     try {
       if (fakePlayer == null && world instanceof ServerWorld) {
@@ -111,7 +117,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       if (this.isTree(dropMe)) {
         if (TileEntityBase.tryHarvestBlock(fakePlayer, world, targetPos)) {
           //ok then DRAIN POWER
-          en.extractEnergy(cost, false);
+          energy.extractEnergy(cost, false);
           //          ModCyclic.LOGGER.info("drain " + cost + "current" + en.getEnergyStored());
         }
       }
@@ -121,7 +127,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
           ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND);
           if (result == ActionResultType.SUCCESS) {
             //ok then DRAIN POWER
-            en.extractEnergy(cost, false);
+            energy.extractEnergy(cost, false);
           }
         }
       }
@@ -135,20 +141,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   @OnlyIn(Dist.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(1) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return isSapling(stack);
-      }
-    };
   }
 
   @Override
@@ -165,31 +157,25 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    energy.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
@@ -200,7 +186,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     if (fakePlayer == null) {
       return;
     }
-    TileEntityBase.tryEquipItem(inventory, fakePlayer, 0, Hand.OFF_HAND);
+    TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, Hand.OFF_HAND);
     if (fakePlayer.get().getHeldItem(Hand.MAIN_HAND).isEmpty()) {
       ItemStack tool = new ItemStack(Items.DIAMOND_AXE);
       //TODO:we can do both silk/fortune with toggle

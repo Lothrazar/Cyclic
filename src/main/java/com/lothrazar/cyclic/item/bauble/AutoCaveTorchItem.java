@@ -69,7 +69,10 @@ public class AutoCaveTorchItem extends ItemBase {
       BlockPos pos = entityIn.getPosition();
       if (world.getLightValue(pos) <= LIGHT_LIMIT) {
         blockHashList.addAll(UtilShape.caveInterior(world, pos, player.getHorizontalFacing(), MAX_LIST_SIZE / 2));
-        blockHashList.removeIf(blockPos -> player.getDistanceSq(blockPos.getX(), blockPos.getY(), blockPos.getZ()) > MAX_DISTANCE_SQ);
+        //  line below: java.util.ConcurrentModificationException: null
+        blockHashList.removeIf(blockPos -> {
+          return blockPos != null && player != null && player.getDistanceSq(blockPos.getX(), blockPos.getY(), blockPos.getZ()) > MAX_DISTANCE_SQ;
+        });
         if (blockHashList.size() > MAX_LIST_SIZE) { //if we're moving too fast and adding a bunch of torches, trim until under max size
           int i = blockHashList.size();
           iter = blockHashList.iterator();

@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilParticle;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,16 +17,17 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class TeleporterWandItem extends ItemBase {
 
   private static final int TICKS_USING = 93000;
+  public static IntValue RANGE;
 
   public TeleporterWandItem(Properties properties) {
     super(properties);
@@ -66,21 +68,23 @@ public class TeleporterWandItem extends ItemBase {
   }
 
   @Override
-  public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entity, int chargeTimer) {
-    if (!(entity instanceof PlayerEntity))
+  public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entity, int chargeTimer) {
+    if (!(entity instanceof PlayerEntity)) {
       return;
+    }
     float percentageCharged = getChargedPercent(stack, chargeTimer);
-    if (percentageCharged == 1) { //full charge
+    if (percentageCharged >= 0.98) { //full charge with a bit of buffer room
       PlayerEntity player = (PlayerEntity) entity;
-      RayTraceResult rt0 = player.pick(50D, 0, true);
-      if (rt0.getType() == RayTraceResult.Type.BLOCK) {
-        Direction face = ((BlockRayTraceResult) rt0).getFace();
-        BlockPos pos = ((BlockRayTraceResult) rt0).getPos().offset(face);
-        BlockPos currentPlayerPos = player.getPosition();
-        UtilEntity.teleportWallSafe(player, player.world, pos);
-        if (player.getPosition() != currentPlayerPos) {
-          UtilParticle.spawnParticleBeam(worldIn, ParticleTypes.PORTAL, currentPlayerPos, player.getPosition(), 50);
-          worldIn.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+      RayTraceResult trace = player.pick(RANGE.get(), 0, true);
+      if (trace.getType() == RayTraceResult.Type.BLOCK) {
+        BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) trace;
+        Direction face = blockRayTraceResult.getFace();
+        BlockPos newPos = blockRayTraceResult.getPos().offset(face);
+        BlockPos oldPos = player.getPosition();
+        if (UtilEntity.enderTeleportEvent(player, world, newPos)) {// && player.getPosition() != currentPlayerPos
+          UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
+          UtilSound.playSound(player, SoundEvents.ENTITY_ENDERMAN_TELEPORT);
+          //          world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
           UtilItemStack.damageItem(player, stack);
         }
       }

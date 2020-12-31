@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "eoe",
+    "pbp",
+    "eoe"
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:ender_pearl"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "p": {
+      "item": "minecraft:purpur_block"
+    },
+    "b": {
+      "item": "cyclic:ender_shelf"
+    }
+  },
+  "result": {
+    "item": "cyclic:ender_controller",
+    "count": 1
+  }
+}

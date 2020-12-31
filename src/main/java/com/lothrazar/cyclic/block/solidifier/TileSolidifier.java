@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
@@ -22,7 +21,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -43,13 +41,13 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public static IntValue POWERCONF;
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank;
-  private ItemStackHandlerSided inputSlots;
-  private ItemStackHandlerSided outputSlot;
+  private ItemStackHandlerSided inputSlots = new ItemStackHandlerSided(3);
+  private ItemStackHandlerSided outputSlot = new ItemStackHandlerSided(1);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
-  private final LazyOptional<IEnergyStorage> energyWrapper = LazyOptional.of(this::createEnergy);
-  private final LazyOptional<IItemHandler> inputsSlotWrapper = LazyOptional.of(() -> inputSlots);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inputSlots);
   private final LazyOptional<IItemHandler> outputSlotWrapper = LazyOptional.of(() -> outputSlot);
-  //  private final LazyOptional<IItemHandler> everything = LazyOptional.of(() -> new CombinedInvWrapper(inputSlots, outputSlot));
 
   static enum Fields {
     REDSTONE, TIMER, RENDER;
@@ -57,18 +55,12 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   public TileSolidifier() {
     super(TileRegistry.solidifier);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-    inputSlots = new ItemStackHandlerSided(3);
-    outputSlot = new ItemStackHandlerSided(1);
+    tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
   @Override
   public void tick() {
     this.syncEnergy();
-    IEnergyStorage en = this.energyWrapper.orElse(null);
-    if (en == null) {
-      return;
-    }
     this.findMatchingRecipe();
     if (currentRecipe == null) {
       return;
@@ -78,21 +70,13 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       timer = 0;
     }
     final int cost = POWERCONF.get();
-    if (en.getEnergyStored() < cost && cost > 0) {
+    if (energy.getEnergyStored() < cost && cost > 0) {
       return;//broke
     }
     if (timer == 0 && this.tryProcessRecipe()) {
       this.timer = TIMER_FULL;
-      en.extractEnergy(cost, false);
+      energy.extractEnergy(cost, false);
     }
-  }
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  public Predicate<FluidStack> isFluidValid() {
-    return p -> true;
   }
 
   @Override
@@ -137,9 +121,10 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     tank.readFromNBT(tag.getCompound("fluid"));
-    energyWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    inputsSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
-    outputSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("invoutput")));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    inputSlots.deserializeNBT(tag.getCompound(NBTINV));
+    outputSlot.deserializeNBT(tag.getCompound("invoutput"));
+    //    outputSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("invoutput")));
     super.read(bs, tag);
   }
 
@@ -148,18 +133,9 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
-    energyWrapper.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    inputsSlotWrapper.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
-    outputSlotWrapper.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("invoutput", compound);
-    });
+    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV, inputSlots.serializeNBT());
+    tag.put("invoutput", outputSlot.serializeNBT());
     return super.write(tag);
   }
   //  @Override
@@ -173,12 +149,12 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       return tankWrapper.cast();
     }
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energyWrapper.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       if (side == Direction.DOWN)
         return outputSlotWrapper.cast();
-      return inputsSlotWrapper.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }

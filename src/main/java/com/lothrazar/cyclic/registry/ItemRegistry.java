@@ -1,11 +1,17 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.block.apple.AppleBuffs;
+import com.lothrazar.cyclic.block.apple.AppleChocolate;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
+import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.CarbonPaperItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
@@ -18,8 +24,6 @@ import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
-import com.lothrazar.cyclic.item.apple.AppleBuffs;
-import com.lothrazar.cyclic.item.apple.AppleChocolate;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
@@ -40,6 +44,8 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.carrot.ItemHorseLapisVariant;
 import com.lothrazar.cyclic.item.carrot.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.carrot.ItemHorseToxic;
+import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
+import com.lothrazar.cyclic.item.craftingsimple.CraftingStickItem;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
@@ -65,6 +71,7 @@ import com.lothrazar.cyclic.item.scythe.ScytheBrush;
 import com.lothrazar.cyclic.item.scythe.ScytheForage;
 import com.lothrazar.cyclic.item.scythe.ScytheHarvest;
 import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
+import com.lothrazar.cyclic.item.storagebag.StorageBagItem;
 import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
@@ -93,6 +100,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":gem_amber")
   public static Item gem_amber;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
@@ -127,11 +135,19 @@ public class ItemRegistry {
   public static Item glowing_helmet;
   @ObjectHolder(ModCyclic.MODID + ":elevation_wand")
   public static Item elevation_wand;
+  @ObjectHolder(ModCyclic.MODID + ":storage_bag")
+  public static Item storage_bag;
+  @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
+  public static Item crafting_bag;
+  @ObjectHolder(ModCyclic.MODID + ":antimatter_wand")
+  public static Item antimatter_wand;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
+    r.register(new BlockItem(BlockRegistry.ghost_phantom, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("ghost_phantom"));
+    r.register(new BlockItem(BlockRegistry.ghost, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("ghost"));
     r.register(new BlockItem(BlockRegistry.laser, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("laser"));
     r.register(new BlockItem(BlockRegistry.apple_sprout, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout"));
     r.register(new BlockItem(BlockRegistry.apple_sprout_diamond, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("apple_sprout_diamond"));
@@ -143,6 +159,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.mason_steel, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_steel"));
     r.register(new BlockItem(BlockRegistry.mason_iron, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_iron"));
     r.register(new BlockItem(BlockRegistry.mason_plate, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("mason_plate"));
+    r.register(new BlockItem(BlockRegistry.eye_redstone, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("eye_redstone"));
+    r.register(new BlockItem(BlockRegistry.eye_teleport, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("eye_teleport"));
     //
     r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("battery"));
     r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("peat_generator"));
@@ -195,7 +213,13 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.unbreakable_block, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("unbreakable_block"));
     r.register(new BlockItem(BlockRegistry.unbreakable_reactive, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("unbreakable_reactive"));
+
     r.register(new BlockItem(BlockRegistry.conveyor, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("conveyor"));
+
+    r.register(new BlockItem(BlockRegistry.ender_shelf, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("ender_shelf"));
+    r.register(new BlockItem(BlockRegistry.ender_controller, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("ender_controller"));
+    r.register(new BlockItem(BlockRegistry.workbench, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("workbench"));
+
     // exp machines
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.blockgrp)).setRegistryName("experience_pylon"));
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("experience_food"));
@@ -251,7 +275,11 @@ public class ItemRegistry {
     r.register(new SettingsCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("settings_data"));
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.itemgrp)).setRegistryName("shape_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.itemgrp).maxDamage(1024)).setRegistryName("scythe_harvest"));
-    ///////////////////////// apples  
+    r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
+    r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
+    r.register(new CraftingStickItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).setNoRepair()).setRegistryName("crafting_stick"));
+    r.register(new AntimatterEvaporatorWandItem(new Item.Properties().group(MaterialRegistry.itemgrp).maxStackSize(1).maxDamage(1024)).setRegistryName("antimatter_wand"));
+    ///////////////////////// apples
     final int SMALLPOT = 20 * 90;// 1:30
     final int LARGEPOT = 3 * 20 * 60;// 3:00
     int h = Foods.APPLE.getHealing();

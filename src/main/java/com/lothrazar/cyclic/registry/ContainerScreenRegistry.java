@@ -34,6 +34,10 @@ import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
+import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
+import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
+import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
+import com.lothrazar.cyclic.item.storagebag.StorageBagContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -48,6 +52,9 @@ public class ContainerScreenRegistry {
   @SubscribeEvent
   public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
     IForgeRegistry<ContainerType<?>> r = event.getRegistry();
+    //
+    // Blocks with containers
+    //
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerItemCollector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("collector"));
@@ -142,11 +149,20 @@ public class ContainerScreenRegistry {
       return new ContainerShapedata(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("computer_shape"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerWorkbench(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("workbench"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerFisher(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fisher"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerLaser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("laser"));
+    //
+    //  Items with containers
+    //
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new StorageBagContainer(windowId, inv, inv.player))).setRegistryName("storage_bag"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":laser")
@@ -199,7 +215,6 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerFluidCollect> collector_fluid;
   @ObjectHolder(ModCyclic.MODID + ":fan")
   public static ContainerType<ContainerFan> fan;
-  //
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static ContainerType<ContainerUncraft> uncraft;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
@@ -216,4 +231,12 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerMiner> miner;
   @ObjectHolder(ModCyclic.MODID + ":screen")
   public static ContainerType<ContainerScreentext> screen;
+  @ObjectHolder(ModCyclic.MODID + ":storage_bag")
+  public static ContainerType<StorageBagContainer> storage_bag;
+  @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
+  public static ContainerType<CraftingBagContainer> crafting_bag;
+  @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
+  public static ContainerType<CraftingStickContainer> crafting_stick;
+  @ObjectHolder(ModCyclic.MODID + ":workbench")
+  public static ContainerType<ContainerWorkbench> workbench;
 }

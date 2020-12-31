@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.eye_redstone",
+  "icon": "cyclic:eye_redstone",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.eye_redstone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:eye_redstone"
+    }
+  ]
+}

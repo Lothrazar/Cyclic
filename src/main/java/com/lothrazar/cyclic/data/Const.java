@@ -217,4 +217,8 @@ public class Const {
    */
   public static final int LAVA_TEMPERATURE = 1300;
   public static final int REDSTONE_MAX = 16;
-}// ends class reference
+  /**
+   * defined by vanilla item stacks on things like grindstone/anvi/enchanting table for increasing repair costs
+   */
+  public static final Object NBT_REPAIR_COST = "RepairCost";
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sis",
+    "iri",
+    "sis"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:string"
+    },
+    "i": {
+      "item": "minecraft:iron_nugget"
+    },
+    "r": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "result": {
+    "item": "cyclic:ghost_phantom",
+    "count": 8
+  }
+}

@@ -117,6 +117,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
     return super.getCapability(cap, side);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     LazyOptional<IItemHandler> item;
@@ -130,6 +131,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
     super.read(bs, tag);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     LazyOptional<IItemHandler> item;

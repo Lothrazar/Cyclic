@@ -24,14 +24,15 @@ public class ContainerSolidifier extends ContainerBase {
     tile = (TileSolidifier) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
+    //move it
+    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
+      addSlot(new SlotItemHandler(h, 0, 121, 31));
+    });
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots();
+      this.endInv = h.getSlots() + 1;//for shiftclick out of the out slot
       addSlot(new SlotItemHandler(h, 0, 37, 17));
       addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
       addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
-    });
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
-      addSlot(new SlotItemHandler(h, 0, 121, 31));
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileSolidifier.Fields.values().length);

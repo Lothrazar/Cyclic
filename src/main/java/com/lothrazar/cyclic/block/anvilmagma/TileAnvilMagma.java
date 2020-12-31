@@ -12,6 +12,7 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
@@ -25,7 +26,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
@@ -41,7 +41,20 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   private static final int IN = 0;
   public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(this::createHandler);
+  ItemStackHandler inventory = new ItemStackHandler(2) {
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+      if (slot == IN)
+        return stack.isRepairable() &&
+            stack.getDamage() > 0;
+      if (slot == OUT)
+        return stack.isRepairable() &&
+            stack.getDamage() == 0;
+      return true;
+    }
+  };
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank;
 
   static enum Fields {
@@ -51,6 +64,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   public TileAnvilMagma() {
     super(TileRegistry.anvil_magma);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+    this.needsRedstone = 0;//default on
   }
 
   @Override
@@ -60,48 +74,40 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
       return;
     }
     setLitProperty(true);
-    inventory.ifPresent(inv -> {
-      ItemStack stack = inv.getStackInSlot(0);
-      if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
-        return;
+    ItemStack stack = inventory.getStackInSlot(0);
+    if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
+      return;
+    }
+    final int repair = 100;//not power, fluid.
+    boolean work = false;
+    if (tank != null &&
+        tank.getFluidAmount() >= repair &&
+        stack.isRepairable() &&
+        stack.getDamage() > 0) {
+      //we can repair so steal some power 
+      //ok drain power  
+      work = true;
+      tank.drain(repair, FluidAction.EXECUTE);
+    }
+    //shift to other slot
+    if (work) {
+      UtilItemStack.repairItem(stack);
+      boolean done = stack.getDamage() == 0;
+      //
+      if (done && inventory.getStackInSlot(OUT).isEmpty()) {
+        inventory.insertItem(1, stack.copy(), false);
+        inventory.extractItem(0, stack.getCount(), false);
       }
-      final int repair = 100;
-      if (tank != null &&
-          tank.getFluidAmount() >= repair &&
-          stack.isRepairable() &&
-          stack.getDamage() > 0) {
-        //we can repair so steal some power 
-        //ok drain power  
-        UtilItemStack.repairItem(stack);
-        tank.drain(repair, FluidAction.EXECUTE);
-      }
-      //shift to other slot
-      if ((stack.getDamage() == 0 || !stack.isRepairable())
-          && inv.getStackInSlot(1).isEmpty()) {
-        //
-        inv.insertItem(1, stack.copy(), false);
-        inv.extractItem(0, stack.getCount(), false);
-      }
-    });
+    }
   }
 
   public Predicate<FluidStack> isFluidValid() {
-    return p -> p.getFluid() == FluidMagmaHolder.STILL.get();
-  }
-
-  private IItemHandler createHandler() {
-    return new ItemStackHandler(2) {
-
-      @Override
-      public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        if (slot == IN)
-          return stack.isRepairable() &&
-              stack.getDamage() > 0;
-        if (slot == OUT)
-          return stack.isRepairable() &&
-              stack.getDamage() == 0;
-        return true;
-      }
+    return p -> {
+      Fluid fluid = p.getFluid();
+      return fluid == FluidMagmaHolder.STILL.get()
+      //          || fluid == Fluids.LAVA
+      //          || fluid == Fluids.FLOWING_LAVA
+      ;
     };
   }
 
@@ -119,7 +125,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return LazyOptional.of(() -> tank).cast();
@@ -129,7 +135,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     tank.readFromNBT(tag.getCompound("fluid"));
     super.read(bs, tag);
   }
@@ -139,10 +145,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
