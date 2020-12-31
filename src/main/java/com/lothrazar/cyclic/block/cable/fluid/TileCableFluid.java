@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
@@ -72,13 +71,13 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     Direction incomingSide = extractSide.getOpposite();
     IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
     boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, CAPACITY);
-    FluidTankBase sideHandler = flow.get(incomingSide).orElse(null);
-    //    ModCyclic.LOGGER.info(" sideHandler.getSpace()  from " + sideHandler.getSpace());
+    FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
+    //    ModCyclic.LOGGER.info(" sideHandler.incomingSide()  from " + incomingSide);
     if (!success && world.hasWater(target) && sideHandler != null
         && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME
     //
     ) {
-      //      ModCyclic.LOGGER.info(" sideHandler.getSpace()  from " + sideHandler.getSpace());
+      //source water block. or waterlogged slab
       //
       BlockState targetState = world.getBlockState(target);
       if (targetState.getBlock() == Blocks.WATER) {
@@ -92,10 +91,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
             targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
             if (world.setBlockState(target, targetState))
               sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-            else
-              ModCyclic.LOGGER.info(" WTF cant set block " + targetState);
           }
-      //
     }
   }
 
