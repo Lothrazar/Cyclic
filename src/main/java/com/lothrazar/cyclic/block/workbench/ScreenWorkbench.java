@@ -47,8 +47,8 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
 
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
-    //    this.drawName(ms, title.getString());
+    //    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
+    this.drawName(ms, title.getString());
     this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 

@@ -72,7 +72,7 @@ public class PacketCraftAction extends PacketBase {
       case EMPTY:
         // move all slots down out of grid into inventory
         for (int i = 1; i <= 9; i++) {
-          c.transferStackInSlot(player, i);
+          c.transferStack(player, i);
         }
         c.getCraftResult().clear();
       break;

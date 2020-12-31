@@ -91,6 +91,11 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   //  }
 
   @Override
+  public ItemStack transferStack(PlayerEntity playerIn, int index) {
+    return super.transferStackInSlot(playerIn, index);
+  }
+
+  @Override
   public CraftingInventory getCraftMatrix() {
     return this.craftMatrix;
   }

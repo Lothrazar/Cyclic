@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.workbench;
 
 import java.util.Optional;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
@@ -136,6 +137,11 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
   }
 
   @Override
+  public ItemStack transferStack(PlayerEntity playerIn, int index) {
+    return this.transferStackInSlot(playerIn, index);
+  }
+
+  @Override
   public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
     try {
       //if last machine slot is 17, endInv is 18
@@ -170,7 +176,7 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
       return itemstack;
     }
     catch (Exception e) {
-      //      ModCyclic.LOGGER.error("Shift click error", e);
+      ModCyclic.LOGGER.error(index + "Shift click error", e);
       return ItemStack.EMPTY;
     }
   }

@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public interface IContainerCraftingAction {
 
-  ItemStack transferStackInSlot(PlayerEntity playerIn, int index);
+  ItemStack transferStack(PlayerEntity playerIn, int index);
 
   CraftingInventory getCraftMatrix();
 
