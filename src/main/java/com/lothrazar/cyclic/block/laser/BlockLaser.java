@@ -7,7 +7,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -26,6 +29,11 @@ public class BlockLaser extends BlockBase {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ClientRegistry.bindTileEntityRenderer(TileRegistry.laser, RenderLaser::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.laser, ScreenLaser::new);
+  }
+
+  @Override
+  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+    return true;
   }
 
   @Override
