@@ -128,6 +128,10 @@
     "block.cyclic.unbreakable_reactive.tooltip": "Unbreakable while it has redstone power, can mine it otherwise",
     "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
 
+    "block.cyclic.conveyor": "Conveyor Belt",
+    "block.cyclic.conveyor.tooltip": "Conveyor Belt",
+    "block.cyclic.conveyor.guide": "Moves entities",
+
     "block.cyclic.ender_shelf":"Ender Shelf",
     "block.cyclic.ender_shelf.tooltip": "Multiblock Enchantment Storage",
     "block.cyclic.ender_shelf.guide": "Can be used standalone or as part of a multiblock structure with at least one $(l:blocks/ender_controller)Ender Shelf Controller$(/l). Each shelf has 5 slots that you can right click on to insert an Enchanted Book for storage.",
@@ -140,6 +144,7 @@
     "block.cyclic.workbench": "Workbench",
     "block.cyclic.workbench.tooltip": "A Crafting Table that keeps its inventory when closed",
     "block.cyclic.workbench.guide": "A simple Crafting Table that keeps its inventory when closed.",
+
 
     "item.cyclic.flippers":"Flippers",
     "item.cyclic.flippers.tooltip":"Increase swim speed",

@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.conveyor.ConveyorItemEntity;
+import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
@@ -13,6 +15,7 @@ import com.lothrazar.cyclic.item.findspawner.EntityDungeonEye;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.torchthrow.EntityTorchBolt;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -23,6 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -49,6 +53,8 @@ public class EntityRegistry {
   public static EntityType<EyeOfEnderEntityNodrop> eye;
   @ObjectHolder(ModCyclic.MODID + ":fire_bolt")
   public static EntityType<FireEntity> fire_bolt;
+  @ObjectHolder(ModCyclic.MODID + ":conveyor_item")
+  public static EntityType<ConveyorItemEntity> conveyor_item;
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -63,6 +69,7 @@ public class EntityRegistry {
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dungeon, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.eye, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.fire_bolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.conveyor_item, render -> new ConveyorItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
 
   @SubscribeEvent
@@ -148,5 +155,13 @@ public class EntityRegistry {
             .size(.6f, .6f)
             .build("fire_bolt")
             .setRegistryName("fire_bolt"));
+    r.register(
+        EntityType.Builder.<ConveyorItemEntity> create(ConveyorItemEntity::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(1)
+            .size(0.45F, 0.45F)
+            .build("conveyor_item")
+            .setRegistryName("conveyor_item"));
   }
 }
