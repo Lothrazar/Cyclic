@@ -8,10 +8,10 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IRendersAsItem;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -38,12 +38,12 @@ public class ConveyorItemRenderer<T extends Entity & IRendersAsItem> extends Ent
 
   @Override
   public ResourceLocation getEntityTexture(ConveyorItemEntity entity) {
-    return AtlasTexture.LOCATION_BLOCKS_TEXTURE;
+    return PlayerContainer.LOCATION_BLOCKS_TEXTURE;
   }
 
   @Override
   public boolean shouldRender(ConveyorItemEntity livingEntityIn, ClippingHelper camera, double camX, double camY, double camZ) {
-    ConveyorItemEntity stack = livingEntityIn;
+    //    ConveyorItemEntity stack = livingEntityIn;
     return true;
   }
 }
