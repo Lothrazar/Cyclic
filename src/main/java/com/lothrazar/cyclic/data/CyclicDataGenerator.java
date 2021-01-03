@@ -43,8 +43,8 @@ public class CyclicDataGenerator {
       VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.conveyor);
 
       builder.forAllStates((state -> {
-        BlockConveyor.Type type = state.get(BlockConveyor.TYPE);
-        BlockConveyor.Speed speed = state.get(BlockConveyor.SPEED);
+        BlockConveyor.ConveyorType type = state.get(BlockConveyor.TYPE);
+        BlockConveyor.ConveyorSpeed speed = state.get(BlockConveyor.SPEED);
         Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
         int y;
         switch (facing) {
