@@ -71,14 +71,14 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
       return;
     }
     xSpeed = facing.getXOffset() * speed;
-    zSpeed = facing.getZOffset() * speed;
     ySpeed = 0.0D;
-    if (facing.getAxis() == Axis.Z) {
-      //north/south
-      if (normalizedX > 0.8) {
-        ModCyclic.LOGGER.info("large Z axis edge " + normalizedZ);
-      }
-    }
+    zSpeed = facing.getZOffset() * speed;
+    //    if (facing.getAxis() == Axis.Z) {
+    //      //north/south
+    //      if (normalizedX > 0.8) {
+    //        ModCyclic.LOGGER.info("large Z axis edge " + normalizedZ);
+    //      }
+    //    }
     //redo below, but for all not just corner. take direction and move to center axis
     if (type.isCorner()) {
       Direction rotated = type == BlockConveyor.ConveyorType.CORNER_RIGHT ? facing.rotateYCCW() : facing.rotateY();
@@ -96,7 +96,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
       }
     }
     if (type.isVertical()) {
-      ySpeed = speed * 2;
+      ySpeed = speed * 1.2;
       if (type == BlockConveyor.ConveyorType.DOWN) {
         ySpeed *= -1;
       }
