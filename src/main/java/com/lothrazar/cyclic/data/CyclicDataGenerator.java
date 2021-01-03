@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.data;
 import com.google.gson.Gson;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.conveyor.BlockConveyor;
+import com.lothrazar.cyclic.block.conveyor.ConveyorSpeed;
+import com.lothrazar.cyclic.block.conveyor.ConveyorType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -43,8 +45,8 @@ public class CyclicDataGenerator {
       VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.conveyor);
 
       builder.forAllStates((state -> {
-        BlockConveyor.ConveyorType type = state.get(BlockConveyor.TYPE);
-        BlockConveyor.ConveyorSpeed speed = state.get(BlockConveyor.SPEED);
+        ConveyorType type = state.get(BlockConveyor.TYPE);
+        ConveyorSpeed speed = state.get(BlockConveyor.SPEED);
         Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
         int y;
         switch (facing) {

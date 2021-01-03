@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -20,7 +23,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -63,48 +65,6 @@ public class BlockConveyor extends BlockBase {
   public static final EnumProperty<ConveyorSpeed> SPEED = EnumProperty.create("speed", ConveyorSpeed.class);
   //javafx.util class doesnt compile into minecraft with ./gradlew build, swapped to SimpleEntry https://www.baeldung.com/java-pairs
   public static final List<SimpleImmutableEntry<ConveyorType, Direction>> STATE_PAIRS = generateStatePairs();
-
-  public enum ConveyorType implements IStringSerializable {
-
-    STRAIGHT, UP, DOWN, CORNER_LEFT, CORNER_RIGHT;
-
-    @Override
-    public String getString() {
-      return this.name().toLowerCase();
-    }
-
-    public boolean isCorner() {
-      return this == CORNER_LEFT || this == CORNER_RIGHT;
-    }
-
-    public boolean isVertical() {
-      return this == UP || this == DOWN;
-    }
-  }
-
-  public enum ConveyorSpeed implements IStringSerializable {
-
-    SLOWEST, SLOW, MEDIUM, FAST;
-
-    @Override
-    public String getString() {
-      return this.name().toLowerCase();
-    }
-
-    public double getSpeed() {
-      switch (this) {
-        case SLOWEST:
-          return 0.11D;
-        case SLOW:
-          return 0.12D;
-        case MEDIUM:
-          return 0.16D;
-        case FAST:
-          return 0.21D;
-      }
-      return 0;
-    }
-  }
 
   public BlockConveyor(Properties properties) {
     super(properties.notSolid());
@@ -231,13 +191,41 @@ public class BlockConveyor extends BlockBase {
 
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    if (hand == Hand.OFF_HAND
-        || player.getHeldItem(hand).getItem() != this.asItem()) {
-      return ActionResultType.PASS;
+    Item heldItem = player.getHeldItem(hand).getItem();
+    if (heldItem == ItemRegistry.cable_wrench
+        || heldItem == Items.REDSTONE_TORCH) {
+      //speed toggle
+      ConveyorSpeed speed = state.get(SPEED);
+      //      ModCyclic.LOGGER.info("next speed " + speed);
+      if (world.setBlockState(pos, state.with(SPEED, speed.getNext()))) {
+        //TODO: run a train 
+        this.setConnectedSpeed(world, pos, speed.getNext(), 0);
+        return ActionResultType.SUCCESS;
+      }
     }
-    SimpleImmutableEntry<ConveyorType, Direction> nextState = nextConnectedState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
-    boolean success = world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
-    return success ? ActionResultType.SUCCESS : super.onBlockActivated(state, world, pos, player, hand, hit);
+    if (heldItem == this.asItem()) {
+      SimpleImmutableEntry<ConveyorType, Direction> nextState = nextConnectedState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
+      boolean success = world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
+      if (success) return ActionResultType.SUCCESS;
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, hit);
+  }
+
+  private void setConnectedSpeed(World world, BlockPos pos, ConveyorSpeed speedIn, int maxRecursive) {
+    if (maxRecursive > 16) {
+      return;
+    }
+    for (Direction d : Direction.values()) {
+      //
+      BlockPos offset = pos.offset(d);
+      BlockState here = world.getBlockState(offset);
+      if (here.getBlock() == this) {
+        if (world.setBlockState(offset, here.with(SPEED, speedIn))) {
+          maxRecursive++;
+          this.setConnectedSpeed(world, offset, speedIn, maxRecursive);
+        }
+      }
+    }
   }
 
   @Override

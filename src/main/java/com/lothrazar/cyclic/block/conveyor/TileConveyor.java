@@ -31,10 +31,9 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
 
   @Override
   public void tick() {
-    if (this.world == null) {
-      return;
+    if (world == null || pos == null) {
+      return;//is this necessary?
     }
-    World world = this.world;
     List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos).expand(0.0F, 0.5F, 0.0F));
     for (Entity e : entities) {
       makeEntitiesTravel(e, this.getBlockState(), this.pos, world);
@@ -63,7 +62,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     if (facing.getAxis() == Axis.X && (normalizedZ > 1 - offside || normalizedZ < 0 + offside)) {
       return;
     }
-    BlockConveyor.ConveyorType type = bs.get(BlockConveyor.TYPE);
+    ConveyorType type = bs.get(BlockConveyor.TYPE);
     double heightLimit = (type.isVertical()) ? pos.getY() + 1.3D : pos.getY() + 0.125D;
     double speed = bs.get(BlockConveyor.SPEED).getSpeed();//0.08D; //temp variable, replace with speed from blockstate later
     double xSpeed = 0.0D, zSpeed = 0.0D, ySpeed = 0.0D;
@@ -82,7 +81,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     //    }
     //redo below, but for all not just corner. take direction and move to center axis
     if (type.isCorner()) {
-      Direction rotated = type == BlockConveyor.ConveyorType.CORNER_RIGHT ? facing.rotateYCCW() : facing.rotateY();
+      Direction rotated = type == ConveyorType.CORNER_RIGHT ? facing.rotateYCCW() : facing.rotateY();
       //
       if (Math.random() < 0.1)
         System.out.printf("Corner %s to %s. Entity at normalized [%f, %f]%n", facing.getString(), rotated.getString(), normalizedX, normalizedZ);
@@ -122,7 +121,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
       //        entity.setPosition(entity.getPosX(), entity.getPosY() + .2, entity.getPosZ());
       //      }
       ySpeed = speed * 1.3;//was 1.2
-      if (type == BlockConveyor.ConveyorType.DOWN) {
+      if (type == ConveyorType.DOWN) {
         ySpeed *= -1;
       }
       //      double normalizedDistance = 0.0D;
