@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 public class BlockConveyor extends BlockBase {
 
   protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-  protected static final VoxelShape AG00 = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 0.1D, 16.0D);
+  protected static final VoxelShape AG00 = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 0.8D, 16.0D);
   protected static final VoxelShape AG01 = Block.makeCuboidShape(1.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
   protected static final VoxelShape AG02 = Block.makeCuboidShape(2.0D, 1.0D, 0.0D, 16.0D, 2.0D, 16.0D);
   protected static final VoxelShape AG03 = Block.makeCuboidShape(3.0D, 2.0D, 0.0D, 16.0D, 3.0D, 16.0D);
@@ -49,12 +49,13 @@ public class BlockConveyor extends BlockBase {
   protected static final VoxelShape AG13 = Block.makeCuboidShape(13.0D, 12.0D, 0.0D, 16.0D, 13.0D, 16.0D);
   protected static final VoxelShape AG14 = Block.makeCuboidShape(14.0D, 13.0D, 0.0D, 16.0D, 14.0D, 16.0D);
   protected static final VoxelShape AG15 = Block.makeCuboidShape(15.0D, 14.0D, 0.0D, 16.0D, 15.0D, 16.0D);
-  protected static final VoxelShape ANGLEEAST = VoxelShapes.or(AG00, AG01, AG02, AG03, AG04, AG05, AG06, AG07, AG08, AG09, AG10, AG11, AG12, AG13, AG14, AG15);
-  protected static final VoxelShape ANGLESOUTH = VoxelShapes.or(rot(AG00), rot(AG01), rot(AG02), rot(AG03), rot(AG04), rot(AG05), rot(AG06), rot(AG07), rot(AG08), rot(AG09), rot(AG10), rot(AG11), rot(AG12), rot(AG13), rot(AG14), rot(AG15));
+  protected static final VoxelShape AG16 = Block.makeCuboidShape(15.5D, 15.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+  protected static final VoxelShape ANGLEEAST = VoxelShapes.or(AG00, AG01, AG02, AG03, AG04, AG05, AG06, AG07, AG08, AG09, AG10, AG11, AG12, AG13, AG14, AG15, AG16);
+  protected static final VoxelShape ANGLESOUTH = VoxelShapes.or(rot(AG00), rot(AG01), rot(AG02), rot(AG03), rot(AG04), rot(AG05), rot(AG06), rot(AG07), rot(AG08), rot(AG09), rot(AG10), rot(AG11), rot(AG12), rot(AG13), rot(AG14), rot(AG15), rot(AG16));
   //
-  protected static final VoxelShape ANGLENORTH = VoxelShapes.or(flipx(AG00), flipx(AG01), flipx(AG02), flipx(AG03), flipx(AG04), flipx(AG05), flipx(AG06), flipx(AG07), flipx(AG08), flipx(AG09), flipx(AG10), flipx(AG11), flipx(AG12), flipx(AG13), flipx(AG14), flipx(AG15));
+  protected static final VoxelShape ANGLENORTH = VoxelShapes.or(flipx(AG00), flipx(AG01), flipx(AG02), flipx(AG03), flipx(AG04), flipx(AG05), flipx(AG06), flipx(AG07), flipx(AG08), flipx(AG09), flipx(AG10), flipx(AG11), flipx(AG12), flipx(AG13), flipx(AG14), flipx(AG15), flipx(AG16));
   //
-  protected static final VoxelShape ANGLEWEST = VoxelShapes.or(flipz(AG00), flipz(AG01), flipz(AG02), flipz(AG03), flipz(AG04), flipz(AG05), flipz(AG06), flipz(AG07), flipz(AG08), flipz(AG09), flipz(AG10), flipz(AG11), flipz(AG12), flipz(AG13), flipz(AG14), flipz(AG15));
+  protected static final VoxelShape ANGLEWEST = VoxelShapes.or(flipz(AG00), flipz(AG01), flipz(AG02), flipz(AG03), flipz(AG04), flipz(AG05), flipz(AG06), flipz(AG07), flipz(AG08), flipz(AG09), flipz(AG10), flipz(AG11), flipz(AG12), flipz(AG13), flipz(AG14), flipz(AG15), flipz(AG16));
   protected static final VoxelShape BOTTOM = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 0.0D, 8.0D, 16.0D);
   protected static final VoxelShape TOP = Block.makeCuboidShape(0.0D, 8.0D, 0.0D, 0.0D, 16.0D, 8.0D);
   protected static final VoxelShape STAIR = VoxelShapes.combine(BOTTOM, TOP, IBooleanFunction.OR);
@@ -93,7 +94,7 @@ public class BlockConveyor extends BlockBase {
     public double getSpeed() {
       switch (this) {
         case SLOWEST:
-          return 0.08D;
+          return 0.11D;
         case SLOW:
           return 0.12D;
         case MEDIUM:
@@ -230,11 +231,13 @@ public class BlockConveyor extends BlockBase {
 
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    if (hand == Hand.OFF_HAND)
+    if (hand == Hand.OFF_HAND
+        || player.getHeldItem(hand).getItem() != this.asItem()) {
       return ActionResultType.PASS;
+    }
     SimpleImmutableEntry<ConveyorType, Direction> nextState = nextConnectedState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
-    world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
-    return super.onBlockActivated(state, world, pos, player, hand, hit);
+    boolean success = world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
+    return success ? ActionResultType.SUCCESS : super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
   @Override

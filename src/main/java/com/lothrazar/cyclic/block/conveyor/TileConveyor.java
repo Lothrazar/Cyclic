@@ -64,10 +64,11 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
       return;
     }
     BlockConveyor.ConveyorType type = bs.get(BlockConveyor.TYPE);
-    double heightLimit = (type.isVertical()) ? pos.getY() + 0.95D : pos.getY() + 0.125D;
+    double heightLimit = (type.isVertical()) ? pos.getY() + 1.3D : pos.getY() + 0.125D;
     double speed = bs.get(BlockConveyor.SPEED).getSpeed();//0.08D; //temp variable, replace with speed from blockstate later
     double xSpeed = 0.0D, zSpeed = 0.0D, ySpeed = 0.0D;
     if (entity.getPosY() > heightLimit) {
+      ModCyclic.LOGGER.info("cancel HEIGHT LIMIT ");
       return;
     }
     xSpeed = facing.getXOffset() * speed;
@@ -94,9 +95,33 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
         //        xSpeed = 0.0D;
         //        zSpeed = rotated.getZOffset() * speed;
       }
+      //FIX their centering when going around corners
+      if (facing.getAxis() == Axis.Z
+          && (normalizedX < 0.4 || normalizedX > 0.6)) {
+        entity.setPosition(Math.floor(entity.getPosX()) + 0.5, entity.getPosY(), entity.getPosZ());
+      }
+      if (facing.getAxis() == Axis.X
+          && (normalizedZ < 0.4 || normalizedZ > 0.6)) {
+        //        ModCyclic.LOGGER.info(normalizedZ + "  forced xx   " + entity);
+        //centralize Z
+        entity.setPosition(entity.getPosX(), entity.getPosY(), Math.floor(entity.getPosZ()) + 0.5);
+      }
     }
     if (type.isVertical()) {
-      ySpeed = speed * 1.2;
+      //      if (entity instanceof ItemEntity) {
+      //shit gets stuck   
+      double hackEdge = 0.1;
+      if (normalizedX < hackEdge || normalizedZ < hackEdge
+          || normalizedX > 1 - hackEdge || normalizedZ > 1 - hackEdge) {
+        ModCyclic.LOGGER.info("jump hacks " + entity);
+        entity.setPosition(entity.getPosX(), entity.getPosY() + .2, entity.getPosZ());
+      }
+      //      }
+      //      if (normalizedZ < 0.2) {
+      //        ModCyclic.LOGGER.info("jump hacks " + entity);
+      //        entity.setPosition(entity.getPosX(), entity.getPosY() + .2, entity.getPosZ());
+      //      }
+      ySpeed = speed * 1.3;//was 1.2
       if (type == BlockConveyor.ConveyorType.DOWN) {
         ySpeed *= -1;
       }
@@ -121,8 +146,8 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     }
     if (xSpeed != 0.0D || ySpeed != 0.0D || zSpeed != 0.0D) {
       entity.setMotion(xSpeed, ySpeed, zSpeed);
-      if (Math.random() < 0.1)
-        System.out.printf(pos + " move spam [%f, %f, %f]\n", xSpeed, ySpeed, zSpeed);
+      //      if (Math.random() < 0.1)
+      //        System.out.printf(pos + " move spam [%f, %f, %f]\n", xSpeed, ySpeed, zSpeed);
     }
     //e.setPosition(e.getPosX(), this.getPos().getY() + 0.125D, e.getPosZ());
     //    }
