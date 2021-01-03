@@ -49,8 +49,12 @@ public class BlockConveyor extends BlockBase {
   protected static final VoxelShape AG13 = Block.makeCuboidShape(13.0D, 12.0D, 0.0D, 16.0D, 13.0D, 16.0D);
   protected static final VoxelShape AG14 = Block.makeCuboidShape(14.0D, 13.0D, 0.0D, 16.0D, 14.0D, 16.0D);
   protected static final VoxelShape AG15 = Block.makeCuboidShape(15.0D, 14.0D, 0.0D, 16.0D, 15.0D, 16.0D);
-  protected static final VoxelShape ANGLE = VoxelShapes.or(AG00, AG01, AG02, AG03, AG04, AG05, AG06, AG07, AG08, AG09, AG10, AG11, AG12, AG13, AG14, AG15);
-  //  protected static final VoxelShape COLLISION_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.1D, 16.0D);
+  protected static final VoxelShape ANGLEEAST = VoxelShapes.or(AG00, AG01, AG02, AG03, AG04, AG05, AG06, AG07, AG08, AG09, AG10, AG11, AG12, AG13, AG14, AG15);
+  protected static final VoxelShape ANGLESOUTH = VoxelShapes.or(rot(AG00), rot(AG01), rot(AG02), rot(AG03), rot(AG04), rot(AG05), rot(AG06), rot(AG07), rot(AG08), rot(AG09), rot(AG10), rot(AG11), rot(AG12), rot(AG13), rot(AG14), rot(AG15));
+  //
+  protected static final VoxelShape ANGLENORTH = VoxelShapes.or(flipx(AG00), flipx(AG01), flipx(AG02), flipx(AG03), flipx(AG04), flipx(AG05), flipx(AG06), flipx(AG07), flipx(AG08), flipx(AG09), flipx(AG10), flipx(AG11), flipx(AG12), flipx(AG13), flipx(AG14), flipx(AG15));
+  //
+  protected static final VoxelShape ANGLEWEST = VoxelShapes.or(flipz(AG00), flipz(AG01), flipz(AG02), flipz(AG03), flipz(AG04), flipz(AG05), flipz(AG06), flipz(AG07), flipz(AG08), flipz(AG09), flipz(AG10), flipz(AG11), flipz(AG12), flipz(AG13), flipz(AG14), flipz(AG15));
   protected static final VoxelShape BOTTOM = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 0.0D, 8.0D, 16.0D);
   protected static final VoxelShape TOP = Block.makeCuboidShape(0.0D, 8.0D, 0.0D, 0.0D, 16.0D, 8.0D);
   protected static final VoxelShape STAIR = VoxelShapes.combine(BOTTOM, TOP, IBooleanFunction.OR);
@@ -105,10 +109,108 @@ public class BlockConveyor extends BlockBase {
     super(properties.notSolid());
   }
 
+  /**
+   * Utility methods for block shapes.
+   *
+   * @author SciWhiz12
+   */
+  /**
+   * Rotates the given {@link VoxelShape} along the horizontal plane according to the given rotation direction.
+   *
+   * Assumes the given shape is within the bounds of 1 unit on each axis.
+   * 
+   * https://gist.github.com/sciwhiz12/0852b629e7a3d0200ffc03ec7edab187
+   * 
+   * @param shape
+   *          The shape to rotate
+   * @param rotationDir
+   *          The rotation direction
+   * @return The rotated shape
+   */
+  public static VoxelShape rot(final VoxelShape shape) {
+    double x1 = shape.getStart(Direction.Axis.X), x2 = shape.getEnd(Direction.Axis.X);
+    final double y1 = shape.getStart(Direction.Axis.Y), y2 = shape.getEnd(Direction.Axis.Y);
+    double z1 = shape.getStart(Direction.Axis.Z), z2 = shape.getEnd(Direction.Axis.Z);
+    //    if (rotationDir == Rotation.CLOCKWISE_90 || rotationDir == Rotation.COUNTERCLOCKWISE_90) {
+    double temp = z1; // ]
+    z1 = x1; // ] x1 <-> z1
+    x1 = temp; // ]
+    temp = z2; // ]
+    z2 = x2; // ] x2 <-> z2
+    x2 = temp; // ]
+    //    }
+    //    if (rotationDir == Rotation.CLOCKWISE_90 || rotationDir == Rotation.CLOCKWISE_180) {
+    x1 = 1 - x1; // clockwise
+    x2 = 1 - x2;
+    //    }
+    //    if (rotationDir == Rotation.COUNTERCLOCKWISE_90 || rotationDir == Rotation.CLOCKWISE_180) {
+    //      z1 = 1 - z1; // counterclockwise
+    //      z2 = 1 - z2;
+    //    }
+    return VoxelShapes.create(x1, y1, z1, x2, y2, z2);
+  }
+
+  public static VoxelShape flipx(final VoxelShape shape) {
+    double x1 = shape.getStart(Direction.Axis.X);
+    double x2 = shape.getEnd(Direction.Axis.X);
+    final double y1 = shape.getStart(Direction.Axis.Y);
+    final double y2 = shape.getEnd(Direction.Axis.Y);
+    double z1 = shape.getStart(Direction.Axis.Z);
+    double z2 = shape.getEnd(Direction.Axis.Z);
+    //flip
+    double temp = z1; // ]
+    z1 = x1; // ] x1 <-> z1
+    x1 = temp; // ]
+    temp = z2; // ]
+    z2 = x2; // ] x2 <-> z2
+    x2 = temp; // ]
+    //
+    //    if (rotationDir == Rotation.COUNTERCLOCKWISE_90 || rotationDir == Rotation.CLOCKWISE_180) {
+    z1 = 1 - z1; // counterclockwise
+    z2 = 1 - z2;
+    return VoxelShapes.create(x1, y1, z1, x2, y2, z2);
+  }
+
+  public static VoxelShape flipz(final VoxelShape shape) {
+    double x1 = shape.getStart(Direction.Axis.X);
+    double x2 = shape.getEnd(Direction.Axis.X);
+    final double y1 = shape.getStart(Direction.Axis.Y);
+    final double y2 = shape.getEnd(Direction.Axis.Y);
+    double z1 = shape.getStart(Direction.Axis.Z);
+    double z2 = shape.getEnd(Direction.Axis.Z);
+    //flip
+    //    double temp = z1; // ]
+    //    z1 = x1; // ] x1 <-> z1
+    //    x1 = temp; // ]
+    //    temp = z2; // ]
+    //    z2 = x2; // ] x2 <-> z2
+    //    x2 = temp; // ]
+    //
+    x1 = 1 - x1; //  
+    x2 = 1 - x2;
+    z1 = 1 - z1; //  
+    z2 = 1 - z2;
+    return VoxelShapes.create(x1, y1, z1, x2, y2, z2);
+  }
+
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    if (state.get(TYPE).isVertical())
-      return ANGLE;
+    if (state.get(TYPE).isVertical()) {
+      Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+      switch (facing) {
+        case EAST:
+          return ANGLEEAST;//good
+        case NORTH:
+          return ANGLENORTH;//good
+        case SOUTH:
+          return ANGLESOUTH;//good
+        case WEST:
+          return ANGLEWEST;
+        case DOWN:
+        case UP:
+        break;
+      }
+    }
     return SHAPE;
   }
   //  @Override
