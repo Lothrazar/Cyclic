@@ -13,6 +13,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -25,7 +27,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -34,7 +35,10 @@ import net.minecraft.world.World;
 
 public class BlockConveyor extends BlockBase {
 
+  private static final int MAX_CONNECTED_UPDATE = 16;
+  //main flat shape
   protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+  //Sub-shapes for angles
   protected static final VoxelShape AG00 = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 0.8D, 16.0D);
   protected static final VoxelShape AG01 = Block.makeCuboidShape(1.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
   protected static final VoxelShape AG02 = Block.makeCuboidShape(2.0D, 1.0D, 0.0D, 16.0D, 2.0D, 16.0D);
@@ -52,15 +56,13 @@ public class BlockConveyor extends BlockBase {
   protected static final VoxelShape AG14 = Block.makeCuboidShape(14.0D, 13.0D, 0.0D, 16.0D, 14.0D, 16.0D);
   protected static final VoxelShape AG15 = Block.makeCuboidShape(15.0D, 14.0D, 0.0D, 16.0D, 15.0D, 16.0D);
   protected static final VoxelShape AG16 = Block.makeCuboidShape(15.5D, 15.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+  //four angled shapes
   protected static final VoxelShape ANGLEEAST = VoxelShapes.or(AG00, AG01, AG02, AG03, AG04, AG05, AG06, AG07, AG08, AG09, AG10, AG11, AG12, AG13, AG14, AG15, AG16);
   protected static final VoxelShape ANGLESOUTH = VoxelShapes.or(rot(AG00), rot(AG01), rot(AG02), rot(AG03), rot(AG04), rot(AG05), rot(AG06), rot(AG07), rot(AG08), rot(AG09), rot(AG10), rot(AG11), rot(AG12), rot(AG13), rot(AG14), rot(AG15), rot(AG16));
-  //
   protected static final VoxelShape ANGLENORTH = VoxelShapes.or(flipx(AG00), flipx(AG01), flipx(AG02), flipx(AG03), flipx(AG04), flipx(AG05), flipx(AG06), flipx(AG07), flipx(AG08), flipx(AG09), flipx(AG10), flipx(AG11), flipx(AG12), flipx(AG13), flipx(AG14), flipx(AG15), flipx(AG16));
-  //
   protected static final VoxelShape ANGLEWEST = VoxelShapes.or(flipz(AG00), flipz(AG01), flipz(AG02), flipz(AG03), flipz(AG04), flipz(AG05), flipz(AG06), flipz(AG07), flipz(AG08), flipz(AG09), flipz(AG10), flipz(AG11), flipz(AG12), flipz(AG13), flipz(AG14), flipz(AG15), flipz(AG16));
-  protected static final VoxelShape BOTTOM = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 0.0D, 8.0D, 16.0D);
-  protected static final VoxelShape TOP = Block.makeCuboidShape(0.0D, 8.0D, 0.0D, 0.0D, 16.0D, 8.0D);
-  protected static final VoxelShape STAIR = VoxelShapes.combine(BOTTOM, TOP, IBooleanFunction.OR);
+  // PROPERTIES
+  public static final EnumProperty<DyeColor> COLOUR = EnumProperty.create("colour", DyeColor.class);
   public static final EnumProperty<ConveyorType> TYPE = EnumProperty.create("type", ConveyorType.class);
   public static final EnumProperty<ConveyorSpeed> SPEED = EnumProperty.create("speed", ConveyorSpeed.class);
   //javafx.util class doesnt compile into minecraft with ./gradlew build, swapped to SimpleEntry https://www.baeldung.com/java-pairs
@@ -68,6 +70,7 @@ public class BlockConveyor extends BlockBase {
 
   public BlockConveyor(Properties properties) {
     super(properties.notSolid());
+    DyeColor y;
   }
 
   /**
@@ -174,10 +177,6 @@ public class BlockConveyor extends BlockBase {
     }
     return SHAPE;
   }
-  //  @Override
-  //  public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-  //    return COLLISION_SHAPE;
-  //  }
 
   @Override
   public boolean isTransparent(BlockState state) {
@@ -192,13 +191,22 @@ public class BlockConveyor extends BlockBase {
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     Item heldItem = player.getHeldItem(hand).getItem();
+    if (heldItem instanceof DyeItem) {
+      //
+      DyeItem dye = (DyeItem) heldItem;
+      DyeColor newc = dye.getDyeColor();
+      if (world.setBlockState(pos, state.with(COLOUR, newc))) {
+        //
+        this.setConnectedColour(world, pos, newc, 0);
+        return ActionResultType.SUCCESS;
+      }
+    }
     if (heldItem == ItemRegistry.cable_wrench
         || heldItem == Items.REDSTONE_TORCH) {
       //speed toggle
       ConveyorSpeed speed = state.get(SPEED);
       //      ModCyclic.LOGGER.info("next speed " + speed);
       if (world.setBlockState(pos, state.with(SPEED, speed.getNext()))) {
-        //TODO: run a train 
         this.setConnectedSpeed(world, pos, speed.getNext(), 0);
         return ActionResultType.SUCCESS;
       }
@@ -211,8 +219,25 @@ public class BlockConveyor extends BlockBase {
     return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
+  private void setConnectedColour(World world, BlockPos pos, DyeColor speedIn, int maxRecursive) {
+    if (maxRecursive > MAX_CONNECTED_UPDATE) {
+      return;
+    }
+    for (Direction d : Direction.values()) {
+      //
+      BlockPos offset = pos.offset(d);
+      BlockState here = world.getBlockState(offset);
+      if (here.getBlock() == this) {
+        if (world.setBlockState(offset, here.with(COLOUR, speedIn))) {
+          maxRecursive++;
+          this.setConnectedColour(world, offset, speedIn, maxRecursive);
+        }
+      }
+    }
+  }
+
   private void setConnectedSpeed(World world, BlockPos pos, ConveyorSpeed speedIn, int maxRecursive) {
-    if (maxRecursive > 16) {
+    if (maxRecursive > MAX_CONNECTED_UPDATE) {
       return;
     }
     for (Direction d : Direction.values()) {
@@ -249,18 +274,12 @@ public class BlockConveyor extends BlockBase {
     //
     Direction facing = placer != null ? placer.getHorizontalFacing() : Direction.NORTH;
     //now set
-    worldIn.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, facing).with(SPEED, speed).with(TYPE, type), 2);
+    worldIn.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, facing).with(SPEED, speed).with(TYPE, type).with(COLOUR, DyeColor.BLUE), 2);
     super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
   }
 
   @Override
   public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-    if (!world.isRemote) {
-      // 
-      //      ModCyclic.LOGGER.info("crash " + entity);
-      //      //
-      //      TileConveyor.makeEntitiesTravel(entity, state, pos, world);
-    }
     if (!world.isRemote && entity instanceof ItemEntity && !(entity instanceof ConveyorItemEntity)) {
       ItemEntity e = (ItemEntity) entity;
       //I wanted to make it a custom entity that will just ride on the conveyor somewhat stationary but it's proving problematic
@@ -280,7 +299,7 @@ public class BlockConveyor extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.HORIZONTAL_FACING).add(SPEED).add(TYPE);
+    builder.add(BlockStateProperties.HORIZONTAL_FACING).add(SPEED).add(TYPE).add(COLOUR);
   }
 
   public static SimpleImmutableEntry<ConveyorType, Direction> nextState(ConveyorType t, Direction d) {
