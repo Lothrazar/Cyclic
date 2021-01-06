@@ -1,4 +1,5 @@
 {
+   "parent": "minecraft:block/cube",
   "textures": {
     "0": "cyclic:blocks/conveyor/conveyor_bottom",
     "1": "cyclic:blocks/conveyor/conveyor_end",
