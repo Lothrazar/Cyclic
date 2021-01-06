@@ -67,7 +67,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     double speed = bs.get(BlockConveyor.SPEED).getSpeed();//0.08D; //temp variable, replace with speed from blockstate later
     double xSpeed = 0.0D, zSpeed = 0.0D, ySpeed = 0.0D;
     if (entity.getPosY() > heightLimit) {
-      ModCyclic.LOGGER.info("cancel HEIGHT LIMIT ");
+      //            ModCyclic.LOGGER.info("cancel HEIGHT LIMIT ");
       return;
     }
     xSpeed = facing.getXOffset() * speed;
@@ -112,7 +112,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
       double hackEdge = 0.1;
       if (normalizedX < hackEdge || normalizedZ < hackEdge
           || normalizedX > 1 - hackEdge || normalizedZ > 1 - hackEdge) {
-        ModCyclic.LOGGER.info("jump hacks " + entity);
+        //        ModCyclic.LOGGER.info("jump hacks " + entity);
         entity.setPosition(entity.getPosX(), entity.getPosY() + .2, entity.getPosZ());
       }
       //      }

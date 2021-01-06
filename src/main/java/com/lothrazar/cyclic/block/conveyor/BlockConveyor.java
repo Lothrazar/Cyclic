@@ -9,9 +9,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.DyeItem;
@@ -163,11 +161,11 @@ public class BlockConveyor extends BlockBase {
       Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
       switch (facing) {
         case EAST:
-          return ANGLEEAST;//good
+          return ANGLEEAST;
         case NORTH:
-          return ANGLENORTH;//good
+          return ANGLENORTH;
         case SOUTH:
-          return ANGLESOUTH;//good
+          return ANGLESOUTH;
         case WEST:
           return ANGLEWEST;
         case DOWN:
@@ -180,12 +178,12 @@ public class BlockConveyor extends BlockBase {
 
   @Override
   public boolean isTransparent(BlockState state) {
-    return isVertical(state);
+    return state.get(TYPE).isVertical();
   }
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-    return isVertical(state);
+    return state.get(TYPE).isVertical();
   }
 
   @Override
@@ -195,17 +193,16 @@ public class BlockConveyor extends BlockBase {
       //
       DyeItem dye = (DyeItem) heldItem;
       DyeColor newc = dye.getDyeColor();
-      if (world.setBlockState(pos, state.with(COLOUR, newc))) {
-        //
-        this.setConnectedColour(world, pos, newc, 0);
-        return ActionResultType.SUCCESS;
-      }
+      world.setBlockState(pos, state.with(COLOUR, newc));
+      //
+      this.setConnectedColour(world, pos, newc, 0);
+      return ActionResultType.SUCCESS;
+      //  }
     }
     if (heldItem == ItemRegistry.cable_wrench
         || heldItem == Items.REDSTONE_TORCH) {
       //speed toggle
       ConveyorSpeed speed = state.get(SPEED);
-      //      ModCyclic.LOGGER.info("next speed " + speed);
       if (world.setBlockState(pos, state.with(SPEED, speed.getNext()))) {
         this.setConnectedSpeed(world, pos, speed.getNext(), 0);
         return ActionResultType.SUCCESS;
@@ -219,6 +216,18 @@ public class BlockConveyor extends BlockBase {
     return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
+  private BlockState getClosestConnected(World world, BlockPos pos) {
+    for (Direction d : Direction.values()) {
+      //
+      BlockPos offset = pos.offset(d);
+      BlockState here = world.getBlockState(offset);
+      if (here.getBlock() == this) {
+        return here;
+      }
+    }
+    return null;
+  }
+
   private void setConnectedColour(World world, BlockPos pos, DyeColor speedIn, int maxRecursive) {
     if (maxRecursive > MAX_CONNECTED_UPDATE) {
       return;
@@ -228,10 +237,10 @@ public class BlockConveyor extends BlockBase {
       BlockPos offset = pos.offset(d);
       BlockState here = world.getBlockState(offset);
       if (here.getBlock() == this) {
-        if (world.setBlockState(offset, here.with(COLOUR, speedIn))) {
-          maxRecursive++;
-          this.setConnectedColour(world, offset, speedIn, maxRecursive);
-        }
+        world.setBlockState(offset, here.with(COLOUR, speedIn));
+        maxRecursive++;
+        this.setConnectedColour(world, offset, speedIn, maxRecursive);
+        //}
       }
     }
   }
@@ -265,37 +274,41 @@ public class BlockConveyor extends BlockBase {
   }
 
   @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
     //decide properties
-    ConveyorSpeed speed = ConveyorSpeed.SLOWEST;
+    ConveyorSpeed speed = ConveyorSpeed.MEDIUM;
     ConveyorType type = ConveyorType.STRAIGHT;
-    //TODO: decide types
+    DyeColor col = DyeColor.GRAY;
     //
-    //
-    Direction facing = placer != null ? placer.getHorizontalFacing() : Direction.NORTH;
-    //now set
-    worldIn.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, facing).with(SPEED, speed).with(TYPE, type).with(COLOUR, DyeColor.BLUE), 2);
-    super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-  }
-
-  @Override
-  public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-    if (!world.isRemote && entity instanceof ItemEntity && !(entity instanceof ConveyorItemEntity)) {
-      ItemEntity e = (ItemEntity) entity;
-      //I wanted to make it a custom entity that will just ride on the conveyor somewhat stationary but it's proving problematic
-      //ConveyorItemEntity c = new ConveyorItemEntity(world, e.getPosX(), e.getPosY(), e.getPosZ(), e.getItem());
-      //ItemEntity e2 = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PUMPKIN, 1));
-      //world.addEntity(e2);
-      //world.addEntity(c);
-      //c.setThrowerId(e.getThrowerId());
-      //c.setMotion(e.getMotion());
-      //c.setNoDespawn();
-      //c.setDefaultPickupDelay();
-      //e.setItem(ItemStack.EMPTY);
-      //e.remove();
+    //overwrite defaults with what is nearby
+    BlockState nearby = getClosestConnected(world, pos);
+    if (nearby != null) {
+      speed = nearby.get(SPEED);
+      col = nearby.get(COLOUR);
     }
-    super.onEntityCollision(state, world, pos, entity);
+    //now set
+    Direction facing = placer != null ? placer.getHorizontalFacing() : Direction.NORTH;
+    world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, facing).with(SPEED, speed).with(TYPE, type).with(COLOUR, col), 2);
+    super.onBlockPlacedBy(world, pos, state, placer, stack);
   }
+  //  @Override
+  //  public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+  //    if (!world.isRemote && entity instanceof ItemEntity && !(entity instanceof ConveyorItemEntity)) {
+  //      ItemEntity e = (ItemEntity) entity;
+  //      //I wanted to make it a custom entity that will just ride on the conveyor somewhat stationary but it's proving problematic
+  //      //ConveyorItemEntity c = new ConveyorItemEntity(world, e.getPosX(), e.getPosY(), e.getPosZ(), e.getItem());
+  //      //ItemEntity e2 = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PUMPKIN, 1));
+  //      //world.addEntity(e2);
+  //      //world.addEntity(c);
+  //      //c.setThrowerId(e.getThrowerId());
+  //      //c.setMotion(e.getMotion());
+  //      //c.setNoDespawn();
+  //      //c.setDefaultPickupDelay();
+  //      //e.setItem(ItemStack.EMPTY);
+  //      //e.remove();
+  //    }
+  //    super.onEntityCollision(state, world, pos, entity);
+  //  }
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
@@ -337,9 +350,5 @@ public class BlockConveyor extends BlockBase {
       }
     }
     return pairs;
-  }
-
-  public static boolean isVertical(BlockState state) {
-    return state.get(TYPE).isVertical();
   }
 }

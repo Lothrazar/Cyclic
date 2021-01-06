@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "r r",
+    "rcr",
+    "r r"
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:rail"
+    },
+    "c": {
+      "tag": "forge:dusts/redstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:conveyor",
+    "count": 8
+  }
+}

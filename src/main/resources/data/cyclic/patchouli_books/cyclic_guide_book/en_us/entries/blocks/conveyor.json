@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.conveyor",
+  "icon": "cyclic:conveyor",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.conveyor.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:conveyor",
+      "text": "block.cyclic.conveyor.guide0"
+    }
+  ]
+}
