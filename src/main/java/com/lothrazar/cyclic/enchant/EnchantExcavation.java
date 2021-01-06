@@ -103,8 +103,8 @@ public class EnchantExcavation extends EnchantBase {
       return;
     }
     if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
-      int harvested = this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
-      if (harvested > 0) {
+      boolean harvested = this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
+      if (harvested) {
         //damage but also respect the unbreaking chant  
         player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.getRandom(), null);
       }
@@ -120,22 +120,32 @@ public class EnchantExcavation extends EnchantBase {
    *
    * @param swingingHand
    */
-  private int harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn, final Block block, int totalBroken, final int level,
-      Hand swingingHand) {
-    if (totalBroken >= this.getHarvestMax(level)
+  private boolean harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn, final Block block, int totalAttempts, final int level, Hand swingingHand) {
+    if (totalAttempts >= this.getHarvestMax(level)
         || player.getHeldItem(player.swingingHand).isEmpty()) {
-      return totalBroken;
+      ModCyclic.LOGGER.info(totalAttempts + " = totalAttempts ; early quitqqqqq");
+      return totalAttempts > 0;
     }
     //    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     Set<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
+    if (theFuture.size() == 0) {
+      ModCyclic.LOGGER.info(theFuture + " = theFuture  ni suze ");
+      //avoid infinite loop if nothing near by and this is empty
+      return totalAttempts > 0;
+    }
     Set<BlockPos> wasHarvested = new HashSet<BlockPos>();
     for (BlockPos targetPos : theFuture) {
+      // https://github.com/Lothrazar/Cyclic/issues/1666
+      //even if we fail to break this block, and arent allowed, STILL we need to count it
+      //otherwise possible infinite loop where its constantly skipping over unbreakable blocks
+      totalAttempts++;
+      //now continue
       BlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
       if (world.isAirBlock(targetPos)
           || !player.isAllowEdit()
           || player.func_234569_d_(targetState) == false//canHarvestBlock
-          || totalBroken >= this.getHarvestMax(level)
+          || totalAttempts >= this.getHarvestMax(level)
           || player.getHeldItem(player.swingingHand).isEmpty()
           || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)) {
         continue;
@@ -151,20 +161,21 @@ public class EnchantExcavation extends EnchantBase {
       }
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
-      totalBroken++;
     }
     //AFTER we harvest the close ones only THEN we branch out
     for (BlockPos targetPos : theFuture) {
-      if (totalBroken >= this.getHarvestMax(level)
+      if (totalAttempts >= this.getHarvestMax(level)
           || player.getHeldItem(player.swingingHand).isEmpty()) {
+        ModCyclic.LOGGER.info(totalAttempts + " = totalAttempts ; too many for level");
         break;
       }
-      totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level, swingingHand);
+      return this.harvestSurrounding(world, player, targetPos, block, totalAttempts, level, swingingHand);
     }
-    return totalBroken;
+    return totalAttempts > 0;
   }
 
   private static final Direction[] VALUES = Direction.values();
+  private static final Direction[] HORIZ = { Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST };
 
   private Set<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
     Set<BlockPos> list = new HashSet<BlockPos>();
@@ -184,6 +195,24 @@ public class EnchantExcavation extends EnchantBase {
       Block target = world.getBlockState(start.offset(fac)).getBlock();
       if (target == blockIn) {
         list.add(start.offset(fac));
+      }
+    }
+    //does not do "edge" or corner diagonals. for example, a grass block that is up one and north one
+    //picture a vertical 3 tall '+' sign, thats what it checks now
+    BlockPos up = start.offset(Direction.UP);
+    //go up and check all four NESW
+    BlockPos down = start.offset(Direction.DOWN);
+    //go down check all four   NESW
+    for (Direction offs : HORIZ) {
+      //upper diagonals
+      Block target = world.getBlockState(up.offset(offs)).getBlock();
+      if (target == blockIn) {
+        list.add(up.offset(offs));
+      }
+      //lower diagonals
+      target = world.getBlockState(down.offset(offs)).getBlock();
+      if (target == blockIn) {
+        list.add(down.offset(offs));
       }
     }
     return list;

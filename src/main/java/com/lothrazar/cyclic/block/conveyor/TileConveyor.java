@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -56,7 +55,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     //if the normalized values are >1 or <0, they entity is right at the border so dont apply it now
     Direction facing = bs.get(BlockStateProperties.HORIZONTAL_FACING);
     if (facing.getAxis() == Axis.Z && (normalizedX > 1 - offside || normalizedX < 0 + offside)) {
-      ModCyclic.LOGGER.info("cancel edge movement  " + entity);
+      //      ModCyclic.LOGGER.info("cancel edge movement  " + entity);
       return;
     }
     if (facing.getAxis() == Axis.X && (normalizedZ > 1 - offside || normalizedZ < 0 + offside)) {
