@@ -1,12 +1,12 @@
 {
-	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+	"credit": "Made with Blockbench",
 	"parent": "cyclic:parent/conveyor",
 	"elements": [
 		{
 			"name": "RailW",
-			"from": [0.25, 10.5, -4],
-			"to": [2, 13.5, 20],
-			"rotation": {"angle": 45, "axis": "x", "origin": [1, 12, 4]},
+			"from": [0.25, 4.5, -4],
+			"to": [2, 7.5, 20],
+			"rotation": {"angle": -45, "axis": "x", "origin": [1, 6, 4]},
 			"faces": {
 				"north": {"uv": [14, 13, 16, 16], "texture": "#1"},
 				"east": {"uv": [0, 13, 16, 16], "texture": "#3"},
@@ -18,9 +18,9 @@
 		},
 		{
 			"name": "RailE",
-			"from": [14, 10.5, -4],
-			"to": [15.75, 13.5, 20],
-			"rotation": {"angle": 45, "axis": "x", "origin": [15, 12, 4]},
+			"from": [14, 4.5, -4],
+			"to": [15.75, 7.5, 20],
+			"rotation": {"angle": -45, "axis": "x", "origin": [1, 6, 4]},
 			"faces": {
 				"north": {"uv": [0, 13, 2, 16], "texture": "#1"},
 				"east": {"uv": [0, 13, 16, 16], "texture": "#3"},
@@ -32,20 +32,20 @@
 		},
 		{
 			"name": "Middle",
-			"from": [2, 11.5, -3],
-			"to": [14, 12.5, 20],
-			"rotation": {"angle": 45, "axis": "x", "origin": [8, 12, 5]},
+			"from": [2, 5.5, -3],
+			"to": [14, 6.5, 20],
+			"rotation": {"angle": -45, "axis": "x", "origin": [1, 6, 4]},
 			"faces": {
 				"north": {"uv": [14, 0, 2, 1], "texture": "#2"},
 				"south": {"uv": [2, 15, 14, 16], "texture": "#2"},
-				"up": {"uv": [2, 0, 14, 16], "texture": "#2", "rotation":180}
+				"up": {"uv": [2, 0, 14, 16], "texture": "#2"}
 			}
 		},
 		{
 			"name": "MiddleBasePlate",
-			"from": [2, 11.5, -3],
-			"to": [14, 12.5, 20],
-			"rotation": {"angle": 45, "axis": "x", "origin": [8, 12, 5]},
+			"from": [2, 5.5, -3],
+			"to": [14, 6.5, 20],
+			"rotation": {"angle": -45, "axis": "x", "origin": [1, 6, 4]},
 			"faces": {
 				"north": {"uv": [2, 15, 14, 16], "texture": "#1"},
 				"south": {"uv": [2, 15, 14, 16], "texture": "#1"},
@@ -54,21 +54,6 @@
 		}
 	],
 	"display": {
-		"gui": {
-			"rotation": [75, 45, 0],
-			"translation": [0, 0, 0],
-			"scale": [0.625, 0.625, 0.625]
-		},
-		"ground": {
-			"rotation": [0, 0, 0],
-			"translation": [0, 3, 0],
-			"scale": [0.25, 0.25, 0.25]
-		},
-		"fixed": {
-			"rotation": [0, 0, 0],
-			"translation": [0, 0, 0],
-			"scale": [0.5, 0.5, 0.5]
-		},
 		"thirdperson_righthand": {
 			"rotation": [75, 45, 0],
 			"translation": [0, 2.5, 0],
@@ -76,13 +61,22 @@
 		},
 		"firstperson_righthand": {
 			"rotation": [0, 45, 0],
-			"translation": [0, 0, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
 			"rotation": [0, 225, 0],
-			"translation": [0, 0, 0],
 			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [75, 45, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
 		}
 	}
 }
