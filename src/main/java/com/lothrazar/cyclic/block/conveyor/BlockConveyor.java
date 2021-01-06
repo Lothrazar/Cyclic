@@ -157,8 +157,9 @@ public class BlockConveyor extends BlockBase {
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    if (state.get(TYPE).isVertical()) {
-      Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+    Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+    if (state.get(TYPE) == ConveyorType.UP) {
+      //      Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
       switch (facing) {
         case EAST:
           return ANGLEEAST;
@@ -171,6 +172,21 @@ public class BlockConveyor extends BlockBase {
         case DOWN:
         case UP:
         break;
+      }
+      if (state.get(TYPE) == ConveyorType.DOWN) {
+        switch (facing) {
+          case EAST:
+            return ANGLEWEST;
+          case NORTH:
+            return ANGLESOUTH;
+          case SOUTH:
+            return ANGLENORTH;
+          case WEST:
+            return ANGLEEAST;
+          case DOWN:
+          case UP:
+          break;
+        }
       }
     }
     return SHAPE;
@@ -199,8 +215,7 @@ public class BlockConveyor extends BlockBase {
       return ActionResultType.SUCCESS;
       //  }
     }
-    if (heldItem == ItemRegistry.cable_wrench
-        || heldItem == Items.REDSTONE_TORCH) {
+    else if (heldItem == ItemRegistry.cable_wrench || heldItem == Items.REDSTONE_TORCH) {
       //speed toggle
       ConveyorSpeed speed = state.get(SPEED);
       if (world.setBlockState(pos, state.with(SPEED, speed.getNext()))) {
@@ -208,7 +223,7 @@ public class BlockConveyor extends BlockBase {
         return ActionResultType.SUCCESS;
       }
     }
-    if (heldItem == this.asItem()) {
+    else if (heldItem == ItemRegistry.wrench) { //heldItem == this.asItem() || 
       SimpleImmutableEntry<ConveyorType, Direction> nextState = nextConnectedState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
       boolean success = world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
       if (success) return ActionResultType.SUCCESS;

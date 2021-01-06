@@ -109,6 +109,8 @@ public class ItemRegistry {
   public static Item peat_fuel;
   @ObjectHolder(ModCyclic.MODID + ":peat_fuel_enriched")
   public static Item peat_fuel_enriched;
+  @ObjectHolder(ModCyclic.MODID + ":wrench")
+  public static Item wrench;
   @ObjectHolder(ModCyclic.MODID + ":cable_wrench")
   public static CableWrench cable_wrench;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
