@@ -74,13 +74,11 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, CAPACITY);
     FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
     if (!success && sideHandler != null
-        && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME
-    //
-    ) {
+        && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       //test if its a source block, or a waterlogged block
       //
       BlockState targetState = world.getBlockState(target);
-      FluidState fluid = targetState.getBlock().getFluidState(targetState);
+      FluidState fluid = targetState.getFluidState();
       if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
         //not just water. any fluid source block
         if (world.setBlockState(target, Blocks.AIR.getDefaultState()))

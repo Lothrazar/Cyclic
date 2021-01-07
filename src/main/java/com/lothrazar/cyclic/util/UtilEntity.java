@@ -370,22 +370,6 @@ public class UtilEntity {
     entity.setPosition(fixedX, entity.getPosition().getY(), fixedZ);
   }
 
-  private static final int TICKS_FALLDIST_SYNC = 16;//tick every so often
-
-  public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
-    Vector3d motion = entity.getMotion();
-    if (entity.isCrouching()) {
-      entity.setMotion(motion.x, 0, motion.z);
-    }
-    else if (entity.moveForward > 0.0F && motion.y < climbSpeed) {
-      entity.setMotion(motion.x, climbSpeed, motion.z);
-    }
-    if (worldIn.isRemote && //setting fall distance on clientside wont work
-        entity instanceof PlayerEntity && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
-    }
-  }
-
   public static List<VillagerEntity> getVillagers(World world, BlockPos p, int r) {
     BlockPos start = p.add(-r, -r, -r);
     BlockPos end = p.add(r, r, r);
@@ -509,6 +493,21 @@ public class UtilEntity {
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Horse eating animation error", e);
+    }
+  }
+
+  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
+
+  public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
+    if (entity.isCrouching()) {
+      entity.setMotion(entity.getMotion().x, 0.0, entity.getMotion().z);
+    }
+    else if (entity.moveForward > 0.0F && entity.getMotion().y < climbSpeed) {
+      entity.setMotion(entity.getMotion().x, climbSpeed, entity.getMotion().z);
+      entity.fallDistance = 0.0F;
+    } //setting fall distance on clientside wont work
+    if (worldIn.isRemote && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+      PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
     }
   }
 }

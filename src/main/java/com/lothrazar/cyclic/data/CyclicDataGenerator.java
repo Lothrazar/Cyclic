@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.data;
 
-import com.google.gson.Gson;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclic.block.conveyor.ConveyorSpeed;
@@ -22,13 +21,9 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CyclicDataGenerator {
 
-  private static Gson GSON = null;
-
   @SubscribeEvent
   public static void gatherData(GatherDataEvent event) {
-
     DataGenerator gen = event.getGenerator();
-
     if (event.includeClient()) {
       gen.addProvider(new BlockStates(gen, ModCyclic.MODID, event.getExistingFileHelper()));
     }
@@ -43,7 +38,6 @@ public class CyclicDataGenerator {
     @Override
     protected void registerStatesAndModels() {
       VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.conveyor);
-
       builder.forAllStates((state -> {
         ConveyorType type = state.get(BlockConveyor.TYPE);
         ConveyorSpeed speed = state.get(BlockConveyor.SPEED);
@@ -52,23 +46,23 @@ public class CyclicDataGenerator {
         switch (facing) {
           case EAST:
             y = 90;
-            break;
+          break;
           case SOUTH:
             y = 180;
-            break;
+          break;
           case WEST:
             y = 270;
-            break;
+          break;
           default:
             y = 0;
         }
         String location = String.format("block/conveyor/conveyor_%s_%s", speed.getString(), type.getString());
         ModelFile.UncheckedModelFile model = new ModelFile.UncheckedModelFile(new ResourceLocation(ModCyclic.MODID, location));
         return ConfiguredModel.builder()
-                .rotationX(0)
-                .rotationY(y)
-                .modelFile(model)
-                .build();
+            .rotationX(0)
+            .rotationY(y)
+            .modelFile(model)
+            .build();
       }));
     }
   }

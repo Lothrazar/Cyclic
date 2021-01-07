@@ -4,7 +4,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilStuff;
+import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +35,7 @@ public class GloveItem extends ItemBase implements IHasClickToggle {
       PlayerEntity player = (PlayerEntity) entityIn;
       if (player.collidedHorizontally) {
         World world = player.getEntityWorld();
-        UtilStuff.tryMakeEntityClimb(world, player, CLIMB_SPEED);
+        UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
         //        stack.damageItem(1, player);
         //        if (world.isRemote &&
         //            player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
@@ -63,10 +63,7 @@ public class GloveItem extends ItemBase implements IHasClickToggle {
 
   @Override
   public void toggle(PlayerEntity player, ItemStack held) {
-    CompoundNBT tag = held.getTag();
-    if (tag == null) {
-      tag = new CompoundNBT();
-    }
+    CompoundNBT tag = held.getOrCreateTag();
     tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
     held.setTag(tag);
   }

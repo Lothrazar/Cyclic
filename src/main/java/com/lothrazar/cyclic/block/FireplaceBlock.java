@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilStuff;
+import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -95,7 +95,7 @@ public class FireplaceBlock extends BlockBase {
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlockState(pos, state.with(BlockStateProperties.FACING, UtilStuff.getFacingFromEntity(pos, entity)), 2);
+      world.setBlockState(pos, state.with(BlockStateProperties.FACING, UtilBlockstates.getFacingFromEntity(pos, entity)), 2);
     }
   }
 

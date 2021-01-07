@@ -68,7 +68,6 @@ public class BlockConveyor extends BlockBase {
 
   public BlockConveyor(Properties properties) {
     super(properties.notSolid());
-    DyeColor y;
   }
 
   /**
@@ -141,13 +140,6 @@ public class BlockConveyor extends BlockBase {
     double z1 = shape.getStart(Direction.Axis.Z);
     double z2 = shape.getEnd(Direction.Axis.Z);
     //flip
-    //    double temp = z1; // ]
-    //    z1 = x1; // ] x1 <-> z1
-    //    x1 = temp; // ]
-    //    temp = z2; // ]
-    //    z2 = x2; // ] x2 <-> z2
-    //    x2 = temp; // ]
-    //
     x1 = 1 - x1; //  
     x2 = 1 - x2;
     z1 = 1 - z1; //  

@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.item.bauble;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
@@ -33,10 +34,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class AutoCaveTorchItem extends ItemBase {
+public class AutoCaveTorchItem extends ItemBase implements IHasClickToggle {
 
   public AutoCaveTorchItem(Properties properties) {
     super(properties);
@@ -51,6 +53,9 @@ public class AutoCaveTorchItem extends ItemBase {
 
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
+    if (!this.isOn(stack)) {
+      return;
+    }
     if (!(entityIn instanceof PlayerEntity)) {
       return;
     }
@@ -104,5 +109,17 @@ public class AutoCaveTorchItem extends ItemBase {
 
   private boolean shouldPlaceTorch(World world, BlockPos pos) {
     return world.getLight(pos) <= LIGHT_LIMIT && world.isAirBlock(pos);
+  }
+
+  @Override
+  public void toggle(PlayerEntity player, ItemStack held) {
+    CompoundNBT tag = held.getOrCreateTag();
+    tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
+    held.setTag(tag);
+  }
+
+  @Override
+  public boolean isOn(ItemStack held) {
+    return held.getOrCreateTag().getInt(NBT_STATUS) == 0;
   }
 }

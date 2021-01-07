@@ -13,6 +13,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ConveyorItemEntity extends ItemEntity {
+
   public ConveyorItemEntity(World worldIn, double x, double y, double z, ItemStack stack) {
     super(EntityRegistry.conveyor_item, worldIn);
     this.setPosition(x, y, z);
@@ -44,12 +45,9 @@ public class ConveyorItemEntity extends ItemEntity {
 
   @Override
   public void tick() {
-    if (this.world == null)
+    if (this.world == null) {
       return;
-    if (this.world.isRemote) {
-      int i = 0;
     }
-
     if (!(this.world.getBlockState(this.getPosition()).getBlock() instanceof BlockConveyor)) {
       this.spawnRegularStack();
     }
@@ -79,11 +77,9 @@ public class ConveyorItemEntity extends ItemEntity {
     if (this.getThrowerId() != null) {
       compound.putUniqueId("Thrower", this.getThrowerId());
     }
-
     if (this.getOwnerId() != null) {
       compound.putUniqueId("Owner", this.getOwnerId());
     }
-
     if (!this.getItem().isEmpty()) {
       compound.put("Item", this.getItem().write(new CompoundNBT()));
     }
@@ -94,15 +90,12 @@ public class ConveyorItemEntity extends ItemEntity {
     this.setNoDespawn();
     this.setInfinitePickupDelay();
     if (compound.contains("Lifespan")) lifespan = compound.getInt("Lifespan");
-
     if (compound.hasUniqueId("Owner")) {
       this.setOwnerId(compound.getUniqueId("Owner"));
     }
-
     if (compound.hasUniqueId("Thrower")) {
       this.setThrowerId(compound.getUniqueId("Thrower"));
     }
-
     CompoundNBT compoundnbt = compound.getCompound("Item");
     this.setItem(ItemStack.read(compoundnbt));
     if (this.getItem().isEmpty()) {

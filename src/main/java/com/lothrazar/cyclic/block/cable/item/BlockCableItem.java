@@ -44,7 +44,7 @@ public class BlockCableItem extends CableBase {
         if (handlerHere != null) {
           ItemStack current = handlerHere.getStackInSlot(0);
           if (!current.isEmpty())
-            player.sendMessage(new TranslationTextComponent(d.toString() + " " + current.getDisplayName()), player.getUniqueID());
+            player.sendMessage(new TranslationTextComponent(d.toString() + " " + current.getDisplayName().getString()), player.getUniqueID());
         }
       }
     }
@@ -73,28 +73,6 @@ public class BlockCableItem extends CableBase {
       super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
   }
-  //  @Override
-  //  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-  //    int calc = 0;
-  //    TileEntity tileentity = worldIn.getTileEntity(pos);
-  //    if (tileentity != null) {
-  //      for (Direction d : Direction.values()) {
-  //        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-  //        if (items != null) {
-  //          //ok 
-  //          if (items.getStackInSlot(0).isEmpty() == false) {
-  //            calc += 2;
-  //          }
-  //        }
-  //      }
-  //    }
-  //    return calc;
-  //  }
-  //
-  //  @Override
-  //  public boolean hasComparatorInputOverride(BlockState state) {
-  //    return true;
-  //  }
 
   @Nullable
   @Override

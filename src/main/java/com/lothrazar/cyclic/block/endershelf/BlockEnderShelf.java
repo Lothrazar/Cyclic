@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilEnchant;
-import com.lothrazar.cyclic.util.UtilStuff;
+import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -67,7 +67,7 @@ public class BlockEnderShelf extends BlockBase {
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilStuff.getFacingFromEntityHorizontal(pos, entity)), 2);
+      world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
       if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEnderShelf) {
         TileEnderShelf shelf = (TileEnderShelf) world.getTileEntity(pos);
         BlockPos controllerPos = null;

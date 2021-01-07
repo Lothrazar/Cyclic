@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.item.wing;
 
 import java.util.Optional;
+import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -41,7 +42,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class EnderWingItem extends ItemBase {
+public class EnderWingItem extends ItemBase implements IHasClickToggle {
 
   public EnderWingItem(Properties properties) {
     super(properties);
@@ -52,8 +53,14 @@ public class EnderWingItem extends ItemBase {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
     if (worldIn.isRemote
-        || playerIn.getCooldownTracker().hasCooldown(this))
+        || playerIn.getCooldownTracker().hasCooldown(this)) {
       return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+    attemptTeleport(worldIn, playerIn, playerIn.getHeldItem(handIn));
+    return super.onItemRightClick(worldIn, playerIn, handIn);
+  }
+
+  private void attemptTeleport(World worldIn, PlayerEntity playerIn, ItemStack held) {
     ServerWorld serverWorld = worldIn.getServer().getWorld(World.OVERWORLD);
     ServerPlayerEntity serverPlayerEntity = playerIn instanceof ServerPlayerEntity ? (ServerPlayerEntity) playerIn : null;
     if (serverWorld != null && serverPlayerEntity != null) {
@@ -86,7 +93,7 @@ public class EnderWingItem extends ItemBase {
             }
           }
           if (needsTeleport) {
-            UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
+            UtilItemStack.damageItem(playerIn, held);
             playerIn.getCooldownTracker().setCooldown(this, cooldown);
             UtilEntity.enderTeleportEvent(playerIn, spawnWorld, pos);
             UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
@@ -97,6 +104,15 @@ public class EnderWingItem extends ItemBase {
         }
       }
     }
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+  }
+
+  @Override
+  public void toggle(PlayerEntity player, ItemStack held) {
+    this.attemptTeleport(player.world, player, held);
+  }
+
+  @Override
+  public boolean isOn(ItemStack held) {
+    return false;
   }
 }

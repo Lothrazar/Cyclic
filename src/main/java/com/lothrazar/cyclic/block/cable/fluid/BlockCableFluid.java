@@ -36,10 +36,10 @@ public class BlockCableFluid extends CableBase {
 
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    if (world.isRemote) {
+    if (!world.isRemote) {
       TileEntity ent = world.getTileEntity(pos);
       IFluidHandler handlerHere = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
-      //show current
+      //show current 
       if (handlerHere != null && handlerHere.getFluidInTank(0) != null) {
         FluidStack fluid = handlerHere.getFluidInTank(0);
         int st = fluid.getAmount();

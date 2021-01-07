@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.wing;
 
+import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -36,7 +37,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.IWorldInfo;
 
-public class EnderWingSp extends ItemBase {
+public class EnderWingSp extends ItemBase implements IHasClickToggle {
 
   public EnderWingSp(Properties properties) {
     super(properties);
@@ -49,17 +50,30 @@ public class EnderWingSp extends ItemBase {
     if (playerIn.getCooldownTracker().hasCooldown(this)) {
       return super.onItemRightClick(worldIn, playerIn, handIn);
     }
+    attemptTeleport(worldIn, playerIn, playerIn.getHeldItem(handIn));
+    return super.onItemRightClick(worldIn, playerIn, handIn);
+  }
+
+  private void attemptTeleport(World worldIn, PlayerEntity playerIn, ItemStack held) {
     IWorldInfo worldInfo = worldIn.getWorldInfo();
     if (worldInfo != null) {
       BlockPos spawn = new BlockPos(worldInfo.getSpawnX(), worldInfo.getSpawnY(), worldInfo.getSpawnZ());
-      //     BlockPos spawn = playerIn.getBedPosition().orElse(null);
       if (spawn != null) {
         UtilEntity.enderTeleportEvent(playerIn, worldIn, spawn);
         UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
-        UtilItemStack.damageItem(playerIn, playerIn.getHeldItem(handIn));
+        UtilItemStack.damageItem(playerIn, held);
         playerIn.getCooldownTracker().setCooldown(this, cooldown);
       }
     }
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+  }
+
+  @Override
+  public void toggle(PlayerEntity player, ItemStack held) {
+    this.attemptTeleport(player.world, player, held);
+  }
+
+  @Override
+  public boolean isOn(ItemStack held) {
+    return false;
   }
 }

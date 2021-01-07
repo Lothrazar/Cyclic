@@ -44,8 +44,10 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
       return;
     }
+    setLitProperty(true);
     if (world.isRemote) {
       return;
     }

@@ -1,30 +1,13 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class UtilStuff {
-
-  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
-
-  public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
-    if (entity.isCrouching()) {
-      entity.setMotion(entity.getMotion().x, 0.0, entity.getMotion().z);
-    }
-    else if (entity.moveForward > 0.0F && entity.getMotion().y < climbSpeed) {
-      entity.setMotion(entity.getMotion().x, climbSpeed, entity.getMotion().z);
-      entity.fallDistance = 0.0F;
-    } //setting fall distance on clientside wont work
-    if (worldIn.isRemote && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
-    }
-  }
+public class UtilBlockstates {
 
   public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
     return Direction.getFacingFromVector((float) (entity.lastTickPosX - clickedBlock.getX()), (float) (entity.lastTickPosY - clickedBlock.getY()), (float) (entity.lastTickPosZ - clickedBlock.getZ()));
@@ -39,14 +22,14 @@ public class UtilStuff {
     return d;
   }
 
-  public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
+  public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, final int radiusIn) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
-    int xMin = start.getX() - RADIUS;
-    int xMax = start.getX() + RADIUS;
-    int yMin = start.getY() - RADIUS;
-    int yMax = start.getY() + RADIUS;
-    int zMin = start.getZ() - RADIUS;
-    int zMax = start.getZ() + RADIUS;
+    int xMin = start.getX() - radiusIn;
+    int xMax = start.getX() + radiusIn;
+    int yMin = start.getY() - radiusIn;
+    int yMax = start.getY() + radiusIn;
+    int zMin = start.getZ() - radiusIn;
+    int zMax = start.getZ() + radiusIn;
     BlockPos posCurrent = null;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
