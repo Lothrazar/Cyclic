@@ -32,6 +32,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     REDSTONE, RENDER, SIZE;
   }
 
+  private static final int MAX_SIZE = 11;//radius 7 translates to 15x15 area (center block + 7 each side)
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int radius = 8;
@@ -128,7 +129,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
         this.render = value % 2;
       break;
       case SIZE:
-        radius = value % 11;//max
+        radius = value % MAX_SIZE;
       break;
     }
   }

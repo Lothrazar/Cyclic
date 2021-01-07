@@ -46,6 +46,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  private static final int MAX_SIZE = 11;//radius 7 translates to 15x15 area (center block + 7 each side)
   private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
   public static IntValue POWERCONF;
   private int radius = 9;
@@ -192,7 +193,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         this.render = value % 2;
       break;
       case SIZE:
-        radius = value % 11;//max
+        radius = value % MAX_SIZE;
+        ModCyclic.LOGGER.info(value + " -> harvester radius " + radius);
       break;
     }
   }
@@ -207,12 +209,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    radius = tag.getInt("radius");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("radius", radius);
     tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }

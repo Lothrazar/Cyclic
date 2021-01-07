@@ -49,8 +49,8 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   static final int MAX_HEIGHT = 32;
   public static IntValue POWERCONF;
   private int height = MAX_HEIGHT;
-  private static final int MAX_SIZE = 9;//radius 7 translates to 15x15 area (center block + 7 each side)
-  private int size = MAX_SIZE;
+  private static final int MAX_SIZE = 11;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private int radius = MAX_SIZE;
   static final int MAX = 64000;
   //
   //
@@ -167,6 +167,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    radius = tag.getInt("radius");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -175,6 +176,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
+    tag.putInt("radius", radius);
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
@@ -216,14 +218,14 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   //for harvest
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(size + 1), size, height);
+    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, height);
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size + 1), this.size);
+    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), this.radius);
     if (targetPos != null) {
       shape.add(targetPos);
     }
@@ -255,7 +257,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       case RENDER:
         return render;
       case SIZE:
-        return size;
+        return radius;
     }
     return 0;
   }
@@ -270,7 +272,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         this.render = value % 2;
       break;
       case SIZE:
-        size = value % MAX_SIZE;
+        radius = value % MAX_SIZE;
       break;
     }
   }
