@@ -15,6 +15,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -72,23 +73,24 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
     boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, CAPACITY);
     FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
-    //    ModCyclic.LOGGER.info(" sideHandler.incomingSide()  from " + incomingSide);
-    if (!success && world.hasWater(target) && sideHandler != null
+    if (!success && sideHandler != null
         && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME
     //
     ) {
-      //source water block. or waterlogged slab
+      //test if its a source block, or a waterlogged block
       //
       BlockState targetState = world.getBlockState(target);
-      if (targetState.getBlock() == Blocks.WATER) {
-        //
+      FluidState fluid = targetState.getBlock().getFluidState(targetState);
+      if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
+        //not just water. any fluid source block
         if (world.setBlockState(target, Blocks.AIR.getDefaultState()))
-          sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          sideHandler.fill(new FluidStack(fluid.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
       }
       else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
           && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
             //
             targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
+            //for waterlogged it is hardcoded to water
             if (world.setBlockState(target, targetState))
               sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
           }
