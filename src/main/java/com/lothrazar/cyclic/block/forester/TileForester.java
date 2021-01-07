@@ -78,7 +78,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   //  private PlantingMode mode;
   //harvest mode: do we shear or break leaves
   static enum Fields {
-    REDSTONE, RENDER;
+    REDSTONE, RENDER, SIZE;
   }
 
   public TileForester() {
@@ -254,6 +254,8 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         return this.needsRedstone;
       case RENDER:
         return render;
+      case SIZE:
+        return size;
     }
     return 0;
   }
@@ -266,6 +268,9 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       break;
       case RENDER:
         this.render = value % 2;
+      break;
+      case SIZE:
+        size = value % MAX_SIZE;
       break;
     }
   }

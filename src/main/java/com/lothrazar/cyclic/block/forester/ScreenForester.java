@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.block.forester;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -14,6 +16,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   private ButtonMachineRedstone btnRender;
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
+  private GuiSliderInteger size;
 
   public ScreenForester(ContainerForester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -30,8 +33,15 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileForester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileForester.Fields.RENDER.ordinal(),
+    y += 20;
+    btnRender = addButton(new ButtonMachineRedstone(x, y, TileForester.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+    int w = 110;
+    int h = 18;
+    int f = TileForester.Fields.SIZE.ordinal();
+    x += 28;
+    y += 20;
+    size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, 10, container.tile.getField(f)));
   }
 
   @Override
@@ -48,12 +58,14 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(container.tile);
     btnRender.onValueUpdate(container.tile);
+    size.setTooltip("cyclic.screen.size" + container.tile.getField(size.getField()));
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 54, 34);
+    int relX = this.getXSize() / 2 - 9;
+    this.drawSlot(ms, relX, 24, TextureRegistry.SLOTSAPLING, Const.SQ);
     energy.draw(ms, container.getEnergy());
   }
 }
