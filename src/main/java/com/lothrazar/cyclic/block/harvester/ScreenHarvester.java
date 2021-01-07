@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.harvester;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -14,6 +15,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   private EnergyBar energy;
   private ButtonMachineRedstone btnRedstone;
   private ButtonMachineRedstone btnRender;
+  private GuiSliderInteger size;
 
   public ScreenHarvester(ContainerHarvester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -30,8 +32,16 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileHarvester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileHarvester.Fields.RENDER.ordinal(),
+    y += 20;
+    btnRender = addButton(new ButtonMachineRedstone(x, y, TileHarvester.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+    //
+    int w = 130;
+    int h = 18;
+    int f = TileHarvester.Fields.SIZE.ordinal();
+    //    x += 18;
+    y += 26;
+    size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, 10, container.tile.getField(f)));
   }
 
   @Override
@@ -46,6 +56,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(container.tile);
     btnRender.onValueUpdate(container.tile);
+    size.setTooltip("cyclic.screen.size" + container.tile.getField(size.getField()));
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
   }

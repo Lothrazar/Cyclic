@@ -54,7 +54,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   static final int MAX = 640000;
 
   static enum Fields {
-    REDSTONE, RENDER;
+    REDSTONE, RENDER, SIZE;
   }
 
   public TileHarvester() {
@@ -81,14 +81,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return;
     }
     timer = Const.TICKS_PER_SEC / 2;//could config, but 2x per sec is enough
-    BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius), radius);
+    BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius + 1), radius);
     if (tryHarvestSingle(this.world, target)) {
       energy.extractEnergy(cost, false);
     }
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius), radius);
+    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
   }
 
   @Override
@@ -176,6 +176,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         return this.needsRedstone;
       case RENDER:
         return render;
+      case SIZE:
+        return radius;
     }
     return 0;
   }
@@ -188,6 +190,9 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       break;
       case RENDER:
         this.render = value % 2;
+      break;
+      case SIZE:
+        radius = value % 11;//max
       break;
     }
   }

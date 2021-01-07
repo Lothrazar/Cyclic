@@ -68,9 +68,9 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
    */
   @Override
   public void setTooltip(String tt) {
-    if (tooltip == null) {
-      tooltip = new ArrayList<>();
-    }
+    //    if (tooltip == null) {
+    tooltip = new ArrayList<>();
+    //    }
     this.tooltip.add(new TranslationTextComponent(tt));
     this.tooltip.add(new TranslationTextComponent("cyclic.gui.sliderkeys").mergeStyle(TextFormatting.DARK_GRAY));
   }
@@ -132,5 +132,9 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
 
   public int getSliderValueActual() {
     return MathHelper.floor(MathHelper.clampedLerp(min, max, this.sliderValue));
+  }
+
+  public int getField() {
+    return this.field;
   }
 }
