@@ -39,7 +39,6 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     int w = 130;
     int h = 18;
     int f = TileHarvester.Fields.SIZE.ordinal();
-    //    x += 18;
     y += 26;
     size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, 10, container.tile.getField(f)));
   }

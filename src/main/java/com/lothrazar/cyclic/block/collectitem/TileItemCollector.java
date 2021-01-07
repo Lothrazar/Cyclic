@@ -29,7 +29,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileItemCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static enum Fields {
-    REDSTONE, RENDER;
+    REDSTONE, RENDER, SIZE;
   }
 
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
@@ -103,18 +103,18 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
 
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), radius);
+    return this.getPos().offset(this.getCurrentFacing(), radius + 1);
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.getShape(getRange(), pos.getY());
+    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
   }
 
   private AxisAlignedBB getRange() {
     BlockPos center = getTargetCenter();
     AxisAlignedBB aabb = new AxisAlignedBB(
         center.getX() - radius, center.getY(), center.getZ() - radius,
-        center.getX() + radius, center.getY() + 2, center.getZ() + radius);
+        center.getX() + radius + 1, center.getY() + 2, center.getZ() + radius + 1);
     return aabb;
   }
 
@@ -127,6 +127,9 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       case RENDER:
         this.render = value % 2;
       break;
+      case SIZE:
+        radius = value % 11;//max
+      break;
     }
   }
 
@@ -137,6 +140,8 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
         return this.needsRedstone;
       case RENDER:
         return this.render;
+      case SIZE:
+        return radius;
     }
     return 0;
   }

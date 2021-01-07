@@ -22,13 +22,13 @@ public class ContainerItemCollector extends ContainerBase {
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      int numRows = 2;
+      final int numRows = 2;
       for (int j = 0; j < numRows; ++j) {
         for (int k = 0; k < 9; ++k) {
           this.addSlot(new SlotItemHandler(h,
               k + j * 9,
               8 + k * 18,
-              17 + (j + 1) * 18));
+              24 + (j + 1) * 18));
         }
       }
     });
