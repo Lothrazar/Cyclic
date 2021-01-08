@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.harvester;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -7,6 +8,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -50,6 +52,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
   public static IntValue POWERCONF;
   private int radius = 9;
+  private int shapeIndex = 0;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   static final int MAX = 640000;
@@ -81,15 +84,45 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (timer > 0) {
       return;
     }
-    timer = Const.TICKS_PER_SEC / 2;//could config, but 2x per sec is enough
-    BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius + 1), radius);
-    if (tryHarvestSingle(this.world, target)) {
+    timer = Const.TICKS_PER_SEC / 5;//could config, but 2x per sec is enough
+    //
+    List<BlockPos> shape = this.getShape();
+    if (shape.size() == 0) {
+      return;
+    }
+    //update target
+    shapeIndex++;
+    BlockPos targetPos = getShapeTarget(shape);
+    //does it exist
+    //    BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius + 1), radius);
+    if (targetPos != null && tryHarvestSingle(this.world, targetPos)) {
       energy.extractEnergy(cost, false);
     }
   }
 
+  private BlockPos getShapeTarget(List<BlockPos> shape) {
+    if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
+      this.shapeIndex = 0;
+    }
+    return shape.get(shapeIndex);
+  }
+
+  //for harvest
   public List<BlockPos> getShape() {
-    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, 0);
+    //    ModCyclic.LOGGER.info("" + targetPos);
+    return shape;
+  }
+
+  //for render
+  public List<BlockPos> getShapeHollow() {
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
+    BlockPos targetPos = getShapeTarget(shape);
+    if (targetPos != null) {
+      shape.add(targetPos);
+    }
+    return shape;
   }
 
   @Override
@@ -151,13 +184,13 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       //better mod compatibility if they dont use 'age'
       return crops.getAgeProperty();
     }
-    String age = "age";
+    String age = CropsBlock.AGE.getName();
     ResourceLocation bid = blockState.getBlock().getRegistryName();
-    if ("resynth".equalsIgnoreCase(bid.getNamespace())) {
+    if (CompatConstants.RESYNTH_MODID.equalsIgnoreCase(bid.getNamespace())) {
       //some silly old mods dont use age for compatibility
       // https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/blob/a9f47439d103c1c17ca7a4ffd05c2dc0397e5e5f/src/main/java/com/ki11erwolf/resynth/plant/block/BlockBiochemicalPlant.java#L59
       //so we hack it
-      age = "growth_stage";
+      age = CompatConstants.RESYNTH_CROPSAGE;
     }
     for (Property<?> p : blockState.getProperties()) {
       if (p != null && p.getName() != null
@@ -210,6 +243,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     radius = tag.getInt("radius");
+    shapeIndex = tag.getInt("shapeIndex");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }
@@ -217,6 +251,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("radius", radius);
+    tag.putInt("shapeIndex", shapeIndex);
     tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }

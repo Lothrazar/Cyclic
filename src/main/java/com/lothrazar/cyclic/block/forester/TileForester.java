@@ -66,7 +66,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private int shapeIndex = 0;
-  BlockPos targetPos = null;
   //  public enum PlantingMode {
   //    //full is every square
   //    //spread is grid with 2 between so every three 
@@ -95,6 +94,9 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       return;
     }
     setLitProperty(true);
+    if (this.world.isRemote) {
+      return;
+    }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost) {
       if (cost > 0)
@@ -105,16 +107,18 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     if (shape.size() == 0) {
       return;
     }
-    updateTargetPos(shape);
+    //update target
+    shapeIndex++;
+    BlockPos targetPos = getShapeTarget(shape);
     skipSomeAirBlocks(shape);
-    ItemStack dropMe = inventory.getStackInSlot(0).copy();
     //only saplings at my level, the rest is harvesting
     try {
       if (fakePlayer == null && world instanceof ServerWorld) {
         fakePlayer = setupBeforeTrigger((ServerWorld) world, "forester");
       }
       this.equipTool();
-      if (this.isTree(dropMe)) {
+      ItemStack dropMe = inventory.getStackInSlot(0).copy();
+      if (this.isTree(targetPos)) {
         if (TileEntityBase.tryHarvestBlock(fakePlayer, world, targetPos)) {
           //ok then DRAIN POWER
           energy.extractEnergy(cost, false);
@@ -167,6 +171,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
@@ -175,6 +180,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("shapeIndex", shapeIndex);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.putInt("radius", radius);
     tag.put(NBTINV, inventory.serializeNBT());
@@ -197,22 +203,21 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
   }
 
-  private void updateTargetPos(List<BlockPos> shape) {
-    shapeIndex++;
+  private void skipSomeAirBlocks(List<BlockPos> shape) {
+    //    int skipping = MAX_HEIGHT - 2;
+    //    int i = 0;
+    //    while (world.isAirBlock(targetPos) && i < skipping
+    //        && targetPos.getY() > pos.getY()) {
+    //      updateTargetPos(shape);
+    //      i++;
+    //    }
+  }
+
+  private BlockPos getShapeTarget(List<BlockPos> shape) {
     if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
       this.shapeIndex = 0;
     }
-    targetPos = shape.get(shapeIndex);
-  }
-
-  private void skipSomeAirBlocks(List<BlockPos> shape) {
-    int skipping = MAX_HEIGHT - 2;
-    int i = 0;
-    while (world.isAirBlock(targetPos) && i < skipping
-        && targetPos.getY() > pos.getY()) {
-      updateTargetPos(shape);
-      i++;
-    }
+    return shape.get(shapeIndex);
   }
 
   //for harvest
@@ -224,8 +229,8 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   //for render
   public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), this.radius);
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), this.radius);
+    BlockPos targetPos = getShapeTarget(shape);
     if (targetPos != null) {
       shape.add(targetPos);
     }
@@ -240,7 +245,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         block instanceof SaplingBlock;
   }
 
-  private boolean isTree(ItemStack dropMe) {
+  private boolean isTree(BlockPos targetPos) {
     if (targetPos == null) {
       return false;
     }

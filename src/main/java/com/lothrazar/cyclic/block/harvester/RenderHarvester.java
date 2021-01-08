@@ -19,7 +19,7 @@ public class RenderHarvester extends TileEntityRenderer<TileHarvester> {
   public void render(TileHarvester te, float v, MatrixStack matrix,
       IRenderTypeBuffer ibuffer, int partialTicks, int destroyStage) {
     if (1 == te.getField(TileHarvester.Fields.RENDER.ordinal())) {
-      UtilRender.renderOutline(te.getPos(), te.getShape(), matrix);
+      UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrix);
     }
   }
 }
