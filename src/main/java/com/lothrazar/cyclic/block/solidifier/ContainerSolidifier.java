@@ -6,13 +6,12 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.Direction;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerSolidifier extends ContainerBase {
@@ -25,15 +24,12 @@ public class ContainerSolidifier extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     //move it
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
-      addSlot(new SlotItemHandler(h, 0, 121, 31));
-    });
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots() + 1;//for shiftclick out of the out slot
-      addSlot(new SlotItemHandler(h, 0, 37, 17));
-      addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
-      addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
-    });
+    addSlot(new SlotItemHandler(tile.outputSlot, 0, 121, 31));
+    ItemStackHandler h = tile.inputSlots;
+    this.endInv = h.getSlots() + 1;//for shiftclick out of the out slot
+    addSlot(new SlotItemHandler(h, 0, 37, 17));
+    addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
+    addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileSolidifier.Fields.values().length);
     trackEnergy(tile);

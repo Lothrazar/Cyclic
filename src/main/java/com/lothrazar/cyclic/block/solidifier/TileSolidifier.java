@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.capability.ItemStackHandlerSided;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -30,6 +30,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
 public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
@@ -41,13 +42,15 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   public static IntValue POWERCONF;
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank;
-  private ItemStackHandlerSided inputSlots = new ItemStackHandlerSided(3);
-  private ItemStackHandlerSided outputSlot = new ItemStackHandlerSided(1);
+  ItemStackHandler inputSlots = new ItemStackHandler(3);
+  ItemStackHandler outputSlot = new ItemStackHandler(1);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inputSlots);
-  private final LazyOptional<IItemHandler> outputSlotWrapper = LazyOptional.of(() -> outputSlot);
+  //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inputSlots);
+  //  private final LazyOptional<IItemHandler> outputSlotWrapper = LazyOptional.of(() -> outputSlot);
 
   static enum Fields {
     REDSTONE, TIMER, RENDER;
@@ -124,7 +127,6 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inputSlots.deserializeNBT(tag.getCompound(NBTINV));
     outputSlot.deserializeNBT(tag.getCompound("invoutput"));
-    //    outputSlotWrapper.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("invoutput")));
     super.read(bs, tag);
   }
 
@@ -138,10 +140,6 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     tag.put("invoutput", outputSlot.serializeNBT());
     return super.write(tag);
   }
-  //  @Override
-  //  public boolean hasFastRenderer() {
-  //    return true;
-  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
@@ -152,8 +150,6 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      if (side == Direction.DOWN)
-        return outputSlotWrapper.cast();
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);

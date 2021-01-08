@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -55,18 +56,19 @@ public class ContainerCrafter extends ContainerBase {
     tile = (TileCrafter) clientWorld.getTileEntity(pos);
     this.playerEntity = clientPlayer;
     this.playerInventory = inv;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
-      int index = 0;
-      //add input
-      for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
-        for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
-          this.addSlot(new SlotItemHandler(h, index,
-              INPUT_START_X + colPos * Const.SQ,
-              INPUT_START_Y + rowPos * Const.SQ));
-          index++;
-        }
+    //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
+    //    ItemStackHandler in = tile.inputHandler;  
+    int indexx = 0;
+    //add input
+    for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
+      for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
+        this.addSlot(new SlotItemHandler(tile.inputHandler, indexx,
+            INPUT_START_X + colPos * Const.SQ,
+            INPUT_START_Y + rowPos * Const.SQ));
+        indexx++;
       }
-    });
+    }
+    //    });
     //add grid
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
       int index = 0;
@@ -80,20 +82,20 @@ public class ContainerCrafter extends ContainerBase {
       }
     });
     //add output
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.OUTPUT).ifPresent(h -> {
-      int index = 0;
-      for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
-        for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
-          this.addSlot(new CrafterOutputSlot(h, index,
-              OUTPUT_START_X + colPos * Const.SQ,
-              OUTPUT_START_Y + rowPos * Const.SQ));
-          index++;
-        }
+    //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.OUTPUT).ifPresent(h -> {
+    indexx = 0;
+    for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
+      for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
+        this.addSlot(new CrafterOutputSlot(tile.outHandler, indexx,
+            OUTPUT_START_X + colPos * Const.SQ,
+            OUTPUT_START_Y + rowPos * Const.SQ));
+        indexx++;
       }
-    });
+    }
+    //    });
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
-      int index = 0;
-      addSlot(new CrafterGridSlot(h, index,
+      //      intindex = 0;
+      addSlot(new CrafterGridSlot(h, 0,
           PREVIEW_START_X,
           PREVIEW_START_Y));
     });
@@ -108,6 +110,7 @@ public class ContainerCrafter extends ContainerBase {
     if (slotId == TileCrafter.PREVIEW_SLOT)
       return ItemStack.EMPTY;
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
+      ModCyclic.LOGGER.info("grid slot");
       ItemStack ghostStack = player.inventory.getItemStack().copy();
       ghostStack.setCount(1);
       inventorySlots.get(slotId).putStack(ghostStack);

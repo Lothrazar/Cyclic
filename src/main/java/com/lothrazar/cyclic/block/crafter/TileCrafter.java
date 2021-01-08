@@ -32,6 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,11 +65,17 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
   public static IntValue POWERCONF;
-  private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  private final LazyOptional<IItemHandler> input = LazyOptional.of(this::createIOHandler);
-  private final LazyOptional<IItemHandler> output = LazyOptional.of(this::createIOHandler);
-  private final LazyOptional<IItemHandler> grid = LazyOptional.of(this::createGridHandler);
-  private final LazyOptional<IItemHandler> preview = LazyOptional.of(this::createPreviewHandler);
+  private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> new CustomEnergyStorage(MAX, MAX));
+  ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE);
+  ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
+  private final LazyOptional<IItemHandler> input = LazyOptional.of(() -> inputHandler);
+  private final LazyOptional<IItemHandler> output = LazyOptional.of(() -> outHandler);
+  private final LazyOptional<IItemHandler> grid = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
+  private final LazyOptional<IItemHandler> preview = LazyOptional.of(() -> new ItemStackHandler(1));
+  //
+  private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
+  //
   public static final int IO_NUM_ROWS = 5;
   public static final int IO_NUM_COLS = 2;
   public static final int GRID_NUM_ROWS = 3;
@@ -372,22 +379,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     return ingredientCount == itemStackCount;
   }
 
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(MAX, MAX);
-  }
-
-  private IItemHandler createIOHandler() {
-    return new ItemStackHandler(IO_SIZE);
-  }
-
-  private IItemHandler createGridHandler() {
-    return new ItemStackHandler(GRID_SIZE);
-  }
-
-  private IItemHandler createPreviewHandler() {
-    return new ItemStackHandler(1);
-  }
-
   @Override
   public ITextComponent getDisplayName() {
     return new StringTextComponent(getType().getRegistryName().getPath());
@@ -404,18 +395,19 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energy.cast();
     }
-    if (side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      switch (side) {
-        case EAST:
-        case WEST:
-        case NORTH:
-        case SOUTH:
-          return input.cast();
-        case UP:
-        case DOWN:
-        default:
-          return output.cast();
-      }
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return inventoryCap.cast();
+      //      switch (side) {
+      //        case EAST:
+      //        case WEST:
+      //        case NORTH:
+      //        case SOUTH:
+      //          return input.cast();
+      //        case UP:
+      //        case DOWN:
+      //        default:
+      //          return output.cast();
+      //      }
     }
     return super.getCapability(cap, side);
   }
