@@ -12,6 +12,7 @@ import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilScythe;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -26,8 +27,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.Property;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -49,7 +48,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int MAX_SIZE = 11;//radius 7 translates to 15x15 area (center block + 7 each side)
-  private static final INamedTag<Block> HARVEST_BREAK = BlockTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "harvester_break").toString());
   public static IntValue POWERCONF;
   private int radius = 9;
   private int shapeIndex = 0;
@@ -173,7 +171,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   private static boolean simpleBreakDrop(BlockState blockState) {
-    boolean breakit = blockState.getBlock().isIn(HARVEST_BREAK);
+    boolean breakit = blockState.isIn(UtilScythe.VINES)
+        || blockState.isIn(UtilScythe.CROPBLOCKS);
     // the list tells all
     return breakit;
   }

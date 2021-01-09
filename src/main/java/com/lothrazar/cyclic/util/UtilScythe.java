@@ -36,9 +36,13 @@ public class UtilScythe {
 
   private static final INamedTag<Block> PLANTS = BlockTags.makeWrapperTag("forge:plants");
   //this is valid but not needed
-  //  private static final INamedTag<Block> SLEAVES = BlockTags.makeWrapperTag("minecraft:leaves");
-  private static final INamedTag<Block> SFORAGE = BlockTags.makeWrapperTag(ScytheType.FORAGE.type().toString());
+  //  private static final INamedTag<Block> SLEAVES = BlockTags.makeWrapperTag("minecraft:leaves"); 
+  //
+  private static final INamedTag<Block> MUSHROOMS = BlockTags.makeWrapperTag("forge:mushrooms");
+  public static final INamedTag<Block> VINES = BlockTags.makeWrapperTag("forge:vines");
+  public static final INamedTag<Block> CROPBLOCKS = BlockTags.makeWrapperTag("forge:crop_blocks");
 
+  //
   public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ScytheType type) {
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
@@ -58,7 +62,12 @@ public class UtilScythe {
         //        "#forge:mushrooms",
         //        "#forge:vines",
         //        "#forge:crop_blocks"
-        doBreak = blockState.isIn(SFORAGE);
+        doBreak = blockState.isIn(BlockTags.SMALL_FLOWERS) || blockState.isIn(BlockTags.TALL_FLOWERS)
+            || blockState.isIn(BlockTags.CORALS) || blockState.isIn(BlockTags.WALL_CORALS)
+            || blockState.isIn(BlockTags.CORAL_PLANTS)
+            || blockState.isIn(MUSHROOMS)
+            || blockState.isIn(VINES)
+            || blockState.isIn(CROPBLOCKS);
       break;
     }
     if (doBreak) {
