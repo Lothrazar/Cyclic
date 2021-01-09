@@ -10,9 +10,9 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilScythe;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -171,8 +171,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   private static boolean simpleBreakDrop(BlockState blockState) {
-    boolean breakit = blockState.isIn(UtilScythe.VINES)
-        || blockState.isIn(UtilScythe.CROPBLOCKS);
+    boolean breakit = blockState.isIn(DataTags.VINES)
+        || blockState.isIn(DataTags.CROPBLOCKS);
     // the list tells all
     return breakit;
   }

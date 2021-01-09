@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.anvil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
@@ -12,14 +12,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.ITag.INamedTag;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
@@ -49,7 +45,6 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   //
   private static final int OUT = 1;
   private static final int IN = 0;
-  public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
   static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -109,7 +104,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     setLitProperty(true);
     //
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
+    if (stack.isEmpty() || stack.getItem().isIn(DataTags.IMMUNE)) {
       return;
     }
     final int repair = POWERCONF.get();

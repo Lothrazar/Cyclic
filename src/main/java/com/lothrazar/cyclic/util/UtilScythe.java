@@ -24,23 +24,14 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.item.scythe.ScytheType;
-import net.minecraft.block.Block;
+import com.lothrazar.cyclic.registry.DataTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilScythe {
-
-  private static final INamedTag<Block> PLANTS = BlockTags.makeWrapperTag("forge:plants");
-  //this is valid but not needed
-  //  private static final INamedTag<Block> SLEAVES = BlockTags.makeWrapperTag("minecraft:leaves"); 
-  //
-  private static final INamedTag<Block> MUSHROOMS = BlockTags.makeWrapperTag("forge:mushrooms");
-  public static final INamedTag<Block> VINES = BlockTags.makeWrapperTag("forge:vines");
-  public static final INamedTag<Block> CROPBLOCKS = BlockTags.makeWrapperTag("forge:crop_blocks");
 
   //
   public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ScytheType type) {
@@ -51,7 +42,7 @@ public class UtilScythe {
         doBreak = blockState.isIn(BlockTags.LEAVES);
       break;
       case BRUSH:
-        doBreak = blockState.isIn(PLANTS);
+        doBreak = blockState.isIn(DataTags.PLANTS);
       break;
       case FORAGE:
         //        "#minecraft:small_flowers",
@@ -65,9 +56,9 @@ public class UtilScythe {
         doBreak = blockState.isIn(BlockTags.SMALL_FLOWERS) || blockState.isIn(BlockTags.TALL_FLOWERS)
             || blockState.isIn(BlockTags.CORALS) || blockState.isIn(BlockTags.WALL_CORALS)
             || blockState.isIn(BlockTags.CORAL_PLANTS)
-            || blockState.isIn(MUSHROOMS)
-            || blockState.isIn(VINES)
-            || blockState.isIn(CROPBLOCKS);
+            || blockState.isIn(DataTags.MUSHROOMS)
+            || blockState.isIn(DataTags.VINES)
+            || blockState.isIn(DataTags.CROPBLOCKS);
       break;
     }
     if (doBreak) {
