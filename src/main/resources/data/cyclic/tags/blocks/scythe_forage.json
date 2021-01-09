@@ -6,8 +6,8 @@
     "#minecraft:corals",
     "#minecraft:wall_corals",    
     "#minecraft:coral_plants",
-    "#cyclic:mushrooms",
-  	"#cyclic:vines",
-	"#cyclic:crop_blocks"
+    "#forge:mushrooms",
+  	"#forge:vines",
+	  "#forge:crop_blocks"
   ]
 }
