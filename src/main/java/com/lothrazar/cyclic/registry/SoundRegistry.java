@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.SoundType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +28,14 @@ public class SoundRegistry {
   public static SoundEvent tool_mode = make("tool_mode");
   public static SoundEvent dice_mike_koenig = make("dice_mike_koenig");
   public static SoundEvent fill = make("fill");
-  public static SoundType SCAFFOLD = new SoundType(1.0F, 1.0F, block_scaffolding_0, block_scaffolding_1, block_scaffolding_0, block_scaffolding_1, block_scaffolding_1);
+  //update: forge sound type exists apparently
+  public static SoundType SCAFFOLD = new ForgeSoundType(1.0F, 1.0F,
+      //suppliers
+      () -> block_scaffolding_0,
+      () -> block_scaffolding_1,
+      () -> block_scaffolding_0,
+      () -> block_scaffolding_1,
+      () -> block_scaffolding_1);
 
   private static SoundEvent make(String s) {
     SoundEvent se = new SoundEvent(new ResourceLocation(ModCyclic.MODID, s));
