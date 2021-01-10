@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.block.anvilmagma;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
@@ -15,14 +15,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.ITag.INamedTag;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -39,7 +35,6 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
 
   private static final int OUT = 1;
   private static final int IN = 0;
-  public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "anvil_immune").toString());
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   ItemStackHandler inventory = new ItemStackHandler(2) {
 
@@ -75,7 +70,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     }
     setLitProperty(true);
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().isIn(IMMUNE)) {
+    if (stack.isEmpty() || stack.getItem().isIn(DataTags.IMMUNE)) {
       return;
     }
     final int repair = 100;//not power, fluid.

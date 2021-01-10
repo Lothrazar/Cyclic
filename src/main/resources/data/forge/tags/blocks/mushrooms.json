@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:red_mushroom",
+    "minecraft:brown_mushroom",
+    "minecraft:warped_fungus",
+    "minecraft:crimson_fungus",
+     {"required":false, "id": "botania:white_mushroom"      },
+     {"required":false, "id":  "botania:orange_mushroom"       },
+     {"required":false, "id":  "botania:pink_mushroom"         },
+     {"required":false, "id":  "botania:cyan_mushroom"         },
+     {"required":false, "id":  "botania:yellow_mushroom"       },
+     {"required":false, "id":  "botania:lime_mushroom"         },
+     {"required":false, "id":  "botania:light_blue_mushroom"   },
+     {"required":false, "id":  "botania:magenta_mushroom"      },
+     {"required":false, "id":  "botania:gray_mushroom"    },
+     {"required":false, "id":  "botania:light_gray_mushroom"   },
+     {"required":false, "id":  "botania:cyan_mushroom"        },
+     {"required":false, "id":  "botania:purple_mushroom"       },
+     {"required":false, "id":  "botania:blue_mushroom"         },
+     {"required":false, "id":  "botania:brown_mushroom"        },
+     {"required":false, "id":  "botania:green_mushroom"        },
+     {"required":false, "id":  "botania:red_mushroom"           }
+    
+  ]
+}

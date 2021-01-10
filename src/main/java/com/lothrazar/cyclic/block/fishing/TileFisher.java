@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.block.BlockState;
@@ -16,7 +17,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameterSets;
@@ -25,11 +25,8 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTableManager;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.ITag.INamedTag;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
@@ -45,13 +42,13 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileFisher extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int RADIUS = 12;
-  public static final INamedTag<Item> RODS = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "fishing_rods").toString());
+  //  public static final INamedTag<Item> RODS = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "fishing_rods").toString());
   private static final double CHANCE = 0.1;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-      return stack.getItem().isIn(RODS);
+      return stack.getItem().isIn(DataTags.RODS);
     }
   };
   LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -102,7 +99,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
       return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.getItem().isIn(RODS)) {
+    if (stack.getItem().isIn(DataTags.RODS)) {
       int x = pos.getX() + world.rand.nextInt(RADIUS * 2) - RADIUS;
       int y = pos.getY();
       int z = pos.getZ() + world.rand.nextInt(RADIUS * 2) - RADIUS;

@@ -2,18 +2,12 @@ package com.lothrazar.cyclic.item.scythe;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.UtilShape;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 public enum ScytheType {
 
   BRUSH, FORAGE, LEAVES;
-
-  public ResourceLocation type() {
-    return new ResourceLocation(ModCyclic.MODID, "scythe_" + this.toString().toLowerCase());
-  }
 
   public static List<BlockPos> getShape(BlockPos center, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
