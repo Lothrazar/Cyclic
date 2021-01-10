@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
@@ -28,6 +29,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class BlockEnderShelf extends BlockBase {
 
@@ -99,7 +101,22 @@ public class BlockEnderShelf extends BlockBase {
       //trigger controller reindex
       te.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos));
     }
-    super.onReplaced(state, worldIn, pos, newState, isMoving);
+    if (state.getBlock() != newState.getBlock()) {
+      TileEntity tileentity = worldIn.getTileEntity(pos);
+      if (tileentity != null) {
+        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        if (items != null) {
+          for (int i = 0; i < items.getSlots(); ++i) {
+            ItemStack is = items.getStackInSlot(i);
+            while(!is.isEmpty()) {
+              InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), is.split(1));
+            }
+          }
+          worldIn.updateComparatorOutputLevel(pos, this);
+          worldIn.removeTileEntity(pos);
+        }
+      }
+    }
   }
 
   @Override
@@ -134,9 +151,10 @@ public class BlockEnderShelf extends BlockBase {
           shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
             player.setHeldItem(Hand.MAIN_HAND, h.insertItem(0, heldItem, false));
           });
+        return ActionResultType.CONSUME;
       }
     }
-    return super.onBlockActivated(state, world, pos, player, hand, hit);
+    return ActionResultType.PASS;
   }
 
   private int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {
