@@ -12,7 +12,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -127,11 +126,9 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         }
       }
       else if (this.isSapling(dropMe)) {
-        //plant me  . if im on the lowest level
-        Block targetBlock = world.getBlockState(targetPos).getBlock();
-        Boolean validTarget = targetBlock == Blocks.AIR || targetBlock == Blocks.GRASS || targetBlock == Blocks.TALL_GRASS;
-        if (targetPos.getY() == this.pos.getY() && validTarget) {
-          ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND);
+        //plant me  . if im on the lowest level 
+        if (targetPos.getY() == this.pos.getY()) {
+          ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND, Direction.DOWN);
           if (result == ActionResultType.CONSUME) {
             //ok then DRAIN POWER
             energy.extractEnergy(cost, false);

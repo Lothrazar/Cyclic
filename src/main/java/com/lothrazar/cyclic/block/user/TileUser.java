@@ -105,7 +105,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       }
       //end of SUPERHACK
       BlockPos target = this.pos.offset(this.getCurrentFacing());
-      ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND);
+      ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND, null);
       ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
       if (result == ActionResultType.SUCCESS || result == ActionResultType.CONSUME) {
         TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);

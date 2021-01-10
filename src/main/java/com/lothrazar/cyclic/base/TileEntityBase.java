@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
@@ -129,12 +130,13 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,
-      World world, BlockPos targetPos, Hand hand) throws Exception {
+      World world, BlockPos targetPos, Hand hand, @Nullable Direction facing) throws Exception {
     if (fakePlayer == null) {
       return ActionResultType.FAIL;
     }
+    Direction placementOn = (facing == null) ? fakePlayer.get().getAdjustedHorizontalFacing() : facing;
     BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
-        fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
+        fakePlayer.get().getLookVec(), placementOn,
         targetPos, true);
     //processRightClick
     ActionResultType result = fakePlayer.get().interactionManager.func_219441_a(fakePlayer.get(), world,
