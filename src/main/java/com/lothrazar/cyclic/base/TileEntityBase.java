@@ -248,22 +248,22 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
   }
 
-  public void moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
+  public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
     if (this.world.isRemote()) {
-      return;
+      return false;
     }
     if (handlerHere == null) {
-      return;
+      return false;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
     BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
-      return;
+      return false;
     }
     IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
-      return;
+      return false;
     }
     if (handlerHere != null && handlerOutput != null) {
       int SLOT = 0;
@@ -283,7 +283,9 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       if (sizeAfter > 0) {
         handlerHere.extractItem(SLOT, sizeAfter, false);
       }
+      return true;
     }
+    return false;
   }
 
   protected void moveEnergy(Direction myFacingDir, int quantity) {

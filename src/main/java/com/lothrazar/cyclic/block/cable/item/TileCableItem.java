@@ -94,6 +94,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
       sideHandler = flow.get(incomingSide).orElse(null);
       //thise items came from that
       Collections.shuffle(rawList);
+      boolean validAdjacent = false;
       for (Integer i : rawList) {
         outgoingSide = Direction.values()[i];
         if (outgoingSide == incomingSide) {
@@ -102,7 +103,10 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
         if (importFromSide != null && importFromSide == outgoingSide) {
           continue;
         }
-        this.moveItems(outgoingSide, 64, sideHandler);
+        validAdjacent = validAdjacent || this.moveItems(outgoingSide, 64, sideHandler);
+      }
+      if (!validAdjacent) {
+        this.moveItems(incomingSide, 64, sideHandler);
       }
     }
   }
