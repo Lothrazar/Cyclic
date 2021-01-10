@@ -4,8 +4,8 @@ import java.util.Set;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilBlockstates;
+import com.lothrazar.cyclic.util.UtilEnchant;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -108,7 +108,7 @@ public class BlockEnderShelf extends BlockBase {
         if (items != null) {
           for (int i = 0; i < items.getSlots(); ++i) {
             ItemStack is = items.getStackInSlot(i);
-            while(!is.isEmpty()) {
+            while (!is.isEmpty()) {
               InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), is.split(1));
             }
           }
