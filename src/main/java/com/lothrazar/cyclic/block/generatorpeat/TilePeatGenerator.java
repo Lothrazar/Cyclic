@@ -105,13 +105,11 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     if (stack.getItem() instanceof PeatItem) {
       PeatItem peat = (PeatItem) stack.getItem();
       int futureValue = energy.getEnergyStored() + peat.getPeatFuelValue() * BURNTIME;
-      if (futureValue > energy.getMaxEnergyStored()) {
-        //not enough room for even 1 tick, dont eat the item
-        return;
+      if (futureValue < energy.getMaxEnergyStored()) { // consume fuel only if we have room in the buffer
+        fuelRate = peat.getPeatFuelValue();
+        inventory.extractItem(0, 1, false);
+        this.burnTime = BURNTIME;
       }
-      fuelRate = peat.getPeatFuelValue();
-      inventory.extractItem(0, 1, false);
-      this.burnTime = BURNTIME;
     }
     if (this.getFlowing() == 1)
       this.tickCableFlow();
