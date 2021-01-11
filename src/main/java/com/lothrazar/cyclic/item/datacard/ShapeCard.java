@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
@@ -86,15 +85,12 @@ public class ShapeCard extends ItemBase {
             slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
             if (slot < 0) {
               //cannot find material
-              ModCyclic.LOGGER.info("not creative, no mats " + posBuild);
               UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.empty");
               break;//stop looping
             }
           }
           //     TODO:      success = UtilPlaceBlocks.placeStateSafe(world, player, cworld);
           if (world.setBlockState(posBuild, targetState, 1)) {
-            //
-            ModCyclic.LOGGER.info("  build at" + posBuild);
             UtilPlayer.decrStackSize(player, slot);
           }
         }

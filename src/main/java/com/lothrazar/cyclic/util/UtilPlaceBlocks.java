@@ -34,7 +34,6 @@ public class UtilPlaceBlocks {
           newState = clicked.func_235896_a_(prop);//cycle
           if (newState.get(prop).toString().equals(valueDupe)) {
             //haha just hack and skip. turns into length 2. dont worry about it
-            //      ModCyclic.LOGGER.info("yes is double");
             newState = newState.func_235896_a_(prop);
           }
         }

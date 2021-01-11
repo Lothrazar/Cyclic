@@ -60,7 +60,6 @@ public class PacketEnergySync extends PacketBase {
     ClientWorld world = Minecraft.getInstance().world;
     TileEntity te = world.getTileEntity(message.pos);
     if (te instanceof TileEntityBase) {
-      //        ModCyclic.LOGGER.info(te + " energ sync " + message.energy);
       ((TileEntityBase) te).setEnergy(message.energy);
     }
   }

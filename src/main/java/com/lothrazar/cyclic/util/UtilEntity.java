@@ -202,12 +202,6 @@ public class UtilEntity {
     if (Math.abs(velX) < lowEnough) velX = 0;
     if (Math.abs(velY) < lowEnough) velY = 0;
     if (Math.abs(velZ) < lowEnough) velZ = 0;
-    //    if(entity.getEntityWorld().isRemote){
-    //    ModCyclic.logger.info("(angle,yaw,power) = " + rotationPitch + "," + rotationYaw + "," + power);
-    //    ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
-    ////    ModCyclic.logger.info("!onground " + entity.onGround);
-    //    ModCyclic.logger.info("!posY " + entity.posY);
-    //    }
     //setting to zero first then using add, pretty much the same as set
     entity.addVelocity(velX, velY, velZ);
   }
@@ -307,7 +301,6 @@ public class UtilEntity {
   }
 
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all, float speedClose, float speedFar) {
-    //    ModCyclic.LOGGER.info("Found for magnet " + all.size());
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;

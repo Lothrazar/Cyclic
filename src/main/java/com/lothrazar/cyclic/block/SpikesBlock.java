@@ -129,9 +129,6 @@ public class SpikesBlock extends BlockBase {
           //          if (!entity.isBurning()) {
           //            entity.fire
           entity.setFire(FIRE_TIME);
-        //          }
-        //          else
-        //            ModCyclic.LOGGER.info("is burning " + entity);
         break;
         case PLAIN:
           entity.attackEntityFrom(DamageSource.CACTUS, 1);

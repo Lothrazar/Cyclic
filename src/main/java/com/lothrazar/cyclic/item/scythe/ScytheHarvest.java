@@ -38,7 +38,6 @@ public class ScytheHarvest extends ItemBase {
       // 
       if (TileHarvester.tryHarvestSingle(context.getWorld(), p)) {
         counts++;
-        //        ModCyclic.LOGGER.info("SUCCESS " + p);
       }
     }
     //

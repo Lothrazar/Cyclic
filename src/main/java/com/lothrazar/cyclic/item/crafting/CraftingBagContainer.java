@@ -63,7 +63,6 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {
-          //          ModCyclic.LOGGER.info(inBag + " TODO: put this in matrix");
           this.craftMatrix.setInventorySlotContents(j, h.getStackInSlot(j));
         }
       }
@@ -88,8 +87,8 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
             ModCyclic.LOGGER.info(failtest + " why did this fail; client= " + playerIn.world.isRemote);
           //
           //
-          ItemStack doubleTest = h.extractItem(i, 64, true);
-          ModCyclic.LOGGER.info(doubleTest + " got saved in " + i);
+          //          ItemStack doubleTest = h.extractItem(i, 64, true);
+          //          ModCyclic.LOGGER.info(doubleTest + " got saved in " + i);
         }
       });
     //    clearContainer(playerIn, playerIn.world, craftMatrix);

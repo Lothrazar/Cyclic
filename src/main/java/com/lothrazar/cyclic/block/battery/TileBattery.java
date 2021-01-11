@@ -49,7 +49,6 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   @Override
   public void tick() {
     this.syncEnergy();
-    //    ModCyclic.LOGGER.info(world.isRemote + " en= " + this.getEnergy());
     setPercentFilled();
     boolean isFlowing = this.getFlowing() == 1;
     setLitProperty(isFlowing);

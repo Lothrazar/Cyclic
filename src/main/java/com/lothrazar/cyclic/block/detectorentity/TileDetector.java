@@ -67,7 +67,6 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
       default:
       break;
     }
-    //    ModCyclic.LOGGER.info("! power " + isPoweredNow);
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
       BlockState state = world.getBlockState(this.getPos());

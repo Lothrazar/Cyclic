@@ -172,8 +172,6 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         }
       }
     }
-    //    if (!dropMe.isEmpty())
-    //      ModCyclic.LOGGER.info("No recipe found " + dropMe);
     return null;
   }
 
@@ -192,7 +190,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     }
     //check config
     if (UtilString.isInList(TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
-      //      ModCyclic.LOGGER.info("Uncrafter: blocked by config list " + stack);
+      ModCyclic.LOGGER.info("Uncrafter: blocked by config list " + stack);
       this.status = UncraftStatusEnum.CONFIG;
       return false;
     }

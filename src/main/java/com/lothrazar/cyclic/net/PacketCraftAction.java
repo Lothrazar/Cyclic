@@ -26,7 +26,6 @@ package com.lothrazar.cyclic.net;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
@@ -112,7 +111,6 @@ public class PacketCraftAction extends PacketBase {
         totalQuantity += tmp.getCount();
       }
     }
-    ModCyclic.LOGGER.info(biggest.getItem() + "  totalQuantity" + totalQuantity);
     //step 3: extract all of those allowed to merge including original
     //step 4: flatten them out, with the remainder left over
     //ok. mow we can split it
@@ -121,9 +119,6 @@ public class PacketCraftAction extends PacketBase {
     int slotsUsedForBalancing = slotTargest.size();
     int avg = totalQuantity / slotsUsedForBalancing;
     int remainder = totalQuantity % slotsUsedForBalancing;
-    ModCyclic.LOGGER.info("  slotsUsedForBalancing " + slotsUsedForBalancing);
-    ModCyclic.LOGGER.info("  avg " + avg);
-    ModCyclic.LOGGER.info("  remainder  " + remainder);
     if (avg == 0) {
       return;
     }

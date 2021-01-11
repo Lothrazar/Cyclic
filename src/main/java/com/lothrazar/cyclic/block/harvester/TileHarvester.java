@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
@@ -109,7 +108,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, 0);
-    //    ModCyclic.LOGGER.info("" + targetPos);
     return shape;
   }
 
@@ -226,7 +224,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       break;
       case SIZE:
         radius = value % MAX_SIZE;
-        ModCyclic.LOGGER.info(value + " -> harvester radius " + radius);
       break;
     }
   }

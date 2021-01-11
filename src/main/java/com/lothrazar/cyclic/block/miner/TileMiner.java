@@ -168,15 +168,13 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       //state.getPlayerRelativeBlockHardness(player, worldIn, pos);UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
       curBlockDamage += relative;
       //
-      //      ModCyclic.LOGGER.info(targetState + " progress ? " + targetPos + "  relative = " + relative + "    curBlockDamage=" + curBlockDamage);
       //if hardness is relative, jus fekin break it like air eh
       if (curBlockDamage >= 1.0f || relative == 0) {
-        //        ModCyclic.LOGGER.info("TRY t" + targetPos);
         boolean harvested = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
         if (!harvested) {
           //            world.destroyBlock(targetPos, true, fakePlayer.get()); 
           harvested = world.getBlockState(targetPos).removedByPlayer(world, pos, fakePlayer.get(), true, world.getFluidState(pos));
-          ModCyclic.LOGGER.info("Miner:removedByPlayer hacky workaround " + targetPos);
+          //   ModCyclic.LOGGER.info("Miner:removedByPlayer hacky workaround " + targetPos);
         }
         if (harvested) {
           // success 

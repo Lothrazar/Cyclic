@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.heart;
 
 import com.lothrazar.cyclic.ConfigRegistry;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -45,15 +44,11 @@ public class HeartToxicItem extends ItemBase {
       playerIn.getFoodStats().addStats(3, 1);
       playerIn.giveExperiencePoints(ConfigRegistry.HEARTXPMINUS.get());
     }
-    //    ModCyclic.LOGGER.info(" oldHealthModifier.getAmount()" + oldHealthModifier.getAmount());
     //replace the modifier on the main attribute
     healthAttribute.removeModifier(HeartItem.healthModifierUuid);
     AttributeModifier healthModifier = new AttributeModifier(HeartItem.healthModifierUuid, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
     healthAttribute.applyPersistentModifier(healthModifier);
     //
-    //finish up
-    //    }
-    ModCyclic.LOGGER.info(" getMaxHealth " + playerIn.getMaxHealth());
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 }

@@ -52,9 +52,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   };
   ItemStackHandler outputSlot = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static IntValue POWERCONF;
-  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   static final int MAX = 640000;
   private static final int SLOT_INPUT = 0;

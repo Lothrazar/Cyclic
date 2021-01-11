@@ -78,7 +78,6 @@ public class EnchantBeheading extends EnchantBase {
         return;
       }
       World world = attacker.world;
-      //      ModCyclic.LOGGER.info(level + "---" + percentForLevel(level));
       if (MathHelper.nextInt(world.rand, 0, 100) > percentForLevel(level)) {
         return;
       }

@@ -122,7 +122,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         if (TileEntityBase.tryHarvestBlock(fakePlayer, world, targetPos)) {
           //ok then DRAIN POWER
           energy.extractEnergy(cost, false);
-          //          ModCyclic.LOGGER.info("drain " + cost + "current" + en.getEnergyStored());
         }
       }
       else if (this.isSapling(dropMe)) {

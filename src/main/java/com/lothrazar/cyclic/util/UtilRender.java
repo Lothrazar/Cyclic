@@ -280,7 +280,6 @@ public class UtilRender {
       float x = coordinate.getX();
       float y = coordinate.getY();
       float z = coordinate.getZ();
-      //      ModCyclic.LOGGER.info("y value of build " + y);
       matrix.push();
       matrix.translate(x, y, z);
       //

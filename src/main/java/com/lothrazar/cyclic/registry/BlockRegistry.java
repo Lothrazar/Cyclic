@@ -240,7 +240,6 @@ public class BlockRegistry {
   @ObjectHolder(ModCyclic.MODID + ":ghost_phantom")
   public static Block ghost_phantom;
 
-
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();

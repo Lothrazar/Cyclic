@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.heart;
 
 import java.util.UUID;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -45,7 +44,6 @@ public class HeartItem extends ItemBase {
       playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
       playerIn.getHeldItem(handIn).shrink(1);
       UtilSound.playSound(playerIn, SoundRegistry.fill);
-      ModCyclic.LOGGER.info(" getMaxHealth " + playerIn.getMaxHealth());
     }
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }

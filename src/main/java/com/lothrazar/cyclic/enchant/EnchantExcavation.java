@@ -123,13 +123,11 @@ public class EnchantExcavation extends EnchantBase {
   private boolean harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn, final Block block, int totalAttempts, final int level, Hand swingingHand) {
     if (totalAttempts >= this.getHarvestMax(level)
         || player.getHeldItem(player.swingingHand).isEmpty()) {
-      ModCyclic.LOGGER.info(totalAttempts + " = totalAttempts ; early quitqqqqq");
       return totalAttempts > 0;
     }
     //    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     Set<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
     if (theFuture.size() == 0) {
-      ModCyclic.LOGGER.info(theFuture + " = theFuture  ni suze ");
       //avoid infinite loop if nothing near by and this is empty
       return totalAttempts > 0;
     }
@@ -168,7 +166,6 @@ public class EnchantExcavation extends EnchantBase {
     for (BlockPos targetPos : theFuture) {
       if (totalAttempts >= this.getHarvestMax(level)
           || player.getHeldItem(player.swingingHand).isEmpty()) {
-        ModCyclic.LOGGER.info(totalAttempts + " = totalAttempts ; too many for level");
         break;
       }
       return this.harvestSurrounding(world, player, targetPos, block, totalAttempts, level, swingingHand);

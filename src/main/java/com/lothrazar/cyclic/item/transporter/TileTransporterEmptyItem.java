@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.item.transporter;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -63,7 +62,6 @@ public class TileTransporterEmptyItem extends ItemBase {
     World world = context.getWorld();
     TileEntity tile = world.getTileEntity(pos);
     BlockState state = world.getBlockState(pos);
-    ModCyclic.LOGGER.info(state.getBlock().getRegistryName() + "");//
     //
     if (state == null || tile == null || state.getBlock() == null
         || state.getBlock().getRegistryName() == null) {

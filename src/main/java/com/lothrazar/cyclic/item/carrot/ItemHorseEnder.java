@@ -48,7 +48,6 @@ public class ItemHorseEnder extends ItemEntityInteractable {
     UtilSound.playSound(liv, SoundEvents.ENTITY_GENERIC_DRINK);
     UtilParticle.spawnParticle(liv.world, ParticleTypes.CRIT, liv.getPosition(), 3);
     increment(liv, -1);
-    //    ModCyclic.LOGGER.info("carrot_ender triggered down " + liv.getPersistentData().getInt(NBT_KEYACTIVE));
     //    int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
     //    UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);
   }
@@ -72,7 +71,6 @@ public class ItemHorseEnder extends ItemEntityInteractable {
       }
       //do the thing 
       increment(ahorse, 1);
-      ModCyclic.LOGGER.info("set   teleport horse");
       event.setCanceled(true);
       event.setCancellationResult(ActionResultType.SUCCESS);
       event.getPlayer().getCooldownTracker().setCooldown(this, 1);

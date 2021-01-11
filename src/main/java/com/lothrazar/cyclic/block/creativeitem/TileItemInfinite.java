@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.creativeitem;
 
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -22,18 +23,10 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
     super(TileRegistry.item_infinite);
   }
 
-  int here = 0;
-  int backup = 1;
-  ItemStackHandler inventory = new ItemStackHandler(2) {
-
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-      if (slot == backup)//no extracting here allowed
-        return ItemStack.EMPTY;
-      return super.extractItem(slot, amount, simulate);
-    }
-  };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  ItemStackHandler inputSlots = new ItemStackHandler(1);
+  ItemStackHandler outputSlot = new ItemStackHandler(1);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
@@ -62,19 +55,19 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
 
   @Override
   public void tick() {
-    ItemStack stackHere = inventory.getStackInSlot(here);
-    ItemStack stackBackup = inventory.getStackInSlot(backup);
+    ItemStack stackHere = inputSlots.getStackInSlot(0);
+    ItemStack stackBackup = outputSlot.getStackInSlot(0);
     if (!stackHere.isEmpty() && stackBackup.isEmpty()) {
       //copy here to backup. backup never gets drained its always a fresh copy
-      inventory.insertItem(backup, stackHere.copy(), false);
+      outputSlot.insertItem(0, stackHere.copy(), false);
       return;
     }
     //take the backup, and overwrite whats here. if here is empty
-    if (stackHere.isEmpty()) {
-      stackBackup.setCount(64);
-      inventory.extractItem(here, 64, false);
-      inventory.insertItem(here, stackBackup.copy(), false);
-    }
+    //    if (stackHere.isEmpty()) {
+    //      stackBackup.setCount(64);
+    //      inputSlots.extractItem(0, 64, false);
+    //      inputSlots.insertItem(0, stackBackup.copy(), false);
+    //    }
   }
 
   @Override

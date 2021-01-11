@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -110,7 +109,6 @@ public class ContainerCrafter extends ContainerBase {
     if (slotId == TileCrafter.PREVIEW_SLOT)
       return ItemStack.EMPTY;
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
-      ModCyclic.LOGGER.info("grid slot");
       ItemStack ghostStack = player.inventory.getItemStack().copy();
       ghostStack.setCount(1);
       inventorySlots.get(slotId).putStack(ghostStack);

@@ -208,7 +208,6 @@ public class BoomerangEntity extends ProjectileItemEntity {
     final BlockPos pos = this.getPosition();
     Entity owner = func_234616_v_();
     if (owner != null && UtilWorld.distanceBetweenHorizontal(pos, owner.getPosition()) < 1) {
-      //       ModCyclic.LOGGER.info("Drop by distance");
       dropAsItem();
       return;
     }

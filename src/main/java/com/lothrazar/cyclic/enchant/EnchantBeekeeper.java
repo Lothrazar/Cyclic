@@ -88,7 +88,6 @@ public class EnchantBeekeeper extends EnchantBase {
         bee.setAggroed(false);
         bee.setAngerTime(0);
         bee.setAngerTarget(null);
-        //        ModCyclic.LOGGER.info("no hurt me");
         event.setResult(Result.DENY);
       }
     }
