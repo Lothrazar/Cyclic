@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
@@ -76,6 +77,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return;//broke
     }
     ItemStack input = inventory.getStackInSlot(SLOT_INPUT);
+    if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHIMMUNE)) {
+      return;
+    }
     ItemStack book = inventory.getStackInSlot(SLOT_BOOK);
     if (book.getItem() != Items.BOOK
         || inventory.getStackInSlot(SLOT_OUT).isEmpty() == false

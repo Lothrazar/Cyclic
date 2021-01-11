@@ -15,4 +15,5 @@ public class DataTags {
   public static final INamedTag<Block> CROPBLOCKS = BlockTags.makeWrapperTag("forge:crop_blocks");
   public static final INamedTag<Item> RODS = ItemTags.makeWrapperTag("forge:fishing_rods");
   public static final INamedTag<Item> IMMUNE = ItemTags.makeWrapperTag(ModCyclic.MODID + ":anvil_immune");
+  public static final INamedTag<Item> DISENCHIMMUNE = ItemTags.makeWrapperTag(ModCyclic.MODID + ":disenchanter_immune");
 }
