@@ -63,11 +63,6 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
     //    for (int i = 0; i <= 2; i++) {
-    //      Collections.addAll(stuff, recipe.ingredientAt(i));
-    //      in.add(stuff);
-    //      ingredients.setInputLists(VanillaTypes.ITEM, in);
-    //      stuff = new ArrayList<>();
-    //    }
     //test without loop just in case?
     Collections.addAll(stuff, recipe.ingredientAt(0));
     in.add(stuff);
