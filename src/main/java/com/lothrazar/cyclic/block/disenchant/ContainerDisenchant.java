@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerDisenchant extends ContainerBase {
@@ -20,12 +20,12 @@ public class ContainerDisenchant extends ContainerBase {
     tile = (TileDisenchant) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 24, 40));
-      addSlot(new SlotItemHandler(h, 1, 48, 40));
-      addSlot(new SlotItemHandler(h, 2, 124, 40));
-    });
+    ItemStackHandler h = tile.inputSlots;
+    this.endInv = h.getSlots() + 1;//for shiftclick out of the out slot
+    addSlot(new SlotItemHandler(h, 0, 24, 40));
+    addSlot(new SlotItemHandler(h, 1, 48, 40));
+    addSlot(new SlotItemHandler(tile.outputSlot, 0, 124, 28));
+    addSlot(new SlotItemHandler(tile.outputSlot, 1, 124, 58));
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
     this.trackAllIntFields(tile, TileDisenchant.Fields.values().length);

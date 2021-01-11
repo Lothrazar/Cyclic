@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -35,7 +36,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileDisenchant extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  ItemStackHandler inventory = new ItemStackHandler(3) {
+  ItemStackHandler inputSlots = new ItemStackHandler(2) {
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
@@ -49,14 +50,15 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return stack.getItem() == Items.ENCHANTED_BOOK;
     }
   };
+  ItemStackHandler outputSlot = new ItemStackHandler(2);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static IntValue POWERCONF;
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   static final int MAX = 640000;
   private static final int SLOT_INPUT = 0;
   private static final int SLOT_BOOK = 1;
-  private static final int SLOT_OUT = 2;
 
   static enum Fields {
     REDSTONE;
@@ -76,21 +78,21 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     if (energy.getEnergyStored() < cost && (cost > 0)) {
       return;//broke
     }
-    ItemStack input = inventory.getStackInSlot(SLOT_INPUT);
+    ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
     if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHIMMUNE)) {
       return;
     }
-    ItemStack book = inventory.getStackInSlot(SLOT_BOOK);
+    ItemStack book = inputSlots.getStackInSlot(SLOT_BOOK);
     if (book.getItem() != Items.BOOK
-        || inventory.getStackInSlot(SLOT_OUT).isEmpty() == false
+        || outputSlot.getStackInSlot(0).isEmpty() == false
         || input.getCount() != 1) {
       return;
     }
     //input is size 1, at least one book exists, and output IS empty
     Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer> newLinkedHashMap();
-    Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(input);
+    Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(input);
     Enchantment keyMoved = null;
-    for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+    for (Map.Entry<Enchantment, Integer> entry : inputEnchants.entrySet()) {
       keyMoved = entry.getKey();
       outEnchants.put(keyMoved, entry.getValue());
       break;
@@ -103,32 +105,41 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
     energy.extractEnergy(cost, false);
     //do all the moving over
-    enchants.remove(keyMoved);
+    inputEnchants.remove(keyMoved);
     ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
     EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
     //replace book with enchanted
-    inventory.extractItem(SLOT_BOOK, 1, false);
-    inventory.insertItem(SLOT_OUT, eBook, false);
+    inputSlots.extractItem(SLOT_BOOK, 1, false);
+    outputSlot.insertItem(0, eBook, false);
+    //outputSlot.insertItem(1, eBook, false);
     //do i replace input with a book?
-    if (input.getItem() == Items.ENCHANTED_BOOK && enchants.size() == 0) {
-      inventory.extractItem(SLOT_INPUT, 64, false);//delete input
-      inventory.insertItem(SLOT_INPUT, new ItemStack(Items.BOOK), false);
+    if (input.getItem() == Items.ENCHANTED_BOOK && inputEnchants.size() == 0) {
+      inputSlots.extractItem(SLOT_INPUT, 64, false);//delete input
+      inputSlots.insertItem(SLOT_INPUT, new ItemStack(Items.BOOK), false);
     }
     else {
       //was a normal item, so ok to set its ench list to empty
       if (input.getItem() == Items.ENCHANTED_BOOK) {//hotfix workaround for book: so it dont try to merge eh
         ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantmentHelper.setEnchantments(enchants, inputCopy);//set as remove
-        inventory.extractItem(SLOT_INPUT, 64, false);//delete input
-        inventory.insertItem(SLOT_INPUT, inputCopy, false);
+        EnchantmentHelper.setEnchantments(inputEnchants, inputCopy);//set as remove
+        inputSlots.extractItem(SLOT_INPUT, 64, false);//delete input
+        inputSlots.insertItem(SLOT_INPUT, inputCopy, false);
       }
       else {
-        EnchantmentHelper.setEnchantments(enchants, input);//set as removed
+        EnchantmentHelper.setEnchantments(inputEnchants, input);//set as removed
         //          inv.extractItem(SLOT_INPUT, 64, false);//delete input
         //          inv.insertItem(SLOT_INPUT, input, false);
       }
-      //        }
     }
+    //recalculate input item
+    input = inputSlots.getStackInSlot(SLOT_INPUT);
+    inputEnchants = EnchantmentHelper.getEnchantments(input);
+    if (!input.isEmpty() && inputEnchants.size() == 0) {
+      //hey we done, bump it over to the ALL NEW finished slot
+      outputSlot.insertItem(1, input.copy(), false);
+      inputSlots.extractItem(SLOT_INPUT, 64, false);//delete input
+    }
+    //
   }
 
   @Override
@@ -161,14 +172,14 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    inputSlots.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, inputSlots.serializeNBT());
     return super.write(tag);
   }
 

@@ -52,7 +52,8 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     int y = 39;
     this.drawSlot(ms, x, y);
     this.drawSlot(ms, x + 24, y, TextureRegistry.SLOT_BOOK, 18);
-    this.drawSlotLarge(ms, 119, y - 4);
+    this.drawSlotLarge(ms, 119, y - 16);
+    this.drawSlotLarge(ms, 119, y + 14);
     if (TileDisenchant.POWERCONF.get() > 0)
       energy.draw(ms, container.tile.getEnergy());
   }
