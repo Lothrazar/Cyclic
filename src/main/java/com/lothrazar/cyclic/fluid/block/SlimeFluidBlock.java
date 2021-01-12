@@ -92,16 +92,16 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
       super.onLanded(worldIn, entityIn);
     }
     else {
-      this.func_226946_a_(entityIn);
+      this.collision(entityIn);
     }
   }
 
   /**
-   * From SlimeBlock.java
+   * From SlimeBlock.java TODO: func_226946_a_
    * 
    * @param entity
    */
-  private void func_226946_a_(Entity entity) {
+  private void collision(Entity entity) {
     Vector3d vec3d = entity.getMotion();
     if (vec3d.y < 0.0D) {
       double d0 = entity instanceof LivingEntity ? 1.0D : 0.8D;

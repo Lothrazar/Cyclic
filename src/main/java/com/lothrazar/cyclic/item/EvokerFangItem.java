@@ -25,7 +25,7 @@ public class EvokerFangItem extends ItemBase {
   private static final int MAX_RANGE = 16;
 
   private void summonFangRay(double startX, double startZ, PlayerEntity player, double posX, double posY, double posZ) {
-    double minY = posY;//Math.min(posY, caster.posY);
+    double minY = posY; //Math.min(posY, caster.posY);
     //double d1 = Math.max(posY,caster.posY) ;
     double tposX = player.getPosX();
     //    double tposY = player.getPosY();

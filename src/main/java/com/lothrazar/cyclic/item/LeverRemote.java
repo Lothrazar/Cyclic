@@ -52,8 +52,9 @@ public class LeverRemote extends ItemBase {
       playerIn.swingArm(hand);
       return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
     }
-    else
+    else {
       return new ActionResult<ItemStack>(ActionResultType.FAIL, stack);
+    }
   }
 
   @Override
@@ -79,10 +80,12 @@ public class LeverRemote extends ItemBase {
     else {
       boolean success = false;
       success = trigger(stack, world, player);
-      if (success)
+      if (success) {
         return ActionResultType.SUCCESS;
-      else
+      }
+      else {
         return ActionResultType.FAIL;
+      }
     }
     //    return super.onItemUse(context);
   }
@@ -99,7 +102,7 @@ public class LeverRemote extends ItemBase {
     String dimensionTarget = stack.getOrCreateTag().getString("LeverDim");
     //check if we can avoid crossing dimensions
     String currentDim = UtilWorld.dimensionToString(player.world);
-    if (dimensionTarget.equalsIgnoreCase(currentDim)) {//same dim eh
+    if (dimensionTarget.equalsIgnoreCase(currentDim)) { //same dim eh
       BlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (world.isRemote) {

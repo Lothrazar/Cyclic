@@ -11,15 +11,15 @@ public enum BuilderActionType {
   SINGLE, X3, X5, X7, X9, X91, X19;
 
   public static final String NBTBLOCKSTATE = "blockstate";
-  private final static String NBT = "ActionType";
-  private final static String NBTTIMEOUT = "timeout";
+  private static final String NBT = "ActionType";
+  private static final String NBTTIMEOUT = "timeout";
 
   public static int getTimeout(ItemStack wand) {
     return wand.getOrCreateTag().getInt(NBTTIMEOUT);
   }
 
   public static void setTimeout(ItemStack wand) {
-    wand.getOrCreateTag().putInt(NBTTIMEOUT, 15);//less than one tick
+    wand.getOrCreateTag().putInt(NBTTIMEOUT, 15); //less than one tick
   }
 
   public static void tickTimeout(ItemStack wand) {

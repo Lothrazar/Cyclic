@@ -33,7 +33,7 @@ public class BoomerangItem extends ItemBase {
 
   @Override
   public int getUseDuration(ItemStack stack) {
-    return TICKS_USING;//bow has 72000
+    return TICKS_USING; //bow has 72000
   }
 
   @Override
@@ -46,9 +46,9 @@ public class BoomerangItem extends ItemBase {
   @Override
   public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entity, int chargeTimer) {
     int charge = this.getUseDuration(stack) - chargeTimer;
-    float percentageCharged = BowItem.getArrowVelocity(charge);//never zero, its from [0.03,1];
+    float percentageCharged = BowItem.getArrowVelocity(charge); //never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
-      return;//not enough force to go with any realistic path 
+      return; //not enough force to go with any realistic path 
     }
     //    float amountCharged = percentageCharged * MAX_CHARGE;
     //    float velocityFactor = percentageCharged * 1.5F;

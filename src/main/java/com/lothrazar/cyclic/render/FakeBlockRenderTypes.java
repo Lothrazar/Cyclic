@@ -19,7 +19,7 @@ public class FakeBlockRenderTypes extends RenderType {
   /**
    * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
    */
-  public static RenderType LASER_MAIN_BEAM = makeType("MiningLaserMainBeam",
+  public static final RenderType LASER_MAIN_BEAM = makeType("MiningLaserMainBeam",
       DefaultVertexFormats.POSITION_COLOR_TEX, GL11.GL_QUADS, 256,
       RenderType.State.getBuilder()
           .layer(field_239235_M_)
@@ -30,7 +30,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .writeMask(COLOR_WRITE)
           .build(false));
   //
-  public final static RenderType FAKE_BLOCK = makeType("fakeBlock",
+  public static final RenderType FAKE_BLOCK = makeType("fakeBlock",
       DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256,
       RenderType.State.getBuilder()
           .shadeModel(SHADE_ENABLED)

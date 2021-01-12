@@ -34,45 +34,42 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
         nbt, StringNBT.valueOf("pickup_mode"), StringNBT.valueOf("nothing"),
         new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
-            new TranslationTextComponent("item.cyclic.storage_bag.disabled")),
-        (p) -> {});
+            new TranslationTextComponent("item.cyclic.storage_bag.disabled")));
     pickup.addState(
         new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
             new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything")),
-        StringNBT.valueOf("everything"), (p) -> {});
+        StringNBT.valueOf("everything"));
     pickup.addState(
         new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
             new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter")),
-        StringNBT.valueOf("filter"), (p) -> {});
+        StringNBT.valueOf("filter"));
     ToggleButton dump = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y + BUTTON_GAP,
         nbt, StringNBT.valueOf("deposit_mode"), StringNBT.valueOf("nothing"),
         new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
-            new TranslationTextComponent("item.cyclic.storage_bag.disabled")),
-        (p) -> {});
+            new TranslationTextComponent("item.cyclic.storage_bag.disabled")));
     dump.addState(
         new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
             new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump")),
-        StringNBT.valueOf("dump"), (p) -> {});
+        StringNBT.valueOf("dump"));
     dump.addState(
         new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
             new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge")),
-        StringNBT.valueOf("merge"), (p) -> {});
+        StringNBT.valueOf("merge"));
     ToggleButton refill = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y + BUTTON_GAP * 2,
         nbt, StringNBT.valueOf("refill_mode"), StringNBT.valueOf("nothing"),
         new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
-            new TranslationTextComponent("item.cyclic.storage_bag.disabled")),
-        (p) -> {});
+            new TranslationTextComponent("item.cyclic.storage_bag.disabled")));
     refill.addState(
         new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar.button"),
         new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
             new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar")),
-        StringNBT.valueOf("hotbar"), (p) -> {});
+        StringNBT.valueOf("hotbar"));
     this.addButton(pickup);
     this.addButton(dump);
     this.addButton(refill);
@@ -115,8 +112,10 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
     CompoundNBT nbt;
     int index;
 
-    public ToggleButton(int x, int y, CompoundNBT nbt, StringNBT key, INBT defaultValue, ITextComponent defaultTitle, ITextComponent defaultTooltip, IPressable defaultPressable) {
-      super(x, y, 0, 20, defaultTitle, (p -> {}), Button::renderToolTip);
+    public ToggleButton(int x, int y, CompoundNBT nbt, StringNBT key, INBT defaultValue, ITextComponent defaultTitle, ITextComponent defaultTooltip) {
+      super(x, y, 0, 20, defaultTitle, (p -> {
+        //do nothing
+      }), Button::renderToolTip);
       this.width = StorageBagScreen.this.font.getStringWidth(defaultTitle.getString()) + 8;
       index = 0;
       titles = new LinkedList<>();
@@ -127,7 +126,9 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
       this.nbtKey = key;
       titles.add(defaultTitle);
       tooltips.add(defaultTooltip);
-      pressables.add(defaultPressable);
+      //      pressables.add((p) -> {
+      //        //why is this here
+      //      });
       nbtValues.add(defaultValue);
     }
 
@@ -140,19 +141,21 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
     public void onPress() {
       super.onPress();
       this.pressables.get(index).onPress(this);
-      if (pressables.size() == 0)
+      if (pressables.size() == 0) {
         return;
-      if (++index >= pressables.size())
+      }
+      if (++index >= pressables.size()) {
         index = 0;
+      }
       this.setMessage(titles.get(index));
       PacketRegistry.INSTANCE.sendToServer(new PacketItemStackNBT(
           StorageBagScreen.this.container.bag, StorageBagScreen.this.container.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
 
-    public void addState(ITextComponent title, ITextComponent tooltip, INBT nbtValue, IPressable pressable) {
+    public void addState(ITextComponent title, ITextComponent tooltip, INBT nbtValue) {
       this.titles.add(title);
       this.tooltips.add(tooltip);
-      this.pressables.add(pressable);
+      //      this.pressables.add(pressable);
       this.nbtValues.add(nbtValue);
       if (this.nbt.get(nbtKey.getString()) != null &&
           this.nbt.get(nbtKey.getString()).equals(nbtValue)) {

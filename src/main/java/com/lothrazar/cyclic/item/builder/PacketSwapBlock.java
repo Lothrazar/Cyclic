@@ -76,17 +76,19 @@ public class PacketSwapBlock extends PacketBase {
           if (processed.get(curPos) > 0) {
             continue; //dont process the same location more than once per click
           }
-          processed.put(curPos, processed.get(curPos) + 1);// ++
+          processed.put(curPos, processed.get(curPos) + 1);
           int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
             //nothign found. is that ok?
             if (!player.isCreative()) {
               UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
-              break;//you have no materials left
+              break;
+              //you have no materials left
             }
           }
           if (world.getTileEntity(curPos) != null) {
-            continue;//ignore tile entities IE do not break chests / etc
+            continue;
+            //ignore tile entities IE do not break chests / etc
           }
           replacedBlockState = world.getBlockState(curPos);
           Block replacedBlock = replacedBlockState.getBlock();
@@ -101,7 +103,7 @@ public class PacketSwapBlock extends PacketBase {
             continue;
           }
           if (replacedBlockState.getBlockHardness(world, curPos) < 0) {
-            continue;//since we know -1 is unbreakable
+            continue; //since we know -1 is unbreakable
           }
           //wait, do they match? are they the same? do not replace myself
           if (UtilWorld.doBlockStatesMatch(replacedBlockState, targetState)) {

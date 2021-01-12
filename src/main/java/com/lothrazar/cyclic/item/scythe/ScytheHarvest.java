@@ -16,8 +16,8 @@ public class ScytheHarvest extends ItemBase {
     super(properties);
   }
 
-  private static final int RADIUS = 6;//13x13
-  private static final int RADIUS_SNEAKING = 2;//2x2
+  private static final int RADIUS = 6; //13x13
+  private static final int RADIUS_SNEAKING = 2; //2x2
 
   public List<BlockPos> getShape(BlockPos pos, int radius) {
     return UtilShape.squareHorizontalFull(pos, radius);
@@ -32,7 +32,6 @@ public class ScytheHarvest extends ItemBase {
     }
     PlayerEntity player = context.getPlayer();
     int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
-    //
     int counts = 0;
     for (BlockPos p : getShape(pos, radius)) {
       // 
@@ -40,10 +39,10 @@ public class ScytheHarvest extends ItemBase {
         counts++;
       }
     }
-    //
-    //
     player.swingArm(context.getHand());
-    context.getItem().damageItem(counts, player, (e) -> {});
+    context.getItem().damageItem(counts, player, (e) -> {
+      //break?
+    });
     return super.onItemUse(context);
   }
 }

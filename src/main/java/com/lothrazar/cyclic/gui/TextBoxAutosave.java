@@ -31,8 +31,8 @@ public class TextBoxAutosave extends TextFieldWidget {
   }
 
   @Override
-  protected void onFocusedChanged(boolean p_onFocusedChanged_1_) {
-    super.onFocusedChanged(p_onFocusedChanged_1_);
+  protected void onFocusedChanged(boolean onFocusedChanged) {
+    super.onFocusedChanged(onFocusedChanged);
     saveValue();
   }
 

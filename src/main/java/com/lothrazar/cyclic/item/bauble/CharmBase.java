@@ -78,8 +78,9 @@ public abstract class CharmBase extends ItemBase {
     if (this.voidProt && entityIn.getPosition().getY() < yLowest && entityIn instanceof LivingEntity) {
       UtilEntity.enderTeleportEvent((LivingEntity) entityIn, worldIn,
           new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
-      if (entityIn instanceof LivingEntity)
+      if (entityIn instanceof LivingEntity) {
         UtilItemStack.damageItem((LivingEntity) entityIn, stack);
+      }
       UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT);
     }
   }

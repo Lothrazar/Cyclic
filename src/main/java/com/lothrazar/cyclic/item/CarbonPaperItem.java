@@ -76,7 +76,8 @@ public class CarbonPaperItem extends ItemBase {
         }
         UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.written");
       }
-      else {//so it has NO tag right now at all
+      else {
+        //so it has NO tag right now at all
         //read
         CompoundNBT data = new CompoundNBT();
         sign.write(data);

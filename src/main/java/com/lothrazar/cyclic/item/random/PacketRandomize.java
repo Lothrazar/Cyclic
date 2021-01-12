@@ -66,7 +66,7 @@ public class PacketRandomize extends PacketBase {
       Collections.shuffle(rpos, world.rand);
       BlockPos swapPos;
       BlockState swapState;
-      synchronized (rpos) {//just in case
+      synchronized (rpos) { //just in case
         for (int i = 0; i < rpos.size(); i++) {
           swapPos = rpos.get(i);
           swapState = rstates.get(i);

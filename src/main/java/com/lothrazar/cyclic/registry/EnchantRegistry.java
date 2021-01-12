@@ -55,7 +55,8 @@ public class EnchantRegistry {
 
   private static void register(IForgeRegistry<Enchantment> r, Enchantment e) {
     EnchantBase ench = (EnchantBase) e;
-    if (ench.isEnabled())
+    if (ench.isEnabled()) {
       r.register(ench);
+    }
   }
 }

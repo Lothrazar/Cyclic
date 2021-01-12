@@ -99,7 +99,7 @@ public class PacketCraftAction extends PacketBase {
       return;
     }
     //step 2: find all stacks that are allowed to merge with that. (keep track of both types of slots)
-    Set<Integer> slotTargest = new HashSet<>();//including biggest
+    Set<Integer> slotTargest = new HashSet<>();
     int totalQuantity = 0;
     for (int i = 0; i <= 8; i++) {
       ItemStack tmp = c.getCraftMatrix().getStackInSlot(i);

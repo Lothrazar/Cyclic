@@ -27,7 +27,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   public static final String NBT_GLOW = Const.MODID + "_glow";
-  private final static String NBT_STATUS = "onoff";
+  public static final String NBT_STATUS = "onoff";
 
   public GlowingHelmetItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn) {
     super(materialIn, slot, builderIn);
@@ -37,8 +37,9 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
     boolean isTurnedOn = this.isOn(stack);
     removeNightVision(player, isTurnedOn);
-    if (isTurnedOn)
+    if (isTurnedOn) {
       addNightVision(player);
+    }
   }
 
   @Override
@@ -89,7 +90,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
     //reduce check to only once per second instead  of per tick
     if (event.getEntity().world.getGameTime() % 20 == 0 &&
-        event.getEntityLiving() != null) {//some of the items need an off switch
+        event.getEntityLiving() != null) { //some of the items need an off switch
       PlayerEntity player = (PlayerEntity) event.getEntityLiving();
       checkIfHelmOff(player);
     }

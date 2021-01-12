@@ -94,8 +94,9 @@ public class BoomerangEntity extends ProjectileItemEntity {
 
   public void setOwner(PlayerEntity ent) {
     this.targetEntity = ent;
-    if (ent != null && ent.getUniqueID() != null)
+    if (ent != null && ent.getUniqueID() != null) {
       dataManager.set(OWNER, ent.getUniqueID().toString());
+    }
   }
 
   private void movementReturnCheck() {
@@ -126,8 +127,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
     //try to find entities to pick up
     int range = 1;
     List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
-        this.getBoundingBox()
-            .offset(this.getMotion()).grow(range, range, range));
+        this.getBoundingBox().offset(this.getMotion()).grow(range, range, range));
     for (Entity entityHit : list) {
       if (entityHit instanceof ItemEntity || entityHit instanceof ExperienceOrbEntity) {
         entityHit.setPositionAndUpdate(owner.getPosX(), owner.getPosY(), owner.getPosZ());
@@ -143,7 +143,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         ActionResultType t = block.onBlockActivated(blockState, world, pos, (PlayerEntity) owner, Hand.MAIN_HAND, null);
-        boolean hasTriggered = t == ActionResultType.SUCCESS;//block.onBlockActivated(world, pos, blockState,
+        boolean hasTriggered = t == ActionResultType.SUCCESS; //block.onBlockActivated(world, pos, blockState,
         //            (PlayerEntity) this.owner, Hand.MAIN_HAND, Direction.UP, 0.5F, 0.5F, 0.5F);
         if (hasTriggered) {
           this.setRedstoneHasTriggered();
@@ -265,8 +265,9 @@ public class BoomerangEntity extends ProjectileItemEntity {
     }
     switch (this.boomerangType) {
       case CARRY:
-        if (!entityHit.world.isRemote)
+        if (!entityHit.world.isRemote) {
           entityHit.startRiding(this);
+        }
       break;
       case DAMAGE:
         if (entityHit instanceof LivingEntity) {

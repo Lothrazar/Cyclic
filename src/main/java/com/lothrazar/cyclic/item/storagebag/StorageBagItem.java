@@ -39,6 +39,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class StorageBagItem extends ItemBase {
 
+  private static final String NBT_COLOUR = "COLOUR";
   public static final int REFILL_TICKS = 4;
   public int timer = 0;
   private int slots;
@@ -90,8 +91,6 @@ public class StorageBagItem extends ItemBase {
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 
-  private final static String NBT_COLOUR = "COLOUR";
-
   public static void setColour(ItemStack stack, DyeColor col) {
     CompoundNBT tags = stack.getOrCreateTag();
     tags.putInt(NBT_COLOUR, col.getColorValue());
@@ -100,7 +99,7 @@ public class StorageBagItem extends ItemBase {
   public static int getColour(ItemStack stack) {
     CompoundNBT tags = stack.getOrCreateTag();
     if (tags.contains(NBT_COLOUR) == false) {
-      return DyeColor.BROWN.getColorValue();//BROWN as default for normal look
+      return DyeColor.BROWN.getColorValue(); //BROWN as default for normal look
     }
     return tags.getInt(NBT_COLOUR);
   }
@@ -144,21 +143,24 @@ public class StorageBagItem extends ItemBase {
     String pickupMode = nbt.getString("pickup_mode");
     String depositMode = nbt.getString("deposit_mode");
     String refillMode = nbt.getString("refill_mode");
-    if (!pickupMode.equals(""))
+    if (!pickupMode.equals("")) {
       tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
           new TranslationTextComponent(String.format(
               pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
                   .mergeStyle(TextFormatting.GREEN));
-    if (!depositMode.equals(""))
+    }
+    if (!depositMode.equals("")) {
       tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
           new TranslationTextComponent(String.format(
               depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
                   .mergeStyle(TextFormatting.BLUE));
-    if (!refillMode.equals(""))
+    }
+    if (!refillMode.equals("")) {
       tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
           new TranslationTextComponent(String.format(
               refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
                   .mergeStyle(TextFormatting.RED));
+    }
   }
 
   @Override
@@ -219,8 +221,9 @@ public class StorageBagItem extends ItemBase {
 
   @Nullable
   private static ItemStackHandler getInventory(ItemStack bag) {
-    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent())
+    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent()) {
       return (ItemStackHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
+    }
     return null;
   }
 
@@ -233,8 +236,9 @@ public class StorageBagItem extends ItemBase {
   }
 
   public static ItemStack tryFilteredInsert(ItemStack bag, ItemStack stack) {
-    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() && bagHasItem(bag, stack))
+    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() && bagHasItem(bag, stack)) {
       return tryInsert(bag, stack);
+    }
     return stack;
   }
 
@@ -242,8 +246,9 @@ public class StorageBagItem extends ItemBase {
     AtomicBoolean hasItem = new AtomicBoolean(false);
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
-        if (h.getStackInSlot(i).getItem() == stack.getItem())
+        if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           hasItem.set(true);
+        }
       }
     });
     return hasItem.get();
@@ -264,8 +269,9 @@ public class StorageBagItem extends ItemBase {
     AtomicInteger slot = new AtomicInteger(-1);
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       for (int i = h.getSlots() - 1; i >= 0; i--) {
-        if (h.getStackInSlot(i).getItem() == stack.getItem())
+        if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);
+        }
       }
     });
     return slot.get();
@@ -274,8 +280,9 @@ public class StorageBagItem extends ItemBase {
   public static PickupMode getPickupMode(ItemStack stack) {
     String mode = stack.getOrCreateTag().getString("pickup_mode");
     for (int i = 0; i < PickupMode.values().length; i++) {
-      if (mode.equals(PickupMode.values()[i].getString()))
+      if (mode.equals(PickupMode.values()[i].getString())) {
         return PickupMode.values()[i];
+      }
     }
     return PickupMode.NOTHING;
   }
@@ -283,8 +290,9 @@ public class StorageBagItem extends ItemBase {
   private static DepositMode getDepositMode(ItemStack stack) {
     String mode = stack.getOrCreateTag().getString("deposit_mode");
     for (int i = 0; i < DepositMode.values().length; i++) {
-      if (mode.equals(DepositMode.values()[i].getString()))
+      if (mode.equals(DepositMode.values()[i].getString())) {
         return DepositMode.values()[i];
+      }
     }
     return DepositMode.NOTHING;
   }
@@ -292,8 +300,9 @@ public class StorageBagItem extends ItemBase {
   private static RefillMode getRefillMode(ItemStack stack) {
     String mode = stack.getOrCreateTag().getString("refill_mode");
     for (int i = 0; i < RefillMode.values().length; i++) {
-      if (mode.equals(RefillMode.values()[i].getString()))
+      if (mode.equals(RefillMode.values()[i].getString())) {
         return RefillMode.values()[i];
+      }
     }
     return RefillMode.NOTHING;
   }
@@ -301,8 +310,9 @@ public class StorageBagItem extends ItemBase {
   public static Set<Integer> getAllBagSlots(PlayerEntity player) {
     Set<Integer> slots = new HashSet<>();
     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-      if (isBag(player.inventory.getStackInSlot(i)))
+      if (isBag(player.inventory.getStackInSlot(i))) {
         slots.add(i);
+      }
     }
     return slots;
   }

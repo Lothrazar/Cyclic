@@ -44,11 +44,11 @@ import net.minecraft.world.server.ServerWorld;
 
 public class EnderWingItem extends ItemBase implements IHasClickToggle {
 
+  private static final int COOLDOWN = 600; //ticks not seconds 
+
   public EnderWingItem(Properties properties) {
     super(properties);
   }
-
-  private static final int cooldown = 600;//ticks not seconds 
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
@@ -94,7 +94,7 @@ public class EnderWingItem extends ItemBase implements IHasClickToggle {
           }
           if (needsTeleport) {
             UtilItemStack.damageItem(playerIn, held);
-            playerIn.getCooldownTracker().setCooldown(this, cooldown);
+            playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
             UtilEntity.enderTeleportEvent(playerIn, spawnWorld, pos);
             UtilSound.playSound(playerIn, SoundRegistry.warp_echo);
           }

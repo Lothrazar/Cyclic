@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AirAntiGravity extends ItemBase implements IHasClickToggle {
 
-  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
+  private static final int TICKS_FALLDIST_SYNC = 22; //tick every so often
   private static final double DOWNWARD_SPEED_SNEAKING = -0.32;
 
   public AirAntiGravity(Properties properties) {
@@ -46,15 +46,16 @@ public class AirAntiGravity extends ItemBase implements IHasClickToggle {
     }
     PlayerEntity player = (PlayerEntity) entity;
     BlockPos belowMe = player.getPosition().down();
-    boolean isAirBorne = (world.isAirBlock(belowMe) //sneak on air, or a nonsolid block like a flower
-        || world.isTopSolid(belowMe, player) == false);
+    //sneak on air, or a nonsolid block like a flower
+    boolean isAirBorne = (world.isAirBlock(belowMe) || world.isTopSolid(belowMe, player) == false);
     //
-    if (isAirBorne && player.getMotion().y < 0) {//player.isSneaking() &&
+    if (isAirBorne && player.getMotion().y < 0) { //player.isSneaking() &&
       double y = (player.isCrouching()) ? DOWNWARD_SPEED_SNEAKING : 0;
       player.setMotion(player.getMotion().x, y, player.getMotion().z);
       player.isAirBorne = false;
       //if we set onGround->true all the time, it blocks fwd movement anywya
-      player.setOnGround(true);// (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
+      player.setOnGround(true);
+      // (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
       if (player.getEntityWorld().rand.nextDouble() < 0.1) {
         //        super.damageCharm(player, stack);
         UtilItemStack.damageItem(player, stack);

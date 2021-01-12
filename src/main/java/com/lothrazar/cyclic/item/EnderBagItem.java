@@ -47,15 +47,18 @@ public class EnderBagItem extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
     EnderChestInventory enderchestinventory = player.getInventoryEnderChest();
     enderchestinventory.setChestTileEntity(null);
-    player.openContainer(new SimpleNamedContainerProvider((p_220114_1_, p_220114_2_, p_220114_3_) -> {
-      return ChestContainer.createGeneric9X3(p_220114_1_, p_220114_2_, enderchestinventory);
-    }, new TranslationTextComponent("container.enderchest")));//EnderChestBlock.CONTAINER_NAME));//stupid mojang makes things private for no reason becasue  they hate modders
+    player.openContainer(new SimpleNamedContainerProvider((id, pl, b) -> {
+      return ChestContainer.createGeneric9X3(id, pl, enderchestinventory);
+    }, new TranslationTextComponent("container.enderchest")));
+    // EnderChestBlock.CONTAINER_NAME));//stupid mojang makes things private for no reason becasue  they hate modders
     //..
     player.addStat(Stats.OPEN_ENDERCHEST);
-    if (world.rand.nextDouble() > 0.5)
+    if (world.rand.nextDouble() > 0.5) {
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDER_CHEST_CLOSE);
-    else
+    }
+    else {
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDER_CHEST_OPEN);
+    }
     return super.onItemRightClick(world, player, hand);
   }
 }

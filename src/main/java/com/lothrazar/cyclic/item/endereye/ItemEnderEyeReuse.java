@@ -82,14 +82,18 @@ public class ItemEnderEyeReuse extends ItemBase {
   }
 
   private BlockPos returnClosest(BlockPos playerPos, @Nullable BlockPos pos1, @Nullable BlockPos pos2) {
-    if (pos1 == null && pos2 == null)
+    if (pos1 == null && pos2 == null) {
       return null;
-    else if (pos1 == null)
+    }
+    else if (pos1 == null) {
       return pos2;
-    else if (pos2 == null)
+    }
+    else if (pos2 == null) {
       return pos1;
-    else if (UtilWorld.distanceBetweenHorizontal(playerPos, pos1) <= UtilWorld.distanceBetweenHorizontal(playerPos, pos2))
+    }
+    else if (UtilWorld.distanceBetweenHorizontal(playerPos, pos1) <= UtilWorld.distanceBetweenHorizontal(playerPos, pos2)) {
       return pos1;
+    }
     return pos2;
   }
 }

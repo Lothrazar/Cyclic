@@ -57,7 +57,7 @@ public class EntityTorchBolt extends ProjectileItemEntity {
     else if (type == RayTraceResult.Type.BLOCK) {
       BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
       Direction offset = bRayTrace.getFace();
-      BlockPos pos = bRayTrace.getPos().offset(offset);//NO BAD NOT THIS this.getPosition();
+      BlockPos pos = bRayTrace.getPos().offset(offset);
       boolean itPlaced = false;
       if (world.isAirBlock(pos)) {
         BlockState newstate = null;

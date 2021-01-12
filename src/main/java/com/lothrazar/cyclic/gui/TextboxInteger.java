@@ -30,17 +30,17 @@ public class TextboxInteger extends TextFieldWidget implements IHasTooltip {
   }
 
   @Override
-  protected void onFocusedChanged(boolean p_onFocusedChanged_1_) {
-    super.onFocusedChanged(p_onFocusedChanged_1_);
+  protected void onFocusedChanged(boolean onFocusedChanged) {
+    super.onFocusedChanged(onFocusedChanged);
     saveValue();
   }
 
   @Override
-  public boolean keyPressed(int key, int p_keyPressed_2_, int p_keyPressed_3_) {
+  public boolean keyPressed(int key, int mx, int my) {
     if (key == KEY_BACKSPACE || key == KEY_DELETE) {
       saveValue();
     }
-    return super.keyPressed(key, p_keyPressed_2_, p_keyPressed_3_);
+    return super.keyPressed(key, mx, my);
   }
 
   private void saveValue() {

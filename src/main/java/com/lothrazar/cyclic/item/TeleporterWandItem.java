@@ -26,6 +26,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class TeleporterWandItem extends ItemBase {
 
+  private static final int TICK_REPAIR = 4;
   private static final int TICKS_USING = 93000;
   public static IntValue RANGE;
 
@@ -40,7 +41,7 @@ public class TeleporterWandItem extends ItemBase {
 
   @Override
   public int getUseDuration(ItemStack stack) {
-    return TICKS_USING;//bow has 72000
+    return TICKS_USING; //bow has 72000
   }
 
   @Override
@@ -52,8 +53,9 @@ public class TeleporterWandItem extends ItemBase {
 
   @Override
   public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (entityIn instanceof PlayerEntity && stack.isDamaged() && stack.getDamage() >= 4)
+    if (entityIn instanceof PlayerEntity && stack.isDamaged() && stack.getDamage() >= TICK_REPAIR) {
       tryRepairWith(stack, (PlayerEntity) entityIn, Items.ENDER_PEARL);
+    }
   }
 
   @Override
@@ -81,10 +83,10 @@ public class TeleporterWandItem extends ItemBase {
         Direction face = blockRayTraceResult.getFace();
         BlockPos newPos = blockRayTraceResult.getPos().offset(face);
         BlockPos oldPos = player.getPosition();
-        if (UtilEntity.enderTeleportEvent(player, world, newPos)) {// && player.getPosition() != currentPlayerPos
+        if (UtilEntity.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos
           UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
           UtilSound.playSound(player, SoundEvents.ENTITY_ENDERMAN_TELEPORT);
-          //          world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+          //  world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS );
           UtilItemStack.damageItem(player, stack);
         }
       }

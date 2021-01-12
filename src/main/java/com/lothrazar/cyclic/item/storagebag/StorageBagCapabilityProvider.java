@@ -13,7 +13,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class StorageBagCapabilityProvider implements ICapabilitySerializable<CompoundNBT> {
 
-  //  private ItemStack bag;
   private int slots;
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(slots) {
 
@@ -31,8 +30,9 @@ public class StorageBagCapabilityProvider implements ICapabilitySerializable<Com
   @Nonnull
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventory.cast();
+    }
     return LazyOptional.empty();
   }
 

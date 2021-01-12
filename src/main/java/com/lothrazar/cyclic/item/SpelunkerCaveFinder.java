@@ -43,7 +43,7 @@ public class SpelunkerCaveFinder extends ItemBase {
   }
 
   private static final int COOLDOWN = 12;
-  private static int range = 48;
+  private static final int RANGE = 64;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -60,7 +60,7 @@ public class SpelunkerCaveFinder extends ItemBase {
     boolean found = false;
     //    if (!worldObj.isRemote) {
     BlockPos current = pos;
-    for (int i = 1; i <= range; i++) {
+    for (int i = 1; i <= RANGE; i++) {
       current = current.offset(direction.getOpposite());
       if (context.getWorld().isAirBlock(current)) {
         UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.cave") + i);
@@ -75,13 +75,12 @@ public class SpelunkerCaveFinder extends ItemBase {
         found = true;
       }
       if (found) {
-        break;//stop looping
+        break;
       }
     }
     if (found == false) {
-      UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.none") + range);
+      UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.none") + RANGE);
     }
-    //    }
     UtilItemStack.damageItem(player, stack);
     UtilEntity.setCooldownItem(player, this, COOLDOWN);
     return super.onItemUse(context);

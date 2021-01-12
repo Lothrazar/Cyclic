@@ -56,7 +56,7 @@ public class SettingsCard extends ItemBase {
     //am i doing a READ or a WRITE
     if (player.world.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
       //      Blocks.BEDROCK.isu
-      held.setTag(null);//clear
+      held.setTag(null); //clear
       UtilChat.addChatMessage(player, getTranslationKey() + ".deleted");
     }
     //

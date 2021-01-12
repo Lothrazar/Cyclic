@@ -31,7 +31,7 @@ public class ItemMagicNet extends ItemBase {
 
   @Override
   public int getUseDuration(ItemStack stack) {
-    return TICKS_USING;//bow has 72000
+    return TICKS_USING; //bow has 72000
   }
 
   @Override
@@ -45,9 +45,9 @@ public class ItemMagicNet extends ItemBase {
   public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entity, int chargeTimer) {
     //
     int charge = this.getUseDuration(stack) - chargeTimer;
-    float percentageCharged = BowItem.getArrowVelocity(charge);//never zero, its from [0.03,1];
+    float percentageCharged = BowItem.getArrowVelocity(charge); //never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
-      return;//not enough force to go with any realistic path 
+      return; //not enough force to go with any realistic path 
     }
     float velocityFactor = percentageCharged * 1.5F;
     if (entity instanceof PlayerEntity == false) {
@@ -57,7 +57,7 @@ public class ItemMagicNet extends ItemBase {
     EntityMagicNetEmpty e = new EntityMagicNetEmpty(worldIn, player);
     Vector3d lookVector = player.getLookVec();
     e.shoot(lookVector.getX(), lookVector.getY(), lookVector.getZ(), velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
-    worldIn.playSound((PlayerEntity) null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+    worldIn.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
     worldIn.addEntity(e);
     stack.shrink(1);
   }

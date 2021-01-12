@@ -39,7 +39,7 @@ public class PacketTileInventory extends PacketBase {
         return;
       }
       TileEntity tile = Minecraft.getInstance().world.getTileEntity(message.blockPos);
-      if (tile != null)
+      if (tile != null) {
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
           if (message.type == TYPE.SET && h instanceof EnderShelfItemHandler) {
             //            ItemStack was = h.getStackInSlot(message.slot);
@@ -47,6 +47,7 @@ public class PacketTileInventory extends PacketBase {
           }
           h.insertItem(message.slot, message.itemStack, false);
         });
+      }
     });
     message.done(ctx);
   }

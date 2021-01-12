@@ -43,7 +43,7 @@ public class ItemProjectileDungeon extends ItemBase {
 
   private void findTargetLocation(PlayerEntity player, EntityDungeonEye entityendereye) {
     if (entityendereye == null || !entityendereye.isAlive()) {
-      return;//something happened!
+      return; //something happened!
     }
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.SPAWNER, DUNGEONRADIUS);
     if (blockpos == null) {

@@ -86,16 +86,15 @@ public class ShapeCard extends ItemBase {
             if (slot < 0) {
               //cannot find material
               UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.empty");
-              break;//stop looping
+              break; //stop looping
             }
           }
-          //     TODO:      success = UtilPlaceBlocks.placeStateSafe(world, player, cworld);
           if (world.setBlockState(posBuild, targetState, 1)) {
             UtilPlayer.decrStackSize(player, slot);
           }
         }
       }
-      else {// no state selected
+      else { // no state selected
         UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.state");
       }
     }

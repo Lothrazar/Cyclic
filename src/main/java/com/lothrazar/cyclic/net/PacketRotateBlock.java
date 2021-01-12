@@ -70,8 +70,9 @@ public class PacketRotateBlock extends PacketBase {
         ServerPlayerEntity player = ctx.get().getSender();
         ItemStack itemStackHeld = player.getHeldItem(message.hand);
         UtilItemStack.damageItem(player, itemStackHeld);
-        if (world.getBlockState(message.pos).getSoundType() != null)
+        if (world.getBlockState(message.pos).getSoundType() != null) {
           UtilSound.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound());
+        }
       }
     });
     message.done(ctx);

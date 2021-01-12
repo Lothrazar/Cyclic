@@ -49,7 +49,7 @@ public class ItemEvents {
   public void onPlayerCloneDeath(PlayerEvent.Clone event) {
     ModifiableAttributeInstance original = event.getOriginal().getAttribute(Attributes.MAX_HEALTH);
     if (original != null) {
-      AttributeModifier healthModifier = original.getModifier(HeartItem.healthModifierUuid);
+      AttributeModifier healthModifier = original.getModifier(HeartItem.ID);
       if (healthModifier != null)
         event.getPlayer().getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(healthModifier);
     }

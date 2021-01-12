@@ -320,8 +320,8 @@ public class BlockRegistry {
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
     r.register(new BlockWorkbench(Block.Properties.create(Material.ROCK)).setRegistryName("workbench"));
-    r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block"));//stable, only changes with player interaction
-    r.register(new UnbreakablePoweredBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_reactive"));//reactive and unstable, ignores players and reads redstone powered state from world in TE
+    r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block")); //stable, only changes with player interaction
+    r.register(new UnbreakablePoweredBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_reactive")); //reactive and unstable, ignores players and reads redstone 
     r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), false).setRegistryName("ender_shelf"));
     r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), true).setRegistryName("ender_controller"));
   }

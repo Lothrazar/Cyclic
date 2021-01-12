@@ -27,7 +27,7 @@ public class FluidBar {
   public int guiTop;
 
   public FluidBar(Screen p, int cap) {
-    this(p, 132, 8, cap);//defaults
+    this(p, 132, 8, cap);
   }
 
   public FluidBar(Screen p, int x, int y, int cap) {

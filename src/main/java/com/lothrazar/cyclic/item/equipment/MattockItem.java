@@ -29,7 +29,7 @@ public class MattockItem extends ToolItem {
     super(5.0F, -3.0F, ItemTier.DIAMOND, Sets.newHashSet(), builder);
   }
 
-  final static int RADIUS = 1;//radius 2 is 5x5 area square
+  static final int RADIUS = 1; //radius 2 is 5x5 area square
 
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
@@ -45,7 +45,7 @@ public class MattockItem extends ToolItem {
       else if (sideHit == Direction.EAST || sideHit == Direction.WEST) {
         shape = UtilShape.squareVerticalZ(pos, RADIUS);
       }
-      else {//has to be NORTHSOUTH
+      else { //has to be NORTHSOUTH
         shape = UtilShape.squareVerticalX(pos, RADIUS);
       }
       for (BlockPos posCurrent : shape) {
@@ -59,14 +59,14 @@ public class MattockItem extends ToolItem {
             && this.getDestroySpeed(stack, bsCurrent) > 1) {
           stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
-          if (world.isRemote) {//C
+          if (world.isRemote) {
             world.playEvent(2001, posCurrent, Block.getStateId(bsCurrent));
             if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
               blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
             }
             //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
           }
-          else if (player instanceof ServerPlayerEntity) {//Server side, so this works
+          else if (player instanceof ServerPlayerEntity) { //Server side, so this works
             ServerPlayerEntity mp = (ServerPlayerEntity) player;
             int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, posCurrent);
             if (xpGivenOnDrop >= 0) {

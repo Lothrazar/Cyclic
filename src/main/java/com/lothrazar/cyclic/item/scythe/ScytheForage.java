@@ -36,8 +36,8 @@ public class ScytheForage extends ItemBase {
     super(properties);
   }
 
-  private static final int RADIUS = 6;//13x13
-  private static final int RADIUS_SNEAKING = 2;//2x2
+  private static final int RADIUS = 6; //13x13
+  private static final int RADIUS_SNEAKING = 2; //2x2
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -49,7 +49,9 @@ public class ScytheForage extends ItemBase {
     int radius = (context.getPlayer().isCrouching()) ? RADIUS_SNEAKING : RADIUS;
     PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
     context.getPlayer().swingArm(context.getHand());
-    context.getItem().damageItem(1, context.getPlayer(), (e) -> {});
+    context.getItem().damageItem(1, context.getPlayer(), (e) -> {
+      //TODO: test
+    });
     return super.onItemUse(context);
   }
 }

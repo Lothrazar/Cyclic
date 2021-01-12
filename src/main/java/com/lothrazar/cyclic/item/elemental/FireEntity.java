@@ -55,7 +55,7 @@ public class FireEntity extends ProjectileItemEntity {
     }
     else if (type == RayTraceResult.Type.BLOCK) {
       BlockRayTraceResult ray = (BlockRayTraceResult) result;
-      if (ray.getPos() == null) {// || ray.getFace() == null) {
+      if (ray.getPos() == null) {
         return;
       }
       //      BlockPos pos = ray.getPos();//.offset(ray.getFace());

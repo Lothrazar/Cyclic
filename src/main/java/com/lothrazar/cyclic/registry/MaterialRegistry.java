@@ -14,14 +14,14 @@ import net.minecraft.util.SoundEvents;
 
 public class MaterialRegistry {
 
-  public static ItemGroup blockgrp = new ItemGroup(ModCyclic.MODID) {
+  public static final ItemGroup BLOCK_GROUP = new ItemGroup(ModCyclic.MODID) {
 
     @Override
     public ItemStack createIcon() {
       return new ItemStack(BlockRegistry.trash);
     }
   };
-  public static ItemGroup itemgrp = new ItemGroup(ModCyclic.MODID + "items") {
+  public static final ItemGroup ITEM_GROUP = new ItemGroup(ModCyclic.MODID + "items") {
 
     @Override
     public ItemStack createIcon() {

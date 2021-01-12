@@ -40,13 +40,13 @@ public class PacketItemStackNBT extends PacketBase {
   }
 
   public static void handle(PacketItemStackNBT message, Supplier<NetworkEvent.Context> context) {
-    //    System.out.println("Handling from client");
     context.get().enqueueWork(() -> {
       ServerPlayerEntity player = context.get().getSender();
       if (player != null) {
         ItemStack serverStack = ItemStack.EMPTY;
-        if (0 <= message.slot && message.slot < player.inventory.getSizeInventory())
+        if (0 <= message.slot && message.slot < player.inventory.getSizeInventory()) {
           serverStack = player.inventory.getStackInSlot(message.slot);
+        }
         if (!serverStack.isEmpty()) {
           //          System.out.printf("Before set on stack %s%n", serverStack.getOrCreateTag().getString());
           serverStack.getOrCreateTag().put(message.nbtKey.getString(), message.nbtValue);
@@ -102,6 +102,7 @@ public class PacketItemStackNBT extends PacketBase {
       break;
       default: //0 is EndNBT, shouldn't ever happen, I don't think.
         packet.nbtValue = StringNBT.valueOf("");
+      break;
     }
     return packet;
   }

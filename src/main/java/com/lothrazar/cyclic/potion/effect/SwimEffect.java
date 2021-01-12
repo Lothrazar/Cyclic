@@ -21,7 +21,7 @@ public class SwimEffect extends TickableEffect {
     LivingEntity entity = event.getEntityLiving();
     if (entity.isInWater()) {
       EffectInstance pot = entity.getActivePotionEffect(this);
-      int amp = pot.getAmplifier() + 4;//level I is zero,  II is one 
+      int amp = pot.getAmplifier() + 4; //level I is zero,  II is one 
       UtilEntity.speedupEntityIfMoving(entity, speedfactor * amp);
     }
   }

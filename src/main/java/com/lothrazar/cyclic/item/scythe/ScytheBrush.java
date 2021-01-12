@@ -36,8 +36,8 @@ public class ScytheBrush extends ItemBase {
     super(properties);
   }
 
-  private static final int RADIUS = 6;//13x13
-  private static final int RADIUS_SNEAKING = 2;//2x2
+  private static final int RADIUS = 6; //13x13
+  private static final int RADIUS_SNEAKING = 2; //2x2
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -51,7 +51,9 @@ public class ScytheBrush extends ItemBase {
     PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius));
     //client actions
     context.getPlayer().swingArm(context.getHand());
-    context.getItem().damageItem(1, context.getPlayer(), (e) -> {});
+    context.getItem().damageItem(1, context.getPlayer(), (e) -> {
+      //TODO 
+    });
     return super.onItemUse(context);
   }
 }

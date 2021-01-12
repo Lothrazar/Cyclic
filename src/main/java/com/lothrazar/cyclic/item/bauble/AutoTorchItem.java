@@ -41,7 +41,8 @@ public class AutoTorchItem extends ItemBase implements IHasClickToggle {
     super(properties);
   }
 
-  public static final int lightLimit = 9;
+  //TODO: config
+  public static final int LIGHT_LIMIT = 9;
 
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
@@ -60,7 +61,7 @@ public class AutoTorchItem extends ItemBase implements IHasClickToggle {
       return;
     }
     BlockPos pos = entityIn.getPosition();
-    if (world.getLight(pos) <= lightLimit
+    if (world.getLight(pos) <= LIGHT_LIMIT
         //            && player.isSpectator() == false
         //            && world.isSideSolid(pos.down(), Direction.UP)
         && world.getBlockState(pos.down()).isSolid()

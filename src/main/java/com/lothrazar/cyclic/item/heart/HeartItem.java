@@ -17,7 +17,7 @@ public class HeartItem extends ItemBase {
 
   private static final int MAX = 100;
   static final int COOLDOWN = 10;
-  public static final UUID healthModifierUuid = UUID.fromString("06d30aa2-eff2-4a81-b92b-a1cb95f115c6");
+  public static final UUID ID = UUID.fromString("06d30aa2-eff2-4a81-b92b-a1cb95f115c6");
 
   public HeartItem(Properties properties) {
     super(properties);
@@ -33,12 +33,12 @@ public class HeartItem extends ItemBase {
     ModifiableAttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
     if (healthAttribute.getValue() < MAX) {
       //get attribute modif by id
-      AttributeModifier oldHealthModifier = healthAttribute.getModifier(healthModifierUuid);
+      AttributeModifier oldHealthModifier = healthAttribute.getModifier(ID);
       //what is our value
       double addedHealth = (oldHealthModifier == null) ? +2.0D : oldHealthModifier.getAmount() + 2.0D;
       //replace the modifier on the main attribute
-      healthAttribute.removeModifier(healthModifierUuid);
-      AttributeModifier healthModifier = new AttributeModifier(healthModifierUuid, "HP Bonus from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
+      healthAttribute.removeModifier(ID);
+      AttributeModifier healthModifier = new AttributeModifier(ID, "HP Bonus from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
       healthAttribute.applyPersistentModifier(healthModifier);
       //finish up
       playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);

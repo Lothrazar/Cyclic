@@ -14,7 +14,7 @@ public class PotionEvents {
     if (entity == null) {
       return;
     }
-    for (TickableEffect effect : PotionRegistry.PotionEffects.effects) {
+    for (TickableEffect effect : PotionRegistry.PotionEffects.EFFECTS) {
       if (effect != null && entity.isPotionActive(effect)) {
         effect.tick(event);
       }

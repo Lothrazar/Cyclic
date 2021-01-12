@@ -40,16 +40,17 @@ import net.minecraft.world.World;
 
 public class AutoCaveTorchItem extends ItemBase implements IHasClickToggle {
 
-  public AutoCaveTorchItem(Properties properties) {
-    super(properties);
-  }
-
+  private static final int TICK_DELAY = 2;
   public static final int LIGHT_LIMIT = 9;
   private static final int MAX_DISTANCE_SQ = (int) Math.pow(16, 2);
   private static final int MAX_LIST_SIZE = 200;
-  private static int timer = 0;
+  private int timer = 0;
   private boolean ticking = false;
   private LinkedHashSet<BlockPos> blockHashList = new LinkedHashSet<>();
+
+  public AutoCaveTorchItem(Properties properties) {
+    super(properties);
+  }
 
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
@@ -84,8 +85,9 @@ public class AutoCaveTorchItem extends ItemBase implements IHasClickToggle {
           while (iter.hasNext()) {
             iter.next();
             iter.remove();
-            if (--i <= MAX_LIST_SIZE)
+            if (--i <= MAX_LIST_SIZE) {
               break;
+            }
           }
         }
       }
@@ -93,10 +95,11 @@ public class AutoCaveTorchItem extends ItemBase implements IHasClickToggle {
       while (iter.hasNext()) {
         BlockPos testPos = iter.next();
         if (shouldPlaceTorch(world, testPos)) {
-          if (UtilPlaceBlocks.placeTorchSafely(world, testPos))
+          if (UtilPlaceBlocks.placeTorchSafely(world, testPos)) {
             UtilItemStack.damageItem(player, stack);
+          }
           iter.remove();
-          timer = 2; //lag compensation -- wait a tick before trying to place next torch
+          timer = TICK_DELAY; //lag compensation -- wait a tick before trying to place next torch
           break;
         }
       }

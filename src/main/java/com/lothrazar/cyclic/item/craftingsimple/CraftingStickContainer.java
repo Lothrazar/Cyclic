@@ -75,7 +75,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return hand != null && playerIn.getHeldItem(hand).getItem() instanceof CraftingStickItem;//todo: true IF im holding the stick
+    return hand != null && playerIn.getHeldItem(hand).getItem() instanceof CraftingStickItem;
   }
   //  @Nonnull
   //  @Override

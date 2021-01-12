@@ -40,7 +40,7 @@ public class PotionRegistry {
   private static TickableEffect register(IForgeRegistry<Effect> r, TickableEffect pot, String name) {
     pot.setRegistryName(new ResourceLocation(ModCyclic.MODID, name));
     r.register(pot);
-    PotionEffects.effects.add(pot);
+    PotionEffects.EFFECTS.add(pot);
     return pot;
   }
 
@@ -63,7 +63,7 @@ public class PotionRegistry {
   public static class PotionEffects {
 
     //for events
-    public static final List<TickableEffect> effects = new ArrayList<TickableEffect>();
+    public static final List<TickableEffect> EFFECTS = new ArrayList<TickableEffect>();
     @ObjectHolder(ModCyclic.MODID + ":stun")
     public static TickableEffect stun;
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
@@ -84,29 +84,28 @@ public class PotionRegistry {
 
   public static void setup(FMLCommonSetupEvent event) {
     ///haste recipes
-    ItemStack AWKWARD = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD);
-    basicBrewing(AWKWARD.copy(), PotionRegistry.PotionItem.haste, Items.EMERALD);
+    final ItemStack awkwardPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.haste, Items.EMERALD);
     splashBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
     basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste),
         PotionRegistry.PotionItem.strong_haste, Items.REDSTONE);
     splashBrewing(PotionRegistry.PotionItem.strong_haste, Items.EMERALD);
     lingerBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
     //STUN recipes
-    basicBrewing(AWKWARD.copy(), PotionRegistry.PotionItem.stun, Items.CLAY);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.stun, Items.CLAY);
     splashBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
     lingerBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
     //swimspeed recipes
-    basicBrewing(AWKWARD.copy(), PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
     splashBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
     lingerBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
     //    PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste).gr
   }
 
-  private static void basicBrewing(ItemStack AWKWARD, Potion pot, Item item) {
+  private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {
     //hmm wat 
-    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(AWKWARD, Ingredient.fromItems(item),
-        PotionUtils.addPotionToItemStack(
-            new ItemStack(Items.POTION), pot)));
+    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(inputPot, Ingredient.fromItems(item),
+        PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), pot)));
   }
 
   private static void splashBrewing(Potion pot, Item item) {

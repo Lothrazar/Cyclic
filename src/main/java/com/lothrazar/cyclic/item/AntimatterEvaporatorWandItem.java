@@ -29,6 +29,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AntimatterEvaporatorWandItem extends ItemBase {
 
+  private static final int SIZE = 4;
+  private static final String NBT_MODE = "mode";
   public static final int COOLDOWN = 15;
   private static final List<Fluid> VALID_WATER = new ArrayList<>();
   private static final List<Fluid> VALID_LAVA = new ArrayList<>();
@@ -68,8 +70,8 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     BlockPos pos = context.getPos();
     World world = context.getWorld();
     Direction face = context.getFace();
-    Mode fluidMode = Mode.values()[context.getItem().getOrCreateTag().getInt("mode")];
-    List<BlockPos> area = UtilShape.cubeSquareBase(pos.offset(face), 4, 1);
+    Mode fluidMode = Mode.values()[context.getItem().getOrCreateTag().getInt(NBT_MODE)];
+    List<BlockPos> area = UtilShape.cubeSquareBase(pos.offset(face), SIZE, 1);
     List<Fluid> theList = fluidMode == Mode.WATER ? VALID_WATER : fluidMode == Mode.LAVA ? VALID_LAVA : null;
     AtomicBoolean removed = new AtomicBoolean(false);
     if (theList != null) {
@@ -85,13 +87,15 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       });
     }
     //
-    //
     if (removed.get()) {
       PlayerEntity player = context.getPlayer();
       player.swingArm(context.getHand());
-      context.getItem().damageItem(1, player, (e) -> {});
-      if (world.isRemote)
+      context.getItem().damageItem(1, player, (e) -> {
+        // TODO : test break
+      });
+      if (world.isRemote) {
         UtilSound.playSound(pos, SoundEvents.ITEM_BUCKET_FILL);
+      }
     }
     return ActionResultType.SUCCESS;
   }
@@ -109,21 +113,23 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
 
   @Override
   public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-    stack.getOrCreateTag().putInt("mode", Mode.WATER.ordinal());
+    stack.getOrCreateTag().putInt(NBT_MODE, Mode.WATER.ordinal());
     super.onCreated(stack, worldIn, playerIn);
   }
 
   private static TranslationTextComponent getModeTooltip(ItemStack stack) {
+    Mode mode = Mode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
     return new TranslationTextComponent("item.cyclic.antimatter_wand.tooltip0",
         new TranslationTextComponent(String.format("item.cyclic.antimatter_wand.mode.%s",
-            Mode.values()[stack.getOrCreateTag().getInt("mode")].getString())));
+            mode.getString())));
   }
 
   public static void toggleMode(PlayerEntity player, ItemStack stack) {
-    if (player.getCooldownTracker().hasCooldown(stack.getItem()))
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
       return;
-    Mode mode = Mode.values()[stack.getOrCreateTag().getInt("mode")];
-    stack.getOrCreateTag().putInt("mode", mode.getNext().ordinal());
+    }
+    Mode mode = Mode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
+    stack.getOrCreateTag().putInt(NBT_MODE, mode.getNext().ordinal());
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     if (player.world.isRemote) {
       player.sendStatusMessage(getModeTooltip(stack), true);

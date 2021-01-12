@@ -41,8 +41,6 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     //result first
     this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     //
-    // 
-    //
     if (player.getHeldItemMainhand().getItem() instanceof CraftingBagItem) {
       this.bag = player.getHeldItemMainhand();
       this.slot = player.inventory.currentItem;
@@ -74,7 +72,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   public void onContainerClosed(PlayerEntity playerIn) {
     super.onContainerClosed(playerIn);
     //this is not the saving version
-    if (playerIn.world.isRemote == false)
+    if (playerIn.world.isRemote == false) {
       bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
         for (int i = 0; i < 9; i++) {
           ItemStack crafty = this.craftMatrix.getStackInSlot(i);
@@ -83,14 +81,15 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
           }
           h.extractItem(i, 64, false);
           ItemStack failtest = h.insertItem(i, crafty, false);
-          if (!failtest.isEmpty())
+          if (!failtest.isEmpty()) {
             ModCyclic.LOGGER.info(failtest + " why did this fail; client= " + playerIn.world.isRemote);
-          //
+          }
           //
           //          ItemStack doubleTest = h.extractItem(i, 64, true);
           //          ModCyclic.LOGGER.info(doubleTest + " got saved in " + i);
         }
       });
+    }
     //    clearContainer(playerIn, playerIn.world, craftMatrix);
   }
 

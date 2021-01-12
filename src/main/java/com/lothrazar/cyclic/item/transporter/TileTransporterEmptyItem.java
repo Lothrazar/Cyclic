@@ -73,7 +73,7 @@ public class TileTransporterEmptyItem extends ItemBase {
       UtilChat.sendStatusMessage(player, "chest_sack.error.config");
       return ActionResultType.FAIL;
     }
-    UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT);//SoundRegistry.chest_sack_capture);
+    UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT); //SoundRegistry.chest_sack_capture);
     if (world.isRemote) {
       PacketRegistry.INSTANCE.sendToServer(new PacketChestSack(pos));
     }
@@ -89,7 +89,9 @@ public class TileTransporterEmptyItem extends ItemBase {
     if (state.getPlayerRelativeBlockHardness(player, world, pos) <= 0) {
       return;
     }
-    CompoundNBT tileData = new CompoundNBT(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
+    CompoundNBT tileData = new CompoundNBT();
+    //thanks for the tip on setting tile entity data from nbt tag:
+    //https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
     tile.write(tileData);
     CompoundNBT itemData = new CompoundNBT();
     itemData.putString(TileTransporterItem.KEY_BLOCKNAME, state.getBlock().getTranslationKey());
@@ -109,11 +111,7 @@ public class TileTransporterEmptyItem extends ItemBase {
           // try to undo the break if we can
           UtilChat.sendStatusMessage(player, "chest_sack.error.pickup");
           world.setBlockState(pos, state);
-          return;// and dont drop the full item stack or shrink the empty just end
-          //TileEntity tileCopy = world.getTileEntity(position);
-          //  if (tileCopy != null) {
-          //    tileCopy.readFromNBT(tileData);
-          //  } 
+          return; // and dont drop the full item stack or shrink the empty just end
         }
         ItemStack drop = new ItemStack(ItemRegistry.tile_transporter);
         drop.setTag(itemData);

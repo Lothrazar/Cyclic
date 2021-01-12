@@ -38,12 +38,12 @@ import net.minecraft.world.World;
 
 public class WaterSpreaderItem extends ItemBase {
 
+  private static final int COOLDOWN = 28;
+  private static final int RADIUS = 3;
+
   public WaterSpreaderItem(Properties properties) {
     super(properties);
   }
-
-  private static final int COOLDOWN = 28;
-  private static final int RADIUS = 3;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -79,7 +79,7 @@ public class WaterSpreaderItem extends ItemBase {
       }
     }
     boolean success = count > 0;
-    if (success) {//particles are on each location, sound is just once
+    if (success) { //particles are on each location, sound is just once
       UtilEntity.setCooldownItem(player, this, COOLDOWN);
       //      UtilSound.playSound(player, SoundEvents.ENTITY_PLAYER_SPLASH);
     }

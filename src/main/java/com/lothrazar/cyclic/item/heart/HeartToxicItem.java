@@ -30,7 +30,7 @@ public class HeartToxicItem extends ItemBase {
     ModifiableAttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
     //    if (healthAttribute != null && healthAttribute.getBaseValue() > 2) {
     //get attribute modif by id
-    AttributeModifier oldHealthModifier = healthAttribute.getModifier(HeartItem.healthModifierUuid);
+    AttributeModifier oldHealthModifier = healthAttribute.getModifier(HeartItem.ID);
     double addedHealth = 0;
     if (oldHealthModifier != null && oldHealthModifier.getAmount() <= -18) {
       addedHealth = -18;
@@ -45,8 +45,8 @@ public class HeartToxicItem extends ItemBase {
       playerIn.giveExperiencePoints(ConfigRegistry.HEARTXPMINUS.get());
     }
     //replace the modifier on the main attribute
-    healthAttribute.removeModifier(HeartItem.healthModifierUuid);
-    AttributeModifier healthModifier = new AttributeModifier(HeartItem.healthModifierUuid, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
+    healthAttribute.removeModifier(HeartItem.ID);
+    AttributeModifier healthModifier = new AttributeModifier(HeartItem.ID, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
     healthAttribute.applyPersistentModifier(healthModifier);
     //
     return super.onItemRightClick(worldIn, playerIn, handIn);

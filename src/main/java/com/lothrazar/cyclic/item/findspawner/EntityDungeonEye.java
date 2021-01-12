@@ -98,7 +98,7 @@ public class EntityDungeonEye extends ProjectileItemEntity {
       motionZ = Math.sin(atan) * horizFactor;
       motionY = (14 * distY) / distLine * VERT;
       this.setMotion(motionX, motionY, motionZ);
-      if (distX < DISTLIMIT && distZ < DISTLIMIT) {//if we are right in line, stop swaggerin
+      if (distX < DISTLIMIT && distZ < DISTLIMIT) { //if we are right in line, stop swaggerin
         motionX = 0;
         motionZ = 0;
         if (distY < DISTLIMIT) {

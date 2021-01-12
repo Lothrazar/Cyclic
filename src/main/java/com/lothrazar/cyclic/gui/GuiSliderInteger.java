@@ -96,8 +96,9 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     if (keyCode == ESC) {
       //close
       ClientPlayerEntity pl = Minecraft.getInstance().player;
-      if (pl != null)
+      if (pl != null) {
         pl.closeScreen();
+      }
       return true;
     }
     if (keyCode == ARROW_LEFT || keyCode == ARROW_RIGHT) {

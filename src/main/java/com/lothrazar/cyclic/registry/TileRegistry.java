@@ -191,7 +191,6 @@ public class TileRegistry {
   public static TileEntityType<TileCrate> cask;
   @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
   public static TileEntityType<TilePlacerFluid> placer_fluid;
-  //
   @ObjectHolder(ModCyclic.MODID + ":beacon")
   public static TileEntityType<TilePotion> beacon;
   @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
@@ -218,7 +217,6 @@ public class TileRegistry {
   public static TileEntityType<TileEnderShelf> ender_shelf;
   @ObjectHolder(ModCyclic.MODID + ":ender_controller")
   public static TileEntityType<TileEnderShelf> ender_controller;
-  //
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static TileEntityType<TileLaser> laser;
   @ObjectHolder(ModCyclic.MODID + ":workbench")

@@ -375,8 +375,8 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         WHITESPACE CHECKS
 
-        -->
         <module name="GenericWhitespace" />
+        -->
 
         <module name="WhitespaceAround">
             <!-- Checks that various tokens are surrounded by whitespace.

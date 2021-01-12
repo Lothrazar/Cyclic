@@ -22,13 +22,16 @@ public class CraftingBagCapabilityProvider implements ICapabilitySerializable<Co
     }
   });
 
-  public CraftingBagCapabilityProvider() {}
+  public CraftingBagCapabilityProvider() {
+    // is this needed?
+  }
 
   @Nonnull
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventory.cast();
+    }
     return LazyOptional.empty();
   }
 

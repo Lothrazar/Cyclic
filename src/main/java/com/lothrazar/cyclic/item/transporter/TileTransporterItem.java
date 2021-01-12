@@ -76,16 +76,14 @@ public class TileTransporterItem extends ItemBase {
     BlockPos pos = context.getPos();
     Direction side = context.getFace();
     World world = context.getWorld();
-    //    TileEntity tile = world.getTileEntity(pos);
-    //    BlockState state = world.getBlockState(pos);
     BlockPos offset = pos.offset(side);
     if (world.isAirBlock(offset) == false) {
       return ActionResultType.FAIL;
     }
     if (placeStoredTileEntity(player, stack, offset)) {
       player.setHeldItem(context.getHand(), ItemStack.EMPTY);
-      UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT);//SoundRegistry.chest_sack_capture);
-      if (player.isCreative() == false) {//its never really null tho
+      UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT); //SoundRegistry.chest_sack_capture);
+      if (player.isCreative() == false) { //its never really null tho
         UtilItemStack.drop(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
       }
     }
@@ -96,7 +94,6 @@ public class TileTransporterItem extends ItemBase {
     CompoundNBT itemData = heldChestSack.getOrCreateTag();
     ResourceLocation res = new ResourceLocation(itemData.getString(KEY_BLOCKID));
     Block block = ForgeRegistries.BLOCKS.getValue(res);
-    //    Block.regi
     if (block == null) {
       heldChestSack = ItemStack.EMPTY;
       UtilChat.addChatMessage(player, "Invalid block id " + res);
@@ -113,7 +110,7 @@ public class TileTransporterItem extends ItemBase {
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
-        tile.read(toPlace, tileData);// can cause errors in 3rd party mod
+        tile.read(toPlace, tileData); // can cause errors in 3rd party mod
         //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
         tile.markDirty();
         world.markChunkDirty(pos, tile);
@@ -137,19 +134,16 @@ public class TileTransporterItem extends ItemBase {
     if (itemStack.getTag() != null && itemStack.getTag().contains(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTag().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
-        TranslationTextComponent t = new TranslationTextComponent(
-            UtilChat.lang(blockname));//.replace("block.", "item.") + ".name"
+        TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang(blockname));
         t.mergeStyle(TextFormatting.DARK_GREEN);
         list.add(t);
       }
     }
     else {
-      TranslationTextComponent t = new TranslationTextComponent(
-          UtilChat.lang("invalid"));//.replace("block.", "item.") + ".name"
+      TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang("invalid"));
       t.mergeStyle(TextFormatting.DARK_RED);
       list.add(t);
     }
-    //super.addInformation(itemStack, player, list, advanced);
   }
 
   @Override

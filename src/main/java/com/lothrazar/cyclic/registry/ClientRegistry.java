@@ -29,7 +29,7 @@ public class ClientRegistry {
     Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> {
       if (stack.getItem() == ItemRegistry.storage_bag) {
         // ok
-        if (tintIndex == 0) {//layer zero is outline, ignore this 
+        if (tintIndex == 0) { //layer zero is outline, ignore this 
           return 0xFFFFFFFF;
         }
         //layer 1 is overlay  
