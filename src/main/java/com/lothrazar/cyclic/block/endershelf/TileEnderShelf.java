@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;

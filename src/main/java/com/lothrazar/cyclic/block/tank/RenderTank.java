@@ -34,7 +34,7 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
     }
     IVertexBuilder buffer = renderer.getBuffer(FluidTankRenderType.resizableCuboid());
     matrix.scale(1F, UtilFluid.getScale(tankHere.tank), 1F);
-    UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.stages - 1),
+    UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.STAGES - 1),
         matrix, buffer, UtilRender.getColorARGB(fluid, 0.1F),
         UtilRender.calculateGlowLight(light, fluid));
   }

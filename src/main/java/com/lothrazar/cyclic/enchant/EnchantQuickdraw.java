@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import java.lang.reflect.Method;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import java.lang.reflect.Method;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

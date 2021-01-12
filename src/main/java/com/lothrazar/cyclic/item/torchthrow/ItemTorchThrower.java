@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.torchthrow;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.ItemBase;
+import javax.annotation.Nonnull;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

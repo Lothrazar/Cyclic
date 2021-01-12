@@ -23,13 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Vector3;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -54,12 +54,11 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class UtilEntity {
 
-  private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
-  private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
-  //  public static final UUID HEALTH_MODIFIER_ID = UUID.fromString("60b1b9b5-dc5d-43a2-aa4e-655353070dbe");
-  //  public static final String HEALTH_MODIFIER_NAME = "Cyclic Health Modifier";
-  private final static float ITEMSPEEDFAR = 0.9F;
-  private final static float ITEMSPEEDCLOSE = 0.2F;
+  private static final double ENTITY_PULL_DIST = 0.4; //closer than this and nothing happens
+  private static final double ENTITY_PULL_SPEED_CUTOFF = 3; //closer than this and it slows down
+  private static final float ITEMSPEEDFAR = 0.9F;
+  private static final float ITEMSPEEDCLOSE = 0.2F;
+  private static final int TICKS_FALLDIST_SYNC = 22; //tick every so often
 
   /**
    *
@@ -102,8 +101,9 @@ public class UtilEntity {
 
   public static Direction getFacing(LivingEntity entity) {
     int yaw = (int) entity.rotationYaw;
-    if (yaw < 0) // due to the yaw running a -360 to positive 360
+    if (yaw < 0) { // due to the yaw running a -360 to positive 360
       yaw += 360; // not sure why it's that way
+    }
     yaw += 22; // centers coordinates you may want to drop this line
     yaw %= 360; // and this one if you want a strict interpretation of the
     // zones
@@ -113,19 +113,6 @@ public class UtilEntity {
 
   public static double getSpeedTranslated(double speed) {
     return speed * 100;
-  }
-
-  public static double getJumpTranslated(double jump) {
-    // double jump = horse.getHorseJumpStrength();
-    // convert from scale factor to blocks
-    double jumpHeight = 0;
-    double gravity = 0.98;
-    while (jump > 0) {
-      jumpHeight += jump;
-      jump -= 0.08;
-      jump *= gravity;
-    }
-    return jumpHeight;
   }
 
   /**
@@ -188,24 +175,6 @@ public class UtilEntity {
     launch(entity, rotationPitch, rotationYaw, power);
   }
 
-  static final float lowEnough = 0.001F;
-
-  //      float LIMIT = 180F;
-  public static void setVelocity(Entity entity, float rotationPitch, float rotationYaw, float power) {
-    entity.setMotion(0, 0, 0);
-    double velX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
-    double velZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
-    double velY = MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
-    //    if (velY < 0) {
-    //      velY *= -1;// make it always up never down
-    //    }
-    if (Math.abs(velX) < lowEnough) velX = 0;
-    if (Math.abs(velY) < lowEnough) velY = 0;
-    if (Math.abs(velZ) < lowEnough) velZ = 0;
-    //setting to zero first then using add, pretty much the same as set
-    entity.addVelocity(velX, velY, velZ);
-  }
-
   public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
     float mountPower = (float) (power + 0.5);
     double velX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
@@ -214,7 +183,7 @@ public class UtilEntity {
     // launch the player up and forward at minimum angle
     // regardless of look vector
     if (velY < 0) {
-      velY *= -1;// make it always up never down
+      velY *= -1; // make it always up never down
     }
     Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
@@ -278,8 +247,8 @@ public class UtilEntity {
     entity.setMotion(x, entity.getMotion().y, z);
   }
 
-  public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos, float speed) {
-    AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+  public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int horizRadius, int height, boolean towardsPos, float speed) {
+    AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, horizRadius, height);
     List<LivingEntity> nonPlayer = getLivingHostile(world, range);
     return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed);
   }
@@ -304,13 +273,13 @@ public class UtilEntity {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
-    int direction = (towardsPos) ? 1 : -1;//negative to flip the vector and push it away
+    int direction = (towardsPos) ? 1 : -1; //negative to flip the vector and push it away
     for (Entity entity : all) {
       if (entity == null) {
         continue;
       } //being paranoid
       if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
-        continue;//sneak avoid feature
+        continue; //sneak avoid feature
       }
       BlockPos p = entity.getPosition();
       xDist = Math.abs(x - p.getX());
@@ -329,8 +298,9 @@ public class UtilEntity {
     Vector3 originalPosVector = new Vector3(x, y, z);
     Vector3 entityVector = new Vector3(entity);
     Vector3 finalVector = originalPosVector.copy().subtract(entityVector);
-    if (finalVector.mag() > 1)
+    if (finalVector.mag() > 1) {
       finalVector.normalize();
+    }
     double motionX = finalVector.x * modifier;
     double motionY = finalVector.y * modifier;
     double motionZ = finalVector.z * modifier;
@@ -358,8 +328,8 @@ public class UtilEntity {
    * @param pos
    */
   public static void centerEntityHoriz(Entity entity, BlockPos pos) {
-    float fixedX = pos.getX() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
-    float fixedZ = pos.getZ() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
+    float fixedX = pos.getX() + 0.5F; //((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
+    float fixedZ = pos.getZ() + 0.5F; //((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
     entity.setPosition(fixedX, entity.getPosition().getY(), fixedZ);
   }
 
@@ -387,12 +357,13 @@ public class UtilEntity {
 
   public static VillagerEntity getVillager(World world, int x, int y, int z) {
     List<VillagerEntity> all = world.getEntitiesWithinAABB(VillagerEntity.class, new AxisAlignedBB(new BlockPos(x, y, z)));
-    if (all.size() == 0)
+    if (all.size() == 0) {
       return null;
-    else
+    }
+    else {
       return all.get(0);
+    }
   }
-
   //  public static int getVillagerCareer(VillagerEntity merchant) {
   //    return ObfuscationReflectionHelper.getPrivateValue(VillagerEntity.class, merchant, "careerId", "field_175563_bv");
   //  }
@@ -400,9 +371,9 @@ public class UtilEntity {
   //  public static void setVillagerCareer(VillagerEntity merchant, int c) {
   //    ObfuscationReflectionHelper.setPrivateValue(VillagerEntity.class, merchant, c, "careerId", "field_175563_bv");
   //  }
-  public static String getCareerName(VillagerEntity merchant) {
-    return merchant.getDisplayName().getString(); //.getFormattedText();//getProfessionForge().getCareer(maybeC).getName();
-  }
+  //  public static String getCareerName(VillagerEntity merchant) {
+  //    return merchant.getDisplayName().getString(); //.getFormattedText();//getProfessionForge().getCareer(maybeC).getName();
+  //  }
 
   public static float yawDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2) {
     float f = (float) ((180.0f * Math.atan2(posX2 - posX, posZ2 - posZ)) / (float) Math.PI);
@@ -474,12 +445,12 @@ public class UtilEntity {
   }
 
   public static Attribute getAttributeJump(HorseEntity ahorse) {
-    return Attributes.HORSE_JUMP_STRENGTH;//was reflection lol
+    return Attributes.HORSE_JUMP_STRENGTH; //was reflection lol
   }
 
   public static void eatingHorse(HorseEntity ahorse) {
     try {
-      Method m = ObfuscationReflectionHelper.findMethod(AbstractHorseEntity.class, "func_110266_cB");// "eatingHorse");
+      Method m = ObfuscationReflectionHelper.findMethod(AbstractHorseEntity.class, "func_110266_cB"); // "eatingHorse");
       //      Method m = AbstractHorseEntity.class.getDeclaredMethod("eatingHorse");
       m.setAccessible(true);
       m.invoke(ahorse);
@@ -488,8 +459,6 @@ public class UtilEntity {
       ModCyclic.LOGGER.error("Horse eating animation error", e);
     }
   }
-
-  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
 
   public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
     if (entity.isCrouching()) {

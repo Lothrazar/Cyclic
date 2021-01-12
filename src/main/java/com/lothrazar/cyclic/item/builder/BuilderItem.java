@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item.builder;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;

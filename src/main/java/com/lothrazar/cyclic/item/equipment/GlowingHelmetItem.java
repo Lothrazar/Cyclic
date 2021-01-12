@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilPlayer;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;

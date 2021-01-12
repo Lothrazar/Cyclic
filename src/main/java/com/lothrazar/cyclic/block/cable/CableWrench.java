@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.cable;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;

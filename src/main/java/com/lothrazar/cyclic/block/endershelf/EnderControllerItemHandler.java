@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import com.lothrazar.cyclic.util.UtilEnchant;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.util.UtilEnchant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;

@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

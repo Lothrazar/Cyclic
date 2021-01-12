@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.base;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;

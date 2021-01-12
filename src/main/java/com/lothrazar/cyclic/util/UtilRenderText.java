@@ -13,6 +13,8 @@ import net.minecraft.util.math.vector.Vector3f;
  */
 public class UtilRenderText {
 
+  static final float[] SIDE_ROTATION = { 0, 0, 2, 0, 3, 1 };
+
   public static void alignRendering(MatrixStack matrix, Direction side) {
     // Rotate to face the correct direction for the drawer's orientation.
     matrix.translate(.5f, .5f, .5f);
@@ -20,9 +22,7 @@ public class UtilRenderText {
     matrix.translate(-.5f, -.5f, -.5f);
   }
 
-  final static float[] sideRotationY2D = { 0, 0, 2, 0, 3, 1 };
-
   public static float getRotationYForSide2D(Direction side) {
-    return sideRotationY2D[side.ordinal()] * 90;
+    return SIDE_ROTATION[side.ordinal()] * 90;
   }
 }

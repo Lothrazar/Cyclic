@@ -1,12 +1,10 @@
 package com.lothrazar.cyclic.util;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluid;
@@ -22,11 +20,13 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 public class UtilFluid {
 
-  public static final FluidRenderMap<Int2ObjectMap<Model3D>> cachedCenterFluids = new FluidRenderMap<>();
-  public static final int stages = 1400;
+  public static final FluidRenderMap<Int2ObjectMap<Model3D>> CACHED_FLUIDS = new FluidRenderMap<>();
+  public static final int STAGES = 1400;
 
   /**
    * Thank you Mekanism which is MIT License https://github.com/mekanism/Mekanism
@@ -51,8 +51,8 @@ public class UtilFluid {
   }
 
   public static Model3D getFluidModel(@Nonnull FluidStack fluid, int stage) {
-    if (cachedCenterFluids.containsKey(fluid) && cachedCenterFluids.get(fluid).containsKey(stage)) {
-      return cachedCenterFluids.get(fluid).get(stage);
+    if (CACHED_FLUIDS.containsKey(fluid) && CACHED_FLUIDS.get(fluid).containsKey(stage)) {
+      return CACHED_FLUIDS.get(fluid).get(stage);
     }
     Model3D model = new Model3D();
     model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidType.STILL));
@@ -67,13 +67,13 @@ public class UtilFluid {
       model.maxY = 1 - topSpacing;
       model.maxZ = 1 - sideSpacing;
     }
-    if (cachedCenterFluids.containsKey(fluid)) {
-      cachedCenterFluids.get(fluid).put(stage, model);
+    if (CACHED_FLUIDS.containsKey(fluid)) {
+      CACHED_FLUIDS.get(fluid).put(stage, model);
     }
     else {
       Int2ObjectMap<Model3D> map = new Int2ObjectOpenHashMap<>();
       map.put(stage, model);
-      cachedCenterFluids.put(fluid, map);
+      CACHED_FLUIDS.put(fluid, map);
     }
     return model;
   }

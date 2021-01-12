@@ -1,9 +1,5 @@
 package com.lothrazar.cyclic.event;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
@@ -16,6 +12,10 @@ import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.lothrazar.cyclic.util.UtilWorld;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.HorseInventoryScreen;

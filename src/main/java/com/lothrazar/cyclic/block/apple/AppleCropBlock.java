@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.apple;
 
-import java.util.Random;
 import com.lothrazar.cyclic.base.BlockBase;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;

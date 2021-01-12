@@ -23,12 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Supplier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;

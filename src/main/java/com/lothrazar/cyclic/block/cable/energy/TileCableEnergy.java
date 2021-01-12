@@ -1,16 +1,16 @@
 package com.lothrazar.cyclic.block.cable.energy;
 
+import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
-import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;

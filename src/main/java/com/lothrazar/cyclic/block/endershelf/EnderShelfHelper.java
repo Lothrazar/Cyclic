@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import com.lothrazar.cyclic.ModCyclic;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;

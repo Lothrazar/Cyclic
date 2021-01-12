@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.data.Const;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,9 +13,7 @@ import net.minecraft.world.World;
 
 public class UtilShape {
 
-  public static List<BlockPos> cubeSquareBase(
-      final BlockPos pos, int radius,
-      int height) {
+  public static List<BlockPos> cubeSquareBase(final BlockPos pos, int radius, int height) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
     int xMin = pos.getX() - radius;
@@ -166,14 +165,14 @@ public class UtilShape {
     return shape;
   }
 
-  public static List<BlockPos> circleHorizontal(BlockPos pos, int diameter) {
+  public static List<BlockPos> circleHorizontal(BlockPos pos, final int diameter) {
     int centerX = pos.getX();
     int centerZ = pos.getZ();
     int height = pos.getY();
     int radius = diameter / 2;
     int z = radius;
     int x = 0;
-    int d = 2 - (2 * radius);//dont use Diameter again, for integer roundoff
+    int d = 2 - (2 * radius); //dont use Diameter again, for integer roundoff
     List<BlockPos> circleList = new ArrayList<BlockPos>();
     do {
       circleList.add(new BlockPos(centerX + x, height, centerZ + z));
@@ -206,8 +205,8 @@ public class UtilShape {
 
   public static List<BlockPos> repeatShapeByHeight(List<BlockPos> shape, final int height) {
     List<BlockPos> newShape = new ArrayList<BlockPos>();
-    newShape.addAll(shape);//copy it
-    for (int i = 1; i <= Math.abs(height); i++)
+    newShape.addAll(shape); //copy it
+    for (int i = 1; i <= Math.abs(height); i++) {
       for (BlockPos p : shape) {
         BlockPos newOffset = null;
         if (height > 0) {
@@ -216,10 +215,13 @@ public class UtilShape {
         else {
           newOffset = p.down(i);
         }
-        if (newOffset.getY() > 3) {}
-        if (newOffset.getY() >= 0 && newOffset.getY() <= 256)
+        //        if (newOffset.getY() > 3) {}
+        // TODO: put in const, 
+        if (newOffset.getY() >= 0 && newOffset.getY() <= Const.MAX_WORLD_HEIGHT) {
           newShape.add(newOffset);
+        }
       }
+    }
     return newShape;
   }
 
@@ -264,7 +266,7 @@ public class UtilShape {
         for (zCurr = z - radius; zCurr <= z + radius; zCurr++) {
           squareDistance = (xCurr - x) * (xCurr - x) + (yCurr - y) * (yCurr - y) + (zCurr - z) * (zCurr - z);
           if (squareDistance <= (radius * radius)
-              && squareDistance >= (radiusInner * radiusInner)) {//just to get the outline
+              && squareDistance >= (radiusInner * radiusInner)) { //just to get the outline
             shape.add(new BlockPos(xCurr, yCurr, zCurr));
           }
         }
@@ -288,11 +290,12 @@ public class UtilShape {
   public static List<BlockPos> diagonal(BlockPos posCurrent, Direction pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     for (int i = 1; i < want + 1; i++) {
-      if (isLookingUp)
+      if (isLookingUp) {
         posCurrent = posCurrent.up();
-      else
+      }
+      else {
         posCurrent = posCurrent.down();
-      //go up and over each time
+      } //go up and over each time
       posCurrent = posCurrent.offset(pfacing);
       shape.add(posCurrent);
     }
@@ -344,8 +347,9 @@ public class UtilShape {
         facing = nextStep.facing;
         stickySurface = nextStep.stickySurface;
       }
-      if (!shape.contains(pos))
+      if (!shape.contains(pos)) {
         shape.add(pos);
+      }
       iterations++;
     }
     return shape;
@@ -377,17 +381,4 @@ public class UtilShape {
       this.stickySurface = stickySurface;
     }
   }
-  /**
-   * only if NOT air block. any air blocks not returned
-   */
-  //  public static List<BlockPos> filterAir(World world, List<BlockPos> shape) {
-  //    List<BlockPos> sh = new ArrayList<BlockPos>();
-  //    //
-  //    for (BlockPos p : shape) {
-  //      if (!world.isAirBlock(p)) {
-  //        sh.add(p);
-  //      }
-  //    }
-  //    return sh;
-  //  }
 }

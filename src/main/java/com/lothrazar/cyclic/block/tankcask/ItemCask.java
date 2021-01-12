@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.tankcask;
 
+import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;

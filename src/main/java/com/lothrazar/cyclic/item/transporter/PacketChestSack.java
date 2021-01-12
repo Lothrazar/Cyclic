@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.transporter;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.PacketBase;
+import java.util.function.Supplier;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;

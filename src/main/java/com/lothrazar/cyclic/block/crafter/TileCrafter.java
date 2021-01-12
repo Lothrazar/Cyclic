@@ -23,6 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,10 +34,6 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

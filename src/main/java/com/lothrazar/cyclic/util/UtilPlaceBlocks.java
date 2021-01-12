@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.util;
 
-import static net.minecraft.block.WallTorchBlock.HORIZONTAL_FACING;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.WallTorchBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.Property;
 import net.minecraft.tags.BlockTags;
@@ -24,14 +24,14 @@ public class UtilPlaceBlocks {
     Block clickedBlock = clicked.getBlock();
     BlockState newState = null;
     if (clickedBlock.isIn(BlockTags.SLABS)) {
-      final String key = "type";//top or bottom
-      final String valueDupe = "double";//actually theres 3 but dont worry about it
+      final String key = "type"; //top or bottom
+      final String valueDupe = "double"; //actually theres 3 but dont worry about it
       //      clicked.get(property)
-      for (Property<?> prop : clicked.getProperties()) {//getProperties
+      for (Property<?> prop : clicked.getProperties()) {
         //yes
         if (prop.getName().equals(key)) {
           //then cycle me 
-          newState = clicked.func_235896_a_(prop);//cycle
+          newState = clicked.func_235896_a_(prop); // cycle
           if (newState.get(prop).toString().equals(valueDupe)) {
             //haha just hack and skip. turns into length 2. dont worry about it
             newState = newState.func_235896_a_(prop);
@@ -144,15 +144,16 @@ public class UtilPlaceBlocks {
 
   public static boolean destroyBlock(World world, BlockPos pos) {
     world.removeTileEntity(pos);
-    return world.setBlockState(pos, Blocks.AIR.getDefaultState());// world.destroyBlock(pos, false);
+    return world.setBlockState(pos, Blocks.AIR.getDefaultState()); // world.destroyBlock(pos, false);
   }
 
   public static boolean placeTorchSafely(World world, BlockPos blockPos) {
     Direction actual = findFirstSolidFace(world, blockPos, Direction.DOWN);
-    if (actual == null)
+    if (actual == null) {
       return false;
+    }
     if (actual.getAxis().isHorizontal()) {
-      world.setBlockState(blockPos, Blocks.WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING, actual));
+      world.setBlockState(blockPos, Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, actual));
       return true;
     }
     else if (actual != Direction.DOWN) {
@@ -166,10 +167,14 @@ public class UtilPlaceBlocks {
   public static Direction findFirstSolidFace(World world, BlockPos blockPos, Direction prefer) {
     Direction actual = null;
     Direction[] alternatives = { Direction.DOWN, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH, Direction.UP };
-    if (world.getBlockState(blockPos.offset(prefer)).isSolid()) actual = prefer;
+    if (world.getBlockState(blockPos.offset(prefer)).isSolid()) {
+      actual = prefer;
+    }
     else {
       for (Direction dir : alternatives) {
-        if (world.getBlockState(blockPos.offset(dir)).isSolid()) actual = dir;
+        if (world.getBlockState(blockPos.offset(dir)).isSolid()) {
+          actual = dir;
+        }
       }
     }
     return actual == null ? null : actual.getOpposite();

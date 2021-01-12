@@ -46,25 +46,27 @@ public class UtilItemStack {
   }
 
   public static void damageItem(PlayerEntity player, ItemStack stack) {
-    if (!player.isCreative())
+    if (!player.isCreative()) {
       stack.damageItem(1, player, (p) -> {
         p.sendBreakAnimation(Hand.MAIN_HAND);
       });
-    if (stack.getDamage() >= stack.getMaxDamage()) {
-      stack.setCount(0);
-      stack = ItemStack.EMPTY;
+      if (stack.getDamage() >= stack.getMaxDamage()) {
+        stack.setCount(0);
+        stack = ItemStack.EMPTY;
+      }
     }
   }
 
   public static void drop(World world, BlockPos pos, Block drop) {
-    if (!world.isRemote)
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
-          new ItemStack(drop.asItem())));
+    if (!world.isRemote) {
+      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(drop.asItem())));
+    }
   }
 
   public static void drop(World world, BlockPos pos, ItemStack drop) {
-    if (!world.isRemote)
+    if (!world.isRemote) {
       world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
+    }
   }
 
   public static boolean matches(ItemStack current, ItemStack in) {
@@ -74,8 +76,9 @@ public class UtilItemStack {
   }
 
   public static void shrink(PlayerEntity player, ItemStack stac) {
-    if (!player.isCreative())
+    if (!player.isCreative()) {
       stac.shrink(1);
+    }
   }
 
   public static void drop(World world, BlockPos center, List<ItemStack> lootDrops) {

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.command;
 
-import java.util.List;
 import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
+import java.util.List;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;

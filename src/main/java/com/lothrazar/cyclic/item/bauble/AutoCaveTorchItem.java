@@ -23,13 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

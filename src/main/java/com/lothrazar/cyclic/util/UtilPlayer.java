@@ -30,13 +30,16 @@ public class UtilPlayer {
     // numeric reference:
     // http://minecraft.gamepedia.com/Experience#Leveling_up
     int totalExp = 0;
-    if (level <= 15)
+    if (level <= 15) {
       totalExp = level * level + 6 * level;
-    else if (level <= 30)
+    }
+    else if (level <= 30) {
       totalExp = (int) (2.5 * level * level - 40.5 * level + 360);
-    else
+    }
+    else {
       // level >= 31
       totalExp = (int) (4.5 * level * level - 162.5 * level + 2220);
+    }
     return totalExp;
   }
 

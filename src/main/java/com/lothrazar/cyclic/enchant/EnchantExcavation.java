@@ -23,13 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;

@@ -1,5 +1,8 @@
 package com.lothrazar.cyclic.block.tankcask;
 
+import com.lothrazar.cyclic.base.FluidTankBase;
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -8,9 +11,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;

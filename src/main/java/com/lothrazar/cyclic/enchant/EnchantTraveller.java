@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import java.util.Arrays;
-import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilParticle;
+import java.util.Arrays;
+import java.util.List;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;

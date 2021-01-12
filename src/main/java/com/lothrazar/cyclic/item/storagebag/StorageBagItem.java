@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.item.storagebag;
 
+import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,8 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;

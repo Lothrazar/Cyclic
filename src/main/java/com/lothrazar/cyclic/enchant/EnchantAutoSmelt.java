@@ -23,12 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import com.google.gson.JsonObject;
+import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import com.google.gson.JsonObject;
-import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;

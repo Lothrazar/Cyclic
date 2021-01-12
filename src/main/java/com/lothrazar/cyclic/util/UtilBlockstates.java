@@ -10,7 +10,10 @@ import net.minecraft.world.World;
 public class UtilBlockstates {
 
   public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
-    return Direction.getFacingFromVector((float) (entity.lastTickPosX - clickedBlock.getX()), (float) (entity.lastTickPosY - clickedBlock.getY()), (float) (entity.lastTickPosZ - clickedBlock.getZ()));
+    return Direction.getFacingFromVector(
+        (float) (entity.lastTickPosX - clickedBlock.getX()),
+        (float) (entity.lastTickPosY - clickedBlock.getY()),
+        (float) (entity.lastTickPosZ - clickedBlock.getZ()));
   }
 
   public static Direction getFacingFromEntityHorizontal(BlockPos clickedBlock, LivingEntity entity) {

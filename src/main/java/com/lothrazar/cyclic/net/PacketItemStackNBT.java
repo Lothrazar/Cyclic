@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.net;
 
+import com.lothrazar.cyclic.base.PacketBase;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.base.PacketBase;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ByteArrayNBT;

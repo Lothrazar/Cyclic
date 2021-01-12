@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import java.lang.ref.WeakReference;
-import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.authlib.GameProfile;
+import java.lang.ref.WeakReference;
+import java.util.UUID;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketDirection;

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.data;
 
+import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;

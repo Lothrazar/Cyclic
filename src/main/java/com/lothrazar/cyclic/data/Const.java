@@ -221,4 +221,5 @@ public class Const {
    * defined by vanilla item stacks on things like grindstone/anvi/enchanting table for increasing repair costs
    */
   public static final Object NBT_REPAIR_COST = "RepairCost";
+  public static final int MAX_WORLD_HEIGHT = 256;
 }

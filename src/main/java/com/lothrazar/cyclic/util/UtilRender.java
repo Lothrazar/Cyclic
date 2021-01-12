@@ -1,5 +1,11 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.data.Model3D;
+import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
+import com.lothrazar.cyclic.render.RenderResizableCuboid;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +13,6 @@ import java.util.Map;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclic.data.Model3D;
-import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
-import com.lothrazar.cyclic.render.RenderResizableCuboid;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -46,6 +45,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.FluidStack;
+import org.lwjgl.opengl.GL11;
 
 /**
  * legacy ref https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
@@ -268,7 +268,7 @@ public class UtilRender {
     }
     Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);//i guess?
+    IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);
     BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
     matrix.push();
     //    BlockPos centerPos = center;//mc.gameRenderer.getActiveRenderInfo().getProjectedView();

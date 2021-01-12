@@ -33,16 +33,18 @@ public class UtilEnchant {
     Collection<Effect> effects = ForgeRegistries.POTIONS.getValues();
     List<Effect> effectsList = new ArrayList<>();
     for (Effect effect : effects) {
-      if (effectType == null || effect.getEffectType() == effectType)
+      if (effectType == null || effect.getEffectType() == effectType) {
         effectsList.add(effect);
+      }
     }
     return effectsList;
   }
 
   public static boolean doBookEnchantmentsMatch(ItemStack stack1, ItemStack stack2) {
     if (stack1.getItem() == Items.ENCHANTED_BOOK && stack2.getItem() == Items.ENCHANTED_BOOK) {
-      if (EnchantedBookItem.getEnchantments(stack1).equals(EnchantedBookItem.getEnchantments(stack2)))
+      if (EnchantedBookItem.getEnchantments(stack1).equals(EnchantedBookItem.getEnchantments(stack2))) {
         return true;
+      }
     }
     return false;
   }

@@ -23,12 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import java.util.Collections;
-import java.util.List;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;

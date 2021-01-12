@@ -1,5 +1,11 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
+import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.base.FluidTankBase;
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilFluid;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -7,12 +13,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
-import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.FluidState;

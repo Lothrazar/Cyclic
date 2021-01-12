@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

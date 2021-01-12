@@ -1,10 +1,9 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.data.Const;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.data.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,7 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilWorld {
@@ -39,8 +37,7 @@ public class UtilWorld {
     for (int i = 0; i < max; i++) {
       BlockState state = world.getBlockState(posLoop);
       if (state.getBlock() != null
-          && world.getBlockState(posLoop).getBlock() == Blocks.AIR//.isAir(state)//.isReplaceable(world, posLoop)
-      ) {
+          && world.getBlockState(posLoop).getBlock() == Blocks.AIR) {
         posToPlaceAt = posLoop;
         break;
       }
@@ -61,28 +58,27 @@ public class UtilWorld {
     }
     return entityItem;
   }
+  //  public static BlockPos getRandomPos(Random rand, BlockPos here, int hRadius) {
+  //    int x = here.getX();
+  //    int z = here.getZ();
+  //    // search in a square
+  //    int xMin = x - hRadius;
+  //    int xMax = x + hRadius;
+  //    int zMin = z - hRadius;
+  //    int zMax = z + hRadius;
+  //    int posX = MathHelper.nextInt(rand, xMin, xMax);
+  //    int posZ = MathHelper.nextInt(rand, zMin, zMax);
+  //    return new BlockPos(posX, here.getY(), posZ);
+  //  }
 
-  public static BlockPos getRandomPos(Random rand, BlockPos here, int hRadius) {
-    int x = here.getX();
-    int z = here.getZ();
-    // search in a square
-    int xMin = x - hRadius;
-    int xMax = x + hRadius;
-    int zMin = z - hRadius;
-    int zMax = z + hRadius;
-    int posX = MathHelper.nextInt(rand, xMin, xMax);
-    int posZ = MathHelper.nextInt(rand, zMin, zMax);
-    return new BlockPos(posX, here.getY(), posZ);
-  }
-
-  public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
+  public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, final int radius) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
-    int xMin = start.getX() - RADIUS;
-    int xMax = start.getX() + RADIUS;
-    int yMin = start.getY() - RADIUS;
-    int yMax = start.getY() + RADIUS;
-    int zMin = start.getZ() - RADIUS;
-    int zMax = start.getZ() + RADIUS;
+    int xMin = start.getX() - radius;
+    int xMax = start.getX() + radius;
+    int yMin = start.getY() - radius;
+    int yMax = start.getY() + radius;
+    int zMin = start.getZ() - radius;
+    int zMax = start.getZ() + radius;
     BlockPos posCurrent = null;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
@@ -98,7 +94,7 @@ public class UtilWorld {
   }
 
   public static void toggleLeverPowerState(World worldIn, BlockPos blockPos, BlockState blockState) {
-    boolean hasPowerHere = blockState.get(LeverBlock.POWERED).booleanValue();//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
+    boolean hasPowerHere = blockState.get(LeverBlock.POWERED).booleanValue();
     BlockState stateNew = blockState.with(LeverBlock.POWERED, !hasPowerHere);
     boolean success = worldIn.setBlockState(blockPos, stateNew);
     if (success) {
@@ -115,20 +111,20 @@ public class UtilWorld {
   public static void flagUpdate(World worldIn, BlockPos blockPos, BlockState blockState, BlockState stateNew) {
     worldIn.notifyBlockUpdate(blockPos, blockState, stateNew, 3);
     worldIn.notifyNeighborsOfStateChange(blockPos, stateNew.getBlock());
-    worldIn.notifyNeighborsOfStateChange(blockPos, blockState.getBlock());//THIS one works only with true
+    worldIn.notifyNeighborsOfStateChange(blockPos, blockState.getBlock());
     //        worldIn.scheduleBlockUpdate(blockPos, stateNew.getBlock(), 3, 3);
     //        worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
   }
 
-  public static BlockPos findClosestBlock(PlayerEntity player, Block blockHunt, int RADIUS) {
+  public static BlockPos findClosestBlock(final PlayerEntity player, final Block blockHunt, final int radiusIn) {
     BlockPos found = null;
-    int xMin = (int) player.getPosX() - RADIUS;
-    int xMax = (int) player.getPosX() + RADIUS;
-    int yMin = (int) player.getPosY() - RADIUS;
-    int yMax = (int) player.getPosY() + RADIUS;
-    int zMin = (int) player.getPosZ() - RADIUS;
-    int zMax = (int) player.getPosZ() + RADIUS;
-    int distance = 0, distanceClosest = RADIUS * RADIUS;
+    int xMin = (int) player.getPosX() - radiusIn;
+    int xMax = (int) player.getPosX() + radiusIn;
+    int yMin = (int) player.getPosY() - radiusIn;
+    int yMax = (int) player.getPosY() + radiusIn;
+    int zMin = (int) player.getPosZ() - radiusIn;
+    int zMax = (int) player.getPosZ() + radiusIn;
+    int distance = 0, distanceClosest = radiusIn * radiusIn;
     BlockPos posCurrent = null;
     World world = player.getEntityWorld();
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
@@ -159,11 +155,13 @@ public class UtilWorld {
 
   public static List<BlockPos> getPositionsInRange(BlockPos pos, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
     List<BlockPos> found = new ArrayList<BlockPos>();
-    for (int x = xMin; x <= xMax; x++)
-      for (int y = yMin; y <= yMax; y++)
+    for (int x = xMin; x <= xMax; x++) {
+      for (int y = yMin; y <= yMax; y++) {
         for (int z = zMin; z <= zMax; z++) {
           found.add(new BlockPos(x, y, z));
         }
+      }
+    }
     return found;
   }
 
@@ -197,16 +195,19 @@ public class UtilWorld {
 
   public static BlockPos getLastAirBlock(World world, BlockPos pos, Direction direction) {
     int increment;
-    if (direction == Direction.DOWN)
+    if (direction == Direction.DOWN) {
       increment = -1;
-    else
+    }
+    else {
       increment = 1;
+    }
     BlockPos posCurrent;
     BlockPos posPrevious = pos;
     for (int y = pos.getY(); y < Const.WORLDHEIGHT && y > 0; y += increment) {
       posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
-      if (!world.isAirBlock(posCurrent))
+      if (!world.isAirBlock(posCurrent)) {
         return posPrevious;
+      }
       posPrevious = posCurrent;
     }
     return pos;

@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.conveyor;
 
+import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;

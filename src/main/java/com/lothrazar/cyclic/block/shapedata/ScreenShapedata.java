@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.shapedata;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.Fields;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.StructCommands;
@@ -12,6 +10,8 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 

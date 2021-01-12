@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.magicnet;
 
+import com.lothrazar.cyclic.base.ItemBase;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

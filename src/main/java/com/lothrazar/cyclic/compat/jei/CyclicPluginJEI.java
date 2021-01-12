@@ -12,6 +12,8 @@ import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
@@ -21,8 +23,6 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import javax.annotation.Nonnull;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;

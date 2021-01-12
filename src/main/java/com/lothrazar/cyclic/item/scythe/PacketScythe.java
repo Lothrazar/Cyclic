@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.scythe;
 
-import java.util.List;
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.util.UtilScythe;
+import java.util.List;
+import java.util.function.Supplier;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;

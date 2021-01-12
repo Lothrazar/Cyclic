@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.battery;
 
+import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;

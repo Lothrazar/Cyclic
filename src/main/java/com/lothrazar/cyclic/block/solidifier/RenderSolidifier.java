@@ -67,7 +67,7 @@ public class RenderSolidifier extends TileEntityRenderer<TileSolidifier> {
     IVertexBuilder vertexBuffer = buffer.getBuffer(FluidTankRenderType.resizableCuboid());
     matrixStack.push();
     matrixStack.scale(1F, UtilFluid.getScale(tankHere.tank), 1F);
-    UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.stages - 1),
+    UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.STAGES - 1),
         matrixStack, vertexBuffer, UtilRender.getColorARGB(fluid, 0.1F),
         UtilRender.calculateGlowLight(light, fluid));
     matrixStack.pop();

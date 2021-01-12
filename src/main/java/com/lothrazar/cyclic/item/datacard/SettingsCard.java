@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.util.UtilChat;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;

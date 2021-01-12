@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.recipe;
 
-import java.util.ArrayList;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -33,7 +33,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
 
-  public static ArrayList<CyclicRecipe> recipes = new ArrayList<CyclicRecipe>();
+  public static final ArrayList<CyclicRecipe> RECIPES = new ArrayList<CyclicRecipe>();
   private final ResourceLocation id;
 
   protected CyclicRecipe(ResourceLocation id) {

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.net.PacketTileInventory;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEnchant;
+import javax.annotation.Nonnull;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.Enchantments;

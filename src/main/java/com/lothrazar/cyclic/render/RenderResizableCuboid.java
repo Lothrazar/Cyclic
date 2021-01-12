@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.render;
 
-import java.util.Arrays;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import java.util.Arrays;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -66,7 +66,7 @@ public class RenderResizableCuboid {
     Vector3d size = new Vector3d(cube.sizeX(), cube.sizeY(), cube.sizeZ());
     matrix.push();
     matrix.translate(cube.minX, cube.minY, cube.minZ);
-    net.minecraft.util.math.vector.Matrix4f matrix4f = matrix.getLast().getMatrix();// getMatrix()
+    net.minecraft.util.math.vector.Matrix4f matrix4f = matrix.getLast().getMatrix();
     for (Direction face : Direction.values()) {
       if (cube.shouldSideRender(face)) {
         int ordinal = face.ordinal();
@@ -121,11 +121,11 @@ public class RenderResizableCuboid {
 
   private void renderPoint(Matrix4f matrix4f, IVertexBuilder buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV,
       float red, float green, float blue, float alpha, int light) {
-    int U_ARRAY = minU ? U_MIN : U_MAX;
-    int V_ARRAY = minV ? V_MIN : V_MAX;
-    Vector3f vertex = withValue(VEC_ZERO, u, xyz[U_ARRAY]);
-    vertex = withValue(vertex, v, xyz[V_ARRAY]);
+    int uFinal = minU ? U_MIN : U_MAX;
+    int vFinal = minV ? V_MIN : V_MAX;
+    Vector3f vertex = withValue(VEC_ZERO, u, xyz[uFinal]);
+    vertex = withValue(vertex, v, xyz[vFinal]);
     vertex = withValue(vertex, face.getAxis(), other);
-    buffer.pos(matrix4f, vertex.getX(), vertex.getY(), vertex.getZ()).color(red, green, blue, alpha).tex(uv[U_ARRAY], uv[V_ARRAY]).lightmap(light).endVertex();
+    buffer.pos(matrix4f, vertex.getX(), vertex.getY(), vertex.getZ()).color(red, green, blue, alpha).tex(uv[uFinal], uv[vFinal]).lightmap(light).endVertex();
   }
 }

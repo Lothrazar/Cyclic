@@ -33,6 +33,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
         -->
     </module>
 
+
     <!--
 
     LENGTH CHECKS FOR FILES
@@ -68,12 +69,57 @@ page at http://checkstyle.sourceforge.net/config.html -->
           <!--Only allows a package-info.java, not package.html. &ndash;&gt;-->
         <!--<property name="severity" value="warning"/>-->
     <!--</module>-->
+	
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="TileRegistry.java"/>
+  <property name="lines" value="1-300"/>
+</module>
+	
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="SoundRegistry.java"/>
+  <property name="lines" value="16-40"/>
+</module>
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="ItemRegistry.java"/>
+  <property name="lines" value="50-400"/>
+</module>
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="BlockRegistry.java"/>
+  <property name="lines" value="75-300"/>
+</module>
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="ContainerScreenRegistry.java"/>
+  <property name="lines" value="150-300"/>
+</module>
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="PotionRegistry.java"/>
+  <property name="lines" value="60-120"/>
+</module>
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="EntityRegistry.java"/>
+  <property name="lines" value="30-60"/>
+</module>
+<module name="SuppressionSingleFilter">
+  <property name="checks" value="StaticVariableName"/>
+  <property name="files" value="FluidRegistry.java"/>
+  <property name="lines" value="10-20"/>
+</module>
+
+
 
     <!-- All Java AST specific tests live under TreeWalker module. -->
     <module name="TreeWalker">
 
-        <!-- required for SupressionCommentFilter and SuppressWithNearbyCommentFilter -->
-        <module name="FileContentsHolder" />
+        <!-- required for SupressionCommentFilter and SuppressWithNearbyCommentFilter 
+		        <module name="FileContentsHolder" />  -->
+
 
         <!--
 
@@ -94,8 +140,9 @@ page at http://checkstyle.sourceforge.net/config.html -->
         <module name="ImportOrder">
             <!-- Checks for out of order import statements. -->
             <property name="severity" value="error" />
-            <property name="ordered" value="true" />
-            <property name="groups" value="/([^j]|.[^a]|..[^v]|...[^a])/,/^javax?\./" />
+			<!-- i would prefer ordered=true, but it thinks .Block; coming before .BlockState; is wrong when its correct -->
+            <property name="ordered" value="false" />
+            <property name="groups" value="" />
             <!-- This ensures that static imports go to the end. -->
             <property name="option" value="bottom" />
             <property name="tokens" value="STATIC_IMPORT, IMPORT" />
@@ -103,7 +150,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         <module name="IllegalImport">
             <property name="severity" value="error" />
-            <property name="illegalPkgs" value="junit.framework, java.awt, javafx" />
+            <property name="illegalPkgs" value="junit.framework, javafx" />
         </module>
 
         <module name="UnusedImports" />
@@ -246,7 +293,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         <module name="LineLength">
             <!-- Checks if a line is too long. -->
-            <property name="max" value="180" default="180" />
+            <property name="max" value="200" default="180" />
             <property name="severity" value="error" />
 
             <!--
@@ -270,18 +317,18 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <pre>
               if {
                 ...
-              } else
+              } 
+			  else
             </pre>
             -->
             <!-- This next example is not fine:
             <pre>
               if {
                 ...
-              }
-              else
+              } else
             </pre>
             -->
-            <property name="option" value="same" />
+			<property name="option" value="alone_or_singleline"/>
             <property name="severity" value="error" />
         </module>
 
@@ -404,9 +451,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
         </module>
     </module>
 
-    <!--module name="SuppressionFilter">
-        <property name="file" value="suppressions.xml"/>
-    </module-->
+    <!--
 
     <module name="SuppressionCommentFilter">
         <property name="offCommentFormat" value="CHECKSTYLE OFF: (.+)" />
@@ -414,5 +459,5 @@ page at http://checkstyle.sourceforge.net/config.html -->
         <property name="checkFormat" value="Javadoc.*" />
         <property name="messageFormat" value="$1" />
     </module>
-
+-->
 </module>

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic;
 
-import org.apache.logging.log4j.LogManager;
 import com.lothrazar.cyclic.compat.curios.CuriosRegistry;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
@@ -21,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ModCyclic.MODID)

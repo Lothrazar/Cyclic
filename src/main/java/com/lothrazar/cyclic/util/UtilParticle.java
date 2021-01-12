@@ -36,8 +36,9 @@ public class UtilParticle {
   }
 
   public static void spawnParticle(World world, IParticleData sparkle, BlockPos pos, int count) {
-    if (world.isRemote)
+    if (world.isRemote) {
       spawnParticle(world, sparkle, pos.getX() + .5F, pos.getY() + .5F, pos.getZ() + .5F, count);
+    }
   }
 
   /**

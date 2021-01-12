@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.apple;
 
-import java.util.Iterator;
 import com.lothrazar.cyclic.base.ItemBase;
+import java.util.Iterator;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

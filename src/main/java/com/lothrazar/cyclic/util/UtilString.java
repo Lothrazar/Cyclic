@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import java.util.List;
 import net.minecraft.util.ResourceLocation;
 
 public class UtilString {
@@ -46,7 +46,7 @@ public class UtilString {
     String id = toMatch.getNamespace();
     for (String strFromList : list) {
       if (strFromList == null || strFromList.isEmpty()) {
-        continue;//just ignore me
+        continue; //just ignore me
       }
       if (strFromList.equals(id)) {
         return true;
@@ -58,7 +58,7 @@ public class UtilString {
           return false;
         }
         String modIdFromList = blockIdArray[0];
-        String blockIdFromList = blockIdArray[1];//has the *
+        String blockIdFromList = blockIdArray[1]; //has the *
         String modIdToMatch = toMatch.getNamespace();
         String blockIdToMatch = toMatch.getPath();
         if (modIdFromList.equals(modIdToMatch) == false) {

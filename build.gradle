@@ -14,6 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'checkstyle'
 //apply plugin: 'org.spongepowered.mixin'
 
 import net.minecraftforge.gradle.common.task.SignJar
@@ -24,6 +25,14 @@ version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Cyclic'
 
+
+checkstyle {
+    toolVersion '8.23'
+    configFile file("checkstyle.xml")
+}
+checkstyleMain {
+    source ='src/main/java'
+}
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 

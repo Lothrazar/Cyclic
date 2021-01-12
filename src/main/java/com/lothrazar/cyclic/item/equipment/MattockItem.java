@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.util.UtilShape;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

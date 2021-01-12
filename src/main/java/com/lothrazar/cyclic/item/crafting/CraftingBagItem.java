@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.item.crafting;
 
+import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

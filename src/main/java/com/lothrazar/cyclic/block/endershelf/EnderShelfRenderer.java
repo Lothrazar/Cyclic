@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 import com.lothrazar.cyclic.util.UtilRenderText;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;

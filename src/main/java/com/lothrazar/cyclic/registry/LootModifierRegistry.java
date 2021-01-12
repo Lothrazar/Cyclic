@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.registry;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
+import javax.annotation.Nonnull;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
