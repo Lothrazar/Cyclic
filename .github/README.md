@@ -1,6 +1,8 @@
 
 # Cyclic [![](http://cf.way2muchnoise.eu/239286.svg)](https://minecraft.curseforge.com/projects/cyclic) [![](http://cf.way2muchnoise.eu/versions/239286.svg)](https://minecraft.curseforge.com/projects/cyclic)
 
+![build](https://github.com/Lothrazar/Cyclic/workflows/build/badge.svg)
+
 Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 
 
