@@ -42,11 +42,11 @@ public class EnchantLifeLeech extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "life_leech";
+  public static final String ID = "life_leech";
 
   @Override
   public boolean isEnabled() {
-    return CFG == null || CFG.get();
+    return CFG.get();
   }
 
   @Override
@@ -64,7 +64,7 @@ public class EnchantLifeLeech extends EnchantBase {
         // we -1  since potion level 1 is  II
         //so that means enchantment I giving poison I means this
         int restore = (int) Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
-        int min = level;//so if restore starts at 4 the rand will be [min,restore]
+        int min = level; //so if restore starts at 4 the rand will be [min,restore]
         restore = attacker.getEntityWorld().rand.nextInt(restore + 1) + min;
         if (restore > 0) {
           //hunger

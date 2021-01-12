@@ -48,7 +48,7 @@ public class EnchantReach extends EnchantBase {
   private static final int REACH_VANILLA = 5;
   private static final int REACH_BOOST = 16;
   public static BooleanValue CFG;
-  public static final String id = "reach";
+  public static final String ID = "reach";
 
   @Override
   public boolean isEnabled() {
@@ -80,7 +80,7 @@ public class EnchantReach extends EnchantBase {
   }
 
   private void turnReachOn(PlayerEntity player) {
-    player.getPersistentData().putBoolean(NBT_REACH_ON, true);//.setInteger(NBT_REACH_ON, 1);
+    player.getPersistentData().putBoolean(NBT_REACH_ON, true);
     UtilPlayer.setPlayerReach(player, REACH_BOOST);
   }
 

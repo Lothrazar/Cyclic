@@ -20,7 +20,7 @@ public class EnchantXp extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "experience_boost";
+  public static final String ID = "experience_boost";
 
   @Override
   public boolean isEnabled() {
@@ -65,7 +65,7 @@ public class EnchantXp extends EnchantBase {
   @Override
   public boolean canApply(ItemStack stack) {
     if (stack.getItem() instanceof SwordItem) {
-      return true;//override even though digger type 
+      return true; //override even though digger type 
     }
     return super.canApply(stack);
   }

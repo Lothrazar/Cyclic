@@ -55,7 +55,7 @@ public class EnchantLaunch extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "launch";
+  public static final String ID = "launch";
 
   @Override
   public boolean isEnabled() {
@@ -124,7 +124,7 @@ public class EnchantLaunch extends EnchantBase {
         && player.getPosY() < player.lastTickPosY && player.isAirBorne && player.isInWater() == false) {
       //JUMP IS pressed and you are moving down
       int level = EnchantmentHelper.getEnchantments(feet).get(this);
-      int uses = feet.getOrCreateTag().getInt(NBT_USES);//UtilNBT.getItemStackNBTVal(feet, NBT_USES);
+      int uses = feet.getOrCreateTag().getInt(NBT_USES);
       player.fallDistance = 0;
       float angle = (player.getMotion().x == 0 && player.getMotion().z == 0) ? 90 : ROTATIONPITCH;
       UtilEntity.launch(player, angle, LAUNCH_POWER);
@@ -142,7 +142,7 @@ public class EnchantLaunch extends EnchantBase {
       UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
       player.fallDistance = 0;
       //
-      PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());//reset at bottom of jump
+      PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage()); //reset at bottom of jump
     }
   }
 }

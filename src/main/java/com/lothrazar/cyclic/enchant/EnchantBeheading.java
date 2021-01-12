@@ -52,12 +52,12 @@ public class EnchantBeheading extends EnchantBase {
 
   private static final int percentDrop = 20;
   private static final int percentPerLevel = 25;
-  public static final String id = "beheading";
+  public static final String ID = "beheading";
   public static BooleanValue CFG;
 
   @Override
   public boolean isEnabled() {
-    return CFG == null || CFG.get();
+    return CFG.get();
   }
 
   @Override

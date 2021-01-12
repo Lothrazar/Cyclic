@@ -217,7 +217,7 @@ public class UtilShape {
         }
         //        if (newOffset.getY() > 3) {}
         // TODO: put in const, 
-        if (newOffset.getY() >= 0 && newOffset.getY() <= Const.MAX_WORLD_HEIGHT) {
+        if (newOffset.getY() >= 0 && newOffset.getY() <= Const.WORLDHEIGHT) {
           newShape.add(newOffset);
         }
       }

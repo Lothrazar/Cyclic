@@ -29,7 +29,7 @@ public class EnchantCurse extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "curse";
+  public static final String ID = "curse";
 
   @Override
   public boolean isEnabled() {
@@ -48,8 +48,9 @@ public class EnchantCurse extends EnchantBase {
 
   @Override
   public void onUserHurt(LivingEntity user, Entity attacker, int level) {
-    if (user.world.isRemote || !(attacker instanceof LivingEntity))
+    if (user.world.isRemote || !(attacker instanceof LivingEntity)) {
       return;
+    }
     //only allow activation once
     int totalLevels = getCurrentArmorLevelSlot(user, EquipmentSlotType.HEAD)
         + getCurrentArmorLevelSlot(user, EquipmentSlotType.CHEST)
@@ -65,8 +66,9 @@ public class EnchantCurse extends EnchantBase {
         if (appliedEffects < MIN_EFFECTS
             || BASE_APPLY_CHANCE > user.world.rand.nextDouble()) {
           livingAttacker.addPotionEffect(new EffectInstance(effect, EFFECT_DURATION));
-          if (++appliedEffects >= MAX_EFFECTS)
+          if (++appliedEffects >= MAX_EFFECTS) {
             break;
+          }
         }
       }
     }

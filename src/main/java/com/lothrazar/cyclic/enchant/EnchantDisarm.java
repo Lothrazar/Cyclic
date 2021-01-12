@@ -16,7 +16,9 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class EnchantDisarm extends EnchantBase {
 
-  private static final double BASE_CHANCE = 0.08 / 2; //halves the desired base chance to activate because onEntityDamage gets called twice and it's currently a "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
+  //halves the desired base chance to activate because onEntityDamage gets called twice and it's currently a 
+  // "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
+  private static final double BASE_CHANCE = 0.08 / 2;
 
   public EnchantDisarm(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
@@ -24,7 +26,7 @@ public class EnchantDisarm extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "disarm";
+  public static final String ID = "disarm";
 
   @Override
   public boolean isEnabled() {
@@ -47,8 +49,9 @@ public class EnchantDisarm extends EnchantBase {
 
   @Override
   public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-    if (!(target instanceof LivingEntity))
+    if (target instanceof LivingEntity == false) {
       return;
+    }
     LivingEntity livingTarget = (LivingEntity) target;
     List<ItemStack> toDisarm = new ArrayList<>();
     target.getHeldEquipment().forEach(itemStack -> {

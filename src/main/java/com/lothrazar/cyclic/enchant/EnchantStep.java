@@ -46,7 +46,7 @@ public class EnchantStep extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "step";
+  public static final String ID = "step";
 
   @Override
   public boolean isEnabled() {
@@ -102,7 +102,7 @@ public class EnchantStep extends EnchantBase {
       player.stepHeight = 0.9F;
     }
     else {
-      player.stepHeight = 1.0F + (1F / 16F);//PATH BLOCKS etc are 1/16th downif MY feature turns this on, then do it
+      player.stepHeight = 1.0F + (1F / 16F); //PATH BLOCKS etc are 1/16th downif MY feature turns this on, then do it
     }
     //    ModCyclic.log("ON " + player.getPersistentData().getBoolean(NBT_ON));
   }
@@ -110,7 +110,7 @@ public class EnchantStep extends EnchantBase {
   private void turnOff(PlayerEntity player, ItemStack armor) {
     //was it on before, do we need to do an off hit
     if (player.getPersistentData().contains(NBT_ON) && player.getPersistentData().getBoolean(NBT_ON)) {
-      player.stepHeight = 0.6F;// LivingEntity.class constructor defaults to this
+      player.stepHeight = 0.6F; // LivingEntity.class constructor defaults to this
       player.getPersistentData().putBoolean(NBT_ON, false);
     }
   }

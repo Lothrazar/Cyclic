@@ -66,7 +66,7 @@ public class EventRender {
               //              if(event.i)
               UtilChat.addChatMessage(player, "item.cyclic.carrot_ender.tooltip");
               //                  test);
-            }) {};
+            });
         event.addWidget(bt2);
       }
     }
@@ -122,9 +122,9 @@ public class EventRender {
       BlockPosDim loc = LocationGpsCard.getPosition(stack);
       if (loc != null) {
         if (loc.getDimension() == null ||
-            loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world)))
-          //    TODO: null dimensions test.  but if its saved and equal then ok 
+            loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
           mappos.put(loc.getPos(), Color.BLUE);
+        }
       }
     }
     ///////////////////////////////////////ShapeCard

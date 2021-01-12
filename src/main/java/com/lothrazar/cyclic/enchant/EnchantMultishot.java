@@ -51,7 +51,7 @@ public class EnchantMultishot extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "multishot";
+  public static final String ID = "multishot";
 
   @Override
   public boolean isEnabled() {

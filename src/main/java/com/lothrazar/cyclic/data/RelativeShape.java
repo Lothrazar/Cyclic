@@ -43,7 +43,7 @@ public class RelativeShape {
    */
   public RelativeShape(World world, List<BlockPos> options, BlockPos center) {
     this();
-    if (world != null)
+    if (world != null) {
       for (BlockPos pos : options) {
         BlockState bs = world.getBlockState(pos);
         if (bs.getBlock() != Blocks.AIR) {
@@ -51,6 +51,7 @@ public class RelativeShape {
           //          states.add(bs);
         }
       }
+    }
     count = shape.size();
   }
 

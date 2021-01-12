@@ -47,7 +47,7 @@ public class EnchantQuickdraw extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "quickshot";
+  public static final String ID = "quickshot";
 
   @Override
   public boolean isEnabled() {
@@ -81,14 +81,15 @@ public class EnchantQuickdraw extends EnchantBase {
         return;
       }
       // extra tick per level
-      for (int i = 0; i < level; i++)
+      for (int i = 0; i < level; i++) {
         this.tickHeldBow(player);
+      }
     }
   }
 
   private void tickHeldBow(PlayerEntity player) {
     try {
-      Method m = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_184608_ct");// "updateActiveHand");
+      Method m = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_184608_ct");
       //      Method m = PlayerEntity.class.getDeclaredMethod("updateActiveHand");
       m.setAccessible(true);
       m.invoke(player);

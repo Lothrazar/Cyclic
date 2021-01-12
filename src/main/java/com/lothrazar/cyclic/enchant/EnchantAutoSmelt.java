@@ -48,14 +48,13 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EnchantAutoSmelt extends EnchantBase {
 
-  public static final String id = "auto_smelt";
+  public static final String ID = "auto_smelt";
+  public static BooleanValue CFG;
 
   public EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
 
   @Override
   public boolean isEnabled() {

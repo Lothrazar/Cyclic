@@ -12,6 +12,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -30,9 +31,8 @@ public class EnchantPearl extends EnchantBase {
   private static final int COOLDOWN = 6 * 20;
   private static final float VELOCITY = 1.5F; //Same as EnderPearlItem
   private static final float INNACCURACY = 1F; //Same as EnderPearlItem
-  private static final int DURABILITY_DAMAGE = 3;
   public static BooleanValue CFG;
-  public static final String id = "ender";
+  public static final String ID = "ender";
 
   @Override
   public boolean isEnabled() {
@@ -57,7 +57,8 @@ public class EnchantPearl extends EnchantBase {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-    if (!event.getWorld().isRemote && event.getResult() != Result.DENY) {
+    World world = event.getWorld();
+    if (!world.isRemote && event.getResult() != Result.DENY) {
       int level = EnchantmentHelper.getEnchantmentLevel(this, event.getItemStack());
       if (level > 0) {
         int adjustedCooldown = COOLDOWN / level;
@@ -65,13 +66,14 @@ public class EnchantPearl extends EnchantBase {
         if (player.getCooldownTracker().hasCooldown(event.getItemStack().getItem())) {
           return;
         }
-        EnderPearlEntity pearl = new EnderPearlEntity(event.getWorld(), player);
+        EnderPearlEntity pearl = new EnderPearlEntity(world, player);
         Vector3d lookVector = player.getLookVec();
         pearl.shoot(lookVector.getX(), lookVector.getY(), lookVector.getZ(), VELOCITY, INNACCURACY);
         UtilEntity.setCooldownItem(player, event.getItemStack().getItem(), adjustedCooldown);
-        event.getWorld().playSound((PlayerEntity) null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (event.getWorld().rand.nextFloat() * 0.4F + 0.8F));
-        event.getWorld().addEntity(pearl);
-        event.getItemStack().damageItem(DURABILITY_DAMAGE, player, (e) -> {});
+        world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL,
+            //TODO: UtilSound
+            0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
+        world.addEntity(pearl);
         //block propogation of event 
         event.setResult(Result.DENY);
         event.setCanceled(true);

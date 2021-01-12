@@ -45,46 +45,46 @@ public class CyclicPluginJEI implements IModPlugin {
   @Override
   public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.crafter.asItem(), 1), VanillaRecipeCategoryUid.CRAFTING);
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.melter.asItem(), 1), MelterRecipeCategory.id);
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.solidifier.asItem(), 1), SolidifierRecipeCategory.id);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.melter.asItem(), 1), MelterRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.solidifier.asItem(), 1), SolidifierRecipeCategory.ID);
   }
 
   @Override
   public void registerRecipes(IRecipeRegistration registry) {
-    registry.addRecipes(RecipeMelter.RECIPES, MelterRecipeCategory.id);
-    registry.addRecipes(RecipeSolidifier.RECIPES, SolidifierRecipeCategory.id);
+    registry.addRecipes(RecipeMelter.RECIPES, MelterRecipeCategory.ID);
+    registry.addRecipes(RecipeSolidifier.RECIPES, SolidifierRecipeCategory.ID);
   }
 
   @Override
   public void registerGuiHandlers(IGuiHandlerRegistration registry) {
     registry.addRecipeClickArea(ScreenMelter.class,
         75, 20,
-        40, 26, MelterRecipeCategory.id);
+        40, 26, MelterRecipeCategory.ID);
     registry.addRecipeClickArea(ScreenSolidifier.class,
         75, 20,
-        40, 26, SolidifierRecipeCategory.id);
+        40, 26, SolidifierRecipeCategory.ID);
   }
 
   @Override
   public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
-    registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.id,
+    registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.ID,
         0, 2, //recipeSLotStart, recipeSlotCount
-        2, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.id,
+        2, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.ID,
         //second part should be 3 not 4, but i think JEI has a bug or something
         1, 4, //recipeSLotStart, recipeSlotCount
-        4, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+        4, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
         10, 9, //recipeSLotStart, recipeSlotCount
-        30, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+        30, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(CraftingBagContainer.class, VanillaRecipeCategoryUid.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
-        10, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+        10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(CraftingStickContainer.class, VanillaRecipeCategoryUid.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
-        10, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+        10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
-        10, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+        10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
   }
 }

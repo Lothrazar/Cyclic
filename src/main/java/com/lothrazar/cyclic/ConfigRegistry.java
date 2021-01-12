@@ -147,24 +147,24 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Enchantment related configs", WALL)
         .push("enchantment");
     //
-    EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.id, true);
-    EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.id, true);
-    EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.id, true);
-    EnchantCurse.CFG = CFG.comment("Set false to disable enchantment").define(EnchantCurse.id, true);
-    EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.id, true);
-    EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.id, true);
-    EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.id, true);
-    EnchantLaunch.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLaunch.id, true);
-    EnchantLifeLeech.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLifeLeech.id, true);
-    EnchantMagnet.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMagnet.id, true);
-    EnchantMultishot.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMultishot.id, true);
-    EnchantPearl.CFG = CFG.comment("Set false to disable enchantment").define(EnchantPearl.id, true);
-    EnchantQuickdraw.CFG = CFG.comment("Set false to disable enchantment").define(EnchantQuickdraw.id, true);
-    EnchantReach.CFG = CFG.comment("Set false to disable enchantment").define(EnchantReach.id, true);
-    EnchantStep.CFG = CFG.comment("Set false to disable enchantment").define(EnchantStep.id, true);
-    EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.id, true);
-    EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.id, true);
-    EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.id, true);
+    EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.ID, true);
+    EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.ID, true);
+    EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.ID, true);
+    EnchantCurse.CFG = CFG.comment("Set false to disable enchantment").define(EnchantCurse.ID, true);
+    EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
+    EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.ID, true);
+    EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.ID, true);
+    EnchantLaunch.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLaunch.ID, true);
+    EnchantLifeLeech.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLifeLeech.ID, true);
+    EnchantMagnet.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMagnet.ID, true);
+    EnchantMultishot.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMultishot.ID, true);
+    EnchantPearl.CFG = CFG.comment("Set false to disable enchantment").define(EnchantPearl.ID, true);
+    EnchantQuickdraw.CFG = CFG.comment("Set false to disable enchantment").define(EnchantQuickdraw.ID, true);
+    EnchantReach.CFG = CFG.comment("Set false to disable enchantment").define(EnchantReach.ID, true);
+    EnchantStep.CFG = CFG.comment("Set false to disable enchantment").define(EnchantStep.ID, true);
+    EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.ID, true);
+    EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.ID, true);
+    EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.ID, true);
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheadingEntityMHF", defaultBeheading);
     CFG.pop();//enchantment
     //

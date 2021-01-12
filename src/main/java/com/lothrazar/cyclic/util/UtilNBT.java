@@ -15,7 +15,7 @@ public class UtilNBT {
 
   public static ItemStack buildNamedPlayerSkull(String displayNameString) {
     CompoundNBT t = new CompoundNBT();
-    t.putString(Const.SkullOwner, displayNameString);
+    t.putString(Const.SKULLOWNER, displayNameString);
     return buildSkullFromTag(t);
   }
 

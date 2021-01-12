@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -45,9 +46,9 @@ public class EnchantVenom extends EnchantBase {
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  final int durationTicksPerLevel = 3 * 20;//3 seconds
+  final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;
   public static BooleanValue CFG;
-  public static final String id = "venom";
+  public static final String ID = "venom";
 
   @Override
   public boolean isEnabled() {

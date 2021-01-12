@@ -50,16 +50,16 @@ public class ItemEvents {
     ModifiableAttributeInstance original = event.getOriginal().getAttribute(Attributes.MAX_HEALTH);
     if (original != null) {
       AttributeModifier healthModifier = original.getModifier(HeartItem.ID);
-      if (healthModifier != null)
+      if (healthModifier != null) {
         event.getPlayer().getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(healthModifier);
+      }
     }
   }
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     LivingEntity liv = event.getEntityLiving();
-    if (//!liv.world.isRemote &&
-    liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
+    if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
         && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
       // 
       if (liv.isInWater()
@@ -109,8 +109,9 @@ public class ItemEvents {
     }
     else if (world.getBlockState(pos).getBlock() == BlockRegistry.flower_cyan) {
       event.setResult(Result.ALLOW);
-      if (world.rand.nextDouble() < 0.5)//TODO: config
+      if (world.rand.nextDouble() < 0.5) {
         UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.flower_cyan));
+      }
     }
   }
 
@@ -227,12 +228,15 @@ public class ItemEvents {
           break;
         }
       }
-      if (resultStack != null)
+      if (resultStack != null) {
         event.getItem().setItem(resultStack);
-      if (resultStack != null && resultStack.getCount() != stack.getCount())
+      }
+      if (resultStack != null && resultStack.getCount() != stack.getCount()) {
         event.setResult(Result.ALLOW);
-      else
+      }
+      else {
         event.setResult(Result.DEFAULT);
+      }
     }
   }
 }

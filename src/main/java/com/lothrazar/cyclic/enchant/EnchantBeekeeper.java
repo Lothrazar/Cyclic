@@ -32,7 +32,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -47,37 +46,17 @@ public class EnchantBeekeeper extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "beekeeper";
+  public static final String ID = "beekeeper";
 
   @Override
   public boolean isEnabled() {
-    return CFG == null || CFG.get();
+    return CFG.get();
   }
 
   @Override
   public int getMaxLevel() {
     return 2;
   }
-
-  BabyEntitySpawnEvent event;// if nearby beekeeper, more spawn? bee extends animal where this is fired so?
-  LivingSetAttackTargetEvent event2;//when bee targets a player.? 
-  //  @SubscribeEvent
-  //  public void onBabyEntitySpawnEvent(BabyEntitySpawnEvent event) {
-  //    // instanceof BeeEntity 
-  //    if (event.getChild().getType() == EntityType.BEE && event.getCausedByPlayer() != null) {
-  //      //
-  //      int level = this.getCurrentArmorLevel(event.getCausedByPlayer());
-  //      if (level > 0) {
-  //        //spawn new one
-  //        ModCyclic.LOGGER.info("Breeed extra bee");
-  //        BeeEntity newbee = EntityType.BEE.create(event.getChild().world);
-  //        newbee.setLocationAndAngles(event.getChild().getPosX(), event.getChild().getPosY(), event.getChild().getPosZ(), 0, 0);
-  //        //        newbee.setLocationAndAngles(x, y, z, yaw, pitch);
-  //        //        newbee = new BeeEntity(null, null);
-  //        event.getChild().world.addEntity(newbee);
-  //      }
-  //    }
-  //  }
 
   @SubscribeEvent
   public void onLivingSetAttackTargetEvent(LivingSetAttackTargetEvent event) {

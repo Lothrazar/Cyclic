@@ -42,7 +42,7 @@ public class ClientInputEvents {
         }
       }
     }
-    catch (Exception e) {//array out of bounds, or we are in a strange third party GUI that doesnt have slots like this
+    catch (Exception e) { //array out of bounds, or we are in a strange third party GUI that doesnt have slots like this
       //EXAMPLE:  mod.chiselsandbits.bitbag.BagGui
       ModCyclic.LOGGER.error("click error", e);
       // so this fixes ithttps://github.com/PrinceOfAmber/Cyclic/issues/410

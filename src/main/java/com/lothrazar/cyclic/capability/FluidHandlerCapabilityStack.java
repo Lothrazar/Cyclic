@@ -157,8 +157,9 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
   @Override
   @Nonnull
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-    if (CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY == capability)
+    if (CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY == capability) {
       return holder.cast();
+    }
     return LazyOptional.empty();
   }
 }

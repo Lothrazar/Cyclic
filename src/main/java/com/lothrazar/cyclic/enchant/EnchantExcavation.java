@@ -62,11 +62,11 @@ public class EnchantExcavation extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "excavate";
+  public static final String ID = "excavate";
 
   @Override
   public boolean isEnabled() {
-    return CFG == null || CFG.get();
+    return CFG.get();
   }
 
   @Override
@@ -80,8 +80,9 @@ public class EnchantExcavation extends EnchantBase {
   }
 
   private int getHarvestMax(int level) {
-    if (level <= 5)
+    if (level <= 5) {
       return (level + 1) * POWER_PER_LEVEL + 10;
+    }
     //reduce power if ench is past level 5
     return 6 * POWER_PER_LEVEL + level * 5;
   }

@@ -54,7 +54,7 @@ public class EnchantTraveller extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "traveler";
+  public static final String ID = "traveler";
 
   @Override
   public boolean isEnabled() {

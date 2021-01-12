@@ -23,7 +23,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 @SuppressWarnings("rawtypes")
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
-  static ResourceLocation id = new ResourceLocation(CyclicRecipeType.MELTER.toString());
+  static ResourceLocation ID = new ResourceLocation(CyclicRecipeType.MELTER.toString());
   private IDrawable gui;
   private IDrawable icon;
 
@@ -54,7 +54,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   @Override
   public ResourceLocation getUid() {
-    return id;
+    return ID;
   }
 
   @Override
@@ -86,7 +86,6 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     if (input != null && input.isEmpty() == false) {
       guiItemStacks.set(1, input);
     }
-    //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     //getname is the same   
     recipeLayout.getFluidStacks().init(0, true, 140, Const.SQ + 1, Const.SQ - 2, Const.SQ - 2,

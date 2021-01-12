@@ -43,7 +43,7 @@ public class EnchantMagnet extends EnchantBase {
   }
 
   public static BooleanValue CFG;
-  public static final String id = "magnet";
+  public static final String ID = "magnet";
 
   @Override
   public boolean isEnabled() {

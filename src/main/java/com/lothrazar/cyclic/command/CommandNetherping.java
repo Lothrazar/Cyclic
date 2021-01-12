@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class CommandNetherping implements ICyclicCommand {
 
-  final static double netherRatio = 8.0;
+  static final double NETHER_RATIO = 8.0;
 
   @Override
   public String getName() {
@@ -25,11 +25,11 @@ public class CommandNetherping implements ICyclicCommand {
 
   @Override
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    double factor = 1 / netherRatio;//overworld: use 1/8th
+    double factor = 1 / NETHER_RATIO; //overworld: use 1/8th
     boolean isnether = player.world.getDimensionKey() == World.THE_NETHER;
     if (isnether) {
       //you are nether, multiply by it
-      factor = netherRatio;
+      factor = NETHER_RATIO;
     }
     BlockPos pos = player.getPosition();
     double x = pos.getX();

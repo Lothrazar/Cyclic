@@ -46,17 +46,19 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantGrowth extends EnchantBase {
 
+  private static final double ODDS_ROTATE = 0.04;
+
   public EnchantGrowth(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
 
   public static BooleanValue CFG;
-  public static final String id = "growth";
+  public static final String ID = "growth";
 
   @Override
   public boolean isEnabled() {
-    return CFG == null || CFG.get();
+    return CFG.get();
   }
 
   @Override
@@ -82,11 +84,10 @@ public class EnchantGrowth extends EnchantBase {
     //Ticking
     int level = getCurrentLevelTool(entity.getHeldItem(Hand.MAIN_HAND));
     if (level > 0 && !entity.world.isRemote) {
-      if (entity.world.rand.nextDouble() > 0.04 / level) {
-        return;//slow the dice down
+      if (entity.world.rand.nextDouble() > ODDS_ROTATE / level) {
+        return; //slow the dice down
       }
-      final int growthLimit = level * 2 +
-          (entity.world.isRaining() ? 4 : 1);//faster when raining too 
+      final int growthLimit = level * 2 + (entity.world.isRaining() ? 4 : 1); //faster when raining too 
       int grown = 0;
       List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level + 2);
       shape = UtilShape.repeatShapeByHeight(shape, 2);

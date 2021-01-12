@@ -23,7 +23,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 @SuppressWarnings("rawtypes")
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
 
-  static ResourceLocation id = new ResourceLocation(CyclicRecipeType.SOLID.toString());
+  static final ResourceLocation ID = new ResourceLocation(CyclicRecipeType.SOLID.toString());
   private IDrawable gui;
   private IDrawable icon;
 
@@ -54,7 +54,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public ResourceLocation getUid() {
-    return id;
+    return ID;
   }
 
   @Override
