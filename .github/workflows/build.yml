@@ -36,5 +36,5 @@ jobs:
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
-      - name: checkstyle
-        run: ./gradlew check
+    #  - name: checkstyle
+    #    run: ./gradlew check

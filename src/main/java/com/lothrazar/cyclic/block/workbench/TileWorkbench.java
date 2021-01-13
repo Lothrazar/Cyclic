@@ -56,10 +56,12 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
 
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nonnull ItemHandlers handler) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      if (handler == ItemHandlers.GRID)
+      if (handler == ItemHandlers.GRID) {
         return inventory.cast();
-      else if (handler == ItemHandlers.OUTPUT)
+      }
+      else if (handler == ItemHandlers.OUTPUT) {
         return output.cast();
+      }
     }
     return super.getCapability(cap, Direction.NORTH);
   }
