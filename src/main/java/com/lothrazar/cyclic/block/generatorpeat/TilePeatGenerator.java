@@ -93,6 +93,9 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     if (this.isFull()) {
       return;
     }
+    if (energy.getEnergyStored() + 1 >= energy.getMaxEnergyStored()) {
+      return; //cannot accept any more
+    }
     if (this.isBurning() && fuelRate > 0) {
       --this.burnTime;
       this.addEnergy(fuelRate);
@@ -104,7 +107,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.getItem() instanceof PeatItem) {
       PeatItem peat = (PeatItem) stack.getItem();
-      int futureValue = energy.getEnergyStored() + peat.getPeatFuelValue() * BURNTIME;
+      int futureValue = energy.getEnergyStored() + peat.getPeatFuelValue();
       if (futureValue < energy.getMaxEnergyStored()) { // consume fuel only if we have room in the buffer
         fuelRate = peat.getPeatFuelValue();
         inventory.extractItem(0, 1, false);
