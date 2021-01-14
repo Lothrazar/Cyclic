@@ -85,6 +85,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     ItemStack book = inputSlots.getStackInSlot(SLOT_BOOK);
     if (book.getItem() != Items.BOOK
         || outputSlot.getStackInSlot(0).isEmpty() == false
+        || outputSlot.getStackInSlot(1).isEmpty() == false
         || input.getCount() != 1) {
       return;
     }
