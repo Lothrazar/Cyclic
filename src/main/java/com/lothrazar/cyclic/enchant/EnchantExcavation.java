@@ -104,7 +104,7 @@ public class EnchantExcavation extends EnchantBase {
       return;
     }
     if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
-      boolean harvested = this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
+      boolean harvested = this.harvestSurrounding((World) world, player, pos, block, level, player.swingingHand, 0);
       if (harvested) {
         //damage but also respect the unbreaking chant  
         player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.getRandom(), null);
@@ -121,31 +121,32 @@ public class EnchantExcavation extends EnchantBase {
    *
    * @param swingingHand
    */
-  private boolean harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn, final Block block, int totalAttempts, final int level, Hand swingingHand) {
-    if (totalAttempts >= this.getHarvestMax(level)
-        || player.getHeldItem(player.swingingHand).isEmpty()) {
-      return totalAttempts > 0;
+  private boolean harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn, final Block block, final int level, Hand swingingHand, int recursive) {
+    recursive++;
+    if (recursive > Math.pow(2, 12)) {
+      return false;
+    }
+    if (player.getHeldItem(player.swingingHand).isEmpty()) {
+      return false; //false means nothing was harvested
     }
     //    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     Set<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
     if (theFuture.size() == 0) {
       //avoid infinite loop if nothing near by and this is empty
-      return totalAttempts > 0;
+      return false;
     }
     Set<BlockPos> wasHarvested = new HashSet<BlockPos>();
     for (BlockPos targetPos : theFuture) {
       // https://github.com/Lothrazar/Cyclic/issues/1666
       //even if we fail to break this block, and arent allowed, STILL we need to count it
       //otherwise possible infinite loop where its constantly skipping over unbreakable blocks
-      totalAttempts++;
+      //      totalAttempts++;
       //now continue
       BlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
       if (world.isAirBlock(targetPos)
           || !player.isAllowEdit()
-          || player.func_234569_d_(targetState) == false//canHarvestBlock
-          || totalAttempts >= this.getHarvestMax(level)
-          || player.getHeldItem(player.swingingHand).isEmpty()
+          || !player.func_234569_d_(targetState) //doPlayerHarvestCheck -> canHarvestBlock ?
           || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)) {
         continue;
       }
@@ -164,14 +165,18 @@ public class EnchantExcavation extends EnchantBase {
       wasHarvested.add(targetPos);
     }
     //AFTER we harvest the close ones only THEN we branch out
+    int i = 0;
     for (BlockPos targetPos : theFuture) {
-      if (totalAttempts >= this.getHarvestMax(level)
-          || player.getHeldItem(player.swingingHand).isEmpty()) {
-        break;
+      if (!player.getHeldItem(player.swingingHand).isEmpty()) {
+        // increment counter
+        this.harvestSurrounding(world, player, targetPos, block, level, swingingHand, recursive);
       }
-      return this.harvestSurrounding(world, player, targetPos, block, totalAttempts, level, swingingHand);
+      i++;
+      if (i > level + 2) {
+        break; // breakout based on level
+      }
     }
-    return totalAttempts > 0;
+    return wasHarvested.size() > 0; // something was harvested
   }
 
   private static final Direction[] VALUES = Direction.values();

@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 
 public class MaterialRegistry {
 
@@ -53,7 +52,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getSoundEvent() {
-        return SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND;
+        return SoundRegistry.item_armor_equip_emerald;
       }
 
       @Override
@@ -95,7 +94,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getSoundEvent() {
-        return SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND;
+        return SoundRegistry.item_armor_equip_emerald;
       }
 
       @Override
@@ -140,7 +139,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getSoundEvent() {
-        return mimicArmor.getSoundEvent();
+        return SoundRegistry.item_armor_equip_emerald;
       }
 
       @Override

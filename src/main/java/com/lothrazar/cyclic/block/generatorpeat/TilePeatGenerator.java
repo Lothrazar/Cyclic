@@ -88,14 +88,13 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       return;
     }
     if (this.isFull()) {
+      this.tickCableFlow();
       return;
-    }
-    if (energy.getEnergyStored() + 1 >= energy.getMaxEnergyStored()) {
-      return; //cannot accept any more
     }
     if (this.isBurning() && fuelRate > 0) {
       --this.timer;
       this.addEnergy(fuelRate);
+      this.tickCableFlow();
       return;
     }
     fuelRate = 0;
@@ -111,19 +110,19 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
         this.timer = BURNTIME;
       }
     }
-    if (this.getFlowing() == 1) {
-      this.tickCableFlow();
-    }
+    this.tickCableFlow();
   }
 
   private void tickCableFlow() {
-    List<Integer> rawList = IntStream.rangeClosed(
-        0,
-        5).boxed().collect(Collectors.toList());
-    Collections.shuffle(rawList);
-    for (Integer i : rawList) {
-      Direction exportToSide = Direction.values()[i];
-      moveEnergy(exportToSide, MENERGY / 2);
+    if (this.getFlowing() == 1) {
+      List<Integer> rawList = IntStream.rangeClosed(
+              0,
+              5).boxed().collect(Collectors.toList());
+      Collections.shuffle(rawList);
+      for (Integer i : rawList) {
+        Direction exportToSide = Direction.values()[i];
+        moveEnergy(exportToSide, MENERGY / 2);
+      }
     }
   }
 
