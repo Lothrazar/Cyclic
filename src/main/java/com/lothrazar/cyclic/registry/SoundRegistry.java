@@ -28,6 +28,7 @@ public class SoundRegistry {
   public static SoundEvent tool_mode = make("tool_mode");
   public static SoundEvent dice_mike_koenig = make("dice_mike_koenig");
   public static SoundEvent fill = make("fill");
+  public static SoundEvent item_armor_equip_emerald = make("equip_emerald");
   //update: forge sound type exists apparently
   public static SoundType SCAFFOLD = new ForgeSoundType(1.0F, 1.0F,
       //suppliers
