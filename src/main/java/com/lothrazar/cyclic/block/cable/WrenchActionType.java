@@ -7,15 +7,16 @@ public enum WrenchActionType {
 
   EXTRACT, DISABLE;
 
-  private final static String NBT = "ActionType";
-  private final static String NBTTIMEOUT = "timeout";
+  private static final String NBT = "ActionType";
+  private static final String NBTTIMEOUT = "timeout";
 
   public static int getTimeout(ItemStack wand) {
     return wand.getOrCreateTag().getInt(NBTTIMEOUT);
   }
 
   public static void setTimeout(ItemStack wand) {
-    wand.getOrCreateTag().putInt(NBTTIMEOUT, 15);//less than one tick
+    wand.getOrCreateTag().putInt(NBTTIMEOUT, 15);
+    //less than one tick
   }
 
   public static void tickTimeout(ItemStack wand) {

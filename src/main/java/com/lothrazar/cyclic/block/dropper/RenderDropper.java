@@ -17,10 +17,9 @@ public class RenderDropper extends TileEntityRenderer<TileDropper> {
   }
 
   @Override
-  public void render(TileDropper te, float v, MatrixStack matrixStack,
-      IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
-    // ok
-    if (te.getField(TileDropper.Fields.RENDER.ordinal()) == 1)
+  public void render(TileDropper te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
+    if (te.getField(TileDropper.Fields.RENDER.ordinal()) == 1) {
       UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.5F, Color.MAGENTA);
+    }
   }
 }

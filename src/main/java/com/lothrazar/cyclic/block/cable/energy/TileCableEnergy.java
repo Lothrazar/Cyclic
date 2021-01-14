@@ -22,10 +22,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergy extends TileEntityBase implements ITickableTileEntity {
 
-  private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
   private static final int MAX = 8000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
 
   public TileCableEnergy() {
     super(TileRegistry.energy_pipeTile);
@@ -42,9 +42,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   private void tickCableFlow() {
-    List<Integer> rawList = IntStream.rangeClosed(
-        0,
-        5).boxed().collect(Collectors.toList());
+    List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction outgoingSide = Direction.values()[i];
@@ -56,16 +54,18 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   public void tickDownIncomingPowerFaces() {
     for (Direction f : Direction.values()) {
-      if (mapIncomingEnergy.get(f) > 0)
+      if (mapIncomingEnergy.get(f) > 0) {
         mapIncomingEnergy.put(f, mapIncomingEnergy.get(f) - 1);
+      }
     }
   }
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
-      if (!CableBase.isCableBlocked(this.getBlockState(), side))
+      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
         return energyCap.cast();
+      }
     }
     return super.getCapability(cap, side);
   }

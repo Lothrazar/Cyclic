@@ -46,25 +46,27 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   static final int SLOT_BUILD = 0;
   protected static final int SLOT_SHAPE = 1;
   protected static final int SLOT_GPS = 2;
-  public static final int maxHeight = 100;
+  public static final int MAXHEIGHT = 100;
 
   static enum Fields {
     TIMER, BUILDTYPE, SIZE, HEIGHT, REDSTONE, RENDER;
   }
 
   static final int MAX = 64000;
-  //  static final int SLOT_SHAPE = 1;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(3) {
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-      if (slot == SLOT_BUILD)
+      if (slot == SLOT_BUILD) {
         return Block.getBlockFromItem(stack.getItem()) != null;
-      else if (slot == SLOT_SHAPE)
+      }
+      else if (slot == SLOT_SHAPE) {
         return stack.getItem() instanceof ShapeCard;
-      else // if SLOT_GPS
+      }
+      else { // if SLOT_GPS
         return stack.getItem() instanceof LocationGpsCard;
+      }
     }
   };
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
@@ -74,7 +76,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private int buildSize = 3;
   private int height = 2;
   //machine settings
-  private int shapeIndex = 0;// current index of shape array
+  private int shapeIndex = 0;
 
   public TileStructure() {
     super(TileRegistry.structure);
@@ -147,8 +149,8 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         this.buildSize = value;
       break;
       case HEIGHT:
-        if (value > maxHeight) {
-          value = maxHeight;
+        if (value > MAXHEIGHT) {
+          value = MAXHEIGHT;
         }
         this.height = Math.max(1, value);
       break;
@@ -193,13 +195,14 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
       this.shapeIndex = 0;
     }
-    BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
+    BlockPos nextPos = shape.get(this.shapeIndex);
+    //start at current position and validate
     //does my shape exist? if so copy to it
     if (SLOT_SHAPE < inventory.getSlots()) {
       ItemStack shapeCard = inventory.getStackInSlot(SLOT_SHAPE);
       if (shapeCard.getItem() instanceof ShapeCard) {
         //copy 
-        shapeCard.setTag(null);//overwrite
+        shapeCard.setTag(null);
         RelativeShape worldShape = new RelativeShape(null, shape, this.pos);
         worldShape.write(shapeCard);
       }
@@ -215,7 +218,8 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     int cost = POWERCONF.get();
     for (int i = 0; i < spotsSkippablePerTrigger; i++) {
       if (energy.getEnergyStored() < cost && cost > 0) {
-        break;//if repair is free dont break
+        break;
+        //if repair is free dont break
       }
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
@@ -228,9 +232,11 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
           stack.shrink(1);
           energy.extractEnergy(cost, false);
         }
-        break;//ok , target position is valid, we can build only into air
+        break;
+        //ok , target position is valid, we can build only into air
       }
-      else {//cant build here. move up one
+      else {
+        //cant build here. move up one
         nextPos = shape.get(this.shapeIndex);
         this.incrementPosition(shape);
       } //but after inrementing once, we may not yet be valid so skip at most ten spots per tick

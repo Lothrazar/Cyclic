@@ -22,6 +22,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   @Override
   public void init() {
     super.init();
+    energy.visible = TileUser.POWERCONF.get() > 0;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     int x, y;
@@ -34,9 +35,9 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     int w = 120;
     int h = 20;
     int f = TileUser.Fields.TIMERDEL.ordinal();
-    GuiSliderInteger DROPCOUNT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger slider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 64, container.tile.getField(f)));
-    DROPCOUNT.setTooltip("block.cyclic.user.delay");
+    slider.setTooltip("block.cyclic.user.delay");
   }
 
   @Override
@@ -58,7 +59,6 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 9, 34);
-    if (TileUser.POWERCONF.get() > 0)
-      energy.draw(ms, container.tile.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
   }
 }

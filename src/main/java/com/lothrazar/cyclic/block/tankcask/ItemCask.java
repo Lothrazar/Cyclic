@@ -27,7 +27,8 @@ public class ItemCask extends BlockItem {
   @Override
   public boolean showDurabilityBar(ItemStack stack) {
     FluidStack fstack = copyFluidFromStack(stack);
-    return fstack != null && fstack.getAmount() > 0;//  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+    return fstack != null && fstack.getAmount() > 0;
+    //  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
   }
 
   /**
@@ -46,7 +47,9 @@ public class ItemCask extends BlockItem {
       float ratio = qty / (TileCask.CAPACITY);
       return 1 - ratio;
     }
-    catch (Throwable e) {} //lazy 
+    catch (Throwable e) {
+      //lazy
+    }
     return 1;
   }
 
@@ -73,7 +76,7 @@ public class ItemCask extends BlockItem {
     IFluidHandler storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
-      if (fs != null && !fs.isEmpty()) {// + 
+      if (fs != null && !fs.isEmpty()) {
         TranslationTextComponent t = new TranslationTextComponent(
             fs.getDisplayName().getString()
                 + " " + fs.getAmount()

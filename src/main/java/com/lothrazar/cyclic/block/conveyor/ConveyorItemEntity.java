@@ -89,7 +89,9 @@ public class ConveyorItemEntity extends ItemEntity {
   public void readAdditional(CompoundNBT compound) {
     this.setNoDespawn();
     this.setInfinitePickupDelay();
-    if (compound.contains("Lifespan")) lifespan = compound.getInt("Lifespan");
+    if (compound.contains("Lifespan")) {
+      lifespan = compound.getInt("Lifespan");
+    }
     if (compound.hasUniqueId("Owner")) {
       this.setOwnerId(compound.getUniqueId("Owner"));
     }

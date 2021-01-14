@@ -98,8 +98,9 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
-      if (this.poweredSides.get(exportToSide))
-        moveEnergy(exportToSide, MAX / 4);
+      if (this.poweredSides.get(exportToSide)) {
+        moveEnergy(exportToSide, MAX / 4); // TODO : slider GUI
+      }
     }
   }
 

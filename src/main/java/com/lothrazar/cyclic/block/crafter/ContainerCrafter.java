@@ -53,6 +53,7 @@ public class ContainerCrafter extends ContainerBase {
   public ContainerCrafter(int windowId, World clientWorld, BlockPos pos, PlayerInventory inv, PlayerEntity clientPlayer) {
     super(ContainerScreenRegistry.crafter, windowId);
     tile = (TileCrafter) clientWorld.getTileEntity(pos);
+    trackEnergy(tile);
     this.playerEntity = clientPlayer;
     this.playerInventory = inv;
     //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
@@ -67,7 +68,6 @@ public class ContainerCrafter extends ContainerBase {
         indexx++;
       }
     }
-    //    });
     //add grid
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
       int index = 0;
@@ -80,8 +80,7 @@ public class ContainerCrafter extends ContainerBase {
         }
       }
     });
-    //add output
-    //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.OUTPUT).ifPresent(h -> {
+    //add output 
     indexx = 0;
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
       for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
@@ -91,9 +90,7 @@ public class ContainerCrafter extends ContainerBase {
         indexx++;
       }
     }
-    //    });
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
-      //      intindex = 0;
       addSlot(new CrafterGridSlot(h, 0,
           PREVIEW_START_X,
           PREVIEW_START_Y));
@@ -101,13 +98,13 @@ public class ContainerCrafter extends ContainerBase {
     this.endInv = inventorySlots.size();
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileCrafter.Fields.values().length);
-    trackEnergy(tile);
   }
 
   @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    if (slotId == TileCrafter.PREVIEW_SLOT)
+    if (slotId == TileCrafter.PREVIEW_SLOT) {
       return ItemStack.EMPTY;
+    }
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
       ItemStack ghostStack = player.inventory.getItemStack().copy();
       ghostStack.setCount(1);

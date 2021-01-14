@@ -32,7 +32,8 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     REDSTONE, RENDER, SIZE;
   }
 
-  private static final int MAX_SIZE = 11;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private static final int MAX_SIZE = 11;
+  //radius 7 translates to 15x15 area (center block + 7 each side)
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int radius = 8;
@@ -53,7 +54,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     }
     AxisAlignedBB aabb = getRange();
     List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
-      return entity.isAlive();//  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
+      return entity.isAlive(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
     });
     if (list.size() > 0) {
       ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
@@ -66,7 +67,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       }
       stackEntity.setItem(remainder);
       if (remainder.isEmpty()) {
-        stackEntity.remove();//kill it
+        stackEntity.remove();
       }
     }
   }

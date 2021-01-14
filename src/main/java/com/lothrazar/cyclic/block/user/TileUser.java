@@ -70,8 +70,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     //timer is zero so trigger
     timer = timerDelay;
     if (fakePlayer == null) {
-      if (uuid == null)
+      if (uuid == null) {
         uuid = UUID.randomUUID();
+      }
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "user", uuid);
     }
     final int repair = POWERCONF.get();
@@ -166,8 +167,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     timerDelay = tag.getInt("delay");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    if (tag.contains("uuid"))
+    if (tag.contains("uuid")) {
       uuid = tag.getUniqueId("uuid");
+    }
     super.read(bs, tag);
   }
 
@@ -176,8 +178,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     tag.putInt("delay", timerDelay);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    if (uuid != null)
+    if (uuid != null) {
       tag.putUniqueId("uuid", uuid);
+    }
     return super.write(tag);
   }
 

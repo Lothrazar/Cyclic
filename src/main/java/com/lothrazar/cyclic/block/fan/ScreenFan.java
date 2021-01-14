@@ -11,8 +11,6 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenFan extends ScreenBase<ContainerFan> {
 
   private ButtonMachineRedstone btnRedstone;
-  //  private TextboxInteger txtSize;
-  //  private TextboxInteger txtRange;
 
   public ScreenFan(ContainerFan screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -26,29 +24,28 @@ public class ScreenFan extends ScreenBase<ContainerFan> {
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileFan.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     //
-    //
     int w = 160;
     int h = 20;
     int f = TileFan.Fields.SPEED.ordinal();
     x = guiLeft + 8;
     y = guiTop + 30;
-    GuiSliderInteger SPEED = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger speedsl = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, TileFan.MAX_SPEED, container.tile.getField(f)));
-    SPEED.setTooltip("cyclic.fan.speed");
+    speedsl.setTooltip("cyclic.fan.speed");
     //    
     f = TileFan.Fields.RANGE.ordinal();
     x = guiLeft + 8;
     y = guiTop + 54;
-    GuiSliderInteger RANGE = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger rangesl = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, TileFan.MAX_RANGE, container.tile.getField(f)));
-    RANGE.setTooltip("cyclic.fan.range");
+    rangesl.setTooltip("cyclic.fan.range");
   }
 
   @Override
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
   }
 
   @Override

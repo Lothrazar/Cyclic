@@ -147,10 +147,11 @@ public class BlockEnderShelf extends BlockBase {
         }
       }
       else if (EnderShelfHelper.isController(state) && hand == Hand.MAIN_HAND) {
-        if (heldItem.getItem() == Items.ENCHANTED_BOOK)
+        if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
           shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
             player.setHeldItem(Hand.MAIN_HAND, h.insertItem(0, heldItem, false));
           });
+        }
         return ActionResultType.CONSUME;
       }
     }
@@ -166,8 +167,9 @@ public class BlockEnderShelf extends BlockBase {
   }
 
   public TileEnderShelf getTileEntity(World world, BlockPos pos) {
-    if (pos == null)
+    if (pos == null) {
       return null;
+    }
     BlockState state = world.getBlockState(pos);
     return EnderShelfHelper.isShelf(state) || EnderShelfHelper.isController(state) ? (TileEnderShelf) world.getTileEntity(pos) : null;
   }

@@ -33,7 +33,7 @@ public class ScreenAnvilMagma extends ScreenBase<ContainerAnvilMagma> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip 
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
   }
 

@@ -26,6 +26,7 @@ public class ContainerFisher extends ContainerBase {
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackIntField(tile, TileFisher.Fields.REDSTONE.ordinal());
+    this.trackEnergy(tile);
   }
 
   @Override

@@ -48,15 +48,17 @@ public class UnbreakableBlock extends BlockBase {
   private void setBreakable(BlockState state, World world, BlockPos pos, boolean isBreakable) {
     boolean oldBreakable = state.get(BREAKABLE);
     world.setBlockState(pos, state.with(BREAKABLE, isBreakable));
-    if (world.isRemote && oldBreakable != isBreakable)
+    if (world.isRemote && oldBreakable != isBreakable) {
       UtilParticle.spawnParticle(world, RedstoneParticleData.REDSTONE_DUST, pos, 5);
+    }
   }
 
   @Override
   public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     BlockState neighborState = worldIn.getBlockState(fromPos);
-    if (!isMoving && neighborState.hasProperty(BREAKABLE) && state.hasProperty(BREAKABLE))
+    if (!isMoving && neighborState.hasProperty(BREAKABLE) && state.hasProperty(BREAKABLE)) {
       setBreakable(state, worldIn, pos, neighborState.get(BREAKABLE));
+    }
   }
 
   @Override

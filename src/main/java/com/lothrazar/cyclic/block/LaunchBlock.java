@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class LaunchBlock extends BlockBase {
 
-  private final static float ANGLE = 90;
+  private static final float ANGLE = 90;
   protected static final VoxelShape PRESSED_AABB = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
   boolean sneakPlayerAvoid = true;
   boolean doRedstone;

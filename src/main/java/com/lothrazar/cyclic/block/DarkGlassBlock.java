@@ -16,14 +16,13 @@ import net.minecraftforge.common.ToolType;
 public class DarkGlassBlock extends BlockBase {
 
   public DarkGlassBlock(Properties properties) {
-    super(properties.hardnessAndResistance(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS)
-        .notSolid());
+    super(properties.hardnessAndResistance(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS).notSolid());
   }
 
   @Override
   @Deprecated
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return 255;//zero is transparent fully
+    return 255; //zero is transparent fully
   }
 
   @Override

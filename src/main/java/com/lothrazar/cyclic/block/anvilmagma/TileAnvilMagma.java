@@ -33,6 +33,10 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileAnvilMagma extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    TIMER, REDSTONE;
+  }
+
   private static final int OUT = 1;
   private static final int IN = 0;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
@@ -40,26 +44,22 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-      if (slot == IN)
-        return stack.isRepairable() &&
-            stack.getDamage() > 0;
-      if (slot == OUT)
-        return stack.isRepairable() &&
-            stack.getDamage() == 0;
+      if (slot == IN) {
+        return stack.isRepairable() && stack.getDamage() > 0;
+      }
+      if (slot == OUT) {
+        return stack.isRepairable() && stack.getDamage() == 0;
+      }
       return true;
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank;
 
-  static enum Fields {
-    TIMER, REDSTONE;
-  }
-
   public TileAnvilMagma() {
     super(TileRegistry.anvil_magma);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-    this.needsRedstone = 0;//default on
+    this.needsRedstone = 0;
   }
 
   @Override
@@ -73,7 +73,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     if (stack.isEmpty() || stack.getItem().isIn(DataTags.IMMUNE)) {
       return;
     }
-    final int repair = 100;//not power, fluid.
+    final int repair = 100; // fluid
     boolean work = false;
     if (tank != null &&
         tank.getFluidAmount() >= repair &&
@@ -99,10 +99,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   public Predicate<FluidStack> isFluidValid() {
     return p -> {
       Fluid fluid = p.getFluid();
-      return fluid == FluidMagmaHolder.STILL.get()
-      //          || fluid == Fluids.LAVA
-      //          || fluid == Fluids.FLOWING_LAVA
-      ;
+      return fluid == FluidMagmaHolder.STILL.get();
     };
   }
 
@@ -151,8 +148,6 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
         return this.needsRedstone;
       case TIMER:
         return this.timer;
-      default:
-      break;
     }
     return 0;
   }

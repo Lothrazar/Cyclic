@@ -24,14 +24,16 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
     ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
     remaining = insertItemElsewhere(remaining, false, simulate); //first try to put it in a matching slot
-    if (!remaining.isEmpty())
+    if (!remaining.isEmpty()) {
       remaining = insertItemElsewhere(remaining, true, simulate); //then try to put it in the first open slot
+    }
     return remaining;
   }
 
   private ItemStack insertItemElsewhere(ItemStack stack, boolean insertWhenEmpty, boolean simulate) {
-    if (controller.getWorld() == null)
+    if (controller.getWorld() == null) {
       return stack;
+    }
     for (BlockPos shelfPos : controller.getShelves()) {
       TileEntity te = controller.getWorld().getTileEntity(shelfPos);
       if (te != null && EnderShelfHelper.isShelf(te.getBlockState())) {
@@ -43,22 +45,26 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   }
 
   private ItemStack insertItemElsewhere(TileEnderShelf shelf, ItemStack stack, boolean insertWhenEmpty, boolean simulate) {
-    if (EnderShelfHelper.isController(shelf.getBlockState()))
+    if (EnderShelfHelper.isController(shelf.getBlockState())) {
       return stack;
+    }
     EnderShelfItemHandler h = EnderShelfHelper.getShelfHandler(shelf);
-    if (h == null)
+    if (h == null) {
       return stack;
+    }
     List<Integer> emptySlots = new ArrayList<>();
     for (int i = 0; i < h.getSlots(); i++) {
       ItemStack slotStack = h.getStackInSlot(i);
-      if (slotStack.isEmpty())
+      if (slotStack.isEmpty()) {
         emptySlots.add(i);
+      }
       else if (UtilEnchant.doBookEnchantmentsMatch(stack, slotStack) && slotStack.getCount() != h.getStackLimit(i, stack)) {
         return h.insertItem(i, stack, simulate);
       }
     }
-    if (emptySlots.size() > 0 && insertWhenEmpty)
+    if (emptySlots.size() > 0 && insertWhenEmpty) {
       return h.insertItem(emptySlots.get(0), stack, simulate);
+    }
     return stack;
   }
 
@@ -69,8 +75,9 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   }
 
   private ItemStack extractItemElsewhere(int amount, boolean simulate) {
-    if (this.controller.getShelves().size() == 0)
+    if (this.controller.getShelves().size() == 0) {
       return ItemStack.EMPTY;
+    }
     if (this.controller.getWorld() != null) {
       int slot = -1;
       EnderShelfItemHandler handler = null;
@@ -79,12 +86,14 @@ public class EnderControllerItemHandler extends ItemStackHandler {
         handler = EnderShelfHelper.getShelfHandler(te);
         if (handler != null) {
           slot = handler.firstSlotWithItem();
-          if (slot != -1)
+          if (slot != -1) {
             break;
+          }
         }
       }
-      if (slot != -1)
+      if (slot != -1) {
         return handler.extractItem(slot, amount, simulate);
+      }
     }
     return ItemStack.EMPTY;
   }

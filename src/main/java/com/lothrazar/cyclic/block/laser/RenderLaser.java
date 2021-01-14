@@ -46,13 +46,13 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
   private static Vector3f adjustBeamToEyes(Vector3f from, Vector3f to, BlockPos tile) {
     //This method takes the player's position into account, and adjusts the beam so that its rendered properly whereever you stand
     PlayerEntity player = Minecraft.getInstance().player;
-    Vector3f P = new Vector3f((float) player.getPosX() - tile.getX(), (float) player.getPosYEye() - tile.getY(), (float) player.getPosZ() - tile.getZ());
-    Vector3f PS = from.copy();
-    PS.sub(P);
-    Vector3f SE = to.copy();
-    SE.sub(from);
-    Vector3f adjustedVec = PS.copy();
-    adjustedVec.cross(SE);
+    Vector3f vectP = new Vector3f((float) player.getPosX() - tile.getX(), (float) player.getPosYEye() - tile.getY(), (float) player.getPosZ() - tile.getZ());
+    Vector3f vectS = from.copy();
+    vectS.sub(vectP);
+    Vector3f vectE = to.copy();
+    vectE.sub(from);
+    Vector3f adjustedVec = vectS.copy();
+    adjustedVec.cross(vectE);
     adjustedVec.normalize();
     return adjustedVec;
   }

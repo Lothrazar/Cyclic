@@ -54,7 +54,8 @@ public class BlockScaffoldingReplace extends BlockScaffolding {
       world.destroyBlock(pos, true);
       ItemUseContext context = new ItemUseContext(player, hand, hit);
       heldItem.onItemUse(context);
-      return ActionResultType.SUCCESS;//to cancel event chains
+      return ActionResultType.SUCCESS;
+      //to cancel event chains
     }
     return ActionResultType.PASS;
   }

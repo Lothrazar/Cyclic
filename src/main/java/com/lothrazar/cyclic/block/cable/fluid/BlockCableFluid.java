@@ -43,8 +43,9 @@ public class BlockCableFluid extends CableBase {
       if (handlerHere != null && handlerHere.getFluidInTank(0) != null) {
         FluidStack fluid = handlerHere.getFluidInTank(0);
         int st = fluid.getAmount();
-        if (st > 0)
+        if (st > 0) {
           player.sendStatusMessage(new TranslationTextComponent(st + " " + fluid.getDisplayName()), true);
+        }
       }
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);

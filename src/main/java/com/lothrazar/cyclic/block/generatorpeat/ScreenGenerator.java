@@ -1,10 +1,12 @@
 package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
+import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -18,16 +20,19 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
   private ButtonMachine btnToggle;
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
+  private TimerBar timer;
 
   public ScreenGenerator(ContainerGenerator screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TilePeatGenerator.MENERGY);
+    timer = new TimerBar(this, 88, 37, TileMelter.TIMER_FULL);
   }
 
   @Override
   public void init() {
     super.init();
-    energy.guiLeft = guiLeft;
+    timer.guiLeft = energy.guiLeft = guiLeft;
+    timer.guiTop = energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     int x = guiLeft + 132, y = guiTop + 8;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
@@ -61,5 +66,6 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, xSize / 2 - 9, 28);
     energy.draw(ms, container.tile.getEnergy());
+    timer.draw(ms, container.tile.getField(TilePeatGenerator.Fields.BURNTIME.ordinal()));
   }
 }

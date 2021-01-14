@@ -21,12 +21,14 @@ public class ItemScaffolding extends BlockItem {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-    if (player.isCrouching()) {// || worldIn.getBlockState(context.getPos()).isAir() == false) {
+    if (player.isCrouching()) {
+      // || worldIn.getBlockState(context.getPos()).isAir() == false) {
       return super.onItemRightClick(worldIn, player, hand);
     }
     //NOT crouchign so this is the MID AIR PLACEMENT section
     //skip if sneaking
-    BlockPos pos = player.getPosition().up();// at eye level
+    BlockPos pos = player.getPosition().up();
+    // at eye level
     int direction = MathHelper.floor((player.rotationYaw * 4F) / 360F + 0.5D) & 3;
     //imported from my scaffolding spell https://github.com/PrinceOfAmber/CyclicMagic/blob/37ebb722378cbf940aa9cfb4fa99ce0e80127533/src/main/java/com/lothrazar/cyclicmagic/spell/SpellScaffolding.java
     // -45 is up

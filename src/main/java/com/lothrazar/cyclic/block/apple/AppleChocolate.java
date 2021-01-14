@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.PotionEvent;
 
 public class AppleChocolate extends ItemBase {
 
@@ -26,7 +28,9 @@ public class AppleChocolate extends ItemBase {
     Iterator<EffectInstance> itr = entityLiving.getActivePotionMap().values().iterator();
     while (itr.hasNext()) {
       EffectInstance effect = itr.next();
-      if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.living.PotionEvent.PotionRemoveEvent(entityLiving, effect))) continue;
+      if (MinecraftForge.EVENT_BUS.post(new PotionEvent.PotionRemoveEvent(entityLiving, effect))) {
+        continue;
+      }
       if (effect.getPotion().isBeneficial() == false) {
         //dont remove beneficial potions though such as speed, fire prot, night vision 
         effect.getPotion().removeAttributesModifiersFromEntity(entityLiving, entityLiving.getAttributeManager(), effect.getAmplifier());

@@ -42,8 +42,7 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
 
   protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
     Block block = state.getBlock();
-    return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT ||
-        block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
+    return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
   }
 
   @SuppressWarnings("deprecation")
@@ -55,8 +54,9 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
   @Override
   public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
     BlockPos blockpos = pos.down();
-    if (state.getBlock() == this) //Forge: This function is called during world gen and placement, before this block is set, so if we are not 'here' then assume it's the pre-check.
+    if (state.getBlock() == this) { //Forge: This function is called during world gen and placement, before this block is set, so if we are not 'here' then assume it's the pre-check.
       return worldIn.getBlockState(blockpos).canSustainPlant(worldIn, blockpos, Direction.UP, this);
+    }
     return this.isValidGround(worldIn.getBlockState(blockpos), worldIn, blockpos);
   }
 
@@ -68,14 +68,15 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
   @SuppressWarnings("deprecation")
   @Override
   public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
-    //&& !this.blocksMovement
     return type == PathType.AIR ? true : super.allowsMovement(state, worldIn, pos, type);
   }
 
   @Override
   public BlockState getPlant(IBlockReader world, BlockPos pos) {
     BlockState state = world.getBlockState(pos);
-    if (state.getBlock() != this) return getDefaultState();
+    if (state.getBlock() != this) {
+      return getDefaultState();
+    }
     return state;
   }
 }

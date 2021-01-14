@@ -93,7 +93,8 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     for (int s = 0; s < inventory.getSlots(); s++) {
       ItemStack stack = inventory.getStackInSlot(s);
       BlockPosDim targetPos = LocationGpsCard.getPosition(stack);
-      if (targetPos == null) {//|| targetPos.getDimension() != world.dimension.getType().getId()) {
+      if (targetPos == null) {
+        // || targetPos.getDimension() != world.dimension.getType().getId()) {
         return;
       }
       toggleTarget(targetPos.getPos());

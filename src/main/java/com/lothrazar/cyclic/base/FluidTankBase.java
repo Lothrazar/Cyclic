@@ -19,14 +19,13 @@ public class FluidTankBase extends FluidTank {
 
   @Override
   protected void onContentsChanged() {
-    //    tile.markDirty();//doesnt work
     //send to client
     IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }
     FluidStack f = handler.getFluidInTank(0);
-    if (tile.getWorld().isRemote == false) {//if serverside then 
+    if (tile.getWorld().isRemote == false) { //if serverside then 
       PacketRegistry.sendToAllClients(tile.getWorld(), new PacketFluidSync(tile.getPos(), f));
     }
   }

@@ -29,29 +29,27 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    TIMER, REDSTONE;
+  }
+
+  private static final int OUT = 1;
+  private static final int IN = 0;
+  static final int MAX = 64000;
   public static IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2) {
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-      if (slot == IN)
-        return stack.isRepairable() &&
-            stack.getDamage() > 0;
+      if (slot == IN) {
+        return stack.isRepairable() && stack.getDamage() > 0;
+      }
       return true;
     }
   };
-  //
-  //
-  private static final int OUT = 1;
-  private static final int IN = 0;
-  static final int MAX = 64000;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-
-  static enum Fields {
-    TIMER, REDSTONE;
-  }
 
   public TileAnvilAuto() {
     super(TileRegistry.anvil);
@@ -70,8 +68,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY
-        && POWERCONF.get() > 0) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -152,5 +149,9 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
         this.timer = value;
       break;
     }
+  }
+
+  public int getEnergyMax() {
+    return TileAnvilAuto.MAX;
   }
 }

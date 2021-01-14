@@ -32,6 +32,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileExpPylon extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  static enum Fields {
+    REDSTONE;
+  }
+
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
   public static final int FLUID_PER_EXP = 20;
   public static final int DRAIN_PLAYER_EXP = 20;
@@ -40,14 +44,10 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
 
-  static enum Fields {
-    REDSTONE;
-  }
-
   public TileExpPylon() {
     super(TileRegistry.experience_pylontile);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-    this.needsRedstone = 0;//default ON
+    this.needsRedstone = 0;
   }
 
   @Override
@@ -119,7 +119,9 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
         else if (p.experienceLevel > 5) {
           addMeXp = 10;
         }
-        else addMeXp = 1;//smallest 
+        else {
+          addMeXp = 1;
+        }
         //
         int addMeFluid = addMeXp * FLUID_PER_EXP;
         //at level 100+ this is way too slow
@@ -139,7 +141,8 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     List<ExperienceOrbEntity> list = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(
         pos.getX() - RADIUS, pos.getY() - 1, pos.getZ() - RADIUS,
         pos.getX() + RADIUS, pos.getY() + 2, pos.getZ() + RADIUS), (entity) -> {
-          return entity.isAlive() && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
+          return entity.isAlive() && entity.getXpValue() > 0;
+          //entity != null && entity.getHorizontalFacing() == facing;
         });
     if (list.size() > 0) {
       ExperienceOrbEntity myOrb = list.get(world.rand.nextInt(list.size()));
@@ -149,8 +152,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
         // myOrb.setPosition(this.pos.getX(), this.pos.getY(), this.pos.getZ());
         myOrb.remove();
         int addMeFluid = addMeXp * FLUID_PER_EXP;
-        tank.fill(new FluidStack(
-            FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
+        tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
       }
     }
   }

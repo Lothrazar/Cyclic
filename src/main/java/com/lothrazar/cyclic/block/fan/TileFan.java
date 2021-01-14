@@ -23,16 +23,16 @@ import net.minecraft.util.text.StringTextComponent;
 
 public class TileFan extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  private int range = 7;
-  private int speed = 5;
+  static enum Fields {
+    REDSTONE, RANGE, SPEED;
+  }
+
   public static final int MIN_RANGE = 1;
   public static final int MAX_RANGE = 64;
   public static final int MIN_SPEED = 1;
   public static final int MAX_SPEED = 20;
-
-  static enum Fields {
-    REDSTONE, RANGE, SPEED;
-  }
+  private int range = 7;
+  private int speed = 5;
 
   public TileFan() {
     super(TileRegistry.fantile);
@@ -70,7 +70,8 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   private int getCurrentRange() {
     Direction facing = getCurrentFacing();
     BlockPos tester;
-    for (int i = MIN_RANGE; i <= this.getRange(); i++) {//if we start at fan, we hit MYSELF (the fan)
+    for (int i = MIN_RANGE; i <= this.getRange(); i++) {
+      //if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
       if (canBlowThrough(tester) == false) {
         return i; //cant pass thru
@@ -94,20 +95,19 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
       return 0;
     }
     BlockPos start = shape.get(0);
-    BlockPos end = shape.get(shape.size() - 1);//without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
+    BlockPos end = shape.get(shape.size() - 1); //without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
     switch (getCurrentFacing().getAxis()) {
       case X:
-        end = end.add(0, 0, 1);//X means EASTorwest. adding +1z means GO 1 south
-        end = end.add(0, 1, 0);//and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
+        end = end.add(0, 0, 1); //X means EASTorwest. adding +1z means GO 1 south
+        end = end.add(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
       case Z:
         end = end.add(1, 0, 0);
-        end = end.add(0, 1, 0);//and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
+        end = end.add(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
       case Y:
         start = start.add(1, 0, 0);
         end = end.add(0, 0, 1);
-      default:
       break;
     }
     //ok now we have basically teh 3d box we wanted
@@ -135,14 +135,14 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
       break;
     }
     AxisAlignedBB region = new AxisAlignedBB(start, end);
-    List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
+    List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);
     int moved = 0;
-    boolean doPush = true;// (pushIfZero == 0);
+    boolean doPush = true; // TODO this toggle
     int direction = 1;
-    float SPEED = this.getSpeedCalc();
+    float speed = this.getSpeedCalc();
     for (Entity entity : entitiesFound) {
       if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
-        continue;//sneak avoid feature
+        continue; //sneak avoid feature
       }
       moved++;
       double newx = entity.getMotion().getX();
@@ -151,28 +151,27 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
       switch (face) {
         case NORTH:
           direction = !doPush ? 1 : -1;
-          newz += direction * SPEED;
+          newz += direction * speed;
         break;
         case SOUTH:
           direction = doPush ? 1 : -1;
-          newz += direction * SPEED;
+          newz += direction * speed;
         break;
         case EAST:
           direction = doPush ? 1 : -1;
-          newx += direction * SPEED;
+          newx += direction * speed;
         break;
         case WEST:
           direction = !doPush ? 1 : -1;
-          newx += direction * SPEED;
+          newx += direction * speed;
         break;
         case DOWN:
           direction = !doPush ? 1 : -1;
-          newy += direction * SPEED;
+          newy += direction * speed;
         break;
         case UP:
           direction = doPush ? 1 : -1;
-          newy += direction * SPEED;
-        default:
+          newy += direction * speed;
         break;
       }
       entity.setMotion(newx, newy, newz);

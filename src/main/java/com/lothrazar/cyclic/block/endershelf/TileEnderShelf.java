@@ -66,8 +66,9 @@ public class TileEnderShelf extends TileEntityBase {
       //enable next two lines for dev feature, extract random enchanted books from bottom of Controller
       //if (isController && side == Direction.DOWN)
       //  return fakeInventory.cast();
-      if (isController)
+      if (isController) {
         return controllerInventory.cast();
+      }
       return inventory.cast();
     }
     return super.getCapability(cap, side);

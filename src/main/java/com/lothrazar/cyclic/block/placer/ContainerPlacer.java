@@ -26,6 +26,7 @@ public class ContainerPlacer extends ContainerBase {
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePlacer.Fields.values().length);
+    trackEnergy(tile);
   }
 
   @Override

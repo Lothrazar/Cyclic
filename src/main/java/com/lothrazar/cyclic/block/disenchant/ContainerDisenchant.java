@@ -21,7 +21,7 @@ public class ContainerDisenchant extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     ItemStackHandler h = tile.inputSlots;
-    this.endInv = h.getSlots() + 1;//for shiftclick out of the out slot
+    this.endInv = h.getSlots() + 1;
     addSlot(new SlotItemHandler(h, 0, 24, 40));
     addSlot(new SlotItemHandler(h, 1, 48, 40));
     addSlot(new SlotItemHandler(tile.outputSlot, 0, 124, 28));

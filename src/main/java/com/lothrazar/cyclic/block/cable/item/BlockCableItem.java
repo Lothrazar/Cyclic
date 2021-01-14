@@ -43,8 +43,9 @@ public class BlockCableItem extends CableBase {
         //show current
         if (handlerHere != null) {
           ItemStack current = handlerHere.getStackInSlot(0);
-          if (!current.isEmpty())
+          if (!current.isEmpty()) {
             player.sendMessage(new TranslationTextComponent(d.toString() + " " + current.getDisplayName().getString()), player.getUniqueID());
+          }
         }
       }
     }

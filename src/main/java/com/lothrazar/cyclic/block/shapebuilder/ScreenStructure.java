@@ -45,14 +45,14 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     int f = TileStructure.Fields.HEIGHT.ordinal();
     x = guiLeft + 8;
     y = guiTop + 82;
-    GuiSliderInteger DURATION = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        1, TileStructure.maxHeight, container.tile.getField(f)));
-    DURATION.setTooltip("buildertype.height.tooltip");
+    GuiSliderInteger durationslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        1, TileStructure.MAXHEIGHT, container.tile.getField(f)));
+    durationslider.setTooltip("buildertype.height.tooltip");
     y += 21;
     f = TileStructure.Fields.SIZE.ordinal();
-    GuiSliderInteger SIZE = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger sizeslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 64, container.tile.getField(f)));
-    SIZE.setTooltip("buildertype.size.tooltip");
+    sizeslider.setTooltip("buildertype.size.tooltip");
     //
     //
     //    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
@@ -73,7 +73,8 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     shapeBtuns = new ArrayList<>();
     for (BuildStructureType shape : BuildStructureType.values()) {
       numInRow++;
-      if (numInRow == 7) {//only 6 per row fit on screen
+      if (numInRow == 7) {
+        //only 6 per row fit on screen
         //so just reset x back to left side and bump up the y
         x = this.guiLeft + 8;
         y += bsize;

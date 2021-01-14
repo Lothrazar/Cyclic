@@ -39,7 +39,7 @@ public class BlockFluidTank extends BlockBase {
 
   public static final BooleanProperty TANK_ABOVE = BooleanProperty.create("above");
   public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");
-  public static final int heightCheckMax = 16;
+  public static final int MAXHEIGHT = 16;
 
   public BlockFluidTank(Properties properties) {
     super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F).notSolid());
@@ -141,7 +141,8 @@ public class BlockFluidTank extends BlockBase {
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
-    if (world.isRemote == false)
+    if (world.isRemote == false) {
       world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
+    }
   }
 }

@@ -31,7 +31,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileLaser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static enum Fields {
+  static enum Fields {
     REDSTONE, THICK, RED, GREEN, BLUE, ALPHA, XOFF, YOFF, ZOFF;
   }
 
@@ -41,8 +41,8 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   private int red = 255;
   private int green = 0;
   private int blue = 0;
-  private int alpha = 70;//1-100 will become 0-1
-  private int thick = 8;//1-20 
+  private int alpha = 70;
+  private int thick = 8;
   ItemStackHandler inventory = new ItemStackHandler(4) {
 
     @Override
@@ -142,18 +142,21 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
         alpha = value;
       break;
       case XOFF:
-        if (value >= OffsetEnum.values().length)
+        if (value >= OffsetEnum.values().length) {
           value = 0;
+        }
         this.xOffset = OffsetEnum.values()[value];
       break;
       case YOFF:
-        if (value >= OffsetEnum.values().length)
+        if (value >= OffsetEnum.values().length) {
           value = 0;
+        }
         this.yOffset = OffsetEnum.values()[value];
       break;
       case ZOFF:
-        if (value >= OffsetEnum.values().length)
+        if (value >= OffsetEnum.values().length) {
           value = 0;
+        }
         this.zOffset = OffsetEnum.values()[value];
       break;
     }

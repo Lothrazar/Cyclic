@@ -5,9 +5,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
@@ -26,7 +24,8 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 @SuppressWarnings("rawtypes")
 public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
-  public static List<RecipeMelter> RECIPES = new ArrayList<>();
+  private static final Set<String> HASHES = new HashSet<>();
+  public static final Set<RecipeMelter<?>> RECIPES = new HashSet<>();
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
 
@@ -49,7 +48,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   public boolean matches(TileMelter tile, int slot) {
-    ItemStack current = tile.getStackInputSlot(slot);//get slot thing
+    ItemStack current = tile.getStackInputSlot(slot); //get slot thing
     Ingredient ing = ingredients.get(slot);
     for (ItemStack test : ing.getMatchingStacks()) {
       if (UtilItemStack.matches(current, test)) {
@@ -92,11 +91,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
   public static final SerializeMelter SERIALMELTER = new SerializeMelter();
 
-  /**
-   * SHOUTOUT https://github.com/Minecraft-Forge-Tutorials/Custom-Json-Recipes
-   */
-  //  @SuppressWarnings("unchecked")
-  //  @SuppressWarnings("rawtypes")
   public static class SerializeMelter extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
 
     SerializeMelter() {
@@ -147,16 +141,14 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     }
   }
 
-  private static Set<String> hashes = new HashSet<>();
-
   private static void addRecipe(RecipeMelter r) {
     ResourceLocation id = r.getId();
-    if (hashes.contains(id.toString())) {
+    if (HASHES.contains(id.toString())) {
       ModCyclic.LOGGER.info("Warning: Duplicate melter recipe id " + id.toString());
     }
     else {
       RECIPES.add(r);
-      hashes.add(id.toString());
+      HASHES.add(id.toString());
       ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
     }
   }

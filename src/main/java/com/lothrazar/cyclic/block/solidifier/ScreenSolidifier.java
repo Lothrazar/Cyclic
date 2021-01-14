@@ -43,11 +43,6 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
-    int timer = container.tile.getField(TileSolidifier.Fields.TIMER.ordinal());
-    if (timer > 0)
-      this.font.drawString(ms, "[" + timer + "]",
-          (this.getXSize()) / 2 - 16,
-          40.0F, 4209792);
   }
 
   @Override

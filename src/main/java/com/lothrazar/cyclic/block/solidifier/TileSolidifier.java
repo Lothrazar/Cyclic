@@ -35,7 +35,7 @@ import net.minecraftforge.items.ItemStackHandler;
 @SuppressWarnings("rawtypes")
 public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 5;
+  public static final int TIMER_FULL = Const.TICKS_PER_SEC * 5;
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
@@ -74,7 +74,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
-      return;//broke
+      return;
     }
     if (timer == 0 && this.tryProcessRecipe()) {
       this.timer = TIMER_FULL;
@@ -170,7 +170,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, world)) {
-      return;// its valid
+      return;
     }
     currentRecipe = null;
     for (RecipeSolidifier rec : RecipeSolidifier.RECIPES) {
@@ -186,7 +186,8 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     if (test.getAmount() == this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
       if (!outputSlot.insertItem(0, currentRecipe.getRecipeOutput(), true).isEmpty()) {
-        return false;//there was non-empty left after this, so no room for all
+        return false;
+        //there was non-empty left after this, so no room for all
       }
       //ok it has room for all the fluid none will be wasted 
       inputSlots.getStackInSlot(0).shrink(1);

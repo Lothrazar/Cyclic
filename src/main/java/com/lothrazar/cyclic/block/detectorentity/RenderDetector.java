@@ -19,7 +19,8 @@ public class RenderDetector extends TileEntityRenderer<TileDetector> {
   @Override
   public void render(TileDetector te, float v, MatrixStack matrixStack,
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
-    if (te.getField(TileDetector.Fields.RENDER.ordinal()) == 1)
-      UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.6F, Color.GREEN);
+    if (te.getField(TileDetector.Fields.RENDER.ordinal()) == 1) {
+      UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.6F, Color.GREEN); // TODO: color pickers
+    }
   }
 }

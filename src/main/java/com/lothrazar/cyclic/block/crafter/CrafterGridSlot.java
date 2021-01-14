@@ -20,7 +20,7 @@ public class CrafterGridSlot extends SlotItemHandler {
   @Override
   public void putStack(ItemStack stack) {
     super.putStack(stack.copy());
-    stack.grow(1);//hack for JEI when they auto-fill recipes, re fill it after it drains so its a 'mock slot'
+    stack.grow(1); //hack for JEI when they auto-fill recipes, re fill it after it drains so its a 'mock slot'
   }
 
   public CrafterGridSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {

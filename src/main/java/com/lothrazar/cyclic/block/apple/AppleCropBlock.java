@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeHooks;
 
 public class AppleCropBlock extends BlockBase implements IGrowable {
 
@@ -37,7 +38,7 @@ public class AppleCropBlock extends BlockBase implements IGrowable {
       Block.makeCuboidShape(4.0D, 8.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 4
       Block.makeCuboidShape(4.0D, 6.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 5
       Block.makeCuboidShape(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 6
-      Block.makeCuboidShape(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D) };//7
+      Block.makeCuboidShape(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D) };
   boolean canBonemeal = true;
 
   public AppleCropBlock(Block.Properties builder, boolean canBonemeal) {
@@ -63,7 +64,7 @@ public class AppleCropBlock extends BlockBase implements IGrowable {
 
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-    return canBonemeal;//false if its a super-apple
+    return canBonemeal; //false if its a super-apple
   }
 
   @Override
@@ -81,7 +82,7 @@ public class AppleCropBlock extends BlockBase implements IGrowable {
     int age = state.get(AGE);
     if (age < MAX_AGE && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.rand.nextInt(5) == 0)) {
       worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(age + 1)), 2);
-      net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+      ForgeHooks.onCropsGrowPost(worldIn, pos, state);
     }
   }
 

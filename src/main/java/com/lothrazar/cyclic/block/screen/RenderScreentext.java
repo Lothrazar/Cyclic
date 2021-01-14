@@ -17,9 +17,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * 
  */
 @OnlyIn(Dist.CLIENT)
-public class RenderScreen extends TileEntityRenderer<TileScreentext> {
+public class RenderScreentext extends TileEntityRenderer<TileScreentext> {
 
-  public RenderScreen(TileEntityRendererDispatcher d) {
+  public RenderScreentext(TileEntityRendererDispatcher d) {
     super(d);
   }
 
@@ -42,7 +42,7 @@ public class RenderScreen extends TileEntityRenderer<TileScreentext> {
     //    int textWidth = fontRenderer.getStringWidth(text);// for Centering feature in future?
     float offsetHoriz = padding * 5;
     float offsetVertical = 0;
-    float blockOffset = -0.01F - offset;//negative val is so its not overlapping texture  
+    float blockOffset = -0.01F - offset; //negative val is so its not overlapping texture  
     matrix.push();
     UtilRenderText.alignRendering(matrix, side);
     matrix.translate(0, 1, 1 - blockOffset);

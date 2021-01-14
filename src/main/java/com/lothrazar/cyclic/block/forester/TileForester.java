@@ -46,14 +46,16 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileForester extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    REDSTONE, RENDER, SIZE;
+  }
+
+  static final int MAX = 64000;
   static final int MAX_HEIGHT = 32;
+  private static final int MAX_SIZE = 11; //radius 7 translates to 15x15 area (center block + 7 each side)
   public static IntValue POWERCONF;
   private int height = MAX_HEIGHT;
-  private static final int MAX_SIZE = 11;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int radius = MAX_SIZE;
-  static final int MAX = 64000;
-  //
-  //
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
@@ -66,19 +68,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private int shapeIndex = 0;
-  //  public enum PlantingMode {
-  //    //full is every square
-  //    //spread is grid with 2 between so every three 
-  //    //twos is 2x2 trees with 2 between
-  //    FULL, GRID1, GRID2, LARGE;
-  //  }
-
-  //
-  //  private PlantingMode mode;
-  //harvest mode: do we shear or break leaves
-  static enum Fields {
-    REDSTONE, RENDER, SIZE;
-  }
 
   public TileForester() {
     super(TileRegistry.forester);
@@ -99,8 +88,9 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost) {
-      if (cost > 0)
+      if (cost > 0) {
         return;
+      }
     }
     //
     List<BlockPos> shape = this.getShape();

@@ -49,8 +49,9 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
   @Nonnull
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventory.cast();
+    }
     return super.getCapability(cap, side);
   }
 
@@ -82,7 +83,9 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+    //
+  }
 
   @Override
   public int getField(int field) {

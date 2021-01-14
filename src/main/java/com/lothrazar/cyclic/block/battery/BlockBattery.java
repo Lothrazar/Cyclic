@@ -64,9 +64,9 @@ public class BlockBattery extends BlockBase {
       }
     }
     //even if energy fails 
-    if (world.isRemote == false)
+    if (world.isRemote == false) {
       world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), battery));
-    //    player.dropItem(battery, true);
+    }
   }
 
   @Override

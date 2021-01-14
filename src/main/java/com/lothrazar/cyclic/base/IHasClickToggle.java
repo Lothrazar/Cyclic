@@ -5,9 +5,9 @@ import net.minecraft.item.ItemStack;
 
 public interface IHasClickToggle {
 
-  public final static String NBT_STATUS = "onoff";
+  static final String NBT_STATUS = "onoff";
 
-  public void toggle(PlayerEntity player, ItemStack held);
+  void toggle(PlayerEntity player, ItemStack held);
 
-  public boolean isOn(ItemStack held);
+  boolean isOn(ItemStack held);
 }

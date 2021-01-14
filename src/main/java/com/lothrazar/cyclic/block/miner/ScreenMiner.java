@@ -40,23 +40,22 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     x = guiLeft + 32;
     y += h + 1;
     int f = TileMiner.Fields.HEIGHT.ordinal();
-    GuiSliderInteger HEIGHT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, TileMiner.MAX_HEIGHT, container.tile.getField(f)));
-    HEIGHT.setTooltip("buildertype.height.tooltip");
+    heightslider.setTooltip("buildertype.height.tooltip");
     y += h + 1;
     //
-    //
     f = TileMiner.Fields.SIZE.ordinal();
-    GuiSliderInteger SIZE = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger sizeslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, TileMiner.MAX_SIZE, container.tile.getField(f)));
-    SIZE.setTooltip("buildertype.size.tooltip");
+    sizeslider.setTooltip("buildertype.size.tooltip");
   }
 
   @Override
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 

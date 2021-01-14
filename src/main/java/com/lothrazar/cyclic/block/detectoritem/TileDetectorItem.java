@@ -25,6 +25,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class TileDetectorItem extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  static enum Fields {
+    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, RENDER;
+  }
+
   private static final int PER_TICK = 10;
   public static final int MAX_RANGE = 32;
   private int rangeX = 5;
@@ -35,10 +39,6 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   private CompareType compType = CompareType.GREATER;
   private boolean isPoweredNow = false;
 
-  static enum Fields {
-    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, RENDER;
-  }
-
   public TileDetectorItem() {
     super(TileRegistry.detector_item);
   }
@@ -47,7 +47,7 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   public void tick() {
     timer--;
     if (world.isRemote || timer > 0) {
-      return;//client so halt
+      return;
     }
     timer = PER_TICK;
     //and then
@@ -200,8 +200,9 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
     this.rangeZ = tag.getInt("oz");
     this.limitUntilRedstone = tag.getInt("limit");
     int cType = tag.getInt("compare");
-    if (cType >= 0 && cType < CompareType.values().length)
+    if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
+    }
     super.read(bs, tag);
   }
 

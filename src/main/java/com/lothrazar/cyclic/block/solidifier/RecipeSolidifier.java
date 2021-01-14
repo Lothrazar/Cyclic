@@ -5,9 +5,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
@@ -26,7 +24,8 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
-  public static List<RecipeSolidifier<?>> RECIPES = new ArrayList<>();
+  private static final Set<String> HASHES = new HashSet<>();
+  public static final Set<RecipeSolidifier<?>> RECIPES = new HashSet<>();
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack fluidInput;
@@ -46,13 +45,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      if (tile.getFluid() != null && tile.getFluid().getFluid() == this.fluidInput.getFluid()
-      //          && this.fluidInput.getAmount() >= tile.getFluid().getAmount()
-      ) {
+      if (tile.getFluid() != null && tile.getFluid().getFluid() == this.fluidInput.getFluid()) {
         return matches(tile, 0) && matches(tile, 1) && matches(tile, 2);
       }
-      else
+      else {
         return false;
+      }
     }
     catch (ClassCastException e) {
       return false;
@@ -60,7 +58,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   public boolean matches(TileSolidifier tile, int slot) {
-    ItemStack current = tile.getStackInputSlot(slot);//get slot thing
+    ItemStack current = tile.getStackInputSlot(slot);
     Ingredient ing = ingredients.get(slot);
     for (ItemStack test : ing.getMatchingStacks()) {
       if (UtilItemStack.matches(current, test)) {
@@ -162,16 +160,14 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
   }
 
-  private static Set<String> hashes = new HashSet<>();
-
   private static void addRecipe(RecipeSolidifier<?> r) {
     ResourceLocation id = r.getId();
-    if (hashes.contains(id.toString())) {
+    if (HASHES.contains(id.toString())) {
       ModCyclic.LOGGER.info("Warn: Duplicate solidifier recipe id " + id.toString());
     }
     else {
       RECIPES.add(r);
-      hashes.add(id.toString());
+      HASHES.add(id.toString());
       ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
     }
   }

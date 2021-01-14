@@ -39,19 +39,19 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     w = 120;
     h = 20;
     int f = TileDropper.Fields.DROPCOUNT.ordinal();
-    GuiSliderInteger DROPCOUNT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger dropcount = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 64, container.tile.getField(f)));
-    DROPCOUNT.setTooltip("cyclic.dropper.count");
+    dropcount.setTooltip("cyclic.dropper.count");
     y += h + 1;
     f = TileDropper.Fields.OFFSET.ordinal();
-    GuiSliderInteger OFFSET = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger offsetsli = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 16, container.tile.getField(f)));
-    OFFSET.setTooltip("cyclic.dropper.offset");
+    offsetsli.setTooltip("cyclic.dropper.offset");
     y += h + 1;
     f = TileDropper.Fields.DELAY.ordinal();
-    GuiSliderInteger DELAY = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger delaysli = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 500, container.tile.getField(f)));
-    DELAY.setTooltip("cyclic.dropper.delay");
+    delaysli.setTooltip("cyclic.dropper.delay");
     //    y += 22;
   }
 
@@ -59,7 +59,7 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip 
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
   }
 

@@ -12,11 +12,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public abstract class ContainerBase extends Container {
 
+  public static final int PLAYERSIZE = 4 * 9;
   protected PlayerEntity playerEntity;
   protected PlayerInventory playerInventory;
   protected int startInv = 0;
-  protected int endInv = 17;//must be set by extending class
-  public static final int PLAYERSIZE = 4 * 9;//36
+  protected int endInv = 17; //must be set by extending class
 
   protected ContainerBase(ContainerType<?> type, int id) {
     super(type, id);
@@ -32,21 +32,7 @@ public abstract class ContainerBase extends Container {
 
       @Override
       public void set(int value) {
-        //        if (value < 0) {
-        //          ModCyclic.LOGGER.info(tile + " Where did this bad value come from " + value);
-        //          return;
-        //        }
-        //        if (tile.getWorld().isRemote) {//set energy on client when syncing from server (not the other way around)
-        //          //          //tile.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage) h)
-        //          ModCyclic.LOGGER.info(tile + " CANCLE gui sync" + value);
-        //          IEnergyStorage en = tile.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-        //          if (en != null && en instanceof CustomEnergyStorage) {
-        //            //i think this was causing out of bounds errors?
-        //                        ((CustomEnergyStorage) en).setEnergy(value);
-        //          }
-        //        }
-        //        else
-        //          ModCyclic.LOGGER.info(tile + " server trying to sync energy? " + value);
+        //
       }
     });
   }
@@ -77,7 +63,7 @@ public abstract class ContainerBase extends Container {
     try {
       //if last machine slot is 17, endInv is 18
       int playerStart = endInv;
-      int playerEnd = endInv + PLAYERSIZE;//53 = 17 + 36  
+      int playerEnd = endInv + PLAYERSIZE; //53 = 17 + 36  
       //standard logic based on start/end
       ItemStack itemstack = ItemStack.EMPTY;
       Slot slot = this.inventorySlots.get(index);

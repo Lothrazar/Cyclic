@@ -17,10 +17,9 @@ public class RenderPeatFarm extends TileEntityRenderer<TilePeatFarm> {
   }
 
   @Override
-  public void render(TilePeatFarm te, float v, MatrixStack matrixStack,
-      IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
-    // ok
-    if (te.getField(TilePeatFarm.Fields.RENDER.ordinal()) == 1)
+  public void render(TilePeatFarm te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
+    if (te.getField(TilePeatFarm.Fields.RENDER.ordinal()) == 1) {
       UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.4F, Color.DARK_GRAY);
+    }
   }
 }

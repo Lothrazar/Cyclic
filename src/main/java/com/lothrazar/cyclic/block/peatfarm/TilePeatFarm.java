@@ -64,9 +64,15 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  static enum Fields {
+    REDSTONE, RENDER;
+  }
+
   public static IntValue POWERCONF;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   static final int MAX = 64000;
+  public static final int TIMER_FULL = 1 * 10;
+  private static final int PER_TICK = 1;
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -79,13 +85,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   };
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  public static final int TIMER_FULL = 1 * 10;
-  private static final int PER_TICK = 1;
   private int blockPointer = 0;
-
-  static enum Fields {
-    REDSTONE, RENDER;
-  }
 
   @Override
   public ITextComponent getDisplayName() {
@@ -99,10 +99,12 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   }
 
   private void init() {
-    if (baked == null)
+    if (baked == null) {
       baked = BlockRegistry.peat_baked;
-    if (unbaked == null)
+    }
+    if (unbaked == null) {
       unbaked = BlockRegistry.peat_unbaked;
+    }
     if (outer == null) {
       outer = getShape();
       List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.pos, 6);
@@ -126,7 +128,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
-      return;//broke
+      return;
     }
     for (int i = 0; i < PER_TICK; i++) {
       if (blockPointer < outer.size()) {
@@ -134,15 +136,18 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
         boolean placeWater = (target.getX() - pos.getX()) % 3 == 0
             && (target.getZ() - pos.getZ()) % 3 == 0;
         if (placeWater) {
-          if (tryPlaceWater(target))
+          if (tryPlaceWater(target)) {
             energy.extractEnergy(cost, false);
+          }
         }
-        else if (tryPlacePeat(target))
+        else if (tryPlacePeat(target)) {
           energy.extractEnergy(cost, false);
+        }
         blockPointer++;
       }
-      else
+      else {
         blockPointer = 0;
+      }
     }
     this.timer = TIMER_FULL;
   }
@@ -206,8 +211,9 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     for (int i = 0; i < inventory.getSlots(); i++) {
       ItemStack itemStack = inventory.getStackInSlot(i);
       BlockState state = Block.getBlockFromItem(itemStack.getItem()).getDefaultState();
-      if (itemStack.getCount() == 0)
+      if (itemStack.getCount() == 0) {
         continue;
+      }
       if (world.getBlockState(target).getBlock() instanceof PeatFuelBlock) {
         world.destroyBlock(target, true);
       }

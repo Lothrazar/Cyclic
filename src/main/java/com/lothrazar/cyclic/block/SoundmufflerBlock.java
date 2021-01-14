@@ -23,13 +23,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class SoundmufflerBlock extends BlockBase {
 
+  private static final int VOL_REDUCE_PER_BLOCK = 2;
+  private static final int RADIUS = 6;
+
   public SoundmufflerBlock(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.SCAFFOLDING));
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  private static final int VOL_REDUCE_PER_BLOCK = 2;
-  private static final int RADIUS = 6;
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -43,7 +43,8 @@ public class SoundmufflerBlock extends BlockBase {
     if (blocks == null || blocks.size() == 0) {
       return;
     }
-    try {//WARNING": DO NOT USE getVolume anywhere here it just crashes
+    try {
+      //WARNING": DO NOT USE getVolume anywhere here it just crashes
       //we do use it inside the sound class, but the engine callss tat later on, and our factor is tacked in
       SoundVolumeControlled newSound = new SoundVolumeControlled(sound);
       //the number of nearby blocks informs how much we muffle the sound by
@@ -74,7 +75,7 @@ public class SoundmufflerBlock extends BlockBase {
 
     @Override
     public float getVolume() {
-      return volume * sound.getVolume();//not from the input, our own control
+      return volume * sound.getVolume(); //not from the input, our own control
     }
 
     @Override

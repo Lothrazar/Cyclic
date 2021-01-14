@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -43,13 +42,17 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileFluidCollect extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  public static IntValue POWERCONF;
+  static enum Fields {
+    REDSTONE, RENDER, SIZE, HEIGHT;
+  }
+
   static final int MAX_HEIGHT = 64;
-  public static final int MAX_SIZE = 12;//radius 7 translates to 15x15 area (center block + 7 each side)
+  public static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
+  public static IntValue POWERCONF;
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
-  private int shapeIndex = 0;// current index of shape array
+  private int shapeIndex = 0; // current index of shape array
   private int size = 4 * 2;
   private int height = 4;
   BlockPos targetPos = null;
@@ -65,14 +68,6 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
-  public Predicate<FluidStack> isFluidValid() {
-    return p -> true;
-  }
-
-  static enum Fields {
-    REDSTONE, RENDER, SIZE, HEIGHT;
-  }
-
   public TileFluidCollect() {
     super(TileRegistry.collector_fluid);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
@@ -87,7 +82,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     }
     Integer cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
-      return;//broke
+      return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
@@ -131,7 +126,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
 
   private BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
-    return this.getCurrentFacingPos(size + 1);//this.getPos().offset(this.getCurrentFacing(), size + 1);
+    return this.getCurrentFacingPos(size + 1); //this.getPos().offset(this.getCurrentFacing(), size + 1);
   }
 
   //for render

@@ -8,18 +8,24 @@ public enum EnumBatteryPercent implements IStringSerializable {
 
   @Override
   public String getString() {
-    if (this.name().equals(ONEHUNDRED.name()))
+    if (this.name().equals(ONEHUNDRED.name())) {
       return String.valueOf(100);
-    else if (this.name().equals(NINETY.name()))
+    }
+    else if (this.name().equals(NINETY.name())) {
       return String.valueOf(90);
-    else if (this.name().equals(EIGHTY.name()))
+    }
+    else if (this.name().equals(EIGHTY.name())) {
       return String.valueOf(80);
-    else if (this.name().equals(SIXTY.name()))
+    }
+    else if (this.name().equals(SIXTY.name())) {
       return String.valueOf(60);
-    else if (this.name().equals(FOURTY.name()))
+    }
+    else if (this.name().equals(FOURTY.name())) {
       return String.valueOf(40);
-    else if (this.name().equals(TWENTY.name()))
+    }
+    else if (this.name().equals(TWENTY.name())) {
       return String.valueOf(20);
+    }
     return String.valueOf(0);
   }
 }

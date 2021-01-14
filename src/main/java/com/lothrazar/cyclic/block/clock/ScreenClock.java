@@ -22,26 +22,26 @@ public class ScreenClock extends ScreenBase<ContainerClock> {
     int f = TileRedstoneClock.Fields.DURATION.ordinal();
     x = guiLeft + 8;
     y = guiTop + 18;
-    GuiSliderInteger DURATION = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger dur = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 200, container.tile.getField(f)));
-    DURATION.setTooltip("cyclic.clock.duration");
+    dur.setTooltip("cyclic.clock.duration");
     y += 21;
     f = TileRedstoneClock.Fields.DELAY.ordinal();
-    GuiSliderInteger DELAY = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger delay = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 200, container.tile.getField(f)));
-    DELAY.setTooltip("cyclic.clock.delay");
+    delay.setTooltip("cyclic.clock.delay");
     y += 21;
     f = TileRedstoneClock.Fields.POWER.ordinal();
-    GuiSliderInteger POWER = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger power = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 15, container.tile.getField(f)));
-    POWER.setTooltip("cyclic.clock.power");
+    power.setTooltip("cyclic.clock.power");
   }
 
   @Override
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
   }
 
   @Override

@@ -132,7 +132,7 @@ public class WaterCandleBlock extends BlockBase {
     BlockPos posTarget = new BlockPos(x, y, z);
     MobEntity monster = findMonsterToSpawn(world, posTarget, rand);
     if (monster == null || !world.isAirBlock(posTarget)) {
-      return;//not air block
+      return;
     }
     monster.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
     //null means not from a spawner
@@ -150,7 +150,7 @@ public class WaterCandleBlock extends BlockBase {
   }
 
   private void afterSpawnSuccess(MobEntity monster, World world, BlockPos pos, Random rand) {
-    monster.onInitialSpawn(world.getServer().getWorld(world.getDimensionKey()), world.getDifficultyForLocation(pos), SpawnReason.SPAWNER, null, null);//i hope null is ok?
+    monster.onInitialSpawn(world.getServer().getWorld(world.getDimensionKey()), world.getDifficultyForLocation(pos), SpawnReason.SPAWNER, null, null);
     if (rand.nextDouble() < CHANCE_OFF) {
       turnOff(world, pos);
     }
@@ -175,8 +175,9 @@ public class WaterCandleBlock extends BlockBase {
     MobSpawnInfo.Spawners spawner = WeightedRandom.getRandomItem(rand, spawners);
     MobEntity monster = null;
     Entity ent = spawner.type.create(world);
-    if (ent instanceof MobEntity)
+    if (ent instanceof MobEntity) {
       monster = (MobEntity) ent;
+    }
     return monster;
   }
 

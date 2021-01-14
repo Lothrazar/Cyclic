@@ -34,16 +34,24 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePotion extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    TIMER, REDSTONE, RANGE, ENTITYTYPE;
+  }
+
+  static final int MAX = 64000;
   private static final int TICKS_FIRE_PER = 60;
   //so if a potion has a duration of 1 second, use this many ticks
   static final int TICKS_PER_DURATION = 160000;
-  private static final int POTION_TICKS = 20 * 20;//cant be too low BC night vision flicker
+  private static final int POTION_TICKS = 20 * 20; //cant be too low BC night vision flicker
   //  private static final int MAX_RADIUS = 8;
-  static final int MAX = 64000;
   private static final int MAX_RADIUS = 64;
-  public static IntValue POWERCONF;
   private int radius = MAX_RADIUS;
+  public static IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  /** Primary potion effect given by this beacon. */
+  private List<EffectInstance> effects = new ArrayList<>();
+  EntityFilterType entityFilter = EntityFilterType.PLAYERS;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
@@ -51,15 +59,7 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
       return stack.hasEffect();
     }
   };
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  /** Primary potion effect given by this beacon. */
-  private List<EffectInstance> effects = new ArrayList<>();
-  EntityFilterType entityFilter = EntityFilterType.PLAYERS;
-
-  static enum Fields {
-    TIMER, REDSTONE, RANGE, ENTITYTYPE;
-  }
 
   public TilePotion() {
     super(TileRegistry.beacon);
@@ -76,19 +76,18 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
     if (effects.size() == 0) {
       timer = 0;
     }
-    final int repair = POWERCONF.get();
-    if (energy.getEnergyStored() < repair) {
-      if (repair > 0)
-        return;
+    int cost = POWERCONF.get();
+    if (energy.getEnergyStored() < cost && (cost > 0)) {
+      return;
     }
+    energy.extractEnergy(cost, false);
     timer--;
-    if (timer > 0) {// && timer % 60 == 0
-      tryAffectEntities(repair);
+    if (timer > 0) {
+      tryAffectEntities(cost);
       return;
     }
     //timer is <=zero, delete all effects
     effects.clear();
-    //
     ItemStack s = inventory.getStackInSlot(0);
     if (s.isEmpty()) {
       return;
@@ -177,14 +176,14 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
         && effects.size() > 0
         && energy.getEnergyStored() >= repair) {
       int affected = affectEntities();
-      if (affected > 0)
+      if (affected > 0) {
         energy.extractEnergy(repair, false);
+      }
     }
   }
 
   private int affectEntities() {
-    boolean showParticles = false;//(this.entityType == EntityType.PLAYERS);
-    //    EnumCreatureType creatureType = this.getCreatureType();
+    boolean showParticles = false;
     int affecdted = 0;
     List<? extends LivingEntity> list = this.entityFilter.getEntities(world, pos, radius);
     for (LivingEntity entity : list) {
@@ -238,17 +237,15 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
       break;
       case ENTITYTYPE:
         value = value % EntityFilterType.values().length;
-        //        if (value >= EntityFilterType.values().length)
-        //          value = 0;
-        //        if (value < 0)
-        //          value = EntityFilterType.values().length - 1;
         this.entityFilter = EntityFilterType.values()[value];
       break;
       case RANGE:
-        if (value > MAX_RADIUS)
+        if (value > MAX_RADIUS) {
           radius = MAX_RADIUS;
-        else
+        }
+        else {
           this.radius = Math.min(value, MAX_RADIUS);
+        }
       break;
     }
   }

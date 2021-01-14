@@ -123,8 +123,9 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
 
   @Override
   public void onCraftMatrixChanged(IInventory inventoryIn) {
-    if (!doneOpening)
+    if (!doneOpening) {
       return;
+    }
     this.tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       for (int i = 0; i < craftMatrix.getSizeInventory(); i++) {
         h.extractItem(i, h.getSlotLimit(i), false);
@@ -146,7 +147,7 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
     try {
       //if last machine slot is 17, endInv is 18
       int playerStart = 10;
-      int playerEnd = 10 + ContainerBase.PLAYERSIZE;//53 = 17 + 36
+      int playerEnd = 10 + ContainerBase.PLAYERSIZE;
       //player is 18 to 53
       //TILE is [0, 17]
       ItemStack itemstack = ItemStack.EMPTY;

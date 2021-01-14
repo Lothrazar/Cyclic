@@ -23,7 +23,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
     TIMER, DELAY, DURATION, POWER, REDSTONE, N, E, S, W, U, D;
   }
 
-  private int delay;//dont let these times be zero !!!
+  private int delay; //dont let these times be zero !!!
   private int duration;
   private int power;
   private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
@@ -44,7 +44,6 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
       updateMyState();
     }
     catch (Throwable e) {
-      //
       ModCyclic.LOGGER.error("Clock blockstate update error", e);
     }
   }
@@ -60,10 +59,12 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   }
 
   public int getPowerForSide(Direction side) {
-    if (this.getSideHasPower(side))
+    if (this.getSideHasPower(side)) {
       return this.power;
-    else
+    }
+    else {
       return 0;
+    }
   }
 
   public boolean getSideHasPower(Direction side) {
@@ -106,7 +107,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
       poweredSides.put(f, tag.getBoolean(f.getName2()));
     }
     if (this.detectAllOff()) {
-      this.facingResetAllOn();//fix legacy data for one
+      this.facingResetAllOn(); //fix legacy data for one
     }
     super.read(bs, tag);
   }
@@ -205,6 +206,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
       break;
       case REDSTONE:
         this.needsRedstone = value % 2;
+      break;
       case D:
         this.setSideField(Direction.DOWN, value % 2);
       break;

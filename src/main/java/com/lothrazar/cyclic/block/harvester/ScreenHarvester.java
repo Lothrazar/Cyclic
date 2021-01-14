@@ -19,7 +19,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
 
   public ScreenHarvester(ContainerHarvester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileHarvester.MAX);
+    this.energy = new EnergyBar(this, TileHarvester.MAX_ENERGY);
   }
 
   @Override

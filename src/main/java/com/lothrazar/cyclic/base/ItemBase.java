@@ -24,7 +24,6 @@ public class ItemBase extends Item {
 
   public static final float INACCURACY_DEFAULT = 1.0F;
   public static final float VELOCITY_MAX = 1.5F;
-  public static final float velocityFactor = 1.5F;
 
   public ItemBase(Properties properties) {
     super(properties);
@@ -35,19 +34,19 @@ public class ItemBase extends Item {
     shootMe(world, shooter, ball, 0F);
   }
 
-  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball, float PITCHOFFSET) {
+  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball, float pitch) {
     if (world.isRemote) {
       return;
     }
     Vector3d vector3d1 = shooter.getUpVector(1.0F);
     //      float projectileAngle = 0;//is degrees so can be -10, +10, etc
-    Quaternion quaternion = new Quaternion(new Vector3f(vector3d1), PITCHOFFSET, true);
+    Quaternion quaternion = new Quaternion(new Vector3f(vector3d1), pitch, true);
     Vector3d vector3d = shooter.getLook(1.0F);
     Vector3f vector3f = new Vector3f(vector3d);
     vector3f.transform(quaternion);
     ball.shoot(
         vector3f.getX(), vector3f.getY(), vector3f.getZ(),
-        velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+        VELOCITY_MAX * VELOCITY_MAX, INACCURACY_DEFAULT);
     world.addEntity(ball);
   }
 

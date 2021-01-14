@@ -58,7 +58,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     int xCenter = guiLeft + 80;
     int yCenter = guiTop + 38;
     int space = 18;
-    x = xCenter;//north
+    x = xCenter;
     y = yCenter - space;
     btnN = addButton(new ButtonMachine(x, y, size, size, "N", (p) -> {
       int f = Fields.N.ordinal();
@@ -97,7 +97,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
   }
 

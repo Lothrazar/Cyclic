@@ -83,11 +83,12 @@ public class TeleporterWandItem extends ItemBase {
         Direction face = blockRayTraceResult.getFace();
         BlockPos newPos = blockRayTraceResult.getPos().offset(face);
         BlockPos oldPos = player.getPosition();
-        if (UtilEntity.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos
-          UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
-          UtilSound.playSound(player, SoundEvents.ENTITY_ENDERMAN_TELEPORT);
-          //  world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS );
+        if (UtilEntity.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos    
           UtilItemStack.damageItem(player, stack);
+          if (world.isRemote) {
+            UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
+            UtilSound.playSound(player, SoundEvents.ENTITY_ENDERMAN_TELEPORT);
+          }
         }
       }
     }

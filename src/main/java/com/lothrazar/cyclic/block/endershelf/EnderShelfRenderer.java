@@ -39,7 +39,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
       EnderControllerItemHandler h = EnderShelfHelper.getControllerHandler(tile);
       if (h != null) {
         int count = tile.getShelves().size();
-        String shelves = count == 1 ? " shelf" : " shelves";
+        String shelves = count == 1 ? " shelf" : " shelves"; // TODO lang entry
         ms.push();
         FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
         double x = 1.5F / 16F;
@@ -47,16 +47,16 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
         float scale = 0.1F;
         ms.translate(x, y, 1 - OFFSET);
         ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-        fontRenderer.renderString(count + shelves, 0, 0, 421025,
-            false, ms.getLast().getMatrix(), buffer, false, 0, light);
+        fontRenderer.renderString(count + shelves, 0, 0, 421025, false, ms.getLast().getMatrix(), buffer, false, 0, light);
         ms.pop();
       }
     }
   }
 
   private void renderSlot(int slot, ItemStack itemStack, MatrixStack ms, IRenderTypeBuffer buffer, int light) {
-    if (itemStack.isEmpty())
+    if (itemStack.isEmpty()) {
       return;
+    }
     ms.push();
     FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
     AtomicReference<String> displayName = new AtomicReference<>("Nothing");
@@ -73,8 +73,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
     float scale = 0.1F * getScaleFactor(displayName.get());
     ms.translate(x, y, 1 - OFFSET);
     ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-    fontRenderer.renderString(displayName.get(), 0, 0, 421025,
-        false, ms.getLast().getMatrix(), buffer, false, 0, light);
+    fontRenderer.renderString(displayName.get(), 0, 0, 421025, false, ms.getLast().getMatrix(), buffer, false, 0, light);
     ms.pop();
     ms.push();
     scale = 0.1F;
@@ -86,8 +85,9 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
   }
 
   private float getScaleFactor(String displayName) {
-    if (displayName.length() > 18)
+    if (displayName.length() > 18) { // TODO const
       return 1.0F - 1 / 36F * (displayName.length() - 18);
+    }
     return 1.0F;
   }
 }

@@ -19,7 +19,8 @@ public class RenderForester extends TileEntityRenderer<TileForester> {
   public void render(TileForester te, float v, MatrixStack matrixStack,
       IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
-    if (te.getField(TileForester.Fields.RENDER.ordinal()) == 1)
+    if (te.getField(TileForester.Fields.RENDER.ordinal()) == 1) {
       UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrixStack);
+    }
   }
 }

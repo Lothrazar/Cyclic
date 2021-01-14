@@ -26,7 +26,8 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
   int padding = 0;
   int fontSize = 1;
   int offset = 0;
-  private boolean dropShadow;//TODO
+  //TODO: shadow toggle
+  private boolean dropShadow;
 
   static enum Fields {
     REDSTONE, RED, GREEN, BLUE, PADDING, FONT, OFFSET;

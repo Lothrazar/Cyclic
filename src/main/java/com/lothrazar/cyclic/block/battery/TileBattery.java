@@ -71,18 +71,24 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   public EnumBatteryPercent calculateRoundedPercentFilled() {
     int percent = (int) Math.floor((this.getEnergy() * 1.0F) / MAX * 10.0) * 10;
     //    ut.printf("%d / %d = %d percent%n", this.getEnergy(), MAX, percent);
-    if (percent >= 100)
+    if (percent >= 100) {
       return EnumBatteryPercent.ONEHUNDRED;
-    else if (percent >= 90)
+    }
+    else if (percent >= 90) {
       return EnumBatteryPercent.NINETY;
-    else if (percent >= 80)
+    }
+    else if (percent >= 80) {
       return EnumBatteryPercent.EIGHTY;
-    else if (percent >= 60)
+    }
+    else if (percent >= 60) {
       return EnumBatteryPercent.SIXTY;
-    else if (percent >= 40)
+    }
+    else if (percent >= 40) {
       return EnumBatteryPercent.FOURTY;
-    else if (percent >= 20)
+    }
+    else if (percent >= 20) {
       return EnumBatteryPercent.TWENTY;
+    }
     return EnumBatteryPercent.ZERO;
   }
 
@@ -137,16 +143,15 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     return new ContainerBattery(i, world, pos, playerInventory, playerEntity);
   }
 
-  private List<Integer> rawList = IntStream.rangeClosed(
-      0,
-      5).boxed().collect(Collectors.toList());
+  private List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
 
   private void tickCableFlow() {
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
-      if (this.poweredSides.get(exportToSide))
+      if (this.poweredSides.get(exportToSide)) {
         moveEnergy(exportToSide, MAX / 4);
+      }
     }
   }
 

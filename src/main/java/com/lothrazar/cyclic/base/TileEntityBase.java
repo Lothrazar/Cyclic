@@ -48,7 +48,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public static final String NBTINV = "inv";
   public static final String NBTENERGY = "energy";
   public static final int MENERGY = 64 * 1000;
-  protected int needsRedstone = 1;//default to off
+  protected int needsRedstone = 1;
   protected int render = 0; // default to do not render
   protected int timer;
 
@@ -57,10 +57,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   protected PlayerEntity getLookingPlayer(int maxRange, boolean mustCrouch) {
-    List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(this.pos.getX() - maxRange, this.pos.getY() - maxRange, this.pos.getZ() - maxRange, this.pos.getX() + maxRange, this.pos.getY() + maxRange, this.pos.getZ() + maxRange));
+    List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(
+        this.pos.getX() - maxRange, this.pos.getY() - maxRange, this.pos.getZ() - maxRange, this.pos.getX() + maxRange, this.pos.getY() + maxRange, this.pos.getZ() + maxRange));
     for (PlayerEntity player : players) {
       if (mustCrouch && !player.isCrouching()) {
-        continue;//check the next one
+        continue; //check the next one
       }
       //am i looking
       Vector3d positionEyes = player.getEyePosition(1F);
@@ -70,7 +71,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       Vector3d visionWithLength = positionEyes.add(look.x * maxRange, look.y * maxRange, look.z * maxRange);
       //ray trayce from eyes, along the vision vec
       BlockRayTraceResult rayTrace = this.world.rayTraceBlocks(new RayTraceContext(positionEyes, visionWithLength, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
-      //
       if (this.pos.equals(rayTrace.getPos())) {
         //at least one is enough, stop looping
         return player;
@@ -80,7 +80,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
-    int start = (includeMainHand) ? 0 : 1;//main hand is 1
+    int start = (includeMainHand) ? 0 : 1;
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
     for (int i = start; i < fp.get().inventory.mainInventory.size(); i++) {
       ItemStack s = fp.get().inventory.mainInventory.get(i);
@@ -92,27 +92,24 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     UtilItemStack.drop(this.world, this.pos.up(), toDrop);
   }
 
-  public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp,
-      Hand hand) {
+  public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, Hand hand) {
     if (fp == null) {
       return;
     }
     fp.get().setHeldItem(hand, item);
   }
 
-  public static void syncEquippedItem(LazyOptional<IItemHandler> i,
-      WeakReference<FakePlayer> fp, int slot, Hand hand) {
+  public static void syncEquippedItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, Hand hand) {
     if (fp == null) {
       return;
     }
     i.ifPresent(inv -> {
-      inv.extractItem(slot, 64, false);//delete and overwrite
+      inv.extractItem(slot, 64, false); //delete and overwrite
       inv.insertItem(slot, fp.get().getHeldItem(hand), false);
     });
   }
 
-  public static void tryEquipItem(LazyOptional<IItemHandler> i,
-      WeakReference<FakePlayer> fp, int slot, Hand hand) {
+  public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, Hand hand) {
     if (fp == null) {
       return;
     }
@@ -145,22 +142,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return result;
   }
 
-  public static boolean tryHarvestBlock(WeakReference<FakePlayer> fakePlayer,
-      World world, BlockPos targetPos) {
+  public static boolean tryHarvestBlock(WeakReference<FakePlayer> fakePlayer, World world, BlockPos targetPos) {
     if (fakePlayer == null) {
       return false;
     }
-    //    BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
-    //        fakePlayer.get().getLookVec(), fakePlayer.get().getAdjustedHorizontalFacing(),
-    //        targetPos, true);
-    //TODO:?? 
-    //    world.sendBlockBreakProgress(fakePlayer.get().getEntityId(), targetPos, 10);
-    //    return world.destroyBlock(targetPos, true, fakePlayer.get());
-    //processRightClick
     return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-    //        .func_219441_a(fakePlayer.get(), world,
-    //        fakePlayer.get().getHeldItem(hand), hand, blockraytraceresult);
-    //    return result;
   }
 
   public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name, UUID uuid) {
@@ -170,7 +156,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return null;
     }
     //fake player facing the same direction as tile. for throwables
-    fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());//seems to help interact() mob drops like milk
+    fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ()); //seems to help interact() mob drops like milk
     fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
     return fakePlayer;
   }
@@ -191,10 +177,12 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public Direction getCurrentFacing() {
-    if (this.getBlockState().hasProperty(BlockStateProperties.FACING))
+    if (this.getBlockState().hasProperty(BlockStateProperties.FACING)) {
       return this.getBlockState().get(BlockStateProperties.FACING);
-    if (this.getBlockState().hasProperty(BlockStateProperties.HORIZONTAL_FACING))
+    }
+    if (this.getBlockState().hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
       return this.getBlockState().get(BlockStateProperties.HORIZONTAL_FACING);
+    }
     return null;
   }
 
@@ -202,14 +190,15 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public CompoundNBT getUpdateTag() {
     //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
     CompoundNBT syncData = new CompoundNBT();
-    this.write(syncData);//this calls writeInternal
+    this.write(syncData); //this calls writeInternal
     return syncData;
   }
 
   protected BlockPos getCurrentFacingPos(int distance) {
     Direction f = this.getCurrentFacing();
-    if (f != null)
+    if (f != null) {
       return this.pos.offset(f, distance);
+    }
     return this.pos;
   }
 
@@ -236,16 +225,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return this.needsRedstone == 1;
   }
 
-  public void moveFluids(Direction myFacingDir, int TRANSFER_FLUID_PER_TICK, IFluidHandler tank) {
-    //    private void moveFluid(EnumFacing myFacingDir) {
+  public void moveFluids(Direction myFacingDir, int toFlow, IFluidHandler tank) {
     Direction themFacingMe = myFacingDir.getOpposite();
     if (tank == null || tank.getFluidInTank(0).getAmount() <= 0) {
       return;
     }
-    int toFlow = TRANSFER_FLUID_PER_TICK;
-    //    if (hasAnyIncomingFluidFaces() && toFlow >= tank.getFluidAmount()) {
-    //      toFlow = tank.getFluidAmount();//NOPE// - 1;//keep at least 1 unit in the tank if flow is moving
-    //    }
     BlockPos posTarget = pos.offset(myFacingDir);
     UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
   }
@@ -268,22 +252,22 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return false;
     }
     if (handlerHere != null && handlerOutput != null) {
-      int SLOT = 0;
+      int theslot = 0;
       //first simulate 
-      ItemStack drain = handlerHere.getStackInSlot(SLOT).copy();
+      ItemStack drain = handlerHere.getStackInSlot(theslot).copy();
       int sizeStarted = drain.getCount();
       if (!drain.isEmpty()) {
         //now push it into output, but find out what was ACTUALLY taken
         for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
           drain = handlerOutput.insertItem(slot, drain, false);
           if (drain.isEmpty()) {
-            break;//done draining
+            break; //done draining
           }
         }
       }
       int sizeAfter = sizeStarted - drain.getCount();
       if (sizeAfter > 0) {
-        handlerHere.extractItem(SLOT, sizeAfter, false);
+        handlerHere.extractItem(theslot, sizeAfter, false);
       }
       return true;
     }
@@ -292,7 +276,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   protected void moveEnergy(Direction myFacingDir, int quantity) {
     if (this.world.isRemote) {
-      return;//important to not desync cables
+      return; //important to not desync cables
     }
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
     if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
@@ -312,9 +296,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
       //first simulate
       int drain = handlerHere.extractEnergy(quantity, true);
-      if (drain > 0
-      //          && handlerOutput.getEnergyStored() + drain <= handlerOutput.getMaxEnergyStored()
-      ) {
+      if (drain > 0) {
         //now push it into output, but find out what was ACTUALLY taken
         int filled = handlerOutput.receiveEnergy(drain, false);
         //now actually drain that much from here
@@ -421,10 +403,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
-    if (world.isRemote == false && world.getGameTime() % 20 == 0) {//if serverside then 
+    if (world.isRemote == false && world.getGameTime() % 20 == 0) { //if serverside then 
       IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-      if (energ != null)
+      if (energ != null) {
         PacketRegistry.sendToAllClients(this.getWorld(), new PacketEnergySync(this.getPos(), energ.getEnergyStored()));
+      }
     }
   }
 }

@@ -40,7 +40,6 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   CustomEnergyStorage energy = new CustomEnergyStorage(MENERGY, MENERGY / 2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  private int burnTime;
   private int flowing = 1;
   private int fuelRate = 0;
 
@@ -63,7 +62,6 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     setFlowing(tag.getInt("flowing"));
-    burnTime = tag.getInt("burnTime");
     fuelRate = tag.getInt("fuelRate");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
@@ -73,7 +71,6 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("flowing", getFlowing());
-    tag.putInt("burnTime", burnTime);
     tag.putInt("fuelRate", fuelRate);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
@@ -81,7 +78,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   }
 
   private boolean isBurning() {
-    return this.burnTime > 0;
+    return this.timer > 0;
   }
 
   @Override
@@ -97,7 +94,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       return; //cannot accept any more
     }
     if (this.isBurning() && fuelRate > 0) {
-      --this.burnTime;
+      --this.timer;
       this.addEnergy(fuelRate);
       return;
     }
@@ -111,11 +108,12 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       if (futureValue < energy.getMaxEnergyStored()) { // consume fuel only if we have room in the buffer
         fuelRate = peat.getPeatFuelValue();
         inventory.extractItem(0, 1, false);
-        this.burnTime = BURNTIME;
+        this.timer = BURNTIME;
       }
     }
-    if (this.getFlowing() == 1)
+    if (this.getFlowing() == 1) {
       this.tickCableFlow();
+    }
   }
 
   private void tickCableFlow() {
@@ -138,11 +136,11 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   }
 
   public int getBurnTime() {
-    return this.burnTime;
+    return this.timer;
   }
 
   public void setBurnTime(int value) {
-    burnTime = value;
+    timer = value;
   }
 
   @Override
@@ -194,7 +192,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       case RENDER:
         return render;
       case BURNTIME:
-        return this.burnTime;
+        return this.timer;
     }
     return 0;
   }

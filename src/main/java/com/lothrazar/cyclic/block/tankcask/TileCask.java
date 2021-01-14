@@ -144,8 +144,9 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void tick() {
     //drain below but only to one of myself
-    if (this.flowing == 1)
+    if (this.flowing > 0) {
       tickCableFlow();
+    }
   }
 
   private List<Integer> rawList = IntStream.rangeClosed(

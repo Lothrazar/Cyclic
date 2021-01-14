@@ -25,6 +25,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class TileDetector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  static enum Fields {
+    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDER;
+  }
+
   private static final int PER_TICK = 10;
   public static final int MAX_RANGE = 32;
   private int rangeX = 5;
@@ -36,10 +40,6 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   EntityFilterType entityFilter = EntityFilterType.LIVING;
   private boolean isPoweredNow = false;
 
-  static enum Fields {
-    GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDER;
-  }
-
   public TileDetector() {
     super(TileRegistry.detector_entity);
   }
@@ -48,7 +48,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   public void tick() {
     timer--;
     if (world.isRemote || timer > 0) {
-      return;//client so halt
+      return;
     }
     timer = PER_TICK;
     //and then
@@ -182,10 +182,12 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
         this.rangeZ = value;
       break;
       case ENTITYTYPE:
-        if (value >= EntityFilterType.values().length)
+        if (value >= EntityFilterType.values().length) {
           value = 0;
-        if (value < 0)
+        }
+        if (value < 0) {
           value = EntityFilterType.values().length - 1;
+        }
         this.entityFilter = EntityFilterType.values()[value];
       break;
     }
@@ -198,11 +200,13 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     this.rangeZ = tag.getInt("oz");
     this.limitUntilRedstone = tag.getInt("limit");
     int cType = tag.getInt("compare");
-    if (cType >= 0 && cType < CompareType.values().length)
+    if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
+    }
     int eType = tag.getInt("entityType");
-    if (eType >= 0 && eType < EntityFilterType.values().length)
+    if (eType >= 0 && eType < EntityFilterType.values().length) {
       this.entityFilter = EntityFilterType.values()[eType];
+    }
     super.read(bs, tag);
   }
 

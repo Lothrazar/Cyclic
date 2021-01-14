@@ -27,6 +27,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    energy.visible = TileDisenchant.POWERCONF.get() > 0;
   }
 
   @Override
@@ -34,8 +35,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
-    if (TileDisenchant.POWERCONF.get() > 0)
-      energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
   }
 
   @Override
@@ -54,7 +54,6 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     this.drawSlot(ms, x + 24, y, TextureRegistry.SLOT_BOOK, 18);
     this.drawSlotLarge(ms, 119, y - 16);
     this.drawSlotLarge(ms, 119, y + 14);
-    if (TileDisenchant.POWERCONF.get() > 0)
-      energy.draw(ms, container.tile.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
   }
 }

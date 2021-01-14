@@ -53,23 +53,21 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 64, container.tile.getField(f)));
     red.setTooltip("cyclic.detector.rangex");
-    //
     y += h + 1;
     f = TileDetector.Fields.RANGEY.ordinal();
-    GuiSliderInteger RANGEY = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger rangey = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 64, container.tile.getField(f)));
-    RANGEY.setTooltip("cyclic.detector.rangey");
+    rangey.setTooltip("cyclic.detector.rangey");
     y += h + 1;
     f = TileDetector.Fields.RANGEZ.ordinal();
-    GuiSliderInteger RANGEZ = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger rangez = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 64, container.tile.getField(f)));
-    RANGEZ.setTooltip("cyclic.detector.rangez");
-    //
+    rangez.setTooltip("cyclic.detector.rangez");
     y += h + 1;
     f = TileDetector.Fields.LIMIT.ordinal();
-    GuiSliderInteger LIMIT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger limit = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 64, container.tile.getField(f)));
-    LIMIT.setTooltip("cyclic.detector.limit");
+    limit.setTooltip("cyclic.detector.limit");
   }
 
   @Override

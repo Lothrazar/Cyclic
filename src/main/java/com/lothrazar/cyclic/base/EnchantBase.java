@@ -62,9 +62,8 @@ public abstract class EnchantBase extends Enchantment {
       return ItemStack.EMPTY;
     }
     for (ItemStack main : player.getArmorInventoryList()) {
-      if ((main.isEmpty() == false) &&
-          EnchantmentHelper.getEnchantments(main).containsKey(this)) {
-        return main;// EnchantmentHelper.getEnchantments(main).get(this);
+      if ((main.isEmpty() == false) && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
+        return main;
       }
     }
     return ItemStack.EMPTY;

@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.util.UtilFluid;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
@@ -39,22 +38,11 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
     for (Direction f : Direction.values()) {
-      flow.put(f, LazyOptional.of(this::createHandler));
+      flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, CAPACITY, p -> true)));
     }
   }
 
-  private FluidTankBase createHandler() {
-    FluidTankBase h = new FluidTankBase(this, CAPACITY, isFluidValid());
-    return h;
-  }
-
-  public Predicate<FluidStack> isFluidValid() {
-    return p -> true;
-  }
-
-  List<Integer> rawList = IntStream.rangeClosed(
-      0,
-      5).boxed().collect(Collectors.toList());
+  List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
 
   @Override
   public void tick() {
@@ -67,7 +55,6 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     if (extractSide == null) {
       return;
     }
-    //
     BlockPos target = this.pos.offset(extractSide);
     Direction incomingSide = extractSide.getOpposite();
     IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
@@ -76,21 +63,22 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     if (!success && sideHandler != null
         && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       //test if its a source block, or a waterlogged block
-      //
       BlockState targetState = world.getBlockState(target);
       FluidState fluid = targetState.getFluidState();
       if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
         //not just water. any fluid source block
-        if (world.setBlockState(target, Blocks.AIR.getDefaultState()))
+        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
           sideHandler.fill(new FluidStack(fluid.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
       }
       else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
           && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
             //
             targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
             //for waterlogged it is hardcoded to water
-            if (world.setBlockState(target, targetState))
+            if (world.setBlockState(target, targetState)) {
               sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+            }
           }
     }
   }
@@ -119,8 +107,9 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (side != null && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      if (!CableBase.isCableBlocked(this.getBlockState(), side))
+      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
         return flow.get(side).cast();
+      }
     }
     return super.getCapability(cap, side);
   }

@@ -30,7 +30,7 @@ public class FireplaceBlock extends BlockBase {
     boolean isPowered = worldIn.isBlockPowered(pos);
     BlockPos posFire = pos.offset(state.get(BlockStateProperties.FACING));
     if (worldIn.getBlockState(posFire).isSolid()) {
-      posFire = posFire.up();//if i am facing a block, light its top side.
+      posFire = posFire.up(); //if i am facing a block, light its top side.
       //use case: facing obsidian or wood plank instead of air
     }
     if (isPowered && !state.get(LIT)) { //set fire
@@ -74,8 +74,7 @@ public class FireplaceBlock extends BlockBase {
   }
 
   private boolean canSetInfiniteFire(World worldIn, BlockPos pos) {
-    return worldIn.isAirBlock(pos.offset(Direction.UP))
-        && hasInfiniburnTag(worldIn, pos);
+    return worldIn.isAirBlock(pos.offset(Direction.UP)) && hasInfiniburnTag(worldIn, pos);
   }
 
   private boolean canExtinguish(World worldIn, BlockPos pos) {

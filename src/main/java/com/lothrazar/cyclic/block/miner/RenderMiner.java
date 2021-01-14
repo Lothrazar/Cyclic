@@ -17,10 +17,10 @@ public class RenderMiner extends TileEntityRenderer<TileMiner> {
   }
 
   @Override
-  public void render(TileMiner te, float v, MatrixStack matrixStack,
-      IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
+  public void render(TileMiner te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
-    if (te.getField(TileMiner.Fields.RENDER.ordinal()) == 1)
+    if (te.getField(TileMiner.Fields.RENDER.ordinal()) == 1) {
       UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrixStack, 0.4F, Color.DARK_GRAY);
+    }
   }
 }

@@ -71,7 +71,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
-      return;//broke
+      return;
     }
     setLitProperty(true);
     //only tick down if we have enough energy and have a valid item
@@ -143,7 +143,8 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       }
       //ok
       int index = MathHelper.nextInt(world.rand, 0, ing.getMatchingStacks().length - 1);
-      index = 0;//non random
+      index = 0;
+      //non random
       result.add(ing.getMatchingStacks()[index]);
     }
     for (ItemStack r : result) {
@@ -204,8 +205,9 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       matches = stack.getItem() == recipe.getRecipeOutput().getItem() &&
           ItemStack.areItemStackTagsEqual(stack, recipe.getRecipeOutput());
     }
-    if (!matches)
+    if (!matches) {
       this.status = UncraftStatusEnum.NORECIPE;
+    }
     return matches;
   }
 

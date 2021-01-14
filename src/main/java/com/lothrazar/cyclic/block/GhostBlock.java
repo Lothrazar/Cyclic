@@ -26,7 +26,7 @@ public class GhostBlock extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());//slime block / ice etcuses translucent());
+    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
   }
 
   @Override
@@ -51,7 +51,7 @@ public class GhostBlock extends BlockBase {
     if (isInvisible) {
       return true;
     }
-    return adjacentBlockState.getBlock() == this;//cant do ispassable here, no world
+    return adjacentBlockState.getBlock() == this;
   }
 
   @Override
@@ -62,11 +62,9 @@ public class GhostBlock extends BlockBase {
   private boolean isPassable(IBlockReader worldIn, BlockPos pos) {
     boolean powered = false;
     if ((worldIn instanceof World) == false) {
-      //on world exit/save it can do this
-      //      ModCyclic.LOGGER.error("no world " + worldIn);
       return powered;
     }
-    World world = (World) worldIn;//
+    World world = (World) worldIn;
     powered = world.getRedstonePowerFromNeighbors(pos) > 0;
     return powered;
   }

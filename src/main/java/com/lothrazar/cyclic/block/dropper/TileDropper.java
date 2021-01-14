@@ -35,6 +35,10 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileDropper extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, RENDER;
+  }
+
   static final int MAX = 64000;
   public static IntValue POWERCONF;
   private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -44,10 +48,6 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   private int dropCount = 1;
   private int delay = 10;
   private int hOffset = 0;
-
-  static enum Fields {
-    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, RENDER;
-  }
 
   public TileDropper() {
     super(TileRegistry.dropper);
@@ -65,7 +65,7 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
     if (energy.getEnergyStored() < cost) {
       if (cost > 0) {
         setLitProperty(false);
-        return;//out of energy so keep it rendered as off
+        return; //out of energy so keep it rendered as off
       }
     }
     setLitProperty(true);

@@ -26,10 +26,12 @@ public class RenderShapedata extends TileEntityRenderer<TileShapedata> {
       return;
     }
     if (1 == te.getField(TileShapedata.Fields.RENDER.ordinal())) {
-      if (te.getTarget(0) != null)
+      if (te.getTarget(0) != null) {
         UtilRender.renderOutline(te.getPos(), te.getTarget(0), matrixStack, 1.05F, Color.BLUE);
-      if (te.getTarget(1) != null)
+      }
+      if (te.getTarget(1) != null) {
         UtilRender.renderOutline(te.getPos(), te.getTarget(1), matrixStack, 1.05F, Color.RED);
+      }
       //      ItemStack stack = inv.getStackInSlot(0);
       //      if (stack.isEmpty()) {
       //      }

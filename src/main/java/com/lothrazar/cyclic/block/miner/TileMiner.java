@@ -40,10 +40,14 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileMiner extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
+  }
+
   public static IntValue POWERCONF;
   private int shapeIndex = 0;
   static final int MAX_HEIGHT = 64;
-  public static final int MAX_SIZE = 12;//radius 7 translates to 15x15 area (center block + 7 each side)
+  public static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
   private int height = MAX_HEIGHT / 2;
   private int size = 5;
   static final int MAX = 64000;
@@ -56,10 +60,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private float curBlockDamage;
   private BlockPos targetPos = BlockPos.ZERO;
   private boolean directionIsUp = false;
-
-  enum Fields {
-    REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
-  }
 
   public TileMiner() {
     super(TileRegistry.miner);
@@ -120,8 +120,9 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       setLitProperty(false);
       return;
     }
-    if ((world instanceof ServerWorld) && fakePlayer == null)
+    if ((world instanceof ServerWorld) && fakePlayer == null) {
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "miner");
+    }
     try {
       TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
       //TODO: does this target block match filter
@@ -186,7 +187,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         }
       }
     }
-    else {//is mining is false 
+    else { //is mining is false 
       world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
     }
     return false;
@@ -197,12 +198,12 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
    */
   private boolean isTargetValid() {
     if (targetPos == null || world.isAirBlock(targetPos) || fakePlayer == null) {
-      return false;//dont mine air or liquid. 
+      return false; //dont mine air or liquid. 
     }
     //is this valid
     BlockState blockSt = world.getBlockState(targetPos);
     if (blockSt.hardness < 0) {
-      return false;//unbreakable 
+      return false; //unbreakable 
     }
     //water logged is 
     if (blockSt.getFluidState() != null && blockSt.getFluidState().isEmpty() == false) {

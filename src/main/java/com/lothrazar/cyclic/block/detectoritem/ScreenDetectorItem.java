@@ -18,7 +18,6 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
   private ButtonMachine btnComp;
   private ButtonMachineRedstone btnRender;
 
-  //TODO: unique items vs total items?
   public ScreenDetectorItem(ContainerDetectorItem screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
   }
@@ -50,20 +49,20 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     //
     y += h + 1;
     f = TileDetectorItem.Fields.RANGEY.ordinal();
-    GuiSliderInteger RANGEY = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger rangey = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 64, container.tile.getField(f)));
-    RANGEY.setTooltip("cyclic.detector.rangey");
+    rangey.setTooltip("cyclic.detector.rangey");
     y += h + 1;
     f = TileDetectorItem.Fields.RANGEZ.ordinal();
-    GuiSliderInteger RANGEZ = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger rangez = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 64, container.tile.getField(f)));
-    RANGEZ.setTooltip("cyclic.detector.rangez");
+    rangez.setTooltip("cyclic.detector.rangez");
     //
     y += h + 1;
     f = TileDetectorItem.Fields.LIMIT.ordinal();
-    GuiSliderInteger LIMIT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger limitsl = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, 64, container.tile.getField(f)));
-    LIMIT.setTooltip("cyclic.detector.limit");
+    limitsl.setTooltip("cyclic.detector.limit");
   }
 
   @Override

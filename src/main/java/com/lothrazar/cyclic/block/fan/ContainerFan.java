@@ -20,6 +20,7 @@ public class ContainerFan extends ContainerBase {
     this.playerInventory = playerInventory;
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileFan.Fields.values().length);
+    this.trackEnergy(tile);
   }
 
   @Override

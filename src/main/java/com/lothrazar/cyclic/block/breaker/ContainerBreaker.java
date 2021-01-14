@@ -19,6 +19,7 @@ public class ContainerBreaker extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     layoutPlayerInventorySlots(8, 84);
+    trackEnergy(tile);
     this.trackIntField(tile, TileBreaker.Fields.REDSTONE.ordinal());
   }
 

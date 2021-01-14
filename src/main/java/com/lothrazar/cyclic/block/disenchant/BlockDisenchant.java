@@ -59,7 +59,8 @@ public class BlockDisenchant extends BlockBase {
               if (!worldIn.isAirBlock(pos.add(i / 2, 0, j / 2))) {
                 break;
               }
-              worldIn.addParticle(ParticleTypes.ENCHANT, pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, i + rand.nextFloat() - 0.5D, k - rand.nextFloat() - 1.0F, j + rand.nextFloat() - 0.5D);
+              worldIn.addParticle(ParticleTypes.ENCHANT, pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D,
+                  i + rand.nextFloat() - 0.5D, k - rand.nextFloat() - 1.0F, j + rand.nextFloat() - 0.5D);
             }
           }
         }

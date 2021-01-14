@@ -44,16 +44,16 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     x = guiLeft + 32;
     y += h + 1;
     int f = TileFluidCollect.Fields.HEIGHT.ordinal();
-    GuiSliderInteger HEIGHT = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger height = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, TileFluidCollect.MAX_HEIGHT, container.tile.getField(f)));
-    HEIGHT.setTooltip("buildertype.height.tooltip");
+    height.setTooltip("buildertype.height.tooltip");
     y += h + 1;
     //
     //
     f = TileFluidCollect.Fields.SIZE.ordinal();
-    GuiSliderInteger SIZE = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    GuiSliderInteger size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, TileMiner.MAX_SIZE, container.tile.getField(f)));
-    SIZE.setTooltip("buildertype.size.tooltip");
+    size.setTooltip("buildertype.size.tooltip");
   }
 
   @Override
@@ -80,7 +80,9 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 9, 50);
-    energy.draw(ms, container.tile.getEnergy());
+    if (TileFluidCollect.POWERCONF.get() > 0) {
+      energy.draw(ms, container.tile.getEnergy());
+    }
     fluid.draw(ms, container.tile.getFluid());
   }
 }

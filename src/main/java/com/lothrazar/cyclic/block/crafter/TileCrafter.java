@@ -65,14 +65,14 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
   public static IntValue POWERCONF;
-  private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> new CustomEnergyStorage(MAX, MAX));
+  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE);
   ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
   private final LazyOptional<IItemHandler> input = LazyOptional.of(() -> inputHandler);
   private final LazyOptional<IItemHandler> output = LazyOptional.of(() -> outHandler);
   private final LazyOptional<IItemHandler> grid = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
   private final LazyOptional<IItemHandler> preview = LazyOptional.of(() -> new ItemStackHandler(1));
-  //
   private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
   //
@@ -122,13 +122,14 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     if (world.isRemote) {
       return;
     }
-    IEnergyStorage en = this.energy.orElse(null);
+    //    IEnergyStorage energy = this.energyCap.orElse(null);
     IItemHandler inputHandler = this.input.orElse(null);
     IItemHandler previewHandler = this.preview.orElse(null);
     IItemHandler outputHandler = this.output.orElse(null);
     ArrayList<ItemStack> itemStacksInGrid = getItemsInCraftingGrid();
-    if (lastRecipeGrid == null)
+    if (lastRecipeGrid == null) {
       lastRecipeGrid = itemStacksInGrid;
+    }
     if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0) { //Nothing in Crafting grid, so don't do anything
       setPreviewSlot(previewHandler, ItemStack.EMPTY);
       return;
@@ -158,16 +159,17 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       return;
     }
     setLitProperty(true);
-    IEnergyStorage cap = this.energy.orElse(null);
+    IEnergyStorage cap = this.energyCap.orElse(null);
     if (cap == null) {
       return;
     }
     final int cost = POWERCONF.get();
     if (cap.getEnergyStored() < cost && cost > 0) {
-      return;//broke
-    }
-    if (world == null || world.getServer() == null)
       return;
+    }
+    if (world == null || world.getServer() == null) {
+      return;
+    }
     if (hasValidRecipe) {
       if (timer <= 0 && !readyToCraft && doCraft(inputHandler, true)) { //Start the timer
         timer = TIMER_FULL;
@@ -185,28 +187,31 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
           return;
         }
         else {
-          en.extractEnergy(cost, false);
+          energy.extractEnergy(cost, false);
           ItemStack output = recipeOutput.copy();
           for (int slotId = 0; slotId < IO_SIZE; slotId++) {
             output = outputHandler.insertItem(slotId, output, false);
-            if (output == ItemStack.EMPTY || output.getCount() == 0)
+            if (output == ItemStack.EMPTY || output.getCount() == 0) {
               break;
+            }
           }
         }
         readyToCraft = false;
       }
       timer--;
     }
-    if (timer < 0)
+    if (timer < 0) {
       timer = 0;
+    }
   }
 
   @Nullable
   private ArrayList<ItemStack> getItemsInCraftingGrid() {
     ArrayList<ItemStack> itemStacks = new ArrayList<>();
     IItemHandler gridHandler = this.grid.orElse(null);
-    if (gridHandler == null)
+    if (gridHandler == null) {
       return null;
+    }
     for (int i = 0; i < GRID_SIZE; i++) {
       itemStacks.add(gridHandler.getStackInSlot(i));
     }
@@ -222,10 +227,12 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     for (int slotId = 0; slotId < IO_SIZE; slotId++) {
       if (inv.getStackInSlot(slotId) == ItemStack.EMPTY
           || (inv.getStackInSlot(slotId).isItemEqual(output)
-              && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize()))
+              && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize())) {
         return true;
-      if (output == ItemStack.EMPTY || output.getCount() == 0)
+      }
+      if (output == ItemStack.EMPTY || output.getCount() == 0) {
         return true;
+      }
     }
     return false;
   }
@@ -240,8 +247,9 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       for (int index = 0; index < input.getSlots(); index++) {
         ItemStack itemStack = input.getStackInSlot(index);
         if (ingredient.test(itemStack)) {
-          if (putbackStacks.containsKey(index))
+          if (putbackStacks.containsKey(index)) {
             putbackStacks.get(index).add(new ItemStack(input.getStackInSlot(index).getItem(), 1));
+          }
           else {
             List<ItemStack> list = new ArrayList<>();
             list.add(new ItemStack(input.getStackInSlot(index).getItem(), 1));
@@ -265,29 +273,33 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   private void putbackStacks(HashMap<Integer, List<ItemStack>> putbackStacks, IItemHandler itemHandler) {
     for (HashMap.Entry<Integer, List<ItemStack>> entry : putbackStacks.entrySet()) {
-      for (ItemStack stack : entry.getValue())
+      for (ItemStack stack : entry.getValue()) {
         itemHandler.insertItem(entry.getKey(), stack, false);
+      }
     }
   }
 
   @Nullable
   private IRecipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
-    if (world == null || world.getServer() == null)
+    if (world == null || world.getServer() == null) {
       return null;
+    }
     Collection<IRecipe<?>> recipes = world.getServer().getRecipeManager().getRecipes();
     for (IRecipe<?> recipe : recipes) {
       if (recipe instanceof ShapelessRecipe) {
         ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
-        if (tryMatchShapelessRecipe(itemStacksInGrid, shapelessRecipe))
+        if (tryMatchShapelessRecipe(itemStacksInGrid, shapelessRecipe)) {
           return shapelessRecipe;
+        }
       }
       else if (recipe instanceof ShapedRecipe) {
         ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
         if (!doSizesMatch(shapedRecipe, itemStacksInGrid)) {
           continue;
         }
-        if (tryMatchShapedRecipe(itemStacksInGrid, shapedRecipe))
+        if (tryMatchShapedRecipe(itemStacksInGrid, shapedRecipe)) {
           return shapedRecipe;
+        }
       }
     }
     return null;
@@ -317,8 +329,9 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
           break;
         }
       }
-      if (!matched)
+      if (!matched) {
         return false;
+      }
     }
     return countNonEmptyStacks(itemStacksCopy) == 0;
   }
@@ -327,8 +340,9 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     int recipeSize = recipe.getWidth() * recipe.getHeight();
     int itemStacksSize = itemStacks.size();
     Ingredient ingredient;
-    if (itemStacksSize < recipeSize || offsetX + recipe.getWidth() > 3 || offsetY + recipe.getHeight() > 3)
+    if (itemStacksSize < recipeSize || offsetX + recipe.getWidth() > 3 || offsetY + recipe.getHeight() > 3) {
       return false;
+    }
     int indexInRecipe = 0;
     for (int recipeYPos = 0; recipeYPos < recipe.getHeight(); recipeYPos++) {
       for (int recipeXPos = 0; recipeXPos < recipe.getWidth(); recipeXPos++) {
@@ -352,15 +366,17 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     this.readyToCraft = false;
     this.timer = 0;
     IItemHandler previewHandler = this.preview.orElse(null);
-    if (previewHandler != null)
+    if (previewHandler != null) {
       setPreviewSlot(previewHandler, ItemStack.EMPTY);
+    }
   }
 
   private int countNonEmptyStacks(ArrayList<ItemStack> itemStacks) {
     int count = 0;
     for (ItemStack itemStack : itemStacks) {
-      if (itemStack != ItemStack.EMPTY)
+      if (itemStack != ItemStack.EMPTY) {
         count++;
+      }
     }
     return count;
   }
@@ -369,12 +385,14 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     int ingredientCount = 0;
     int itemStackCount = 0;
     for (Ingredient ingredient : recipe.getIngredients()) {
-      if (!ingredient.test(ItemStack.EMPTY))
+      if (!ingredient.test(ItemStack.EMPTY)) {
         ingredientCount++;
+      }
     }
     for (ItemStack itemStack : itemStacks) {
-      if (itemStack != ItemStack.EMPTY)
+      if (itemStack != ItemStack.EMPTY) {
         itemStackCount++;
+      }
     }
     return ingredientCount == itemStackCount;
   }
@@ -393,21 +411,10 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energy.cast();
+      return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
-      //      switch (side) {
-      //        case EAST:
-      //        case WEST:
-      //        case NORTH:
-      //        case SOUTH:
-      //          return input.cast();
-      //        case UP:
-      //        case DOWN:
-      //        default:
-      //          return output.cast();
-      //      }
     }
     return super.getCapability(cap, side);
   }
@@ -431,7 +438,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
+    energyCap.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     input.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("input")));
     output.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("output")));
     grid.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("grid")));
@@ -441,7 +448,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    energy.ifPresent(h -> {
+    energyCap.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("energy", compound);
     });

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.melter.TileMelter.Fields;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.TimerBar;
@@ -19,7 +18,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   public ScreenMelter(ContainerMelter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     energy = new EnergyBar(this, TileMelter.MAX);
-    fluid = new FluidBar(this, 132, 8, TileMelter.CAPACITY);//152, 14,
+    fluid = new FluidBar(this, 132, 8, TileMelter.CAPACITY);
     timer = new TimerBar(this, 88, 37, TileMelter.TIMER_FULL);
   }
 
@@ -44,11 +43,6 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
-    int timer = container.tile.getField(Fields.TIMER.ordinal());
-    if (timer > 0)
-      this.font.drawString(ms, "[" + timer + "]",
-          (this.getXSize()) / 2 + 4,
-          40.0F, 4209792);
   }
 
   @Override

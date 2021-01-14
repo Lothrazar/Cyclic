@@ -86,7 +86,7 @@ public class SpikesBlock extends BlockBase {
       case DOWN:
         return DOWN_BOX;
     }
-    return VoxelShapes.fullCube();//CANT BE NULL, causes crashes.   
+    return VoxelShapes.fullCube();
   }
 
   @Override
@@ -98,36 +98,39 @@ public class SpikesBlock extends BlockBase {
         case CURSE:
           if (worldIn.rand.nextDouble() < CURSE_CHANCE) {
             LivingEntity living = (LivingEntity) entity;
-            switch (worldIn.rand.nextInt(4)) {//[0,3] if nextInt(4) given 
+            switch (worldIn.rand.nextInt(4)) { //[0,3] if nextInt(4) given 
               case 0:
-                if (!living.isPotionActive(Effects.SLOWNESS))
+                if (!living.isPotionActive(Effects.SLOWNESS)) {
                   living.addPotionEffect(new EffectInstance(Effects.SLOWNESS, CURSE_TIME, 2));
+                }
               break;
               case 1:
-                if (!living.isPotionActive(Effects.WEAKNESS))
+                if (!living.isPotionActive(Effects.WEAKNESS)) {
                   living.addPotionEffect(new EffectInstance(Effects.WEAKNESS, CURSE_TIME, 2));
+                }
               break;
               case 2:
-                if (!living.isPotionActive(Effects.UNLUCK))
+                if (!living.isPotionActive(Effects.UNLUCK)) {
                   living.addPotionEffect(new EffectInstance(Effects.UNLUCK, CURSE_TIME, 1));
+                }
               break;
               case 3:
-                if (!living.isPotionActive(Effects.MINING_FATIGUE))
+                if (!living.isPotionActive(Effects.MINING_FATIGUE)) {
                   living.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, CURSE_TIME, 2));
+                }
               break;
               case 4:
                 entity.attackEntityFrom(DamageSource.MAGIC, 1);
               break;
               case 5:
-                if (!living.isPotionActive(Effects.BLINDNESS))
+                if (!living.isPotionActive(Effects.BLINDNESS)) {
                   living.addPotionEffect(new EffectInstance(Effects.BLINDNESS, CURSE_TIME, 1));
+                }
               break;
             }
           }
         break;
         case FIRE:
-          //          if (!entity.isBurning()) {
-          //            entity.fire
           entity.setFire(FIRE_TIME);
         break;
         case PLAIN:
@@ -144,14 +147,15 @@ public class SpikesBlock extends BlockBase {
   public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     if (state.get(ACTIVATED).booleanValue() == false && world.isBlockPowered(pos)) {
       world.setBlockState(pos, state.with(ACTIVATED, true));
-      if (world.isRemote)
+      if (world.isRemote) {
         UtilSound.playSound(pos, SoundRegistry.spikes_on);
+      }
     }
     else if (state.get(ACTIVATED).booleanValue()
         && world.isBlockPowered(pos) == false) {
-          if (world.isRemote)
+          if (world.isRemote) {
             UtilSound.playSound(pos, SoundRegistry.spikes_off);
-          //  UtilSound.playSoundFromServer(SoundRegistry.spikes_off, SoundCategory.BLOCKS, pos, world.provider.getDimension(), 16);
+          }
           world.setBlockState(pos, state.with(ACTIVATED, false));
         }
     super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);

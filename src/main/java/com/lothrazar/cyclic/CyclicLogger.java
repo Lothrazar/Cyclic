@@ -20,7 +20,8 @@ public class CyclicLogger {
 
   public void info(String string) {
     //default for all releases is false to prevent spam-logs slipping out
-    if (ConfigRegistry.LOGINFO.get())
+    if (ConfigRegistry.LOGINFO.get()) {
       logger.info(string);
+    }
   }
 }

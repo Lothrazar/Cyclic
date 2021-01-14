@@ -39,12 +39,14 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   @Nonnull
   @Override
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
-    if (this.shelf.getWorld() == null)
+    if (this.shelf.getWorld() == null) {
       return ItemStack.EMPTY;
+    }
     if (!fake) {
       ItemStack extracted = super.extractItem(slot, amount, simulate);
-      if (!this.shelf.getWorld().isRemote && !simulate)
+      if (!this.shelf.getWorld().isRemote && !simulate) {
         PacketRegistry.sendToAllClients(this.shelf.getWorld(), new PacketTileInventory(this.shelf.getPos(), slot, this.getStackInSlot(slot), PacketTileInventory.TYPE.SET));
+      }
       return extracted;
     }
     long rand = (long) (Math.random() * ForgeRegistries.ENCHANTMENTS.getValues().size());
@@ -58,30 +60,32 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
     return stack.getItem() == Items.ENCHANTED_BOOK &&
         EnchantedBookItem.getEnchantments(stack).size() == 1 &&
-        (this.getStackInSlot(slot).isEmpty() ||
-            UtilEnchant.doBookEnchantmentsMatch(stack, this.getStackInSlot(slot)));
+        (this.getStackInSlot(slot).isEmpty() || UtilEnchant.doBookEnchantmentsMatch(stack, this.getStackInSlot(slot)));
   }
 
   @Override
   protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-    return 16;
+    return 64;
   }
 
   @Nonnull
   @Override
   public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-    if (this.shelf.getWorld() == null)
+    if (shelf == null || shelf.getWorld() == null) {
       return stack;
+    }
     ItemStack remaining = super.insertItem(slot, stack, simulate);
-    if (!this.shelf.getWorld().isRemote && !simulate)
+    if (!this.shelf.getWorld().isRemote && !simulate) {
       PacketRegistry.sendToAllClients(this.shelf.getWorld(), new PacketTileInventory(this.shelf.getPos(), slot, this.getStackInSlot(slot), PacketTileInventory.TYPE.SET));
+    }
     return remaining;
   }
 
   public int firstSlotWithItem() {
     for (int i = 0; i < this.getSlots(); i++) {
-      if (!this.getStackInSlot(i).isEmpty())
+      if (!this.getStackInSlot(i).isEmpty()) {
         return i;
+      }
     }
     return -1;
   }

@@ -43,10 +43,12 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-      if (slot == SLOT_A || slot == SLOT_B)
+      if (slot == SLOT_A || slot == SLOT_B) {
         return stack.getItem() instanceof LocationGpsCard;
-      else
+      }
+      else {
         return stack.getItem() instanceof ShapeCard;
+      }
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -71,7 +73,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
     }
-    //  ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getTag());
+    //ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getTag());
     RelativeShape cardShape = RelativeShape.read(shapeCard);
     switch (cmd) {
       case READ:
@@ -98,10 +100,9 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
         //only works on EMPTY CARDS
         if (this.copiedShape != null && shapeCard.getTag() != null) {
           //
-          shapeCard.setTag(null);//paste and not merge so overwrite
+          shapeCard.setTag(null); //paste and not merge so overwrite
           this.copiedShape.write(shapeCard);
           ModCyclic.LOGGER.info(cmd + " success");
-          //          this.copiedShape = null;
         }
       break;
       case MERGE:
@@ -212,7 +213,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   public int getField(int field) {
     switch (Fields.values()[field]) {
       case COMMAND:
-        return 0;//unused 
+        return 0; //unused 
       case RENDER:
         return this.render;
       case STASH:

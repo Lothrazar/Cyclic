@@ -42,7 +42,7 @@ public class BlockScreentext extends BlockBase {
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.screen, ScreenScreentext::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.screen, RenderScreen::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.screen, RenderScreentext::new);
   }
 
   @Override

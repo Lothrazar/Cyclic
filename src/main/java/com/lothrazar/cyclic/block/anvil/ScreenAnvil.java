@@ -16,12 +16,13 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
   public ScreenAnvil(ContainerAnvil screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileAnvilAuto.MAX);
+    this.energy = new EnergyBar(this, container.tile.getEnergyMax());
   }
 
   @Override
   public void init() {
     super.init();
+    energy.visible = TileAnvilAuto.POWERCONF.get() > 0;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     int x, y;
@@ -34,9 +35,8 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
   public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);//renderHoveredToolTip
-    if (TileAnvilAuto.POWERCONF.get() > 0)
-      energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
+    this.renderHoveredTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
     btnRedstone.onValueUpdate(container.tile);
   }
 
@@ -51,7 +51,6 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 54, 34);
     this.drawSlotLarge(ms, 104, 30);
-    if (TileAnvilAuto.POWERCONF.get() > 0)
-      energy.draw(ms, container.tile.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
   }
 }

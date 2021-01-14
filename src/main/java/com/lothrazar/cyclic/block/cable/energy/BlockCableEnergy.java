@@ -40,8 +40,9 @@ public class BlockCableEnergy extends CableBase {
       //show current
       if (handlerHere != null) {
         int st = handlerHere.getEnergyStored();
-        if (st > 0)
+        if (st > 0) {
           player.sendStatusMessage(new TranslationTextComponent(st + ""), true);
+        }
       }
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);

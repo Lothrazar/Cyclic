@@ -46,8 +46,9 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
         //without this, txt boxes still work BUT:
         //keybindings like E OPEN INVENTORY dont make trigger the textbox, oops
         TextBoxAutosave txt = (TextBoxAutosave) widget;
-        if (txt.isFocused())
+        if (txt.isFocused()) {
           return txt.keyPressed(keyCode, scanCode, modifiers);
+        }
       }
     }
     return super.keyPressed(keyCode, scanCode, modifiers);
@@ -87,15 +88,17 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
       if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)) {
         btn.renderToolTip(ms, mouseX, mouseY);
         List<ITextComponent> localTooltip = ((IHasTooltip) btn).getTooltip();
-        if (localTooltip != null)
+        if (localTooltip != null) {
           this.func_243308_b(ms, localTooltip, mouseX - guiLeft, mouseY - guiTop);
+        }
       }
     }
     for (IGuiEventListener widget : this.children) {
       if (widget instanceof IHasTooltip && widget.isMouseOver(mouseX, mouseY)) {
         IHasTooltip txt = (IHasTooltip) widget;
-        if (txt.getTooltip() != null)
+        if (txt.getTooltip() != null) {
           this.func_243308_b(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+        }
       }
     }
   }

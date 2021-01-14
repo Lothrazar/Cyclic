@@ -35,9 +35,14 @@ import net.minecraftforge.items.ItemStackHandler;
 @SuppressWarnings("rawtypes")
 public class TileMelter extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  static enum Fields {
+    REDSTONE, TIMER, RENDER;
+  }
+
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
+  public static final int TIMER_FULL = Const.TICKS_PER_SEC * 3;
   public static IntValue POWERCONF;
   public FluidTankBase tank;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -45,11 +50,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private RecipeMelter currentRecipe;
-  public final static int TIMER_FULL = Const.TICKS_PER_SEC * 3;
-
-  static enum Fields {
-    REDSTONE, TIMER, RENDER;
-  }
 
   public TileMelter() {
     super(TileRegistry.melter);
@@ -69,7 +69,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
-      return;//broke
+      return;
     }
     if (timer == 0 && this.tryProcessRecipe()) {
       this.timer = TIMER_FULL;
@@ -172,7 +172,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
 
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, world)) {
-      return;// its valid
+      return;
     }
     currentRecipe = null;
     for (RecipeMelter rec : RecipeMelter.RECIPES) {

@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.harvester;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -46,17 +45,18 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  private static final int MAX_SIZE = 11;//radius 7 translates to 15x15 area (center block + 7 each side)
-  public static IntValue POWERCONF;
-  private int radius = 9;
-  private int shapeIndex = 0;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  static final int MAX = 640000;
-
   static enum Fields {
     REDSTONE, RENDER, SIZE;
   }
+
+  public static final int TIMER_FULL = 5; /// TODO: could be config
+  public static final int MAX_SIZE = 11; // TODO: could be config . radius 7 translates to 15x15 area (center block + 7 each side)
+  static final int MAX_ENERGY = 640000;
+  public static IntValue POWERCONF;
+  private int radius = MAX_SIZE;
+  private int shapeIndex = 0;
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX_ENERGY, MAX_ENERGY / 4);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileHarvester() {
     super(TileRegistry.harvesterTile);
@@ -81,17 +81,17 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (timer > 0) {
       return;
     }
-    timer = Const.TICKS_PER_SEC / 5;//could config, but 2x per sec is enough
+    // we are at zero
+    timer = TIMER_FULL;
     //
     List<BlockPos> shape = this.getShape();
     if (shape.size() == 0) {
       return;
     }
-    //update target
-    shapeIndex++;
+    //get and update target
     BlockPos targetPos = getShapeTarget(shape);
+    shapeIndex++;
     //does it exist
-    //    BlockPos target = UtilWorld.getRandomPos(world.rand, this.getCurrentFacingPos(radius + 1), radius);
     if (targetPos != null && tryHarvestSingle(this.world, targetPos)) {
       energy.extractEnergy(cost, false);
     }

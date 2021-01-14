@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.placer;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,20 +20,27 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePlacer extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  ItemStackHandler inventory = new ItemStackHandler(1);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-
   static enum Fields {
     REDSTONE;
   }
+
+  ItemStackHandler inventory = new ItemStackHandler(1);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  static final int MAX = 64000;
+  public static IntValue POWERCONF;
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TilePlacer() {
     super(TileRegistry.placer);
@@ -44,7 +52,12 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
       setLitProperty(false);
       return;
     }
+    Integer cost = POWERCONF.get();
+    if (energy.getEnergyStored() < cost && (cost > 0)) {
+      return;
+    }
     setLitProperty(true);
+    energy.extractEnergy(cost, false);
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
       return;
@@ -73,6 +86,9 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
+    }
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
+      return energyCap.cast();
     }
     return super.getCapability(cap, side);
   }

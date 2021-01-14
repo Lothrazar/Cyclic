@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.disenchant;
 
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
@@ -36,6 +37,13 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileDisenchant extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    REDSTONE, TIMER;
+  }
+
+  static final int MAX = 640000;
+  private static final int SLOT_INPUT = 0;
+  private static final int SLOT_BOOK = 1;
   ItemStackHandler inputSlots = new ItemStackHandler(2) {
 
     @Override
@@ -56,13 +64,6 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static IntValue POWERCONF;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  static final int MAX = 640000;
-  private static final int SLOT_INPUT = 0;
-  private static final int SLOT_BOOK = 1;
-
-  static enum Fields {
-    REDSTONE;
-  }
 
   public TileDisenchant() {
     super(TileRegistry.disenchanter);
@@ -76,7 +77,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     }
     Integer cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && (cost > 0)) {
-      return;//broke
+      return;
     }
     ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
     if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHIMMUNE)) {
@@ -107,39 +108,46 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     //do all the moving over
     inputEnchants.remove(keyMoved);
     ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
-    EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
+    EnchantmentHelper.setEnchantments(outEnchants, eBook); //add to book
     //replace book with enchanted
     inputSlots.extractItem(SLOT_BOOK, 1, false);
     outputSlot.insertItem(0, eBook, false);
-    //outputSlot.insertItem(1, eBook, false);
     //do i replace input with a book?
     if (input.getItem() == Items.ENCHANTED_BOOK && inputEnchants.size() == 0) {
-      inputSlots.extractItem(SLOT_INPUT, 64, false);//delete input
+      ModCyclic.LOGGER.info("book size zero");
+      inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
       inputSlots.insertItem(SLOT_INPUT, new ItemStack(Items.BOOK), false);
     }
     else {
       //was a normal item, so ok to set its ench list to empty
-      if (input.getItem() == Items.ENCHANTED_BOOK) {//hotfix workaround for book: so it dont try to merge eh
+      if (input.getItem() == Items.ENCHANTED_BOOK) { //hotfix workaround for book: so it dont try to merge eh
+        ModCyclic.LOGGER.info("book normal flow");
         ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantmentHelper.setEnchantments(inputEnchants, inputCopy);//set as remove
-        inputSlots.extractItem(SLOT_INPUT, 64, false);//delete input
+        EnchantmentHelper.setEnchantments(inputEnchants, inputCopy); //set as remove
+        inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
         inputSlots.insertItem(SLOT_INPUT, inputCopy, false);
       }
       else {
-        EnchantmentHelper.setEnchantments(inputEnchants, input);//set as removed
-        //          inv.extractItem(SLOT_INPUT, 64, false);//delete input
-        //          inv.insertItem(SLOT_INPUT, input, false);
+        ModCyclic.LOGGER.info("non-book set as removed from item");
+        EnchantmentHelper.setEnchantments(inputEnchants, input); //set as removed
       }
     }
     //recalculate input item
     input = inputSlots.getStackInSlot(SLOT_INPUT);
     inputEnchants = EnchantmentHelper.getEnchantments(input);
     if (!input.isEmpty() && inputEnchants.size() == 0) {
+      ModCyclic.LOGGER.info("bump to new finished slot");
+      ModCyclic.LOGGER.info("bump to new finished slot");
+      ModCyclic.LOGGER.info("bump to new finished slot");
+      ModCyclic.LOGGER.info("bump to new finished slot");
       //hey we done, bump it over to the ALL NEW finished slot
-      outputSlot.insertItem(1, input.copy(), false);
-      inputSlots.extractItem(SLOT_INPUT, 64, false);//delete input
+      if (outputSlot.getStackInSlot(1).isEmpty()) {
+        //only if there is space, then do it
+        outputSlot.insertItem(1, input.copy(), false);
+        inputSlots.extractItem(SLOT_INPUT, 64, false);
+      }
+      //delete input
     }
-    //
   }
 
   @Override
@@ -189,6 +197,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
+      case TIMER:
+        timer = value;
+      break;
     }
   }
 
@@ -196,7 +207,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   public int getField(int field) {
     switch (Fields.values()[field]) {
       case REDSTONE:
-        return this.needsRedstone;
+        return needsRedstone;
+      case TIMER:
+        return timer;
     }
     return 0;
   }
