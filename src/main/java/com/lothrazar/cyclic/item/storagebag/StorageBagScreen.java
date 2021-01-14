@@ -103,8 +103,6 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
   }
 
   private class ToggleButton extends Button {
-
-    List<IPressable> pressables;
     List<ITextComponent> titles;
     List<ITextComponent> tooltips;
     List<INBT> nbtValues;
@@ -120,15 +118,11 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
       index = 0;
       titles = new LinkedList<>();
       tooltips = new LinkedList<>();
-      pressables = new LinkedList<>();
       nbtValues = new LinkedList<>();
       this.nbt = nbt;
       this.nbtKey = key;
       titles.add(defaultTitle);
       tooltips.add(defaultTooltip);
-      //      pressables.add((p) -> {
-      //        //why is this here
-      //      });
       nbtValues.add(defaultValue);
     }
 
@@ -140,11 +134,7 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
     @Override
     public void onPress() {
       super.onPress();
-      this.pressables.get(index).onPress(this);
-      if (pressables.size() == 0) {
-        return;
-      }
-      if (++index >= pressables.size()) {
+      if (++index >= nbtValues.size()) {
         index = 0;
       }
       this.setMessage(titles.get(index));
@@ -155,7 +145,6 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
     public void addState(ITextComponent title, ITextComponent tooltip, INBT nbtValue) {
       this.titles.add(title);
       this.tooltips.add(tooltip);
-      //      this.pressables.add(pressable);
       this.nbtValues.add(nbtValue);
       if (this.nbt.get(nbtKey.getString()) != null &&
           this.nbt.get(nbtKey.getString()).equals(nbtValue)) {
