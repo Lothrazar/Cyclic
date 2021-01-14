@@ -213,21 +213,21 @@ public class ItemEvents {
     if (event.getEntityLiving() instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) event.getEntityLiving();
       ItemStack stack = event.getItem().getItem();
-      ItemStack resultStack = null;
+      ItemStack resultStack = stack.copy();
       Set<Integer> bagSlots = StorageBagItem.getAllBagSlots(player);
       for (Integer i : bagSlots) {
         ItemStack bag = player.inventory.getStackInSlot(i);
         switch (StorageBagItem.getPickupMode(bag)) {
           case EVERYTHING:
-            resultStack = StorageBagItem.tryInsert(bag, stack);
+            resultStack = StorageBagItem.tryInsert(bag, resultStack);
           break;
           case FILTER:
-            resultStack = StorageBagItem.tryFilteredInsert(bag, stack);
+            resultStack = StorageBagItem.tryFilteredInsert(bag, resultStack);
           break;
           case NOTHING:
           break;
         }
-         if (resultStack == ItemStack.EMPTY) {
+        if (resultStack == ItemStack.EMPTY) {
           break;
         }
       }
