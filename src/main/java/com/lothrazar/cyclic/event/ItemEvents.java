@@ -227,6 +227,9 @@ public class ItemEvents {
           case NOTHING:
           break;
         }
+         if (resultStack == ItemStack.EMPTY) {
+          break;
+        }
       }
       if (resultStack != null) {
         event.getItem().setItem(resultStack);
