@@ -92,7 +92,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   public static final int GRID_SLOT_STOP = GRID_SLOT_START + GRID_SIZE - 1;
   private boolean hasValidRecipe = false;
   public boolean shouldSearch = true;
-  private boolean readyToCraft = false;
   private ArrayList<ItemStack> lastRecipeGrid = null;
   private IRecipe<?> lastValidRecipe = null;
   private ItemStack recipeOutput = ItemStack.EMPTY;
@@ -177,7 +176,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         return;
       }
       timer = TIMER_FULL;
-      ModCyclic.LOGGER.info("tick down valid recipe output " + recipeOutput + " readyToCraft = " + readyToCraft);
+      //      ModCyclic.LOGGER.info("tick down valid recipe output " + recipeOutput + " readyToCraft = " + readyToCraft);
       if (doCraft(inputHandler, true)) { //Start the timer
         ItemStack output = recipeOutput.copy();
         if (hasFreeSpace(outHandler, recipeOutput) && doCraft(inputHandler, false)) {
@@ -389,7 +388,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     this.lastRecipeGrid = null;
     this.lastValidRecipe = null;
     this.shouldSearch = true;
-    this.readyToCraft = false;
     this.timer = 0;
     IItemHandler previewHandler = this.preview.orElse(null);
     if (previewHandler != null) {

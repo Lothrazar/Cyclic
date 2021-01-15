@@ -54,6 +54,7 @@ public class ContainerCrafter extends ContainerBase {
     super(ContainerScreenRegistry.crafter, windowId);
     tile = (TileCrafter) clientWorld.getTileEntity(pos);
     trackEnergy(tile);
+    this.endInv = TileCrafter.IO_NUM_COLS * TileCrafter.IO_NUM_ROWS;
     this.playerEntity = clientPlayer;
     this.playerInventory = inv;
     //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
