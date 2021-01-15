@@ -32,15 +32,16 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TilePlacer extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    REDSTONE;
+    REDSTONE, TIMER;
   }
 
-  ItemStackHandler inventory = new ItemStackHandler(1);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   static final int MAX = 64000;
+  public static final int TIMER_FULL = 500;
   public static IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  ItemStackHandler inventory = new ItemStackHandler(1);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TilePlacer() {
     super(TileRegistry.placer);
@@ -111,6 +112,9 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
+      case TIMER:
+        timer = value;
+      break;
     }
   }
 
@@ -119,6 +123,8 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
     switch (Fields.values()[field]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TIMER:
+        return timer;
     }
     return 0;
   }

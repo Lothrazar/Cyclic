@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.storagebag;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.HashSet;
@@ -48,6 +49,8 @@ public class StorageBagItem extends ItemBase {
 
     NOTHING, EVERYTHING, FILTER;
 
+    public static final String NBT = "pickup_mode";
+
     @Override
     public String getString() {
       return this.name().toLowerCase();
@@ -58,6 +61,8 @@ public class StorageBagItem extends ItemBase {
 
     NOTHING, DUMP, MERGE;
 
+    public static final String NBT = "deposit_mode";
+
     @Override
     public String getString() {
       return this.name().toLowerCase();
@@ -67,6 +72,8 @@ public class StorageBagItem extends ItemBase {
   public enum RefillMode implements IStringSerializable {
 
     NOTHING, HOTBAR;
+
+    public static final String NBT = "refill_mode";
 
     @Override
     public String getString() {
@@ -140,7 +147,7 @@ public class StorageBagItem extends ItemBase {
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     super.addInformation(stack, worldIn, tooltip, flagIn);
     CompoundNBT nbt = stack.getOrCreateTag();
-    String pickupMode = nbt.getString("pickup_mode");
+    String pickupMode = nbt.getString(PickupMode.NBT);
     String depositMode = nbt.getString("deposit_mode");
     String refillMode = nbt.getString("refill_mode");
     if (!pickupMode.equals("")) {
@@ -172,6 +179,22 @@ public class StorageBagItem extends ItemBase {
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
     return new StorageBagCapabilityProvider(stack, slots);
+  }
+
+  @Override
+  public CompoundNBT getShareTag(ItemStack stack) {
+    CompoundNBT tag = super.getShareTag(stack);
+    ItemStackHandler handler = getInventory(stack);
+    if (handler != null) {
+      tag.merge(handler.serializeNBT());
+      ModCyclic.LOGGER.info("getShareTag capability merge" + tag);
+    }
+    return tag;
+  }
+
+  @Override
+  public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+    super.readShareTag(stack, nbt);
   }
 
   @Override
@@ -278,7 +301,7 @@ public class StorageBagItem extends ItemBase {
   }
 
   public static PickupMode getPickupMode(ItemStack stack) {
-    String mode = stack.getOrCreateTag().getString("pickup_mode");
+    String mode = stack.getOrCreateTag().getString(PickupMode.NBT);
     for (int i = 0; i < PickupMode.values().length; i++) {
       if (mode.equals(PickupMode.values()[i].getString())) {
         return PickupMode.values()[i];
@@ -288,7 +311,7 @@ public class StorageBagItem extends ItemBase {
   }
 
   private static DepositMode getDepositMode(ItemStack stack) {
-    String mode = stack.getOrCreateTag().getString("deposit_mode");
+    String mode = stack.getOrCreateTag().getString(DepositMode.NBT);
     for (int i = 0; i < DepositMode.values().length; i++) {
       if (mode.equals(DepositMode.values()[i].getString())) {
         return DepositMode.values()[i];
@@ -298,7 +321,7 @@ public class StorageBagItem extends ItemBase {
   }
 
   private static RefillMode getRefillMode(ItemStack stack) {
-    String mode = stack.getOrCreateTag().getString("refill_mode");
+    String mode = stack.getOrCreateTag().getString();
     for (int i = 0; i < RefillMode.values().length; i++) {
       if (mode.equals(RefillMode.values()[i].getString())) {
         return RefillMode.values()[i];

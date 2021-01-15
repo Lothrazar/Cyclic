@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.breaker;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,6 +27,14 @@ public class ScreenBreaker extends ScreenBase<ContainerBreaker> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileBreaker.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    int w = 160;
+    int h = 20;
+    int f = TileBreaker.Fields.TIMER.ordinal();
+    x = guiLeft + 8;
+    y = guiTop + 30;
+    GuiSliderInteger speedsl = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+        1, TileBreaker.TIMER_FULL, container.tile.getField(f)));
+    speedsl.setTooltip("cyclic.gui.timer");
   }
 
   @Override

@@ -48,6 +48,9 @@ public class UtilWorld {
     return posToPlaceAt;
   }
 
+  /**
+   * Check if empty, then if not drop the stack safely in a new ItemEntity
+   */
   public static ItemEntity dropItemStackInWorld(World world, BlockPos pos, ItemStack stack) {
     if (pos == null || world == null || stack.isEmpty()) {
       return null;

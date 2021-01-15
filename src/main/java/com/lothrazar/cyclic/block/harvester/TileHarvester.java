@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -21,6 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.IntegerProperty;
@@ -49,7 +49,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     REDSTONE, RENDER, SIZE;
   }
 
-  public static final int TIMER_FULL = 5; /// TODO: could be config
   public static final int MAX_SIZE = 11; // TODO: could be config . radius 7 translates to 15x15 area (center block + 7 each side)
   static final int MAX_ENERGY = 640000;
   public static IntValue POWERCONF;
@@ -60,6 +59,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   public TileHarvester() {
     super(TileRegistry.harvesterTile);
+    timer = 1;
   }
 
   @Override
@@ -69,35 +69,30 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       setLitProperty(false);
       return;
     }
+    final int cost = POWERCONF.get();
+    if (energy.getEnergyStored() < cost && cost > 0) {
+      setLitProperty(false);
+      return;
+    }
     setLitProperty(true);
     if (this.world.isRemote) {
       return;
     }
-    final int cost = POWERCONF.get();
-    if (energy.getEnergyStored() < cost && cost > 0) {
-      return;
-    }
-    timer--;
-    if (timer > 0) {
-      return;
-    }
-    // we are at zero
-    timer = TIMER_FULL;
-    //
-    List<BlockPos> shape = this.getShape();
-    if (shape.size() == 0) {
-      return;
-    }
     //get and update target
-    BlockPos targetPos = getShapeTarget(shape);
+    BlockPos targetPos = getShapeTarget();
     shapeIndex++;
     //does it exist
     if (targetPos != null && tryHarvestSingle(this.world, targetPos)) {
+      //energy is per action
       energy.extractEnergy(cost, false);
     }
   }
 
-  private BlockPos getShapeTarget(List<BlockPos> shape) {
+  private BlockPos getShapeTarget() {
+    List<BlockPos> shape = this.getShape();
+    if (shape.size() == 0) {
+      return null;
+    }
     if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
       this.shapeIndex = 0;
     }
@@ -106,18 +101,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   //for harvest
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, 0);
+    int height = 0;
+    List<BlockPos> shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, height);
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
-    BlockPos targetPos = getShapeTarget(shape);
-    if (targetPos != null) {
-      shape.add(targetPos);
-    }
     return shape;
   }
 
@@ -138,39 +129,48 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (world.getBlockState(posCurrent).getBlock() instanceof StemBlock) {
       return false;
     }
+    //growable crops have an age block property
     IntegerProperty propInt = TileHarvester.getAgeProp(blockState);
     if (propInt == null || !(world instanceof ServerWorld)) {
       return false;
     }
-    int currentAge = blockState.get(propInt);
-    int minAge = Collections.min(propInt.getAllowedValues());
-    int maxAge = Collections.max(propInt.getAllowedValues());
+    final int currentAge = blockState.get(propInt);
+    final int minAge = Collections.min(propInt.getAllowedValues());
+    final int maxAge = Collections.max(propInt.getAllowedValues());
     if (minAge == maxAge || currentAge < maxAge) {
       //not grown
       return false;
     }
+    //we have an age property, so harvest now and run drops
     //update behavior to address Issue #1600
+    //
+    //
+    Item seed = null;
+    if (blockState.getBlock() instanceof CropsBlock) {
+      CropsBlock crop = (CropsBlock) blockState.getBlock();
+      seed = crop.getSeedsItem().asItem(); // accesstransformer.cfg
+    }
     List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, null);
-    drops.forEach((dropStack) -> {
-      if (dropStack.getItem() == blockState.getBlock().asItem()) {
+    for (ItemStack dropStack : drops) {
+      if (seed != null && dropStack.getItem() == seed) {
+        //we found the seed. steal one for replant
         dropStack.shrink(1);
+        seed = null;
       }
-      if (!dropStack.isEmpty()) {
-        UtilWorld.dropItemStackInWorld(world, posCurrent, dropStack);
-      }
-    });
-    blockState.spawnAdditionalDrops((ServerWorld) world, posCurrent, ItemStack.EMPTY);
+      //drop the rest
+      UtilWorld.dropItemStackInWorld(world, posCurrent, dropStack);
+    }
+    if (world instanceof ServerWorld) {
+      blockState.spawnAdditionalDrops((ServerWorld) world, posCurrent, ItemStack.EMPTY);
+    }
+    //now update age to zero after harvest
     BlockState newState = blockState.with(propInt, minAge);
-    world.setBlockState(posCurrent, newState);
-    world.notifyBlockUpdate(posCurrent, newState, newState, 3);
-    //        UtilWorld.flagUpdate(world, pos, this.getBlockState(), this.getBlockState());
-    //    this.markDirty();
-    return true;
+    boolean updated = world.setBlockState(posCurrent, newState);
+    return updated || drops.size() > 0;
   }
 
   private static boolean simpleBreakDrop(BlockState blockState) {
-    boolean breakit = blockState.isIn(DataTags.VINES)
-        || blockState.isIn(DataTags.CROPBLOCKS);
+    boolean breakit = blockState.isIn(DataTags.VINES) || blockState.isIn(DataTags.CROPBLOCKS);
     // the list tells all
     return breakit;
   }

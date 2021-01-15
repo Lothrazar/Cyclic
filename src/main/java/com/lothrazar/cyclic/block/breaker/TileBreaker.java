@@ -24,10 +24,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileBreaker extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    REDSTONE;
+    REDSTONE, TIMER;
   }
 
   static final int MAX = 64000;
+  public static final int TIMER_FULL = 500;
   public static IntValue POWERCONF;
   private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
@@ -63,9 +64,6 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
-    //    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-    //      return inventoryCap.cast();
-    //    }
     return super.getCapability(cap, side);
   }
 
@@ -86,6 +84,9 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
+      case TIMER:
+        timer = value;
+      break;
     }
   }
 
@@ -94,6 +95,8 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
     switch (Fields.values()[field]) {
       case REDSTONE:
         return this.needsRedstone;
+      case TIMER:
+        return timer;
     }
     return 0;
   }

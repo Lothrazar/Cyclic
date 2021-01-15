@@ -17,7 +17,6 @@ public class StorageBagContainer extends ContainerBase {
   public ItemStack bag;
   public int slot;
   public int slots;
-  //  public CompoundNBT nbt;
 
   public StorageBagContainer(int i, PlayerInventory playerInventory, PlayerEntity player) {
     super(ContainerScreenRegistry.storage_bag, i);

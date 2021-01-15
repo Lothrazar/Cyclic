@@ -23,7 +23,6 @@ public class StorageBagCapabilityProvider implements ICapabilitySerializable<Com
   });
 
   public StorageBagCapabilityProvider(ItemStack stack, int slots) {
-    //    this.bag = stack;
     this.slots = slots;
   }
 
