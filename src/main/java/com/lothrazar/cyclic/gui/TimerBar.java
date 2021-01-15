@@ -21,6 +21,7 @@ public class TimerBar {
   private int height = 14;
   public int guiLeft;
   public int guiTop;
+  //  public boolean showText = false;
 
   public TimerBar(ContainerScreen<?> parent, int x, int y, int cap) {
     this.parent = parent;
@@ -41,9 +42,9 @@ public class TimerBar {
         0, 0,
         (int) (width * pct), height,
         width, height);
-    Minecraft.getInstance().fontRenderer.drawString(ms, "[" + timer + "]",
-        guiLeft + x,
-        guiTop + y, 4209792);
+    Minecraft.getInstance().fontRenderer.drawString(ms, "[" + ((int) timer) + "]",
+        guiLeft + x + 2,
+        guiTop + y + 4, 4209792);
   }
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int curr) {
