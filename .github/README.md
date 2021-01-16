@@ -2,6 +2,10 @@
 # Cyclic [![](http://cf.way2muchnoise.eu/239286.svg)](https://minecraft.curseforge.com/projects/cyclic) [![](http://cf.way2muchnoise.eu/versions/239286.svg)](https://minecraft.curseforge.com/projects/cyclic)
 
 ![build](https://github.com/Lothrazar/Cyclic/workflows/build/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Twitter Badge](https://img.shields.io/badge/contact-twitter-blue.svg)](https://twitter.com/lothrazar)
+[![Discord](https://img.shields.io/discord/591914197219016707.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/uWZ3jf56fV)
+[![links](https://img.shields.io/badge/click-here-ff69b4.svg)](https://allmylinks.com/lothrazar)
 
 Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 
