@@ -169,7 +169,7 @@ repositories {
   maven { url = "https://modmaven.k-4u.nl"  }    
   maven { url = "https://maven.theillusivec4.top/"    }
   maven { url 'https://maven.blamejared.com' }
-  //  maven { url 'http://maven.mcmoddev.com'    }
+  maven { url 'http://maven.mcmoddev.com'    }
     
 }
 // Example for how to get properties into the manifest for reading by the runtime..
