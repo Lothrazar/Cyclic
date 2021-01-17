@@ -10,8 +10,6 @@ import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.Collections;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
@@ -148,7 +146,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     Item seed = null;
     if (blockState.getBlock() instanceof CropsBlock) {
       CropsBlock crop = (CropsBlock) blockState.getBlock();
-      seed = crop.getSeedsItem().asItem(); // accesstransformer.cfg
+      //     seed = crop.getSeedsItem().asItem(); // accesstransformer.cfg
     }
     List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, null);
     for (ItemStack dropStack : drops) {
@@ -229,7 +227,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
@@ -257,7 +255,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerHarvester(i, world, pos, playerInventory, playerEntity);
