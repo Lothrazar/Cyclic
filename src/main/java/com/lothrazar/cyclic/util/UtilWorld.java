@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.util;
 import com.lothrazar.cyclic.data.Const;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -30,7 +29,7 @@ public class UtilWorld {
     return Math.sqrt(xDistance * xDistance + zDistance * zDistance);
   }
 
-  public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, Direction facing, int max, @Nullable Block blockMatch) {
+  public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, Direction facing, int max, Block blockMatch) {
     BlockPos posToPlaceAt = new BlockPos(posIn);
     BlockPos posLoop = new BlockPos(posIn);
     //    world.getBlockState(posLoop).getBlock().isReplaceable(state, useContext)

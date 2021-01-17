@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -43,7 +42,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   @Override
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     tooltip.add(new TranslationTextComponent(UtilChat.lang(this.getTranslationKey() + ".tooltip")));
     String onoff = this.isOn(stack) ? "on" : "off";
     TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang("item.cantoggle.tooltip.info") + " " + UtilChat.lang("item.cantoggle.tooltip." + onoff));

@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.cable;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -27,7 +26,7 @@ public class CableWrench extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     String msg = TextFormatting.GREEN + UtilChat.lang(WrenchActionType.getName(stack));
     tooltip.add(new TranslationTextComponent(msg));
     super.addInformation(stack, worldIn, tooltip, flagIn);

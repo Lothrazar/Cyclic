@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import javax.annotation.Nullable;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -144,7 +143,7 @@ public class StorageBagItem extends ItemBase {
   }
 
   @Override
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     super.addInformation(stack, worldIn, tooltip, flagIn);
     CompoundNBT nbt = stack.getOrCreateTag();
     String pickupMode = nbt.getString(PickupMode.NBT);
@@ -175,9 +174,8 @@ public class StorageBagItem extends ItemBase {
     ScreenManager.registerFactory(ContainerScreenRegistry.storage_bag, StorageBagScreen::new);
   }
 
-  @Nullable
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
     return new StorageBagCapabilityProvider(stack, slots);
   }
 
@@ -193,7 +191,7 @@ public class StorageBagItem extends ItemBase {
   }
 
   @Override
-  public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+  public void readShareTag(ItemStack stack, CompoundNBT nbt) {
     super.readShareTag(stack, nbt);
   }
 
@@ -242,7 +240,6 @@ public class StorageBagItem extends ItemBase {
     return success;
   }
 
-  @Nullable
   private static ItemStackHandler getInventory(ItemStack bag) {
     if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent()) {
       return (ItemStackHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();

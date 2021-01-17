@@ -14,7 +14,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -127,7 +126,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,
-      World world, BlockPos targetPos, Hand hand, @Nullable Direction facing) throws Exception {
+      World world, BlockPos targetPos, Hand hand, Direction facing) throws Exception {
     if (fakePlayer == null) {
       return ActionResultType.FAIL;
     }

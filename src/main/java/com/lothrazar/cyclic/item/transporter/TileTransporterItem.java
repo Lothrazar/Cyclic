@@ -30,7 +30,6 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -130,7 +129,7 @@ public class TileTransporterItem extends ItemBase {
 
   @OnlyIn(Dist.CLIENT)
   @Override
-  public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack itemStack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
     if (itemStack.getTag() != null && itemStack.getTag().contains(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTag().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {

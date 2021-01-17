@@ -8,8 +8,6 @@ import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -76,14 +74,13 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerMiner(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }

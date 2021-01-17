@@ -4,8 +4,6 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -34,7 +32,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   ItemStackHandler inventory = new ItemStackHandler(9) {
 
     @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+    public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
@@ -45,14 +43,13 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerTransmit(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }

@@ -3,8 +3,6 @@ package com.lothrazar.cyclic.block.placer;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -77,14 +75,14 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
+
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerPlacer(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }

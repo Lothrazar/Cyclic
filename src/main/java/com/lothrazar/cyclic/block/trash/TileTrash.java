@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.trash;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import javax.annotation.Nonnull;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -31,7 +30,7 @@ public class TileTrash extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }

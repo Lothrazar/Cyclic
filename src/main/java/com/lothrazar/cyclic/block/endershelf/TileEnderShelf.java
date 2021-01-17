@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -58,9 +57,8 @@ public class TileEnderShelf extends TileEntityBase {
     return this.connectedShelves;
   }
 
-  @Nonnull
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     boolean isController = EnderShelfHelper.isController(this.getBlockState());
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       //enable next two lines for dev feature, extract random enchanted books from bottom of Controller

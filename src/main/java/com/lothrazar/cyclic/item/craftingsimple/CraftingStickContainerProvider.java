@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.craftingsimple;
 
-import javax.annotation.Nullable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -22,7 +21,6 @@ public class CraftingStickContainerProvider implements INamedContainerProvider {
     return new TranslationTextComponent("item.cyclic.crafting_stick");
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
     return new CraftingStickContainer(i, playerInventory, player, hand);

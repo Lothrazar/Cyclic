@@ -6,8 +6,6 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -115,7 +113,6 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerSolidifier(i, world, pos, playerInventory, playerEntity);
@@ -142,7 +139,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return tankWrapper.cast();
     }

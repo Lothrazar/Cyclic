@@ -3,8 +3,6 @@ package com.lothrazar.cyclic.block.breaker;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -60,7 +58,7 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
@@ -72,7 +70,6 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerBreaker(i, world, pos, playerInventory, playerEntity);

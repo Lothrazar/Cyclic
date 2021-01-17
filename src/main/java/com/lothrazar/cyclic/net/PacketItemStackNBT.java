@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.base.PacketBase;
 import java.util.function.Supplier;
-import javax.annotation.Nonnull;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ByteArrayNBT;
@@ -31,7 +30,7 @@ public class PacketItemStackNBT extends PacketBase {
 
   public PacketItemStackNBT() {}
 
-  public PacketItemStackNBT(@Nonnull ItemStack stack, int slot, byte type, @Nonnull StringNBT nbtKey, @Nonnull INBT nbtValue) {
+  public PacketItemStackNBT(ItemStack stack, int slot, byte type, StringNBT nbtKey, INBT nbtValue) {
     this.stack = stack;
     this.slot = slot;
     this.type = type;

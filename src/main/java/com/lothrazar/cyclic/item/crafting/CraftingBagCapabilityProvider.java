@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.item.crafting;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -17,7 +15,7 @@ public class CraftingBagCapabilityProvider implements ICapabilitySerializable<Co
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(slots) {
 
     @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+    public boolean isItemValid(int slot, ItemStack stack) {
       return !(stack.getItem() instanceof CraftingBagItem) && super.isItemValid(slot, stack);
     }
   });
@@ -26,9 +24,8 @@ public class CraftingBagCapabilityProvider implements ICapabilitySerializable<Co
     // is this needed?
   }
 
-  @Nonnull
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventory.cast();
     }

@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.block.cable.DirectionNullable;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -75,7 +74,6 @@ public class BlockCableItem extends CableBase {
     }
   }
 
-  @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new TileCableItem();
@@ -88,7 +86,7 @@ public class BlockCableItem extends CableBase {
   }
 
   @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
+  public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     stateIn = stateIn.with(EXTR, DirectionNullable.NONE);
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));

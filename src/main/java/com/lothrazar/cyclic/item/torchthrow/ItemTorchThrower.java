@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.torchthrow;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import javax.annotation.Nonnull;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +24,7 @@ public class ItemTorchThrower extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity shooter, @Nonnull Hand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity shooter, Hand hand) {
     shootMe(world, shooter, new EntityTorchBolt(shooter, world));
     shooter.getHeldItem(hand).damageItem(1, shooter, (p) -> {
       p.sendBreakAnimation(hand);

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.fluid.block;
 
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
@@ -83,7 +82,6 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     return shapes[state.get(LEVEL).intValue()];
   }
 
-  @Nullable
   @OnlyIn(Dist.CLIENT)
   public IParticleData getDripParticleData() {
     return ParticleTypes.DRIPPING_LAVA;

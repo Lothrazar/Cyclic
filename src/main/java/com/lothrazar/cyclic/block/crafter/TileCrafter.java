@@ -33,8 +33,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -219,7 +217,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     }
   }
 
-  @Nullable
   private ArrayList<ItemStack> getItemsInCraftingGrid() {
     ArrayList<ItemStack> itemStacks = new ArrayList<>();
     IItemHandler gridHandler = this.grid.orElse(null);
@@ -293,7 +290,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     }
   }
 
-  @Nullable
   private IRecipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
     if (world == null || world.getServer() == null) {
       return null;
@@ -452,14 +448,13 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerCrafter(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
@@ -469,8 +464,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     return super.getCapability(cap, side);
   }
 
-  @Nullable
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nonnull ItemHandlers type) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers type) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       switch (type) {
         case INPUT:

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.List;
-import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -87,7 +86,7 @@ public class UtilItemStack {
     }
   }
 
-  public static void dropItemStackMotionless(World world, BlockPos pos, @Nonnull ItemStack stack) {
+  public static void dropItemStackMotionless(World world, BlockPos pos, ItemStack stack) {
     if (stack.isEmpty()) {
       return;
     }

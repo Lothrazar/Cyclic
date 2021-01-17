@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.util.ITooltipFlag;
@@ -30,7 +29,7 @@ public class CarbonPaperItem extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (stack.hasTag()) {
       SignTileEntity fakeSign = new SignTileEntity();
       fakeSign.read(Blocks.OAK_SIGN.getDefaultState(), stack.getTag());

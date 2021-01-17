@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -70,7 +69,7 @@ public class UtilPlaceBlocks {
     return false;
   }
 
-  public static boolean placeStateSafe(World world, @Nullable PlayerEntity player,
+  public static boolean placeStateSafe(World world, PlayerEntity player,
       BlockPos placePos, BlockState placeState) {
     return placeStateSafe(world, player, placePos, placeState, false);
   }
@@ -85,7 +84,7 @@ public class UtilPlaceBlocks {
    * @param playSound
    * @return
    */
-  public static boolean placeStateSafe(World world, @Nullable PlayerEntity player, BlockPos placePos, BlockState placeState, boolean playSound) {
+  public static boolean placeStateSafe(World world, PlayerEntity player, BlockPos placePos, BlockState placeState, boolean playSound) {
     if (placePos == null) {
       return false;
     }
@@ -163,7 +162,6 @@ public class UtilPlaceBlocks {
     return false;
   }
 
-  @Nullable
   public static Direction findFirstSolidFace(World world, BlockPos blockPos, Direction prefer) {
     Direction actual = null;
     Direction[] alternatives = { Direction.DOWN, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH, Direction.UP };

@@ -2,8 +2,6 @@ package com.lothrazar.cyclic.block.workbench;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,13 +24,11 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
   private LazyOptional<IItemHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(9));
   private LazyOptional<IItemHandler> output = LazyOptional.of(() -> new ItemStackHandler(1));
 
-  @Nonnull
   @Override
   public ITextComponent getDisplayName() {
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerWorkbench(i, world, pos, playerInventory, playerEntity);
@@ -46,16 +42,15 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
     super(TileRegistry.workbench);
   }
 
-  @Nonnull
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventory.cast();
     }
     return super.getCapability(cap, side);
   }
 
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nonnull ItemHandlers handler) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers handler) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       if (handler == ItemHandlers.GRID) {
         return inventory.cast();

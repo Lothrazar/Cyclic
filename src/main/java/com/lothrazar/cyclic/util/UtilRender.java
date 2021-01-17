@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -183,7 +181,7 @@ public class UtilRender {
    * 
    * See MekanismRenderer.
    **/
-  public static void renderObject(@Nullable Model3D object, @Nonnull MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
+  public static void renderObject(Model3D object, MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
     if (object != null) {
       RenderResizableCuboid.INSTANCE.renderCube(object, matrix, buffer, argb, light);
     }
@@ -196,7 +194,7 @@ public class UtilRender {
    * @param fluid
    * @return
    */
-  public static int calculateGlowLight(int light, @Nonnull FluidStack fluid) {
+  public static int calculateGlowLight(int light, FluidStack fluid) {
     return fluid.isEmpty() ? light : calculateGlowLight(light, fluid.getFluid().getAttributes().getLuminosity(fluid));
   }
 
@@ -213,14 +211,14 @@ public class UtilRender {
     return LightTexture.packLight(Math.max(blockLight, glow), Math.max(skyLight, glow));
   }
 
-  public static int getColorARGB(@Nonnull FluidStack fluidStack, float fluidScale) {
+  public static int getColorARGB(FluidStack fluidStack, float fluidScale) {
     if (fluidStack.isEmpty()) {
       return -1;
     }
     return getColorARGB(fluidStack);
   }
 
-  private static int getColorARGB(@Nonnull FluidStack fluidStack) {
+  private static int getColorARGB(FluidStack fluidStack) {
     return fluidStack.getFluid().getAttributes().getColor(fluidStack);
   }
 

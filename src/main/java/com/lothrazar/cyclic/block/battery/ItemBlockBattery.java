@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.battery;
 
 import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;
@@ -37,7 +36,7 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     if (storage != null) {
       TranslationTextComponent t = new TranslationTextComponent(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
@@ -65,7 +64,7 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
     return new EnergyCapabilityItemStack(stack, TileBattery.MAX);
   }
 }

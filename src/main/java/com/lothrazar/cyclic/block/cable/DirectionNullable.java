@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable;
 
-import javax.annotation.Nullable;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
 
@@ -27,7 +26,6 @@ public enum DirectionNullable implements IStringSerializable {
     return values()[d.ordinal()];
   }
 
-  @Nullable
   public Direction direction() {
     if (this == NONE) {
       return null;

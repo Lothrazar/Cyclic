@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
-import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluid;
@@ -35,7 +34,7 @@ public class UtilFluid {
    * @param type
    * @return
    */
-  public static TextureAtlasSprite getBaseFluidTexture(@Nonnull Fluid fluid, @Nonnull FluidType type) {
+  public static TextureAtlasSprite getBaseFluidTexture(Fluid fluid, FluidType type) {
     ResourceLocation spriteLocation;
     if (type == FluidType.STILL) {
       spriteLocation = fluid.getAttributes().getStillTexture();
@@ -50,7 +49,7 @@ public class UtilFluid {
     return Minecraft.getInstance().getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(spriteLocation);
   }
 
-  public static Model3D getFluidModel(@Nonnull FluidStack fluid, int stage) {
+  public static Model3D getFluidModel(FluidStack fluid, int stage) {
     if (CACHED_FLUIDS.containsKey(fluid) && CACHED_FLUIDS.get(fluid).containsKey(stage)) {
       return CACHED_FLUIDS.get(fluid).get(stage);
     }

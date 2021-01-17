@@ -8,8 +8,6 @@ import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import java.util.function.Predicate;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -68,7 +66,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return LazyOptional.of(() -> tank).cast();
     }
@@ -187,7 +185,6 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     return 0;
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerExpPylon(i, world, pos, playerInventory, playerEntity);

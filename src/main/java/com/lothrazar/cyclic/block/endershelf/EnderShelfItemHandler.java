@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.endershelf;
 import com.lothrazar.cyclic.net.PacketTileInventory;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEnchant;
-import javax.annotation.Nonnull;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.Enchantments;
@@ -36,7 +35,6 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     return returnStack;
   }
 
-  @Nonnull
   @Override
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
     if (this.shelf.getWorld() == null) {
@@ -57,20 +55,19 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   }
 
   @Override
-  public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+  public boolean isItemValid(int slot, ItemStack stack) {
     return stack.getItem() == Items.ENCHANTED_BOOK &&
         EnchantedBookItem.getEnchantments(stack).size() == 1 &&
         (this.getStackInSlot(slot).isEmpty() || UtilEnchant.doBookEnchantmentsMatch(stack, this.getStackInSlot(slot)));
   }
 
   @Override
-  protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+  protected int getStackLimit(int slot, ItemStack stack) {
     return 64;
   }
 
-  @Nonnull
   @Override
-  public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+  public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
     if (shelf == null || shelf.getWorld() == null) {
       return stack;
     }

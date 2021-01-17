@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
@@ -128,7 +127,7 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
-  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity ent, ItemStack stack) {
+  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
     super.harvestBlock(world, player, pos, state, ent, stack);
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {

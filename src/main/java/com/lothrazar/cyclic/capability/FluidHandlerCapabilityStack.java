@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.capability;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -17,7 +15,6 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
 
   public static final String FLUID_NBT_KEY = FluidHandlerItemStack.FLUID_NBT_KEY;
   private final LazyOptional<IFluidHandlerItem> holder = LazyOptional.of(() -> this);
-  @Nonnull
   protected ItemStack container;
   protected int capacity;
 
@@ -27,18 +24,16 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
    * @param capacity
    *          The maximum capacity of this fluid tank.
    */
-  public FluidHandlerCapabilityStack(@Nonnull ItemStack container, int capacity) {
+  public FluidHandlerCapabilityStack(ItemStack container, int capacity) {
     this.container = container;
     this.capacity = capacity;
   }
 
-  @Nonnull
   @Override
   public ItemStack getContainer() {
     return container;
   }
 
-  @Nonnull
   public FluidStack getFluid() {
     CompoundNBT tagCompound = container.getTag();
     if (tagCompound == null || !tagCompound.contains(FLUID_NBT_KEY)) {
@@ -61,7 +56,6 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
     return 1;
   }
 
-  @Nonnull
   @Override
   public FluidStack getFluidInTank(int tank) {
     return getFluid();
@@ -73,7 +67,7 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
   }
 
   @Override
-  public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
+  public boolean isFluidValid(int tank, FluidStack stack) {
     return true;
   }
 
@@ -105,7 +99,6 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
     }
   }
 
-  @Nonnull
   @Override
   public FluidStack drain(FluidStack resource, FluidAction action) {
     if (container.getCount() != 1 || resource.isEmpty() || !resource.isFluidEqual(getFluid())) {
@@ -114,7 +107,6 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
     return drain(resource.getAmount(), action);
   }
 
-  @Nonnull
   @Override
   public FluidStack drain(int maxDrain, FluidAction action) {
     if (container.getCount() != 1 || maxDrain <= 0) {
@@ -155,8 +147,7 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
   }
 
   @Override
-  @Nonnull
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+  public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
     if (CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY == capability) {
       return holder.cast();
     }

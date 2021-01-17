@@ -32,8 +32,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import java.util.function.Predicate;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -79,7 +77,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   ItemStackHandler inventory = new ItemStackHandler(6) {
 
     @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+    public boolean isItemValid(int slot, ItemStack stack) {
       return Block.getBlockFromItem(stack.getItem()) == BlockRegistry.peat_unbaked;
     }
   };
@@ -92,7 +90,6 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerPeatFarm(i, world, pos, playerInventory, playerEntity);
@@ -240,7 +237,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }

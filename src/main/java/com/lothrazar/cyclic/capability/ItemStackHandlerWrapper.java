@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.capability;
 
-import javax.annotation.Nonnull;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -16,8 +15,7 @@ public class ItemStackHandlerWrapper extends ItemStackHandler {
   }
 
   @Override
-  @Nonnull
-  public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+  public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
     if (slot >= input.getSlots()) {
       return stack;
     }
@@ -25,7 +23,6 @@ public class ItemStackHandlerWrapper extends ItemStackHandler {
   }
 
   @Override
-  @Nonnull
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
     if (slot >= output.getSlots()) {
       return ItemStack.EMPTY;

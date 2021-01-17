@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item.crafting;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import javax.annotation.Nullable;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -33,9 +32,8 @@ public class CraftingBagItem extends ItemBase {
     ScreenManager.registerFactory(ContainerScreenRegistry.crafting_bag, CraftingBagScreen::new);
   }
 
-  @Nullable
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
     return new CraftingBagCapabilityProvider();
   }
 }

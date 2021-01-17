@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import javax.annotation.Nullable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -15,7 +14,6 @@ public class StorageBagContainerProvider implements INamedContainerProvider {
     return new TranslationTextComponent("cyclic.items.storage_bag");
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
     return new StorageBagContainer(i, playerInventory, player);

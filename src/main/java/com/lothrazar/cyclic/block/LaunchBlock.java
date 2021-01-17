@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilEntity;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -33,7 +32,7 @@ public class LaunchBlock extends BlockBase {
   }
 
   @Override
-  public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
+  public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
     return false;
   }
 

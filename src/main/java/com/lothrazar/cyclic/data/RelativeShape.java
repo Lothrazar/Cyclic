@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 
 public class RelativeShape {
 
-  //  @Nullable
   private String structure = null;
   //corner small always has the lowest Y point, 
   //if same y level, whoever has smallest sum of x+z, closest to negative infinity

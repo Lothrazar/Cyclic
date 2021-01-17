@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.endershelf;
 import com.lothrazar.cyclic.util.UtilEnchant;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,9 +18,8 @@ public class EnderControllerItemHandler extends ItemStackHandler {
     this.controller = controller;
   }
 
-  @Nonnull
   @Override
-  public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+  public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
     ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
     remaining = insertItemElsewhere(remaining, false, simulate); //first try to put it in a matching slot
     if (!remaining.isEmpty()) {
@@ -68,7 +66,6 @@ public class EnderControllerItemHandler extends ItemStackHandler {
     return stack;
   }
 
-  @Nonnull
   @Override
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
     return extractItemElsewhere(amount, simulate);

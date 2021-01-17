@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.storagebag;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import javax.annotation.Nonnull;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -60,7 +59,6 @@ public class StorageBagContainer extends ContainerBase {
     return true;
   }
 
-  @Nonnull
   @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {

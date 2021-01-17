@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.block.detectorentity.CompareType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -96,7 +95,6 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerDetectorItem(i, world, pos, playerInventory, playerEntity);

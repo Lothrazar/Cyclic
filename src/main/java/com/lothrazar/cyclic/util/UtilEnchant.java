@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -29,7 +28,7 @@ public class UtilEnchant {
     return getEffects(null);
   }
 
-  public static List<Effect> getEffects(@Nullable EffectType effectType) {
+  public static List<Effect> getEffects(EffectType effectType) {
     Collection<Effect> effects = ForgeRegistries.POTIONS.getValues();
     List<Effect> effectsList = new ArrayList<>();
     for (Effect effect : effects) {

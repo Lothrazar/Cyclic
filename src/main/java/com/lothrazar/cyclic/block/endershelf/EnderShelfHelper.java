@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -84,7 +83,6 @@ public class EnderShelfHelper {
     return shelves;
   }
 
-  @Nullable
   public static EnderShelfItemHandler getShelfHandler(TileEntity te) {
     if (te != null &&
         te.getBlockState().getBlock().getRegistryName() != null &&
@@ -96,7 +94,6 @@ public class EnderShelfHelper {
     return null;
   }
 
-  @Nullable
   public static EnderControllerItemHandler getControllerHandler(TileEntity te) {
     if (te != null &&
         te.getBlockState().getBlock().getRegistryName() != null &&

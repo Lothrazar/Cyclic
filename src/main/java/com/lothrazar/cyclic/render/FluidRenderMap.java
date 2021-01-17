@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.render;
 
-import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluid;
@@ -28,7 +27,7 @@ public class FluidRenderMap<V> extends Object2ObjectOpenCustomHashMap<FluidStack
     super(FluidHashStrategy.INSTANCE);
   }
 
-  public static TextureAtlasSprite getFluidTexture(@Nonnull FluidStack fluidStack, @Nonnull FluidType type) {
+  public static TextureAtlasSprite getFluidTexture(FluidStack fluidStack, FluidType type) {
     Fluid fluid = fluidStack.getFluid();
     ResourceLocation spriteLocation;
     if (type == FluidType.STILL) {

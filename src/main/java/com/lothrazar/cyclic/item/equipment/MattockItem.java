@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.equipment;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -87,7 +86,7 @@ public class MattockItem extends ToolItem {
   }
 
   @Override
-  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
+  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, PlayerEntity player, BlockState blockState) {
     return Math.max(Items.DIAMOND_PICKAXE.getHarvestLevel(stack, tool, player, blockState),
         Items.DIAMOND_SHOVEL.getHarvestLevel(stack, tool, player, blockState));
   }

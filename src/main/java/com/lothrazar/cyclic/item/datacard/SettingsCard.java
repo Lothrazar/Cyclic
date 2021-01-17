@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +32,7 @@ public class SettingsCard extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     super.addInformation(stack, worldIn, tooltip, flagIn);
     CompoundNBT stackdata = stack.getOrCreateTag();
     if (stackdata.contains("id")) {

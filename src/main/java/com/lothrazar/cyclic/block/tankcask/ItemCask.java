@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.tankcask;
 
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;
@@ -72,7 +71,7 @@ public class ItemCask extends BlockItem {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     IFluidHandler storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
@@ -90,7 +89,7 @@ public class ItemCask extends BlockItem {
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundNBT nbt) {
     return new FluidHandlerCapabilityStack(stack, TileCask.CAPACITY);
   }
 }

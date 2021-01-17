@@ -28,7 +28,6 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -77,7 +76,6 @@ public class EnchantAutoSmelt extends EnchantBase {
       super(conditionsIn);
     }
 
-    @Nonnull
     @Override
     public List<ItemStack> doApply(List<ItemStack> originalLoot, LootContext context) {
       List<ItemStack> newLoot = new ArrayList<>();

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import javax.annotation.Nonnull;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.FluidState;
@@ -105,7 +104,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (side != null && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
         return flow.get(side).cast();

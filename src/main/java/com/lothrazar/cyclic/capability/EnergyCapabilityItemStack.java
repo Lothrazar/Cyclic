@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.capability;
 
-import javax.annotation.Nullable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -53,7 +52,6 @@ public class EnergyCapabilityItemStack implements ICapabilityProvider {
     return "EnergyCapabilityItemStack [energy=" + energy + ", max=" + max + "]";
   }
 
-  @Nullable
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
     if (CapabilityEnergy.ENERGY == capability) {

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.builder;
 
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -64,7 +63,6 @@ public enum BuilderActionType {
     wand.getOrCreateTag().put(NBTBLOCKSTATE, encoded);
   }
 
-  @Nullable
   public static BlockState getBlockState(ItemStack wand) {
     if (!wand.getOrCreateTag().contains(NBTBLOCKSTATE)) {
       return null;

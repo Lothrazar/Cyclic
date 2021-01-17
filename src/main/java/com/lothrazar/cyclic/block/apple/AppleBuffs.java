@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.datafixers.util.Pair;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +24,7 @@ public class AppleBuffs extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (this.getFood() != null && this.getFood().getEffects() != null) {
       List<Pair<EffectInstance, Float>> eff = this.getFood().getEffects();
       for (Pair<EffectInstance, Float> entry : eff) {

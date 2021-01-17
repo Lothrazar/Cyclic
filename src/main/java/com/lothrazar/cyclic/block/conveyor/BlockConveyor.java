@@ -6,7 +6,6 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -279,14 +278,13 @@ public class BlockConveyor extends BlockBase {
     return true;
   }
 
-  @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new TileConveyor();
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     //decide properties
     ConveyorSpeed speed = ConveyorSpeed.MEDIUM;
     ConveyorType type = ConveyorType.STRAIGHT;

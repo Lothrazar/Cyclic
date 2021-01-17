@@ -5,8 +5,6 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.OffsetEnum;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -46,7 +44,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   ItemStackHandler inventory = new ItemStackHandler(4) {
 
     @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+    public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
@@ -58,7 +56,7 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
@@ -70,7 +68,6 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-  @Nullable
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerLaser(i, world, pos, playerInventory, playerEntity);
