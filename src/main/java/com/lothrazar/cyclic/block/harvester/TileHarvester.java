@@ -145,7 +145,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     //
     Item seed = null;
     if (blockState.getBlock() instanceof CropsBlock) {
-      CropsBlock crop = (CropsBlock) blockState.getBlock();
+   //   CropsBlock crop = (CropsBlock) blockState.getBlock();
       //     seed = crop.getSeedsItem().asItem(); // accesstransformer.cfg
     }
     List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, null);
