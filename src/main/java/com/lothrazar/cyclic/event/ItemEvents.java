@@ -4,18 +4,19 @@ import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.item.HeartItem;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,9 @@ public class ItemEvents {
   public void onPlayerCloneDeath(PlayerEvent.Clone event) {
     IAttributeInstance original = event.getOriginal().getAttribute(SharedMonsterAttributes.MAX_HEALTH);
     if (original != null) {
-      UtilEntity.setMaxHealth(event.getPlayer(), original.getValue());
+    	AttributeModifier healthModifier = original.getModifier(HeartItem.healthModifierUuid);
+        if (healthModifier != null)
+          event.getPlayer().getAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(healthModifier);
     }
   }
   //
