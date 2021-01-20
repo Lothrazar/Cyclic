@@ -130,7 +130,7 @@
 
     "block.cyclic.conveyor": "Conveyor Belt",
     "block.cyclic.conveyor.tooltip": "Conveyor with many settings to move entities",
-    "block.cyclic.conveyor.guide": "Moves all entities standing on it.   Many properties of this block are stored in the blockstate such as type, speed, and dye color.  Types include straight, corner, and up/down ramps.  To toggle the type, place in world and use the wooden wrench on the placed rail, this toggles the type.",
+    "block.cyclic.conveyor.guide": "Moves all entities standing on it.   Many properties of this block are stored in the blockstate such as type, speed, and dye color.  Types include straight, corner, and up/down ramps.  To toggle the type, place in world and use the $(l:items/wrench)Wooden Wrench$(/l) on the placed rail, this toggles the type.",
     "block.cyclic.conveyor.guide0": "Hold a redstone torch and interact to toggle the speed.   Hold dye and use it on the block to toggle the color.  These updates propogate to nearby connected rails.  (check F3 to view these properties in detail) ",
 
 
