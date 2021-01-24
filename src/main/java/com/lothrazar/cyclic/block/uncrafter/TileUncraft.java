@@ -5,9 +5,11 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilString;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,11 +18,9 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -82,9 +82,15 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     }
     IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
     if (match != null) {
-      this.status = UncraftStatusEnum.MATCH;
-      uncraftRecipe(match);
-      energy.extractEnergy(cost, false);
+      if (uncraftRecipe(match)) {
+        this.status = UncraftStatusEnum.MATCH;
+        //pay cost
+        inventory.extractItem(0, match.getRecipeOutput().getCount(), false);
+        energy.extractEnergy(cost, false);
+      }
+      else {
+        this.status = UncraftStatusEnum.NORECIPE;
+      }
       timer = TIMER.get();
     }
   }
@@ -132,25 +138,19 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     return super.write(tag);
   }
 
-  private void uncraftRecipe(IRecipe<?> match) {
-    List<ItemStack> result = new ArrayList<>();
-    for (Ingredient ing : match.getIngredients()) {
-      if (ing.getMatchingStacks().length == 0) {
-        continue;
-      }
-      //ok
-      int index = MathHelper.nextInt(world.rand, 0, ing.getMatchingStacks().length - 1);
-      index = 0;
-      //non random
-      result.add(ing.getMatchingStacks()[index]);
+  private boolean uncraftRecipe(IRecipe<?> match) {
+    List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient ->
+        Arrays.stream(ingredient.getMatchingStacks())
+            .filter(stack -> !stack.hasContainerItem())
+            .findAny()
+            .map(Stream::of)
+            .orElseGet(Stream::empty))
+        .collect(Collectors.toList());
+    if (result.isEmpty()) {
+      return false;
     }
     for (ItemStack r : result) {
-      if (r.isEmpty()) {
-        continue;
-      }
-      //pay cost 
-      inventory.extractItem(0, match.getRecipeOutput().getCount(), false);
-      //give result items 
+      //give result items
       for (int i = 1; i < inventory.getSlots(); i++) {
         if (r.isEmpty()) {
           break;
@@ -158,6 +158,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         r = inventory.insertItem(i, r.copy(), false);
       }
     }
+    return true;
   }
 
   public IRecipe<?> findMatchingRecipe(World world, ItemStack dropMe) {
