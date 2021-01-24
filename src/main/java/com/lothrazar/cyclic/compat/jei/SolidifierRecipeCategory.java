@@ -82,7 +82,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     guiItemStacks.init(0, true, 33, 6);
     guiItemStacks.init(1, true, 33, 6 + Const.SQ);
     guiItemStacks.init(2, true, 33, 6 + 2 * Const.SQ);
-    guiItemStacks.init(3, true, 104, 6 + Const.SQ);
+    guiItemStacks.init(3, false, 104, 6 + Const.SQ);
     guiItemStacks.set(3, recipe.getRecipeOutput());
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     List<ItemStack> input = null;
