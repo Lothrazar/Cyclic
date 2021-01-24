@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -102,10 +103,60 @@ public class ContainerCrafter extends ContainerBase {
   }
 
   @Override
+  public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    //30-65 is players
+    //29 is the preview slot
+    //19-28 is the right output
+    //10-18 is crafting grid
+    //0-9 is input leftc
+    //.. almost //... 
+    ModCyclic.LOGGER.info(index + "  ||  end inv on transfer ||" + endInv);
+//    if (index >= 10 || index <= 18) {
+//      return ItemStack.EMPTY;
+//    }
+    //    return super.transferStackInSlot(playerIn, index);
+    //if last machine slot is 17, endInv is 18
+    int playerStart = endInv;
+    int playerEnd = endInv + PLAYERSIZE;
+    //standard logic based on start/end
+    ItemStack itemstack = ItemStack.EMPTY;
+    Slot slot = this.inventorySlots.get(index);
+    if (slot != null && slot.getHasStack()) {
+      ItemStack stack = slot.getStack();    
+      itemstack = stack.copy();
+      if (index < TileCrafter.IO_SIZE) {//was endInv
+        if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
+          ModCyclic.LOGGER.info("to player from < iosize");
+          return ItemStack.EMPTY;
+        }
+      }
+      else if (index <= playerEnd && !this.mergeItemStack(stack, startInv, endInv, false)) {
+        ModCyclic.LOGGER.info("less than playerend and merge to self start-end");
+        return ItemStack.EMPTY;
+      }
+      if (stack.isEmpty()) {
+        slot.putStack(ItemStack.EMPTY);
+      }
+      else {
+        slot.onSlotChanged();
+      }
+      if (stack.getCount() == itemstack.getCount()) {
+        return ItemStack.EMPTY;
+      }
+      slot.onTake(playerIn, stack);
+    }
+    return itemstack;
+  }
+
+  @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+   
+    ModCyclic.LOGGER.info(slotId + "    slotClick ");//s+TileCrafter.GRID_SLOT_START +"|"+TileCrafter.GRID_SLOT_STOP);
+  
     if (slotId == TileCrafter.PREVIEW_SLOT) {
       return ItemStack.EMPTY;
     }
+    // [ 10 - 18 ]
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
       ItemStack ghostStack = player.inventory.getItemStack().copy();
       ghostStack.setCount(1);

@@ -195,7 +195,15 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
               if (recipeLeftover.getContainerItem().isEmpty() == false) {
                 //
                 ModCyclic.LOGGER.info(i + "getContainerItem " + recipeLeftover.getContainerItem());
-                this.input.orElse(null).insertItem(1, recipeLeftover.getContainerItem(), false);
+                //not just 1
+                ItemStack result = recipeLeftover.getContainerItem().copy();
+                for (int j = 0; j < inputHandler.getSlots(); j++) {
+                  //test it
+                  result = this.inputHandler.insertItem(j, result, false);
+                  if (result.isEmpty()) {
+                    break;
+                  }
+                }
               }
               //its not empty
               ItemStack actualLeftovers = itemStacksInGridBackup.get(i);
@@ -367,7 +375,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         try {
           int indexInArray = i + j * 3;
           ItemStack itemStack = itemStacks.get(indexInArray);
-          ModCyclic.LOGGER.info(pos + " craftMatrix  i=" + i + "  j=" + j + "  " + itemStack);
+//          ModCyclic.LOGGER.info(pos + " craftMatrix  i=" + i + "  j=" + j + "  " + itemStack);
           craftMatrix.setInventorySlotContents(indexInArray, itemStack.copy());
         }
         catch (Exception e) {
@@ -377,7 +385,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       }
     }
     boolean matched = recipe.matches(craftMatrix, world);
-    ModCyclic.LOGGER.info(recipe.getRecipeOutput() + " -0 matched recipe and getRemainingItems " + matched);
+//    ModCyclic.LOGGER.info(recipe.getRecipeOutput() + " -0 matched recipe and getRemainingItems " + matched);
     return matched;
     //    return false;
     //    int recipeSize = recipe.getWidth() * recipe.getHeight();
