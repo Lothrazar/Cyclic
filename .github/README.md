@@ -36,4 +36,4 @@ Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 Looking to host a Modded server? Get a discount with my promo code
 
 
-[![Nodecraft Server](https://nodecraft.com/assets/images/partners/loth/mashup.png)](https://nodecraft.com/?utm_campaign=partners&utm_source=loth&utm_medium=curse)
+[![Nodecraft Server](https://nodecraft.com/assets/images/partners/loth/mashup.png)](https://nodecraft.com/r/loth)
