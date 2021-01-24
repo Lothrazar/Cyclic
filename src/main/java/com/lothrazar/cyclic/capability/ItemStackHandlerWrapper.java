@@ -18,8 +18,8 @@ import net.minecraftforge.items.ItemStackHandler;
 public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifiable, INBTSerializable<CompoundNBT> {
   public static final String NBT_INPUT = "Input";
   public static final String NBT_OUTPUT = "Output";
-  private final ItemStackHandler input;
-  private final ItemStackHandler output;
+  protected final ItemStackHandler input;
+  protected final ItemStackHandler output;
 
   public ItemStackHandlerWrapper(ItemStackHandler input, ItemStackHandler output) {
     this.input = input;
@@ -29,7 +29,7 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
   /**
    * Calls with the correct handler, slot for the handler and if it matches the input handler.
    */
-  private <T> T withHandler(int externalSlot, HandlerCallback<T> callback) {
+  protected <T> T withHandler(int externalSlot, HandlerCallback<T> callback) {
     int numInputSlots = input.getSlots();
     boolean isInput = externalSlot < numInputSlots;
     int internalSlot = isInput ? externalSlot : externalSlot - numInputSlots;
@@ -42,7 +42,7 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
    *
    * @see ItemStackHandlerWrapper#withHandler(int, HandlerCallback)
    */
-  private void withCorrectHandlerV(int slot, HandlerCallbackVoid func) {
+  protected void withHandlerV(int slot, HandlerCallbackVoid func) {
     withHandler(slot, (h, s, isInput) -> {
       func.apply(h, s, isInput);
       return false; // Because generics can't be void >.<
@@ -87,7 +87,7 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
 
   @Override
   public void setStackInSlot(int slot, ItemStack stack) {
-    withCorrectHandlerV(slot, (h, s, isInput) -> h.setStackInSlot(s, stack));
+    withHandlerV(slot, (h, s, isInput) -> h.setStackInSlot(s, stack));
   }
 
   @Override
@@ -105,12 +105,12 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
   }
 
   @FunctionalInterface
-  private interface HandlerCallback<T> {
-    T apply(ItemStackHandler handler, int slot, boolean isOutput);
+  protected interface HandlerCallback<T> {
+    T apply(ItemStackHandler handler, int slot, boolean isInput);
   }
 
   @FunctionalInterface
-  private interface HandlerCallbackVoid {
-    void apply(ItemStackHandler handler, int slot, boolean isOutput);
+  protected interface HandlerCallbackVoid {
+    void apply(ItemStackHandler handler, int slot, boolean isInput);
   }
 }
