@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.HashSet;
@@ -177,22 +176,6 @@ public class StorageBagItem extends ItemBase {
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
     return new StorageBagCapabilityProvider(stack, slots);
-  }
-
-  @Override
-  public CompoundNBT getShareTag(ItemStack stack) {
-    CompoundNBT tag = super.getShareTag(stack);
-    ItemStackHandler handler = getInventory(stack);
-    if (handler != null) {
-      tag.merge(handler.serializeNBT());
-      ModCyclic.LOGGER.info("getShareTag capability merge" + tag);
-    }
-    return tag;
-  }
-
-  @Override
-  public void readShareTag(ItemStack stack, CompoundNBT nbt) {
-    super.readShareTag(stack, nbt);
   }
 
   @Override
