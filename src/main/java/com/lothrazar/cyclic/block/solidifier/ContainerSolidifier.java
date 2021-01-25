@@ -27,7 +27,7 @@ public class ContainerSolidifier extends ContainerBase {
     addSlot(new SlotItemHandler(h, 0, 37, 17));
     addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
     addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
-    addSlot(new SlotItemHandler(tile.outputSlot, 0, 121, 31));
+    addSlot(new SlotItemHandler(tile.outputSlots, 0, 121, 31));
     this.endInv = h.getSlots() + 1; //for shiftclick out of the out slot
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileSolidifier.Fields.values().length);

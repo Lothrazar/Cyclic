@@ -41,14 +41,12 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank;
   ItemStackHandler inputSlots = new ItemStackHandler(3);
-  ItemStackHandler outputSlot = new ItemStackHandler(1);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
+  ItemStackHandler outputSlots = new ItemStackHandler(1);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inputSlots);
-  //  private final LazyOptional<IItemHandler> outputSlotWrapper = LazyOptional.of(() -> outputSlot);
 
   static enum Fields {
     REDSTONE, TIMER, RENDER;
@@ -123,7 +121,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     tank.readFromNBT(tag.getCompound("fluid"));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inputSlots.deserializeNBT(tag.getCompound(NBTINV));
-    outputSlot.deserializeNBT(tag.getCompound("invoutput"));
+    outputSlots.deserializeNBT(tag.getCompound("invoutput"));
     super.read(bs, tag);
   }
 
@@ -134,7 +132,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     tag.put("fluid", fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inputSlots.serializeNBT());
-    tag.put("invoutput", outputSlot.serializeNBT());
+    tag.put("invoutput", outputSlots.serializeNBT());
     return super.write(tag);
   }
 
@@ -182,7 +180,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test.getAmount() == this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
-      if (!outputSlot.insertItem(0, currentRecipe.getRecipeOutput(), true).isEmpty()) {
+      if (!outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), true).isEmpty()) {
         return false;
         //there was non-empty left after this, so no room for all
       }
@@ -191,7 +189,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
       tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
-      outputSlot.insertItem(0, currentRecipe.getRecipeOutput(), false);
+      outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), false);
       return true;
     }
     return false;

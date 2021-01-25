@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.uncrafter;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilString;
 import java.util.Arrays;
@@ -37,19 +38,21 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileUncraft extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  static enum Fields {
+    REDSTONE, STATUS, TIMER;
+  }
+
   static final int MAX = 64000;
   public static IntValue POWERCONF;
   public static BooleanValue IGNORE_NBT;
   public static ConfigValue<List<String>> IGNORELIST;
   public static ConfigValue<Integer> TIMER;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  ItemStackHandler inventory = new ItemStackHandler(1 + 8 + 8);
+  ItemStackHandler inputSlots = new ItemStackHandler(1);
+  ItemStackHandler outputSlots = new ItemStackHandler(8 * 2);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-
-  static enum Fields {
-    REDSTONE, STATUS;
-  }
 
   public TileUncraft() {
     super(TileRegistry.uncrafter);
@@ -58,7 +61,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   @Override
   public void tick() {
     this.syncEnergy();
-    ItemStack dropMe = inventory.getStackInSlot(0).copy();
+    ItemStack dropMe = inputSlots.getStackInSlot(0).copy();
     if (dropMe.isEmpty()) {
       this.status = UncraftStatusEnum.EMPTY;
       return;
@@ -139,23 +142,22 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   }
 
   private boolean uncraftRecipe(IRecipe<?> match) {
-    List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient ->
-        Arrays.stream(ingredient.getMatchingStacks())
-            .filter(stack -> !stack.hasContainerItem())
-            .findAny()
-            .map(Stream::of)
-            .orElseGet(Stream::empty))
+    List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getMatchingStacks())
+        .filter(stack -> !stack.hasContainerItem())
+        .findAny()
+        .map(Stream::of)
+        .orElseGet(Stream::empty))
         .collect(Collectors.toList());
     if (result.isEmpty()) {
       return false;
     }
     for (ItemStack r : result) {
       //give result items
-      for (int i = 1; i < inventory.getSlots(); i++) {
+      for (int i = 0; i < outputSlots.getSlots(); i++) {
         if (r.isEmpty()) {
           break;
         }
-        r = inventory.insertItem(i, r.copy(), false);
+        r = outputSlots.insertItem(i, r.copy(), false);
       }
     }
     return true;
@@ -216,6 +218,8 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         return this.needsRedstone;
       case STATUS:
         return this.status.ordinal();
+      case TIMER:
+        return timer;
     }
     return 0;
   }
@@ -228,6 +232,9 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       break;
       case STATUS:
         this.status = UncraftStatusEnum.values()[value];
+      break;
+      case TIMER:
+        timer = value;
       break;
     }
   }
