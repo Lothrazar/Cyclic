@@ -110,10 +110,10 @@ public class ContainerCrafter extends ContainerBase {
     //10-18 is crafting grid
     //0-9 is input leftc
     //.. almost //... 
-    ModCyclic.LOGGER.info(index + "  ||  end inv on transfer ||" + endInv);
-//    if (index >= 10 || index <= 18) {
-//      return ItemStack.EMPTY;
-//    }
+    ModCyclic.LOGGER.info(index + "  ||  endInv=" + endInv + "   startInv=" + startInv);
+    //    if (index >= 10 || index <= 18) {
+    //      return ItemStack.EMPTY;
+    //    }
     //    return super.transferStackInSlot(playerIn, index);
     //if last machine slot is 17, endInv is 18
     int playerStart = endInv;
@@ -122,15 +122,23 @@ public class ContainerCrafter extends ContainerBase {
     ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
-      ItemStack stack = slot.getStack();    
+      ItemStack stack = slot.getStack();
       itemstack = stack.copy();
-      if (index < TileCrafter.IO_SIZE) {//was endInv
+      //from output to player
+      if (index >= TileCrafter.OUTPUT_SLOT_START && index <= TileCrafter.OUTPUT_SLOT_STOP) {
+        if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
+          ModCyclic.LOGGER.info("to player from < output ");
+          return ItemStack.EMPTY;
+        }
+      }
+      //from input to player
+      if (index < TileCrafter.IO_SIZE) {
         if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
           ModCyclic.LOGGER.info("to player from < iosize");
           return ItemStack.EMPTY;
         }
       }
-      else if (index <= playerEnd && !this.mergeItemStack(stack, startInv, endInv, false)) {
+      else if (index <= playerEnd && !this.mergeItemStack(stack, 0, 9, false)) {
         ModCyclic.LOGGER.info("less than playerend and merge to self start-end");
         return ItemStack.EMPTY;
       }
@@ -150,9 +158,6 @@ public class ContainerCrafter extends ContainerBase {
 
   @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-   
-    ModCyclic.LOGGER.info(slotId + "    slotClick ");//s+TileCrafter.GRID_SLOT_START +"|"+TileCrafter.GRID_SLOT_STOP);
-  
     if (slotId == TileCrafter.PREVIEW_SLOT) {
       return ItemStack.EMPTY;
     }
@@ -169,7 +174,11 @@ public class ContainerCrafter extends ContainerBase {
 
   @Override
   public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-    return slotIn.getSlotIndex() != TileCrafter.PREVIEW_SLOT && super.canMergeSlot(stack, slotIn);
+    // dont merge to preview
+    //dont merge to grid
+    return slotIn.getSlotIndex() != TileCrafter.PREVIEW_SLOT &&
+        !(slotIn.getSlotIndex() >= TileCrafter.GRID_SLOT_START && slotIn.getSlotIndex() <= TileCrafter.GRID_SLOT_STOP) &&
+        super.canMergeSlot(stack, slotIn);
   }
 
   @Override

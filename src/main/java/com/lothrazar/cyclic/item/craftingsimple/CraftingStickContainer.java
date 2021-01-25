@@ -77,7 +77,6 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   public boolean canInteractWith(PlayerEntity playerIn) {
     return hand != null && playerIn.getHeldItem(hand).getItem() instanceof CraftingStickItem;
   }
-
   //  @Override
   //  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
   //    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {

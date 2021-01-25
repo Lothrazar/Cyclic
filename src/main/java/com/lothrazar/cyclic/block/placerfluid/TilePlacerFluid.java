@@ -75,7 +75,6 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
     return new StringTextComponent(getType().getRegistryName().getPath());
   }
 
-
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerPlacerFluid(i, world, pos, playerInventory, playerEntity);

@@ -375,7 +375,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         try {
           int indexInArray = i + j * 3;
           ItemStack itemStack = itemStacks.get(indexInArray);
-//          ModCyclic.LOGGER.info(pos + " craftMatrix  i=" + i + "  j=" + j + "  " + itemStack);
+          //          ModCyclic.LOGGER.info(pos + " craftMatrix  i=" + i + "  j=" + j + "  " + itemStack);
           craftMatrix.setInventorySlotContents(indexInArray, itemStack.copy());
         }
         catch (Exception e) {
@@ -385,7 +385,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       }
     }
     boolean matched = recipe.matches(craftMatrix, world);
-//    ModCyclic.LOGGER.info(recipe.getRecipeOutput() + " -0 matched recipe and getRemainingItems " + matched);
+    //    ModCyclic.LOGGER.info(recipe.getRecipeOutput() + " -0 matched recipe and getRemainingItems " + matched);
     return matched;
     //    return false;
     //    int recipeSize = recipe.getWidth() * recipe.getHeight();

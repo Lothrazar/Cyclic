@@ -103,6 +103,7 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
   }
 
   private class ToggleButton extends Button {
+
     List<ITextComponent> titles;
     List<ITextComponent> tooltips;
     List<INBT> nbtValues;

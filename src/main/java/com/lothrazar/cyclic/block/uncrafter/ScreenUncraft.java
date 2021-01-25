@@ -2,8 +2,6 @@ package com.lothrazar.cyclic.block.uncrafter;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
-import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
@@ -23,7 +21,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   public ScreenUncraft(ContainerUncraft screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileUncraft.MAX);
-    this.timer = new TimerBar(this, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ + 2, TileCrafter.TIMER_FULL);
+    this.timer = new TimerBar(this, 66, 24, TileUncraft.TIMER.get());
   }
 
   @Override
@@ -32,6 +30,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     energy.guiLeft = timer.guiLeft = guiLeft;
     energy.guiTop = timer.guiTop = guiTop;
     energy.visible = TileUncraft.POWERCONF.get() > 0;
+    timer.visible = TileUncraft.TIMER.get() > 1;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;

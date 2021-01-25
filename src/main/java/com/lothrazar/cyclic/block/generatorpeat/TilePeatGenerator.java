@@ -114,8 +114,8 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   private void tickCableFlow() {
     if (this.getFlowing() == 1) {
       List<Integer> rawList = IntStream.rangeClosed(
-              0,
-              5).boxed().collect(Collectors.toList());
+          0,
+          5).boxed().collect(Collectors.toList());
       Collections.shuffle(rawList);
       for (Integer i : rawList) {
         Direction exportToSide = Direction.values()[i];

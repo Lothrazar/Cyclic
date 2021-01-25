@@ -13,7 +13,7 @@ public class CraftingBagContainerProvider implements INamedContainerProvider {
   public ITextComponent getDisplayName() {
     return new TranslationTextComponent("item.cyclic.crafting_bag");
   }
-  
+
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
     return new CraftingBagContainer(i, playerInventory, player);

@@ -8,14 +8,12 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 /**
- * Wraps two {@link ItemStackHandler}s: Input and Output.
- * Input's slots come first then the Output's slots come after.
- * Items can only be inserted into Input.
- * Items can only be extracted from Output.
- * Note that the above only applies to operations on the wrapper, the backing handlers are not restricted.
- * For persistence, either the backing {@link ItemStackHandler}s can be saved, or the wrapper itself.
+ * Wraps two {@link ItemStackHandler}s: Input and Output. Input's slots come first then the Output's slots come after. Items can only be inserted into Input. Items can only be extracted from Output.
+ * Note that the above only applies to operations on the wrapper, the backing handlers are not restricted. For persistence, either the backing {@link ItemStackHandler}s can be saved, or the wrapper
+ * itself.
  */
 public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifiable, INBTSerializable<CompoundNBT> {
+
   public static final String NBT_INPUT = "Input";
   public static final String NBT_OUTPUT = "Output";
   protected final ItemStackHandler input;
@@ -61,16 +59,12 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
 
   @Override
   public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-    return withHandler(slot, (h, s, isInput) ->
-            isInput ? h.insertItem(s, stack, simulate) : stack
-    );
+    return withHandler(slot, (h, s, isInput) -> isInput ? h.insertItem(s, stack, simulate) : stack);
   }
 
   @Override
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
-    return withHandler(slot, (h, s, isInput) ->
-            isInput ? ItemStack.EMPTY : h.extractItem(s, amount, simulate)
-    );
+    return withHandler(slot, (h, s, isInput) -> isInput ? ItemStack.EMPTY : h.extractItem(s, amount, simulate));
   }
 
   @Override
@@ -80,9 +74,7 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
 
   @Override
   public boolean isItemValid(int slot, ItemStack stack) {
-    return withHandler(slot, (h, s, isInput) ->
-            isInput && h.isItemValid(s, stack)
-    );
+    return withHandler(slot, (h, s, isInput) -> isInput && h.isItemValid(s, stack));
   }
 
   @Override
@@ -106,11 +98,13 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
 
   @FunctionalInterface
   protected interface HandlerCallback<T> {
+
     T apply(ItemStackHandler handler, int slot, boolean isInput);
   }
 
   @FunctionalInterface
   protected interface HandlerCallbackVoid {
+
     void apply(ItemStackHandler handler, int slot, boolean isInput);
   }
 }
