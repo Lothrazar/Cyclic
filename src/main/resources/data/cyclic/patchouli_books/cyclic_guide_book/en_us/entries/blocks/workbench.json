@@ -1,7 +1,7 @@
 {
   "name": "block.cyclic.workbench",
   "icon": "cyclic:workbench",
-  "category": "cyclic:machines",
+  "category": "cyclic:blocks",
   "pages": [
     {
       "type": "text",

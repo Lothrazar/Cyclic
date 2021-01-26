@@ -48,8 +48,8 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    timer.draw(ms, container.tile.getField(TileSolidifier.Fields.TIMER.ordinal()));
     energy.draw(ms, container.getEnergy());
+    timer.draw(ms, container.tile.getField(TileSolidifier.Fields.TIMER.ordinal()));
     fluid.draw(ms, container.tile.getFluid());
     drawSlotLarge(ms, 116, 26);
     this.drawSlot(ms, 36, 16);

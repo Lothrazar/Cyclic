@@ -4,7 +4,6 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
-import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
@@ -16,7 +15,6 @@ import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
-import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
@@ -203,8 +201,8 @@ public class ConfigRegistry {
     TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm", 500, 0, 64000);
     TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter", 500, 0, 64000);
     TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure", 10, 0, 64000);
-    TilePlacer.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("placer", 0, 0, 64000);
-    TileBreaker.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("breaker", 0, 0, 64000);
+    //    TilePlacer.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("placer", 0, 0, 64000);
+    //  TileBreaker.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("breaker", 0, 0, 64000);
     TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon", 0, 0, 64000);
     CFG.pop(); //cost
     CFG.pop(); //energy

@@ -1,23 +1,18 @@
 package com.lothrazar.cyclic.block.breaker;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileBreaker extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
@@ -27,9 +22,9 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 500;
-  public static IntValue POWERCONF;
-  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  //  public static IntValue POWERCONF;
+  //  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  //  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileBreaker() {
     super(TileRegistry.breakerTile);
@@ -41,29 +36,30 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
       setLitProperty(false);
       return;
     }
-    Integer cost = POWERCONF.get();
-    if (energy.getEnergyStored() < cost && (cost > 0)) {
+    setLitProperty(true);
+    if (world.isRemote) {
       return;
     }
-    setLitProperty(true);
-    energy.extractEnergy(cost, false);
-    if (world.rand.nextDouble() < 0.3) {
-      BlockPos target = pos.offset(this.getCurrentFacing());
-      BlockState state = world.getBlockState(target);
-      if (state.getBlockHardness(world, target) >= 0) {
-        this.world.destroyBlock(target, true);
-      }
-      //else unbreakable
+    BlockPos target = pos.offset(this.getCurrentFacing());
+    BlockState state = world.getBlockState(target);
+    if (state.getBlock() != Blocks.AIR &&
+        state.getBlockHardness(world, target) >= 0) {
+      this.world.destroyBlock(target, true);
+      //      int cost = POWERCONF.get();
+      //      ModCyclic.LOGGER.info("cost" + cost + " have " + energy.getEnergyStored());
+      //      if (cost > 0) {
+      //        energy.extractEnergy(cost, false);
+      //      }
     }
+    //else unbreakable
   }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
+  //  @Override
+  //  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+  //    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
+  //      return energyCap.cast();
+  //    }
+  //    return super.getCapability(cap, side);
+  //  }
 
   @Override
   public ITextComponent getDisplayName() {
@@ -73,6 +69,18 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
     return new ContainerBreaker(i, world, pos, playerInventory, playerEntity);
+  }
+
+  @Override
+  public void read(BlockState bs, CompoundNBT tag) {
+    //    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    super.read(bs, tag);
+  }
+
+  @Override
+  public CompoundNBT write(CompoundNBT tag) {
+    //    tag.put(NBTENERGY, energy.serializeNBT());
+    return super.write(tag);
   }
 
   @Override

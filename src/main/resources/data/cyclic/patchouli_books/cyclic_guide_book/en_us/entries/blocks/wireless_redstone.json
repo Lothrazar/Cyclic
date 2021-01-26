@@ -1,7 +1,7 @@
 {
   "name": "block.cyclic.wireless_redstone.guide.title",
-  "icon": "cyclic:anvil",
-  "category": "cyclic:machines",
+  "icon": "cyclic:wireless_transmitter",
+  "category": "cyclic:blocks",
   "pages": [
     {
       "type": "text",

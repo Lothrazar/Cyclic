@@ -880,6 +880,7 @@
     "cyclic.screen.thick": "Thickness",
     "cyclic.gui.sliderkeys": "Arrow keys; hold shift/alt",
     "cyclic.gui.empty":"Empty",
+    "cyclic.gui.timer":"Time delay (ticks)",
     
     "cyclic.gui.craft.empty":"Empty the grid",
     "cyclic.gui.craft.balance":"Balance largest stack",

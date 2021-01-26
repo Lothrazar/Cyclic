@@ -109,13 +109,6 @@ public class ContainerCrafter extends ContainerBase {
     //19-28 is the right output
     //10-18 is crafting grid
     //0-9 is input leftc
-    //.. almost //... 
-    ModCyclic.LOGGER.info(index + "  ||  endInv=" + endInv + "   startInv=" + startInv);
-    //    if (index >= 10 || index <= 18) {
-    //      return ItemStack.EMPTY;
-    //    }
-    //    return super.transferStackInSlot(playerIn, index);
-    //if last machine slot is 17, endInv is 18
     int playerStart = endInv;
     int playerEnd = endInv + PLAYERSIZE;
     //standard logic based on start/end
@@ -127,14 +120,12 @@ public class ContainerCrafter extends ContainerBase {
       //from output to player
       if (index >= TileCrafter.OUTPUT_SLOT_START && index <= TileCrafter.OUTPUT_SLOT_STOP) {
         if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
-          ModCyclic.LOGGER.info("to player from < output ");
           return ItemStack.EMPTY;
         }
       }
       //from input to player
       if (index < TileCrafter.IO_SIZE) {
         if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
-          ModCyclic.LOGGER.info("to player from < iosize");
           return ItemStack.EMPTY;
         }
       }
@@ -175,7 +166,7 @@ public class ContainerCrafter extends ContainerBase {
   @Override
   public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
     // dont merge to preview
-    //dont merge to grid
+    // dont merge to grid
     return slotIn.getSlotIndex() != TileCrafter.PREVIEW_SLOT &&
         !(slotIn.getSlotIndex() >= TileCrafter.GRID_SLOT_START && slotIn.getSlotIndex() <= TileCrafter.GRID_SLOT_STOP) &&
         super.canMergeSlot(stack, slotIn);

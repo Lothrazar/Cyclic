@@ -141,6 +141,8 @@ public class ItemRegistry {
   public static Item storage_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
   public static Item crafting_bag;
+  @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
+  public static Item crafting_stick;
   @ObjectHolder(ModCyclic.MODID + ":antimatter_wand")
   public static Item antimatter_wand;
 

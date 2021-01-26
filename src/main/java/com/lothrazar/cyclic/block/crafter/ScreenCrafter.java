@@ -76,9 +76,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
-    if (TileCrafter.POWERCONF.get() > 0) {
-      energy.draw(ms, container.tile.getEnergy());
-    }
+    energy.draw(ms, container.tile.getEnergy());
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
       for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
         this.drawSlot(ms, ContainerCrafter.INPUT_START_X - 1 + colPos * Const.SQ,
