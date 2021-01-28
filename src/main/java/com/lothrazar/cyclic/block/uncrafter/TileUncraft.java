@@ -88,7 +88,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       if (uncraftRecipe(match)) {
         this.status = UncraftStatusEnum.MATCH;
         //pay cost
-        inventory.extractItem(0, match.getRecipeOutput().getCount(), false);
+        inputSlots.extractItem(0, match.getRecipeOutput().getCount(), false);
         energy.extractEnergy(cost, false);
       }
       else {
