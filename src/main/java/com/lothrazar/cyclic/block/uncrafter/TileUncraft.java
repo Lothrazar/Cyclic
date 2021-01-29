@@ -80,6 +80,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     if (timer > 0) {
       return;
     }
+    timer = TIMER.get();
     if (world.isRemote || world.getServer() == null) {
       return;
     }
@@ -94,7 +95,6 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       else {
         this.status = UncraftStatusEnum.NORECIPE;
       }
-      timer = TIMER.get();
     }
   }
 
