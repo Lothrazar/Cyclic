@@ -9,7 +9,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerUncraft extends ContainerBase {
@@ -21,22 +21,22 @@ public class ContainerUncraft extends ContainerBase {
     tile = (TileUncraft) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 39, 19));
-      //the main slot
-      //the rows 
-      int index = 1;
-      for (int j = 0; j < 2; ++j) {
-        for (int k = 0; k < 8; ++k) {
-          this.addSlot(new SlotItemHandler(h,
-              index,
-              8 + k * Const.SQ,
-              27 + (j + 1) * Const.SQ));
-          index++;
-        }
+    ItemStackHandler inputSlots = tile.inputSlots;
+    ItemStackHandler outputSlots = tile.outputSlots;
+    this.endInv = inputSlots.getSlots() + outputSlots.getSlots();
+    //the main slot
+    addSlot(new SlotItemHandler(inputSlots, 0, 39, 19));
+    //the rows
+    int index = 0;
+    for (int j = 0; j < 2; ++j) {
+      for (int k = 0; k < 8; ++k) {
+        this.addSlot(new SlotItemHandler(outputSlots,
+            index,
+            8 + k * Const.SQ,
+            27 + (j + 1) * Const.SQ));
+        index++;
       }
-    });
+    }
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileUncraft.Fields.values().length);
     trackEnergy(tile);
