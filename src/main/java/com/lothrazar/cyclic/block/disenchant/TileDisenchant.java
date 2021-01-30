@@ -56,8 +56,8 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return stack.getItem() == Items.ENCHANTED_BOOK;
     }
   };
-  ItemStackHandler outputSlot = new ItemStackHandler(2);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
+  ItemStackHandler outputSlots = new ItemStackHandler(2);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static IntValue POWERCONF;
@@ -83,8 +83,8 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     }
     ItemStack book = inputSlots.getStackInSlot(SLOT_BOOK);
     if (book.getItem() != Items.BOOK
-        || outputSlot.getStackInSlot(0).isEmpty() == false
-        || outputSlot.getStackInSlot(1).isEmpty() == false
+        || outputSlots.getStackInSlot(0).isEmpty() == false
+        || outputSlots.getStackInSlot(1).isEmpty() == false
         || input.getCount() != 1) {
       return;
     }
@@ -110,7 +110,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     EnchantmentHelper.setEnchantments(outEnchants, eBook); //add to book
     //replace book with enchanted
     inputSlots.extractItem(SLOT_BOOK, 1, false);
-    outputSlot.insertItem(0, eBook, false);
+    outputSlots.insertItem(0, eBook, false);
     //do i replace input with a book?
     if (input.getItem() == Items.ENCHANTED_BOOK && inputEnchants.size() == 0) {
       ModCyclic.LOGGER.info("book size zero");
@@ -140,9 +140,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       ModCyclic.LOGGER.info("bump to new finished slot");
       ModCyclic.LOGGER.info("bump to new finished slot");
       //hey we done, bump it over to the ALL NEW finished slot
-      if (outputSlot.getStackInSlot(1).isEmpty()) {
+      if (outputSlots.getStackInSlot(1).isEmpty()) {
         //only if there is space, then do it
-        outputSlot.insertItem(1, input.copy(), false);
+        outputSlots.insertItem(1, input.copy(), false);
         inputSlots.extractItem(SLOT_INPUT, 64, false);
       }
       //delete input
