@@ -25,10 +25,10 @@ version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Cyclic'
 
-
 checkstyle {
     toolVersion '8.23'
     configFile file("checkstyle.xml")
+ //      config project.resources.text.fromUri("https://raw.githubusercontent.com/Lothrazar/Cyclic/trunk/1.16/checkstyle.xml")
 }
 checkstyleMain {
     source ='src/main/java'

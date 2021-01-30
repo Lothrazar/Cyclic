@@ -121,7 +121,6 @@ public class EnchantExcavation extends EnchantBase {
     if (totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
       return totalBroken;
     }
-    //    int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
     Set<BlockPos> wasHarvested = new HashSet<BlockPos>();
     Set<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
     for (BlockPos targetPos : theFuture) {
@@ -136,7 +135,9 @@ public class EnchantExcavation extends EnchantBase {
         continue;
       }
       if (world instanceof ServerWorld) {
-        Block.spawnDrops(targetState, world, targetPos, world.getTileEntity(targetPos));
+        //important! use the version that takes the item stack. this way it will end up in Block:getDrops that references the LootContext.Builder
+        //and since now loot tables are used, fortune and similar things will be respected
+        Block.spawnDrops(targetState, world, targetPos, world.getTileEntity(targetPos), player, player.getHeldItem(player.swingingHand));
       }
       int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
       int silklevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());

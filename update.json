@@ -28,5 +28,6 @@
   	,"1.1.2":"Fixed peat generator.  Fix serverside Teleporter wand crash.  Fix disenchanter itemslot bug.  Fix peat farm loot table.   Fix Multiple storage bag bugs with pickup mode   "
   	,"1.1.3":"Optimize harvester.  Update Storage Bag getShareTag for sync issue . Fix crafter shaped recipes "
   	,"1.1.4":"Fixed bugs when shift-clicking into the crafter.  Fixed Client not being able to join Servers (reverted to functional 1.1.2 state, removed bug introduced in 1.1.3).  Harvester bugfix: disable getSeedsItem accesstransformer.  Bump to 1.16.5  . ( BlueAgent ) Fix Solidifier recipe automation and JEI integration. Fix Uncrafter bug with empty container items such as buckets in some recipes.  (  MichaelNZ404 )  changed ingame manual text to reflect changed behaviour for Conveyors. "
+  	,"1.1.5":"When both Fortune and Excavate are applied to a tool, the fortune bonus now applies to every block broken not just the first.  Minimum required forge version is 1.16.4-35.1.22.    ( BlueAgent ) Disenchanter and Uncrafting containers.  Fix uncrafter not consuming inputs. "
   }
 }
