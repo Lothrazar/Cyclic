@@ -19,6 +19,8 @@
 		#Set false to disable enchantment
 		ender = true
 		#Set false to disable enchantment
+		launch = true
+		#Set false to disable enchantment
 		disarm = true
 		#Set false to disable enchantment
 		excavate = true
@@ -89,7 +91,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = false
+		info = true
 
 	#####################################################################################
 	# Item specific configs
@@ -99,7 +101,7 @@
 		#Sack of Holding settings
 		[cyclic.items.tile_transporter]
 			#Block these from being picked up
-			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
+			disable_pickup = []
 
 		#Wand settings
 		[cyclic.items.teleport_wand]
@@ -115,6 +117,9 @@
 
 		#Heart items
 		[cyclic.items.heart]
+			#Maximum number of hearts that can be attained (including initial 10)
+			#Range: 1 ~ 200
+			maximum = 100
 			#Experience given when eating a poisoned heart
 			#Range: 0 ~ 99999
 			experience = 500
@@ -182,7 +187,7 @@
 			#Power per use forester
 			#Range: 0 ~ 64000
 			forester = 50
-			#Power per tick beacon
+			#Power per tick while in use
 			#Range: 0 ~ 64000
 			beacon = 10
 			#Power per use crafter
@@ -190,7 +195,7 @@
 			crafter = 500
 			#Power per use user
 			#Range: 0 ~ 64000
-			user = 50
+			user = 0
 			#Power per recipe solidifier
 			#Range: 0 ~ 64000
 			solidifier = 5000

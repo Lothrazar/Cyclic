@@ -12,16 +12,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class HeartItem extends ItemBase {
 
-  private static final int MAX = 100;
+  public static IntValue MAX;
   static final int COOLDOWN = 10;
   public static final UUID ID = UUID.fromString("06d30aa2-eff2-4a81-b92b-a1cb95f115c6");
 
   public HeartItem(Properties properties) {
     super(properties);
-    //see ItemEvents for saving hearts on death
+    // see ItemEvents for saving hearts on death
   }
 
   @Override
@@ -31,7 +32,7 @@ public class HeartItem extends ItemBase {
     }
     playerIn.getFoodStats().addStats(1, 4);
     ModifiableAttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
-    if (healthAttribute.getValue() < MAX) {
+    if (healthAttribute.getValue() < MAX.get()) {
       //get attribute modif by id
       AttributeModifier oldHealthModifier = healthAttribute.getModifier(ID);
       //what is our value

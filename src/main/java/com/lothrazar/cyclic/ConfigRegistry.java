@@ -38,6 +38,7 @@ import com.lothrazar.cyclic.enchant.EnchantTraveller;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
+import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -223,6 +224,8 @@ public class ConfigRegistry {
     CFG.comment("Heart items").push("heart");
     HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart")
         .defineInRange("experience", 500, 0, 99999);
+    HeartItem.MAX = CFG.comment("Maximum number of hearts that can be attained (including initial 10)")
+        .defineInRange("maximum", 100, 1, 200);
     CFG.pop(); //heart
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL)
