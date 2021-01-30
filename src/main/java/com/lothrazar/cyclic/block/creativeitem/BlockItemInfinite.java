@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.creativeitem;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -33,8 +34,11 @@ public class BlockItemInfinite extends BlockBase {
       TileEntity tileEntity = world.getTileEntity(pos);
       if (tileEntity instanceof TileItemInfinite) {
         TileItemInfinite tile = (TileItemInfinite) tileEntity;
-        tile.inputSlots.setStackInSlot(0, player.getHeldItem(hand));
-        return ActionResultType.CONSUME;
+        ItemStack stack = player.getHeldItem(hand);
+        if (!stack.isEmpty()) {
+          tile.inputSlots.setStackInSlot(0, stack);
+          return ActionResultType.SUCCESS;
+        }
       }
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);

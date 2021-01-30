@@ -55,18 +55,9 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
   @Override
   public void tick() {
     ItemStack stackHere = inputSlots.getStackInSlot(0);
-    ItemStack stackBackup = outputSlot.getStackInSlot(0);
-    if (!stackHere.isEmpty() && stackBackup.isEmpty()) {
-      //copy here to backup. backup never gets drained its always a fresh copy
+    if (!stackHere.isEmpty()) {
       outputSlot.insertItem(0, stackHere.copy(), false);
-      return;
     }
-    //take the backup, and overwrite whats here. if here is empty
-    //    if (stackHere.isEmpty()) {
-    //      stackBackup.setCount(64);
-    //      inputSlots.extractItem(0, 64, false);
-    //      inputSlots.insertItem(0, stackBackup.copy(), false);
-    //    }
   }
 
   @Override
