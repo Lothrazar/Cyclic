@@ -69,7 +69,18 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     setLitProperty(true);
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.isEmpty() || stack.getItem().isIn(DataTags.IMMUNE)) {
+      //move it over and then done
+      if (inventory.getStackInSlot(OUT).isEmpty()) {
+        inventory.insertItem(1, stack.copy(), false);
+        inventory.extractItem(0, stack.getCount(), false);
+      }
       return;
+    }
+    boolean done = stack.getDamage() == 0;
+    if (done && inventory.getStackInSlot(OUT).isEmpty()) {
+      // 
+      inventory.insertItem(1, stack.copy(), false);
+      inventory.extractItem(0, stack.getCount(), false);
     }
     final int repair = 100; // fluid
     boolean work = false;
@@ -85,12 +96,6 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     //shift to other slot
     if (work) {
       UtilItemStack.repairItem(stack);
-      boolean done = stack.getDamage() == 0;
-      //
-      if (done && inventory.getStackInSlot(OUT).isEmpty()) {
-        inventory.insertItem(1, stack.copy(), false);
-        inventory.extractItem(0, stack.getCount(), false);
-      }
     }
   }
 
