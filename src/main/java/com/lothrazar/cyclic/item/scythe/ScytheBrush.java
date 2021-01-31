@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.item.scythe;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -46,14 +47,13 @@ public class ScytheBrush extends ItemBase {
     if (side != null) {
       pos = pos.offset(side);
     }
-    //send work packet
+    // send work packet
     int radius = (context.getPlayer().isCrouching()) ? RADIUS_SNEAKING : RADIUS;
-    PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius));
-    //client actions
+    if (context.getWorld().isRemote) {
+      PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
+    }
     context.getPlayer().swingArm(context.getHand());
-    context.getItem().damageItem(1, context.getPlayer(), (e) -> {
-      //TODO 
-    });
+    UtilItemStack.damageItem(context.getItem());
     return super.onItemUse(context);
   }
 }

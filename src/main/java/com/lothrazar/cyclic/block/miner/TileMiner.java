@@ -47,7 +47,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   static final int MAX_HEIGHT = 64;
   public static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
   private int height = MAX_HEIGHT / 2;
-  private int size = 5;
+  private int radius = 5;
   static final int MAX = 64000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(1);
@@ -92,9 +92,10 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    size = tag.getInt("size");
+    radius = tag.getInt("size");
     height = tag.getInt("height");
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
+    directionIsUp = tag.getBoolean("directionIsUp");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -102,9 +103,10 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    tag.putInt("size", size);
+    tag.putInt("size", radius);
     tag.putInt("height", height);
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
+    directionIsUp = tag.getBoolean("directionIsUp");
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
@@ -237,8 +239,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(size + 1), size);
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(radius + 1), radius);
     int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
       shape = UtilShape.repeatShapeByHeight(shape, diff * height);
@@ -248,7 +249,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(size + 1), size);
+    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
     int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
       shape = UtilShape.repeatShapeByHeight(shape, diff * height);
@@ -271,7 +272,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       case HEIGHT:
         return height;
       case SIZE:
-        return size;
+        return radius;
       default:
       break;
     }
@@ -294,7 +295,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         height = Math.min(value, MAX_HEIGHT);
       break;
       case SIZE:
-        size = Math.min(value, MAX_SIZE);
+        radius = Math.min(value, MAX_SIZE);
       break;
       default:
       break;

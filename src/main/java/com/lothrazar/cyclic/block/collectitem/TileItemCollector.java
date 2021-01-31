@@ -27,10 +27,13 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileItemCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static enum Fields {
-    REDSTONE, RENDER, SIZE;
+    REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
   }
 
-  private static final int MAX_SIZE = 11;
+  static final int MAX_SIZE = 12;
+  static final int MAX_HEIGHT = 64;
+  private int height = 1;
+  private boolean directionIsUp = false;
   //radius 7 translates to 15x15 area (center block + 7 each side)
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -91,6 +94,8 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     radius = tag.getInt("radius");
+    height = tag.getInt("height");
+    directionIsUp = tag.getBoolean("directionIsUp");
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
@@ -98,6 +103,8 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("radius", radius);
+    tag.putInt("height", height);
+    directionIsUp = tag.getBoolean("directionIsUp");
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
@@ -108,7 +115,12 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
+    int diff = directionIsUp ? 1 : -1;
+    if (height > 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    }
+    return shape;
   }
 
   private AxisAlignedBB getRange() {
@@ -131,6 +143,12 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       case SIZE:
         radius = value % MAX_SIZE;
       break;
+      case HEIGHT:
+        height = Math.min(value, MAX_HEIGHT);
+      break;
+      case DIRECTION:
+        this.directionIsUp = value == 1;
+      break;
     }
   }
 
@@ -143,6 +161,10 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
         return this.render;
       case SIZE:
         return radius;
+      case HEIGHT:
+        return height;
+      case DIRECTION:
+        return (directionIsUp) ? 1 : 0;
     }
     return 0;
   }

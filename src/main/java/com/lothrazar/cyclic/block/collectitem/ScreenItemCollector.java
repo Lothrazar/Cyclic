@@ -14,27 +14,46 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
 
   private ButtonMachineRedstone btnRedstone;
   private ButtonMachineRedstone btnRender;
-  private GuiSliderInteger size;
+  private GuiSliderInteger sizeSlider;
+  private ButtonMachineRedstone btnDirection;
 
   public ScreenItemCollector(ContainerItemCollector screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-    super(screenContainer, inv, titleIn);
+    super(screenContainer, inv, titleIn);;
+    this.ySize = 256;
   }
 
   @Override
   public void init() {
     super.init();
-    int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileItemCollector.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileItemCollector.Fields.RENDER.ordinal(),
+    int x = guiLeft + 8;
+    int y = guiTop + 8;
+    int f = TileItemCollector.Fields.REDSTONE.ordinal();
+    btnRedstone = addButton(new ButtonMachineRedstone(x, y, f, container.tile.getPos()));
+    f = TileItemCollector.Fields.RENDER.ordinal();
+    y += 20;
+    btnRender = addButton(new ButtonMachineRedstone(x, y, f,
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+    //then toggle
+    f = TileItemCollector.Fields.DIRECTION.ordinal();
+    y += 20;
+    btnDirection = addButton(new ButtonMachineRedstone(x, y, f,
+        container.tile.getPos(), TextureEnum.DIR_UP, TextureEnum.DIR_DOWN, "gui.cyclic.direction"));
     int w = 110;
     int h = 18;
-    int f = TileItemCollector.Fields.SIZE.ordinal();
-    x += 44;
-    y += 8;
-    size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, 10, container.tile.getField(f)));
+    //now start sliders
+    //
+    y = guiTop + 22;
+    x = guiLeft + 34;
+    f = TileItemCollector.Fields.HEIGHT.ordinal();
+    GuiSliderInteger heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, TileItemCollector.Fields.HEIGHT.ordinal(), container.tile.getPos(),
+        0, TileItemCollector.MAX_HEIGHT, container.tile.getField(f)));
+    heightslider.setTooltip("buildertype.height.tooltip");
+    //then size
+    f = TileItemCollector.Fields.SIZE.ordinal();
+    y += h + 1;
+    sizeSlider = this.addButton(new GuiSliderInteger(x, y, w, h, TileItemCollector.Fields.SIZE.ordinal(),
+        container.tile.getPos(), 0, TileItemCollector.MAX_SIZE, container.tile.getField(f)));
+    sizeSlider.setTooltip("buildertype.size.tooltip");
   }
 
   @Override
@@ -48,17 +67,19 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(container.tile);
     btnRender.onValueUpdate(container.tile);
-    size.setTooltip("cyclic.screen.size" + container.tile.getField(size.getField()));
+    btnDirection.onValueUpdate(container.tile);
+    sizeSlider.setTooltip("cyclic.screen.size" + container.tile.getField(sizeSlider.getField()));
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     for (int i = 0; i < 9; i++) {
-      this.drawSlot(ms, 7 + i * Const.SQ, 41);
-      this.drawSlot(ms, 7 + i * Const.SQ, 41 + Const.SQ);
+      int y = 81;
+      this.drawSlot(ms, 7 + i * Const.SQ, y);
+      this.drawSlot(ms, 7 + i * Const.SQ, y + Const.SQ);
     }
   }
 }

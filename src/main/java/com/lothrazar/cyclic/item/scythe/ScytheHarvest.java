@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.scythe;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,17 +33,11 @@ public class ScytheHarvest extends ItemBase {
     }
     PlayerEntity player = context.getPlayer();
     int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
-    int counts = 0;
     for (BlockPos p : getShape(pos, radius)) {
-      // 
-      if (TileHarvester.tryHarvestSingle(context.getWorld(), p)) {
-        counts++;
-      }
+      TileHarvester.tryHarvestSingle(context.getWorld(), p);
     }
-    player.swingArm(context.getHand());
-    context.getItem().damageItem(counts, player, (e) -> {
-      //break?
-    });
+    context.getPlayer().swingArm(context.getHand());
+    UtilItemStack.damageItem(context.getItem());
     return super.onItemUse(context);
   }
 }

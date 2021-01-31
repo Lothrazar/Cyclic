@@ -72,7 +72,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
   private final LazyOptional<IItemHandler> input = LazyOptional.of(() -> inputHandler);
   private final LazyOptional<IItemHandler> output = LazyOptional.of(() -> outHandler);
-  private final LazyOptional<IItemHandler> grid = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
+  private final LazyOptional<IItemHandler> gridCap = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
   private final LazyOptional<IItemHandler> preview = LazyOptional.of(() -> new ItemStackHandler(1));
   private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
@@ -227,7 +227,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   private ArrayList<ItemStack> getItemsInCraftingGrid() {
     ArrayList<ItemStack> itemStacks = new ArrayList<>();
-    IItemHandler gridHandler = this.grid.orElse(null);
+    IItemHandler gridHandler = this.gridCap.orElse(null);
     if (gridHandler == null) {
       return null;
     }
@@ -480,7 +480,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         case OUTPUT:
           return output.cast();
         case GRID:
-          return grid.cast();
+          return gridCap.cast();
         case PREVIEW:
           return preview.cast();
       }
@@ -493,7 +493,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     energyCap.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
     input.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("input")));
     output.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("output")));
-    grid.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("grid")));
+    gridCap.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("grid")));
     preview.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("preview")));
     super.read(bs, tag);
   }
@@ -512,7 +512,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("output", compound);
     });
-    grid.ifPresent(h -> {
+    gridCap.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("grid", compound);
     });

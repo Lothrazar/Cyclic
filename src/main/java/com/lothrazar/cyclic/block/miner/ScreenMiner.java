@@ -15,6 +15,8 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
   private ButtonMachineRedstone btnRedstone;
   private ButtonMachineRedstone btnRender;
   private EnergyBar energy;
+  private ButtonMachineRedstone btnDirection;
+  private GuiSliderInteger sizeSlider;
 
   public ScreenMiner(ContainerMiner screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -24,31 +26,35 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
   @Override
   public void init() {
     super.init();
-    int x, y;
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     energy.visible = TileMiner.POWERCONF.get() > 0;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileMiner.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileMiner.Fields.RENDER.ordinal(),
+    int x = guiLeft + 8;
+    int y = guiTop + 8;
+    int f = TileMiner.Fields.REDSTONE.ordinal();
+    btnRedstone = addButton(new ButtonMachineRedstone(x, y, f, container.tile.getPos()));
+    f = TileMiner.Fields.RENDER.ordinal();
+    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, f,
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
-    //
+    //then toggle
+    f = TileMiner.Fields.DIRECTION.ordinal();
+    btnDirection = addButton(new ButtonMachineRedstone(x, y + 40, f,
+        container.tile.getPos(), TextureEnum.DIR_UP, TextureEnum.DIR_DOWN, "gui.cyclic.direction"));
     //
     int w = 120;
     int h = 20;
     x = guiLeft + 32;
     y += h + 1;
-    int f = TileMiner.Fields.HEIGHT.ordinal();
+    // height fi
+    f = TileMiner.Fields.HEIGHT.ordinal();
     GuiSliderInteger heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, TileMiner.MAX_HEIGHT, container.tile.getField(f)));
     heightslider.setTooltip("buildertype.height.tooltip");
     y += h + 1;
     //
     f = TileMiner.Fields.SIZE.ordinal();
-    GuiSliderInteger sizeslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
+    sizeSlider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         0, TileMiner.MAX_SIZE, container.tile.getField(f)));
-    sizeslider.setTooltip("buildertype.size.tooltip");
   }
 
   @Override
@@ -65,12 +71,14 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(container.tile);
     btnRender.onValueUpdate(container.tile);
+    btnDirection.onValueUpdate(container.tile);
+    sizeSlider.setTooltip("cyclic.screen.size" + container.tile.getField(sizeSlider.getField()));
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 9, 50);
+    this.drawSlot(ms, 32, 8);
     energy.draw(ms, container.tile.getEnergy());
   }
 }

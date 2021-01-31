@@ -58,8 +58,6 @@ public class ContainerCrafter extends ContainerBase {
     this.endInv = TileCrafter.IO_NUM_COLS * TileCrafter.IO_NUM_ROWS;
     this.playerEntity = clientPlayer;
     this.playerInventory = inv;
-    //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
-    //    ItemStackHandler in = tile.inputHandler;  
     int indexx = 0;
     //add input
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {

@@ -176,7 +176,9 @@
 	"gui.cyclic.flowing.south":"South",
 	"gui.cyclic.flowing.east":"East",
 	"gui.cyclic.flowing.west":"West",
-    
+	"gui.cyclic.direction0":"Down",
+  "gui.cyclic.direction1":"Up",
+      
     "item.cyclic.build_scepter":"Building Scepter (fill)",
     "item.cyclic.offset_scepter":"Building Scepter (place)",
     "item.cyclic.replace_scepter":"Building Scepter (exchange)",
