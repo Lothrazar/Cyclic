@@ -37,7 +37,7 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
     f = TileItemCollector.Fields.DIRECTION.ordinal();
     y += 20;
     btnDirection = addButton(new ButtonMachineRedstone(x, y, f,
-        container.tile.getPos(), TextureEnum.DIR_UP, TextureEnum.DIR_DOWN, "gui.cyclic.direction"));
+        container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
     int w = 110;
     int h = 18;
     //now start sliders

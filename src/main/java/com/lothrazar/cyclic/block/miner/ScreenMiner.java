@@ -39,7 +39,7 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     //then toggle
     f = TileMiner.Fields.DIRECTION.ordinal();
     btnDirection = addButton(new ButtonMachineRedstone(x, y + 40, f,
-        container.tile.getPos(), TextureEnum.DIR_UP, TextureEnum.DIR_DOWN, "gui.cyclic.direction"));
+        container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
     //
     int w = 120;
     int h = 20;
