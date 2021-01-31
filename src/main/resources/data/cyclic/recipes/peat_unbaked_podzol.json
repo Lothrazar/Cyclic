@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "bcb",
-    "cbc",
+    "dcd",
     "bcb"
   ],
   "key": {
@@ -10,11 +10,14 @@
       "item": "cyclic:biomass"
     },
     "c": {
-      "item": "cyclic:peat_fuel"
+      "item": "minecraft:podzol"
+    },
+    "d": {
+      "item": "minecraft:charcoal"
     }
   },
   "result": {
     "item": "cyclic:peat_unbaked",
-    "count": 4
+    "count": 32
   }
 }
