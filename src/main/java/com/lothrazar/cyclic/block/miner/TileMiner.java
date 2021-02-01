@@ -105,8 +105,8 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("size", radius);
     tag.putInt("height", height);
-    isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
-    directionIsUp = tag.getBoolean("directionIsUp");
+    tag.putBoolean("isCurrentlyMining", isCurrentlyMining);
+    tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
