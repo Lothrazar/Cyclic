@@ -240,6 +240,8 @@
     "cyclic.screen.size8": "17x17",
     "cyclic.screen.size9": "19x19",
     "cyclic.screen.size10": "21x21",
+    "cyclic.screen.size11": "23x23",
+    "cyclic.screen.size12": "23x23",
     "button.height.down": "Decrease height",
     "button.height.up": "Increase height",
  

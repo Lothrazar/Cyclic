@@ -41,6 +41,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
 
   public TileItemCollector() {
     super(TileRegistry.collectortile);
+    this.needsRedstone = 0; // default on
   }
 
   @Override
@@ -126,9 +127,16 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   private AxisAlignedBB getRange() {
     BlockPos center = getTargetCenter();
     int diff = directionIsUp ? 1 : -1;
+    int yMin = center.getY();
+    int yMax = center.getY() + diff * height;
+    //for some reason
+    if (!directionIsUp) {
+      // when aiming down, we dont have the offset to get [current block] without this
+      yMin++;
+    }
     AxisAlignedBB aabb = new AxisAlignedBB(
-        center.getX() - radius, center.getY(), center.getZ() - radius,
-        center.getX() + radius + 1, center.getY() + diff * height, center.getZ() + radius + 1);
+        center.getX() - radius, yMin, center.getZ() - radius,
+        center.getX() + radius + 1, yMax, center.getZ() + radius + 1);
     return aabb;
   }
 
@@ -142,7 +150,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
         this.render = value % 2;
       break;
       case SIZE:
-        radius = value % MAX_SIZE;
+        radius = Math.min(value, MAX_SIZE);
       break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);

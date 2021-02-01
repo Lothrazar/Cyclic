@@ -47,7 +47,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     REDSTONE, RENDER, SIZE;
   }
 
-  public static final int MAX_SIZE = 11; // TODO: could be config . radius 7 translates to 15x15 area (center block + 7 each side)
+  public static final int MAX_SIZE = 12; // TODO: could be config . radius 7 translates to 15x15 area (center block + 7 each side)
   static final int MAX_ENERGY = 640000;
   public static IntValue POWERCONF;
   private int radius = MAX_SIZE;
@@ -145,8 +145,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     //
     Item seed = null;
     if (blockState.getBlock() instanceof CropsBlock) {
-      //   CropsBlock crop = (CropsBlock) blockState.getBlock();
-      //     seed = crop.getSeedsItem().asItem(); // accesstransformer.cfg
+      CropsBlock crop = (CropsBlock) blockState.getBlock();
+      ItemStack defaultSeedDrop = crop.getItem(world, posCurrent, blockState);
+      if (!defaultSeedDrop.isEmpty()) {
+        seed = defaultSeedDrop.getItem();
+      }
     }
     List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, null);
     for (ItemStack dropStack : drops) {
@@ -221,7 +224,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         this.render = value % 2;
       break;
       case SIZE:
-        radius = value % MAX_SIZE;
+        radius = Math.min(value, MAX_SIZE);
       break;
     }
   }

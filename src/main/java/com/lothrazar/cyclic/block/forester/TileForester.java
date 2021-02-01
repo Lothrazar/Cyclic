@@ -50,7 +50,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   static final int MAX = 64000;
   static final int MAX_HEIGHT = 32;
-  private static final int MAX_SIZE = 11; //radius 7 translates to 15x15 area (center block + 7 each side)
+  private static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
   public static IntValue POWERCONF;
   private int height = MAX_HEIGHT;
   private int radius = MAX_SIZE;
