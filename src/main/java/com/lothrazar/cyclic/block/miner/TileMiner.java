@@ -208,7 +208,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     if (blockSt.getFluidState() != null && blockSt.getFluidState().isEmpty() == false) {
       //am i PURE liquid? or just a WATERLOGGED block
       if (blockSt.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
-        ModCyclic.LOGGER.info(targetPos + " Mining FLUID is not valid  " + blockSt);
+        //    ModCyclic.LOGGER.info(targetPos + " Mining FLUID is not valid  " + blockSt);
         //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
         return false;
       }
@@ -216,7 +216,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     //its a solid non-air, non-fluid block (but might be like waterlogged stairs or something)
     boolean canHarvest = blockSt.canHarvestBlock(world, targetPos, fakePlayer.get());
     if (!canHarvest) {
-      ModCyclic.LOGGER.info(targetPos + " Mining target is not valid  " + blockSt);
+      //      ModCyclic.LOGGER.info(targetPos + " Mining target is not valid  " + blockSt);
     }
     return canHarvest;
   }
@@ -273,8 +273,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         return height;
       case SIZE:
         return radius;
-      default:
-      break;
     }
     return 0;
   }
@@ -296,8 +294,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
-      default:
       break;
     }
   }

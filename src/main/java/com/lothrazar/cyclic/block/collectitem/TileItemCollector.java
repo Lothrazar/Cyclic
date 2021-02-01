@@ -54,6 +54,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       return;
     }
     AxisAlignedBB aabb = getRange();
+    List<BlockPos> shape = this.getShape();
     List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
       return entity.isAlive(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
     });
@@ -124,10 +125,12 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   }
 
   private AxisAlignedBB getRange() {
+    //    List<BlockPos> shape = this.getShape();
     BlockPos center = getTargetCenter();
+    int diff = directionIsUp ? 1 : -1;
     AxisAlignedBB aabb = new AxisAlignedBB(
         center.getX() - radius, center.getY(), center.getZ() - radius,
-        center.getX() + radius + 1, center.getY() + 2, center.getZ() + radius + 1);
+        center.getX() + radius + 1, center.getY() + diff * height, center.getZ() + radius + 1);
     return aabb;
   }
 
@@ -164,7 +167,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       case HEIGHT:
         return height;
       case DIRECTION:
-        return (directionIsUp) ? 1 : 0;
+        return directionIsUp ? 1 : 0;
     }
     return 0;
   }
