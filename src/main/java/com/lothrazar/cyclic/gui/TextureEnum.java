@@ -6,9 +6,9 @@ public enum TextureEnum {
   public int getX() {
     switch (this) {
       case DIR_DOWN:
-        return 48;
+        return 47;
       case DIR_UPWARDS:
-        return 23;
+        return 24;
       case REDSTONE_NEEDED:
         return 62;
       case REDSTONE_ON:
@@ -34,9 +34,9 @@ public enum TextureEnum {
   public int getY() {
     switch (this) {
       case DIR_DOWN:
-        return 175;
+        return 176;
       case DIR_UPWARDS:
-        return 175;
+        return 176;
       case REDSTONE_NEEDED:
         return 478;
       case REDSTONE_ON:
@@ -57,5 +57,57 @@ public enum TextureEnum {
         return 129;
     }
     return 0;
+  }
+
+  public int getWidth() {
+    switch (this) {
+      case POWER_MOVING:
+      case POWER_STOP:
+      case CRAFT_EMPTY:
+      case CRAFT_BALANCE:
+      case CRAFT_MATCH:
+        return 14;
+      case DIR_DOWN:
+      case DIR_UPWARDS:
+        return 18;
+      default:
+        return 20;
+    }
+  }
+
+  public int getHeight() {
+    switch (this) {
+      case POWER_MOVING:
+      case POWER_STOP:
+      case CRAFT_EMPTY:
+      case CRAFT_BALANCE:
+      case CRAFT_MATCH:
+        return 14;
+      case DIR_DOWN:
+      case DIR_UPWARDS:
+        return 18;
+      default:
+        return 20;
+    }
+  }
+
+  public int getOffsetX() {
+    switch (this) {
+      case DIR_DOWN:
+      case DIR_UPWARDS:
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+  public int getOffsetY() {
+    switch (this) {
+      case DIR_DOWN:
+      case DIR_UPWARDS:
+        return 1;
+      default:
+        return 0;
+    }
   }
 }

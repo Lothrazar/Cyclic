@@ -27,7 +27,6 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   FluidTankBase tank;
-  //  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
 
   static enum Fields {
     REDSTONE, RENDER;

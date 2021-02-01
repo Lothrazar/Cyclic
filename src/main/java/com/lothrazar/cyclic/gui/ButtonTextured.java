@@ -11,7 +11,7 @@ import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 import org.lwjgl.opengl.GL11;
 
 /**
- * not bound to a tile entity unlike ButtonMachine
+ * not bound to a tile entity unlike ButtonMachine. Textures bound to TextureEnum
  * 
  */
 public class ButtonTextured extends ExtendedButton implements IHasTooltip {
@@ -43,9 +43,10 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
     GL11.glEnable(GL11.GL_BLEND);
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     if (textureId != null) {
-      this.blit(ms, this.x, this.y,
+      this.blit(ms,
+          this.x + textureId.getOffsetX(), this.y + textureId.getOffsetY(),
           textureId.getX(), textureId.getY(),
-          width, height);
+          textureId.getWidth(), textureId.getHeight());
     }
     this.renderBg(ms, minecraft, mouseX, mouseY);
   }

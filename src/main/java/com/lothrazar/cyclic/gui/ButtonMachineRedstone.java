@@ -30,6 +30,12 @@ public class ButtonMachineRedstone extends ButtonMachine {
     this.tooltipPrefix = tooltipPrefix;
   }
 
+  public ButtonMachineRedstone setSize(int size) {
+    this.height = size;
+    this.width = size;
+    return this;
+  }
+
   public void onValueUpdate(TileEntityBase tile) {
     int val = tile.getField(this.getTileField());
     this.onValueUpdate(val);

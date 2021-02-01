@@ -25,14 +25,14 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
   public ScreenGenerator(ContainerGenerator screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TilePeatGenerator.MENERGY);
-    timer = new TimerBar(this, 88, 37, TileMelter.TIMER_FULL);
+    timer = new TimerBar(this, 78, 55, TileMelter.TIMER_FULL);
   }
 
   @Override
   public void init() {
     super.init();
     timer.guiLeft = energy.guiLeft = guiLeft;
-    timer.guiTop = energy.guiLeft = guiLeft;
+    timer.guiTop = energy.guiTop = guiTop;
     energy.guiTop = guiTop;
     int x = guiLeft + 132, y = guiTop + 8;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {

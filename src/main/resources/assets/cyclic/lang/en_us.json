@@ -94,7 +94,9 @@
     "item.cyclic.settings_data":"Settings Data Card",
     "item.cyclic.settings_data.tooltip":"Copy settings between cyclic machines",
     "item.cyclic.settings_data.guide":"Copy settings between cyclic machines.  Hit on bedrock to wipe data clean.  After data is copied, can only be put onto blocks with the same id.",
-
+		"item.cyclic.settings_data.savednew": "Machine Data saved",
+		"item.cyclic.settings_data.written": "Machine Data written",
+				
     "block.cyclic.terra_preta":"Terra Preta",
     "block.cyclic.terra_preta.tooltip":"Place below farmland for sprinkler-like growth",
     "block.cyclic.terra_preta.guide":"Place Terra Preta below farmland to increase the speed at which crops grow.  Works just like a sprinkler except there are no particles, and it only targets the block above. ",

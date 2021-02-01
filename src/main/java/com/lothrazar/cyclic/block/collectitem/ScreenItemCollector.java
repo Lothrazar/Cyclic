@@ -32,12 +32,16 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
     f = TileItemCollector.Fields.RENDER.ordinal();
     y += 20;
     btnRender = addButton(new ButtonMachineRedstone(x, y, f,
-        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"))
+    //            .setSize(18)
+    ;
     //then toggle
     f = TileItemCollector.Fields.DIRECTION.ordinal();
     y += 20;
     btnDirection = addButton(new ButtonMachineRedstone(x, y, f,
-        container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
+        container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"))
+    //.setSize(18)
+    ;
     int w = 110;
     int h = 18;
     //now start sliders
