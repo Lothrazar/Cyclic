@@ -45,6 +45,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   /**
    * exact copy of super() but replaced hardcoded 20 with this.height
    */
+  @SuppressWarnings("deprecation")
   @Override
   protected void renderBg(MatrixStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
     minecraft.getTextureManager().bindTexture(WIDGETS_LOCATION);

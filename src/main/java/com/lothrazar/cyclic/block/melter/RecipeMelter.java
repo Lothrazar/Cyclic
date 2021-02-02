@@ -29,7 +29,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
 
-  protected RecipeMelter(ResourceLocation id, Ingredient in, Ingredient inSecond, FluidStack out) {
+  public RecipeMelter(ResourceLocation id, Ingredient in, Ingredient inSecond, FluidStack out) {
     super(id);
     ingredients.add(in);
     ingredients.add(inSecond);
@@ -141,15 +141,15 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     }
   }
 
-  private static void addRecipe(RecipeMelter r) {
+  public static boolean addRecipe(RecipeMelter r) {
     ResourceLocation id = r.getId();
     if (HASHES.contains(id.toString())) {
       ModCyclic.LOGGER.info("Warning: Duplicate melter recipe id " + id.toString());
+      return false;
     }
-    else {
-      RECIPES.add(r);
-      HASHES.add(id.toString());
-      ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
-    }
+    RECIPES.add(r);
+    HASHES.add(id.toString());
+    ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
+    return true;
   }
 }
