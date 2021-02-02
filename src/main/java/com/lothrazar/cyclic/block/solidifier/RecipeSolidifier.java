@@ -30,7 +30,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack fluidInput;
 
-  private RecipeSolidifier(ResourceLocation id,
+  public RecipeSolidifier(ResourceLocation id,
       Ingredient in, Ingredient inSecond, Ingredient inThird, FluidStack fluid,
       ItemStack result) {
     super(id);
@@ -160,15 +160,15 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
   }
 
-  private static void addRecipe(RecipeSolidifier<?> r) {
+  public static boolean addRecipe(RecipeSolidifier<?> r) {
     ResourceLocation id = r.getId();
     if (HASHES.contains(id.toString())) {
-      ModCyclic.LOGGER.info("Warn: Duplicate solidifier recipe id " + id.toString());
+      ModCyclic.LOGGER.error("Warn: Duplicate solidifier recipe id " + id.toString());
+      return false;
     }
-    else {
-      RECIPES.add(r);
-      HASHES.add(id.toString());
-      ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
-    }
+    RECIPES.add(r);
+    HASHES.add(id.toString());
+    ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
+    return true;
   }
 }

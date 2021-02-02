@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.compat.crafttweaker;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IIngredient;
-import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
@@ -26,22 +25,19 @@ public class MelterManager implements IRecipeManager {
 
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient inputFirst, IIngredient inputSecond, IFluidStack f) {
-    if (f == null || name == null) {
+    if (f == null || name == null || f.getFluid() == null) {
       return;
     }
-    ModCyclic.LOGGER.info("recipe   " + name);
-    ModCyclic.LOGGER.info("recipe   " + f);
-    ModCyclic.LOGGER.info("recipe   " + f.getAmount());
-    ModCyclic.LOGGER.info("recipe   " + f.getFluid());
+    ModCyclic.LOGGER.info("recipe   " + name + f.getFluid());
     RecipeMelter<?> m = new RecipeMelter(new ResourceLocation(CompatConstants.CT_ID, name),
         inputFirst.asVanillaIngredient(),
         inputSecond.asVanillaIngredient(),
         new FluidStack(f.getFluid(), f.getAmount()));
     if (RecipeMelter.addRecipe(m)) {
-      ModCyclic.LOGGER.info(String.format("CT: addRecipe success %s | %d ", name, RecipeMelter.RECIPES.size()));
+      ModCyclic.LOGGER.error(String.format("melter: addRecipe success %s | %d ", name, RecipeMelter.RECIPES.size()));
     }
     else {
-      ModCyclic.LOGGER.info(String.format("CT: addRecipe error %s  " + m, name));
+      ModCyclic.LOGGER.error(String.format("melter: addRecipe error %s  " + m, name));
     }
   }
 
@@ -52,6 +48,7 @@ public class MelterManager implements IRecipeManager {
     }
     ModCyclic.LOGGER.info("CT: removeRecipe attempt %s %d ", name,
         RecipeMelter.RECIPES.size());
+    this.removeByName(name);
     // go
     RecipeMelter<?> found = null;
     for (RecipeMelter<?> m : RecipeMelter.RECIPES) {
@@ -64,18 +61,11 @@ public class MelterManager implements IRecipeManager {
     if (found != null) {
       int before = RecipeMelter.RECIPES.size();
       RecipeMelter.RECIPES.remove(found);
-      ModCyclic.LOGGER.info(String.format("CT: removeRecipe found %s ||  %d -> %d "
+      ModCyclic.LOGGER.error(String.format("CT: removeRecipe found %s ||  %d -> %d "
           + found.getRecipeFluid().getFluid().getRegistryName(), name, before, RecipeMelter.RECIPES.size()));
     }
     else {
-      ModCyclic.LOGGER.info(String.format("CT: removeRecipe NOT found %s  ", name));
+      ModCyclic.LOGGER.error(String.format("CT: removeRecipe NOT found %s  ", name));
     }
-  }
-
-  @Override
-  public void removeRecipe(IItemStack output) {
-    ModCyclic.LOGGER.error("CT: removeRecipe no single stack " + output);
-    // throws new IllegalArgumentException
-    //
   }
 }
