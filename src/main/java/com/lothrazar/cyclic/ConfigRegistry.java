@@ -73,7 +73,7 @@ public class ConfigRegistry {
   public static BooleanValue COMMANDGETHELP;
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
-  private static ConfigValue<List<String>> BEHEADING_SKINS;
+  private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   static {
     buildDefaults();
     initConfig();
@@ -130,6 +130,7 @@ public class ConfigRegistry {
     UNCRAFT.add("spectrite:spectrite_arrow_special");
     UNCRAFT.add("techreborn:uumatter");
     UNCRAFT.add("projecte:*");
+    UNCRAFT.add("refinedstorage:*_monitor");
     //bag cannot pickup these. 
     TRANSPORTBAG.add("minecraft:spawner");
     TRANSPORTBAG.add("parabox:parabox");
@@ -160,7 +161,8 @@ public class ConfigRegistry {
     EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.ID, true);
     EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.ID, true);
     EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.ID, true);
-    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").define("beheadingEntityMHF", BEHEADING);
+    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList("beheadingEntityMHF", BEHEADING,
+        it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
@@ -213,7 +215,7 @@ public class ConfigRegistry {
     CFG.pop();
     CFG.comment("Sack of Holding settings").push("tile_transporter");
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
-        .define("disable_pickup", TRANSPORTBAG);
+        .defineList("disable_pickup", TRANSPORTBAG, it -> it instanceof String);
     CFG.pop();
     CFG.comment("Peat blocks").push("peat");
     PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
@@ -247,7 +249,7 @@ public class ConfigRegistry {
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
         + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", true);
-    TileUncraft.IGNORELIST = CFG.comment("Block these from being un-crafted").define("ignore_list", UNCRAFT);
+    TileUncraft.IGNORELIST = CFG.comment("Block these from being un-crafted").defineList("ignore_list", UNCRAFT, it -> it instanceof String);
     TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);
     CFG.pop(); //uncrafter
     CFG.pop(); //blocks

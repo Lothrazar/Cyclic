@@ -45,7 +45,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   static final int MAX = 64000;
   public static IntValue POWERCONF;
   public static BooleanValue IGNORE_NBT;
-  public static ConfigValue<List<String>> IGNORELIST;
+  public static ConfigValue<List<? extends String>> IGNORELIST;
   public static ConfigValue<Integer> TIMER;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1);
@@ -177,12 +177,14 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   }
 
   // matches count and has enough
+  @SuppressWarnings("unchecked")
   private boolean recipeMatches(ItemStack stack, IRecipe<?> recipe) {
     //    if (stack.getTag() != null && stack.getTag().keySet().size() == 1 && stack.getTag().keySet().contains(Const.NBT_REPAIR_COST)) {
     //      //what is it
     //      stack.setTag(null);
     //    }
     // do items match
+    //    ModCyclic.LOGGER.info("recipe id" + recipe.getId());
     if (stack.isEmpty() ||
         recipe.getRecipeOutput().isEmpty() ||
         recipe.getRecipeOutput().getCount() > stack.getCount()) {
@@ -190,7 +192,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       return false;
     }
     //check config
-    if (UtilString.isInList(TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
+    if (UtilString.isInList((List<String>) TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
       ModCyclic.LOGGER.info("Uncrafter: blocked by config list " + stack);
       this.status = UncraftStatusEnum.CONFIG;
       return false;

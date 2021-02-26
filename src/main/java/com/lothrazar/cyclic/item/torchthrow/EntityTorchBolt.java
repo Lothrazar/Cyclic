@@ -59,7 +59,7 @@ public class EntityTorchBolt extends ProjectileItemEntity {
       Direction offset = bRayTrace.getFace();
       BlockPos pos = bRayTrace.getPos().offset(offset);
       boolean itPlaced = false;
-      if (world.isAirBlock(pos)) {
+      if (world.isAirBlock(pos) || world.getBlockState(pos).getMaterial().isReplaceable()) {
         BlockState newstate = null;
         if (offset == Direction.UP || offset == Direction.DOWN) {
           newstate = Blocks.TORCH.getDefaultState();

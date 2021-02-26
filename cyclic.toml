@@ -17,9 +17,9 @@
 		#Set false to disable enchantment
 		experience_boost = true
 		#Set false to disable enchantment
-		ender = true
-		#Set false to disable enchantment
 		launch = true
+		#Set false to disable enchantment
+		ender = true
 		#Set false to disable enchantment
 		disarm = true
 		#Set false to disable enchantment
@@ -75,7 +75,7 @@
 			#Range: 1 ~ 9999
 			ticks = 60
 			#Block these from being un-crafted
-			ignore_list = ["minecraft:elytra", "minecraft:beacon", "minecraft:magma", "minecraft:tipped_arrow", "minecraft:cobweb", "minecraft:*_dye", "minecraft:stick", "minecraft:netherite_ingot", "cyclic:gem_*", "forge:bucketfilled", "progressiveautomation:*", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
+			ignore_list = ["minecraft:elytra", "minecraft:beacon", "minecraft:magma", "minecraft:tipped_arrow", "minecraft:cobweb", "minecraft:*_dye", "minecraft:stick", "minecraft:netherite_ingot", "cyclic:gem_*", "forge:bucketfilled", "progressiveautomation:*", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*", "refinedstorage:*_monitor"]
 
 		#Ender Trigger settings
 		[cyclic.blocks.eye_redstone]
@@ -91,7 +91,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
+		info = false
 
 	#####################################################################################
 	# Item specific configs
@@ -101,7 +101,7 @@
 		#Sack of Holding settings
 		[cyclic.items.tile_transporter]
 			#Block these from being picked up
-			disable_pickup = []
+			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
 
 		#Wand settings
 		[cyclic.items.teleport_wand]
@@ -189,13 +189,13 @@
 			forester = 50
 			#Power per tick while in use
 			#Range: 0 ~ 64000
-			beacon = 10
+			beacon = 0
 			#Power per use crafter
 			#Range: 0 ~ 64000
 			crafter = 500
 			#Power per use user
 			#Range: 0 ~ 64000
-			user = 0
+			user = 50
 			#Power per recipe solidifier
 			#Range: 0 ~ 64000
 			solidifier = 5000

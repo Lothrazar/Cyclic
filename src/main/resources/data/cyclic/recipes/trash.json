@@ -13,7 +13,7 @@
       "item": "minecraft:iron_ingot"
     },
     "c": {
-      "item": "minecraft:chest"
+      "tag": "forge:chests/wooden"
     }
   },
   "result": {

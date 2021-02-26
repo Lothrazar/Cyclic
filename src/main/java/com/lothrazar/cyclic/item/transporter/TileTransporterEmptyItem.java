@@ -49,12 +49,13 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class TileTransporterEmptyItem extends ItemBase {
 
-  public static ConfigValue<List<String>> IGNORELIST;
+  public static ConfigValue<List<? extends String>> IGNORELIST;
 
   public TileTransporterEmptyItem(Properties prop) {
     super(prop);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
@@ -69,7 +70,7 @@ public class TileTransporterEmptyItem extends ItemBase {
       return ActionResultType.FAIL;
     }
     ResourceLocation blockId = state.getBlock().getRegistryName();
-    if (UtilString.isInList(IGNORELIST.get(), blockId)) {
+    if (UtilString.isInList((List<String>) IGNORELIST.get(), blockId)) {
       UtilChat.sendStatusMessage(player, "chest_sack.error.config");
       return ActionResultType.FAIL;
     }

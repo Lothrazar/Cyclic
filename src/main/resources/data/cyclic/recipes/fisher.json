@@ -10,7 +10,7 @@
       "item": "minecraft:cobweb"
     },
     "p": {
-      "item": "minecraft:trapped_chest"
+      "tag": "forge:chests/trapped"
     },
     "f": {
       "tag": "forge:gems/emerald"

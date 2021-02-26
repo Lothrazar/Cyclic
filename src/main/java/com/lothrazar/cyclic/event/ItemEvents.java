@@ -213,16 +213,18 @@ public class ItemEvents {
     if (event.getEntityLiving() instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) event.getEntityLiving();
       ItemStack stack = event.getItem().getItem();
-      ItemStack resultStack = stack.copy();
+      ItemStack resultStack = null;
       Set<Integer> bagSlots = StorageBagItem.getAllBagSlots(player);
       for (Integer i : bagSlots) {
         ItemStack bag = player.inventory.getStackInSlot(i);
         switch (StorageBagItem.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = StorageBagItem.tryInsert(bag, resultStack);
+            event.getItem().setItem(resultStack);
           break;
           case FILTER:
             resultStack = StorageBagItem.tryFilteredInsert(bag, resultStack);
+            event.getItem().setItem(resultStack);
           break;
           case NOTHING:
           break;
@@ -230,9 +232,6 @@ public class ItemEvents {
         if (resultStack == ItemStack.EMPTY) {
           break;
         }
-      }
-      if (resultStack != null) {
-        event.getItem().setItem(resultStack);
       }
       if (resultStack != null && resultStack.getCount() != stack.getCount()) {
         event.setResult(Result.ALLOW);
