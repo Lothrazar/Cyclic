@@ -130,11 +130,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         r = new RecipeSolidifier(recipeId, inputFirst, inputSecond,
             inputThird, new FluidStack(fluid, count), resultStack);
         addRecipe(r);
+        return r;
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
+        return null;
       }
-      return r;
     }
 
     @Override
@@ -163,7 +164,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public static boolean addRecipe(RecipeSolidifier<?> r) {
     ResourceLocation id = r.getId();
     if (HASHES.contains(id.toString())) {
-      ModCyclic.LOGGER.error("Warn: Duplicate solidifier recipe id " + id.toString());
       return false;
     }
     RECIPES.add(r);
