@@ -895,6 +895,7 @@
     "cyclic.gui.uncrafter.config":"Blocked by config",
     "cyclic.gui.uncrafter.norecipe":"No recipe",
     "cyclic.gui.uncrafter.match":"Match",
+    "cyclic.gui.uncrafter.noroom":"Output blocked",
     
     "cyclic.screen.style0": "Normal",
     "cyclic.screen.style1": "%",

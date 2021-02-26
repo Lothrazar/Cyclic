@@ -93,9 +93,9 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         inputSlots.extractItem(0, match.getRecipeOutput().getCount(), false);
         energy.extractEnergy(cost, false);
       }
-      else {
-        this.status = UncraftStatusEnum.NORECIPE;
-      }
+    }
+    else {
+      this.status = UncraftStatusEnum.NORECIPE;
     }
   }
 
@@ -150,15 +150,32 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
         .orElseGet(Stream::empty))
         .collect(Collectors.toList());
     if (result.isEmpty()) {
+      this.status = UncraftStatusEnum.NORECIPE;
       return false;
     }
+    //do we have space for out?
+    boolean simulate = true;
+    for (ItemStack r : result) {
+      ItemStack rOut = ItemStack.EMPTY;
+      for (int i = 0; i < outputSlots.getSlots(); i++) {
+        if (!r.isEmpty()) {
+          rOut = ItemStack.EMPTY;
+          rOut = outputSlots.insertItem(i, r.copy(), simulate);
+        }
+      }
+      if (!rOut.isEmpty()) {
+        this.status = UncraftStatusEnum.NOROOM;
+        return false;
+      }
+    }
+    //we have room for sure
+    simulate = false;
     for (ItemStack r : result) {
       //give result items
       for (int i = 0; i < outputSlots.getSlots(); i++) {
-        if (r.isEmpty()) {
-          break;
+        if (!r.isEmpty()) {
+          outputSlots.insertItem(i, r.copy(), simulate);
         }
-        r = outputSlots.insertItem(i, r.copy(), false);
       }
     }
     return true;
