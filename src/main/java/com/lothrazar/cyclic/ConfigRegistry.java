@@ -248,7 +248,8 @@ public class ConfigRegistry {
         + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", true);
     TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT, it -> it instanceof String);
-    TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item").defineList("ignore_recipes", UNCRAFT_RECIPE_IDS, it -> it instanceof String);
+    TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
+        .defineList("ignore_recipes", UNCRAFT_RECIPE_IDS, it -> it instanceof String);
     TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);
     CFG.pop(); //uncrafter
     CFG.pop(); //blocks

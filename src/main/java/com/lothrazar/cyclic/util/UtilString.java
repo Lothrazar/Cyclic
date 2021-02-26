@@ -52,7 +52,6 @@ public class UtilString {
         return true;
       }
       if (matchWildcard) {
-        //        System.out.println("blacklist " + strFromList);
         String[] blockIdArray = strFromList.split(":");
         if (blockIdArray.length <= 1) {
           ModCyclic.LOGGER.error("Invalid config value for block : ", strFromList);
@@ -66,7 +65,6 @@ public class UtilString {
           continue;
         }
         String blockIdListWC = blockIdFromList.replace("*", "");
-        //        System.out.println(blockIdToMatch + "Contaiuns " + blockIdListWC + "  ?  " + blockIdToMatch.contains(blockIdListWC));
         if (blockIdToMatch.contains(blockIdListWC)) {
           return true;
         }
