@@ -7,6 +7,10 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class CrafterGridSlot extends SlotItemHandler {
 
+  public CrafterGridSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+    super(itemHandler, index, xPosition, yPosition);
+  }
+
   @Override
   public boolean isItemValid(ItemStack stack) {
     return true;
@@ -19,11 +23,9 @@ public class CrafterGridSlot extends SlotItemHandler {
 
   @Override
   public void putStack(ItemStack stack) {
-    super.putStack(stack.copy());
+    ItemStack copy = stack.copy();
+    copy.setCount(1);
+    super.putStack(copy);
     stack.grow(1); //hack for JEI when they auto-fill recipes, re fill it after it drains so its a 'mock slot'
-  }
-
-  public CrafterGridSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
-    super(itemHandler, index, xPosition, yPosition);
   }
 }
