@@ -21,7 +21,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   public ScreenUncraft(ContainerUncraft screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileUncraft.MAX);
-    this.timer = new TimerBar(this, 66, 24, TileUncraft.TIMER.get());
+    this.timer = new TimerBar(this, 58, 20, TileUncraft.TIMER.get());
   }
 
   @Override
@@ -54,7 +54,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
       String name = UtilChat.lang(
           ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
       int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;
-      drawString(ms, name, center + 29, 22);
+      drawString(ms, name, center + 37, 24);
     }
   }
 

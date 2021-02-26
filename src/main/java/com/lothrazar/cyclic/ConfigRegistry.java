@@ -57,6 +57,7 @@ public class ConfigRegistry {
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> UNCRAFT = new ArrayList<>();
+  private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final String WALL = "####################################################################################";
   private static ForgeConfigSpec COMMON_CONFIG;
@@ -111,27 +112,24 @@ public class ConfigRegistry {
     BEHEADING.add("minecraft:silverfish:MHF_Silverfish");
     BEHEADING.add("minecraft:endermite:MHF_Endermite");
     //
-    // uncrafter defaults for balance
-    //
     //most of these are ported direct from 1.12 defaults, idk if these mods or items exist anymore
     UNCRAFT.add("minecraft:elytra");
-    UNCRAFT.add("minecraft:beacon");
-    UNCRAFT.add("minecraft:magma"); //potion balance
     UNCRAFT.add("minecraft:tipped_arrow");
-    UNCRAFT.add("minecraft:cobweb"); //mods like botania add recipes
-    UNCRAFT.add("minecraft:*_dye"); //getting flowers etc feels bad
-    //    defaultUnc.add("minecraft:*_banner");
-    UNCRAFT.add("minecraft:stick"); //block cheaty way to get bamboo
-    UNCRAFT.add("minecraft:netherite_ingot");
-    UNCRAFT.add("cyclic:gem_*");
-    UNCRAFT.add("forge:bucketfilled");
-    UNCRAFT.add("progressiveautomation:*");
+    UNCRAFT.add("minecraft:*_dye"); //getting flowers etc feels bad 
     UNCRAFT.add("spectrite:spectrite_arrow");
     UNCRAFT.add("spectrite:spectrite_arrow_special");
     UNCRAFT.add("techreborn:uumatter");
     UNCRAFT.add("projecte:*");
-    UNCRAFT.add("refinedstorage:*_monitor");
-    //bag cannot pickup these. 
+    //
+    UNCRAFT_RECIPE_IDS.add("botania:cobweb");
+    UNCRAFT_RECIPE_IDS.add("minecraft:magma_cream");
+    UNCRAFT_RECIPE_IDS.add("minecraft:beacon");
+    UNCRAFT_RECIPE_IDS.add("minecraft:stick_from_bamboo_item");
+    UNCRAFT_RECIPE_IDS.add("minecraft:netherite_ingot_from_netherite_block");
+    UNCRAFT_RECIPE_IDS.add("mysticalagriculture:essence*");
+    UNCRAFT_RECIPE_IDS.add("mysticalagriculture:farmland_till");
+    UNCRAFT_RECIPE_IDS.add("refinedstorage:coloring_recipes*");
+    //
     TRANSPORTBAG.add("minecraft:spawner");
     TRANSPORTBAG.add("parabox:parabox");
     TRANSPORTBAG.add("extracells:fluidcrafter");
@@ -249,7 +247,8 @@ public class ConfigRegistry {
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
         + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", true);
-    TileUncraft.IGNORELIST = CFG.comment("Block these from being un-crafted").defineList("ignore_list", UNCRAFT, it -> it instanceof String);
+    TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT, it -> it instanceof String);
+    TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item").defineList("ignore_recipes", UNCRAFT_RECIPE_IDS, it -> it instanceof String);
     TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);
     CFG.pop(); //uncrafter
     CFG.pop(); //blocks
