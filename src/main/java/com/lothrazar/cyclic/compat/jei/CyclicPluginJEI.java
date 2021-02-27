@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
@@ -77,9 +76,6 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.ID,
         0, 3, //recipeSLotStart, recipeSlotCount
         4, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
-        10, 9, //recipeSLotStart, recipeSlotCount
-        30, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(CraftingBagContainer.class, VanillaRecipeCategoryUid.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
         10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
@@ -89,5 +85,9 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeTransferHandler(ContainerWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
         10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
+    //JEI bug https://github.com/Lothrazar/Cyclic/issues/1742
+    //    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
+    //        10, 9, //recipeSLotStart, recipeSlotCount
+    //        30, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
   }
 }

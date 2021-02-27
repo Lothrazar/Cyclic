@@ -1,15 +1,21 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilEnchant;
+import java.util.Map;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
@@ -120,21 +126,28 @@ public class BlockEnderShelf extends BlockBase {
 
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    ItemStack heldItem = player.getHeldItemMainhand();
+    ItemStack heldItem = player.getHeldItem(hand);
+    if (hand != Hand.MAIN_HAND && heldItem.isEmpty()) {
+      //if your hand is empty, dont process if its the OFF hand
+      //otherwise: main hand inserts, off hand takes out right away
+      return ActionResultType.PASS;
+    }
     Direction face = hit.getFace();
     Vector3d hitVec = hit.getHitVec();
     int slot = getSlotFromHitVec(pos, face, hitVec);
     if (world.getTileEntity(pos) instanceof TileEnderShelf) {
       TileEnderShelf shelf = getTileEntity(world, pos);
-      if (EnderShelfHelper.isShelf(state) && hand == Hand.MAIN_HAND && hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
+      if (EnderShelfHelper.isShelf(state) && hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
+        //
+        // single shelf
+        //
         if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
           shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
             if (h.getStackInSlot(slot) == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(h.getStackInSlot(slot), heldItem)) {
               if (!world.isRemote) {
-                //                ItemStack remaining = 
-                h.insertItem(slot, heldItem, false);
+                ItemStack remaining = h.insertItem(slot, heldItem, false);
+                player.setHeldItem(hand, remaining);
               }
-              player.setHeldItem(hand, ItemStack.EMPTY);
             }
           });
         }
@@ -145,16 +158,54 @@ public class BlockEnderShelf extends BlockBase {
           });
         }
       }
-      else if (EnderShelfHelper.isController(state) && hand == Hand.MAIN_HAND) {
+      else if (EnderShelfHelper.isController(state)) {
+        //
+        // controller
+        //
         if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
           shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            player.setHeldItem(Hand.MAIN_HAND, h.insertItem(0, heldItem, false));
+            insertIntoController(player, hand, heldItem, h);
           });
         }
         return ActionResultType.CONSUME;
       }
     }
     return ActionResultType.PASS;
+  }
+
+  private void insertIntoController(PlayerEntity player, Hand hand, ItemStack heldItem, IItemHandler h) {
+    Map<Enchantment, Integer> allofthem = EnchantmentHelper.getEnchantments(heldItem);
+    if (allofthem.size() == 1) {
+      ItemStack insertResult = h.insertItem(0, heldItem, false);
+      player.setHeldItem(hand, insertResult);
+    }
+    else {
+      //loop and make books of each
+      Enchantment[] flatten = allofthem.keySet().toArray(new Enchantment[0]);
+      for (Enchantment entry : flatten) {
+        // try it
+        ItemStack fake = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantedBookItem.addEnchantment(fake, new EnchantmentData(entry, allofthem.get(entry)));
+        ItemStack insertResult = h.insertItem(0, fake, false);
+        ModCyclic.LOGGER.info("try insert" + insertResult);
+        if (insertResult.isEmpty()) {
+          //ok it worked, so REMOVE that from the og set
+          allofthem.remove(entry);
+        }
+      }
+      //now set it back into the book
+      if (allofthem.isEmpty()) {
+        player.setHeldItem(hand, ItemStack.EMPTY);
+      }
+      else {
+        //        apply all to the book and give the book back
+        ItemStack newFake = new ItemStack(Items.ENCHANTED_BOOK);
+        for (Enchantment newentry : allofthem.keySet()) {
+          EnchantedBookItem.addEnchantment(newFake, new EnchantmentData(newentry, allofthem.get(newentry)));
+        }
+        player.setHeldItem(hand, newFake);
+      }
+    }
   }
 
   private int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {

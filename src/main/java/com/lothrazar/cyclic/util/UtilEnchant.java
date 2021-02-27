@@ -1,11 +1,13 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.ModCyclic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,7 +43,11 @@ public class UtilEnchant {
 
   public static boolean doBookEnchantmentsMatch(ItemStack stack1, ItemStack stack2) {
     if (stack1.getItem() == Items.ENCHANTED_BOOK && stack2.getItem() == Items.ENCHANTED_BOOK) {
-      if (EnchantedBookItem.getEnchantments(stack1).equals(EnchantedBookItem.getEnchantments(stack2))) {
+      ListNBT ench1 = EnchantedBookItem.getEnchantments(stack1);
+      ListNBT ench2 = EnchantedBookItem.getEnchantments(stack2);
+      ModCyclic.LOGGER.info("insert ench1 " + ench1);
+      ModCyclic.LOGGER.info("insert ench2 " + ench2);
+      if (ench1.equals(ench2)) {
         return true;
       }
     }

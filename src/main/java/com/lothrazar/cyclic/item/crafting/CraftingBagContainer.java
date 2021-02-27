@@ -51,7 +51,6 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     //grid
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        ModCyclic.LOGGER.info("i=" + i + " j = " + j + " and total slot is " + (j + i * 3));
         addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * 18, 17 + i * 18));
       }
     }
