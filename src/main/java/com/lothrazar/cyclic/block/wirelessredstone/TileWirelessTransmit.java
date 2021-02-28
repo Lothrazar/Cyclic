@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -90,9 +91,9 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     for (int s = 0; s < inventory.getSlots(); s++) {
       ItemStack stack = inventory.getStackInSlot(s);
       BlockPosDim targetPos = LocationGpsCard.getPosition(stack);
-      if (targetPos == null) {
-        // || targetPos.getDimension() != world.dimension.getType().getId()) {
-        return;
+      if (targetPos == null ||
+          UtilWorld.dimensionIsEqual(targetPos, world) == false) {
+        continue;
       }
       toggleTarget(targetPos.getPos());
     }

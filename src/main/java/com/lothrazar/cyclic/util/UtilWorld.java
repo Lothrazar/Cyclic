@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.Const;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,9 @@ import net.minecraft.world.World;
 
 public class UtilWorld {
 
-  public static String dimensionToString(World w) {
+  public static String dimensionToString(World world) {
     //example: returns "minecraft:overworld" resource location
-    return w.getDimensionKey().getLocation().toString();
+    return world.getDimensionKey().getLocation().toString();
     //RegistryKey.func_240903_a_(Registry.WORLD_KEY, new ResourceLocation("twilightforest", "twilightforest"));
   }
 
@@ -213,5 +214,12 @@ public class UtilWorld {
       posPrevious = posCurrent;
     }
     return pos;
+  }
+
+  public static boolean dimensionIsEqual(BlockPosDim targetPos, World world) {
+    if (targetPos == null || targetPos.getDimension() == null) {
+      return false;//world always has one
+    }
+    return targetPos.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world));
   }
 }
