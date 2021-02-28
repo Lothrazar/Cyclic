@@ -54,7 +54,8 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.hasEffect();
+      List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(stack);
+      return newEffects.size() > 0;
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
