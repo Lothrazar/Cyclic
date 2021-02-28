@@ -218,7 +218,7 @@ public class UtilWorld {
 
   public static boolean dimensionIsEqual(BlockPosDim targetPos, World world) {
     if (targetPos == null || targetPos.getDimension() == null) {
-      return false;//world always has one
+      return false;
     }
     return targetPos.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world));
   }

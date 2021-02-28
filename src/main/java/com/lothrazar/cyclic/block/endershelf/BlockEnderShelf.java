@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
@@ -187,7 +186,6 @@ public class BlockEnderShelf extends BlockBase {
         ItemStack fake = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantedBookItem.addEnchantment(fake, new EnchantmentData(entry, allofthem.get(entry)));
         ItemStack insertResult = h.insertItem(0, fake, false);
-        ModCyclic.LOGGER.info("try insert" + insertResult);
         if (insertResult.isEmpty()) {
           //ok it worked, so REMOVE that from the og set
           allofthem.remove(entry);
