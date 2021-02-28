@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.anvil;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -31,22 +32,19 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     TIMER, REDSTONE;
   }
 
-  private static final int OUT = 1;
-  private static final int IN = 0;
   static final int MAX = 64000;
   public static IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  ItemStackHandler inventory = new ItemStackHandler(2) {
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      if (slot == IN) {
-        return stack.isRepairable() && stack.getDamage() > 0;
-      }
-      return true;
+      return stack.isRepairable() && stack.getDamage() > 0;
     }
   };
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  ItemStackHandler outputSlots = new ItemStackHandler(1);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileAnvilAuto() {
@@ -116,9 +114,9 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     if (work) {
       UtilItemStack.repairItem(stack);
       boolean done = stack.getDamage() == 0;
-      if (done && inventory.getStackInSlot(OUT).isEmpty()) {
-        inventory.insertItem(OUT, stack.copy(), false);
-        inventory.extractItem(IN, stack.getCount(), false);
+      if (done && outputSlots.getStackInSlot(0).isEmpty()) {
+        outputSlots.insertItem(0, stack.copy(), false);
+        inputSlots.extractItem(0, stack.getCount(), false);
       }
     }
   }

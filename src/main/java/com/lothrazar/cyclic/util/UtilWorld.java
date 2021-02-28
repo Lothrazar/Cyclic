@@ -18,7 +18,7 @@ public class UtilWorld {
 
   public static String dimensionToString(World w) {
     //example: returns "minecraft:overworld" resource location
-    return w.getDimensionKey().getRegistryName().toString();
+    return w.getDimensionKey().getLocation().toString();
     //RegistryKey.func_240903_a_(Registry.WORLD_KEY, new ResourceLocation("twilightforest", "twilightforest"));
   }
 

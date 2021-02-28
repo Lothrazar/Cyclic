@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.anvilmagma;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -35,22 +36,16 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     TIMER, REDSTONE;
   }
 
-  private static final int OUT = 1;
-  private static final int IN = 0;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
-  ItemStackHandler inventory = new ItemStackHandler(2) {
+  ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      if (slot == IN) {
-        return stack.isRepairable() && stack.getDamage() > 0;
-      }
-      if (slot == OUT) {
-        return stack.isRepairable() && stack.getDamage() == 0;
-      }
-      return true;
+      return stack.isRepairable() && stack.getDamage() > 0;
     }
   };
+  ItemStackHandler outputSlots = new ItemStackHandler(1);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank;
 
@@ -67,20 +62,20 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
       return;
     }
     setLitProperty(true);
-    ItemStack stack = inventory.getStackInSlot(0);
+    ItemStack stack = inputSlots.getStackInSlot(0);
     if (stack.isEmpty() || stack.getItem().isIn(DataTags.IMMUNE)) {
       //move it over and then done
-      if (inventory.getStackInSlot(OUT).isEmpty()) {
-        inventory.insertItem(1, stack.copy(), false);
-        inventory.extractItem(0, stack.getCount(), false);
+      if (outputSlots.getStackInSlot(0).isEmpty()) {
+        outputSlots.insertItem(0, stack.copy(), false);
+        inputSlots.extractItem(0, stack.getCount(), false);
       }
       return;
     }
-    boolean done = stack.getDamage() == 0;
-    if (done && inventory.getStackInSlot(OUT).isEmpty()) {
+    boolean done = (stack.getDamage() == 0);
+    if (done && outputSlots.getStackInSlot(0).isEmpty()) {
       // 
-      inventory.insertItem(1, stack.copy(), false);
-      inventory.extractItem(0, stack.getCount(), false);
+      outputSlots.insertItem(0, stack.copy(), false);
+      inputSlots.extractItem(0, stack.getCount(), false);
     }
     final int repair = 100; // fluid
     boolean work = false;
