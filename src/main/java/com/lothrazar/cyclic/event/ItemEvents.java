@@ -25,6 +25,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
@@ -212,32 +213,29 @@ public class ItemEvents {
   public void onPlayerPickup(EntityItemPickupEvent event) {
     if (event.getEntityLiving() instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-      ItemStack stack = event.getItem().getItem();
-      ItemStack resultStack = null;
+      ItemEntity itemEntity = event.getItem();
+      ItemStack resultStack = itemEntity.getItem();
+      int origCount = resultStack.getCount();
       Set<Integer> bagSlots = StorageBagItem.getAllBagSlots(player);
       for (Integer i : bagSlots) {
         ItemStack bag = player.inventory.getStackInSlot(i);
         switch (StorageBagItem.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = StorageBagItem.tryInsert(bag, resultStack);
-            event.getItem().setItem(resultStack);
           break;
           case FILTER:
             resultStack = StorageBagItem.tryFilteredInsert(bag, resultStack);
-            event.getItem().setItem(resultStack);
           break;
           case NOTHING:
           break;
         }
-        if (resultStack == ItemStack.EMPTY) {
+        if (resultStack.isEmpty()) {
           break;
         }
       }
-      if (resultStack != null && resultStack.getCount() != stack.getCount()) {
+      if (resultStack.getCount() != origCount) {
+        itemEntity.setItem(resultStack);
         event.setResult(Result.ALLOW);
-      }
-      else {
-        event.setResult(Result.DEFAULT);
       }
     }
   }
