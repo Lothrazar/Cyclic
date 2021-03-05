@@ -18,7 +18,6 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
-import java.util.Set;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
@@ -216,8 +215,7 @@ public class ItemEvents {
       ItemEntity itemEntity = event.getItem();
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();
-      Set<Integer> bagSlots = StorageBagItem.getAllBagSlots(player);
-      for (Integer i : bagSlots) {
+      for (Integer i : StorageBagItem.getAllBagSlots(player)) {
         ItemStack bag = player.inventory.getStackInSlot(i);
         switch (StorageBagItem.getPickupMode(bag)) {
           case EVERYTHING:

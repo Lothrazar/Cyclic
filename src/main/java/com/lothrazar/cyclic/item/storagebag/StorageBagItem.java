@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.storagebag;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -310,8 +311,8 @@ public class StorageBagItem extends ItemBase {
     return RefillMode.NOTHING;
   }
 
-  public static Set<Integer> getAllBagSlots(PlayerEntity player) {
-    Set<Integer> slots = new HashSet<>();
+  public static List<Integer> getAllBagSlots(PlayerEntity player) {
+    List<Integer> slots = new ArrayList<>();
     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
       if (isBag(player.inventory.getStackInSlot(i))) {
         slots.add(i);
