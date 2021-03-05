@@ -45,31 +45,9 @@ public class SolidManager implements IRecipeManager {
       ModCyclic.LOGGER.error(String.format("RecipeSolidifier: addRecipe error %s  " + m, name));
     }
   }
-
-  @ZenCodeType.Method
-  public void removeRecipe(String name) {
-    if (name == null) {
-      return;
+    
+    @ZenCodeType.Method
+    public void removeRecipe(String name) {
+        removeByName(name);
     }
-    ModCyclic.LOGGER.info("CT: removeRecipe attempt %s %d ", name, RecipeMelter.RECIPES.size());
-    this.removeByName(name);
-    // go
-    RecipeSolidifier<?> found = null;
-    for (RecipeSolidifier<?> m : RecipeSolidifier.RECIPES) {
-      if (m != null && m.getId() != null &&
-          name.equalsIgnoreCase(m.getId().toString())) {
-        found = m;
-        break;
-      }
-    }
-    if (found != null) {
-      int before = RecipeSolidifier.RECIPES.size();
-      RecipeSolidifier.RECIPES.remove(found);
-      ModCyclic.LOGGER.error(String.format("RecipeSolidifier: removeRecipe found %s ||  %d -> %d "
-          + found.getRecipeFluid().getFluid().getRegistryName(), name, before, RecipeMelter.RECIPES.size()));
-    }
-    else {
-      ModCyclic.LOGGER.error(String.format("RecipeSolidifier: removeRecipe NOT found %s  ", name));
-    }
-  }
 }

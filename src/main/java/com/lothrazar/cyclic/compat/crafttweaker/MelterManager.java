@@ -43,29 +43,6 @@ public class MelterManager implements IRecipeManager {
 
   @ZenCodeType.Method
   public void removeRecipe(String name) {
-    if (name == null) {
-      return;
-    }
-    ModCyclic.LOGGER.info("CT: removeRecipe attempt %s %d ", name,
-        RecipeMelter.RECIPES.size());
-    this.removeByName(name);
-    // go
-    RecipeMelter<?> found = null;
-    for (RecipeMelter<?> m : RecipeMelter.RECIPES) {
-      if (m != null && m.getId() != null &&
-          name.equalsIgnoreCase(m.getId().toString())) {
-        found = m;
-        break;
-      }
-    }
-    if (found != null) {
-      int before = RecipeMelter.RECIPES.size();
-      RecipeMelter.RECIPES.remove(found);
-      ModCyclic.LOGGER.error(String.format("CT: removeRecipe found %s ||  %d -> %d "
-          + found.getRecipeFluid().getFluid().getRegistryName(), name, before, RecipeMelter.RECIPES.size()));
-    }
-    else {
-      ModCyclic.LOGGER.error(String.format("CT: removeRecipe NOT found %s  ", name));
-    }
+      removeByName(name);
   }
 }
