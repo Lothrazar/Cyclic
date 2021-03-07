@@ -13,7 +13,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -104,11 +103,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       }
       //end of SUPERHACK
       BlockPos target = this.pos.offset(this.getCurrentFacing());
-      ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND, null);
+      TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND, null);
       // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
-      if (result == ActionResultType.SUCCESS || result == ActionResultType.CONSUME) {
-        TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
-      }
+      TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
