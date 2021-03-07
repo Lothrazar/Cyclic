@@ -18,7 +18,7 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
   private ButtonMachineRedstone btnDirection;
 
   public ScreenItemCollector(ContainerItemCollector screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-    super(screenContainer, inv, titleIn);;
+    super(screenContainer, inv, titleIn);
     this.ySize = 256;
   }
 

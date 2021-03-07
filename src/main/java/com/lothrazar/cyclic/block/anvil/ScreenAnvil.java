@@ -12,7 +12,6 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
-  //  private TimerBar timer;
 
   public ScreenAnvil(ContainerAnvil screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);

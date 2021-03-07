@@ -28,7 +28,6 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     int relX = (this.width - this.xSize) / 2;
     int relY = (this.height - this.ySize) / 2;
     this.blit(ms, relX, relY, 0, 0, this.xSize, this.ySize);
-    //    this.keyPressed(keyCode, scanCode, modifiers)
   }
 
   @Override
