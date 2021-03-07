@@ -18,13 +18,13 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
-import java.util.Set;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
@@ -212,32 +212,28 @@ public class ItemEvents {
   public void onPlayerPickup(EntityItemPickupEvent event) {
     if (event.getEntityLiving() instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-      ItemStack stack = event.getItem().getItem();
-      ItemStack resultStack = null;
-      Set<Integer> bagSlots = StorageBagItem.getAllBagSlots(player);
-      for (Integer i : bagSlots) {
+      ItemEntity itemEntity = event.getItem();
+      ItemStack resultStack = itemEntity.getItem();
+      int origCount = resultStack.getCount();
+      for (Integer i : StorageBagItem.getAllBagSlots(player)) {
         ItemStack bag = player.inventory.getStackInSlot(i);
         switch (StorageBagItem.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = StorageBagItem.tryInsert(bag, resultStack);
-            event.getItem().setItem(resultStack);
           break;
           case FILTER:
             resultStack = StorageBagItem.tryFilteredInsert(bag, resultStack);
-            event.getItem().setItem(resultStack);
           break;
           case NOTHING:
           break;
         }
-        if (resultStack == ItemStack.EMPTY) {
+        if (resultStack.isEmpty()) {
           break;
         }
       }
-      if (resultStack != null && resultStack.getCount() != stack.getCount()) {
+      if (resultStack.getCount() != origCount) {
+        itemEntity.setItem(resultStack);
         event.setResult(Result.ALLOW);
-      }
-      else {
-        event.setResult(Result.DEFAULT);
       }
     }
   }
