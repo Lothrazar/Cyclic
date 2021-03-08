@@ -1,0 +1,10 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+      "item": "minecraft:slime_block"
+  },
+  "result": {
+    "fluid": "cyclic:slime",
+    "count": 900
+  }
+}

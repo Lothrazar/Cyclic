@@ -3,11 +3,8 @@
   "inputFirst": {
     "item": "minecraft:honey_block"
   },
-  "inputSecond": {
-    "item": "minecraft:honeycomb"
-  },
   "result": {
     "fluid": "cyclic:honey",
-    "count": 5000
+    "count": 1000
   }
 }

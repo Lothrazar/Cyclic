@@ -1,0 +1,10 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+    "tag": "forge:slimeballs"
+  },
+  "result": {
+    "fluid": "cyclic:slime",
+    "count": 100
+  }
+}

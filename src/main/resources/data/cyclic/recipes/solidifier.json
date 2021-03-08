@@ -10,7 +10,7 @@
       "item": "minecraft:quartz"
     },
     "g": {
-      "item": "minecraft:glass"
+      "tag": "forge:glass/colorless"
     },
     "r": {
       "item": "minecraft:lapis_block"

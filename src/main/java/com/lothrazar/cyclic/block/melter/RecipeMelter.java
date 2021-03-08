@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.fluid.Fluid;
@@ -32,6 +31,9 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   public RecipeMelter(ResourceLocation id, Ingredient in, Ingredient inSecond, FluidStack out) {
     super(id);
     ingredients.add(in);
+    if (inSecond == null) {
+      inSecond = Ingredient.EMPTY;
+    }
     ingredients.add(inSecond);
     this.outFluid = out;
   }
@@ -40,23 +42,30 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileMelter tile = (TileMelter) inv;
-      return matches(tile, 0) && matches(tile, 1);
+      //if first one matches check second
+      //if first does not match, fail
+      boolean matchLeft = matches(tile.getStackInputSlot(0), ingredients.get(0));
+      boolean matchRight = matches(tile.getStackInputSlot(1), ingredients.get(1));
+      //      if (this.getId().toString().equalsIgnoreCase("cyclic:melter_magma")) {
+      //        //go
+      //        ModCyclic.LOGGER.info(" should match" + matchLeft + " , " + matchRight + " " + this);
+      //      }
+      return matchLeft && matchRight;
     }
     catch (ClassCastException e) {
       return false;
     }
   }
 
-  public boolean matches(TileMelter tile, int slot) {
-    ItemStack current = tile.getStackInputSlot(slot); //get slot thing
-    Ingredient ing = ingredients.get(slot);
-    for (ItemStack test : ing.getMatchingStacks()) {
-      if (UtilItemStack.matches(current, test)) {
-        return true;
-      }
+  public boolean matches(ItemStack current, Ingredient ing) {
+    if (ing == Ingredient.EMPTY) {
+      //it must be empty
+      return current.isEmpty();
     }
-    return false;
-    //  ingredients.get(0).getMatchingStacks()
+    if (current.isEmpty()) {
+      return ing == Ingredient.EMPTY;
+    }
+    return ing.test(current);
   }
 
   public ItemStack[] ingredientAt(int slot) {
@@ -107,7 +116,10 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       RecipeMelter r = null;
       try {
         Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputFirst"));
-        Ingredient inputSecond = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputSecond"));
+        Ingredient inputSecond = Ingredient.EMPTY;
+        if (JSONUtils.hasField(json, "inputSecond")) {
+          inputSecond = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputSecond"));
+        }
         JsonObject result = json.get("result").getAsJsonObject();
         int count = result.get("count").getAsInt();
         String fluidId = JSONUtils.getString(result, "fluid");

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.melter;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -174,18 +175,30 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     currentRecipe = null;
     for (RecipeMelter rec : RecipeMelter.RECIPES) {
       if (rec.matches(this, world)) {
+        if (this.tank.getFluid() != null && !this.tank.getFluid().isEmpty()) {
+          if (rec.getRecipeFluid().getFluid() != this.tank.getFluid().getFluid()) {
+            continue;
+            //fluid wont fit
+          }
+        }
         currentRecipe = rec;
+        ModCyclic.LOGGER.info("current recipe fuond" + currentRecipe.getId());
+        return;
       }
     }
+    //    ModCyclic.LOGGER.info("c");
+    //    ModCyclic.LOGGER.info("NO  recipe found " + this.inventory.getStackInSlot(0));
   }
 
   private boolean tryProcessRecipe() {
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
-    if (test == this.currentRecipe.getRecipeFluid().getAmount()) {
+    if (test == this.currentRecipe.getRecipeFluid().getAmount()
+        && currentRecipe.matches(this, world)) {
       //ok it has room for all the fluid none will be wasted
       inventory.getStackInSlot(0).shrink(1);
       inventory.getStackInSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
+      ModCyclic.LOGGER.info(currentRecipe.getId() + " fill fluid " + currentRecipe.getRecipeFluid().getAmount());
       return true;
     }
     return false;
