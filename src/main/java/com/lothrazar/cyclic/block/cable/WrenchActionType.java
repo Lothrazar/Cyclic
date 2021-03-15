@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.cable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
+@Deprecated
 public enum WrenchActionType {
 
   EXTRACT, DISABLE;

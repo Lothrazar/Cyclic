@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.cable.item;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
+import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
 import java.util.List;
@@ -46,23 +46,28 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
-    tryExtract();
+    for (Direction side : Direction.values()) {
+      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+      if (connection.isExtraction()) {
+        tryExtract(side);
+      }
+    }
     normalFlow();
   }
 
-  private void tryExtract() {
-    Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
-    if (importFromSide == null) {
+  private void tryExtract(Direction extractSide) {
+    //  Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
+    if (extractSide == null) {
       return;
     }
-    IItemHandler sideHandler = flow.get(importFromSide).orElse(null);
-    if (importFromSide == null || !sideHandler.getStackInSlot(0).isEmpty()) {
+    IItemHandler sideHandler = flow.get(extractSide).orElse(null);
+    if (extractSide == null || !sideHandler.getStackInSlot(0).isEmpty()) {
       return;
     }
-    BlockPos posTarget = this.pos.offset(importFromSide);
+    BlockPos posTarget = this.pos.offset(extractSide);
     TileEntity tile = world.getTileEntity(posTarget);
     if (tile != null) {
-      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, importFromSide.getOpposite()).orElse(null);
+      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
       //
       ItemStack itemTarget;
       if (itemHandlerFrom != null) {
@@ -88,7 +93,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   private void normalFlow() {
     IItemHandler sideHandler;
     Direction outgoingSide;
-    Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
+    //  Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
     for (Direction incomingSide : Direction.values()) {
       sideHandler = flow.get(incomingSide).orElse(null);
       //thise items came from that
@@ -99,7 +104,8 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
         if (outgoingSide == incomingSide) {
           continue;
         }
-        if (importFromSide != null && importFromSide == outgoingSide) {
+        EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+        if (connection.isExtraction()) {
           continue;
         }
         validAdjacent = validAdjacent || this.moveItems(outgoingSide, 64, sideHandler);

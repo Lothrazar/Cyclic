@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import java.util.Collections;
@@ -45,12 +46,17 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void tick() {
-    tryExtract();
+    for (Direction side : Direction.values()) {
+      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+      if (connection.isExtraction()) {
+        tryExtract(side);
+      }
+    }
     normalFlow();
   }
 
-  private void tryExtract() {
-    Direction extractSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
+  private void tryExtract(Direction extractSide) {
+    //    Direction extractSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
     if (extractSide == null) {
       return;
     }
@@ -85,7 +91,6 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   private void normalFlow() {
     IFluidHandler sideHandler;
     Direction outgoingSide;
-    Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
     for (Direction incomingSide : Direction.values()) {
       sideHandler = flow.get(incomingSide).orElse(null);
       //thise items came from that
@@ -95,7 +100,8 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         if (outgoingSide == incomingSide) {
           continue;
         }
-        if (importFromSide != null && importFromSide == outgoingSide) {
+        EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+        if (connection.isExtraction()) {
           continue;
         }
         this.moveFluids(outgoingSide, CAPACITY, sideHandler);

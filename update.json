@@ -1,8 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.1.9",
-		"1.16.5-recommended": "1.1.9"
+		"1.16.5-latest": "1.2.0",
+		"1.16.5-recommended": "1.2.0"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -33,5 +33,6 @@
 		"1.1.7": "Fixed a dupe bug.  Fixed some lists in config file resetting and not loading from the file.  Fishing net now uses forge:chests/tagged data tag for compatible recipes.  Thrown torches now get placed inside, instead of above, material that is replacable such as snow layers.  New Uncrafter config 'ignore_recipes', similar to the existing 'ignore_list' but this one lets you use the ID of a specific recipe (for example, if one item has three recipes to craft it, you can now block two of the recipes so the uncrafter will still find and use that third recipe).  Uncrafter now halts when full. ",
 		"1.1.8": "Wireless Transmitter fix: Processing no longer halts on empty slots.  Fixed IO automation on both anvils, so the input slot cannot be extracted by a hopper.  Fixed 'unable to resolve texture' errors in startup logs.  Fixed Terra Preta not affecting most crops, also increased its growth rate.  Ender Shelf can now accept books from your offhand; also it no longer deletes books with too many enchantments.  Ender Shelf Controller can accept enchanted books with multiple chants when added by holding player.  Disabled the '+' JEI hook for Crafting machine, as due to an API change it was deleting items.  Pharos beacon now compatible with 'RandomPatches' modified potions.  "
 		,"1.1.9":"cyclic:workbench block added to forge:workbenches tag. Some recipes use forge:glass tag instead of minecraft:glass.  Melter now supports 1x1 recipes, added 9 recipes inside the Melter.  Fix CT Recipes aren't updated on reload jaredlll08.  Fix bag pickup crash by BlueAgent.  Fix Always sync user held item by BlueAgent.    "
+		,"1.2.0":"Cables can now extract from multiple places at once, not only a single one.  Fixed wrench tags to use 'forge:tools/wrench' for compatibility.  Cable Wrench updated: no more right-click to swap modes; instead left-click and it goes through normal-extract-blocked in a loop.  "
 	}
 }

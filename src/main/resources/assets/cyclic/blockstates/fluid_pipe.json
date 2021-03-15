@@ -74,27 +74,27 @@
             "apply": { "model": "cyclic:block/cable_side_fluid", "y": 90, "uvlock": true }
         },
         {
-            "when": { "extract": "east" },
+            "when": { "east": "cable" },
             "apply": { "model": "cyclic:block/cable_pump_fluid", "y": 90, "uvlock": true }
         },
         {
-            "when": { "extract": "down" },
+            "when": { "down": "cable" },
             "apply": { "model": "cyclic:block/cable_pump_fluid", "x": 90, "uvlock": true }
         },
         {
-            "when": { "extract": "up" },
+            "when": { "up": "cable" },
             "apply": { "model": "cyclic:block/cable_pump_fluid", "x": 270, "uvlock": true }
         },
         {
-            "when": { "extract": "north" },
+            "when": { "north": "cable" },
             "apply": { "model": "cyclic:block/cable_pump_fluid" }
         },
         {
-            "when": { "extract": "west" },
+            "when": { "west": "cable" },
             "apply": { "model": "cyclic:block/cable_pump_fluid", "y": 270, "uvlock": true }
         },
         {
-            "when": { "extract": "south" },
+            "when": { "south": "cable" },
             "apply": { "model": "cyclic:block/cable_pump_fluid", "y": 180, "uvlock": true }
         }
     ]

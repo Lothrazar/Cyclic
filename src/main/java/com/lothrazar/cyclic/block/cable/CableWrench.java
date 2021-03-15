@@ -1,34 +1,16 @@
 package com.lothrazar.cyclic.block.cable;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.util.UtilChat;
-import java.util.List;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.item.Item;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 
 public class CableWrench extends ItemBase {
 
+  public static final ITag.INamedTag<Item> WRENCH = ItemTags.createOptional(new ResourceLocation("forge", "tools/wrench"));
+
   public CableWrench(Properties properties) {
     super(properties.maxStackSize(1));
-  }
-
-  @Override
-  public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    WrenchActionType.tickTimeout(stack);
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    String msg = TextFormatting.GREEN + UtilChat.lang(WrenchActionType.getName(stack));
-    tooltip.add(new TranslationTextComponent(msg));
-    super.addInformation(stack, worldIn, tooltip, flagIn);
   }
 }

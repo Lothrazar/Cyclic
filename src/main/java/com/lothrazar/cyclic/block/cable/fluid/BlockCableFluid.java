@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
 import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.cyclic.block.cable.DirectionNullable;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import net.minecraft.block.Block;
@@ -68,12 +67,11 @@ public class BlockCableFluid extends CableBase {
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
     super.fillStateContainer(builder);
-    builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST, EXTR);
+    builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
   }
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
-    stateIn = stateIn.with(EXTR, DirectionNullable.NONE);
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
       IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);

@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.cable;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.cable.fluid.BlockCableFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import java.util.Map;
@@ -24,8 +23,6 @@ import net.minecraft.world.World;
 
 public abstract class CableBase extends BlockBase {
 
-  //extractor
-  public static final EnumProperty<DirectionNullable> EXTR = EnumProperty.create("extract", DirectionNullable.class);
   //regular connections
   public static final EnumProperty<EnumConnectType> DOWN = EnumProperty.create("down", EnumConnectType.class);
   public static final EnumProperty<EnumConnectType> UP = EnumProperty.create("up", EnumConnectType.class);
@@ -92,9 +89,13 @@ public abstract class CableBase extends BlockBase {
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world,
       BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    if (hit.getFace() == null) {
+      return super.onBlockActivated(state, world, pos, player, handIn, hit);
+    }
     ItemStack stack = player.getHeldItem(handIn);
-    if (stack.getItem() != ItemRegistry.cable_wrench
-        || hit.getFace() == null) {
+    if (!stack.getItem().isIn(CableWrench.WRENCH)
+        && stack.getItem() != ItemRegistry.cable_wrench) {
+      //if its not a wrench tag, OR, its not the actual cable wrench
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
     final float hitLimit = 0.28F;
@@ -122,36 +123,47 @@ public abstract class CableBase extends BlockBase {
       sideToToggle = Direction.SOUTH;
     }
     //now we have the same data that onBlockActivated used
-    WrenchActionType type = WrenchActionType.getType(stack);
-    if (type == WrenchActionType.EXTRACT) {
-      if (state.getBlock() == BlockRegistry.fluid_pipe
-          || state.getBlock() == BlockRegistry.item_pipe) {
-        if (state.hasProperty(BlockCableFluid.EXTR)) {
-          DirectionNullable current = state.get(BlockCableFluid.EXTR);
-          DirectionNullable newextr = current.toggle(sideToToggle);
-          world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
-        }
-      }
-    }
-    else if (type == WrenchActionType.DISABLE && state.getBlock() instanceof CableBase) {
-      EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
-      if (state.hasProperty(prop)) {
-        EnumConnectType status = state.get(prop);
-        BlockState stateNone;
-        switch (status) {
-          case BLOCKED:
-            //unblock it
-            //then updatePostPlacement
-            stateNone = state.with(prop, EnumConnectType.NONE);
-            world.setBlockState(pos, stateNone);
-          break;
-          case CABLE:
-          case INVENTORY:
-          case NONE:
+    //    WrenchActionType type = WrenchActionType.getType(stack);
+    //    if (type == WrenchActionType.EXTRACT) {
+    //      if (state.getBlock() == BlockRegistry.fluid_pipe
+    //          || state.getBlock() == BlockRegistry.item_pipe) {
+    //        if (state.hasProperty(BlockCableFluid.EXTR)) {
+    //          DirectionNullable current = state.get(BlockCableFluid.EXTR);
+    //          DirectionNullable newextr = current.toggle(sideToToggle);
+    //          world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
+    //        }
+    //      }
+    //    }
+    //    else if (type == WrenchActionType.DISABLE && state.getBlock() instanceof CableBase) {
+    EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
+    if (state.hasProperty(prop)) {
+      EnumConnectType status = state.get(prop);
+      //inventory is decided not by wrench but by normal mode
+      //so it rotates: 
+      // INVENTORY// NONE -> CABLE(extract) -> BLOCKED -> and back to none again
+      switch (status) {
+        case BLOCKED:
+          //unblock it
+          //then updatePostPlacement 
+          world.setBlockState(pos, state.with(prop, EnumConnectType.NONE));
+        break;
+        case INVENTORY:
+        case NONE:
+          //actually power wont extract, at least not currently
+          if (state.getBlock() == BlockRegistry.energy_pipe) {
+            //skip extract go to blocked
             world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
-          break;
-        }
+          }
+          else {
+            world.setBlockState(pos, state.with(prop, EnumConnectType.CABLE));
+          }
+        break;
+        case CABLE:
+          //extract
+          world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
+        break;
       }
+      //      }
       //else state does not have prop . ttreat it teh same as (getBlock is not a CableBase)
     }
     return super.onBlockActivated(state, world, pos, player, handIn, hit);
