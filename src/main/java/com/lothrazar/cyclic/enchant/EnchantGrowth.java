@@ -67,9 +67,13 @@ public class EnchantGrowth extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
-    //TODO: boots too?
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
     return stack.getItem() instanceof HoeItem;
+  }
+
+  @Override
+  public boolean canApply(ItemStack stack) {
+    return canApplyAtEnchantingTable(stack);
   }
 
   @SubscribeEvent

@@ -36,7 +36,7 @@ public class EnchantRegistry {
     register(r, new EnchantBeheading(Enchantment.Rarity.COMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName(EnchantBeheading.ID));
     register(r, new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantExcavation.ID));
     register(r, new EnchantXp(Enchantment.Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantXp.ID));
-    register(r, new EnchantGrowth(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantGrowth.ID));
+    register(r, new EnchantGrowth(Enchantment.Rarity.COMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantGrowth.ID));
     register(r, new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET).setRegistryName(EnchantLaunch.ID));
     register(r, new EnchantLifeLeech(Enchantment.Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName(EnchantLifeLeech.ID));
     register(r, new EnchantMagnet(Enchantment.Rarity.VERY_RARE, EnchantmentType.BREAKABLE, EquipmentSlotType.MAINHAND).setRegistryName(EnchantMagnet.ID));
