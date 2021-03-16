@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.net;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import java.util.function.Supplier;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
@@ -34,6 +35,8 @@ public class PacketTileString extends PacketBase {
       if (tile instanceof TileEntityBase) {
         TileEntityBase base = (TileEntityBase) tile;
         base.setFieldString(message.field, message.value);
+        BlockState oldState = world.getBlockState(message.pos);
+        world.notifyBlockUpdate(message.pos, oldState, oldState, 3);
       }
     });
     message.done(ctx);
