@@ -90,7 +90,9 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       if (uncraftRecipe(match)) {
         this.status = UncraftStatusEnum.MATCH;
         //pay cost
+        // ModCyclic.LOGGER.info("before extract cost" + inputSlots.getStackInSlot(0));
         inputSlots.extractItem(0, match.getRecipeOutput().getCount(), false);
+        // ModCyclic.LOGGER.info("AFTER  extract cost" + inputSlots.getStackInSlot(0));
         energy.extractEnergy(cost, false);
       }
     }
@@ -171,11 +173,13 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     //we have room for sure
     simulate = false;
     for (ItemStack r : result) {
+      ItemStack forTesting = r.copy();
       //give result items
       for (int i = 0; i < outputSlots.getSlots(); i++) {
-        if (!r.isEmpty()) {
-          outputSlots.insertItem(i, r.copy(), simulate);
+        if (forTesting.isEmpty()) {
+          break;
         }
+        forTesting = outputSlots.insertItem(i, forTesting, simulate);
       }
     }
     return true;

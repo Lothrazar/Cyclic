@@ -38,17 +38,17 @@ public class SolidManager implements IRecipeManager {
         inputThird.asVanillaIngredient(),
         new FluidStack(f.getFluid(), f.getAmount()),
         output.getInternal());
-    
-      CraftTweakerAPI.apply(new ActionAddRecipe(this, m, "") {
-          @Override
-          public void apply() {
-              RecipeSolidifier.addRecipe((RecipeSolidifier) recipe);
-          }
-      });
+    CraftTweakerAPI.apply(new ActionAddRecipe(this, m, "") {
+
+      @Override
+      public void apply() {
+        RecipeSolidifier.addRecipe((RecipeSolidifier) recipe);
+      }
+    });
   }
-    
-    @ZenCodeType.Method
-    public void removeRecipe(String name) {
-        removeByName(name);
-    }
+
+  @ZenCodeType.Method
+  public void removeRecipe(String name) {
+    removeByName(name);
+  }
 }

@@ -16,11 +16,11 @@ import net.minecraft.world.server.ServerWorld;
 
 public class PeatBlock extends BlockBase {
 
-  public static int FUEL_WEAK = 256;
-  public static int FUEL_STRONG = 4096;
+  public static final int FUEL_WEAK = 256;
+  public static final int FUEL_STRONG = 4096;
 
   public PeatBlock(Properties properties) {
-    super(properties.tickRandomly().hardnessAndResistance(2.1F));
+    super(properties.tickRandomly().hardnessAndResistance(0.9F));
   }
 
   @SuppressWarnings("deprecation")

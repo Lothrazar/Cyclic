@@ -27,22 +27,21 @@ public class MelterManager implements IRecipeManager {
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient inputFirst, IIngredient inputSecond, IFluidStack fluidStack) {
     name = fixRecipeName(name);
-    
     RecipeMelter<?> m = new RecipeMelter(new ResourceLocation(CompatConstants.CT_ID, name),
         inputFirst.asVanillaIngredient(),
         inputSecond.asVanillaIngredient(),
         new FluidStack(fluidStack.getFluid(), fluidStack.getAmount()));
-    
-      CraftTweakerAPI.apply(new ActionAddRecipe(this, m, "") {
-          @Override
-          public void apply() {
-            RecipeMelter.addRecipe((RecipeMelter) recipe);
-          }
-      });
+    CraftTweakerAPI.apply(new ActionAddRecipe(this, m, "") {
+
+      @Override
+      public void apply() {
+        RecipeMelter.addRecipe((RecipeMelter) recipe);
+      }
+    });
   }
 
   @ZenCodeType.Method
   public void removeRecipe(String name) {
-      removeByName(name);
+    removeByName(name);
   }
 }

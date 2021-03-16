@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.authlib.GameProfile;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketDirection;
@@ -36,6 +37,10 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class UtilFakePlayer {
+
+  public static boolean isFakePlayer(Entity attacker) {
+    return attacker instanceof FakePlayer;
+  }
 
   public static WeakReference<FakePlayer> initFakePlayer(ServerWorld ws, UUID uname, String blockName) {
     GameProfile breakerProfile = new GameProfile(uname, ModCyclic.MODID + ".fake_player." + blockName);

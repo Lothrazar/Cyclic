@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilEnchant;
+import com.lothrazar.cyclic.util.UtilFakePlayer;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.enchantment.EnchantmentType;
@@ -48,25 +49,36 @@ public class EnchantCurse extends EnchantBase {
 
   @Override
   public void onUserHurt(LivingEntity user, Entity attacker, int level) {
-    if (user.world.isRemote || !(attacker instanceof LivingEntity)) {
+    if (user.world.isRemote || !(attacker instanceof LivingEntity)
+        || UtilFakePlayer.isFakePlayer(attacker)) {
+      //do nothing on clientside, server only
+      //only trigger if attacker is alive and not a fakeplayer
       return;
     }
+    LivingEntity livingAttacker = (LivingEntity) attacker;
     //only allow activation once
     int totalLevels = getCurrentArmorLevelSlot(user, EquipmentSlotType.HEAD)
         + getCurrentArmorLevelSlot(user, EquipmentSlotType.CHEST)
         + getCurrentArmorLevelSlot(user, EquipmentSlotType.LEGS)
         + getCurrentArmorLevelSlot(user, EquipmentSlotType.FEET);
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
+    //does it pass the chance
     if (adjustedActivationChance > user.world.rand.nextDouble()) {
-      LivingEntity livingAttacker = (LivingEntity) attacker;
       List<Effect> negativeEffects = UtilEnchant.getNegativeEffects();
       Collections.shuffle(negativeEffects);
       int appliedEffects = 0;
       for (Effect effect : negativeEffects) {
+        if (effect == null) {
+          continue;
+          //should be impossible, but i had a random NPE crash log
+        }
         if (appliedEffects < MIN_EFFECTS
             || BASE_APPLY_CHANCE > user.world.rand.nextDouble()) {
+          //the OR means, if we are under minimum, always go thru
+          //if we are beyond minimum, check the random chance
           livingAttacker.addPotionEffect(new EffectInstance(effect, EFFECT_DURATION));
-          if (++appliedEffects >= MAX_EFFECTS) {
+          appliedEffects++;
+          if (appliedEffects >= MAX_EFFECTS) {
             break;
           }
         }

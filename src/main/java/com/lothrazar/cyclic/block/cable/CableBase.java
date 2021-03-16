@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.cable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ItemRegistry;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -93,9 +92,7 @@ public abstract class CableBase extends BlockBase {
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
     ItemStack stack = player.getHeldItem(handIn);
-    if (!stack.getItem().isIn(CableWrench.WRENCH)
-        && stack.getItem() != ItemRegistry.cable_wrench) {
-      //if its not a wrench tag, OR, its not the actual cable wrench
+    if (!stack.getItem().isIn(CableWrench.WRENCH)) {
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
     final float hitLimit = 0.28F;

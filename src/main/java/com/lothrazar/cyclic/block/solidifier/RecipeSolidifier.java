@@ -14,6 +14,8 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -45,7 +47,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      if (tile.getFluid() != null && tile.getFluid().getFluid() == this.fluidInput.getFluid()) {
+      if (doesFluidMatch(tile)) {
         return matches(tile, 0) && matches(tile, 1) && matches(tile, 2);
       }
       else {
@@ -55,6 +57,23 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     catch (ClassCastException e) {
       return false;
     }
+  }
+
+  private boolean doesFluidMatch(TileSolidifier tile) {
+    if (tile.getFluid() == null || tile.getFluid().isEmpty()) {
+      return false;
+    }
+    if (tile.getFluid().getFluid() == this.fluidInput.getFluid()) {
+      return true;
+    }
+    //if the fluids are not identical, they might have a matching tag
+    //see /data/forge/tags/fluids/
+    for (INamedTag<Fluid> fluidTag : FluidTags.getAllTags()) {
+      if (fluidInput.getFluid().isIn(fluidTag) && tile.getFluid().getFluid().isIn(fluidTag)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public boolean matches(TileSolidifier tile, int slot) {
