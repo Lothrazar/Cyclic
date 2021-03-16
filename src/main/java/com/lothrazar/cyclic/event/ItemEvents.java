@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
-import com.lothrazar.cyclic.block.cable.CableWrench;
-import com.lothrazar.cyclic.block.cable.WrenchActionType;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
@@ -192,16 +190,6 @@ public class ItemEvents {
         UtilSound.playSound(player, SoundRegistry.tool_mode);
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
       }
-    }
-    ////////////////////////// wrench
-    if (held.getItem() instanceof CableWrench && WrenchActionType.getTimeout(held) == 0) {
-      //mode 
-      if (!world.isRemote) {
-        WrenchActionType.toggle(held);
-      }
-      UtilSound.playSound(player, SoundRegistry.tool_mode);
-      WrenchActionType.setTimeout(held);
-      UtilChat.sendStatusMessage(player, UtilChat.lang(WrenchActionType.getName(held)));
     }
     if (held.getItem() instanceof AntimatterEvaporatorWandItem) {
       AntimatterEvaporatorWandItem.toggleMode(player, held);
