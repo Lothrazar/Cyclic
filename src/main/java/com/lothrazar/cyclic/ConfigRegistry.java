@@ -75,6 +75,7 @@ public class ConfigRegistry {
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
+  public static BooleanValue CYAN_GENERATES;
   static {
     buildDefaults();
     initConfig();
@@ -162,6 +163,10 @@ public class ConfigRegistry {
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList("beheadingEntityMHF", BEHEADING,
         it -> it instanceof String);
     CFG.pop(); //enchantment
+    CFG.comment(WALL, " Worldgen settings  ", WALL)
+        .push("worldgen");
+    CYAN_GENERATES = CFG.comment("Does this generate in the world").define("flower_cyan", true);
+    CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
     COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);

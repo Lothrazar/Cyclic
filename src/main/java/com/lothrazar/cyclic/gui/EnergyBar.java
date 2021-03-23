@@ -27,7 +27,7 @@ public class EnergyBar {
 
   public boolean isMouseover(int mouseX, int mouseY) {
     return guiLeft + x < mouseX && mouseX < guiLeft + x + width
-        && guiTop + y < mouseY && mouseY < guiTop + y + height;
+        && guiTop + y < mouseY && mouseY < guiTop + y + getHeight();
   }
 
   public void draw(MatrixStack ms, float energ) {
@@ -39,12 +39,12 @@ public class EnergyBar {
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_CTR);
     relX = guiLeft + x;
     relY = guiTop + y;
-    Screen.blit(ms, relX, relY, 0, 0, width, height, width, height);
+    Screen.blit(ms, relX, relY, 0, 0, width, getHeight(), width, getHeight());
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_INNER);
     relX = relX + 1;
     relY = relY + 1;
     float pct = Math.min(energ / capacity, 1.0F);
-    Screen.blit(ms, relX, relY, 0, 0, width - 2, (int) ((height - 2) * pct), width - 2, height - 2);
+    Screen.blit(ms, relX, relY, 0, 0, width - 2, (int) ((getHeight() - 2) * pct), width - 2, getHeight() - 2);
   }
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int energ) {
@@ -54,5 +54,13 @@ public class EnergyBar {
       list.add(new TranslationTextComponent(tt));
       parent.func_243308_b(ms, list, mouseX, mouseY);
     }
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
   }
 }

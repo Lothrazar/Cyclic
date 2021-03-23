@@ -89,11 +89,18 @@
 			frequency = 5
 
 	#####################################################################################
+	# Worldgen settings  
+	#####################################################################################
+	[cyclic.worldgen]
+		#Does this generate in the world
+		flower_cyan = false
+
+	#####################################################################################
 	# Logging related configs
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = false
+		info = true
 
 	#####################################################################################
 	# Item specific configs

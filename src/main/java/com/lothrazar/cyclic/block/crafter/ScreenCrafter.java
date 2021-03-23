@@ -43,6 +43,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
     super(screenContainer, inv, titleIn);
     this.ySize = 256;
     this.energy = new EnergyBar(this, TileCrafter.MAX);
+    this.energy.setHeight(120);
     this.timer = new TimerBar(this, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ + 2, TileCrafter.TIMER_FULL);
   }
 

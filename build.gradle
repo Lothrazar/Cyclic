@@ -132,13 +132,14 @@ dependencies {
     compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
     runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
     
-	  implementation fg.deobf("curse.maven:crafttweaker-239197:3227631")
+	  implementation fg.deobf("curse.maven:crafttweaker-239197:3246320")
 	 // implementation fg.deobf("curse.maven:jeitweaker-368718:3188099")
   //  implementation fg.deobf("curse.maven:cucumber-272335:3187116")
   //  implementation fg.deobf("curse.maven:mystical-agriculture-246640:3152061")
     implementation fg.deobf("curse.maven:simple-storage-network-268495:3163007")
-   // implementation fg.deobf("curse.maven:ctm-267602:3137659")
     implementation fg.deobf("curse.maven:refined-storage-243076:3157354")
+	  implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
+   // implementation fg.deobf("curse.maven:ctm-267602:3137659")
    // implementation fg.deobf("curse.maven:storage-drawers-223852:3180569")
     
     

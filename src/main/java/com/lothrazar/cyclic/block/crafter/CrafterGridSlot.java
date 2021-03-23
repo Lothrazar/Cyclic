@@ -18,7 +18,7 @@ public class CrafterGridSlot extends SlotItemHandler {
 
   @Override
   public boolean canTakeStack(PlayerEntity playerIn) {
-    return true;
+    return false;
   }
 
   @Override
