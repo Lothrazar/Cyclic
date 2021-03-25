@@ -100,7 +100,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
+		info = false
 
 	#####################################################################################
 	# Item specific configs
