@@ -21,11 +21,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.ToolType;
 
 public class MattockItem extends ToolItem {
 
   public MattockItem(Properties builder) {
-    super(5.0F, -3.0F, ItemTier.DIAMOND, Sets.newHashSet(), builder);
+    super(5.0F, -3.0F, ItemTier.DIAMOND, Sets.newHashSet(), builder.addToolType(ToolType.SHOVEL, 4).addToolType(ToolType.PICKAXE, 4));
   }
 
   static final int RADIUS = 1; //radius 2 is 5x5 area square

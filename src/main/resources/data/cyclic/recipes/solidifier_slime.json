@@ -11,10 +11,10 @@
   },
   "mix": {
     "fluid": "cyclic:slime",
-    "count": 600
+    "count": 1500
   },
   "result": {
     "item": "minecraft:slime_ball",
-	"count": 9
+		"count": 9
   }
 }

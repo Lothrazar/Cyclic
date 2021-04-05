@@ -127,8 +127,8 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
     
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3250068")
+    //implementation fg.deobf("curse.maven:simple-storage-network-268495:3230736")
 	  
-  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3163007")
   //  implementation fg.deobf("curse.maven:refined-storage-243076:3157354")
 	//  implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
   //  implementation fg.deobf("curse.maven:cucumber-272335:3187116")
