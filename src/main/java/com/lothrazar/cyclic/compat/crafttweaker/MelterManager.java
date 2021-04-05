@@ -6,6 +6,7 @@ import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IIngredient;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
@@ -31,17 +32,13 @@ public class MelterManager implements IRecipeManager {
         inputFirst.asVanillaIngredient(),
         inputSecond.asVanillaIngredient(),
         new FluidStack(fluidStack.getFluid(), fluidStack.getAmount()));
-    CraftTweakerAPI.apply(new ActionAddRecipe(this, m, "") {
-
-      @Override
-      public void apply() {
-        RecipeMelter.addRecipe((RecipeMelter) recipe);
-      }
-    });
+    CraftTweakerAPI.apply(new ActionAddRecipe(this, m, ""));
+    ModCyclic.LOGGER.info("CRAFT TWEAKER: Recipe loaded " + m.getId().toString());
   }
 
   @ZenCodeType.Method
   public void removeRecipe(String name) {
     removeByName(name);
+    ModCyclic.LOGGER.info("CRAFT TWEAKER: Recipe removed " + name);
   }
 }

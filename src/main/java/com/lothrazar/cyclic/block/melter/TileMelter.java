@@ -1,11 +1,12 @@
 package com.lothrazar.cyclic.block.melter;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.util.List;
 import java.util.function.Predicate;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -173,7 +174,8 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       return;
     }
     currentRecipe = null;
-    for (RecipeMelter rec : RecipeMelter.RECIPES) {
+    List<RecipeMelter<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.MELTER);
+    for (RecipeMelter rec : recipes) {
       if (rec.matches(this, world)) {
         if (this.tank.getFluid() != null && !this.tank.getFluid().isEmpty()) {
           if (rec.getRecipeFluid().getFluid() != this.tank.getFluid().getFluid()) {
@@ -182,12 +184,9 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
           }
         }
         currentRecipe = rec;
-        ModCyclic.LOGGER.info("current recipe fuond" + currentRecipe.getId());
         return;
       }
     }
-    //    ModCyclic.LOGGER.info("c");
-    //    ModCyclic.LOGGER.info("NO  recipe found " + this.inventory.getStackInSlot(0));
   }
 
   private boolean tryProcessRecipe() {
@@ -198,7 +197,6 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       inventory.getStackInSlot(0).shrink(1);
       inventory.getStackInSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
-      ModCyclic.LOGGER.info(currentRecipe.getId() + " fill fluid " + currentRecipe.getRecipeFluid().getAmount());
       return true;
     }
     return false;

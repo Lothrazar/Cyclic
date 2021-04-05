@@ -5,8 +5,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.HashSet;
-import java.util.Set;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -26,8 +24,6 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
-  private static final Set<String> HASHES = new HashSet<>();
-  public static final Set<RecipeSolidifier<?>> RECIPES = new HashSet<>();
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack fluidInput;
@@ -148,13 +144,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         }
         r = new RecipeSolidifier(recipeId, inputFirst, inputSecond,
             inputThird, new FluidStack(fluid, count), resultStack);
-        addRecipe(r);
-        return r;
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
-        return null;
       }
+      ModCyclic.LOGGER.info("Recipe loaded " + r.getId().toString());
+      return r;
     }
 
     @Override
@@ -162,8 +157,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
           Ingredient.read(buffer), Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer),
           buffer.readItemStack());
-      //server reading recipe from client or vice/versa 
-      addRecipe(r);
       return r;
     }
 
@@ -178,16 +171,5 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       recipe.fluidInput.writeToPacket(buffer);
       buffer.writeItemStack(recipe.getRecipeOutput());
     }
-  }
-
-  public static boolean addRecipe(RecipeSolidifier<?> r) {
-    ResourceLocation id = r.getId();
-    if (HASHES.contains(id.toString())) {
-      return false;
-    }
-    RECIPES.add(r);
-    HASHES.add(id.toString());
-    ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
-    return true;
   }
 }

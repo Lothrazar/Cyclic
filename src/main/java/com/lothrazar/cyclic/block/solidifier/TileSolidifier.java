@@ -5,7 +5,9 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -168,7 +170,8 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       return;
     }
     currentRecipe = null;
-    for (RecipeSolidifier rec : RecipeSolidifier.RECIPES) {
+    List<RecipeSolidifier<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID);
+    for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, world)) {
         currentRecipe = rec;
         break;

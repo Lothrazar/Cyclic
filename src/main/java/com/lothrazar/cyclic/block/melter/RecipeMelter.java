@@ -4,8 +4,6 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-import java.util.HashSet;
-import java.util.Set;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -23,8 +21,6 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 @SuppressWarnings("rawtypes")
 public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
-  private static final Set<String> HASHES = new HashSet<>();
-  public static final Set<RecipeMelter<?>> RECIPES = new HashSet<>();
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
 
@@ -46,10 +42,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       //if first does not match, fail
       boolean matchLeft = matches(tile.getStackInputSlot(0), ingredients.get(0));
       boolean matchRight = matches(tile.getStackInputSlot(1), ingredients.get(1));
-      //      if (this.getId().toString().equalsIgnoreCase("cyclic:melter_magma")) {
-      //        //go
-      //        ModCyclic.LOGGER.info(" should match" + matchLeft + " , " + matchRight + " " + this);
-      //      }
       return matchLeft && matchRight;
     }
     catch (ClassCastException e) {
@@ -126,11 +118,11 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         ResourceLocation resourceLocation = new ResourceLocation(fluidId);
         Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
         r = new RecipeMelter(recipeId, inputFirst, inputSecond, new FluidStack(fluid, count));
-        addRecipe(r);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
       }
+      ModCyclic.LOGGER.info("Recipe loaded " + r.getId().toString());
       return r;
     }
 
@@ -139,7 +131,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       RecipeMelter r = new RecipeMelter(recipeId,
           Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer));
       //server reading recipe from client or vice/versa 
-      addRecipe(r);
       return r;
     }
 
@@ -151,17 +142,5 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       one.write(buffer);
       recipe.outFluid.writeToPacket(buffer);
     }
-  }
-
-  public static boolean addRecipe(RecipeMelter r) {
-    ResourceLocation id = r.getId();
-    if (HASHES.contains(id.toString())) {
-      ModCyclic.LOGGER.info("Warning: Duplicate melter recipe id " + id.toString());
-      return false;
-    }
-    RECIPES.add(r);
-    HASHES.add(id.toString());
-    ModCyclic.LOGGER.info("Recipe loaded " + id.toString());
-    return true;
   }
 }
