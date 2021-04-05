@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -17,8 +16,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class EnderShelfHelper {
 
   public static final int MAX_ITERATIONS = 24; // TODO config entry
-  public static final ResourceLocation ENDER_SHELF_REGISTRY_NAME = new ResourceLocation(ModCyclic.MODID, "ender_shelf");
-  public static final ResourceLocation ENDER_CONTROLLER_REGISTRY_NAME = new ResourceLocation(ModCyclic.MODID, "ender_controller");
 
   public static BlockPos findConnectedController(World world, BlockPos shelfPos) {
     return recursivelyFindConnectedController(world, shelfPos, new HashMap<BlockPos, Integer>(), 0);
@@ -35,7 +32,7 @@ public class EnderShelfHelper {
     if (visitedLocations.containsKey(pos)) {
       return null; //We've already traveled here and didn't find anything, stop here.
     }
-    if (state.hasProperty(BlockEnderShelf.IS_CONTROLLER) && state.get(BlockEnderShelf.IS_CONTROLLER)) {
+    if (state.getBlock() == BlockRegistry.ender_controller) {
       return pos; //We found the Controller!
     }
     visitedLocations.put(pos, iterations);
@@ -67,7 +64,7 @@ public class EnderShelfHelper {
     if (iterations > MAX_ITERATIONS) {
       return shelves; //We tried for too long, stop now before there's an infinite loop
     }
-    if (iterations > 0 && !state.getBlock().getRegistryName().equals(ENDER_SHELF_REGISTRY_NAME)) {
+    if (iterations > 0 && !isShelf(state)) {
       return shelves; //We left the group of connected shelves, stop here.
     }
     //If we made it this far, we found a valid shelf.
@@ -85,8 +82,7 @@ public class EnderShelfHelper {
 
   public static EnderShelfItemHandler getShelfHandler(TileEntity te) {
     if (te != null &&
-        te.getBlockState().getBlock().getRegistryName() != null &&
-        te.getBlockState().getBlock().getRegistryName().equals(ENDER_SHELF_REGISTRY_NAME) &&
+        te.getBlockState().getBlock() == BlockRegistry.ender_shelf &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderShelfItemHandler) {
       return (EnderShelfItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
@@ -96,8 +92,7 @@ public class EnderShelfHelper {
 
   public static EnderControllerItemHandler getControllerHandler(TileEntity te) {
     if (te != null &&
-        te.getBlockState().getBlock().getRegistryName() != null &&
-        te.getBlockState().getBlock().getRegistryName().equals(ENDER_CONTROLLER_REGISTRY_NAME) &&
+        te.getBlockState().getBlock() == BlockRegistry.ender_controller &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderControllerItemHandler) {
       return (EnderControllerItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
@@ -106,10 +101,10 @@ public class EnderShelfHelper {
   }
 
   public static boolean isController(BlockState state) {
-    return state.getBlock().getRegistryName() != null && state.getBlock().getRegistryName().equals(EnderShelfHelper.ENDER_CONTROLLER_REGISTRY_NAME);
+    return state.getBlock() == BlockRegistry.ender_controller;
   }
 
   public static boolean isShelf(BlockState state) {
-    return state.getBlock().getRegistryName() != null && state.getBlock().getRegistryName().equals(EnderShelfHelper.ENDER_SHELF_REGISTRY_NAME);
+    return state.getBlock() == BlockRegistry.ender_shelf;
   }
 }

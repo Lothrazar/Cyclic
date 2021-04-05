@@ -132,8 +132,8 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
         h.insertItem(i, craftMatrix.getStackInSlot(i), false);
       }
     });
-    this.worldPosCallable.consume((p_217069_1_, p_217069_2_) -> {
-      updateCraftingResult(this.windowId, p_217069_1_, this.player, this.craftMatrix, this.craftResult);
+    this.worldPosCallable.consume((wrld, posIn) -> {
+      updateCraftingResult(this.windowId, wrld, this.player, this.craftMatrix, this.craftResult);
     });
   }
 

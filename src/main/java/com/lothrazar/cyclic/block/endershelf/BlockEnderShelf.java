@@ -17,7 +17,6 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -37,15 +36,8 @@ import net.minecraftforge.items.IItemHandler;
 
 public class BlockEnderShelf extends BlockBase {
 
-  public static BooleanProperty IS_CONTROLLER = BooleanProperty.create("is_controller");
-
-  public BlockEnderShelf(Properties properties) {
-    this(properties, false);
-  }
-
   public BlockEnderShelf(Properties properties, boolean isController) {
     super(properties.hardnessAndResistance(1.8F));
-    this.setDefaultState(this.getDefaultState().with(IS_CONTROLLER, isController));
   }
 
   @Override
@@ -57,7 +49,7 @@ public class BlockEnderShelf extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.HORIZONTAL_FACING).add(IS_CONTROLLER);
+    builder.add(BlockStateProperties.HORIZONTAL_FACING);
   }
 
   @Override

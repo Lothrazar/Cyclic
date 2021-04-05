@@ -59,6 +59,9 @@ public class ItemMobContainer extends ItemBase {
       if (world.addEntity(entity)) {
         stack.setTag(null);
         stack.shrink(1);
+        if (stack.isEmpty()) {
+          player.setHeldItem(context.getHand(), ItemStack.EMPTY);
+        }
         return ActionResultType.SUCCESS;
       }
     }

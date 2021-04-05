@@ -278,6 +278,7 @@ public class ConfigRegistry {
     COMMON_CONFIG.setConfig(configData);
   }
 
+  @SuppressWarnings("unchecked")
   public static List<String> getMagicNetList() {
     return (List<String>) MBALL_IGNORE_LIST.get();
   }
