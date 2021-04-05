@@ -57,6 +57,7 @@ public class ConfigRegistry {
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> UNCRAFT = new ArrayList<>();
+  private static final List<String> MBALL_IGNORE = new ArrayList<>();
   private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final String WALL = "####################################################################################";
@@ -75,6 +76,7 @@ public class ConfigRegistry {
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
+  private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   public static BooleanValue CYAN_GENERATES;
   static {
     buildDefaults();
@@ -136,6 +138,9 @@ public class ConfigRegistry {
     TRANSPORTBAG.add("extracells:fluidcrafter");
     TRANSPORTBAG.add("extracells:ecbaseblock");
     TRANSPORTBAG.add("extracells:fluidfiller");
+    //
+    MBALL_IGNORE.add("minecraft:ender_dragon");
+    MBALL_IGNORE.add("minecraft:wither");
   }
 
   private static void initConfig() {
@@ -213,6 +218,7 @@ public class ConfigRegistry {
     CFG.pop(); //cost
     CFG.pop(); //energy
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
+    MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");
     TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 128, 16, 256);
     CFG.pop();
@@ -270,6 +276,10 @@ public class ConfigRegistry {
         .build();
     configData.load();
     COMMON_CONFIG.setConfig(configData);
+  }
+
+  public static List<String> getMagicNetList() {
+    return (List<String>) MBALL_IGNORE_LIST.get();
   }
 
   public static Map<String, String> getMappedBeheading() {

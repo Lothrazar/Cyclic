@@ -1,9 +1,11 @@
 package com.lothrazar.cyclic.item.magicnet;
 
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilString;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -58,7 +60,15 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       }
       CompoundNBT compound = new CompoundNBT();
       target.writeUnlessPassenger(compound);
+      //
       String id = EntityType.getKey(target.getType()).toString();
+      if (UtilString.isInList(ConfigRegistry.getMagicNetList(), EntityType.getKey(target.getType()))) {
+        ModCyclic.LOGGER.info("ignored by: CONFIG LIST" + id);
+        return;
+      }
+      //
+      //
+      //
       compound.putString(NBT_ENTITYID, id);
       ItemStack drop = new ItemStack(ItemRegistry.mob_container);
       drop.setTag(compound);
