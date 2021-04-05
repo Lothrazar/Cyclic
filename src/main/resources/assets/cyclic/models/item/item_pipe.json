@@ -1,3 +1,9 @@
  {
-     "parent": "cyclic:block/cable_none_item"
+    "parent": "cyclic:block/cable_none_item",
+    "display" : {
+        "gui" : {
+            "rotation" : [30, -45, 0],
+            "scale" : [0.800, 0.800, 0.800]
+        }
+    }
 }
