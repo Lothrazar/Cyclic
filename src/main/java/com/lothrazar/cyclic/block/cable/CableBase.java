@@ -55,7 +55,7 @@ public abstract class CableBase extends BlockBase {
   protected static final VoxelShape AABB_EAST = Block.makeCuboidShape(sm, sm, sm, top, lg, lg);
 
   static boolean shapeConnects(BlockState state, EnumProperty<EnumConnectType> dirctionProperty) {
-    return state.get(dirctionProperty).equals(EnumConnectType.INVENTORY);
+    return state.get(dirctionProperty).isConnected();
   }
 
   public static VoxelShape createShape(BlockState state) {
@@ -66,16 +66,16 @@ public abstract class CableBase extends BlockBase {
     if (shapeConnects(state, DOWN)) {
       shape = VoxelShapes.combine(shape, AABB_DOWN, IBooleanFunction.OR);
     }
-    if (state.get(WEST).equals(EnumConnectType.INVENTORY)) {
+    if (shapeConnects(state, WEST)) {
       shape = VoxelShapes.combine(shape, AABB_WEST, IBooleanFunction.OR);
     }
-    if (state.get(EAST).equals(EnumConnectType.INVENTORY)) {
+    if (shapeConnects(state, EAST)) {
       shape = VoxelShapes.combine(shape, AABB_EAST, IBooleanFunction.OR);
     }
-    if (state.get(NORTH).equals(EnumConnectType.INVENTORY)) {
+    if (shapeConnects(state, NORTH)) {
       shape = VoxelShapes.combine(shape, AABB_NORTH, IBooleanFunction.OR);
     }
-    if (state.get(SOUTH).equals(EnumConnectType.INVENTORY)) {
+    if (shapeConnects(state, SOUTH)) {
       shape = VoxelShapes.combine(shape, AABB_SOUTH, IBooleanFunction.OR);
     }
     return shape;
@@ -160,7 +160,6 @@ public abstract class CableBase extends BlockBase {
           world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
         break;
       }
-      //      }
       //else state does not have prop . ttreat it teh same as (getBlock is not a CableBase)
     }
     return super.onBlockActivated(state, world, pos, player, handIn, hit);

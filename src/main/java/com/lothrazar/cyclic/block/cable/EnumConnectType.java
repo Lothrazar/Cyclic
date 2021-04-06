@@ -11,6 +11,10 @@ public enum EnumConnectType implements IStringSerializable {
     return this == NONE || this == BLOCKED;
   }
 
+  public boolean isConnected() {
+    return isExtraction() || this == INVENTORY;
+  }
+
   public boolean isExtraction() {
     return this == CABLE;
   }

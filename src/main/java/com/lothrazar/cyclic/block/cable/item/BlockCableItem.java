@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.cable.item;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
@@ -99,13 +100,16 @@ public class BlockCableItem extends CableBase {
   @Override
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
-    if (stateIn.get(property).isBlocked()) {
+    EnumConnectType oldProp = stateIn.get(property);
+    if (oldProp.isBlocked() || oldProp.isExtraction()) {
       return stateIn;
     }
     if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
+      ModCyclic.LOGGER.info(stateIn.get(property) + " to  inventory");
       return stateIn.with(property, EnumConnectType.INVENTORY);
     }
     else {
+      ModCyclic.LOGGER.info(stateIn.get(property) + " to  none ");
       return stateIn.with(property, EnumConnectType.NONE);
     }
   }
