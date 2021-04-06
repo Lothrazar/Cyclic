@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.endershelf;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import net.minecraft.block.BlockState;
@@ -21,14 +21,16 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEnderShelf extends TileEntityBase {
 
-  private final LazyOptional<EnderShelfItemHandler> inventory = LazyOptional.of(() -> new EnderShelfItemHandler(this));
-  private final LazyOptional<EnderControllerItemHandler> controllerInventory = LazyOptional.of(() -> new EnderControllerItemHandler(this));
+  EnderShelfItemHandler invShelf = new EnderShelfItemHandler(this);
+  EnderControllerItemHandler controllerInv = new EnderControllerItemHandler(this);
+  private final LazyOptional<EnderShelfItemHandler> inventoryCap = LazyOptional.of(() -> invShelf);
+  private final LazyOptional<EnderControllerItemHandler> controllerInventoryCap = LazyOptional.of(() -> controllerInv);
   private BlockPos controllerLocation;
-  private Set<BlockPos> connectedShelves;
+  private List<BlockPos> connectedShelves;
 
   public TileEnderShelf() {
     super(TileRegistry.ender_shelf);
-    this.connectedShelves = new HashSet<>();
+    this.connectedShelves = new ArrayList<>();
     this.controllerLocation = null;
   }
 
@@ -48,12 +50,16 @@ public class TileEnderShelf extends TileEntityBase {
     return this.controllerLocation;
   }
 
+  /**
+   * Converts to sorted list
+   * 
+   * @param shelves
+   */
   public void setShelves(Set<BlockPos> shelves) {
-    this.connectedShelves = shelves;
-    this.connectedShelves = this.connectedShelves.stream().sorted(Comparator.comparing(o -> o.distanceSq(this.pos))).collect(Collectors.toCollection(LinkedHashSet::new));
+    this.connectedShelves = shelves.stream().sorted(Comparator.comparing(o -> o.distanceSq(this.pos))).collect(Collectors.toList());
   }
 
-  public Set<BlockPos> getShelves() {
+  public List<BlockPos> getShelves() {
     return this.connectedShelves;
   }
 
@@ -65,16 +71,16 @@ public class TileEnderShelf extends TileEntityBase {
       //if (isController && side == Direction.DOWN)
       //  return fakeInventory.cast();
       if (isController) {
-        return controllerInventory.cast();
+        return controllerInventoryCap.cast();
       }
-      return inventory.cast();
+      return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventoryCap.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
     if (tag.contains("shelves")) {
       ListNBT shelves = tag.getList("shelves", Constants.NBT.TAG_COMPOUND);
       for (int i = 0; i < shelves.size(); i++) {
@@ -87,7 +93,7 @@ public class TileEnderShelf extends TileEntityBase {
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    inventory.ifPresent(h -> {
+    inventoryCap.ifPresent(h -> {
       CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
       tag.put("inv", compound);
     });

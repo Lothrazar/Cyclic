@@ -35,7 +35,8 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
         }
       });
     }
-    else if (EnderShelfHelper.isController(tile.getBlockState())) {
+    else { // if (EnderShelfHelper.isController(tile.getBlockState())) {
+      //TODO: this branch never fires
       EnderControllerItemHandler h = EnderShelfHelper.getControllerHandler(tile);
       if (h != null) {
         int count = tile.getShelves().size();
@@ -73,13 +74,14 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
     float scale = 0.1F * getScaleFactor(displayName.get());
     ms.translate(x, y, 1 - OFFSET);
     ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-    fontRenderer.renderString(displayName.get(), 0, 0, 421025, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+    int color = 0;
+    fontRenderer.renderString(displayName.get(), 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
     ms.pop();
     ms.push();
     scale = 0.1F;
     ms.translate(x, y, 1 - OFFSET);
     ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-    fontRenderer.renderString(displayCount, 110, 0, 421025,
+    fontRenderer.renderString(displayCount, 110, 0, color,
         false, ms.getLast().getMatrix(), buffer, false, 0, light);
     ms.pop();
   }

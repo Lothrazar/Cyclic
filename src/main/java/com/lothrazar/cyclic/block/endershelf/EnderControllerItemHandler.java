@@ -66,32 +66,65 @@ public class EnderControllerItemHandler extends ItemStackHandler {
     return stack;
   }
 
+  //each shelf has 5 rows
+  static final int SLOTS_PER_SHELF = 5;
+
   @Override
-  public ItemStack extractItem(int slot, int amount, boolean simulate) {
-    return extractItemElsewhere(amount, simulate);
+  public int getSlots() {
+    return this.controller.getShelves().size() * 5;
   }
 
-  private ItemStack extractItemElsewhere(int amount, boolean simulate) {
-    if (this.controller.getShelves().size() == 0) {
+  @Override
+  public void setStackInSlot(int slot, ItemStack stack) {
+    this.insertItem(slot, stack, false);
+    onContentsChanged(slot);
+  }
+
+  @Override
+  public ItemStack getStackInSlot(int slot) {
+    if (this.controller.getShelves().size() == 0 || this.controller.getWorld() == null) {
       return ItemStack.EMPTY;
     }
-    if (this.controller.getWorld() != null) {
-      int slot = -1;
-      EnderShelfItemHandler handler = null;
-      for (BlockPos extractPos : this.controller.getShelves()) {
-        TileEntity te = this.controller.getWorld().getTileEntity(extractPos);
-        handler = EnderShelfHelper.getShelfHandler(te);
-        if (handler != null) {
-          slot = handler.firstSlotWithItem();
-          if (slot != -1) {
-            break;
-          }
-        }
-      }
-      if (slot != -1) {
-        return handler.extractItem(slot, amount, simulate);
-      }
+    int shelf = slot / SLOTS_PER_SHELF;
+    int realSlot = slot % SLOTS_PER_SHELF;
+    //
+    EnderShelfItemHandler handler = getHandlerAt(shelf);
+    if (handler != null) {
+      return handler.getStackInSlot(realSlot);
     }
     return ItemStack.EMPTY;
+  }
+
+  @Override
+  public ItemStack extractItem(int slot, int amount, boolean simulate) {
+    return extractItemElsewhere(slot, amount, simulate);
+  }
+
+  private ItemStack extractItemElsewhere(int slot, int amount, boolean simulate) {
+    if (this.controller.getShelves().size() == 0 || this.controller.getWorld() == null) {
+      return ItemStack.EMPTY;
+    }
+    int shelf = slot / SLOTS_PER_SHELF;
+    int realSlot = slot % SLOTS_PER_SHELF;
+    // 
+    EnderShelfItemHandler handler = getHandlerAt(shelf);
+    if (handler != null) {
+      return handler.extractItem(realSlot, amount, simulate);
+    }
+    return ItemStack.EMPTY;
+  }
+
+  /**
+   * null if not found
+   */
+  private EnderShelfItemHandler getHandlerAt(int shelf) {
+    try {
+      BlockPos extractPos = this.controller.getShelves().get(shelf);
+      TileEntity te = this.controller.getWorld().getTileEntity(extractPos);
+      return EnderShelfHelper.getShelfHandler(te);
+    }
+    catch (Exception e) {
+      return null; // index OOB, etc 
+    }
   }
 }
