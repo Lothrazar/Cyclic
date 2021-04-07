@@ -20,19 +20,18 @@ public class UtilSound {
   }
 
   public static void playSound(World world, BlockPos pos, SoundEvent soundIn) {
-    world.playSound(pos.getX(), pos.getY(), pos.getZ(),
-        soundIn, SoundCategory.BLOCKS, 0.5F, 0.5F, false);
+    world.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, SoundCategory.BLOCKS, 0.5F, 0.5F, false);
   }
 
-  public static void playSound(Entity entityIn, BlockPos position, SoundEvent soundIn) {
+  public static void playSound(Entity entityIn, BlockPos pos, SoundEvent soundIn) {
+    playSound(entityIn, pos, soundIn, 1.0F, 1.0F);
+  }
+
+  public static void playSound(Entity entityIn, BlockPos pos, SoundEvent soundIn, float volume, float pitch) {
     if (entityIn != null) {
-      entityIn.playSound(soundIn, 1.0F, 1.0F);
+      entityIn.playSound(soundIn, volume, pitch);
     }
   }
-  //should work but its just silent
-  //  public static void playSoundFromServer(ServerWorld world, PlayerEntity playerIn, BlockPos pos, SoundEvent soundIn) {
-  //    world.playSound(playerIn, pos, soundIn, SoundCategory.PLAYERS, 1.0f, 1.0f);
-  //  }
 
   public static void playSoundFromServer(ServerPlayerEntity entityIn, SoundEvent soundIn) {
     if (soundIn == null || entityIn == null) {

@@ -24,26 +24,17 @@ public class ItemProjectileDungeon extends ItemBase {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
     ItemStack stack = player.getHeldItem(hand);
-    //    if (!world.isRemote) {
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
     shootMe(world, player, ball);
     stack.shrink(1);
-    UtilSound.playSound(player, player.getPosition(), SoundRegistry.dungeonfinder);
-    Runnable runnable = new Runnable() {
-
-      @Override
-      public void run() {
-        findTargetLocation(player, ball);
-      }
-    };
-    Thread thread = new Thread(runnable);
-    thread.start(); // starts thread in background.
+    UtilSound.playSound(player, player.getPosition(), SoundRegistry.dungeonfinder, 0.1F, 1.0F);
+    findTargetLocation(player, ball);
     return super.onItemRightClick(world, player, hand);
   }
 
   private void findTargetLocation(PlayerEntity player, EntityDungeonEye entityendereye) {
     if (entityendereye == null || !entityendereye.isAlive()) {
-      return; //something happened!
+      return; //something happened! but this never happens
     }
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.SPAWNER, DUNGEONRADIUS);
     if (blockpos == null) {
