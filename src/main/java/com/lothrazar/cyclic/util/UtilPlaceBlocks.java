@@ -1,11 +1,9 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.WallTorchBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
@@ -13,7 +11,6 @@ import net.minecraft.item.DirectionalPlaceContext;
 import net.minecraft.item.Items;
 import net.minecraft.state.Property;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -153,8 +150,8 @@ public class UtilPlaceBlocks {
   }
 
   public static boolean placeTorchSafely(World world, BlockPos blockPos) {
-  	BlockItem torch = (BlockItem) Items.TORCH;
-  	BlockItemUseContext context = new DirectionalPlaceContext(world, blockPos, Direction.DOWN, Items.TORCH.getDefaultInstance(), Direction.DOWN);
-  	return torch.tryPlace(context).isSuccessOrConsume();
+    BlockItem torch = (BlockItem) Items.TORCH;
+    BlockItemUseContext context = new DirectionalPlaceContext(world, blockPos, Direction.DOWN, Items.TORCH.getDefaultInstance(), Direction.DOWN);
+    return torch.tryPlace(context).isSuccessOrConsume();
   }
 }
