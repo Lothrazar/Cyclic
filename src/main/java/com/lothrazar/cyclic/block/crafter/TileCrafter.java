@@ -197,9 +197,9 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
                 ModCyclic.LOGGER.info(i + "getContainerItem " + recipeLeftover.getContainerItem());
                 //not just 1
                 ItemStack result = recipeLeftover.getContainerItem().copy();
-                for (int j = 0; j < inputHandler.getSlots(); j++) {
+                for (int j = 0; j < outHandler.getSlots(); j++) {
                   //test it
-                  result = this.inputHandler.insertItem(j, result, false);
+                  result = this.outHandler.insertItem(j, result, false);
                   if (result.isEmpty()) {
                     break;
                   }
