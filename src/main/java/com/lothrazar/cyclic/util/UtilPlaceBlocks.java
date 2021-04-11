@@ -4,8 +4,11 @@ import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.WallTorchBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.DirectionalPlaceContext;
+import net.minecraft.item.Items;
 import net.minecraft.state.Property;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
@@ -147,34 +150,8 @@ public class UtilPlaceBlocks {
   }
 
   public static boolean placeTorchSafely(World world, BlockPos blockPos) {
-    Direction actual = findFirstSolidFace(world, blockPos, Direction.DOWN);
-    if (actual == null) {
-      return false;
-    }
-    if (actual.getAxis().isHorizontal()) {
-      world.setBlockState(blockPos, Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, actual));
-      return true;
-    }
-    else if (actual != Direction.DOWN) {
-      world.setBlockState(blockPos, Blocks.TORCH.getDefaultState());
-      return true;
-    }
-    return false;
-  }
-
-  public static Direction findFirstSolidFace(World world, BlockPos blockPos, Direction prefer) {
-    Direction actual = null;
-    Direction[] alternatives = { Direction.DOWN, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH, Direction.UP };
-    if (world.getBlockState(blockPos.offset(prefer)).isSolid()) {
-      actual = prefer;
-    }
-    else {
-      for (Direction dir : alternatives) {
-        if (world.getBlockState(blockPos.offset(dir)).isSolid()) {
-          actual = dir;
-        }
-      }
-    }
-    return actual == null ? null : actual.getOpposite();
+    BlockItem torch = (BlockItem) Items.TORCH;
+    BlockItemUseContext context = new DirectionalPlaceContext(world, blockPos, Direction.DOWN, Items.TORCH.getDefaultInstance(), Direction.DOWN);
+    return torch.tryPlace(context).isSuccessOrConsume();
   }
 }
