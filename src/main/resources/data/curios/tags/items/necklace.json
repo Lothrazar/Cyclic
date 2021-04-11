@@ -1,6 +1,7 @@
 {
   "replace": "false",
   "values": [
+    "cyclic:charm_torch_cave",
     "cyclic:charm_torch",
     "cyclic:charm_ultimate",
     "cyclic:antigravity"

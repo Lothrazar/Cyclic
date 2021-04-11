@@ -28,25 +28,29 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.List;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AutoCaveTorchItem extends ItemBase implements IHasClickToggle {
 
-  private static final int TICK_DELAY = 2;
+  private static final int TICK_DELAY = 10;
   public static final int LIGHT_LIMIT = 9;
   private static final int MAX_DISTANCE_SQ = (int) Math.pow(16, 2);
   private static final int MAX_LIST_SIZE = 200;
   private int timer = 0;
   private boolean ticking = false;
-  private LinkedHashSet<BlockPos> blockHashList = new LinkedHashSet<>();
 
   public AutoCaveTorchItem(Properties properties) {
     super(properties);
@@ -69,49 +73,47 @@ public class AutoCaveTorchItem extends ItemBase implements IHasClickToggle {
       return;
     }
     timer--;
-    Iterator<BlockPos> iter;
     if (timer <= 0 && !ticking) {
       ticking = true;
       BlockPos pos = entityIn.getPosition();
       if (world.getLightValue(pos) <= LIGHT_LIMIT) {
-        blockHashList.addAll(UtilShape.caveInterior(world, pos, player.getHorizontalFacing(), MAX_LIST_SIZE / 2));
-        //  line below: java.util.ConcurrentModificationException: null
-        blockHashList.removeIf(blockPos -> {
-          return blockPos != null && player != null && player.getDistanceSq(blockPos.getX(), blockPos.getY(), blockPos.getZ()) > MAX_DISTANCE_SQ;
-        });
-        if (blockHashList.size() > MAX_LIST_SIZE) { //if we're moving too fast and adding a bunch of torches, trim until under max size
-          int i = blockHashList.size();
-          iter = blockHashList.iterator();
-          while (iter.hasNext()) {
-            iter.next();
-            iter.remove();
-            if (--i <= MAX_LIST_SIZE) {
-              break;
+        List<BlockPos> blockHashList = UtilShape.caveInterior(world, pos, player.getHorizontalFacing(), MAX_LIST_SIZE / 2);
+        int count = 0;
+        for (BlockPos testPos : blockHashList) {
+          count++;
+          if (count > MAX_LIST_SIZE) {
+            break; // break loop.  mimic previous "iterator next and remove" that was causing the ConcurrentModificationExceptions
+          }
+          if (shouldPlaceTorch(world, player, testPos)) {
+            if (UtilPlaceBlocks.placeTorchSafely(world, testPos)) {
+              UtilItemStack.damageItem(player, stack);
             }
+            timer = TICK_DELAY; //lag compensation -- wait a tick before trying to place next torch
+            break;
           }
         }
+        ticking = false;
       }
-      iter = blockHashList.iterator();
-      while (iter.hasNext()) {
-        BlockPos testPos = iter.next();
-        if (shouldPlaceTorch(world, testPos)) {
-          if (UtilPlaceBlocks.placeTorchSafely(world, testPos)) {
-            UtilItemStack.damageItem(player, stack);
-          }
-          iter.remove();
-          timer = TICK_DELAY; //lag compensation -- wait a tick before trying to place next torch
-          break;
-        }
-      }
-      ticking = false;
     }
     if (!ticking) {
       tryRepairWith(stack, player, Blocks.TORCH.asItem());
     }
   }
 
-  private boolean shouldPlaceTorch(World world, BlockPos pos) {
-    return world.getLight(pos) <= LIGHT_LIMIT && world.isAirBlock(pos);
+  private boolean shouldPlaceTorch(World world, PlayerEntity player, BlockPos pos) {
+    return pos != null &&
+        world.getLight(pos) <= LIGHT_LIMIT &&
+        world.isAirBlock(pos) &&
+        player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < MAX_DISTANCE_SQ;
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    super.addInformation(stack, worldIn, tooltip, flagIn);
+    TranslationTextComponent t = new TranslationTextComponent("item.cyclic.bauble.on." + this.isOn(stack));
+    t.mergeStyle(TextFormatting.DARK_GRAY);
+    tooltip.add(t);
   }
 
   @Override
