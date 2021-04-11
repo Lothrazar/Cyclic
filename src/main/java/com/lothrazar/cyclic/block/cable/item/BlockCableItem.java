@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable.item;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
@@ -105,11 +104,9 @@ public class BlockCableItem extends CableBase {
       return stateIn;
     }
     if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
-      ModCyclic.LOGGER.info(stateIn.get(property) + " to  inventory");
       return stateIn.with(property, EnumConnectType.INVENTORY);
     }
     else {
-      ModCyclic.LOGGER.info(stateIn.get(property) + " to  none ");
       return stateIn.with(property, EnumConnectType.NONE);
     }
   }

@@ -4,7 +4,8 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -43,19 +44,42 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      if (doesFluidMatch(tile)) {
-        return matches(tile, 0) && matches(tile, 1) && matches(tile, 2);
-      }
-      else {
-        return false;
-      }
+      return matchFluid(tile) && matchItems(tile);
     }
     catch (ClassCastException e) {
-      return false;
+      return false; // i think we fixed this
     }
   }
 
-  private boolean doesFluidMatch(TileSolidifier tile) {
+  private int findMatchingSlot(TileSolidifier tile, Ingredient shapeless, final List<Integer> skip) {
+    for (int i = 0; i < 3; i++) {
+      if (skip.contains(i)) {
+        continue; // we already matched this one
+      }
+      if (shapeless.test(tile.getStackInputSlot(i))) {
+        return i;
+      }
+    }
+    //
+    return -1;
+  }
+
+  private boolean matchItems(TileSolidifier tile) {
+    Ingredient top = ingredients.get(0);
+    Ingredient middle = ingredients.get(1);
+    Ingredient bottom = ingredients.get(2);
+    //
+    List<Integer> matchingSlots = new ArrayList<>();
+    matchingSlots.add(findMatchingSlot(tile, top, matchingSlots));
+    matchingSlots.add(findMatchingSlot(tile, middle, matchingSlots));
+    matchingSlots.add(findMatchingSlot(tile, bottom, matchingSlots));
+    if (matchingSlots.contains(-1)) {
+      return false;
+    }
+    return matchingSlots.contains(0) && matchingSlots.contains(1) && matchingSlots.contains(2);
+  }
+
+  private boolean matchFluid(TileSolidifier tile) {
     if (tile.getFluid() == null || tile.getFluid().isEmpty()) {
       return false;
     }
@@ -70,18 +94,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       }
     }
     return false;
-  }
-
-  public boolean matches(TileSolidifier tile, int slot) {
-    ItemStack current = tile.getStackInputSlot(slot);
-    Ingredient ing = ingredients.get(slot);
-    for (ItemStack test : ing.getMatchingStacks()) {
-      if (UtilItemStack.matches(current, test)) {
-        return true;
-      }
-    }
-    return false;
-    //  ingredients.get(0).getMatchingStacks()
   }
 
   @Override
