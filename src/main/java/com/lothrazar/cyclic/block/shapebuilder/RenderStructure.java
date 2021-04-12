@@ -19,8 +19,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
   }
 
   @Override
-  public void render(TileStructure te, float v, MatrixStack matrixStack,
-      IRenderTypeBuffer ibuffer, int partialTicks, int destroyStage) {
+  public void render(TileStructure te, float v, MatrixStack matrixStack, IRenderTypeBuffer ibuffer, int partialTicks, int destroyStage) {
     IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
     if (inv == null) {
       return;
@@ -31,7 +30,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
         UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack);
       }
       else {
-        UtilRender.renderAsBlock(te.getPos(), te.getShape(), matrixStack, stack, 0.5F, 1.0F);
+        UtilRender.renderAsBlock(te.getPos(), te.getShape(), matrixStack, stack, 1, 1);
       }
     }
   }
