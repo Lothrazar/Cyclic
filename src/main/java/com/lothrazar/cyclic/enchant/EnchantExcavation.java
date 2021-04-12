@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.registry.EnchantRegistry;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -77,6 +79,11 @@ public class EnchantExcavation extends EnchantBase {
   @Override
   public boolean canApply(ItemStack stack) {
     return super.canApply(stack) || stack.getItem() instanceof ShearsItem;
+  }
+
+  @Override
+  public boolean canApplyTogether(Enchantment ench) {
+    return super.canApplyTogether(ench) && ench != EnchantRegistry.EXCAVATE;
   }
 
   private int getHarvestMax(int level) {

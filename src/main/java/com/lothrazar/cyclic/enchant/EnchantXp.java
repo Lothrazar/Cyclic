@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.registry.EnchantRegistry;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -68,6 +70,11 @@ public class EnchantXp extends EnchantBase {
       return true; //override even though digger type 
     }
     return super.canApply(stack);
+  }
+
+  @Override
+  public boolean canApplyTogether(Enchantment ench) {
+    return super.canApplyTogether(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
   }
 
   /**
