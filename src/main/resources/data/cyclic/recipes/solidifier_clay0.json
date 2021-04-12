@@ -3,18 +3,12 @@
   "inputTop": {
     "item": "minecraft:terracotta"
   },
-  "inputMiddle": {
-    "item": "minecraft:terracotta"
-  },
-  "inputBottom": {
-    "item": "minecraft:terracotta"
-  },
   "mix": {
     "fluid": "minecraft:water",
-    "count": 50
+    "count": 25
   },
   "result": {
     "item": "minecraft:clay",
-		"count": 3
+		"count": 1
   }
 }

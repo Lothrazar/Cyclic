@@ -141,21 +141,33 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
-        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputTop"));
-        Ingredient inputSecond = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputMiddle"));
-        Ingredient inputThird = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputBottom"));
+        //TODO: in 1.17 make array
+        Ingredient inputTop = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputTop"));
+        Ingredient inputMiddle = Ingredient.EMPTY;
+        if (JSONUtils.hasField(json, "inputMiddle")) {
+          inputMiddle = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputMiddle"));
+        }
+        Ingredient inputBottom = Ingredient.EMPTY;
+        if (JSONUtils.hasField(json, "inputBottom")) {
+          inputBottom = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputBottom"));
+        }
         ItemStack resultStack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
         JsonObject mix = json.get("mix").getAsJsonObject();
         int count = mix.get("count").getAsInt();
+        if (count < 1) {
+          count = 1;
+        }
         String fluidId = JSONUtils.getString(mix, "fluid");
         ResourceLocation resourceLocation = new ResourceLocation(fluidId);
         Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
-        //is it air? which means not found
+        if (inputTop == Ingredient.EMPTY) {
+          throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
+        }
         if (fluid == FluidStack.EMPTY.getFluid()) {
           throw new IllegalArgumentException("Invalid fluid specified " + fluidId);
         }
-        r = new RecipeSolidifier(recipeId, inputFirst, inputSecond,
-            inputThird, new FluidStack(fluid, count), resultStack);
+        //valid recipe created
+        r = new RecipeSolidifier(recipeId, inputTop, inputMiddle, inputBottom, new FluidStack(fluid, count), resultStack);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);

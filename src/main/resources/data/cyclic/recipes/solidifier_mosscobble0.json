@@ -3,18 +3,12 @@
   "inputTop": {
     "item": "minecraft:cobblestone"
   },
-  "inputMiddle": {
-    "item": "minecraft:cobblestone"
-  },
-  "inputBottom": {
-    "item": "minecraft:cobblestone"
-  },
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 10
   },
   "result": {
     "item": "minecraft:mossy_cobblestone",
-		"count": 3
+		"count": 1
   }
 }

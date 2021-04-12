@@ -3,18 +3,12 @@
   "inputTop": {
     "item": "minecraft:glass_bottle"
   },
-  "inputMiddle": {
-    "item": "minecraft:glass_bottle"
-  },
-  "inputBottom": {
-    "item": "minecraft:glass_bottle"
-  },
   "mix": {
     "fluid": "cyclic:xpjuice",
-    "count": 750
+    "count": 250
   },
   "result": {
     "item": "minecraft:experience_bottle",
-	"count": 3
+	  "count": 1
   }
 }

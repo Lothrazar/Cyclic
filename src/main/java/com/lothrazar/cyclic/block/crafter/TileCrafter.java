@@ -366,7 +366,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     }
   }
 
-  //TODO: future
   private final CraftingInventory craftMatrix = new CraftingInventory(new FakeContainer(ContainerType.CRAFTING, 18291238), 3, 3);
 
   private boolean tryMatchShapedRecipeRegion(ArrayList<ItemStack> itemStacks, ShapedRecipe recipe, int offsetX, int offsetY) {
@@ -375,7 +374,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         try {
           int indexInArray = i + j * 3;
           ItemStack itemStack = itemStacks.get(indexInArray);
-          //          ModCyclic.LOGGER.info(pos + " craftMatrix  i=" + i + "  j=" + j + "  " + itemStack);
           craftMatrix.setInventorySlotContents(indexInArray, itemStack.copy());
         }
         catch (Exception e) {
@@ -387,30 +385,6 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     boolean matched = recipe.matches(craftMatrix, world);
     //    ModCyclic.LOGGER.info(recipe.getRecipeOutput() + " -0 matched recipe and getRemainingItems " + matched);
     return matched;
-    //    return false;
-    //    int recipeSize = recipe.getWidth() * recipe.getHeight();
-    //    
-    //    int itemStacksSize = itemStacks.size();
-    //    Ingredient ingredient;
-    //    if (itemStacksSize < recipeSize || offsetX + recipe.getWidth() > 3 || offsetY + recipe.getHeight() > 3) {
-    //      return false;
-    //    }
-    //    int indexInRecipe = 0;
-    //    for (int i = 0; i < recipe.getWidth(); i++) {
-    //      for (int j = 0; j < recipe.getHeight(); j++) {
-    //        int indexInArray = i + j * 3;
-    //        ItemStack itemStack = itemStacks.get(indexInArray);
-    //        ingredient = recipe.getIngredients().get(indexInRecipe);
-    //        if (!ingredient.test(itemStack)) {
-    //          if (ingredient.getMatchingStacks().length > 0) {
-    //            ModCyclic.LOGGER.info(indexInArray + "=indexInArray;  " + itemStack + " does not match-> " + ingredient.getMatchingStacks()[0]);
-    //          }
-    //          return false;
-    //        }
-    //        indexInRecipe++;
-    //      }
-    //    }
-    //    return true;
   }
 
   public void reset() {

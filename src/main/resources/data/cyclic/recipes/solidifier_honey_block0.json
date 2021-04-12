@@ -1,0 +1,14 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:stick"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 1000
+  },
+  "result": {
+    "item": "minecraft:honey_block",
+		"count": 1
+  }
+}

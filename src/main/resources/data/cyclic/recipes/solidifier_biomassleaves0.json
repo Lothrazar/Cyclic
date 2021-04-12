@@ -3,18 +3,12 @@
   "inputTop": {
     "tag": "minecraft:leaves"
   },
-  "inputMiddle": {
-    "tag": "minecraft:flowers"
-  },
-  "inputBottom": {
-    "tag": "minecraft:coals"
-  },
   "mix": {
     "fluid": "minecraft:water",
-    "count": 100
+    "count": 50
   },
   "result": {
     "item": "cyclic:biomass",
-		"count": 8
+		"count": 1
   }
 }
