@@ -241,8 +241,7 @@ public class UtilRender {
   /**
    * Call from TESR perspective
    */
-  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape,
-      MatrixStack matrix, ItemStack stack, float alpha, float scale) {
+  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, MatrixStack matrix, ItemStack stack, float alpha, float scale) {
     BlockState renderBlockState = Block.getBlockFromItem(stack.getItem()).getDefaultState();
     renderAsBlock(centerPos, shape, matrix, renderBlockState, alpha, scale);
   }
@@ -252,8 +251,7 @@ public class UtilRender {
    * 
    */
   @OnlyIn(Dist.CLIENT)
-  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape,
-      MatrixStack matrix, BlockState renderBlockState, float alpha, float scale) {
+  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, MatrixStack matrix, BlockState renderBlockState, float alpha, float scale) {
     World world = Minecraft.getInstance().world;
     //render 
     Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
@@ -293,13 +291,16 @@ public class UtilRender {
       float green = (color >> 8 & 255) / 255.0F;
       float blue = (color & 255) / 255.0F;
       if (renderBlockState.getRenderType() == BlockRenderType.MODEL) {
+        int combinedLights = 15728640;
+        int combinedOverlay = 655360;
         for (Direction direction : Direction.values()) {
           UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
-              ibakedmodel.getQuads(renderBlockState, direction, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE), 15728640, 655360 / 2);
+              ibakedmodel.getQuads(renderBlockState, direction, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE),
+              combinedLights, combinedOverlay);
         }
-        UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
-            ibakedmodel.getQuads(renderBlockState, null, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE),
-            15728640, 655360);
+        //        UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
+        //            ibakedmodel.getQuads(renderBlockState, null, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE),
+        //            combinedLights, combinedOverlay);
       }
       matrix.pop();
     }
@@ -321,7 +322,6 @@ public class UtilRender {
     //    IRenderTypeBuffer.getImpl(ibuffer);
     final Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    // World world = ModCyclic.proxy.getClientWorld();
     matrix.push();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
     IVertexBuilder builder;

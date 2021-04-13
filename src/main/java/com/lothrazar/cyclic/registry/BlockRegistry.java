@@ -10,7 +10,6 @@ import com.lothrazar.cyclic.block.LaunchBlock;
 import com.lothrazar.cyclic.block.MasonBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
-import com.lothrazar.cyclic.block.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.SpikesBlock;
 import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
 import com.lothrazar.cyclic.block.WaterCandleBlock;
@@ -48,6 +47,7 @@ import com.lothrazar.cyclic.block.forester.BlockForester;
 import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclic.block.laser.BlockLaser;
+import com.lothrazar.cyclic.block.lightcompr.BlockLightCamo;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
 import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
@@ -61,6 +61,8 @@ import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
 import com.lothrazar.cyclic.block.shapedata.BlockShapedata;
 import com.lothrazar.cyclic.block.soil.BlockTerraPreta;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
+import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
+import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlockGhost;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
@@ -118,6 +120,8 @@ public class BlockRegistry {
   public static Block breaker;
   @ObjectHolder(ModCyclic.MODID + ":fan")
   public static Block fan;
+  @ObjectHolder(ModCyclic.MODID + ":soundproofing_ghost")
+  public static Block soundproofing_ghost;
   @ObjectHolder(ModCyclic.MODID + ":soundproofing")
   public static Block soundproofing;
   @ObjectHolder(ModCyclic.MODID + ":dark_glass")
@@ -239,10 +243,13 @@ public class BlockRegistry {
   public static Block ghost;
   @ObjectHolder(ModCyclic.MODID + ":ghost_phantom")
   public static Block ghost_phantom;
+  @ObjectHolder(ModCyclic.MODID + ":light_camo")
+  public static Block light_camo;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
+    r.register(new BlockLightCamo(Block.Properties.create(Material.IRON)).setRegistryName("light_camo"));
     r.register(new BlockLaser(Block.Properties.create(Material.IRON)).setRegistryName("laser"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_emerald"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_diamond"));
@@ -294,6 +301,7 @@ public class BlockRegistry {
     r.register(new GhostBlock(Block.Properties.create(Material.ROCK), false).setRegistryName("ghost"));
     r.register(new GhostBlock(Block.Properties.create(Material.ROCK), true).setRegistryName("ghost_phantom"));
     //
+    r.register(new SoundmufflerBlockGhost(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing_ghost"));
     r.register(new SoundmufflerBlock(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
     r.register(new BlockRedstoneClock(Block.Properties.create(Material.ROCK)).setRegistryName("clock"));
     r.register(new BlockWirelessRec(Block.Properties.create(Material.ROCK)).setRegistryName("wireless_receiver"));

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.soundmuff;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
@@ -27,7 +27,7 @@ public class SoundmufflerBlock extends BlockBase {
   private static final int RADIUS = 6;
 
   public SoundmufflerBlock(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.SCAFFOLDING));
+    super(properties.hardnessAndResistance(1F).sound(SoundType.SCAFFOLDING));
     MinecraftForge.EVENT_BUS.register(this);
   }
 

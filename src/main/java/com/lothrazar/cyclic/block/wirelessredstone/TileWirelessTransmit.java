@@ -26,6 +26,10 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessTransmit extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  static enum Fields {
+    RENDER;
+  }
+
   public TileWirelessTransmit() {
     super(TileRegistry.wireless_transmitter);
   }
@@ -89,8 +93,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   @Override
   public void tick() {
     for (int s = 0; s < inventory.getSlots(); s++) {
-      ItemStack stack = inventory.getStackInSlot(s);
-      BlockPosDim targetPos = LocationGpsCard.getPosition(stack);
+      BlockPosDim targetPos = getTargetInSlot(s);
       if (targetPos == null ||
           UtilWorld.dimensionIsEqual(targetPos, world) == false) {
         continue;
@@ -99,11 +102,46 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     }
   }
 
+  BlockPosDim getTargetInSlot(int s) {
+    ItemStack stack = inventory.getStackInSlot(s);
+    return LocationGpsCard.getPosition(stack);
+  }
+
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+    switch (Fields.values()[field]) {
+      case RENDER:
+        this.render = value % 2;
+      break;
+    }
+  }
 
   @Override
   public int getField(int field) {
+    switch (Fields.values()[field]) {
+      case RENDER:
+        return render;
+    }
     return 0;
+  }
+
+  public float getRed() {
+    return 0.89F;
+  }
+
+  public float getBlue() {
+    return 0;
+  }
+
+  public float getGreen() {
+    return 0.12F;
+  }
+
+  public float getAlpha() {
+    return 0.9F;
+  }
+
+  public float getThick() {
+    return 0.065F;
   }
 }

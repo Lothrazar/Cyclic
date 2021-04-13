@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "sos",
+    " s "
+  ],
+  "key": {
+    "o": {
+      "item": "cyclic:soundproofing"
+    },
+    "s": {
+      "item": "cyclic:dark_glass"
+    }
+  },
+  "result": {
+    "item": "cyclic:soundproofing_ghost",
+    "count": 1
+  }
+}

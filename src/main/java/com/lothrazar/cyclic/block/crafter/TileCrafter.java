@@ -190,18 +190,29 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
           for (int i = 0; i < this.craftMatrix.getSizeInventory(); i++) {
             ItemStack recipeLeftover = this.craftMatrix.getStackInSlot(i);
             if (!recipeLeftover.isEmpty()) {
-              ModCyclic.LOGGER.info(i + " recipe leftovers " + recipeLeftover
-                  + " ||| itemStacksInGridBackup " + itemStacksInGridBackup.get(i));
               if (recipeLeftover.getContainerItem().isEmpty() == false) {
-                //
-                ModCyclic.LOGGER.info(i + "getContainerItem " + recipeLeftover.getContainerItem());
-                //not just 1
-                ItemStack result = recipeLeftover.getContainerItem().copy();
-                for (int j = 0; j < outHandler.getSlots(); j++) {
-                  //test it
-                  result = this.outHandler.insertItem(j, result, false);
-                  if (result.isEmpty()) {
-                    break;
+                // TODO: shared code refactor
+                ModCyclic.LOGGER.info(i + " recipe leftovers " + recipeLeftover + " ||| itemStacksInGridBackup " + itemStacksInGridBackup.get(i));
+                boolean leftoverEqual = (recipeLeftover.getItem() == recipeLeftover.getContainerItem().getItem());
+                if (leftoverEqual) {
+                  ModCyclic.LOGGER.info(i + "leftoverEqual TRUE  " + recipeLeftover.getContainerItem());
+                  ItemStack result = recipeLeftover.getContainerItem().copy();
+                  for (int j = 0; j < inputHandler.getSlots(); j++) {
+                    //test it
+                    result = inputHandler.insertItem(j, result, false);
+                    if (result.isEmpty()) {
+                      break;
+                    }
+                  }
+                }
+                else {
+                  ItemStack result = recipeLeftover.getContainerItem().copy();
+                  for (int j = 0; j < outHandler.getSlots(); j++) {
+                    //test it
+                    result = outHandler.insertItem(j, result, false);
+                    if (result.isEmpty()) {
+                      break;
+                    }
                   }
                 }
               }

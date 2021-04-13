@@ -33,6 +33,7 @@ import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.laser.TileLaser;
+import com.lothrazar.cyclic.block.lightcompr.TileLightCamo;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
@@ -43,6 +44,7 @@ import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata;
 import com.lothrazar.cyclic.block.soil.TileTerraPreta;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
+import com.lothrazar.cyclic.block.soundmuff.SoundmuffTile;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.trash.TileTrash;
@@ -64,6 +66,8 @@ public class TileRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileLightCamo::new, BlockRegistry.light_camo).build(null).setRegistryName("light_camo"));
+    r.register(TileEntityType.Builder.create(SoundmuffTile::new, BlockRegistry.soundproofing_ghost).build(null).setRegistryName("soundproofing_ghost"));
     r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.terra_preta).build(null).setRegistryName("terra_preta"));
     r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.eye_redstone).build(null).setRegistryName("eye_redstone"));
     r.register(TileEntityType.Builder.create(TileEyeTp::new, BlockRegistry.eye_teleport).build(null).setRegistryName("eye_teleport"));
@@ -119,6 +123,10 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":light_camo")
+  public static TileEntityType<TileLightCamo> light_camo;
+  @ObjectHolder(ModCyclic.MODID + ":soundproofing_ghost")
+  public static TileEntityType<SoundmuffTile> soundproofing_ghost;
   @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
   public static TileEntityType<TileEye> eye_redstone;
   @ObjectHolder(ModCyclic.MODID + ":eye_teleport")

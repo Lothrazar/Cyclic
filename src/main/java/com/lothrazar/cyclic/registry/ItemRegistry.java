@@ -201,6 +201,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.fisher, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fisher"));
     r.register(new BlockItem(BlockRegistry.disenchanter, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("disenchanter"));
     r.register(new BlockItem(BlockRegistry.fan, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fan"));
+    //  r.register(new BlockItem(BlockRegistry.light_camo, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("light_camo"));
+    //    r.register(new BlockItem(BlockRegistry.soundproofing_ghost, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("soundproofing_ghost"));
     r.register(new BlockItem(BlockRegistry.soundproofing, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("soundproofing"));
     r.register(new BlockItem(BlockRegistry.anvil, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("anvil"));
     r.register(new BlockItem(BlockRegistry.anvil_magma, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("anvil_magma"));

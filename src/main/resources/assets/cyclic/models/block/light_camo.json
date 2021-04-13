@@ -1,0 +1,40 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"side": "minecraft:block/glowstone",
+		"particle": "minecraft:block/glowstone"
+	},
+	"elements": [
+		{
+			"name": "Main",
+			"from": [7, 7, 7],
+			"to": [9, 9, 9],
+			"faces": {
+				"north": {
+					"texture": "#side",
+					"uv": [1, 1, 15, 15]
+				},
+				"east": {
+					"texture": "#side",
+					"uv": [1, 1, 15, 15]
+				},
+				"south": {
+					"texture": "#side",
+					"uv": [1, 1, 15, 15]
+				},
+				"west": {
+					"texture": "#side",
+					"uv": [1, 1, 15, 15]
+				},
+				"down": {
+					"texture": "#side",
+					"uv": [1, 1, 15, 15]
+				},
+				"up": {
+					"texture": "#side",
+					"uv": [1, 1, 15, 15]
+				}
+			}
+		}
+	]
+}
