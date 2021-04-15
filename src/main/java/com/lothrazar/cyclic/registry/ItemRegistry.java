@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.CarbonPaperItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
+import com.lothrazar.cyclic.item.EnderCookie;
 import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.LeverRemote;
@@ -201,8 +202,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.fisher, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fisher"));
     r.register(new BlockItem(BlockRegistry.disenchanter, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("disenchanter"));
     r.register(new BlockItem(BlockRegistry.fan, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fan"));
-    //  r.register(new BlockItem(BlockRegistry.light_camo, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("light_camo"));
-    //    r.register(new BlockItem(BlockRegistry.soundproofing_ghost, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("soundproofing_ghost"));
+    r.register(new BlockItem(BlockRegistry.light_camo, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("light_camo"));
+    r.register(new BlockItem(BlockRegistry.soundproofing_ghost, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("soundproofing_ghost"));
     r.register(new BlockItem(BlockRegistry.soundproofing, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("soundproofing"));
     r.register(new BlockItem(BlockRegistry.anvil, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("anvil"));
     r.register(new BlockItem(BlockRegistry.anvil_magma, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("anvil_magma"));
@@ -235,7 +236,8 @@ public class ItemRegistry {
     r.register(new PeatItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), PeatItemType.BIOMASS).setRegistryName("biomass"));
     // basic tools
     r.register(new LocationGpsCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("location"));
-    r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(9000)).setRegistryName("mattock"));
+    r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(9000), 1).setRegistryName("mattock"));
+    r.register(new MattockItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(9001), 2).setRegistryName("mattock_nether"));
     r.register(new SleepingMatItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("sleeping_mat"));
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024 * 1024)).setRegistryName("shears_obsidian"));
     //weak flint n steel 
@@ -288,9 +290,35 @@ public class ItemRegistry {
     int h = Foods.APPLE.getHealing();
     float s = Foods.APPLE.getSaturation();
     //honey is basic. fast to eat, gives lots of food but no potion effects 
-    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h * 4).saturation(s * 4)
-        .fastToEat()
+    r.register(new EnderCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0)
+        .build())).setRegistryName("apple_ender"));
+    //
+    r.register(new ItemBase(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h * 4).saturation(s * 4)
         .build())).setRegistryName("apple_honey"));
+    //
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(s)
+        .effect(new EffectInstance(Effects.LEVITATION, largePotionDur, 1), 1)
+        .effect(new EffectInstance(Effects.RESISTANCE, largePotionDur, 0), 1)
+        .effect(new EffectInstance(Effects.UNLUCK, largePotionDur, 1), 1)
+        .effect(new EffectInstance(Effects.SLOW_FALLING, smallPotionDur, 1), 1)
+        .setAlwaysEdible()
+        .build())).setRegistryName("apple_chorus"));
+    //
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(s)
+        .effect(new EffectInstance(Effects.JUMP_BOOST, largePotionDur, 4 + 5), 1)
+        .effect(new EffectInstance(Effects.INVISIBILITY, largePotionDur, 0), 1)
+        .effect(new EffectInstance(Effects.WEAKNESS, largePotionDur, 2), 1)
+        .effect(new EffectInstance(Effects.UNLUCK, largePotionDur, 0), 1)
+        .setAlwaysEdible()
+        .build())).setRegistryName("apple_bone"));
+    //
+    r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(s)
+        .effect(new EffectInstance(Effects.HASTE, largePotionDur, 0), 1)
+        .effect(new EffectInstance(Effects.GLOWING, largePotionDur, 0), 1)
+        .effect(new EffectInstance(Effects.WATER_BREATHING, largePotionDur, 0), 1)
+        .setAlwaysEdible()
+        .build())).setRegistryName("apple_prismarine"));
+    //
     //iron and lapis are basic ones
     r.register(new AppleBuffs(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(s * 4)
         .effect(new EffectInstance(Effects.NIGHT_VISION, largePotionDur, 0), 1)
@@ -317,10 +345,9 @@ public class ItemRegistry {
         .effect(new EffectInstance(Effects.LUCK, smallPotionDur, 1), 1)
         .effect(new EffectInstance(Effects.STRENGTH, smallPotionDur, 1), 1)
         .effect(new EffectInstance(Effects.SLOW_FALLING, smallPotionDur, 1), 1)
-        .fastToEat().setAlwaysEdible()
-        .build())).setRegistryName("apple_emerald"));
+        .setAlwaysEdible().build())).setRegistryName("apple_emerald"));
     r.register(new AppleChocolate(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(s * 4)
-        .fastToEat().setAlwaysEdible().build())).setRegistryName("apple_chocolate"));
+        .setAlwaysEdible().build())).setRegistryName("apple_chocolate"));
     ////////////////////////////////////////
     r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("boomerang_stun"));
     r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("boomerang_carry"));

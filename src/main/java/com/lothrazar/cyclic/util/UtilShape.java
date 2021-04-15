@@ -48,45 +48,53 @@ public class UtilShape {
     return shape;
   }
 
-  public static List<BlockPos> squareVerticalX(final BlockPos pos, int radius) {
+  public static List<BlockPos> squareVerticalX(final BlockPos pos, int xRadius, int yRadius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
-    int xMin = pos.getX() - radius;
-    int xMax = pos.getX() + radius;
-    int yMin = pos.getY() - radius;
-    int yMax = pos.getY() + radius;
+    int xMin = pos.getX() - xRadius;
+    int xMax = pos.getX() + xRadius;
+    int yMin = pos.getY() - yRadius;
+    int yMax = pos.getY() + yRadius;
     int z = pos.getZ();
     //first, leave x fixed and track along +/- y
-    for (int x = xMin; x <= xMax; x++) {
-      shape.add(new BlockPos(x, yMin, z));
-      shape.add(new BlockPos(x, yMax, z));
+    for (int y = yMin + 1; y < yMax; y++) {
+      for (int x = xMin; x <= xMax; x++) {
+        shape.add(new BlockPos(x, y, z));
+        shape.add(new BlockPos(x, y, z));
+      }
     }
     //corners are done so offset
-    for (int y = yMin + 1; y < yMax; y++) {
-      shape.add(new BlockPos(xMin, y, z));
-      shape.add(new BlockPos(xMax, y, z));
+    for (int x = xMin; x <= xMax; x++) {
+      for (int y = yMin + 1; y < yMax; y++) {
+        shape.add(new BlockPos(x, y, z));
+        shape.add(new BlockPos(x, y, z));
+      }
     }
     return shape;
   }
 
   //SHOLD TO-DO: merge x/z vers
-  public static List<BlockPos> squareVerticalZ(final BlockPos pos, int radius) {
+  public static List<BlockPos> squareVerticalZ(final BlockPos pos, int yRadius, int zRadius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
     int x = pos.getX();
-    int zMin = pos.getZ() - radius;
-    int zMax = pos.getZ() + radius;
-    int yMin = pos.getY() - radius;
-    int yMax = pos.getY() + radius;
+    int zMin = pos.getZ() - zRadius;
+    int zMax = pos.getZ() + zRadius;
+    int yMin = pos.getY() - yRadius;
+    int yMax = pos.getY() + yRadius;
     //first, leave x fixed and track along +/- y
-    for (int z = zMin; z <= zMax; z++) {
-      shape.add(new BlockPos(x, yMin, z));
-      shape.add(new BlockPos(x, yMax, z));
+    for (int y = yMin + 1; y < yMax; y++) {
+      for (int z = zMin; z <= zMax; z++) {
+        shape.add(new BlockPos(x, y, z));
+        shape.add(new BlockPos(x, y, z));
+      }
     }
     //corners are done so offset
-    for (int y = yMin + 1; y < yMax; y++) {
-      shape.add(new BlockPos(x, y, zMin));
-      shape.add(new BlockPos(x, y, zMax));
+    for (int z = zMin; z <= zMax; z++) {
+      for (int y = yMin + 1; y < yMax; y++) {
+        shape.add(new BlockPos(x, y, z));
+        shape.add(new BlockPos(x, y, z));
+      }
     }
     return shape;
   }

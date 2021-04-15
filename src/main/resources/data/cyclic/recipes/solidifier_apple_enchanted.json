@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "cyclic:apple_diamond"
+  },
+  "inputMiddle": {
+    "item": "minecraft:netherite_block"
+  },
+  "inputBottom": {
+    "item": "minecraft:golden_apple"
+  },
+  "mix": {
+    "fluid": "cyclic:honey",
+    "count": 4000
+  },
+  "result": {
+    "item": "minecraft:enchanted_golden_apple",
+		"count": 1
+  }
+}

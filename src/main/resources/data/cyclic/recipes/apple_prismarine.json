@@ -10,11 +10,11 @@
       "item": "cyclic:apple_honey"
     },
     "c": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:prismarine_shard"
     }
   },
   "result": {
-    "item": "cyclic:apple_iron",
+    "item": "cyclic:apple_prismarine",
     "count": 1
   }
 }

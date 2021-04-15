@@ -25,11 +25,12 @@ import net.minecraftforge.common.ToolType;
 
 public class MattockItem extends ToolItem {
 
-  public MattockItem(Properties builder) {
-    super(5.0F, -3.0F, ItemTier.DIAMOND, Sets.newHashSet(), builder.addToolType(ToolType.SHOVEL, 4).addToolType(ToolType.PICKAXE, 4));
-  }
+  final int radius; //radius 2 is 5x5 area square
 
-  static final int RADIUS = 1; //radius 2 is 5x5 area square
+  public MattockItem(Properties builder, int radius) {
+    super(5.0F, -3.0F, ItemTier.DIAMOND, Sets.newHashSet(), builder.addToolType(ToolType.SHOVEL, 4).addToolType(ToolType.PICKAXE, 4));
+    this.radius = radius;
+  }
 
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
@@ -40,13 +41,16 @@ public class MattockItem extends ToolItem {
       Direction sideHit = brt.getFace();
       List<BlockPos> shape;
       if (sideHit == Direction.UP || sideHit == Direction.DOWN) {
-        shape = UtilShape.squareHorizontalHollow(pos, RADIUS);
+        shape = UtilShape.squareHorizontalHollow(pos, radius);
+        if (radius == 2) {
+          shape.addAll(UtilShape.squareHorizontalHollow(pos, radius - 1));
+        }
       }
       else if (sideHit == Direction.EAST || sideHit == Direction.WEST) {
-        shape = UtilShape.squareVerticalZ(pos, RADIUS);
+        shape = UtilShape.squareVerticalZ(pos, radius, radius);
       }
       else { //has to be NORTHSOUTH
-        shape = UtilShape.squareVerticalX(pos, RADIUS);
+        shape = UtilShape.squareVerticalX(pos, radius, radius);
       }
       for (BlockPos posCurrent : shape) {
         //

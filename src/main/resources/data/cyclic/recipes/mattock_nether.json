@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " os",
+    " eo",
+    "e  "
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "o": {
+      "item": "minecraft:nether_star"
+    },
+    "s": {
+      "item": "cyclic:mattock"
+    }
+  },
+  "result": {
+    "item": "cyclic:mattock_nether"
+  }
+}

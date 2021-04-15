@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
+import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
@@ -10,12 +11,15 @@ import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.lothrazar.cyclic.util.UtilWorld;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.HorseInventoryScreen;
@@ -29,23 +33,56 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class EventRender {
-
-  //working example code to add text to screen
+  //  @OnlyIn(Dist.CLIENT)
   //  @SubscribeEvent
-  //  public void overlay(RenderGameOverlayEvent.Post event) {
-  //    Minecraft mc = Minecraft.getInstance();
-  //    int width = mc.getMainWindow().getScaledWidth();
-  //    int height = mc.getMainWindow().getScaledHeight();
-  //    int posX = (int) mc.player.lastTickPosX;
-  //    int posY = (int) mc.player.lastTickPosY;
-  //    int posZ = (int) mc.player.lastTickPosZ;
-  //    mc.fontRenderer.drawString(event.getMatrixStack(), "Hello world!", width / 2, height / 2, 0xFFFFFF);
-  //  }
+  //  public void drawScreen(GuiScreenEvent.DrawScreenEvent event) {
+  //    //
+  //  } 
+
+  @OnlyIn(Dist.CLIENT)
+  @SubscribeEvent
+  public void overlay(RenderGameOverlayEvent.Post event) {
+    //Build scepter feature : render selected blockstate in cross hair
+    if (event.getType() == ElementType.CROSSHAIRS) {
+      PlayerEntity player = Minecraft.getInstance().player;
+      ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
+      if (itemStackHeld.getItem() instanceof BuilderItem) {
+        //
+        BlockState targetState = BuilderActionType.getBlockState(itemStackHeld);
+        if (targetState != null) {
+          //ok still 
+          drawStack(new ItemStack(targetState.getBlock()));
+          int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
+          if (slot < 0) {
+            //nothing found
+            drawString(event.getMatrixStack(), "" + 0);
+          }
+        }
+      }
+    }
+  }
+
+  private void drawString(MatrixStack ms, String str) {
+    Minecraft mc = Minecraft.getInstance();
+    int width = mc.getMainWindow().getScaledWidth();
+    int height = mc.getMainWindow().getScaledHeight();
+    mc.fontRenderer.drawString(ms, str, width / 2 + 16, height / 2 + 12, 0xFFFFFF);
+  }
+
+  private void drawStack(ItemStack stack) {
+    Minecraft mc = Minecraft.getInstance();
+    int width = mc.getMainWindow().getScaledWidth();
+    int height = mc.getMainWindow().getScaledHeight();
+    mc.getItemRenderer().renderItemAndEffectIntoGUI(stack, width / 2, height / 2);
+  }
+
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {

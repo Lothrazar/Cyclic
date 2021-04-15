@@ -256,12 +256,12 @@ public class UtilRender {
     //render 
     Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
     //
-    double range = 6F;
-    ClientPlayerEntity player = Minecraft.getInstance().player;
-    BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, false);
-    if (world.isAirBlock(lookingAt.getPos())) {
-      return;
-    }
+    //    double range = 6F;
+    //    ClientPlayerEntity player = Minecraft.getInstance().player;
+    //    BlockRayTraceResult lookingAt = (BlockRayTraceResult) player.pick(range, 0F, false);
+    //    if (world.isAirBlock(lookingAt.getPos())) {
+    //      return;
+    //    }
     Minecraft mc = Minecraft.getInstance();
     IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
     IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);

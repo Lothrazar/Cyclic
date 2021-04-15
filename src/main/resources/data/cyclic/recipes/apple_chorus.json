@@ -3,18 +3,21 @@
   "pattern": [
     "ccc",
     "cac",
-    "ccc"
+    "csc"
   ],
   "key": {
     "a": {
       "item": "cyclic:apple_chocolate"
     },
     "c": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:chorus_fruit"
+    },
+    "s": {
+      "item": "minecraft:sugar"
     }
   },
   "result": {
-    "item": "cyclic:apple_sprout_diamond",
-    "count": 2
+    "item": "cyclic:apple_chorus",
+    "count": 1
   }
 }

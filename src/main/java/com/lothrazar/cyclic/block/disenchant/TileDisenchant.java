@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Map;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.tileentity.EnchantmentTableTileEntityRenderer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -65,6 +66,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
 
   public TileDisenchant() {
     super(TileRegistry.disenchanter);
+    EnchantmentTableTileEntityRenderer y;
   }
 
   @Override
