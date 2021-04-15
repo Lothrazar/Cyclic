@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.block.beaconpotion;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.block.beaconempty.BeamSegment;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
@@ -79,7 +78,6 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   private final List<BeamSegment> beamSegments = Lists.<BeamSegment> newArrayList();
   private String customName;
   /** Primary potion effect given by this beacon. */
-  @Nullable
   private List<PotionEffect> effects;
   private int needsRedstone;
   private int radius = MAX_RADIUS - 2;//just a mid tier default 
@@ -282,14 +280,8 @@ public class TileEntityBeaconPotion extends TileEntityBaseMachineInvo implements
   }
 
   @Override
-  @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-  }
-
-  @Nullable
-  private static Potion isBeaconEffect(int i) {
-    return Potion.getPotionById(i);
   }
 
   /**

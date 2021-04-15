@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.compat.fastbench;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.playerupgrade.crafting.InventoryPlayerExtWorkbench;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -90,11 +89,6 @@ public class ContainerFastPlayerBench extends ContainerFastBench {
       });
     }
     this.addSlotToContainer(new Slot(player.inventory, 40, 77, 62) {
-
-      @Override
-      public boolean isItemValid(@Nullable ItemStack stack) {
-        return super.isItemValid(stack);
-      }
 
       @Override
       public String getSlotTexture() {

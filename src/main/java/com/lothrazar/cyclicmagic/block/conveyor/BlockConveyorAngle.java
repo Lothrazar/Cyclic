@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.conveyor;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -106,7 +105,7 @@ public class BlockConveyorAngle extends BlockConveyor implements IHasRecipe {
 
   @Override
   @Deprecated
-  public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+  public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean p_185477_7_) {
     final double heightInc = 0.0125D;
     final double sideInc = heightInc;
     double edge = 1;

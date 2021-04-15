@@ -26,7 +26,6 @@ package com.lothrazar.cyclicmagic.command;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -83,7 +82,7 @@ public class BaseCommand implements ICommand {
   }
 
   @Override
-  public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
+  public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
     if (usernameIndex < 0) {
       return Collections.<String> emptyList();
     }

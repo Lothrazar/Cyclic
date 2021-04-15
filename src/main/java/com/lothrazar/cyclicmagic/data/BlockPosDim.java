@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.data;
 
-import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +14,6 @@ public class BlockPosDim {
   private int dimension;
   private String display;
   private Vec3d hitVec = Vec3d.ZERO;
-  @Nullable
   private EnumFacing side = null;
   private EnumFacing sidePlayerFacing = null;
 
@@ -114,7 +112,7 @@ public class BlockPosDim {
     this.x = x;
   }
 
-  public @Nullable EnumFacing getSide() {
+  public EnumFacing getSide() {
     return side;
   }
 

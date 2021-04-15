@@ -298,8 +298,6 @@ public class ClientProxy extends CommonProxy {
     }
   }
 
-  public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };
-
   @Override
   public void setPlayerReach(EntityPlayer player, int currentReach) {
     super.setPlayerReach(player, currentReach);

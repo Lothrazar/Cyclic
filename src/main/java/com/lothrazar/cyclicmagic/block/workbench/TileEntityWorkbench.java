@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.workbench;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
@@ -93,7 +92,6 @@ public class TileEntityWorkbench extends TileEntityBaseMachineInvo {
   }
 
   @Override
-  @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(getPos(), 255, getUpdateTag());
   }

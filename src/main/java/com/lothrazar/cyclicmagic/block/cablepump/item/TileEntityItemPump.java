@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.cablepump.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
@@ -272,7 +271,7 @@ public class TileEntityItemPump extends TileEntityBasePump implements ITileStack
   }
 
   @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+  public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return false;
     }

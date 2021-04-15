@@ -24,12 +24,11 @@
 package com.lothrazar.cyclicmagic.data;
 
 import java.util.List;
-import javax.annotation.Nonnull;
 import net.minecraft.util.math.BlockPos;
 
 public interface ITilePreviewToggle {
 
   public boolean isPreviewVisible();
 
-  public @Nonnull List<BlockPos> getShape();
+  public List<BlockPos> getShape();
 }

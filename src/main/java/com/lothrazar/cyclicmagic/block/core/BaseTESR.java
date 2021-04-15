@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.core;
 
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -44,9 +43,10 @@ public abstract class BaseTESR<T extends TileEntity> extends TileEntitySpecialRe
   protected IBakedModel bakedModel;
   protected String resource = null;
 
-  public BaseTESR(@Nullable Block block) {
-    if (block != null)
+  public BaseTESR(Block block) {
+    if (block != null) {
       resource = "tesr/" + block.getTranslationKey().replace("tile.", "").replace(".name", "");
+    }
   }
 
   protected void renderItem(TileEntity te, ItemStack stack, float itemHeight) {

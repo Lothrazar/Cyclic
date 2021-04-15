@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.util.List;
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.packager.TileEntityPackager;
 import net.minecraft.block.Block;
@@ -180,7 +179,7 @@ public class UtilItemStack {
     return entityItem;
   }
 
-  public static void dropItemStackMotionless(World world, BlockPos pos, @Nonnull ItemStack stack) {
+  public static void dropItemStackMotionless(World world, BlockPos pos, ItemStack stack) {
     if (stack.isEmpty()) {
       return;
     }
@@ -198,7 +197,7 @@ public class UtilItemStack {
     }
   }
 
-  public static @Nonnull String getStringForItemStack(ItemStack itemStack) {
+  public static String getStringForItemStack(ItemStack itemStack) {
     Item item = itemStack.getItem();
     return item.getRegistryName().getNamespace() + ":" + item.getRegistryName().getPath() + "/" + itemStack.getMetadata();
   }

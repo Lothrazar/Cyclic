@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.vector;
 
 import java.util.Random;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
@@ -120,7 +119,6 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IC
     return COLLISION_AABB;
   }
 
-  @Nullable
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
     return COLLISION_AABB;

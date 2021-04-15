@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.block.beaconempty;
 
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import net.minecraft.block.BlockStainedGlass;
@@ -39,7 +38,6 @@ import net.minecraft.inventory.ContainerBeacon;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -148,14 +146,8 @@ public class TileEntityBeaconPowered extends TileEntityBaseMachineInvo implement
   }
 
   @Override
-  @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-  }
-
-  @Nullable
-  private static Potion isBeaconEffect(int i) {
-    return Potion.getPotionById(i);
   }
 
   /**

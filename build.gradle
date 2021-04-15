@@ -54,6 +54,7 @@ build.dependsOn signJar
 
 //Defines basic patterns for pulling various dependencies.
 repositories {
+  maven { url 'https://www.cursemaven.com'  }
 	maven {
 		url "https://maven.mcmoddev.com"
 	}

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.capability;
 
-import javax.annotation.Nullable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -41,7 +40,6 @@ public class EnergyCapabilityItemStack implements ICapabilityProvider {
     return this.getCapability(capability, facing) != null;
   }
 
-  @Nullable
   @Override
   public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY) {

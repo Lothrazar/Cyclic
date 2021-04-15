@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tank;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.core.BlockBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,7 +24,6 @@ public class FluidHandler extends FluidHandlerItemStack implements ICapabilityPr
   }
 
   @Override
-  @Nullable
   public FluidStack getFluid() {
     NBTTagCompound tagCompound = container.getTagCompound();
     if (tagCompound == null) {

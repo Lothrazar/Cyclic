@@ -24,8 +24,6 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -111,7 +109,7 @@ public class UtilFluid {
     return (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) ? tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side) : null;
   }
 
-  public static boolean interactWithFluidHandler(@Nonnull EntityPlayer player, @Nonnull World world, @Nonnull BlockPos pos, @Nullable EnumFacing side) {
+  public static boolean interactWithFluidHandler(EntityPlayer player, World world, BlockPos pos, EnumFacing side) {
     return FluidUtil.interactWithFluidHandler(player, EnumHand.MAIN_HAND, world, pos, side);
   }
 
@@ -144,7 +142,7 @@ public class UtilFluid {
    * 
    */
   public static boolean tryFillTankFromPosition(World world, BlockPos posSide, EnumFacing sideOpp, FluidTank tankTo, final int amount,
-      boolean isWhitelist, @Nullable List<FluidStack> allowedToMove) {
+      boolean isWhitelist, List<FluidStack> allowedToMove) {
     try {
       IFluidHandler fluidFrom = FluidUtil.getFluidHandler(world, posSide, sideOpp);
       if (fluidFrom != null) {

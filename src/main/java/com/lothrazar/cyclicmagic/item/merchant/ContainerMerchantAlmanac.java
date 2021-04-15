@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.merchant;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
@@ -106,7 +105,6 @@ public class ContainerMerchantAlmanac extends ContainerBaseMachine {
   }
 
   @Override
-  @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
     return ItemStack.EMPTY;
   }

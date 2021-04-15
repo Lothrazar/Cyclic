@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.mobcapture;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -59,7 +58,7 @@ public class EntityMagicNetFull extends EntityThrowableDispensable {
     super(worldIn, x, y, z);
   }
 
-  public EntityMagicNetFull(World worldIn, @Nonnull EntityLivingBase ent, ItemStack c) {
+  public EntityMagicNetFull(World worldIn, EntityLivingBase ent, ItemStack c) {
     super(worldIn, ent);
     this.setCaptured(c);
   }

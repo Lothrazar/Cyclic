@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.tank;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
@@ -88,7 +87,7 @@ public class ItemBlockFluidTank extends ItemBlock {
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
     return new FluidHandler(stack);
   }
 

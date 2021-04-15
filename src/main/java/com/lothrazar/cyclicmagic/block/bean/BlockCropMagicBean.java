@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -104,7 +103,6 @@ public class BlockCropMagicBean extends BlockCrops implements IContent {
     return AGE;
   }
 
-  @Nullable
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return this.isMaxAge(state) ? this.getSeed() : this.getSeed();

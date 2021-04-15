@@ -25,7 +25,6 @@ package com.lothrazar.cyclicmagic.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -66,8 +65,7 @@ public class InvWrapperRestricted extends InvWrapper {
   }
 
   @Override
-  @Nonnull
-  public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+  public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
     if (canInsert(slot) == false) {
       return stack;
     }
@@ -75,7 +73,6 @@ public class InvWrapperRestricted extends InvWrapper {
   }
 
   @Override
-  @Nonnull
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
     if (canExtract(slot) == false) {
       return ItemStack.EMPTY;

@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.liquid.amber;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.block.core.BlockFluidBase;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.material.Material;
@@ -72,8 +71,7 @@ public class BlockFluidAmber extends BlockFluidBase {
   }
 
   @Override
-  @Nonnull
-  public Vec3d modifyAcceleration(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull Entity entity, @Nonnull Vec3d vec) {
+  public Vec3d modifyAcceleration(World world, BlockPos pos, Entity entity, Vec3d vec) {
     if (entity instanceof EntityLivingBase) {
       EntityLivingBase living = (EntityLivingBase) entity;
       if (living.isPotionActive(MobEffects.SLOWNESS) == false) {

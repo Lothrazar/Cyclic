@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
@@ -245,27 +244,12 @@ public class UtilWorld {
     return Math.sqrt(xDistance * xDistance + zDistance * zDistance);
   }
 
-  public static double distanceBetweenVertical(BlockPos start, BlockPos end) {
-    return Math.abs(start.getY() - end.getY());
-  }
-
   public static boolean doBlockStatesMatch(IBlockState replaced, IBlockState newToPlace) {
     return replaced.getBlock() == newToPlace.getBlock() &&
         replaced.getBlock().getMetaFromState(replaced) == newToPlace.getBlock().getMetaFromState(newToPlace);
   }
 
-  public static boolean isAirOrWater(World world, BlockPos pos) {
-    ArrayList<Block> waterBoth = new ArrayList<Block>();
-    waterBoth.add(Blocks.FLOWING_WATER);
-    waterBoth.add(Blocks.WATER);
-    if (pos == null) {
-      return false;
-    }
-    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getTranslationKey().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
-        && waterBoth.contains(world.getBlockState(pos).getBlock()));
-  }
-
-  public static BlockPos nextAirInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
+  public static BlockPos nextAirInDirection(World world, BlockPos posIn, EnumFacing facing, int max, Block blockMatch) {
     BlockPos posToPlaceAt = null;
     BlockPos posLoop = new BlockPos(posIn);
     for (int i = 0; i < max; i++) {
@@ -277,7 +261,7 @@ public class UtilWorld {
     return posToPlaceAt;
   }
 
-  public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
+  public static BlockPos nextReplaceableInDirection(World world, BlockPos posIn, EnumFacing facing, int max, Block blockMatch) {
     BlockPos posToPlaceAt = new BlockPos(posIn);
     BlockPos posLoop = new BlockPos(posIn);
     for (int i = 0; i < max; i++) {

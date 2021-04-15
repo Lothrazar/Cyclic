@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.30",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12.2-latest": "1.20.8",
-    "1.12.2-recommended": "1.20.8"
+    "1.12.2-latest": "1.20.9",
+    "1.12.2-recommended": "1.20.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -344,5 +344,6 @@
 	,"1.20.6":"Auto crafter now correctly moves container items to output slots and refills them (such as full buckets in cake recipe).  Boomerang fixed to not break certain strong blocks such as Reinforced glass from securitycraft when thrown.  Also Boomerang by default will no longer break blocks when flying (config boomerang.doesBreakBlocks to restore old way).  (trunksbomb) Fix Pattern Replicator to not cause out of bounds exception  "
 	,"1.20.7":"If a block has its fuelcost config set to zero, it now will also hide the energy display in GUI screen, and block capability connections.  New config added for energy cost to run machine I:peat_farm=64 [range: 0 ~ 500000, default: 64] in cyclicmagic.cfg file (prevously was hardcoded 64 default).  "
 	,"1.20.8":"Fixed crash introduced in 1.20.7 energy cable"
+	,"1.20.9":""
   }
 }

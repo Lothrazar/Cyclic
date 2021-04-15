@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.item.minecart;
 
 import java.util.List;
-import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -87,7 +86,7 @@ public class FakeWorld extends World {
   }
 
   @Override
-  public void addBlockEvent(@Nonnull BlockPos pos, Block blockIn, int eventID, int eventParam) {
+  public void addBlockEvent(BlockPos pos, Block blockIn, int eventID, int eventParam) {
     this.entityMinecartBase.getDisplayTile().onBlockEventReceived(this, pos, eventID, eventParam);
   }
 
@@ -101,10 +100,10 @@ public class FakeWorld extends World {
   }
 
   @Override
-  public TileEntity getTileEntity(@Nonnull BlockPos blockPos) {
+  public TileEntity getTileEntity(BlockPos blockPos) {
     if (blockPos.equals(originPos)) {
       return null;
-    } //TODO? this.getBlockWrapper().getTileEntity();
+    }
     return null;
   }
 

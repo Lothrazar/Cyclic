@@ -26,8 +26,6 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -45,23 +43,23 @@ public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
   public static Map<Block, GuideCategory> map = new HashMap<Block, GuideCategory>();
 
-  public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
+  public static void registerBlock(Block b, String name, GuideCategory cat) {
     registerBlock(b, new ItemBlock(b), name, cat);
   }
 
-  public static void registerBlock(Block b, String name, @Nullable GuideCategory cat, boolean inCreativeTab) {
+  public static void registerBlock(Block b, String name, GuideCategory cat, boolean inCreativeTab) {
     registerBlock(b, new ItemBlock(b), name, cat, inCreativeTab);
   }
 
-  public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name) {
+  public static void registerBlock(Block b, ItemBlock ib, String name) {
     BlockRegistry.registerBlock(b, ib, name, GuideCategory.BLOCK, true);
   }
 
-  public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat) {
+  public static void registerBlock(Block b, ItemBlock ib, String name, GuideCategory cat) {
     BlockRegistry.registerBlock(b, ib, name, cat, true);
   }
 
-  public static void registerBlock(@Nonnull Block b, ItemBlock ib, @Nonnull String name, @Nullable GuideCategory cat, boolean inCreativeTab) {
+  public static void registerBlock(Block b, ItemBlock ib, String name, GuideCategory cat, boolean inCreativeTab) {
     if (inCreativeTab) {
       b.setCreativeTab(ModCyclic.TAB);
     }

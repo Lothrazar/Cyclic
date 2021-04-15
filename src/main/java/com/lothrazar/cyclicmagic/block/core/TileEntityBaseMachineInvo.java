@@ -513,7 +513,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
 
   @SuppressWarnings("unchecked")
   @Override
-  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
+  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, EnumFacing facing) {
     if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return (T) invHandler;
     }

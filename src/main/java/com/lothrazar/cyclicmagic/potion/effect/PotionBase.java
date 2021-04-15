@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.potion.effect;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.entity.Entity;
@@ -48,7 +47,7 @@ public abstract class PotionBase extends Potion {
   }
 
   @Override
-  public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, EntityLivingBase entityLivingBaseIn, int amplifier, double health) {
+  public void affectEntity(Entity source, Entity indirectSource, EntityLivingBase entityLivingBaseIn, int amplifier, double health) {
     super.affectEntity(source, indirectSource, entityLivingBaseIn, amplifier, health);
   }
 

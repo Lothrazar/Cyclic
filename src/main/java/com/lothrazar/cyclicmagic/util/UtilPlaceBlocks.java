@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import com.mojang.authlib.GameProfile;
@@ -113,8 +112,7 @@ public class UtilPlaceBlocks {
   /**
    * overloaded version to disable sound
    */
-  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player,
-      BlockPos placePos, IBlockState placeState) {
+  public static boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     return placeStateSafe(world, player, placePos, placeState, false);
   }
 
@@ -128,8 +126,7 @@ public class UtilPlaceBlocks {
    * @param playSound
    * @return
    */
-  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player,
-      BlockPos placePos, IBlockState placeState, boolean playSound) {
+  public static boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState, boolean playSound) {
     if (placePos == null) {
       return false;
     }
@@ -311,7 +308,7 @@ public class UtilPlaceBlocks {
   }
 
   /* TODO: SHOULD every call to this be in a scheduled task? https://github.com/PrinceOfAmber/Cyclic/issues/143 */
-  public static boolean placeStateOverwrite(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
+  public static boolean placeStateOverwrite(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (world.setBlockToAir(placePos)) {
       return placeStateSafe(world, player, placePos, placeState);
     }
@@ -320,7 +317,7 @@ public class UtilPlaceBlocks {
 
   //(worldObj, player, message.pos, message.side);
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static boolean rotateBlockValidState(World worldObj, @Nullable EntityPlayer p, BlockPos pos, EnumFacing side) {
+  public static boolean rotateBlockValidState(World worldObj, EntityPlayer p, BlockPos pos, EnumFacing side) {
     if (pos == null || worldObj.getBlockState(pos) == null || side == null) {
       return false;
     }

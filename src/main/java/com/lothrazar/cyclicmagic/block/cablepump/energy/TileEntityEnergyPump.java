@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.cablepump.energy;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.block.cable.TileEntityCableBase;
 import com.lothrazar.cyclicmagic.block.cablepump.TileEntityBasePump;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
@@ -183,7 +182,7 @@ public class TileEntityEnergyPump extends TileEntityBasePump implements ITickabl
   }
 
   @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+  public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
     if (capability == CapabilityEnergy.ENERGY &&
         (facing == this.getCurrentFacing() || facing == this.getCurrentFacing().getOpposite())) {
       return true;

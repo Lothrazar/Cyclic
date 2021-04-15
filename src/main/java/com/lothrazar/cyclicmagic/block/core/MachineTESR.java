@@ -24,8 +24,6 @@
 package com.lothrazar.cyclicmagic.block.core;
 
 import java.util.function.Function;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -71,7 +69,6 @@ public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
     super.render(te, x, y, z, partialTicks, destroyStage, p);
   }
 
-  @Nullable
   protected IBakedModel getBakedModel() {
     // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
     if (bakedModel == null && resource != null) {
@@ -96,7 +93,7 @@ public class MachineTESR extends BaseMachineTESR<TileEntityBaseMachineInvo> {
     return bakedModel;
   }
 
-  protected void renderAnimation(@Nonnull TileEntityBaseMachineInvo te) {
+  protected void renderAnimation(TileEntityBaseMachineInvo te) {
     if (Minecraft.getMinecraft() == null
         || Minecraft.getMinecraft().getBlockRendererDispatcher() == null
         || Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer() == null

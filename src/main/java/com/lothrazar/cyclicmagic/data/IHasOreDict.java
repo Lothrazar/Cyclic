@@ -22,10 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.data;
-
-import javax.annotation.Nonnull;
-
 public interface IHasOreDict {
 
-  public @Nonnull String[] getOreDict();
+  public String[] getOreDict();
 }

@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.anvil;
 
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacing;
 import com.lothrazar.cyclicmagic.block.core.IBlockHasTESR;
@@ -61,7 +60,7 @@ public class BlockAnvilAuto extends BlockBaseFacing implements IContent, IHasRec
   public static int FUEL_COST = 0;
   private Block center;
 
-  public BlockAnvilAuto(@Nonnull Block center) {
+  public BlockAnvilAuto(Block center) {
     super(Material.ANVIL);
     this.setSoundType(SoundType.ANVIL);
     super.setGuiId(ForgeGuiHandler.GUI_INDEX_ANVIL);

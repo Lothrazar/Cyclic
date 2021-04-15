@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.dice;
 
 import java.util.Random;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseFacingOmni;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
@@ -48,7 +47,7 @@ public class BlockDice extends BlockBaseFacingOmni implements IHasRecipe, IConte
   }
 
   @Override
-  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, @Nullable EntityLivingBase placer) {
+  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing blockFaceClickedOn, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
     EnumFacing fac = getRandom(world.rand);
     return this.getDefaultState().withProperty(PROPERTYFACING, fac);
   }

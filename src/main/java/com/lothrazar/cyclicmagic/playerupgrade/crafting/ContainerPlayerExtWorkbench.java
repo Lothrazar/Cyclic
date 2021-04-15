@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.playerupgrade.crafting;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.container.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -88,12 +87,6 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     this.addSlotToContainer(new Slot(playerInv, 40, 77, 62) {
 
       @Override
-      public boolean isItemValid(@Nullable ItemStack stack) {
-        return super.isItemValid(stack);
-      }
-
-      @Override
-      @Nullable
       @SideOnly(Side.CLIENT)
       public String getSlotTexture() {
         return "minecraft:items/empty_armor_slot_shield";

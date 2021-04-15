@@ -93,17 +93,21 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     if (this.isRunning() == false) {
       return;
     }
-    collectPlayerExperience();
     if (this.collect == ActionMode.SPRAY.ordinal()) {
       updateSpray();
     }
+    else {
+      //do not collect from player while spraying, thats just a loop
+      collectPlayerExperience();
+    }
     this.timer--;
     if (this.timer <= 0) {
+      //collecting and bottling on same timer loop
       this.timer = TIMER_FULL;
       if (this.collect == ActionMode.COLLECT.ordinal()) {
         updateCollection();
       }
-      if (this.collect == ActionMode.BOTTLE.ordinal()) {
+      else if (this.collect == ActionMode.BOTTLE.ordinal()) {
         updateBottle();
       }
     }
@@ -129,14 +133,14 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
           addMeXp = 500;//drain fast if you have a large dump 
         }
         int addMeFluid = addMeXp * FLUID_PER_EXP;
-        ModCyclic.logger.log("BEFORE player  .getExpTotal() = " + UtilExperience.getExpTotal(p) + " DRAIN BY addMeXp=" + addMeXp);
+        //        ModCyclic.logger.log("BEFORE player  .getExpTotal() = " + UtilExperience.getExpTotal(p) + " DRAIN BY addMeXp=" + addMeXp);
         if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
           UtilExperience.drainExp(p, addMeXp);
           //drain from player done  NOW go with fluid
-          ModCyclic.logger.log("BEFORE .getFluidAmount() = " + tank.getFluidAmount());
+          //          ModCyclic.logger.log("BEFORE .getFluidAmount() = " + tank.getFluidAmount());
           tank.fill(new FluidStack(FluidRegistry.getFluid("xpjuice"), addMeFluid), true);
-          ModCyclic.logger.log("AFTER .getFluidAmount() = " + tank.getFluidAmount());
-          ModCyclic.logger.log("AFTER player  .getExpTotal() = " + UtilExperience.getExpTotal(p));
+          //          ModCyclic.logger.log("AFTER .getFluidAmount() = " + tank.getFluidAmount());
+          //          ModCyclic.logger.log("AFTER player  .getExpTotal() = " + UtilExperience.getExpTotal(p));
           //          ModCyclic.logger.log("drainy tank.getFluidAmount() = " + tank.getFluidAmount());
           UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
           this.markDirty();
@@ -182,17 +186,16 @@ public class TileEntityXpPylon extends TileEntityBaseMachineFluid implements ITi
     if (this.getCurrentFluidStackAmount() >= fluidToDrain) {
       FluidStack actuallyDrained = this.tank.drain(fluidToDrain, true);
       //was the correct amount drained
-      if (actuallyDrained == null || actuallyDrained.amount == 0) {
+      if (actuallyDrained == null || actuallyDrained.amount == 0 || fluidToDrain != actuallyDrained.amount) {
         return;
       }
-      if (world.isRemote == false) {
-        EntityXPOrb orb = new EntityXPOrb(world);
-        orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-        orb.xpValue = spewPerOrb;
-        orb.delayBeforeCanPickup = 0;
-        world.spawnEntity(orb);
-        orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
-      }
+      EntityXPOrb orb = new EntityXPOrb(world);
+      orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
+      ModCyclic.logger.log(actuallyDrained.amount + " = actaullyDrained; and SPEW = " + spewPerOrb);
+      orb.xpValue = spewPerOrb;
+      orb.delayBeforeCanPickup = 0;
+      world.spawnEntity(orb);
+      orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
     }
   }
 

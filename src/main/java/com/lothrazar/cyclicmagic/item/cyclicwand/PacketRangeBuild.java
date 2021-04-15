@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.cyclicwand;
 
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild;
 import com.lothrazar.cyclicmagic.playerupgrade.spell.SpellRangeBuild.PlaceType;
@@ -52,7 +51,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBuild, IMessage> {
 
   private BlockPos pos;
-  private @Nullable EnumFacing face;
+  private EnumFacing face;
   private PlaceType type;
   private Vec3d hitVec;
 
@@ -189,8 +188,7 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
     return posToPlaceAt;
   }
 
-  private void castFromServer(BlockPos pos,
-      @Nullable EnumFacing sideMouseover, EntityPlayer p) {
+  private void castFromServer(BlockPos pos, EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
     if (heldWand.isEmpty()) {

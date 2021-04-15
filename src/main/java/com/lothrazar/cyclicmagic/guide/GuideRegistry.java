@@ -25,8 +25,6 @@ package com.lothrazar.cyclicmagic.guide;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -39,18 +37,16 @@ public class GuideRegistry {
   private static List<GuideItem> items = new ArrayList<GuideItem>();
   private static final String SUFFIX = ".guide";
 
-  public static GuideItem register(Enchantment ench, @Nonnull List<String> args) {
+  public static GuideItem register(Enchantment ench, List<String> args) {
     args.add(ench.getRarity().name().toLowerCase().replace("_", " "));
     return register(GuideCategory.ENCHANT, Items.ENCHANTED_BOOK, ench.getName(), ench.getName() + SUFFIX, null, args);
   }
 
   public static GuideItem register(GuideCategory cat, Block block) {
-    //    String pageTitle = block.getUnlocalizedName() + ".name";
-    //    String text = block.getUnlocalizedName() + SUFFIX;
     return register(cat, block, null, null);
   }
 
-  public static GuideItem register(GuideCategory cat, Block block, @Nullable IRecipe recipe, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, Block block, IRecipe recipe, List<String> args) {
     String pageTitle = block.getTranslationKey() + ".name";
     String text = block.getTranslationKey() + SUFFIX;
     return register(cat, Item.getItemFromBlock(block), pageTitle, text, recipe, args);
@@ -60,7 +56,7 @@ public class GuideRegistry {
     return register(cat, item, (IRecipe) null, null);
   }
 
-  public static GuideItem register(GuideCategory cat, Item item, @Nullable IRecipe recipe, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, Item item, IRecipe recipe, List<String> args) {
     String pageTitle = item.getTranslationKey() + ".name";
     String above = item.getTranslationKey() + SUFFIX;
     return register(cat, item, pageTitle, above, recipe, args);
@@ -70,7 +66,7 @@ public class GuideRegistry {
     return register(cat, icon, title, text, null, null);
   }
 
-  public static GuideItem register(GuideCategory cat, @Nonnull Item icon, String title, String text, @Nullable IRecipe recipes, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, Item icon, String title, String text, IRecipe recipes, List<String> args) {
     //layer of seperation between guidebook api. 1 for optional include and 2 in case i ever need to split it out and 3 for easy registering
     if (args != null && args.size() > 0) {
       text = UtilChat.lang(text);

@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.magnetitem;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.block.core.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
@@ -70,7 +69,6 @@ public class BlockMagnet extends BlockBaseHasTile implements IHasRecipe, IConten
     return BOUNDS;
   }
 
-  @Nullable
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
     return NULL_AABB;
   }

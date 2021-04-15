@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.entity;
 
-import javax.annotation.Nonnull;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -36,7 +35,7 @@ public abstract class EntityThrowableDispensable extends EntityThrowable {
     super(worldIn);
   }
 
-  public EntityThrowableDispensable(World worldIn, @Nonnull EntityLivingBase ent) {
+  public EntityThrowableDispensable(World worldIn, EntityLivingBase ent) {
     super(worldIn, ent);
   }
 

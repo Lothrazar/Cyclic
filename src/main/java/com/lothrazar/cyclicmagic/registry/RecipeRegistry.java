@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -175,7 +174,7 @@ public class RecipeRegistry {
     return recipe;
   }
 
-  public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... recipeComponents) {
+  public static IRecipe addShapedRecipe(ItemStack output, Object... recipeComponents) {
     for (Object object : recipeComponents) {
       if (object instanceof String) {
         return addShapedOreRecipe(output, recipeComponents);

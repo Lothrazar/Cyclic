@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
@@ -67,7 +66,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     fakeContainer = new Container() {
 
       @Override
-      public boolean canInteractWith(@Nonnull final EntityPlayer playerIn) {
+      public boolean canInteractWith(final EntityPlayer playerIn) {
         return false;
       }
     };

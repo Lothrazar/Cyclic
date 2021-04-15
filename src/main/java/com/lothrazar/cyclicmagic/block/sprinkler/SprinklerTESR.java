@@ -24,7 +24,6 @@
 package com.lothrazar.cyclicmagic.block.sprinkler;
 
 import java.util.function.Function;
-import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.BaseTESR;
@@ -117,7 +116,6 @@ public class SprinklerTESR<T extends TileSprinkler> extends BaseTESR<T> {
    * 
    * @return
    */
-  @Nullable
   protected IBakedModel getBakedModel() {
     // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
     if (bakedModel == null && resource != null) {

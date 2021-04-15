@@ -60,26 +60,4 @@ public class ItemBlockBattery extends ItemBlock {
     //use getItem to detect max! 
     return new EnergyCapabilityItemStack(stack, BlockBattery.MAX_SMALL);
   }
-  //ICapabilityProvider doesnt exist/notprovidded
-  //oh well http://www.minecraftforge.net/forum/topic/54711-1102-forge-energy-capability-in-item-class/
-  //  @Override
-  //  public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-  //
-  //    ICapabilityProvider superProvider = super.initCapabilities(stack, nbt);
-  //    return new ICapabilityProvider() {
-  //
-  //      @Override
-  //      public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-  //        return capability == CapabilityEnergy.ENERGY ? true : superProvider.hasCapability(capability, facing);
-  //      }
-  //
-  //      @Override
-  //      public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-  //        //NULL POINTER here so idk
-  //        return capability == CapabilityEnergy.ENERGY ? (T) stack.getCapability(CapabilityEnergy.ENERGY, facing) : superProvider.getCapability(capability, facing);
-  //      }
-  //    };
-  //  }
-  //
-  //  
 }

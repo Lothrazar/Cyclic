@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
@@ -401,7 +400,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+  public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
     if (mapBlacklist != null && facing != null && mapBlacklist.get(facing)) {
       return false;//announce that capability does not exist on this side. items and all.
     }
@@ -415,7 +414,7 @@ public abstract class TileEntityCableBase extends TileEntityBaseMachineFluid imp
   }
 
   @Override
-  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
+  public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, EnumFacing facing) {
     if (this.isEnergyPipe() && capability == CapabilityEnergy.ENERGY) {
       return CapabilityEnergy.ENERGY.cast(this.energyStorage);
     }

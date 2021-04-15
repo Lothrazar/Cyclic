@@ -28,7 +28,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.playerupgrade.storage.InventoryPlayerExtended;
 import net.minecraft.entity.player.EntityPlayer;
@@ -116,7 +115,7 @@ public class UtilPlayerInventoryFilestorage {
     }
   }
 
-  public static void savePlayerItems(@Nonnull EntityPlayer player, File playerDirectory) {
+  public static void savePlayerItems(EntityPlayer player, File playerDirectory) {
     if (!player.getEntityWorld().isRemote) {
       try {
         //if original fails to save, ID version will not be overwritten! 

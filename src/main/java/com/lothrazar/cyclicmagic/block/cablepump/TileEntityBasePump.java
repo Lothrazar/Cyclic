@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.cablepump;
 
 import java.util.Map;
-import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.block.IFacingBlacklist;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineFluid;
@@ -49,7 +48,7 @@ public class TileEntityBasePump extends TileEntityBaseMachineFluid implements IF
   }
 
   @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+  public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
     if (mapBlacklist != null && facing != null && mapBlacklist.get(facing)) {
       return false;//announce that capability does not exist on this side. items and all.
     }

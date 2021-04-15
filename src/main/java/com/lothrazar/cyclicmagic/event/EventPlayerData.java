@@ -90,7 +90,8 @@ public class EventPlayerData {
    */
   @SuppressWarnings("rawtypes")
   @SubscribeEvent
-  public void onEntityConstruct(AttachCapabilitiesEvent event) {//was AttachCapabilitiesEvent.Entity in 1.11 and previous
+  public void onEntityConstruct(AttachCapabilitiesEvent event) {
+    //was AttachCapabilitiesEvent.Entity in 1.11 and previous
     if (event.getObject() instanceof EntityPlayer) {
       event.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new PlayerCapInstance());
     }

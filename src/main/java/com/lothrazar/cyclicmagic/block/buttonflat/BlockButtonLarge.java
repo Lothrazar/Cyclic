@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.buttonflat;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -70,7 +69,7 @@ public class BlockButtonLarge extends BlockButton implements IHasRecipe, IConten
   }
 
   @Override
-  protected void playClickSound(@Nullable EntityPlayer player, World worldIn, BlockPos pos) {
+  protected void playClickSound(EntityPlayer player, World worldIn, BlockPos pos) {
     worldIn.playSound(player, pos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
   }
 
