@@ -1,8 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.2.6",
-		"1.16.5-recommended": "1.2.6"
+		"1.16.5-latest": "1.2.7",
+		"1.16.5-recommended": "1.2.7"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -40,5 +40,6 @@
 		,"1.2.4":"Solidifier recipes updated to now be shapeless, so automation is easier.   Crafting machine secondary output -such as empty bottles and buckets- now goes to output slot (fix by shatulsky on github).  Charms and Auto torches can now be turned on-off with right click similar to Flippers and climbing glove, shows in tooltip.  Fixed ConcurrentModificationException error in Caving Torch.  Fix AutoCaveTorchItem to only place torches on valid surfaces (PR by  vemerion)   "
 		,"1.2.5":"Update Crafting machine again from 1.2.4, for recipes with container items (empty buckets or essence crystals).  Wireless redstone now has a heplful rendering option. "
 		,"1.2.6":"Added two new blocks that mimic other blocks Concentrated glowstone and Concentrated soundproofing.  Build scepters now render the block being used on the cross-hair.  Added Ender Apples to find structures, and apples of chorus, bone, and prismarine for other effects (and moved some textures in the rp).  "
+		,"1.2.7":"Fix server startup crash introduced in 1.2.6"
 	}
 }

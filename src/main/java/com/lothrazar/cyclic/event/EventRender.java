@@ -69,6 +69,7 @@ public class EventRender {
     }
   }
 
+  @OnlyIn(Dist.CLIENT)
   private void drawString(MatrixStack ms, String str) {
     Minecraft mc = Minecraft.getInstance();
     int width = mc.getMainWindow().getScaledWidth();
@@ -76,6 +77,7 @@ public class EventRender {
     mc.fontRenderer.drawString(ms, str, width / 2 + 16, height / 2 + 12, 0xFFFFFF);
   }
 
+  @OnlyIn(Dist.CLIENT)
   private void drawStack(ItemStack stack) {
     Minecraft mc = Minecraft.getInstance();
     int width = mc.getMainWindow().getScaledWidth();
