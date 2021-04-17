@@ -117,7 +117,6 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
 
   private int getDamage() {
-    ModCyclic.logger.info("use Diamond Val = " + this.doesPlayerDamage);
     return (this.doesPlayerDamage) ? this.damageDiamond : this.damageIron;
   }
 

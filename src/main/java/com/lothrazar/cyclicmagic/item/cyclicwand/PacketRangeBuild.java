@@ -64,7 +64,6 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
         ray.hitVec.y - MathHelper.fastFloor(ray.hitVec.y),
         ray.hitVec.z - MathHelper.fastFloor(ray.hitVec.z));
     this.type = type;
-    ModCyclic.logger.info("PacketRangeBuild" + this.type);
   }
 
   @Override
