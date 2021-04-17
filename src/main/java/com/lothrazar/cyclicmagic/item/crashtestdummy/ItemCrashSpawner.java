@@ -34,7 +34,7 @@ public class ItemCrashSpawner extends BaseTool implements IHasRecipe, IContent {
 
   @Override
   public void register() {
-    EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
+    EntityRegistry.registerModEntity(new ResourceLocation(Const.MODID, EntityRobot.NAME), EntityRobot.class, Const.MODID + "_" + EntityRobot.NAME, 1030, ModCyclic.instance, 64, 1, true);
     EntityRegistry.registerEgg(new ResourceLocation(Const.MODID, EntityRobot.NAME),
         UtilNBT.intColor(159, 255, 222), UtilNBT.intColor(222, 111, 51));
     ItemRegistry.register(this, getContentName(), GuideCategory.TRANSPORT);

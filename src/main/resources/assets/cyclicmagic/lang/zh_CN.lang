@@ -1297,7 +1297,7 @@ tile.moon_sensor.guide=会根据当前月相来发射红石信号，可能的红
 item.robot_spawner.name=计数机器人生成器
 item.robot_spawner.tooltip=[实验性特性]通过它生成一个计数机器人来测量玩家造成的伤害
 item.robot_spawner.guide=通过它来生成一个测量玩家造成伤害的计数机器人，它可以通过给予护甲来减少伤害（死亡后会掉落）。计数机器人不会攻击和移动，要移除它，你可以杀死或用计数机器人生成器再次点击它。
-entity.robot.name=计数机器人
+entity.cyclicmagic_robot.name=计数机器人
 
 tile.button_large.name=大按钮
 tile.button_large.tooltip=压力板大小的按钮

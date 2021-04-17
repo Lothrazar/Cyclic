@@ -235,12 +235,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent, IRende
       }
     }
 
-    public static int getBuildSize(ItemStack wand) {
-      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
-      int s = tags.getInteger(NBT_SIZE);
-      return s;
-    }
-
     public static void setBuildSize(ItemStack wand, int size) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       tags.setInteger(NBT_SIZE, size);
@@ -265,8 +259,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IContent, IRende
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int prev = getSlot(wand);
       int next = InventoryWand.calculateSlotCurrent(wand);
-      if (prev != next)
+      if (prev != next) {
         tags.setInteger(NBT_SLOT, next);
+      }
     }
   }
 

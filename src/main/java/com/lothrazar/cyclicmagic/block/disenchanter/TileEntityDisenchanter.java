@@ -138,6 +138,16 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       else {
         ModCyclic.logger.log("remaining overwrite enchants  " + enchants.size());
         EnchantmentHelper.setEnchantments(enchants, input);//set as removed
+        if (enchants.size() == 0) {
+          //TODO if empty
+          ModCyclic.logger.log("rNBTts  " + input.getTagCompound());
+          //          if (input.getTagCompound() != null) {
+          //            input.getTagCompound().removeTag("ench");
+          //          }
+          if (input.getTagCompound() != null && input.getTagCompound().isEmpty()) {
+            input.setTagCompound(null);
+          }
+        }
         dropStack(input);
       }
     }

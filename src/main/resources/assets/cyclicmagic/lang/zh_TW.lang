@@ -1228,7 +1228,7 @@ tile.moon_sensor.guide=會根據當前月球的位相來發射紅石信號，可
 item.robot_spawner.name=計數機器人生成器
 item.robot_spawner.tooltip=[實驗性特性]通過它生成一個計數機器人來測量玩家造成的傷害
 item.robot_spawner.guide=通過它來生成一個測量玩家造成傷害的計數機器人，它可以通過給予護甲來減少傷害（死亡後會掉落）。計數機器人不會攻擊和移動，要移除它，你可以殺死或用計數機器人生成器再次點擊它。
-entity.robot.name=計數機器人
+entity.cyclicmagic_robot.name=計數機器人
 
 tile.button_large.name=大按鈕
 tile.button_large.tooltip=壓力板大小的按鈕

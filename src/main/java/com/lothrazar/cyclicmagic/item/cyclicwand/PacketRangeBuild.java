@@ -63,8 +63,8 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
     this.hitVec = new Vec3d(ray.hitVec.x - MathHelper.fastFloor(ray.hitVec.x),
         ray.hitVec.y - MathHelper.fastFloor(ray.hitVec.y),
         ray.hitVec.z - MathHelper.fastFloor(ray.hitVec.z));
-    //    ModCyclic.logger.info("Test" + this.hitVec);
     this.type = type;
+    ModCyclic.logger.info("PacketRangeBuild" + this.type);
   }
 
   @Override
@@ -94,8 +94,9 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
-    if (face != null)
+    if (face != null) {
       tags.setInteger("face", face.ordinal());
+    }
     ByteBufUtils.writeTag(buf, tags);
   }
 
@@ -119,8 +120,7 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
     });
   }
 
-  public static BlockPos getPosToPlaceAt(EntityPlayer p, BlockPos pos, EnumFacing sideMouseover,
-      PlaceType type) {
+  public static BlockPos getPosToPlaceAt(EntityPlayer p, BlockPos pos, EnumFacing sideMouseover, PlaceType type) {
     BlockPos posToPlaceAt = null;
     EnumFacing facing = null;
     EnumFacing playerFacing = p.getHorizontalFacing();
@@ -195,6 +195,7 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
       return;
     }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
+    //******
     ItemStack TEST = InventoryWand.getFromSlot(heldWand, itemSlot);
     IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
     if (state == null || state.getBlock() == null) {
@@ -209,9 +210,10 @@ public class PacketRangeBuild implements IMessage, IMessageHandler<PacketRangeBu
     }
     BlockPos posToPlaceAt = getPosToPlaceAt(p, pos, sideMouseover, type);
     if (posToPlaceAt != null &&
-        UtilPlaceBlocks.buildStackAsPlayer(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec,
-            p.getAdjustedHorizontalFacing())) {
+        UtilPlaceBlocks.buildStackAsPlayer(world, p, posToPlaceAt, TEST, sideMouseover, this.hitVec, p.getAdjustedHorizontalFacing())) {
       UtilSound.playSoundPlaceBlock(p, posToPlaceAt, world.getBlockState(posToPlaceAt));
+      //success so advance
+      ItemCyclicWand.BuildType.setNextSlot(heldWand);
       if (!p.isCreative()) {
         InventoryWand.decrementSlot(heldWand, itemSlot);
       }

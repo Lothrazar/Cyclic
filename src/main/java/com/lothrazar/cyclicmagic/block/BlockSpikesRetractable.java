@@ -117,6 +117,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
   }
 
   private int getDamage() {
+    ModCyclic.logger.info("use Diamond Val = " + this.doesPlayerDamage);
     return (this.doesPlayerDamage) ? this.damageDiamond : this.damageIron;
   }
 
@@ -261,7 +262,7 @@ public class BlockSpikesRetractable extends BlockBase implements IHasRecipe, IHa
 
   @Override
   public void syncConfig(Configuration config) {
-    this.damageIron = config.getInt("SpikeIronDamage", Const.ConfigCategory.modpackMisc, 1, 1, 99, "Damage per second of iron spikes");
-    this.damageDiamond = config.getInt("SpikeDiamondDamage", Const.ConfigCategory.modpackMisc, 5, 1, 99, "Damage per second of iron spikes");
+    this.damageIron = config.getInt("SpikeIronDamage", Const.ConfigCategory.modpackMisc, 1, 1, 99, "Damage per second of Iron spikes");
+    this.damageDiamond = config.getInt("SpikeDiamondDamage", Const.ConfigCategory.modpackMisc, 5, 1, 99, "Damage per second of Diamond spikes");
   }
 }

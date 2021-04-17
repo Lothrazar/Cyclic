@@ -92,13 +92,14 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     StructureBuilderType buildType = getBuildTypeEnum();
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // only rebuild shapes if they are different
+    EnumFacing currFacing = this.getCurrentFacing();
     switch (buildType) {
       case CIRCLE:
         shape = UtilShape.circleHorizontal(this.getPosTarget(), this.getSize() * 2);
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
       break;
       case FACING:
-        shape = UtilShape.line(this.getPosTarget(), this.getCurrentFacing(), this.getSize());
+        shape = UtilShape.line(this.getPosTarget(), currFacing, this.getSize());
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
       break;
       case SQUARE:
@@ -119,15 +120,24 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         shape = UtilShape.sphereCup(this.getPosTarget().up(this.getSize()), this.getSize());
       break;
       case DIAGONAL:
-        shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getHeight(),
+        shape = UtilShape.diagonal(this.getPosTarget(), currFacing, this.getHeight(),
             this.getSize(), true);
       break;
       case PYRAMID:
         shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
       break;
       case CIRCLEVERTICAL:
+        //rotate around axis which one is broken fix 
         shape = UtilShape.circleVertical(this.getPosTarget(), this.getSize() * 2);
-        shape = UtilShape.repeatShapeByFacing(shape, height, this.getCurrentFacing().rotateAround(EnumFacing.Axis.Y));
+        if (height > 1) {
+          //based on NS or EW https://github.com/Lothrazar/Cyclic/issues/1622
+          if (currFacing == EnumFacing.EAST || currFacing == EnumFacing.WEST) {
+            shape = UtilShape.repeatShapeByFacing(shape, height - 1, currFacing.rotateAround(EnumFacing.Axis.Y));
+          }
+          else {
+            shape = UtilShape.repeatShapeByFacing(shape, height - 1, currFacing.rotateAround(EnumFacing.Axis.Z));
+          }
+        }
       break;
     }
     return shape;

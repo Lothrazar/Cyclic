@@ -260,12 +260,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
 
   private String getFuelAmtDisplay() {
     IEnergyStorage energy = tile.getCapability(CapabilityEnergy.ENERGY, EnumFacing.UP);
+    if (energy == null) {
+      return "";
+    }
     return energy.getEnergyStored() + "/" + energy.getMaxEnergyStored();
   }
 
   private void renderEnergyTooltip(int mouseX, int mouseY) {
     String display = getFuelAmtDisplay();
-    drawHoveringText(Arrays.asList(display), mouseX, mouseY, fontRenderer);
+    if (!display.isEmpty()) {
+      drawHoveringText(Arrays.asList(display), mouseX, mouseY, fontRenderer);
+    }
   }
 
   @Override

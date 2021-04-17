@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.component;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
@@ -18,11 +19,11 @@ public class EnergyBar {
   public EnergyBar(GuiBaseContainer p, boolean alwaysVisible) {
     parent = p;
     visible = alwaysVisible;
+    ModCyclic.logger.info("peat generator whats up " + this.visible);
   }
 
   public EnergyBar(GuiBaseContainer p, int cost) {
     parent = p;
-    //    this.cost = cost;
     visible = (cost > 0);
   }
 
