@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.harvester;
 
+import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
@@ -10,6 +11,8 @@ import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
@@ -47,6 +50,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     REDSTONE, RENDER, SIZE;
   }
 
+  private static final Set<IHarvesterOverride> HARVEST_OVERRIDES = Sets.newIdentityHashSet();
   public static final int MAX_SIZE = 12; // TODO: could be config . radius 7 translates to 15x15 area (center block + 7 each side)
   static final int MAX_ENERGY = 640000;
   public static IntValue POWERCONF;
@@ -116,8 +120,24 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     return TileEntity.INFINITE_EXTENT_AABB;
   }
 
+  public static void registerHarvestOverrider(IHarvesterOverride override) {
+    HARVEST_OVERRIDES.add(override);
+  }
+
   public static boolean tryHarvestSingle(World world, BlockPos posCurrent) {
     BlockState blockState = world.getBlockState(posCurrent);
+    // Try running override logic
+    IHarvesterOverride applicable = null;
+    for (IHarvesterOverride override : HARVEST_OVERRIDES) {
+      if(override.appliesTo(blockState, world, posCurrent)) {
+        applicable = override;
+        break;
+      }
+    }
+    if(applicable != null) {
+      return applicable.attemptHarvest(blockState, world, posCurrent, stack -> UtilItemStack.drop(world, posCurrent, blockState.getBlock()));
+    }
+    // Fall back to default logic
     if (TileHarvester.simpleBreakDrop(blockState)) {
       UtilItemStack.drop(world, posCurrent, blockState.getBlock());
       world.destroyBlock(posCurrent, false);
