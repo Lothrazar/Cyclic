@@ -64,11 +64,13 @@ public class BlockCableItem extends CableBase {
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      for (Direction d : Direction.values()) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-        UtilItemStack.dropAll(items, worldIn, pos);
+      if (tileentity != null) {
+        for (Direction d : Direction.values()) {
+          IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
+          UtilItemStack.dropAll(items, worldIn, pos);
+        }
+        worldIn.updateComparatorOutputLevel(pos, this);
       }
-      worldIn.updateComparatorOutputLevel(pos, this);
       super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
   }
