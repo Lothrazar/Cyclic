@@ -1,8 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.2.7",
-		"1.16.5-recommended": "1.2.7"
+		"1.16.5-latest": "1.2.8",
+		"1.16.5-recommended": "1.2.8"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -41,5 +41,6 @@
 		,"1.2.5":"Update Crafting machine again from 1.2.4, for recipes with container items (empty buckets or essence crystals).  Wireless redstone now has a heplful rendering option. "
 		,"1.2.6":"Added two new blocks that mimic other blocks Concentrated glowstone and Concentrated soundproofing.  Build scepters now render the block being used on the cross-hair.  Added Ender Apples to find structures, and apples of chorus, bone, and prismarine for other effects (and moved some textures in the rp).  "
 		,"1.2.7":"Fix server startup crash introduced in 1.2.6"
+		,"1.2.8":"Merged PR from Pelotrio; added com.lothrazar.cyclic.api.IHarvesterOverride by PR from InfinityRaider.   "
 	}
 }

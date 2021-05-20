@@ -40,6 +40,7 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@SuppressWarnings("deprecation")
 public class EnchantTraveller extends EnchantBase {
 
   public static final List<String> PROTS = Arrays.asList(new String[] {

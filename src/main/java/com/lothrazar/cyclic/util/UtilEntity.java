@@ -52,6 +52,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+@SuppressWarnings("deprecation")
 public class UtilEntity {
 
   private static final double ENTITY_PULL_DIST = 0.4; //closer than this and nothing happens
