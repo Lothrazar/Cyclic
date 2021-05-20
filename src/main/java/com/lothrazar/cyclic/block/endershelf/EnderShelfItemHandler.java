@@ -62,7 +62,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   }
 
   @Override
-  protected int getStackLimit(int slot, ItemStack stack) {
+  public int getStackLimit(int slot, ItemStack stack) {
     return 64;
   }
 

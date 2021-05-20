@@ -1,5 +1,6 @@
-package com.lothrazar.cyclic.block.endershelf;
+package com.lothrazar.cyclic.block.enderctrl;
 
+import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,14 +27,11 @@ public class EnderShelfHelper {
     if (iterations > MAX_ITERATIONS) {
       return null; //We tried for too long, stop now before there's an infinite loop
     }
-    if (!(state.getBlock() instanceof BlockEnderShelf)) {
-      return null; //We left the group of connected shelves, stop here.
+    if (EnderShelfHelper.isController(state)) {
+      return pos;
     }
-    if (visitedLocations.containsKey(pos)) {
-      return null; //We've already traveled here and didn't find anything, stop here.
-    }
-    if (state.getBlock() == BlockRegistry.ender_controller) {
-      return pos; //We found the Controller!
+    if (!EnderShelfHelper.isShelf(state) || visitedLocations.containsKey(pos)) {
+      return null; //not shelf. or shelf we have already seen
     }
     visitedLocations.put(pos, iterations);
     BlockPos[] possibleControllers = new BlockPos[Direction.values().length];

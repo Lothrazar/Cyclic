@@ -1,20 +1,17 @@
 package com.lothrazar.cyclic.block.endershelf;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
+import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilEnchant;
-import java.util.Map;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.StateContainer;
@@ -44,7 +41,6 @@ public class BlockEnderShelf extends BlockBase {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.ender_shelf, EnderShelfRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.ender_controller, EnderShelfRenderer::new);
   }
 
   @Override
@@ -68,21 +64,14 @@ public class BlockEnderShelf extends BlockBase {
       world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
       if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEnderShelf) {
         TileEnderShelf shelf = (TileEnderShelf) world.getTileEntity(pos);
-        BlockPos controllerPos = null;
-        TileEnderShelf controller = null;
-        if (EnderShelfHelper.isController(state)) {
-          shelf.setControllerLocation(pos);
-          controllerPos = pos;
-          controller = shelf;
-        }
-        else if (EnderShelfHelper.isShelf(state)) {
-          controllerPos = EnderShelfHelper.findConnectedController(world, pos);
+        BlockPos controllerPos = EnderShelfHelper.findConnectedController(world, pos);
+        if (controllerPos != null) {
           shelf.setControllerLocation(controllerPos);
-          controller = getTileEntity(world, controllerPos);
-        }
-        if (controllerPos != null && controller != null) {
-          Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos);
-          controller.setShelves(shelves);
+          TileEnderCtrl controller = (TileEnderCtrl) world.getTileEntity(controllerPos);
+          if (controllerPos != null && controller != null) {
+            Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos);
+            controller.setShelves(shelves);
+          }
         }
       }
     }
@@ -90,13 +79,13 @@ public class BlockEnderShelf extends BlockBase {
 
   @Override
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    boolean isCurrentlyShelf = EnderShelfHelper.isShelf(state);
-    boolean isNewShelf = EnderShelfHelper.isShelf(newState);
-    TileEnderShelf te = getTileEntity(worldIn, pos);
-    if (isCurrentlyShelf && !isNewShelf && te != null && te.getControllerLocation() != null) {
-      //trigger controller reindex
-      te.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos));
-    }
+    //    boolean isCurrentlyShelf = EnderShelfHelper.isShelf(state);
+    //    boolean isNewShelf = EnderShelfHelper.isShelf(newState);
+    //    TileEnderShelf teThisShelf = getTileEntity(worldIn, pos);
+    //    if (isCurrentlyShelf && !isNewShelf && teThisShelf != null && teThisShelf.getControllerLocation() != null) {
+    //      //trigger controller reindex
+    //      teThisShelf.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos));
+    //    }
     if (state.getBlock() != newState.getBlock()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
       if (tileentity != null) {
@@ -128,7 +117,7 @@ public class BlockEnderShelf extends BlockBase {
     int slot = getSlotFromHitVec(pos, face, hitVec);
     if (world.getTileEntity(pos) instanceof TileEnderShelf) {
       TileEnderShelf shelf = getTileEntity(world, pos);
-      if (EnderShelfHelper.isShelf(state) && hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
+      if (hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
         //
         // single shelf
         //
@@ -149,68 +138,16 @@ public class BlockEnderShelf extends BlockBase {
           });
         }
       }
-      else if (EnderShelfHelper.isController(state)) {
-        //
-        // controller
-        //
-        if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-          shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            insertIntoController(player, hand, heldItem, h);
-          });
-        }
-        return ActionResultType.CONSUME;
-      }
     }
     return ActionResultType.PASS;
   }
 
-  private void insertIntoController(PlayerEntity player, Hand hand, ItemStack heldItem, IItemHandler h) {
-    Map<Enchantment, Integer> allofthem = EnchantmentHelper.getEnchantments(heldItem);
-    if (allofthem.size() == 1) {
-      ItemStack insertResult = h.insertItem(0, heldItem, false);
-      player.setHeldItem(hand, insertResult);
-    }
-    else {
-      //loop and make books of each
-      Enchantment[] flatten = allofthem.keySet().toArray(new Enchantment[0]);
-      for (Enchantment entry : flatten) {
-        // try it
-        ItemStack fake = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantedBookItem.addEnchantment(fake, new EnchantmentData(entry, allofthem.get(entry)));
-        ItemStack insertResult = h.insertItem(0, fake, false);
-        if (insertResult.isEmpty()) {
-          //ok it worked, so REMOVE that from the og set
-          allofthem.remove(entry);
-        }
-      }
-      //now set it back into the book
-      if (allofthem.isEmpty()) {
-        player.setHeldItem(hand, ItemStack.EMPTY);
-      }
-      else {
-        //        apply all to the book and give the book back
-        ItemStack newFake = new ItemStack(Items.ENCHANTED_BOOK);
-        for (Enchantment newentry : allofthem.keySet()) {
-          EnchantedBookItem.addEnchantment(newFake, new EnchantmentData(newentry, allofthem.get(newentry)));
-        }
-        player.setHeldItem(hand, newFake);
-      }
-    }
-  }
-
   private int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {
     double normalizedY = hitVec.getY() - pos.getY();
-    //    double normalizedX = hitVec.getX() - pos.getX();
-    //    if (face == Direction.EAST || face == Direction.WEST)
-    //      normalizedX = hitVec.getZ() - pos.getZ();
     return (int) Math.floor(normalizedY / 0.20);
   }
 
   public TileEnderShelf getTileEntity(World world, BlockPos pos) {
-    if (pos == null) {
-      return null;
-    }
-    BlockState state = world.getBlockState(pos);
-    return EnderShelfHelper.isShelf(state) || EnderShelfHelper.isController(state) ? (TileEnderShelf) world.getTileEntity(pos) : null;
+    return (TileEnderShelf) world.getTileEntity(pos);
   }
 }

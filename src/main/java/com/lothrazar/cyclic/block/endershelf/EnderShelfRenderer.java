@@ -28,30 +28,30 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
       IRenderTypeBuffer buffer, int light, int overlayLight) {
     Direction side = tile.getCurrentFacing();
     UtilRenderText.alignRendering(ms, side);
-    if (EnderShelfHelper.isShelf(tile.getBlockState())) {
-      tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-        for (int i = 0; i < h.getSlots(); i++) {
-          renderSlot(i, h.getStackInSlot(i), ms, buffer, light);
-        }
-      });
-    }
-    else { // if (EnderShelfHelper.isController(tile.getBlockState())) {
-      //TODO: this branch never fires
-      EnderControllerItemHandler h = EnderShelfHelper.getControllerHandler(tile);
-      if (h != null) {
-        int count = tile.getShelves().size();
-        String shelves = count == 1 ? " shelf" : " shelves"; // TODO lang entry
-        ms.push();
-        FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
-        double x = 1.5F / 16F;
-        double y = 14 / 16F;
-        float scale = 0.1F;
-        ms.translate(x, y, 1 - OFFSET);
-        ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-        fontRenderer.renderString(count + shelves, 0, 0, 421025, false, ms.getLast().getMatrix(), buffer, false, 0, light);
-        ms.pop();
+    //    if (EnderShelfHelper.isShelf(tile.getBlockState())) {
+    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      for (int i = 0; i < h.getSlots(); i++) {
+        renderSlot(i, h.getStackInSlot(i), ms, buffer, light);
       }
-    }
+    });
+    //    }
+    //    else { // if (EnderShelfHelper.isController(tile.getBlockState())) {
+    //      //TODO: this branch never fires
+    //      EnderControllerItemHandler h = EnderShelfHelper.getControllerHandler(tile);
+    //      if (h != null) {
+    //        int count = tile.getShelves().size();
+    //        String shelves = count == 1 ? " shelf" : " shelves"; // TODO lang entry
+    //        ms.push();
+    //        FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
+    //        double x = 1.5F / 16F;
+    //        double y = 14 / 16F;
+    //        float scale = 0.1F;
+    //        ms.translate(x, y, 1 - OFFSET);
+    //        ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
+    //        fontRenderer.renderString(count + shelves, 0, 0, 421025, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+    //        ms.pop();
+    //      }
+    //    }
   }
 
   private void renderSlot(int slot, ItemStack itemStack, MatrixStack ms, IRenderTypeBuffer buffer, int light) {

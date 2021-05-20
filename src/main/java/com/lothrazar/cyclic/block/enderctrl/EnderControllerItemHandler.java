@@ -1,5 +1,7 @@
-package com.lothrazar.cyclic.block.endershelf;
+package com.lothrazar.cyclic.block.enderctrl;
 
+import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.util.UtilEnchant;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +13,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class EnderControllerItemHandler extends ItemStackHandler {
 
-  private final TileEnderShelf controller;
+  //each shelf has 5 rows
+  static final int SLOTS_PER_SHELF = 5;
+  private final TileEnderCtrl controller;
 
-  public EnderControllerItemHandler(TileEnderShelf controller) {
+  public EnderControllerItemHandler(TileEnderCtrl controller) {
     super(1);
     this.controller = controller;
   }
@@ -56,7 +60,7 @@ public class EnderControllerItemHandler extends ItemStackHandler {
       if (slotStack.isEmpty()) {
         emptySlots.add(i);
       }
-      else if (UtilEnchant.doBookEnchantmentsMatch(stack, slotStack) && slotStack.getCount() != h.getStackLimit(i, stack)) {
+      else if (slotStack.getCount() < h.getStackLimit(i, stack) && UtilEnchant.doBookEnchantmentsMatch(stack, slotStack)) {
         return h.insertItem(i, stack, simulate);
       }
     }
@@ -65,9 +69,6 @@ public class EnderControllerItemHandler extends ItemStackHandler {
     }
     return stack;
   }
-
-  //each shelf has 5 rows
-  static final int SLOTS_PER_SHELF = 5;
 
   @Override
   public int getSlots() {

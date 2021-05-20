@@ -23,6 +23,7 @@ import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
 import com.lothrazar.cyclic.block.dice.TileDice;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
+import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.eye.TileEye;
@@ -224,7 +225,7 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
   public static TileEntityType<TileEnderShelf> ender_shelf;
   @ObjectHolder(ModCyclic.MODID + ":ender_controller")
-  public static TileEntityType<TileEnderShelf> ender_controller;
+  public static TileEntityType<TileEnderCtrl> ender_controller;
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static TileEntityType<TileLaser> laser;
   @ObjectHolder(ModCyclic.MODID + ":workbench")
