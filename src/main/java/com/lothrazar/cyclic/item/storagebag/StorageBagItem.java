@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -52,7 +53,7 @@ public class StorageBagItem extends ItemBase {
 
     @Override
     public String getString() {
-      return this.name().toLowerCase();
+      return this.name().toLowerCase(Locale.ENGLISH);
     }
   }
 
@@ -64,7 +65,7 @@ public class StorageBagItem extends ItemBase {
 
     @Override
     public String getString() {
-      return this.name().toLowerCase();
+      return this.name().toLowerCase(Locale.ENGLISH);
     }
   }
 
@@ -76,7 +77,7 @@ public class StorageBagItem extends ItemBase {
 
     @Override
     public String getString() {
-      return this.name().toLowerCase();
+      return this.name().toLowerCase(Locale.ENGLISH);
     }
   }
 

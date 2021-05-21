@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.conveyor;
 
+import java.util.Locale;
 import net.minecraft.util.IStringSerializable;
 
 public enum ConveyorSpeed implements IStringSerializable {
@@ -8,7 +9,7 @@ public enum ConveyorSpeed implements IStringSerializable {
 
   @Override
   public String getString() {
-    return this.name().toLowerCase();
+    return this.name().toLowerCase(Locale.ENGLISH);
   }
 
   public ConveyorSpeed getNext() {

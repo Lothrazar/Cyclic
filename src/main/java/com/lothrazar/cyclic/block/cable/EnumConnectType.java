@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.cable;
 
+import java.util.Locale;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumConnectType implements IStringSerializable {
@@ -29,6 +30,6 @@ public enum EnumConnectType implements IStringSerializable {
 
   @Override
   public String getString() {
-    return name().toLowerCase();
+    return this.name().toLowerCase(Locale.ENGLISH);
   }
 }

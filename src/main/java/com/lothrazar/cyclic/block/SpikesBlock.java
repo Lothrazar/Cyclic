@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.Locale;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
@@ -18,7 +17,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -33,16 +31,6 @@ public class SpikesBlock extends BlockBase {
   private static final double CURSE_CHANCE = 0.2;
   private static final int CURSE_TIME = 8 * 20;
   private static final int FIRE_TIME = 20;
-
-  public static enum EnumSpikeType implements IStringSerializable {
-
-    PLAIN, FIRE, CURSE;
-
-    @Override
-    public String getString() {
-      return this.name().toLowerCase(Locale.ENGLISH);
-    }
-  }
 
   public static final BooleanProperty ACTIVATED = BooleanProperty.create("lit");
   private static final float LARGE = 0.9375F;

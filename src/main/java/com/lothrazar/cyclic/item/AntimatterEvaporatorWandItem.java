@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -40,7 +41,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
 
     @Override
     public String getString() {
-      return this.name().toLowerCase();
+      return this.name().toLowerCase(Locale.ENGLISH);
     }
 
     public Mode getNext() {

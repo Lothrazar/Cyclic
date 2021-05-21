@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.cable;
 
+import java.util.Locale;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
 
@@ -9,7 +10,7 @@ public enum DirectionNullable implements IStringSerializable {
 
   @Override
   public String getString() {
-    return this.name().toLowerCase();
+    return this.name().toLowerCase(Locale.ENGLISH);
   }
 
   public DirectionNullable toggle(Direction d) {
