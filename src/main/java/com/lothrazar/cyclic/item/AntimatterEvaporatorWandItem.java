@@ -2,19 +2,21 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicBoolean;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
@@ -32,10 +34,8 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
   private static final int SIZE = 4;
   private static final String NBT_MODE = "mode";
   public static final int COOLDOWN = 15;
-  private static final List<Fluid> VALID_WATER = new ArrayList<>();
-  private static final List<Fluid> VALID_LAVA = new ArrayList<>();
 
-  public enum Mode implements IStringSerializable {
+  public enum EvaporateMode implements IStringSerializable {
 
     WATER, LAVA, GENERIC;
 
@@ -44,7 +44,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       return this.name().toLowerCase(Locale.ENGLISH);
     }
 
-    public Mode getNext() {
+    public EvaporateMode getNext() {
       switch (this) {
         case WATER:
           return LAVA;
@@ -59,10 +59,6 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
 
   public AntimatterEvaporatorWandItem(Properties properties) {
     super(properties);
-    VALID_WATER.add(Fluids.WATER);
-    VALID_WATER.add(Fluids.FLOWING_WATER);
-    VALID_LAVA.add(Fluids.LAVA);
-    VALID_LAVA.add(Fluids.FLOWING_LAVA);
   }
 
   @Override
@@ -70,29 +66,46 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     BlockPos pos = context.getPos();
     World world = context.getWorld();
     Direction face = context.getFace();
-    Mode fluidMode = Mode.values()[context.getItem().getOrCreateTag().getInt(NBT_MODE)];
+    ItemStack itemstack = context.getItem();
+    EvaporateMode fluidMode = EvaporateMode.values()[itemstack.getOrCreateTag().getInt(NBT_MODE)];
     List<BlockPos> area = UtilShape.cubeSquareBase(pos.offset(face), SIZE, 1);
-    List<Fluid> theList = fluidMode == Mode.WATER ? VALID_WATER : fluidMode == Mode.LAVA ? VALID_LAVA : null;
-    AtomicBoolean removed = new AtomicBoolean(false);
-    if (theList != null) {
-      area.stream().filter(pos2 -> theList.contains(world.getFluidState(pos2).getFluid())).forEach(pos3 -> {
-        removeLiquid(world, pos3);
-        removed.set(true);
-      });
+    //    AtomicBoolean removed = new AtomicBoolean(false);
+    switch (fluidMode) {
+      case GENERIC:
+      break;
+      case LAVA:
+      break;
+      case WATER:
+      break;
+      default:
+      break;
     }
-    else {
-      area.stream().filter(pos2 -> !world.getFluidState(pos2).isEmpty()).forEach(pos3 -> {
-        removeLiquid(world, pos3);
-        removed.set(true);
-      });
+    int countSuccess = 0;
+    boolean tryHere = false;
+    for (BlockPos posTarget : area) {
+      BlockState blockHere = world.getBlockState(posTarget);
+      FluidState fluidHere = blockHere.getFluidState();
+      if (fluidHere == null) {
+        continue;
+      }
+      tryHere = false;
+      if (fluidMode == EvaporateMode.GENERIC) {
+        tryHere = true;
+      }
+      else if (fluidMode == EvaporateMode.WATER && fluidHere.getFluid().isIn(FluidTags.WATER)) {
+        tryHere = true;
+      }
+      else if (fluidMode == EvaporateMode.LAVA && fluidHere.getFluid().isIn(FluidTags.LAVA)) {
+        tryHere = true;
+      }
+      if (tryHere && removeLiquid(world, blockHere, posTarget)) {
+        countSuccess++;
+      }
     }
-    //
-    if (removed.get()) {
+    if (countSuccess > 0) {
       PlayerEntity player = context.getPlayer();
       player.swingArm(context.getHand());
-      context.getItem().damageItem(1, player, (e) -> {
-        // TODO : test break
-      });
+      UtilItemStack.damageItem(player, itemstack);
       if (world.isRemote) {
         UtilSound.playSound(pos, SoundEvents.ITEM_BUCKET_FILL);
       }
@@ -100,8 +113,19 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     return ActionResultType.SUCCESS;
   }
 
-  private void removeLiquid(World world, BlockPos pos) {
-    world.setBlockState(pos, Blocks.AIR.getDefaultState(), 18);
+  private boolean removeLiquid(World world, BlockState blockHere, BlockPos pos) {
+    if (blockHere.getBlock() instanceof IBucketPickupHandler) {
+      IBucketPickupHandler block = (IBucketPickupHandler) blockHere.getBlock();
+      return block.pickupFluid(world, pos, blockHere) != null;
+    }
+    else if (blockHere.hasProperty(BlockStateProperties.WATERLOGGED)) {
+      // un-water log
+      return world.setBlockState(pos, blockHere.with(BlockStateProperties.WATERLOGGED, false), 18);
+    }
+    else {
+      //ok just nuke it
+      return world.setBlockState(pos, Blocks.AIR.getDefaultState(), 18);
+    }
   }
 
   @Override
@@ -113,12 +137,12 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
 
   @Override
   public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-    stack.getOrCreateTag().putInt(NBT_MODE, Mode.WATER.ordinal());
+    stack.getOrCreateTag().putInt(NBT_MODE, EvaporateMode.WATER.ordinal());
     super.onCreated(stack, worldIn, playerIn);
   }
 
   private static TranslationTextComponent getModeTooltip(ItemStack stack) {
-    Mode mode = Mode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
+    EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
     return new TranslationTextComponent("item.cyclic.antimatter_wand.tooltip0",
         new TranslationTextComponent(String.format("item.cyclic.antimatter_wand.mode.%s",
             mode.getString())));
@@ -128,7 +152,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
       return;
     }
-    Mode mode = Mode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
+    EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
     stack.getOrCreateTag().putInt(NBT_MODE, mode.getNext().ordinal());
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     if (player.world.isRemote) {
