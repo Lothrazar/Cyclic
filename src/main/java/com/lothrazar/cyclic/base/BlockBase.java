@@ -12,10 +12,12 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -59,12 +61,33 @@ public abstract class BlockBase extends Block {
 
   @SuppressWarnings("deprecation")
   @Override
+  public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+    if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+      Direction oldDir = state.get(BlockStateProperties.HORIZONTAL_FACING);
+      Direction newDir = direction.rotate(oldDir);
+      //still rotate on axis, if its valid
+      if (newDir != Direction.UP && newDir != Direction.DOWN) {
+        return state.with(BlockStateProperties.HORIZONTAL_FACING, newDir);
+      }
+    }
+    if (state.hasProperty(BlockStateProperties.FACING)) {
+      Direction oldDir = state.get(BlockStateProperties.FACING);
+      Direction newDir = direction.rotate(oldDir);
+      // rotate state on axis dir
+      return state.with(BlockStateProperties.FACING, newDir);
+    }
+    // default doesnt do much
+    BlockState newState = state.rotate(direction);
+    return newState;
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (this.hasGui) {
       if (!world.isRemote) {
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof INamedContainerProvider) {
-          //          tileEntity.markDirty();
           NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
         }
         else {
