@@ -125,7 +125,9 @@ public class PacketCraftAction extends PacketBase {
     for (int slot : slotTargest) {
       //remove everything and reset
       int size = (slot == foundSlot) ? avg + remainder : avg;
-      c.getCraftMatrix().setInventorySlotContents(slot, new ItemStack(biggest.getItem(), size));
+      ItemStack copy = biggest.copy();
+      copy.setCount(size);
+      c.getCraftMatrix().setInventorySlotContents(slot, copy);
     }
   }
 }
