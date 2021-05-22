@@ -53,7 +53,7 @@ public class FluidBar {
     this.width = width;
   }
 
-  //  @SuppressWarnings("deprecation")
+  @SuppressWarnings("deprecation")
   public void draw(MatrixStack ms, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.FLUID_WIDGET);
@@ -76,7 +76,7 @@ public class FluidBar {
     }
     drawTiledSprite(x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
     if (fluid.getFluid() == Fluids.WATER) {
-      RenderSystem.color4f(1, 1, 1, 1);
+      RenderSystem.color4f(1, 1, 1, 1); //un-apply the water filter
     }
   }
 

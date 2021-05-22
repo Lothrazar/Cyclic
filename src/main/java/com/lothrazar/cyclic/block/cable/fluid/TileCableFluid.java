@@ -76,15 +76,14 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
           sideHandler.fill(new FluidStack(fluid.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
-      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
-          && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
-            //
-            targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
-            //for waterlogged it is hardcoded to water
-            if (world.setBlockState(target, targetState)) {
-              sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-            }
-          }
+      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
+        //
+        targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
+        //for waterlogged it is hardcoded to water
+        if (world.setBlockState(target, targetState)) {
+          sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
+      }
     }
   }
 

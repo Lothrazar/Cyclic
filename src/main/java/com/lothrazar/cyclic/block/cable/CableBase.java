@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.cable;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.BlockRegistry;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -140,23 +139,15 @@ public abstract class CableBase extends BlockBase {
       // INVENTORY// NONE -> CABLE(extract) -> BLOCKED -> and back to none again
       switch (status) {
         case BLOCKED:
-          //unblock it
-          //then updatePostPlacement 
+          //unblock it go back to none (dont know where connection would be if any)
           world.setBlockState(pos, state.with(prop, EnumConnectType.NONE));
         break;
-        case INVENTORY:
-        case NONE:
-          //actually power wont extract, at least not currently
-          if (state.getBlock() == BlockRegistry.energy_pipe) {
-            //skip extract go to blocked
-            world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
-          }
-          else {
-            world.setBlockState(pos, state.with(prop, EnumConnectType.CABLE));
-          }
+        case INVENTORY: // inventory connection or
+        case NONE: // no connection
+          world.setBlockState(pos, state.with(prop, EnumConnectType.CABLE)); //try to extract
         break;
-        case CABLE:
-          //extract
+        case CABLE: // extract
+          // extract to blocked
           world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
         break;
       }

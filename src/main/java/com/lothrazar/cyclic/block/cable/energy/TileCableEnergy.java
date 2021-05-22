@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.cable.energy;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
@@ -13,7 +14,9 @@ import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -21,7 +24,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergy extends TileEntityBase implements ITickableTileEntity {
 
-  private static final int MAX = 8000;
+  private static final int MAX = 32000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
@@ -38,6 +41,35 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     this.syncEnergy();
     this.tickDownIncomingPowerFaces();
     this.tickCableFlow();
+    //extract mode conditionally
+    for (Direction side : Direction.values()) {
+      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+      if (connection.isExtraction()) {
+        tryExtract(side);
+      }
+    }
+  }
+
+  @SuppressWarnings("unused")
+  private void tryExtract(Direction extractSide) {
+    if (extractSide == null) {
+      return;
+    }
+    BlockPos posTarget = this.pos.offset(extractSide);
+    TileEntity tile = world.getTileEntity(posTarget);
+    if (tile != null) {
+      IEnergyStorage itemHandlerFrom = tile.getCapability(CapabilityEnergy.ENERGY, extractSide.getOpposite()).orElse(null);
+      if (itemHandlerFrom != null) {
+        //ok go
+        //
+        int extractSim = itemHandlerFrom.extractEnergy(MAX, true);
+        if (extractSim > 0 && energy.receiveEnergy(extractSim, true) > 0) {
+          //actually extract energy for real, whatever it accepted 
+          int actuallyEx = itemHandlerFrom.extractEnergy(energy.receiveEnergy(extractSim, false), false);
+          //          ModCyclic.LOGGER.info("TEX from to me" + actuallyEx);
+        }
+      }
+    }
   }
 
   private void tickCableFlow() {
