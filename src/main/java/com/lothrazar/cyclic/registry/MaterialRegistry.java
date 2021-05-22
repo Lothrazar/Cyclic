@@ -33,6 +33,7 @@ public class MaterialRegistry {
     private static final String EMERALDID = ModCyclic.MODID + ":emerald";
     private static final String CRYSTALID = ModCyclic.MODID + ":crystal";
     private static final String GLOWINGID = ModCyclic.MODID + ":glowing";
+    // public static IntValue DURABILITY;
     public static final IArmorMaterial EMERALD = new IArmorMaterial() {
 
       @Override

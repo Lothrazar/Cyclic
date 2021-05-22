@@ -7,14 +7,13 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEnderShelf extends TileEntityBase {
 
-  EnderShelfItemHandler invShelf = new EnderShelfItemHandler(this);
-  private final LazyOptional<EnderShelfItemHandler> inventoryCap = LazyOptional.of(() -> invShelf);
+  final EnderShelfItemHandler inventory = new EnderShelfItemHandler(this);
+  private final LazyOptional<EnderShelfItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private BlockPos controllerLocation;
 
   public TileEnderShelf() {
@@ -48,16 +47,13 @@ public class TileEnderShelf extends TileEntityBase {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventoryCap.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    inventoryCap.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 }

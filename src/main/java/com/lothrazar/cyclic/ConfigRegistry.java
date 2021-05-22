@@ -218,6 +218,13 @@ public class ConfigRegistry {
     CFG.pop(); //cost
     CFG.pop(); //energy
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
+    CFG.push("emerald");
+    // MaterialRegistry.ArmorMats.DURABILITY = CFG.comment("durability").defineInRange("armor", 128, 16, 256);
+    CFG.pop();
+    //
+    //
+    //
+    //
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");
     TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 128, 16, 256);

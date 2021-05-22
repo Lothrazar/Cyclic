@@ -2,13 +2,13 @@ package com.lothrazar.cyclic.block.crate;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -20,6 +20,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockCrate extends BlockBase {
+
+  private static final String NBTCRATE = "crate";
 
   public BlockCrate(Properties properties) {
     super(properties.hardnessAndResistance(1.1F, 3600000.0F).sound(SoundType.STONE));
@@ -58,12 +60,12 @@ public class BlockCrate extends BlockBase {
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
-    if (stack.getTag() != null && tileentity instanceof TileCrate && stack.getTag().contains("crate0")) {
+    if (stack.getTag() != null && tileentity instanceof TileCrate && stack.getTag().contains(NBTCRATE + "0")) {
       //to tile from tag
       TileCrate crate = (TileCrate) tileentity;
       for (int i = 0; i < crate.inventory.getSlots(); i++) {
         //
-        ItemStack crateStack = ItemStack.read(stack.getTag().getCompound("crate" + i));
+        ItemStack crateStack = ItemStack.read(stack.getTag().getCompound(NBTCRATE + i));
         crate.inventory.setStackInSlot(i, crateStack);
       }
     }
@@ -79,11 +81,9 @@ public class BlockCrate extends BlockBase {
       for (int i = 0; i < crate.inventory.getSlots(); i++) {
         CompoundNBT nbt = new CompoundNBT();
         crate.inventory.getStackInSlot(i).write(nbt);
-        newStack.getOrCreateTag().put("crate" + i, nbt);
+        newStack.getOrCreateTag().put(NBTCRATE + i, nbt);
       }
     }
-    if (world.isRemote == false) {
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), newStack));
-    }
+    UtilItemStack.drop(world, pos, newStack);
   }
 }
