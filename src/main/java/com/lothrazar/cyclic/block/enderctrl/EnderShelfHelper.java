@@ -16,7 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class EnderShelfHelper {
 
-  public static final int MAX_ITERATIONS = 24; // TODO config entry
+  public static final int MAX_ITERATIONS = 64; // TODO config entry
 
   public static BlockPos findConnectedController(World world, BlockPos shelfPos) {
     return recursivelyFindConnectedController(world, shelfPos, new HashMap<BlockPos, Integer>(), 0);
