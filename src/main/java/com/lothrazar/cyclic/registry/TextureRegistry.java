@@ -17,6 +17,7 @@ public class TextureRegistry {
   public static final ResourceLocation SHAPE_STASH = new ResourceLocation(ModCyclic.MODID, "textures/gui/shape_stash.png");
   public static final ResourceLocation SLOT_LARGE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_large.png");
   public static final ResourceLocation SLOT_BOOK = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_book.png");
+  public static final ResourceLocation SLOT_BUCKET = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_bucket.png");
   public static final ResourceLocation SLOT_GPS = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_gps.png");
   public static final ResourceLocation SLOT_FILTER = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_filter.png");
   public static final ResourceLocation SLOT_SHAPE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_shape.png");

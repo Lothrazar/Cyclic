@@ -56,8 +56,12 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     for (int i = 0; i < 9; i++) {
       int y = 31;
-      this.drawSlot(ms, 7 + i * Const.SQ, y);
-      //      this.drawSlot(ms, 7 + i * Const.SQ, y + Const.SQ);
+      if (i == FilterCardItem.SLOT_FLUID) {
+        this.drawSlot(ms, 7 + i * Const.SQ, y, TextureRegistry.SLOT_BUCKET, 18);
+      }
+      else {
+        this.drawSlot(ms, 7 + i * Const.SQ, y);
+      }
     }
   }
 }

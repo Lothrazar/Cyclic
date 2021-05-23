@@ -4,9 +4,9 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
+import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -91,56 +91,21 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
             continue;
           }
           // and then pull 
-          if (itemTarget.isEmpty() == false) {
-            if (!this.filterAllowsExtract(itemTarget)) {
-              continue;
-            }
-            itemTarget = itemHandlerFrom.extractItem(i, 64, false);
-            ItemStack result = sideHandler.insertItem(0, itemTarget.copy(), false);
-            itemTarget.setCount(result.getCount());
-            //            this.setInventorySlotContents(importFromSide.ordinal(), pulled.copy());
-            return;
+          if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), itemTarget)) {
+            continue;
           }
+          itemTarget = itemHandlerFrom.extractItem(i, 64, false);
+          ItemStack result = sideHandler.insertItem(0, itemTarget.copy(), false);
+          itemTarget.setCount(result.getCount());
+          return;
         }
       }
-    }
-  }
-
-  private boolean filterAllowsExtract(ItemStack itemTarget) {
-    //does my filter allow extract
-    boolean isEmpty = false;
-    boolean isMatchingList = false;
-    IItemHandler myFilter = filter.getStackInSlot(0).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-    boolean isIgnoreList = filter.getStackInSlot(0).getOrCreateTag().getBoolean("filter");
-    if (myFilter != null) {
-      for (int i = 0; i < myFilter.getSlots(); i++) {
-        ItemStack filterPtr = myFilter.getStackInSlot(i);
-        if (!filterPtr.isEmpty()) {
-          isEmpty = false; //at least one thing is in the filter 
-          //does it match
-          if (UtilItemStack.matches(itemTarget, filterPtr)) {
-            isMatchingList = true;
-            break;
-          }
-        }
-      }
-    }
-    //    ModCyclic.LOGGER.info(isMatchingList + "=isMatchingList " + itemTarget);
-    if (isIgnoreList) {
-      // we are allowed to filter if it doesnt match
-      return !isMatchingList;
-    }
-    else {
-      //its an Allow list. filter if in the list
-      //but if its empty, allow just lets everything
-      return isEmpty || isMatchingList;
     }
   }
 
   private void normalFlow() {
     IItemHandler sideHandler;
     Direction outgoingSide;
-    //  Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
     for (Direction incomingSide : Direction.values()) {
       sideHandler = flow.get(incomingSide).orElse(null);
       //thise items came from that

@@ -10,7 +10,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class CapabilityProviderFilterCard implements ICapabilitySerializable<CompoundNBT> {
 
-  public boolean ignoreList = false; //false means allowList
   public static final int SLOTS = 9;
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(SLOTS) {
     //    @Override
