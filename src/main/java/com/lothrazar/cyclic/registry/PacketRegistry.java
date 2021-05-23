@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.net.PacketEnergySync;
+import com.lothrazar.cyclic.net.PacketFilterCard;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemStackNBT;
@@ -53,6 +54,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketTileInventory.class, PacketTileInventory::encode, PacketTileInventory::decode, PacketTileInventory::handle);
     INSTANCE.registerMessage(id++, PacketItemStackNBT.class, PacketItemStackNBT::encode, PacketItemStackNBT::decode, PacketItemStackNBT::handle);
     INSTANCE.registerMessage(id++, PacketCraftAction.class, PacketCraftAction::encode, PacketCraftAction::decode, PacketCraftAction::handle);
+    INSTANCE.registerMessage(id++, PacketFilterCard.class, PacketFilterCard::encode, PacketFilterCard::decode, PacketFilterCard::handle);
   }
 
   public static void sendToAllClients(World world, PacketBase packet) {

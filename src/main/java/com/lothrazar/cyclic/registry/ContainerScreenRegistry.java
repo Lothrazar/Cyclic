@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.block.anvilmagma.ContainerAnvilMagma;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.beaconpotion.ContainerPotion;
 import com.lothrazar.cyclic.block.breaker.ContainerBreaker;
+import com.lothrazar.cyclic.block.cable.item.ContainerCableItem;
 import com.lothrazar.cyclic.block.clock.ContainerClock;
 import com.lothrazar.cyclic.block.collectfluid.ContainerFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.ContainerItemCollector;
@@ -37,6 +38,7 @@ import com.lothrazar.cyclic.block.wirelessredstone.ContainerTransmit;
 import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
+import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -157,14 +159,22 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerLaser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("laser"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCableItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("item_pipe"));
     //
     //  Items with containers
     //
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new StorageBagContainer(windowId, inv, inv.player))).setRegistryName("storage_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":filter_data")
+  public static ContainerType<ContainerFilterCard> filter_data;
+  @ObjectHolder(ModCyclic.MODID + ":item_pipe")
+  public static ContainerType<ContainerCableItem> item_pipe;
   @ObjectHolder(ModCyclic.MODID + ":laser")
   public static ContainerType<ContainerLaser> laser;
   @ObjectHolder(ModCyclic.MODID + ":fisher")

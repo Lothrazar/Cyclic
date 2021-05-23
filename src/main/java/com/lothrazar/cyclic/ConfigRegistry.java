@@ -218,9 +218,6 @@ public class ConfigRegistry {
     CFG.pop(); //cost
     CFG.pop(); //energy
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
-    CFG.push("emerald");
-    // MaterialRegistry.ArmorMats.DURABILITY = CFG.comment("durability").defineInRange("armor", 128, 16, 256);
-    CFG.pop();
     //
     //
     //

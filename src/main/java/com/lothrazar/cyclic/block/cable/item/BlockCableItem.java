@@ -3,11 +3,13 @@ package com.lothrazar.cyclic.block.cable.item;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -23,6 +25,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -30,6 +34,12 @@ public class BlockCableItem extends CableBase {
 
   public BlockCableItem(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    ScreenManager.registerFactory(ContainerScreenRegistry.item_pipe, ScreenCableItem::new);
   }
 
   @Override
@@ -63,16 +73,12 @@ public class BlockCableItem extends CableBase {
   @Override
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      TileEntity tileentity = worldIn.getTileEntity(pos);
-      if (tileentity != null) {
-        for (Direction d : Direction.values()) {
-          IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-          UtilItemStack.dropAll(items, worldIn, pos);
-        }
-        worldIn.updateComparatorOutputLevel(pos, this);
+      TileCableItem tileentity = (TileCableItem) worldIn.getTileEntity(pos);
+      if (tileentity != null && tileentity.filter != null) {
+        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
       }
-      super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
+    super.onReplaced(state, worldIn, pos, newState, isMoving);
   }
 
   @Override

@@ -40,7 +40,6 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileFisher extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int RADIUS = 12;
-  //  public static final INamedTag<Item> RODS = ItemTags.makeWrapperTag(new ResourceLocation(ModCyclic.MODID, "fishing_rods").toString());
   private static final double CHANCE = 0.1;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 

@@ -48,6 +48,7 @@ import com.lothrazar.cyclic.item.craftingsimple.CraftingStickItem;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
+import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.item.elemental.FireScepter;
 import com.lothrazar.cyclic.item.elemental.IceWand;
 import com.lothrazar.cyclic.item.elemental.LightningScepter;
@@ -146,6 +147,8 @@ public class ItemRegistry {
   public static Item crafting_stick;
   @ObjectHolder(ModCyclic.MODID + ":antimatter_wand")
   public static Item antimatter_wand;
+  @ObjectHolder(ModCyclic.MODID + ":filter_data")
+  public static Item filter_data;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -279,6 +282,7 @@ public class ItemRegistry {
     r.register(new TeleporterWandItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(64)).setRegistryName("teleport_wand"));
     r.register(new SettingsCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("settings_data"));
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("shape_data"));
+    r.register(new FilterCardItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("filter_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024)).setRegistryName("scythe_harvest"));
     r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));

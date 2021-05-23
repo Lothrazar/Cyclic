@@ -4,19 +4,27 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -24,20 +32,26 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableItem extends TileEntityBase implements ITickableTileEntity {
+public class TileCableItem extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getItem() == ItemRegistry.filter_data;
+    }
+  };
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
 
   public TileCableItem() {
     super(TileRegistry.item_pipeTile);
     for (Direction f : Direction.values()) {
-      flow.put(f, LazyOptional.of(this::createHandler));
+      flow.put(f, LazyOptional.of(TileCableItem::createHandler));
     }
   }
 
-  private IItemHandler createHandler() {
-    ItemStackHandler h = new ItemStackHandler(1);
-    return h;
+  private static ItemStackHandler createHandler() {
+    return new ItemStackHandler(1);
   }
 
   List<Integer> rawList = IntStream.rangeClosed(
@@ -56,7 +70,6 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   }
 
   private void tryExtract(Direction extractSide) {
-    //  Direction importFromSide = this.getBlockState().get(BlockCableFluid.EXTR).direction();
     if (extractSide == null) {
       return;
     }
@@ -79,6 +92,9 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
           }
           // and then pull 
           if (itemTarget.isEmpty() == false) {
+            if (!this.filterAllowsExtract(itemTarget)) {
+              continue;
+            }
             itemTarget = itemHandlerFrom.extractItem(i, 64, false);
             ItemStack result = sideHandler.insertItem(0, itemTarget.copy(), false);
             itemTarget.setCount(result.getCount());
@@ -87,6 +103,37 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
           }
         }
       }
+    }
+  }
+
+  private boolean filterAllowsExtract(ItemStack itemTarget) {
+    //does my filter allow extract
+    boolean isEmpty = false;
+    boolean isMatchingList = false;
+    IItemHandler myFilter = filter.getStackInSlot(0).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    boolean isIgnoreList = filter.getStackInSlot(0).getOrCreateTag().getBoolean("filter");
+    if (myFilter != null) {
+      for (int i = 0; i < myFilter.getSlots(); i++) {
+        ItemStack filterPtr = myFilter.getStackInSlot(i);
+        if (!filterPtr.isEmpty()) {
+          isEmpty = false; //at least one thing is in the filter 
+          //does it match
+          if (UtilItemStack.matches(itemTarget, filterPtr)) {
+            isMatchingList = true;
+            break;
+          }
+        }
+      }
+    }
+    //    ModCyclic.LOGGER.info(isMatchingList + "=isMatchingList " + itemTarget);
+    if (isIgnoreList) {
+      // we are allowed to filter if it doesnt match
+      return !isMatchingList;
+    }
+    else {
+      //its an Allow list. filter if in the list
+      //but if its empty, allow just lets everything
+      return isEmpty || isMatchingList;
     }
   }
 
@@ -137,12 +184,14 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
         ((INBTSerializable<CompoundNBT>) h).deserializeNBT(itemTag);
       });
     }
+    filter.deserializeNBT(tag.getCompound("filter"));
     super.read(bs, tag);
   }
 
   @SuppressWarnings("unchecked")
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.put("filter", filter.serializeNBT());
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
@@ -160,5 +209,15 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   @Override
   public int getField(int field) {
     return 0;
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new StringTextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Override
+  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    return new ContainerCableItem(i, world, pos, playerInventory, playerEntity);
   }
 }

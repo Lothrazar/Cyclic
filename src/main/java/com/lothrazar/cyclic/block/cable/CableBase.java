@@ -6,8 +6,11 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -18,6 +21,7 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public abstract class CableBase extends BlockBase {
 
@@ -91,7 +95,30 @@ public abstract class CableBase extends BlockBase {
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
     ItemStack stack = player.getHeldItem(handIn);
-    if (!stack.getItem().isIn(CableWrench.WRENCH)) {
+    if (!stack.getItem().isIn(CableWrench.WRENCH) && handIn == Hand.MAIN_HAND) {
+      //ex
+      boolean hasExtractor = false;
+      for (Direction side : Direction.values()) {
+        EnumConnectType connection = state.get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+        if (connection.isExtraction()) {
+          hasExtractor = true;
+          break;
+        }
+      }
+      if (hasExtractor) {
+        //if has extractor
+        if (!world.isRemote) {
+          TileEntity tileEntity = world.getTileEntity(pos);
+          if (tileEntity instanceof INamedContainerProvider) {
+            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+          }
+          else {
+            throw new IllegalStateException("Our named container provider is missing!");
+          }
+        }
+        return ActionResultType.SUCCESS;
+      }
+      //ex
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
     final float hitLimit = 0.28F;
