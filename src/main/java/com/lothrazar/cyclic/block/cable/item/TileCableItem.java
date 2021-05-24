@@ -34,6 +34,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCableItem extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  private static final int FLOW_QTY = 64; // fixed, for non-extract motion
+  private int extractQty = 64; // default
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -86,7 +88,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
       if (itemHandlerFrom != null) {
         //ok go
         for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
-          itemTarget = itemHandlerFrom.extractItem(i, 64, true);
+          itemTarget = itemHandlerFrom.extractItem(i, extractQty, true);
           if (itemTarget.isEmpty()) {
             continue;
           }
@@ -94,7 +96,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
           if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), itemTarget)) {
             continue;
           }
-          itemTarget = itemHandlerFrom.extractItem(i, 64, false);
+          itemTarget = itemHandlerFrom.extractItem(i, extractQty, false);
           ItemStack result = sideHandler.insertItem(0, itemTarget.copy(), false);
           itemTarget.setCount(result.getCount());
           return;
@@ -123,7 +125,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
         validAdjacent = validAdjacent || this.moveItems(outgoingSide, 64, sideHandler);
       }
       if (!validAdjacent) {
-        this.moveItems(incomingSide, 64, sideHandler);
+        this.moveItems(incomingSide, FLOW_QTY, sideHandler);
       }
     }
   }
@@ -141,6 +143,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   @SuppressWarnings("unchecked")
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    extractQty = tag.getInt("extractCount");
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
@@ -157,6 +160,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put("filter", filter.serializeNBT());
+    tag.putInt("extractCount", extractQty);
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
@@ -169,11 +173,13 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+    this.extractQty = value;
+  }
 
   @Override
   public int getField(int field) {
-    return 0;
+    return this.extractQty;
   }
 
   @Override

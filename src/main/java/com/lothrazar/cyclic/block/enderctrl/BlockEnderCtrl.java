@@ -11,7 +11,6 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -72,20 +71,9 @@ public class BlockEnderCtrl extends BlockBase {
       teCtrl.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos));
     }
     if (state.getBlock() != newState.getBlock()) {
-      TileEntity tileentity = worldIn.getTileEntity(pos);
-      if (tileentity != null) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-        if (items != null) {
-          for (int i = 0; i < items.getSlots(); ++i) {
-            ItemStack is = items.getStackInSlot(i);
-            while (!is.isEmpty()) {
-              InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), is.split(1));
-            }
-          }
-          worldIn.updateComparatorOutputLevel(pos, this);
-          worldIn.removeTileEntity(pos);
-        }
-      }
+      //      TileEntity tileentity = worldIn.getTileEntity(pos); 
+      worldIn.removeTileEntity(pos);
+      worldIn.updateComparatorOutputLevel(pos, this);
     }
   }
 

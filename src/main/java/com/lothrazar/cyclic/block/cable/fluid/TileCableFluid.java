@@ -49,6 +49,8 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     }
   };
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
+  public static final int FLOW_RATE = CAPACITY; //normal non-extract flow
+  public static final int EXTRACT_RATE = CAPACITY;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 2;
   private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
@@ -85,7 +87,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
       return;
     }
-    boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, CAPACITY);
+    boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, EXTRACT_RATE);
     FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
     if (!success && sideHandler != null
         && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
@@ -125,7 +127,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         if (connection.isExtraction()) {
           continue;
         }
-        this.moveFluids(outgoingSide, CAPACITY, sideHandler);
+        this.moveFluids(outgoingSide, FLOW_RATE, sideHandler);
       }
     }
   }
