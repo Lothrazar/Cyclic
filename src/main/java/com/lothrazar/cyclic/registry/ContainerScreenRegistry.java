@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.block.anvilmagma.ContainerAnvilMagma;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.beaconpotion.ContainerPotion;
 import com.lothrazar.cyclic.block.breaker.ContainerBreaker;
+import com.lothrazar.cyclic.block.cable.fluid.ContainerCableFluid;
 import com.lothrazar.cyclic.block.cable.item.ContainerCableItem;
 import com.lothrazar.cyclic.block.clock.ContainerClock;
 import com.lothrazar.cyclic.block.collectfluid.ContainerFluidCollect;
@@ -162,6 +163,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerCableItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("item_pipe"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCableFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("fluid_pipe"));
     //
     //  Items with containers
     //
@@ -173,6 +177,8 @@ public class ContainerScreenRegistry {
 
   @ObjectHolder(ModCyclic.MODID + ":filter_data")
   public static ContainerType<ContainerFilterCard> filter_data;
+  @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
+  public static ContainerType<ContainerCableFluid> fluid_pipe;
   @ObjectHolder(ModCyclic.MODID + ":item_pipe")
   public static ContainerType<ContainerCableItem> item_pipe;
   @ObjectHolder(ModCyclic.MODID + ":laser")

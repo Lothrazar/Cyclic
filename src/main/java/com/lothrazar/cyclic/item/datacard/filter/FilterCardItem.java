@@ -31,6 +31,7 @@ public class FilterCardItem extends ItemBase {
 
   public static final int SLOT_FLUID = 8;
   private static final String NBTFILTER = "filter";
+  // TODO: could match on tags, nbt exact match like enchants, 
 
   public FilterCardItem(Properties properties) {
     super(properties.maxStackSize(1));
@@ -148,7 +149,6 @@ public class FilterCardItem extends ItemBase {
         }
       }
     }
-    //    ModCyclic.LOGGER.info(isMatchingList + "=isMatchingList " + itemTarget);
     if (isIgnoreList) {
       // we are allowed to filter if it doesnt match
       return !isMatchingList;
@@ -162,5 +162,22 @@ public class FilterCardItem extends ItemBase {
 
   private static boolean getIsIgnoreList(ItemStack filterStack) {
     return filterStack.getOrCreateTag().getBoolean(NBTFILTER);
+  }
+
+  public static boolean filterAllowsExtract(ItemStack filterStack, FluidStack fluidInTank) {
+    if (filterStack.getItem() instanceof FilterCardItem == false) {
+      return true; //filter is air, everything allowed
+    }
+    FluidStack fluidFilter = getFluidStack(filterStack);
+    boolean isMatchingList = fluidFilter.getFluid() == fluidInTank.getFluid();
+    boolean isIgnoreList = getIsIgnoreList(filterStack);
+    // 
+    if (isIgnoreList) {
+      return !isMatchingList;
+    }
+    else { // allow list
+      //      ModCyclic.LOGGER.info(" ALLOW LIST therefor allows=" + (fluidFilter.isEmpty() || isMatchingList));
+      return fluidFilter.isEmpty() || isMatchingList;
+    }
   }
 }

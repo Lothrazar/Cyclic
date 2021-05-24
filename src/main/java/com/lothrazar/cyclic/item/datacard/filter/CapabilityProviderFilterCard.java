@@ -12,10 +12,11 @@ public class CapabilityProviderFilterCard implements ICapabilitySerializable<Com
 
   public static final int SLOTS = 9;
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(SLOTS) {
-    //    @Override
-    //    public boolean isItemValid(int slot, ItemStack stack) {
-    //      return !(stack.getItem() instanceof FilterCardItem) && super.isItemValid(slot, stack);
-    //    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
   });
 
   public CapabilityProviderFilterCard() {

@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.cable.item;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
+import com.lothrazar.cyclic.block.cable.fluid.ScreenCableFluid;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -39,7 +40,7 @@ public class BlockCableItem extends CableBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.item_pipe, ScreenCableItem::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.fluid_pipe, ScreenCableFluid::new);
   }
 
   @Override

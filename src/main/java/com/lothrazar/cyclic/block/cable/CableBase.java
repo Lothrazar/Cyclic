@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.block.cable;
 
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -94,8 +96,11 @@ public abstract class CableBase extends BlockBase {
     if (hit.getFace() == null) {
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
+    if (handIn != Hand.MAIN_HAND) {
+      return super.onBlockActivated(state, world, pos, player, handIn, hit);
+    }
     ItemStack stack = player.getHeldItem(handIn);
-    if (!stack.getItem().isIn(CableWrench.WRENCH) && handIn == Hand.MAIN_HAND) {
+    if (!stack.getItem().isIn(CableWrench.WRENCH)) {
       //ex
       boolean hasExtractor = false;
       for (Direction side : Direction.values()) {
@@ -105,7 +110,8 @@ public abstract class CableBase extends BlockBase {
           break;
         }
       }
-      if (hasExtractor) {
+      if (hasExtractor
+          && (this == BlockRegistry.item_pipe || this == BlockRegistry.fluid_pipe)) {
         //if has extractor
         if (!world.isRemote) {
           TileEntity tileEntity = world.getTileEntity(pos);
@@ -121,6 +127,7 @@ public abstract class CableBase extends BlockBase {
       //ex
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
+    //now must be wrench
     final float hitLimit = 0.28F;
     Direction sideToToggle = hit.getFace();
     //hitX y and Z from old onBlockActivated 
@@ -171,10 +178,12 @@ public abstract class CableBase extends BlockBase {
         break;
         case INVENTORY: // inventory connection or
         case NONE: // no connection
+          ModCyclic.LOGGER.info("? normal to extrct ?");
           world.setBlockState(pos, state.with(prop, EnumConnectType.CABLE)); //try to extract
         break;
         case CABLE: // extract
           // extract to blocked
+          ModCyclic.LOGGER.info("? extract to blocked?");
           world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
         break;
       }
