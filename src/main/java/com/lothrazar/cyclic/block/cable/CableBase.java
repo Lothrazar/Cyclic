@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.cable;
 
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import java.util.Map;
@@ -152,42 +151,33 @@ public abstract class CableBase extends BlockBase {
     else if (hitZ > 1 - hitLimit) {
       sideToToggle = Direction.SOUTH;
     }
-    //now we have the same data that onBlockActivated used
-    //    WrenchActionType type = WrenchActionType.getType(stack);
-    //    if (type == WrenchActionType.EXTRACT) {
-    //      if (state.getBlock() == BlockRegistry.fluid_pipe
-    //          || state.getBlock() == BlockRegistry.item_pipe) {
-    //        if (state.hasProperty(BlockCableFluid.EXTR)) {
-    //          DirectionNullable current = state.get(BlockCableFluid.EXTR);
-    //          DirectionNullable newextr = current.toggle(sideToToggle);
-    //          world.setBlockState(pos, state.with(BlockCableFluid.EXTR, newextr));
-    //        }
-    //      }
-    //    }
-    //    else if (type == WrenchActionType.DISABLE && state.getBlock() instanceof CableBase) {
     EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
     if (state.hasProperty(prop)) {
       EnumConnectType status = state.get(prop);
       //inventory is decided not by wrench but by normal mode
       //so it rotates: 
+      BlockState newState = state;
       // INVENTORY// NONE -> CABLE(extract) -> BLOCKED -> and back to none again
+      boolean updatePost = false;
       switch (status) {
         case BLOCKED:
           //unblock it go back to none (dont know where connection would be if any)
-          world.setBlockState(pos, state.with(prop, EnumConnectType.NONE));
+          newState = state.with(prop, EnumConnectType.NONE);
+          updatePost = true;
         break;
         case INVENTORY: // inventory connection or
         case NONE: // no connection
-          ModCyclic.LOGGER.info("? normal to extrct ?");
-          world.setBlockState(pos, state.with(prop, EnumConnectType.CABLE)); //try to extract
+          newState = state.with(prop, EnumConnectType.CABLE);
         break;
         case CABLE: // extract
-          // extract to blocked
-          ModCyclic.LOGGER.info("? extract to blocked?");
-          world.setBlockState(pos, state.with(prop, EnumConnectType.BLOCKED));
+          // extract to blocked 
+          newState = state.with(prop, EnumConnectType.BLOCKED);
         break;
       }
-      //else state does not have prop . ttreat it teh same as (getBlock is not a CableBase)
+      world.setBlockState(pos, newState);
+      if (updatePost) {
+        newState.updatePostPlacement(sideToToggle, world.getBlockState(pos.offset(sideToToggle)), world, pos, pos.offset(sideToToggle));
+      }
     }
     return super.onBlockActivated(state, world, pos, player, handIn, hit);
   }

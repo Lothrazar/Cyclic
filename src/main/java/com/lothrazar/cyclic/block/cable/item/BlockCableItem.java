@@ -113,7 +113,12 @@ public class BlockCableItem extends CableBase {
       return stateIn;
     }
     if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
-      return stateIn.with(property, EnumConnectType.INVENTORY);
+      BlockState with = stateIn.with(property, EnumConnectType.INVENTORY);
+      if (world instanceof World) {
+        //hack to force {any} -> inventory IF its here
+        ((World) world).setBlockState(currentPos, with);
+      }
+      return with;
     }
     else {
       return stateIn.with(property, EnumConnectType.NONE);
