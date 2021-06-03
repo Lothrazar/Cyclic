@@ -13,6 +13,7 @@ import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -89,7 +90,8 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
         continue;
       }
       tryHere = false;
-      if (fluidMode == EvaporateMode.GENERIC) {
+      if (fluidMode == EvaporateMode.GENERIC && fluidHere.getFluid() != null
+          && fluidHere.getFluid() != Fluids.EMPTY) {
         tryHere = true;
       }
       else if (fluidMode == EvaporateMode.WATER && fluidHere.getFluid().isIn(FluidTags.WATER)) {
@@ -123,7 +125,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       return world.setBlockState(pos, blockHere.with(BlockStateProperties.WATERLOGGED, false), 18);
     }
     else {
-      //ok just nuke it
+      //ok just nuke it 
       return world.setBlockState(pos, Blocks.AIR.getDefaultState(), 18);
     }
   }
