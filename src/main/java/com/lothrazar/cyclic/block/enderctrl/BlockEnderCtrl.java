@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import java.util.Map;
 import net.minecraft.block.Block;
@@ -51,12 +50,10 @@ public class BlockEnderCtrl extends BlockBase {
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
       world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
-      if (world.getTileEntity(pos) instanceof TileEnderShelf) {
-        TileEnderCtrl ctrl = getTileEntity(world, pos);
-        //i placed a shelf? find nearby
-        if (ctrl != null) {
-          ctrl.setShelves(EnderShelfHelper.findConnectedShelves(world, pos));
-        }
+      TileEnderCtrl ctrl = (TileEnderCtrl) world.getTileEntity(pos);
+      //i placed a shelf? find nearby
+      if (ctrl != null) {
+        ctrl.setShelves(EnderShelfHelper.findConnectedShelves(world, pos));
       }
     }
   }
@@ -65,7 +62,7 @@ public class BlockEnderCtrl extends BlockBase {
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     boolean isCurrentlyShelf = EnderShelfHelper.isShelf(state);
     boolean isNewShelf = EnderShelfHelper.isShelf(newState);
-    TileEnderCtrl teCtrl = getTileEntity(worldIn, pos);
+    TileEnderCtrl teCtrl = (TileEnderCtrl) worldIn.getTileEntity(pos);
     if (isCurrentlyShelf && !isNewShelf && teCtrl != null) {
       //trigger controller reindex
       teCtrl.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos));
@@ -85,12 +82,8 @@ public class BlockEnderCtrl extends BlockBase {
       //otherwise: main hand inserts, off hand takes out right away
       return ActionResultType.PASS;
     }
-    TileEnderCtrl tileCtrl = getTileEntity(world, pos);
-    //
-    // controller
-    //
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      tileCtrl.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
         insertIntoController(player, hand, heldItem, h);
       });
     }
@@ -129,9 +122,5 @@ public class BlockEnderCtrl extends BlockBase {
         player.setHeldItem(hand, newFake);
       }
     }
-  }
-
-  public TileEnderCtrl getTileEntity(World world, BlockPos pos) {
-    return (TileEnderCtrl) world.getTileEntity(pos);
   }
 }

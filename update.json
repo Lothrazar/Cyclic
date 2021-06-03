@@ -42,6 +42,6 @@
 		,"1.2.6":"Added two new blocks that mimic other blocks Concentrated glowstone and Concentrated soundproofing.  Build scepters now render the block being used on the cross-hair.  Added Ender Apples to find structures, and apples of chorus, bone, and prismarine for other effects (and moved some textures in the rp).  "
 		,"1.2.7":"Fix server startup crash introduced in 1.2.6"
 		,"1.2.8":"Added Filter Card item.  Item/Fluid cable when in extraction mode has a GUI screen to accept a filter card for custom routing.  Fixed Crafting stick buttons sometimes wiping out NBT data of items.  Improved wooden wrench block rotation.  Energy cable capacity increased from 8k to 32k.  Energy cable now has functional extractors (use wrench).  Ender Shelf now saves its content in the item when broken and replaced.  Merged PR from Pelotrio; added com.lothrazar.cyclic.api.IHarvesterOverride by PR from InfinityRaider.  Fix Conveyor saving invalid speed block property value in some locales.  Fix Antimatter evaporator voids waterlogged blocks.   "
-		,"1.2.9":"Fix cables not updating clientside to show connections to containers.  Fix Antimatter Evaporator nuking non-fluid blocks when in generic mode.  "
+		,"1.2.9":"Fix cables not updating clientside to show connections to containers.  Fix Antimatter Evaporator nuking non-fluid blocks when in generic mode.  Fix ender shelf controller not accepting books (if issues persist break and place your controller in a new location).  "
 	}
 }

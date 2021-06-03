@@ -120,7 +120,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.laser).build(null).setRegistryName("laser"));
     r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.conveyor).build(null).setRegistryName("conveyor"));
     r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
-    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
+    r.register(TileEntityType.Builder.create(TileEnderCtrl::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
     r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
   }
 

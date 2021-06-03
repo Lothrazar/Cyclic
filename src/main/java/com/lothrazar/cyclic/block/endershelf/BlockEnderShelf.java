@@ -94,28 +94,26 @@ public class BlockEnderShelf extends BlockBase {
     Direction face = hit.getFace();
     Vector3d hitVec = hit.getHitVec();
     int slot = getSlotFromHitVec(pos, face, hitVec);
-    if (world.getTileEntity(pos) instanceof TileEnderShelf) {
-      TileEnderShelf shelf = getTileEntity(world, pos);
-      if (hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
-        //
-        // single shelf
-        //
-        if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-          shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            if (h.getStackInSlot(slot) == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(h.getStackInSlot(slot), heldItem)) {
-              if (!world.isRemote) {
-                ItemStack remaining = h.insertItem(slot, heldItem, false);
-                player.setHeldItem(hand, remaining);
-              }
+    TileEnderShelf shelf = getTileEntity(world, pos);
+    if (hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
+      //
+      // single shelf
+      //
+      if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
+        shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+          if (h.getStackInSlot(slot) == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(h.getStackInSlot(slot), heldItem)) {
+            if (!world.isRemote) {
+              ItemStack remaining = h.insertItem(slot, heldItem, false);
+              player.setHeldItem(hand, remaining);
             }
-          });
-        }
-        else if (heldItem.isEmpty()) {
-          shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            ItemStack retrievedBook = h.extractItem(slot, 1, false);
-            player.setHeldItem(hand, retrievedBook);
-          });
-        }
+          }
+        });
+      }
+      else if (heldItem.isEmpty()) {
+        shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+          ItemStack retrievedBook = h.extractItem(slot, 1, false);
+          player.setHeldItem(hand, retrievedBook);
+        });
       }
     }
     return ActionResultType.PASS;
