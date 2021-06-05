@@ -8,8 +8,10 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 
 public class MaterialRegistry {
 
@@ -27,13 +29,16 @@ public class MaterialRegistry {
       return new ItemStack(ItemRegistry.gem_amber);
     }
   };
+  public static DoubleValue EMERALD_TOUGH;
+  public static DoubleValue EMERALD_DMG;
+  public static DoubleValue OBS_TOUGH;
+  public static DoubleValue OBS_DMG;
 
   public static class ArmorMats {
 
     private static final String EMERALDID = ModCyclic.MODID + ":emerald";
     private static final String CRYSTALID = ModCyclic.MODID + ":crystal";
     private static final String GLOWINGID = ModCyclic.MODID + ":glowing";
-    // public static IntValue DURABILITY;
     public static final IArmorMaterial EMERALD = new IArmorMaterial() {
 
       @Override
@@ -58,7 +63,7 @@ public class MaterialRegistry {
 
       @Override
       public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(net.minecraft.item.Items.EMERALD));
+        return Ingredient.fromStacks(new ItemStack(Items.EMERALD));
       }
 
       @Override
@@ -68,7 +73,7 @@ public class MaterialRegistry {
 
       @Override
       public float getToughness() {
-        return ArmorMaterial.DIAMOND.getToughness() * 1.5F;
+        return EMERALD_TOUGH.get().floatValue();
       }
 
       @Override
@@ -110,12 +115,11 @@ public class MaterialRegistry {
 
       @Override
       public float getToughness() {
-        return ArmorMaterial.DIAMOND.getToughness() * 3F;
+        return OBS_TOUGH.get().floatValue();
       }
 
       @Override
       public float getKnockbackResistance() {
-        // knockback
         return ArmorMaterial.NETHERITE.getKnockbackResistance();
       }
     };
@@ -181,7 +185,7 @@ public class MaterialRegistry {
 
       @Override
       public float getAttackDamage() {
-        return ItemTier.DIAMOND.getAttackDamage() * 3.5F;
+        return OBS_DMG.get().floatValue();
       }
 
       @Override
@@ -213,7 +217,7 @@ public class MaterialRegistry {
 
       @Override
       public float getAttackDamage() {
-        return ItemTier.DIAMOND.getAttackDamage() * 1.5F;
+        return EMERALD_DMG.get().floatValue();
       }
 
       @Override

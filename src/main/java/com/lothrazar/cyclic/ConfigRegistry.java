@@ -40,6 +40,7 @@ import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
+import com.lothrazar.cyclic.registry.MaterialRegistry;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -218,8 +219,22 @@ public class ConfigRegistry {
     CFG.pop(); //cost
     CFG.pop(); //energy
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
+    CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
+    MaterialRegistry.EMERALD_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 3.0F, 0.1F, 99F);
+    MaterialRegistry.EMERALD_DMG = CFG.comment("Weapon damage").defineInRange("damage", 4.5F, 0.1F, 99F);
+    CFG.pop();
     //
+    //CRYSTAL TOUGH 6.0
+    //emerald TOUGH 3.0
     //
+    // CRYSTAL DAMAGE 10.5
+    // 
+    //  EMERALD DAMAGE 4.5
+    // 
+    CFG.comment(WALL, " Obsidian gear settings", WALL).push("obsidian");
+    MaterialRegistry.OBS_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 6.0F, 0.1F, 99F);
+    MaterialRegistry.OBS_DMG = CFG.comment("Weapon damage").defineInRange("damage", 10.5F, 0.1F, 99F);
+    CFG.pop();
     //
     //
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
