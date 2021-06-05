@@ -1,8 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.2.9",
-		"1.16.5-recommended": "1.2.9"
+		"1.16.5-latest": "1.2.10",
+		"1.16.5-recommended": "1.2.10"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -43,5 +43,6 @@
 		,"1.2.7":"Fix server startup crash introduced in 1.2.6"
 		,"1.2.8":"Added Filter Card item.  Item/Fluid cable when in extraction mode has a GUI screen to accept a filter card for custom routing.  Fixed Crafting stick buttons sometimes wiping out NBT data of items.  Improved wooden wrench block rotation.  Energy cable capacity increased from 8k to 32k.  Energy cable now has functional extractors (use wrench).  Ender Shelf now saves its content in the item when broken and replaced.  Merged PR from Pelotrio; added com.lothrazar.cyclic.api.IHarvesterOverride by PR from InfinityRaider.  Fix Conveyor saving invalid speed block property value in some locales.  Fix Antimatter evaporator voids waterlogged blocks.   "
 		,"1.2.9":"Fix cables not updating clientside to show connections to containers.  Fix Antimatter Evaporator nuking non-fluid blocks when in generic mode.  Fix ender shelf controller not accepting books (if issues persist break and place your controller in a new location).  "
+		,"1.2.10":"Fixed items still flowing into containers through blocked cables (yellow square state).  Fixed the GUI Filter screen not opening for Item cables while in extract mode (to filter items).  Fixed english localization of some items.  "
 	}
 }

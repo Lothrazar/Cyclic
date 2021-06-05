@@ -3,8 +3,10 @@ package com.lothrazar.cyclic.block.cable.fluid;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,6 +24,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -30,6 +34,12 @@ public class BlockCableFluid extends CableBase {
 
   public BlockCableFluid(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void registerClient() {
+    ScreenManager.registerFactory(ContainerScreenRegistry.fluid_pipe, ScreenCableFluid::new);
   }
 
   @Override

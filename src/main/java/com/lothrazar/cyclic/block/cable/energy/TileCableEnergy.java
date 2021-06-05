@@ -77,6 +77,10 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction outgoingSide = Direction.values()[i];
+      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+      if (connection.isExtraction() || connection.isBlocked()) {
+        continue;
+      }
       if (this.isEnergyIncomingFromFace(outgoingSide) == false) {
         moveEnergy(outgoingSide, MAX);
       }

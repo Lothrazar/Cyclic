@@ -119,7 +119,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
           continue;
         }
         EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
-        if (connection.isExtraction()) {
+        if (connection.isExtraction() || connection.isBlocked()) {
           continue;
         }
         validAdjacent = validAdjacent || this.moveItems(outgoingSide, 64, sideHandler);

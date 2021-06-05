@@ -124,7 +124,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
           continue;
         }
         EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
-        if (connection.isExtraction()) {
+        if (connection.isExtraction() || connection.isBlocked()) {
           continue;
         }
         this.moveFluids(outgoingSide, FLOW_RATE, sideHandler);
