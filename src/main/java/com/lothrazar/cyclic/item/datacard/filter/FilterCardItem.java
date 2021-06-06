@@ -13,7 +13,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -41,47 +40,27 @@ public class FilterCardItem extends ItemBase {
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (stack.hasTag()) {
-      TranslationTextComponent t = new TranslationTextComponent("cyclic.screen.filter." + getIsIgnoreList(stack));
-      t.mergeStyle(TextFormatting.GRAY);
+      boolean isIgnore = getIsIgnoreList(stack);
+      TranslationTextComponent t = new TranslationTextComponent("cyclic.screen.filter." + isIgnore);
+      t.mergeStyle(isIgnore ? TextFormatting.DARK_GRAY : TextFormatting.DARK_BLUE);
       tooltip.add(t);
-      int count = 0;
-      ITextComponent first = null;
-      IItemHandler myFilter = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-      if (myFilter != null) {
-        for (int i = 0; i < myFilter.getSlots(); i++) {
-          ItemStack filterPtr = myFilter.getStackInSlot(i);
-          if (!filterPtr.isEmpty()) {
-            count++;
-            if (first == null) {
-              first = filterPtr.getDisplayName();
-            }
-          }
-        }
+      // caps arent synced from server very well
+      //
+      CompoundNBT stackTag = stack.getOrCreateTag();
+      if (stackTag.contains("fluidTooltip")) {
+        String fluidTooltip = stackTag.getString("fluidTooltip");
+        tooltip.add(new TranslationTextComponent(fluidTooltip).mergeStyle(TextFormatting.AQUA));
       }
-      if (first != null) {
-        tooltip.add(first);
+      if (stackTag.contains("itemTooltip")) {
+        String itemTooltip = stackTag.getString("itemTooltip");
+        tooltip.add(new TranslationTextComponent(itemTooltip).mergeStyle(TextFormatting.GRAY));
       }
-      if (count == 0) {
-        t = new TranslationTextComponent("cyclic.screen.filter.item.empty");
-        t.mergeStyle(TextFormatting.GRAY);
-        tooltip.add(t);
-      }
-      else {
+      if (stackTag.contains("itemCount")) {
+        int itemCount = stackTag.getInt("itemCount");
         t = new TranslationTextComponent("cyclic.screen.filter.item.count");
-        t.appendString("" + count);
+        t.appendString("" + itemCount);
         t.mergeStyle(TextFormatting.GRAY);
         tooltip.add(t);
-      }
-      FluidStack fluidStack = FilterCardItem.getFluidStack(stack);
-      if (fluidStack.isEmpty()) {
-        t = new TranslationTextComponent("cyclic.screen.filter.fluid.empty");
-        t.mergeStyle(TextFormatting.GRAY);
-        tooltip.add(t);
-      }
-      else {
-        StringTextComponent s = new StringTextComponent(fluidStack.getDisplayName().getString());
-        s.mergeStyle(TextFormatting.GRAY);
-        tooltip.add(s);
       }
     }
     else {
@@ -175,9 +154,48 @@ public class FilterCardItem extends ItemBase {
     if (isIgnoreList) {
       return !isMatchingList;
     }
-    else { // allow list
-      //      ModCyclic.LOGGER.info(" ALLOW LIST therefor allows=" + (fluidFilter.isEmpty() || isMatchingList));
+    else { // allow list 
       return fluidFilter.isEmpty() || isMatchingList;
     }
+  }
+
+  // ShareTag for server->client capability data sync
+  @Override
+  public CompoundNBT getShareTag(ItemStack stack) {
+    CompoundNBT nbt = stack.getOrCreateTag();
+    FluidStack fluidStack = FilterCardItem.getFluidStack(stack);
+    if (!fluidStack.isEmpty()) {
+      nbt.putString("fluidTooltip", fluidStack.getDisplayName().getString());
+    }
+    IItemHandler cap = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    //on server  this runs . also has correct values.
+    //set data for sync to client
+    if (cap != null) {
+      int count = 0;
+      ITextComponent first = null;
+      for (int i = 0; i < cap.getSlots(); i++) {
+        if (!cap.getStackInSlot(i).isEmpty()) {
+          //non empty stack eh
+          count++;
+          if (first == null) {
+            first = cap.getStackInSlot(i).getDisplayName();
+          }
+        }
+      }
+      nbt.putInt("itemCount", count);
+      if (first != null) {
+        nbt.putString("itemTooltip", first.getString());
+      }
+    }
+    return nbt;
+  }
+
+  @Override
+  public void readShareTag(ItemStack stack, CompoundNBT nbt) {
+    CompoundNBT stackTag = stack.getOrCreateTag();
+    stackTag.putString("itemTooltip", nbt.getString("itemTooltip"));
+    stackTag.putString("fluidTooltip", nbt.getString("fluidTooltip"));
+    stackTag.putInt("itemCount", nbt.getInt("itemCount"));
+    super.readShareTag(stack, nbt);
   }
 }
