@@ -40,7 +40,7 @@ public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE);
+    this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, xSize / 2 - 9, 28);
   }
 }

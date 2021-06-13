@@ -192,10 +192,12 @@ public class FilterCardItem extends ItemBase {
 
   @Override
   public void readShareTag(ItemStack stack, CompoundNBT nbt) {
-    CompoundNBT stackTag = stack.getOrCreateTag();
-    stackTag.putString("itemTooltip", nbt.getString("itemTooltip"));
-    stackTag.putString("fluidTooltip", nbt.getString("fluidTooltip"));
-    stackTag.putInt("itemCount", nbt.getInt("itemCount"));
+    if (nbt != null) {
+      CompoundNBT stackTag = stack.getOrCreateTag();
+      stackTag.putString("itemTooltip", nbt.getString("itemTooltip"));
+      stackTag.putString("fluidTooltip", nbt.getString("fluidTooltip"));
+      stackTag.putInt("itemCount", nbt.getInt("itemCount"));
+    }
     super.readShareTag(stack, nbt);
   }
 }
