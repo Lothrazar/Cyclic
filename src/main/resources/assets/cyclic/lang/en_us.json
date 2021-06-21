@@ -38,11 +38,24 @@
 		"block.cyclic.ghost_phantom.tooltip":"Vanishing barrier powered by redstone",
 		"block.cyclic.ghost_phantom.guide":"While this block has redstone power, it is not selectable or breakable, and all entities pass through it.  Remove the power to break it. ",
 
+
+
+
+		"block.cyclic.hopper":"Wooden Hopper",
+		"block.cyclic.hopper.tooltip":"Simple fast hopper",
+		"block.cyclic.hopper.guide":"Moves items one per tick with similar logic to regular hoppers.  Is disabled with redstone.  Collects only from the are directly above the hopper",
+
+
+		"block.cyclic.hopper_fluid":"Fluid Hopper",
+		"block.cyclic.hopper_fluid.tooltip":"Collect and move fluids",
+		"block.cyclic.hopper_fluid.guide":"Moves fluids one bucket per tick with similar logic to regular hoppers.  Is disabled with redstone.  Collects only from the are directly above the hopper",
+
+
 		"block.cyclic.eye_redstone":"Ender Trigger",
 		"block.cyclic.eye_redstone.tooltip":"Redstone powered while a player is looking",
 		"block.cyclic.eye_redstone.guide":"This block detects nearby players, and checks their eye position to see if the player is looking at the block.  Whenever its being looked at, the blockstate is updated and it produces redstone power. ",
 
-	"block.cyclic.experience_pylon.notenough": "Not enough stored",
+	  "block.cyclic.experience_pylon.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.collector.tooltip": "Picks up nearby items",
     "block.cyclic.collector.guide": "The Collector picks up nearby items and stores them in its internal buffer. Items can be taken directly out of the buffer, or piped out.",

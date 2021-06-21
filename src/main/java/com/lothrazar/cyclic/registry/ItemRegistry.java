@@ -95,13 +95,19 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModCyclic.MODID);
+  public static final RegistryObject<Item> FLUIDHOPPER = ITEMS.register("hopper_fluid", () -> new BlockItem(BlockRegistry.FLUIDHOPPER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> HOPPER = ITEMS.register("hopper", () -> new BlockItem(BlockRegistry.HOPPER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":gem_amber")
   public static Item gem_amber;

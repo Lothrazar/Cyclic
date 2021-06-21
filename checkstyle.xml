@@ -293,7 +293,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         <module name="LineLength">
             <!-- Checks if a line is too long. -->
-            <property name="max" value="200" default="180" />
+            <property name="max" value="300" default="180" />
             <property name="severity" value="error" />
 
             <!--

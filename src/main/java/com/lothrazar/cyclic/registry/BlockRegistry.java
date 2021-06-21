@@ -47,6 +47,8 @@ import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
 import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
+import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
+import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.block.laser.BlockLaser;
 import com.lothrazar.cyclic.block.lightcompr.BlockLightCamo;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
@@ -60,12 +62,12 @@ import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.screen.BlockScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
 import com.lothrazar.cyclic.block.shapedata.BlockShapedata;
-import com.lothrazar.cyclic.block.soil.BlockTerraPreta;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlockGhost;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
+import com.lothrazar.cyclic.block.terrasoil.BlockTerraPreta;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
 import com.lothrazar.cyclic.block.user.BlockUser;
@@ -79,14 +81,20 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
 
+  public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
   public static List<BlockBase> blocks = new ArrayList<>();
+  public static final RegistryObject<Block> FLUIDHOPPER = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.create(Material.IRON)));
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")

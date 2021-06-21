@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "b b",
+    "bcb",
+    " b "
+  ],
+  "key": {
+    "b": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "c": {
+      "tag": "forge:chests/wooden"
+    }
+  },
+  "result": {
+    "item": "cyclic:hopper",
+    "count": 1
+  }
+}

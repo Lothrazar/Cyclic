@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.soil;
+package com.lothrazar.cyclic.block.terrasoil;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;

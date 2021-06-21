@@ -33,6 +33,8 @@ import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.block.hopper.TileSimpleHopper;
+import com.lothrazar.cyclic.block.hopperfluid.TileFluidHopper;
 import com.lothrazar.cyclic.block.laser.TileLaser;
 import com.lothrazar.cyclic.block.lightcompr.TileLightCamo;
 import com.lothrazar.cyclic.block.melter.TileMelter;
@@ -43,11 +45,11 @@ import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
 import com.lothrazar.cyclic.block.screen.TileScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata;
-import com.lothrazar.cyclic.block.soil.TileTerraPreta;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmuffTile;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
+import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
@@ -57,12 +59,19 @@ import com.lothrazar.cyclic.block.workbench.TileWorkbench;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TileRegistry {
+
+  public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ModCyclic.MODID);
+  public static final RegistryObject<TileEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> TileEntityType.Builder.create(() -> new TileFluidHopper(), BlockRegistry.FLUIDHOPPER.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> TileEntityType.Builder.create(() -> new TileSimpleHopper(), BlockRegistry.HOPPER.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

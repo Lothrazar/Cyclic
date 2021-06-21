@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/hopper_side",
+  "textures": {
+    "particle": "cyclic:blocks/hoppers/outside",
+    "top": "cyclic:blocks/hoppers/top",
+    "side": "cyclic:blocks/hoppers/outside",
+    "inside": "cyclic:blocks/hoppers/inside"
+  }
+}
