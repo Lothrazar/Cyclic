@@ -7,6 +7,10 @@ public class TileGoldHopper extends TileSimpleHopper {
 
   public TileGoldHopper() {
     super(TileRegistry.HOPPERGOLD.get());
-    this.flow = 64;
+  }
+
+  @Override
+  public int getFlow() {
+    return 64;
   }
 }

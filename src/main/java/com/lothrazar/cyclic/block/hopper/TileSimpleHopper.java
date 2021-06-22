@@ -22,7 +22,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileSimpleHopper extends TileEntityBase implements ITickableTileEntity {
 
-  protected int flow = 1;
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
@@ -51,11 +50,11 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     tryPullFromWorld(pos.offset(Direction.UP));
     tryExtract(Direction.UP);
     Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
-    this.moveItems(exportToSide, flow, inventory);
+    this.moveItems(exportToSide, getFlow(), inventory);
   }
 
-  private int getFlow() {
-    return flow;
+  public int getFlow() {
+    return 1;
   }
 
   private int getRadius() {
@@ -79,20 +78,6 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
         stackEntity.remove();
       }
     }
-    //    for (ItemEntity item : list) {
-    //      ItemStack itemTarget = item.getItem();
-    //      ItemStack resultSimulate = inventory.insertItem(0, itemTarget.copy(), true);
-    //      if (resultSimulate.getCount() < itemTarget.getCount()) {
-    //        //simulate worked
-    //        // and then pull 
-    //        //        itemTarget = itemHandlerFrom.extractItem(i, FLOW, false);
-    //        itemTarget.setCount(resultSimulate.getCount());
-    //        item.setItem(itemTarget);
-    //        //            ItemStack result =
-    //        inventory.insertItem(0, itemTarget, false);
-    //        return;
-    //      }
-    //    }
   }
 
   private void tryExtract(Direction extractSide) {
