@@ -45,5 +45,6 @@
 		,"1.2.9":"Fix cables not updating clientside to show connections to containers.  Fix Antimatter Evaporator nuking non-fluid blocks when in generic mode.  Fix ender shelf controller not accepting books (if issues persist break and place your controller in a new location).  "
 		,"1.2.10":"Fixed item cables not dropping their contents when items get stuck or backed up and cables are broken.  Fixed items still flowing into containers through blocked cables (yellow square state).  Fixed the GUI Filter screen not opening for Item cables while in extract mode (to filter items).  Fixed english localization of some items.  Added config file entries for armor toughness, weapon damage, for crystal obsidian and emerald. Fixed the Filter Data Card tooltips not showing while on a server. "
 		,"1.2.11":"Fix NullPointerException error relating to FilterCardItem on server.  Fix Block Placer gui broken.  "
+		,"1.3.0":"Added hoppers, void anvil.  Fix honey apple tooltip.  Increased creative battery power transfer rate."
 	}
 }

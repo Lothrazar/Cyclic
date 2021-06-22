@@ -28,7 +28,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     N, E, S, W, U, D;
   }
 
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private Map<Direction, Boolean> poweredSides;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
@@ -85,7 +85,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
 
   @Override
   public void tick() {
-    energy.receiveEnergy(MAX / 4, false);
+    energy.receiveEnergy(MAX, false);
     //now go
     this.tickCableFlow();
   }
