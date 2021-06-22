@@ -72,7 +72,6 @@ public class ConfigRegistry {
   public static BooleanValue COMMANDHOME;
   public static BooleanValue COMMANDHUNGER;
   public static BooleanValue COMMANDPINGNETHER;
-  public static BooleanValue COMMANDWORLDSPAWN;
   public static BooleanValue COMMANDGETHELP;
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
@@ -182,7 +181,6 @@ public class ConfigRegistry {
     COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define("hunger", true);
     COMMANDNBT = CFG.comment("True means only players with OP can use this /cyclic command").define("nbtprint", false);
     COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define("pingnether", false);
-    COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define("worldspawn", true);
     CFG.pop(); //command
     CFG.comment(WALL, " Logging related configs", WALL)
         .push("logging");

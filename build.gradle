@@ -128,6 +128,9 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3250068")
+	  
+    implementation fg.deobf("curse.maven:cofh-core-69162:3249453")
+	  implementation fg.deobf("curse.maven:ensorcellation-349447:3246996")
 
   // implementation fg.deobf("curse.maven:mantle-74924:3273201")
   // implementation fg.deobf("curse.maven:inspirations-284007:3170862")
@@ -139,7 +142,7 @@ dependencies {
   //  implementation fg.deobf("curse.maven:industrial-foregoing-266515:3261176")
 	//	implementation fg.deobf("curse.maven:titanium-287342:3261072")
   //  implementation fg.deobf("curse.maven:thermal-foundation-222880:3248150")
-	//	implementation fg.deobf("curse.maven:cofh-core-69162:3249453")
+
 	//	implementation fg.deobf("curse.maven:mekanism-268560:3206392")
   //  implementation fg.deobf("curse.maven:refined-storage-243076:3157354")
   //  implementation fg.deobf("curse.maven:ex-nihilo-sequentia-400012:3060647")

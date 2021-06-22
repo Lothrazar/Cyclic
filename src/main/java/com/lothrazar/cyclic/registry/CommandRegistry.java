@@ -3,10 +3,12 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.command.CommandGetHome;
 import com.lothrazar.cyclic.command.CommandHealth;
+import com.lothrazar.cyclic.command.CommandHelp;
 import com.lothrazar.cyclic.command.CommandHome;
 import com.lothrazar.cyclic.command.CommandHunger;
 import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
+import com.lothrazar.cyclic.command.CommandTask;
 import com.lothrazar.cyclic.command.ICyclicCommand;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.CommandDispatcher;
@@ -32,11 +34,12 @@ public class CommandRegistry {
   public void onRegisterCommandsEvent(RegisterCommandsEvent event) {
     COMMANDS.add(new CommandGetHome());
     COMMANDS.add(new CommandHealth());
+    COMMANDS.add(new CommandHelp());
     COMMANDS.add(new CommandHome());
     COMMANDS.add(new CommandHunger());
     COMMANDS.add(new CommandNbt());
+    COMMANDS.add(new CommandTask());
     COMMANDS.add(new CommandNetherping());
-    //    COMMANDS.add(new CommandWorldspawn());
     for (ICyclicCommand cmd : COMMANDS) {
       SUBCOMMANDS.add(cmd.getName());
     }
