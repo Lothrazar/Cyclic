@@ -3,21 +3,18 @@
   "pattern": [
     "ddd",
     " s ",
-    "r r"
+    "sss"
   ],
   "key": {
     "s": {
       "item": "cyclic:mason_steel"
     },
     "d": {
-      "item": "minecraft:magma_block"
-    },
-    "r": {
-      "tag": "forge:obsidian"
+      "item": "cyclic:mason_iron"
     }
   },
   "result": {
-    "item": "cyclic:anvil_magma",
+    "item": "cyclic:anvil_void",
     "count": 1
   }
 }

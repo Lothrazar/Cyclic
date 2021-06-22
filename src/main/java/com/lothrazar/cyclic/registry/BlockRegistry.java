@@ -15,6 +15,7 @@ import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
 import com.lothrazar.cyclic.block.WaterCandleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
+import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
 import com.lothrazar.cyclic.block.apple.AppleCropBlock;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.beaconpotion.BlockPotion;
@@ -97,6 +98,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> FLUIDHOPPER = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.create(Material.WOOD)));
   public static final RegistryObject<Block> HOPPERGOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> ANVILVOID = BLOCKS.register("anvil_void", () -> new BlockAnvilVoid(Block.Properties.create(Material.ANVIL)));
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")

@@ -1394,9 +1394,9 @@
     "block.fire_frost.tooltip": "Low intermittent damage; slowness and weakness",
     "block.fire_frost.guide": "Low intermittent damage; slowness and weakness",
 
-    "block.void_anvil": "Void Anvil",
-    "block.void_anvil.tooltip": "Delete enchantments off anything",
-    "block.void_anvil.guide": "Delete enchantments off anything",
+    "block.cyclic.anvil_void": "Void Anvil",
+    "block.cyclic.anvil_void.tooltip": "Deletes all enchantments",
+    "block.cyclic.anvil_void.guide": "Delete enchantments off anything by wiping out the enchantments NBT tag.  Uses no power",
 
     "block.sound_player": "SFX Block",
     "block.sound_player.tooltip": "Can play almost any sound",

@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
+import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
 import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredTile;
@@ -74,6 +75,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> TileEntityType.Builder.create(() -> new TileFluidHopper(), BlockRegistry.FLUIDHOPPER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> TileEntityType.Builder.create(() -> new TileSimpleHopper(), BlockRegistry.HOPPER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> TileEntityType.Builder.create(() -> new TileGoldHopper(), BlockRegistry.HOPPERGOLD.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> TileEntityType.Builder.create(() -> new TileAnvilVoid(), BlockRegistry.ANVILVOID.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

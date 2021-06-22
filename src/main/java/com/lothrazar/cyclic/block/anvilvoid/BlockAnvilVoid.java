@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.anvilmagma;
+package com.lothrazar.cyclic.block.anvilvoid;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -24,9 +26,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockAnvilMagma extends BlockBase {
+public class BlockAnvilVoid extends BlockBase {
 
-  public BlockAnvilMagma(Properties properties) {
+  //copy from anvilblock 
+  public BlockAnvilVoid(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.ANVIL));
     this.setHasGui();
   }
@@ -39,7 +42,8 @@ public class BlockAnvilMagma extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.anvil_magma, ScreenAnvilMagma::new);
+    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    ScreenManager.registerFactory(ContainerScreenRegistry.anvil_void, ScreenAnvilVoid::new);
   }
 
   @Override
@@ -55,7 +59,7 @@ public class BlockAnvilMagma extends BlockBase {
 
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileAnvilMagma();
+    return new TileAnvilVoid();
   }
 
   @Override
