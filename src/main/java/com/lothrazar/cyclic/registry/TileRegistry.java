@@ -35,6 +35,7 @@ import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.hopper.TileSimpleHopper;
 import com.lothrazar.cyclic.block.hopperfluid.TileFluidHopper;
+import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.block.laser.TileLaser;
 import com.lothrazar.cyclic.block.lightcompr.TileLightCamo;
 import com.lothrazar.cyclic.block.melter.TileMelter;
@@ -72,6 +73,7 @@ public class TileRegistry {
   public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ModCyclic.MODID);
   public static final RegistryObject<TileEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> TileEntityType.Builder.create(() -> new TileFluidHopper(), BlockRegistry.FLUIDHOPPER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> TileEntityType.Builder.create(() -> new TileSimpleHopper(), BlockRegistry.HOPPER.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> TileEntityType.Builder.create(() -> new TileGoldHopper(), BlockRegistry.HOPPERGOLD.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

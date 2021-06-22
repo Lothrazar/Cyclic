@@ -49,6 +49,7 @@ import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
+import com.lothrazar.cyclic.block.hoppergold.BlockGoldHopper;
 import com.lothrazar.cyclic.block.laser.BlockLaser;
 import com.lothrazar.cyclic.block.lightcompr.BlockLightCamo;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
@@ -93,8 +94,9 @@ public class BlockRegistry {
 
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
   public static List<BlockBase> blocks = new ArrayList<>();
-  public static final RegistryObject<Block> FLUIDHOPPER = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.create(Material.IRON)));
-  public static final RegistryObject<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> FLUIDHOPPER = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.create(Material.WOOD)));
+  public static final RegistryObject<Block> HOPPERGOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.create(Material.IRON)));
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")

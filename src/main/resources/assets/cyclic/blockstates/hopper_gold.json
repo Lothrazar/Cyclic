@@ -1,0 +1,10 @@
+{
+    "variants": {
+
+	    "facing=down": { "model": "cyclic:block/hopper_gold" },
+	    "facing=north": { "model": "cyclic:block/hopper_gold_side" },
+	    "facing=south": { "model": "cyclic:block/hopper_gold_side", "y": 180 },
+	    "facing=west": { "model": "cyclic:block/hopper_gold_side", "y": 270 },
+	    "facing=east": { "model": "cyclic:block/hopper_gold_side", "y": 90 }
+    }
+}

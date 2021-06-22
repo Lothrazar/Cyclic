@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -21,12 +22,16 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileSimpleHopper extends TileEntityBase implements ITickableTileEntity {
 
-  private static final int FLOW = 1;
+  protected int flow = 1;
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileSimpleHopper() {
     super(TileRegistry.HOPPER.get());
+  }
+
+  public TileSimpleHopper(TileEntityType<? extends TileSimpleHopper> tileEntityType) {
+    super(tileEntityType);
   }
 
   @Override
@@ -46,11 +51,19 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     tryPullFromWorld(pos.offset(Direction.UP));
     tryExtract(Direction.UP);
     Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
-    this.moveItems(exportToSide, FLOW, inventory);
+    this.moveItems(exportToSide, flow, inventory);
+  }
+
+  private int getFlow() {
+    return flow;
+  }
+
+  private int getRadius() {
+    return 1;
   }
 
   private void tryPullFromWorld(BlockPos center) {
-    int radius = 1;
+    int radius = getRadius();
     AxisAlignedBB aabb = new AxisAlignedBB(
         center.getX() - radius, center.getY(), center.getZ() - radius,
         center.getX() + radius + 1, center.getY(), center.getZ() + radius + 1);
@@ -94,7 +107,7 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
         //ok go
         ItemStack itemTarget;
         for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
-          itemTarget = itemHandlerFrom.extractItem(i, FLOW, true);
+          itemTarget = itemHandlerFrom.extractItem(i, getFlow(), true);
           if (itemTarget.isEmpty()) {
             continue; // nothing extracted
           }
@@ -102,7 +115,7 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
           if (resultSimulate.getCount() < itemTarget.getCount()) {
             //simulate worked
             // and then pull 
-            itemTarget = itemHandlerFrom.extractItem(i, FLOW, false);
+            itemTarget = itemHandlerFrom.extractItem(i, getFlow(), false);
             //            ItemStack result =
             inventory.insertItem(0, itemTarget, false);
             return;
