@@ -44,6 +44,7 @@ import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.eye.BlockEye;
 import com.lothrazar.cyclic.block.eyetp.BlockEyeTp;
 import com.lothrazar.cyclic.block.fan.BlockFan;
+import com.lothrazar.cyclic.block.fanslab.BlockFanSlab;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
 import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
@@ -99,6 +100,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.create(Material.WOOD)));
   public static final RegistryObject<Block> HOPPERGOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> ANVILVOID = BLOCKS.register("anvil_void", () -> new BlockAnvilVoid(Block.Properties.create(Material.ANVIL)));
+  public static final RegistryObject<Block> FANSLAB = BLOCKS.register("fan_slab", () -> new BlockFanSlab(Block.Properties.create(Material.ROCK)));
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")

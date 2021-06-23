@@ -30,6 +30,7 @@ import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.eye.TileEye;
 import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.fan.TileFan;
+import com.lothrazar.cyclic.block.fanslab.TileFanSlab;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
@@ -76,6 +77,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> TileEntityType.Builder.create(() -> new TileSimpleHopper(), BlockRegistry.HOPPER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> TileEntityType.Builder.create(() -> new TileGoldHopper(), BlockRegistry.HOPPERGOLD.get()).build(null));
   public static final RegistryObject<TileEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> TileEntityType.Builder.create(() -> new TileAnvilVoid(), BlockRegistry.ANVILVOID.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileFanSlab>> FANSLAB = TILES.register("fan_slab", () -> TileEntityType.Builder.create(() -> new TileFanSlab(), BlockRegistry.FANSLAB.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

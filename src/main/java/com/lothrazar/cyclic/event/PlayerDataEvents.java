@@ -25,9 +25,10 @@ public class PlayerDataEvents {
 
   public static class CyclicFile {
 
-    UUID playerId;
-    boolean storage = false;
-    public List<String> tasks = new ArrayList<>();
+    public final UUID playerId;
+    public boolean storageVisible = false;
+    public boolean todoVisible = false;
+    public List<String> todoTasks = new ArrayList<>();
 
     public CyclicFile(UUID playerId) {
       this.playerId = playerId;
@@ -35,22 +36,22 @@ public class PlayerDataEvents {
 
     public void read(CompoundNBT data) {
       ModCyclic.LOGGER.info("READ file " + data);
-      storage = data.getBoolean("storage");
+      storageVisible = data.getBoolean("storage");
       if (data.contains("tasks")) {
         ListNBT glist = data.getList("tasks", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < glist.size(); i++) {
           CompoundNBT row = glist.getCompound(i);
-          tasks.add(row.getString("todo"));
+          todoTasks.add(row.getString("todo"));
         }
       }
     }
 
     public CompoundNBT write() {
       CompoundNBT data = new CompoundNBT();
-      data.putBoolean("storage", storage);
+      data.putBoolean("storage", storageVisible);
       ListNBT glist = new ListNBT();
       int i = 0;
-      for (String t : tasks) {
+      for (String t : todoTasks) {
         CompoundNBT row = new CompoundNBT();
         row.putInt("index", i);
         row.putString("todo", t);

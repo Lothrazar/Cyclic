@@ -26,24 +26,24 @@ public class CommandTask implements ICyclicCommand {
     CyclicFile file = PlayerDataEvents.getOrCreate(player);
     if (subtask.equalsIgnoreCase("add")) {
       String extra = String.join(" ", arguments.subList(1, arguments.size()));
-      int j = file.tasks.size();
-      file.tasks.add(extra);
+      int j = file.todoTasks.size();
+      file.todoTasks.add(extra);
       UtilChat.addServerChatMessage(player, j + ")" + extra);
     }
     else if (subtask.equalsIgnoreCase("remove")) {
       Integer target = Integer.parseInt(arguments.get(1));
-      file.tasks.remove(target.intValue());
-      UtilChat.addServerChatMessage(player, "[" + file.tasks.size() + "]");
+      file.todoTasks.remove(target.intValue());
+      UtilChat.addServerChatMessage(player, "[" + file.todoTasks.size() + "]");
     }
     else if (subtask.equalsIgnoreCase("list")) {
       int i = 0;
-      for (String t : file.tasks) {
+      for (String t : file.todoTasks) {
         UtilChat.addServerChatMessage(player, i + ")" + t);
         i++;
       }
     }
-    else if (subtask.equalsIgnoreCase("show")) {
-      //toggle showhide
+    else if (subtask.equalsIgnoreCase("hidden")) {
+      file.todoVisible = !file.todoVisible;
     }
     return 1;
   }

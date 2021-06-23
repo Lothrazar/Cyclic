@@ -134,6 +134,9 @@
     "block.cyclic.fan": "Fan",
     "block.cyclic.fan.tooltip": "Pushes entities",
     "block.cyclic.fan.guide": "The Fan is a configurable machine designed to push players, mobs, items and other entities.$(br2)Right-click on a fan to configure its range and speed.",
+    "block.cyclic.fan_slab": "Fan Slab",
+    "block.cyclic.fan_slab.tooltip": "Pushes entities away",
+    "block.cyclic.fan_slab.guide": "The Fan Slab is a simple block machine designed to push players, mobs, items and other entities.",
 
     "cyclic.fan.range":"Range",
     "cyclic.fan.speed":"Speed",
