@@ -59,6 +59,7 @@ import com.lothrazar.cyclic.block.miner.BlockMiner;
 import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placerfluid.BlockPlacerFluid;
+import com.lothrazar.cyclic.block.rotator.BlockRotator;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingReplace;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
@@ -101,6 +102,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> HOPPERGOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> ANVILVOID = BLOCKS.register("anvil_void", () -> new BlockAnvilVoid(Block.Properties.create(Material.ANVIL)));
   public static final RegistryObject<Block> FANSLAB = BLOCKS.register("fan_slab", () -> new BlockFanSlab(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> ROTATOR = BLOCKS.register("rotator", () -> new BlockRotator(Block.Properties.create(Material.ROCK)));
+  //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")

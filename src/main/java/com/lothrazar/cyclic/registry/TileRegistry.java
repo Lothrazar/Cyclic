@@ -45,6 +45,7 @@ import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
+import com.lothrazar.cyclic.block.rotator.TileRotator;
 import com.lothrazar.cyclic.block.screen.TileScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata;
@@ -78,6 +79,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> TileEntityType.Builder.create(() -> new TileGoldHopper(), BlockRegistry.HOPPERGOLD.get()).build(null));
   public static final RegistryObject<TileEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> TileEntityType.Builder.create(() -> new TileAnvilVoid(), BlockRegistry.ANVILVOID.get()).build(null));
   public static final RegistryObject<TileEntityType<TileFanSlab>> FANSLAB = TILES.register("fan_slab", () -> TileEntityType.Builder.create(() -> new TileFanSlab(), BlockRegistry.FANSLAB.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileRotator>> ROTATOR = TILES.register("rotator", () -> TileEntityType.Builder.create(() -> new TileRotator(), BlockRegistry.ROTATOR.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

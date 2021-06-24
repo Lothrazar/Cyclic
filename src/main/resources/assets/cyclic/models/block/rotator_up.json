@@ -1,0 +1,14 @@
+{
+ 	"parent": "cyclic:parent/machine_vertical",
+	"textures":{
+        "base": "cyclic:blocks/machine/wood",
+        "stem": "cyclic:blocks/machine/wood",
+        "side": "cyclic:blocks/machine/stone",
+        "bottom": "cyclic:blocks/machine/stone",
+			"left": "cyclic:blocks/machine/stone",
+			"right": "cyclic:blocks/machine/stone",
+			"back": "cyclic:blocks/machine/stone",
+		"side_flipped": "cyclic:blocks/machine/stone",
+			"front": "cyclic:blocks/machine/stone_front"
+	}
+}
