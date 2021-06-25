@@ -46,7 +46,6 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
-  @Deprecated
   public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1.0f;
   }

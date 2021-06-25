@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "gog",
+    "ggg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:lime_stained_glass"
+    },
+    "o": {
+      "item": "cyclic:terra_preta"
+    }
+  },
+  "result": {
+    "item": "cyclic:terra_glass",
+    "count": 8
+  }
+}

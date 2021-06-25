@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "level=0": { "model": "cyclic:block/detector_moon" },
+        "level=1": { "model": "cyclic:block/detector_moon1" },
+        "level=2": { "model": "cyclic:block/detector_moon2" },
+        "level=3": { "model": "cyclic:block/detector_moon3" },
+        "level=4": { "model": "cyclic:block/detector_moon4" },
+        "level=5": { "model": "cyclic:block/detector_moon5" },
+        "level=6": { "model": "cyclic:block/detector_moon6" },
+        "level=7": { "model": "cyclic:block/detector_moon7" },
+        "level=8": { "model": "cyclic:block/detector_moon8" }
+    }
+}

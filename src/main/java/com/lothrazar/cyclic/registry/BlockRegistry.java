@@ -33,8 +33,10 @@ import com.lothrazar.cyclic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
 import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.BlockItemInfinite;
+import com.lothrazar.cyclic.block.detectmoon.BlockMoon;
 import com.lothrazar.cyclic.block.detectorentity.BlockDetector;
 import com.lothrazar.cyclic.block.detectoritem.BlockDetectorItem;
+import com.lothrazar.cyclic.block.detectweather.BlockWeather;
 import com.lothrazar.cyclic.block.dice.BlockDice;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.dropper.BlockDropper;
@@ -71,6 +73,7 @@ import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlockGhost;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
+import com.lothrazar.cyclic.block.terraglass.BlockTerraGlass;
 import com.lothrazar.cyclic.block.terrasoil.BlockTerraPreta;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
@@ -103,6 +106,9 @@ public class BlockRegistry {
   public static final RegistryObject<Block> ANVILVOID = BLOCKS.register("anvil_void", () -> new BlockAnvilVoid(Block.Properties.create(Material.ANVIL)));
   public static final RegistryObject<Block> FANSLAB = BLOCKS.register("fan_slab", () -> new BlockFanSlab(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> ROTATOR = BLOCKS.register("rotator", () -> new BlockRotator(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> DETECTORMOON = BLOCKS.register("detector_moon", () -> new BlockMoon(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> DETECTORWEATHER = BLOCKS.register("detector_weather", () -> new BlockWeather(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> TERRAGLASS = BLOCKS.register("terra_glass", () -> new BlockTerraGlass(Block.Properties.create(Material.ROCK)));
   //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;

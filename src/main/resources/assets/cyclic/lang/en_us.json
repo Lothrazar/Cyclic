@@ -25,7 +25,19 @@
 		"item.cyclic.crafting_bag": "Advanced Crafting Stick",
 		"item.cyclic.crafting_bag.tooltip": "Saves inventory",
 		"item.cyclic.crafting_bag.guide": "Handheld crafting table with an inventory that is saved in itself like a backpack",
+		
+		"block.cyclic.terra_glass":"Terra Glass",
+		"block.cyclic.terra_glass.tooltip":"Reactive to sunlight, promotes crop growth",
+		"block.cyclic.terra_glass.guide":"Reacts to sunlight if it is in direct contact.  Produces light and lights up crops when in the sun.  ",
+		
+		"block.cyclic.detector_weather":"Weather Detector",
+		"block.cyclic.detector_weather.tooltip":"Redstone output level depends on weather",
+		"block.cyclic.detector_weather.guide":"Full power when thunderstorm, half power in the rain",
 
+		"block.cyclic.detector_moon":"Moon Phase Detector",
+		"block.cyclic.detector_moon.tooltip":"Redstone output level depends on phase of the moon",
+		"block.cyclic.detector_moon.guide":"The eight phases of the moon each output a different power level",
+		
 		"block.cyclic.rotator":"Block Rotator",
 		"block.cyclic.rotator.tooltip":"Rotates targeted block when triggered with redstone",
 		"block.cyclic.rotator.guide":"Triggers when redstone power goes from off to on.  Rotates common valid block states",

@@ -19,8 +19,10 @@ import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.TileItemInfinite;
+import com.lothrazar.cyclic.block.detectmoon.TileMoon;
 import com.lothrazar.cyclic.block.detectorentity.TileDetector;
 import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
+import com.lothrazar.cyclic.block.detectweather.TileWeather;
 import com.lothrazar.cyclic.block.dice.TileDice;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
@@ -53,6 +55,7 @@ import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmuffTile;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
+import com.lothrazar.cyclic.block.terraglass.TileTerraGlass;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
@@ -80,6 +83,9 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> TileEntityType.Builder.create(() -> new TileAnvilVoid(), BlockRegistry.ANVILVOID.get()).build(null));
   public static final RegistryObject<TileEntityType<TileFanSlab>> FANSLAB = TILES.register("fan_slab", () -> TileEntityType.Builder.create(() -> new TileFanSlab(), BlockRegistry.FANSLAB.get()).build(null));
   public static final RegistryObject<TileEntityType<TileRotator>> ROTATOR = TILES.register("rotator", () -> TileEntityType.Builder.create(() -> new TileRotator(), BlockRegistry.ROTATOR.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileMoon>> DETECTORMOON = TILES.register("detector_moon", () -> TileEntityType.Builder.create(() -> new TileMoon(), BlockRegistry.DETECTORMOON.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileWeather>> DETECTORWEATHER = TILES.register("detector_weather", () -> TileEntityType.Builder.create(() -> new TileWeather(), BlockRegistry.DETECTORWEATHER.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileTerraGlass>> TERRAGLASS = TILES.register("terra_glass", () -> TileEntityType.Builder.create(() -> new TileTerraGlass(), BlockRegistry.TERRAGLASS.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
