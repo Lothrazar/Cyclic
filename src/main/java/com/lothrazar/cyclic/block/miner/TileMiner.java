@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.block.miner;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.item.datacard.BlockstateCard;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
@@ -13,7 +15,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.Property;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -44,13 +48,29 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   public static IntValue POWERCONF;
   private int shapeIndex = 0;
+  static final int SLOT_TOOL = 0;
+  static final int SLOT_FILTER = 1;
   static final int MAX_HEIGHT = 64;
   public static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
   private int height = MAX_HEIGHT / 2;
   private int radius = 5;
   static final int MAX = 64000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  ItemStackHandler inventory = new ItemStackHandler(1);
+  ItemStackHandler inventory = new ItemStackHandler(2) {
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      if (slot == SLOT_FILTER && stack.getItem() != ItemRegistry.STATECARD.get()) {
+        return false;
+      }
+      return true;
+    }
+  };
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
@@ -192,6 +212,36 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     return false;
   }
 
+  private boolean isValidTarget(BlockState targetState) {
+    ItemStack filter = inventory.getStackInSlot(SLOT_FILTER);
+    if (filter.isEmpty()) {
+      return true; //ya go
+    }
+    for (BlockState st : BlockstateCard.getSavedStates(filter)) {
+      if (targetState.getBlock() == st.getBlock()) {
+        //only this
+        boolean propy = this.propertiesMatch(targetState, st);
+        return propy;
+      }
+    }
+    return false;
+  }
+
+  private boolean propertiesMatch(BlockState targetState, BlockState st) {
+    try {
+      for (Property<?> p : st.getProperties()) {
+        if (!st.get(p).equals(targetState.get(p))) {
+          return false;
+        }
+      }
+    }
+    catch (Exception e) {
+      return false;
+    }
+    //none had a mismatch
+    return true;
+  }
+
   /***
    * Unbreakable blocks and fluid blocks are not valid. Otherwise checks if player:canHarvestBlock using its equipped item
    */
@@ -212,6 +262,9 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
         return false;
       }
+    }
+    if (!this.isValidTarget(blockSt)) {
+      return false;
     }
     //its a solid non-air, non-fluid block (but might be like waterlogged stairs or something)
     boolean canHarvest = blockSt.canHarvestBlock(world, targetPos, fakePlayer.get());

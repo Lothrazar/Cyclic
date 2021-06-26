@@ -195,15 +195,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     BlockPos nextPos = shape.get(this.shapeIndex);
     //start at current position and validate
     //does my shape exist? if so copy to it
-    if (SLOT_SHAPE < inventory.getSlots()) {
-      ItemStack shapeCard = inventory.getStackInSlot(SLOT_SHAPE);
-      if (shapeCard.getItem() instanceof ShapeCard) {
-        //copy 
-        shapeCard.setTag(null);
-        RelativeShape worldShape = new RelativeShape(null, shape, this.pos);
-        worldShape.write(shapeCard);
-      }
-    }
     ItemStack stack = inventory.getStackInSlot(SLOT_BUILD);
     //    if (stack.isEmpty()) {
     //      return;
@@ -274,6 +265,16 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   public List<BlockPos> getShape() {
+    if (SLOT_SHAPE < inventory.getSlots()) {
+      ItemStack shapeCard = inventory.getStackInSlot(SLOT_SHAPE);
+      if (shapeCard.getItem() instanceof ShapeCard) {
+        RelativeShape shape = RelativeShape.read(shapeCard);
+        shape.setWorldCenter(world, getPosTarget());
+        if (shape != null && shape.getShape() != null && shape.getShape().size() > 0) {
+          return shape.getShape();
+        }
+      }
+    }
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // ITEMSTACK / CARD storing what shape and settings to use
     // only rebuild shapes if they are different

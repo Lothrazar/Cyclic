@@ -42,7 +42,15 @@ public class RelativeShape {
    */
   public RelativeShape(World world, List<BlockPos> options, BlockPos center) {
     this();
+    this.shape = options;
+    if (world != null && center != null)
+      setWorldCenter(world, center);
+  }
+
+  public void setWorldCenter(World world, BlockPos center) {
     if (world != null) {
+      List<BlockPos> options = shape;
+      shape = new ArrayList<>();
       for (BlockPos pos : options) {
         BlockState bs = world.getBlockState(pos);
         if (bs.getBlock() != Blocks.AIR) {

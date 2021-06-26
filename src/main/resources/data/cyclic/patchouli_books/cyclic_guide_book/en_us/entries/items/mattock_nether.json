@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.mattock_nether",
+  "icon": "cyclic:mattock_nether",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.mattock_nether.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:mattock_nether"
+    }
+  ]
+}

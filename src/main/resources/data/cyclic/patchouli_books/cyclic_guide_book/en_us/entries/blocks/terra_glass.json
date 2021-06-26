@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.terra_glass",
+  "icon": "cyclic:terra_glass",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.terra_glass.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:terra_glass"
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " a ",
+    "cac",
     "cpc",
-    " a "
+    "cac"
   ],
   "key": {
     "a": {
-      "tag": "forge:dyes/purple"
+      "tag": "forge:dyes/yellow"
     },
     "c": {
       "item": "minecraft:iron_nugget"
@@ -18,6 +18,6 @@
   },
   "result": {
     "item": "cyclic:filter_data",
-    "count": 1
+    "count": 4
   }
 }

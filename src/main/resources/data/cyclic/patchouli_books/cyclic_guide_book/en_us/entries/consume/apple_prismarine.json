@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.apple_prismarine",
+  "icon": "cyclic:apple_prismarine",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.apple_prismarine.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:apple_prismarine"
+    }
+  ]
+}
