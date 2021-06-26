@@ -1,19 +1,19 @@
-package com.lothrazar.cyclic.block.terraglass;
+package com.lothrazar.cyclic.block.sprinkler;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Direction;
 
-public class TileTerraGlass extends TileEntityBase implements ITickableTileEntity {
+public class TileSprinkler extends TileEntityBase implements ITickableTileEntity {
 
-  private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL / 2;
-  private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
+  private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL;
+  private static final int RAD = 2;
 
-  public TileTerraGlass() {
-    super(TileRegistry.TERRAGLASS.get());
+  public TileSprinkler() {
+    super(TileRegistry.SPRINKLER.get());
   }
 
   @Override
@@ -28,18 +28,16 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
     boolean newLit = world.canBlockSeeSky(pos);
     if (lit != newLit) {
       this.setLitProperty(newLit);
-      world.notifyNeighborsOfStateChange(pos, this.getBlockState().getBlock());
     }
     if (!newLit) {
       return;
     }
-    for (int h = 0; h < DISTANCE; h++) {
-      BlockPos current = pos.down(h);
-      if (!world.canBlockSeeSky(current.up())) {
-        //        ModCyclic.LOGGER.info("sunbeam nogo " + h);
-        return;
-      }
-      TileTerraPreta.grow(world, current, 0.25);
+    final double d = 0.001;
+    for (int h = 1; h <= RAD; h++) {
+      TileTerraPreta.grow(world, pos.offset(Direction.NORTH, h), d);
+      TileTerraPreta.grow(world, pos.offset(Direction.SOUTH, h), d);
+      TileTerraPreta.grow(world, pos.offset(Direction.WEST, h), d);
+      TileTerraPreta.grow(world, pos.offset(Direction.EAST, h), d);
     }
   }
 

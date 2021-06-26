@@ -10,6 +10,8 @@ import net.minecraft.util.math.MathHelper;
 
 public class EvokerFangItem extends ItemBase {
 
+  private static final int COOLDOWN = 10;
+
   public EvokerFangItem(Properties properties) {
     super(properties.maxDamage(256 * 4));
   }
@@ -17,6 +19,11 @@ public class EvokerFangItem extends ItemBase {
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
+    if (player.getCooldownTracker().hasCooldown(this)) {
+      return super.onItemUse(context);
+    }
+    player.getCooldownTracker().setCooldown(context.getItem().getItem(), COOLDOWN);
+    player.swingArm(context.getHand());
     this.summonFangRay(player.getPosition().getX(), player.getPosition().getZ(), player, context.getHitVec().getX(), context.getHitVec().getY(), context.getHitVec().getZ());
     UtilItemStack.damageItem(player, context.getItem());
     return super.onItemUse(context);

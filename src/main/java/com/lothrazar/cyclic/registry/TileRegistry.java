@@ -53,6 +53,7 @@ import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmuffTile;
+import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.terraglass.TileTerraGlass;
@@ -86,6 +87,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileMoon>> DETECTORMOON = TILES.register("detector_moon", () -> TileEntityType.Builder.create(() -> new TileMoon(), BlockRegistry.DETECTORMOON.get()).build(null));
   public static final RegistryObject<TileEntityType<TileWeather>> DETECTORWEATHER = TILES.register("detector_weather", () -> TileEntityType.Builder.create(() -> new TileWeather(), BlockRegistry.DETECTORWEATHER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileTerraGlass>> TERRAGLASS = TILES.register("terra_glass", () -> TileEntityType.Builder.create(() -> new TileTerraGlass(), BlockRegistry.TERRAGLASS.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileSprinkler>> SPRINKLER = TILES.register("sprinkler", () -> TileEntityType.Builder.create(() -> new TileSprinkler(), BlockRegistry.SPRINKLER.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

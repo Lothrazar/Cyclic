@@ -17,7 +17,7 @@
 	}
   },
   "result": {
-    "item": "cyclic:filter_data",
+    "item": "cyclic:blockstate_data",
     "count": 4
   }
 }

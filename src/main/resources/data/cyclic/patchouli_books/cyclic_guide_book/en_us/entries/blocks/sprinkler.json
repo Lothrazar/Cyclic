@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.sprinkler",
+  "icon": "cyclic:sprinkler",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.sprinkler.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sprinkler"
+    }
+  ]
+}

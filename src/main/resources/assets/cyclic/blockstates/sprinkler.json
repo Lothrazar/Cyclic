@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "lit=false": {
+            "model": "cyclic:block/sprinkler"
+        },
+        "lit=true": {
+            "model": "cyclic:block/sprinkler_on"
+        }
+    }
+}

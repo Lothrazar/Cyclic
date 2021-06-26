@@ -127,6 +127,7 @@
     "item.cyclic.shape_data.state":"Empty block, select one with a click first",
     "item.cyclic.shape_data.empty":"Out of materials",
     "item.cyclic.shape_data.nothing":"Card requires a shape and a selected block",
+    "item.cyclic.shape_data.count":"Shape Size: ",
     
     "item.cyclic.settings_data":"Settings Data Card",
     "item.cyclic.settings_data.tooltip":"Copy settings between cyclic machines",
