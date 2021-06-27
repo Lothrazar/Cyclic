@@ -28,7 +28,8 @@ public class TileRotator extends TileEntityBase implements ITickableTileEntity {
       //
       if (state.getBlock() != Blocks.AIR &&
           state.getBlockHardness(world, target) >= 0) {
-        boolean succ = UtilPlaceBlocks.rotateBlockValidState(world, target, currentFacing.getOpposite());
+        //        boolean succ = 
+        UtilPlaceBlocks.rotateBlockValidState(world, target, currentFacing.getOpposite());
       }
     }
     //now powered and lit match
