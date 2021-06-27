@@ -15,6 +15,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -25,8 +26,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 public class TileSprinkler extends TileEntityBase implements ITickableTileEntity {
 
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
-  private static final int TIMER_FULL = 20;
-  private static final int WATERCOST = 5;
+  public static IntValue TIMER_FULL;
+  public static IntValue WATERCOST;
   private static final int RAD = 4;
   public FluidTankBase tank;
   private int shapeIndex = 0;
@@ -42,9 +43,9 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     if (timer > 0) {
       return;
     }
-    timer = TIMER_FULL;
+    timer = TIMER_FULL.get();
     this.grabWater();
-    if (tank.isEmpty() || tank.getFluidAmount() < WATERCOST) {
+    if (WATERCOST.get() > 0 && tank.getFluidAmount() < WATERCOST.get()) {
       return;
     }
     List<BlockPos> shape = UtilShape.squareHorizontalFull(pos, RAD);
@@ -55,11 +56,11 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     //drain is a per tick cost. at least per timer
     //otherwise if its slowly skipping over lots of empty plots it doesnt seem "turned off"
     //since no animation
-    tank.drain(WATERCOST, FluidAction.EXECUTE);
+    tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
     final double d = 0.001;
     if (TileTerraPreta.grow(world, shape.get(shapeIndex), d)) {
       //it worked, so double drain
-      tank.drain(WATERCOST, FluidAction.EXECUTE);
+      tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
     }
   }
 
