@@ -33,7 +33,7 @@ public class RenderSprinkler extends TileEntityRenderer<TileSprinkler> {
       return;
     }
     IVertexBuilder buffer = renderer.getBuffer(FluidTankRenderType.resizableCuboid());
-    matrix.scale(1F, UtilFluid.getScale(tankHere.tank) / 2F, 1F);
+    matrix.scale(1F, UtilFluid.getScale(tankHere.tank) / 4F, 1F);
     float f = 0.5F;
     matrix.scale(f, 1F, f);
     matrix.translate(f, 0, f);
