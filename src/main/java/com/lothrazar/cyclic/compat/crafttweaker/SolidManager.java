@@ -33,7 +33,7 @@ public class SolidManager implements IRecipeManager {
     if (output.getInternal().isEmpty()) {
       throw new IllegalArgumentException("Output cannot be empty!");
     }
-    RecipeSolidifier<?> m = new RecipeSolidifier(new ResourceLocation(CompatConstants.CT_ID, name),
+    RecipeSolidifier<?> m = new RecipeSolidifier(new ResourceLocation(CompatConstants.CRAFTTWEAKER, name),
         inputFirst.asVanillaIngredient(),
         inputSecond.asVanillaIngredient(),
         inputThird.asVanillaIngredient(),

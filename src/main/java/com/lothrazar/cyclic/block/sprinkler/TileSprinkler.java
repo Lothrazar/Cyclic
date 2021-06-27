@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
+import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
@@ -23,9 +24,10 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
 
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   private static final int TIMER_FULL = 40;
-  private static final int WATERCOST = 1;
+  private static final int WATERCOST = 50;
   private static final int RAD = 4;
   public FluidTankBase tank;
+  private int shapeIndex = 0;
 
   public TileSprinkler() {
     super(TileRegistry.SPRINKLER.get());
@@ -34,7 +36,6 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
-    //sprinkler to ONLY whats directly above/below
     timer--;
     if (timer > 0) {
       return;
@@ -44,15 +45,23 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     if (tank.isEmpty() || tank.getFluidAmount() < WATERCOST) {
       return;
     }
-    for (BlockPos p : UtilShape.squareHorizontalFull(pos, RAD)) {
-      if (tank.getFluidAmount() < WATERCOST) {
-        break;
-      }
-      tryGrow(p);
+    if (tank.getFluidAmount() < WATERCOST) {
+      return;
+    }
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(pos, RAD);
+    shapeIndex++;
+    if (shapeIndex >= shape.size()) {
+      shapeIndex = 0;
+    }
+    final double d = 0.001;
+    if (TileTerraPreta.grow(world, shape.get(shapeIndex), d)) {
+      tank.drain(WATERCOST, FluidAction.EXECUTE);
+      //it worked
     }
   }
 
   private void grabWater() {
+    //only drink from below. similar to but updated from 1.12.2
     BlockState down = world.getBlockState(pos.down());
     if (tank.isEmpty() && down.getBlock() == Blocks.WATER
         && down.getFluidState().isSource()) {
@@ -61,17 +70,11 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     }
   }
 
-  private void tryGrow(BlockPos offset) {
-    final double d = 0.001;
-    if (TileTerraPreta.grow(world, offset, d)) {
-      tank.drain(WATERCOST, FluidAction.EXECUTE);
-    }
-  }
-
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     CompoundNBT fluid = tag.getCompound("fluid");
     tank.readFromNBT(fluid);
+    shapeIndex = tag.getInt("shapeIndex");
     super.read(bs, tag);
   }
 
@@ -80,6 +83,7 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put("fluid", fluid);
+    tag.putInt("shapeIndex", shapeIndex);
     return super.write(tag);
   }
 

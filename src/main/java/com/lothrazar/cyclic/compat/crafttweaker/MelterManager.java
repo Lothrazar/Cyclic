@@ -28,7 +28,7 @@ public class MelterManager implements IRecipeManager {
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient inputFirst, IIngredient inputSecond, IFluidStack fluidStack) {
     name = fixRecipeName(name);
-    RecipeMelter<?> m = new RecipeMelter(new ResourceLocation(CompatConstants.CT_ID, name),
+    RecipeMelter<?> m = new RecipeMelter(new ResourceLocation(CompatConstants.CRAFTTWEAKER, name),
         inputFirst.asVanillaIngredient(),
         inputSecond.asVanillaIngredient(),
         new FluidStack(fluidStack.getFluid(), fluidStack.getAmount()));
