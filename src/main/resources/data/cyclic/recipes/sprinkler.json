@@ -10,7 +10,7 @@
       "item": "minecraft:cauldron"
     },
     "c": {
-      "item": "minecraft:brick"
+      "item": "cyclic:terra_glass"
     },
     "b": {
       "item": "cyclic:hopper_fluid"

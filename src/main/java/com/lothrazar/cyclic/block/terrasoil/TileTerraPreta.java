@@ -10,7 +10,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.IPlantable;
 
 public class TileTerraPreta extends TileEntityBase implements ITickableTileEntity {
 
@@ -36,33 +35,28 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
   }
 
   @SuppressWarnings("deprecation")
-  public static void grow(World world, BlockPos current, double d) {
+  public static boolean grow(World world, BlockPos current, double d) {
     BlockState bState = world.getBlockState(current);
     if (bState == null || bState.getBlock() == null) {
-      return;
+      return false;
     }
     Block block = bState.getBlock();
     if (!isValidGrow(world, current, bState)) {
-      return;
+      return false;
     }
-    if (block instanceof IPlantable || block instanceof IGrowable) {
-      if (block instanceof IGrowable) {
-        IGrowable crop = ((IGrowable) block);
-        if (!crop.canGrow(world, current, bState, world.isRemote) || !crop.canUseBonemeal(world, world.rand, current, bState)) {
-          return;
-        }
-      }
-      if (world instanceof ServerWorld) {
-        try {
-          ServerWorld sw = (ServerWorld) world;
+    if (world instanceof ServerWorld) {
+      try {
+        ServerWorld sw = (ServerWorld) world;
+        block.randomTick(bState, sw, current, world.rand);
+        if (world.rand.nextDouble() < d) {
           block.randomTick(bState, sw, current, world.rand);
-          if (world.rand.nextDouble() < d) {
-            block.randomTick(bState, sw, current, world.rand);
-          }
         }
-        catch (Exception e) {}
+      }
+      catch (Exception e) {
+        return false;
       }
     }
+    return true;
   }
 
   private static boolean isValidGrow(World world, BlockPos current, BlockState bState) {
@@ -73,7 +67,7 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
       }
     }
     //check tags
-    return bState.isIn(BlockTags.CROPS ) || bState.isIn(BlockTags.SAPLINGS);
+    return bState.isIn(BlockTags.CROPS) || bState.isIn(BlockTags.SAPLINGS);
   }
 
   @Override
