@@ -35,12 +35,6 @@ public class GloveItem extends ItemBase implements IHasClickToggle {
       if (player.collidedHorizontally) {
         World world = player.getEntityWorld();
         UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
-        //        stack.damageItem(1, player);
-        //        if (world.isRemote &&
-        //            player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
-        //          //SOUND DOES WORK I JSUT dont like it anymore lol
-        //          //  UtilStuff.playSound(player, SoundEvents.BLOCK_LADDER_STEP);
-        //        }
       }
     }
   }

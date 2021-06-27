@@ -43,8 +43,9 @@ public class RelativeShape {
   public RelativeShape(World world, List<BlockPos> options, BlockPos center) {
     this();
     this.shape = options;
-    if (world != null && center != null)
+    if (world != null && center != null) {
       setWorldCenter(world, center);
+    }
   }
 
   public void setWorldCenter(World world, BlockPos center) {
@@ -55,7 +56,6 @@ public class RelativeShape {
         BlockState bs = world.getBlockState(pos);
         if (bs.getBlock() != Blocks.AIR) {
           shape.add(pos.add(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
-          //          states.add(bs);
         }
       }
     }
@@ -102,11 +102,9 @@ public class RelativeShape {
     int i = 0;
     int count = 0;
     for (BlockPos p : shape) {
-      // 
       tag.putInt("x" + i, p.getX());
       tag.putInt("y" + i, p.getY());
       tag.putInt("z" + i, p.getZ());
-      //      p.re
       i++;
       count = i;
     }

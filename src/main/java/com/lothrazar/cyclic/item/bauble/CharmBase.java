@@ -1,32 +1,21 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.base.IHasClickToggle;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.List;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public abstract class CharmBase extends ItemBase implements IHasClickToggle {
+public abstract class CharmBase extends ItemBaseToggle {
 
   private static final int yLowest = -30;
   private static final int yDest = 255;
@@ -38,10 +27,6 @@ public abstract class CharmBase extends ItemBase implements IHasClickToggle {
 
   public CharmBase(Properties properties) {
     super(properties);
-  }
-
-  private boolean canUse(ItemStack stack) {
-    return stack.getDamage() < stack.getMaxDamage();
   }
 
   @Override
@@ -57,27 +42,6 @@ public abstract class CharmBase extends ItemBase implements IHasClickToggle {
     tryPoisonTick(stack, entityIn, living);
     tryWitherTick(stack, entityIn, living);
     tryFireTick(stack, living);
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
-    TranslationTextComponent t = new TranslationTextComponent("item.cyclic.bauble.on." + this.isOn(stack));
-    t.mergeStyle(TextFormatting.DARK_GRAY);
-    tooltip.add(t);
-  }
-
-  @Override
-  public void toggle(PlayerEntity player, ItemStack held) {
-    CompoundNBT tag = held.getOrCreateTag();
-    tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
-    held.setTag(tag);
-  }
-
-  @Override
-  public boolean isOn(ItemStack held) {
-    return held.getOrCreateTag().getInt(NBT_STATUS) == 0;
   }
 
   private void tryFireTick(ItemStack stack, LivingEntity living) {
