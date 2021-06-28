@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.soundmuff;
+package com.lothrazar.cyclic.block.soundmuff.ghost;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;

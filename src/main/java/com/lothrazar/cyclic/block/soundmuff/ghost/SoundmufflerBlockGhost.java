@@ -1,5 +1,6 @@
-package com.lothrazar.cyclic.block.soundmuff;
+package com.lothrazar.cyclic.block.soundmuff.ghost;
 
+import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

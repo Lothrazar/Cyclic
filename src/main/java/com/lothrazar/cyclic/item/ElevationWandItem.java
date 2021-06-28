@@ -2,11 +2,11 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -41,7 +41,7 @@ public class ElevationWandItem extends ItemBase {
       UtilSound.playSound(target, target.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
       if (!world.isRemote) {
         UtilEntity.enderTeleportEvent(target, world, destination);
-        stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity) playerIn);
+        UtilItemStack.damageItem(playerIn, stack);
       }
       //play sound att new location also, may be far away
       UtilSound.playSound(target, target.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);

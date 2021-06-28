@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.soundmuff;
+package com.lothrazar.cyclic.block.soundmuff.ghost;
 
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;

@@ -70,7 +70,7 @@ import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
 import com.lothrazar.cyclic.block.shapedata.BlockShapedata;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
-import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlockGhost;
+import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmufflerBlockGhost;
 import com.lothrazar.cyclic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
