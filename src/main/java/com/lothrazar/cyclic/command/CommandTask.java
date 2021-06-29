@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
+import com.lothrazar.cyclic.event.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
-import com.lothrazar.cyclic.event.PlayerDataEvents.CyclicFile;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import java.util.List;

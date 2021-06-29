@@ -11,6 +11,8 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.CarbonPaperItem;
+import com.lothrazar.cyclic.item.EdibleFlightItem;
+import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
 import com.lothrazar.cyclic.item.EnderCookie;
@@ -118,6 +120,9 @@ public class ItemRegistry {
   public static final RegistryObject<Item> TERRAGLASS = ITEMS.register("terra_glass", () -> new BlockItem(BlockRegistry.TERRAGLASS.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> STATECARD = ITEMS.register("blockstate_data", () -> new BlockstateCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SPRINKLER = ITEMS.register("sprinkler", () -> new BlockItem(BlockRegistry.SPRINKLER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SHEARING = ITEMS.register("shearing", () -> new BlockItem(BlockRegistry.SHEARING.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CHORUS_FLIGHT = ITEMS.register("chorus_flight", () -> new EdibleFlightItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHORUS_SPECTRAL = ITEMS.register("chorus_spectral", () -> new EdibleSpecItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":gem_amber")

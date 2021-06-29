@@ -28,11 +28,6 @@ public class SoundmufflerBlockGhost extends SoundmufflerBlock {
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.soundproofing_ghost, SoundmuffRender::new);
   }
-  //
-  //  @Override
-  //  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-  //    return false;
-  //  }
 
   @Override
   public boolean hasTileEntity(BlockState state) {

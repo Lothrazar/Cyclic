@@ -6,11 +6,9 @@ import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
-import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
-import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -22,22 +20,17 @@ import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.HorseInventoryScreen;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class EventRender {
   //  @OnlyIn(Dist.CLIENT)
@@ -50,8 +43,9 @@ public class EventRender {
   @SubscribeEvent
   public void overlay(RenderGameOverlayEvent.Post event) {
     //Build scepter feature : render selected blockstate in cross hair
+    PlayerEntity player = Minecraft.getInstance().player;
+    Minecraft mc = Minecraft.getInstance();
     if (event.getType() == ElementType.CROSSHAIRS) {
-      PlayerEntity player = Minecraft.getInstance().player;
       ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
       if (itemStackHeld.getItem() instanceof BuilderItem) {
         //
@@ -62,54 +56,67 @@ public class EventRender {
           int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
             //nothing found
-            drawString(event.getMatrixStack(), "" + 0);
+            int width = mc.getMainWindow().getScaledWidth();
+            int height = mc.getMainWindow().getScaledHeight();
+            drawString(event.getMatrixStack(), "" + 0, width / 2 + 16, height / 2 + 12);
           }
         }
+      }
+    }
+    else if (event.getType() == ElementType.TEXT) {
+      //
+      CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
+      if (datFile.flyTicks > 0) {
+        int seconds = datFile.flyTicks / 20;
+        int height = mc.getMainWindow().getScaledHeight();
+        drawString(event.getMatrixStack(), "flight " + seconds, 10, height - 30);
+      }
+      if (datFile.spectatorTicks > 0) {
+        int seconds = datFile.spectatorTicks / 20;
+        int height = mc.getMainWindow().getScaledHeight();
+        drawString(event.getMatrixStack(), "noClip " + seconds, 10, height - 10);
       }
     }
   }
 
   @OnlyIn(Dist.CLIENT)
-  private void drawString(MatrixStack ms, String str) {
+  public static void drawString(MatrixStack ms, String str, int x, int y) {
     Minecraft mc = Minecraft.getInstance();
-    int width = mc.getMainWindow().getScaledWidth();
-    int height = mc.getMainWindow().getScaledHeight();
-    mc.fontRenderer.drawString(ms, str, width / 2 + 16, height / 2 + 12, 0xFFFFFF);
+    mc.fontRenderer.drawString(ms, str, x, y, 0xFFFFFF);
   }
 
   @OnlyIn(Dist.CLIENT)
-  private void drawStack(ItemStack stack) {
+  public static void drawStack(ItemStack stack) {
     Minecraft mc = Minecraft.getInstance();
     int width = mc.getMainWindow().getScaledWidth();
     int height = mc.getMainWindow().getScaledHeight();
     mc.getItemRenderer().renderItemAndEffectIntoGUI(stack, width / 2, height / 2);
   }
-
-  @OnlyIn(Dist.CLIENT)
-  @SubscribeEvent
-  public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
-    //
-    PlayerEntity player = Minecraft.getInstance().player;
-    if (event.getGui() instanceof HorseInventoryScreen
-        && player != null
-        && player.getRidingEntity() != null) {
-      Entity liv = player.getRidingEntity();
-      if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
-          && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
-        //
-        int ct = liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE);
-        ExtendedButton bt2 = new ExtendedButton(event.getGui().width / 2 + 68,
-            event.getGui().height / 2 - 80,
-            //cyclic.carrot_ender.charges
-            18, 14, new StringTextComponent("" + ct), b -> {
-              //              if(event.i)
-              UtilChat.addChatMessage(player, "item.cyclic.carrot_ender.tooltip");
-              //                  test);
-            });
-        event.addWidget(bt2);
-      }
-    }
-  }
+  //  @OnlyIn(Dist.CLIENT)
+  //  @SubscribeEvent
+  //  public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
+  //   
+  //    PlayerEntity player = Minecraft.getInstance().player;
+  //    if (event.getGui() instanceof HorseInventoryScreen
+  //        && player != null
+  //        && player.getRidingEntity() != null) {
+  //      Entity liv = player.getRidingEntity();
+  //      if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
+  //          && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
+  //        //
+  //        int ct = liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE);
+  //        ExtendedButton bt2 = new ExtendedButton(event.getGui().width / 2 + 68,
+  //            event.getGui().height / 2 - 80,
+  //            //cyclic.carrot_ender.charges
+  //            18, 14, new StringTextComponent("" + ct), b -> {
+  //              //              if(event.i)
+  //              UtilChat.addChatMessage(player, "item.cyclic.carrot_ender.tooltip");
+  //              //                  test);
+  //            });
+  //        event.addWidget(bt2);
+  //      }
+  //    }
+  //  }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -121,7 +128,7 @@ public class EventRender {
     World world = player.world;
     double range = 6F;
     float alpha = 0.125F * 2;
-    Map<BlockPos, Color> mappos = new HashMap<>();
+    Map<BlockPos, Color> renderCubes = new HashMap<>();
     // could refactor here, three cases
     ///////////////////// BuilderItem
     ItemStack stack = BuilderItem.getIfHeld(player);
@@ -139,7 +146,7 @@ public class EventRender {
         //now the item has a build area
         List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getFace(), buildStyle);
         for (BlockPos coordinate : coordinates) {
-          mappos.put(coordinate, col);
+          renderCubes.put(coordinate, col);
         }
       }
     }
@@ -152,7 +159,7 @@ public class EventRender {
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getPos(), lookingAt.getFace());
       for (BlockPos e : coords) {
-        mappos.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? Color.GREEN : Color.RED);
+        renderCubes.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? Color.GREEN : Color.RED);
       }
     }
     ///////////////////// LocationGpsItem
@@ -162,7 +169,7 @@ public class EventRender {
       if (loc != null) {
         if (loc.getDimension() == null ||
             loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
-          mappos.put(loc.getPos(), Color.BLUE);
+          renderCubes.put(loc.getPos(), Color.BLUE);
         }
       }
     }
@@ -174,15 +181,15 @@ public class EventRender {
         //TODO: offsetTo
         //        shape.offsetTo(pos)
         for (BlockPos s : shape.getShape()) {
-          mappos.put(here.add(s), Color.ORANGE);
+          renderCubes.put(here.add(s), Color.ORANGE);
         }
       }
     }
     // other items added here
     //
     //render the pos->colour map
-    if (mappos.keySet().size() > 0) {
-      UtilRender.renderColourCubes(evt, mappos, alpha);
+    if (renderCubes.keySet().size() > 0) {
+      UtilRender.renderColourCubes(evt, renderCubes, alpha);
     }
   }
 }

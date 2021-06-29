@@ -68,6 +68,7 @@ import com.lothrazar.cyclic.block.scaffolding.BlockScaffoldingResponsive;
 import com.lothrazar.cyclic.block.screen.BlockScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.BlockStructure;
 import com.lothrazar.cyclic.block.shapedata.BlockShapedata;
+import com.lothrazar.cyclic.block.shears.BlockShearing;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmufflerBlockGhost;
@@ -111,6 +112,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> DETECTORWEATHER = BLOCKS.register("detector_weather", () -> new BlockWeather(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> TERRAGLASS = BLOCKS.register("terra_glass", () -> new BlockTerraGlass(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new BlockSprinkler(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> SHEARING = BLOCKS.register("shearing", () -> new BlockShearing(Block.Properties.create(Material.ROCK)));
   //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;

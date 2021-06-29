@@ -38,6 +38,8 @@ import com.lothrazar.cyclic.enchant.EnchantStep;
 import com.lothrazar.cyclic.enchant.EnchantTraveller;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
+import com.lothrazar.cyclic.item.EdibleFlightItem;
+import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
@@ -235,6 +237,11 @@ public class ConfigRegistry {
     MaterialRegistry.OBS_DMG = CFG.comment("Weapon damage").defineInRange("damage", 10.5F, 0.1F, 99F);
     CFG.pop();
     //
+    CFG.comment(WALL, " Edible chorus settings", WALL).push("chorus");
+    EdibleFlightItem.TICKS = CFG.comment("Seconds of flight per chorus_flight").defineInRange("ticks", 20 * 60, 1, 20 * 1000);
+    //
+    EdibleSpecItem.TICKS = CFG.comment("Seconds of noClip per chorus_spectral").defineInRange("ticks", 20 * 30, 1, 20 * 1000);
+    CFG.pop();
     //
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");

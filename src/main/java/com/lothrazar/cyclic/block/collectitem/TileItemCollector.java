@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
@@ -37,6 +39,13 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   //radius 7 translates to 15x15 area (center block + 7 each side)
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getItem() == ItemRegistry.filter_data;
+    }
+  };
   private int radius = 8;
 
   public TileItemCollector() {
@@ -61,6 +70,10 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     if (list.size() > 0) {
       ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();
+      // and then pull 
+      if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), remainder)) {
+        return; //not allowed
+      }
       for (int i = 0; i < inventory.getSlots(); i++) {
         if (remainder.isEmpty()) {
           break;
@@ -94,6 +107,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    filter.deserializeNBT(tag.getCompound("filter"));
     radius = tag.getInt("radius");
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
@@ -103,6 +117,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.put("filter", filter.serializeNBT());
     tag.putInt("radius", radius);
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);

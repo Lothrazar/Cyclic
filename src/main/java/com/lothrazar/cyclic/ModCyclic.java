@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.compat.curios.CuriosRegistry;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.event.ItemEvents;
+import com.lothrazar.cyclic.event.PlayerAbilityEvents;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
 import com.lothrazar.cyclic.event.WorldGenEvents;
@@ -67,5 +68,6 @@ public class ModCyclic {
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(new WorldGenEvents());
     MinecraftForge.EVENT_BUS.register(new PlayerDataEvents());
+    MinecraftForge.EVENT_BUS.register(new PlayerAbilityEvents());
   }
 }
