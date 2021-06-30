@@ -14,14 +14,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public abstract class ItemBaseToggle extends ItemBase implements IHasClickToggle {
+public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
 
   public ItemBaseToggle(Properties properties) {
     super(properties);
   }
 
+  /**
+   * ElytraItem::isUsable static
+   * 
+   * @param stack
+   * @return
+   */
   public boolean canUse(ItemStack stack) {
-    return stack.getDamage() < stack.getMaxDamage();
+    return stack.getDamage() < stack.getMaxDamage() - 1;
   }
 
   @Override
@@ -42,7 +48,10 @@ public abstract class ItemBaseToggle extends ItemBase implements IHasClickToggle
 
   @Override
   public boolean isOn(ItemStack held) {
-    return held.getOrCreateTag().getInt(NBT_STATUS) == 0;
+    if (held.getTag() == null) {
+      return false;
+    }
+    return held.getTag().getInt(NBT_STATUS) == 0;
   }
 
   @Override

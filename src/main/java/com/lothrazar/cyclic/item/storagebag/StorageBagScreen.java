@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.storagebag;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.net.PacketItemStackNBT;
+import com.lothrazar.cyclic.net.PacketStorageBagScreen;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -139,7 +139,7 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
         index = 0;
       }
       this.setMessage(titles.get(index));
-      PacketRegistry.INSTANCE.sendToServer(new PacketItemStackNBT(
+      PacketRegistry.INSTANCE.sendToServer(new PacketStorageBagScreen(
           StorageBagScreen.this.container.bag, StorageBagScreen.this.container.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
 

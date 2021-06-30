@@ -12,10 +12,63 @@
     "block.cyclic.experience_pylon": "Experience Pylon",
     "block.cyclic.experience_pylon.tooltip": "Collects nearby XP orbs, players above",
     "block.cyclic.experience_pylon.guide": "The Experience Pylon automatically collects nearby experience orbs and stores them as Fluid Experience in its internal buffer. $(l:misc/fluid_experience)Fluid Experience$(/l) can be pumped into and out of the pylon.$(br2)Additionally, the player may right click a filled Experience Pylon with a piece of Sugar to enrich it with experience, creating an $(l:misc/experience_food)Experience Confection$(/l).",
-	"item.cyclic.experience_food": "Experience Confection",
-	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
+	  "item.cyclic.experience_food": "Experience Confection",
+	  "item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
     "item.cyclic.experience_food.guide": "Created by using a piece of Sugar on a filled Experience Pylon. Eat the confection to gain the experience held within, or use it on an Experience Pylon to put experience back into the pylon.",
     "item.cyclic.experience_food.guide0": "Can also be created by combining Fluid Experience and Sugar in a $(l:machines/solidifier)Solidification Chamber$(/l), and turned back into Fluid Experience in a $(l:machines/melter)Melting Chamber$(/l).",
+
+
+		"item.cyclic.charm_stone": "Ethereal Circlet",
+		"item.cyclic.charm_stone.tooltip": "Immune to suffocation & elytra crash damage",
+
+		"item.cyclic.charm_creeper": "Dormant Creeper Spore",
+		"item.cyclic.charm_creeper.tooltip": "Immune to explosion damage",
+		"item.cyclic.charm_creeper.guide": "Immune to explosion damage",
+		
+		"item.cyclic.charm_crit": "Bracers of the Titans",
+		"item.cyclic.charm_crit.tooltip": "Critical hit damage is doubled",
+		"item.cyclic.charm_crit.guide": "Critical hit damage is doubled",
+		
+		"item.cyclic.quiver_lightning": "Paladin's Quiver",
+		"item.cyclic.quiver_lightning.tooltip": "Living targets have a 25% chance of retribution",
+		"item.cyclic.quiver_lightning.guide": "Living targets have a 25% chance of lightning bolt spawned on the entity",
+		
+		"item.cyclic.quiver_damage": "Crusader's Quiver",
+		"item.cyclic.quiver_damage.tooltip": "Arrow damage increased by 50%",
+		"item.cyclic.quiver_damage.guide": "Arrow damage increased by 50%",
+		
+		
+		"item.cyclic.charm_venom": "Spiderfang Amulet",
+		"item.cyclic.charm_venom.tooltip": "Attacks have 25% chance to poison target",
+		"item.cyclic.charm_venom.guide": "When damage dealt from the player as a source, this adds a chance to give the poison potion effect for a few seconds on the target",
+		
+		"item.cyclic.charm_water": "Waterbreathing Charm",
+		"item.cyclic.charm_water.tooltip": "Immune to Drowning Damage",
+		"item.cyclic.charm_water.guide": "Prevent drowning damage after air is empty",
+		
+		"item.cyclic.charm_starvation": "Everlasting Rock Candy",
+		"item.cyclic.charm_starvation.tooltip": "Immune to damage and death by starvation",
+		"item.cyclic.charm_starvation.guide": "Immune to damage and death by starvation",
+		
+		"item.cyclic.charm_invisible": "Cloak of Invisibility",
+		"item.cyclic.charm_invisible.tooltip": "Grants consistent invisibility",
+		"item.cyclic.charm_invisible.guide": "Applies the invisibility potion effect like a beacon would",
+		
+		"item.cyclic.charm_boostpotion": "Broken Phylactery",
+		"item.cyclic.charm_boostpotion.tooltip": "Potion duration increased by 50%",
+		"item.cyclic.charm_boostpotion.guide": "Potion duration increased by 50%",
+		
+		"item.cyclic.charm_stealthpotion": "Runic Signet of Alchemy",
+		"item.cyclic.charm_stealthpotion.tooltip": "Disables potion particles",
+		"item.cyclic.charm_stealthpotion.guide": "Disables potion particles at the moment you gain the effect, or drink the potion.  Does not work on existing effects, so if you drink a potion and then equip it does not know",
+		
+		"item.cyclic.charm_antipotion": "Alchemical Veil",
+		"item.cyclic.charm_antipotion.tooltip": "Immune to ailments and effects",
+		"item.cyclic.charm_antipotion.guide": "Potion duration is nullified at the time of consumption.  Treats positive and negative effects the same.  Ignores instant effects",
+		
+		"item.cyclic.charm_longfall": "Silkweave Slippers",
+		"item.cyclic.charm_longfall.tooltip": "Immune to fall damage",
+		"item.cyclic.charm_longfall.guide": "Immune to fall damage, and cactus and sweetberry damage",
 
 
 		"item.cyclic.crafting_stick": "Crafting Stick",

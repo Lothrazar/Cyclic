@@ -132,8 +132,10 @@ dependencies {
     implementation fg.deobf("curse.maven:cofh-core-69162:3249453")
 	  implementation fg.deobf("curse.maven:ensorcellation-349447:3246996")
 
-  // implementation fg.deobf("curse.maven:mantle-74924:3273201")
-  // implementation fg.deobf("curse.maven:inspirations-284007:3170862")
+   implementation fg.deobf("curse.maven:mantle-74924:3273201")
+   implementation fg.deobf("curse.maven:inspirations-284007:3170862")
+   implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
+   implementation fg.deobf("curse.maven:quark-243121:3366626")
   // implementation fg.deobf("curse.maven:simple-storage-network-268495:3230736")
 	// implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
   // implementation fg.deobf("curse.maven:cucumber-272335:3187116")

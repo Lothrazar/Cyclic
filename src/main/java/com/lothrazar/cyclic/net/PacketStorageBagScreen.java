@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import java.util.function.Supplier;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketItemStackNBT extends PacketBase {
+public class PacketStorageBagScreen extends PacketBase {
 
   private ItemStack stack;
   private byte type;
@@ -28,9 +29,9 @@ public class PacketItemStackNBT extends PacketBase {
   private StringNBT nbtKey;
   private INBT nbtValue;
 
-  public PacketItemStackNBT() {}
+  public PacketStorageBagScreen() {}
 
-  public PacketItemStackNBT(ItemStack stack, int slot, byte type, StringNBT nbtKey, INBT nbtValue) {
+  public PacketStorageBagScreen(ItemStack stack, int slot, byte type, StringNBT nbtKey, INBT nbtValue) {
     this.stack = stack;
     this.slot = slot;
     this.type = type;
@@ -38,7 +39,7 @@ public class PacketItemStackNBT extends PacketBase {
     this.nbtValue = nbtValue;
   }
 
-  public static void handle(PacketItemStackNBT message, Supplier<NetworkEvent.Context> context) {
+  public static void handle(PacketStorageBagScreen message, Supplier<NetworkEvent.Context> context) {
     context.get().enqueueWork(() -> {
       ServerPlayerEntity player = context.get().getSender();
       if (player != null) {
@@ -46,9 +47,14 @@ public class PacketItemStackNBT extends PacketBase {
         if (0 <= message.slot && message.slot < player.inventory.getSizeInventory()) {
           serverStack = player.inventory.getStackInSlot(message.slot);
         }
-        if (!serverStack.isEmpty()) {
+        //TODO: fix refactor this whole thing with RefilMode enum or somee shit
+        String key = message.nbtKey.getString();
+        if (!serverStack.isEmpty()
+            && serverStack.getItem() == ItemRegistry.storage_bag
+            && (key.equals("refill_mode") || key.equals("deposit_mode") || key.equals("pickup_mode"))) {
+          System.out.println("message.nbtKey.getString()" + message.nbtKey.getString());
           //          System.out.printf("Before set on stack %s%n", serverStack.getOrCreateTag().getString());
-          serverStack.getOrCreateTag().put(message.nbtKey.getString(), message.nbtValue);
+          serverStack.getOrCreateTag().put(key, message.nbtValue);
           //          System.out.printf("After set on stack %s%n", serverStack.getOrCreateTag().getString());
         }
       }
@@ -56,8 +62,8 @@ public class PacketItemStackNBT extends PacketBase {
     message.done(context);
   }
 
-  public static PacketItemStackNBT decode(PacketBuffer buffer) {
-    PacketItemStackNBT packet = new PacketItemStackNBT();
+  public static PacketStorageBagScreen decode(PacketBuffer buffer) {
+    PacketStorageBagScreen packet = new PacketStorageBagScreen();
     packet.slot = buffer.readInt();
     packet.type = buffer.readByte();
     packet.stack = buffer.readItemStack();
@@ -106,7 +112,7 @@ public class PacketItemStackNBT extends PacketBase {
     return packet;
   }
 
-  public static void encode(PacketItemStackNBT message, PacketBuffer buffer) {
+  public static void encode(PacketStorageBagScreen message, PacketBuffer buffer) {
     buffer.writeInt(message.slot);
     buffer.writeByte(message.type);
     buffer.writeItemStack(message.stack);

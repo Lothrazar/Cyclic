@@ -64,17 +64,27 @@ public class EventRender {
       }
     }
     else if (event.getType() == ElementType.TEXT) {
-      //
+      int height = mc.getMainWindow().getScaledHeight();
+      //      int width = mc.getMainWindow().getScaledWidth();
+      //      //
+      //      // 
+      //      int seconds = (int) (player.world.getDayTime() / 20);
+      //      int minutes = seconds / 60;
+      //      int hours = minutes / 60;
+      //      //8pm = 20000
+      //      //noon = 12000
+      //      //8am = 8000
+      //      drawString(event.getMatrixStack(), "" + player.getPosition().toString(), width - 50, height - 30);
+      //      drawString(event.getMatrixStack(), "" + player.world.getDayTime(), width - 50, height - 60);
+      // now files
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
       if (datFile.flyTicks > 0) {
-        int seconds = datFile.flyTicks / 20;
-        int height = mc.getMainWindow().getScaledHeight();
-        drawString(event.getMatrixStack(), "flight " + seconds, 10, height - 30);
+        int sec = datFile.flyTicks / 20;
+        drawString(event.getMatrixStack(), "flight " + sec, 10, height - 30);
       }
       if (datFile.spectatorTicks > 0) {
-        int seconds = datFile.spectatorTicks / 20;
-        int height = mc.getMainWindow().getScaledHeight();
-        drawString(event.getMatrixStack(), "noClip " + seconds, 10, height - 10);
+        int sec = datFile.spectatorTicks / 20;
+        drawString(event.getMatrixStack(), "noClip " + sec, 10, height - 10);
       }
     }
   }

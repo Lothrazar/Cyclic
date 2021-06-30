@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PlayerAbilityEvents {
 
-  private static final int DISABLE_OFFSET = 2;
+  private static final int DISABLE_OFFSET = 6;
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
@@ -40,6 +40,7 @@ public class PlayerAbilityEvents {
     }
     if (datFile.flyTicks > DISABLE_OFFSET) {
       player.abilities.allowFlying = true;
+      ModCyclic.LOGGER.info("allowFlying");
     }
     else if (datFile.flyTicks <= DISABLE_OFFSET) {
       player.abilities.allowFlying = false;

@@ -1,5 +1,7 @@
-package com.lothrazar.cyclic.compat.curios;
+package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -9,7 +11,19 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import top.theillusivec4.curios.api.CuriosApi;
 
-public class CuriosUtil {
+public class CharmUtil {
+
+  public static ItemStack getIfEnabled(PlayerEntity player, Item match) {
+    Triple<String, Integer, ItemStack> found = isCurioOrInventory(player, match);
+    ItemStack stack = found == null ? ItemStack.EMPTY : found.getRight();
+    if (stack.getItem() instanceof IHasClickToggle) {
+      IHasClickToggle testMe = (IHasClickToggle) stack.getItem();
+      if (testMe.isOn(stack) == false) {
+        return ItemStack.EMPTY; // found but player turned it off so dont use it
+      }
+    }
+    return stack;
+  }
 
   /**
    * First check curios. Then player inventory. Then left/right hands, not ender chest
@@ -21,13 +35,19 @@ public class CuriosUtil {
   public static Triple<String, Integer, ItemStack> isCurioOrInventory(PlayerEntity player, Item match) {
     Triple<String, Integer, ItemStack> stackFound = Triple.of("", -1, ItemStack.EMPTY);
     if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
-      //check curios slots
-      final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
-      if (equipped != null && isMatching(equipped.right, match)) {
-        //success: try to insert items to network thru this remote 
-        return Triple.of("curios", equipped.middle, equipped.right);
+      //check curios slots IF mod is loaded
+      try {
+        final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
+        if (equipped != null && isMatching(equipped.right, match)) {
+          return Triple.of("curios", equipped.middle, equipped.right);
+        }
+      }
+      catch (Exception e) {
+        // if API not installed or fails
+        ModCyclic.LOGGER.info("curios api error", e);
       }
     }
+    //is "baubles" in 1.16? 
     //not curios, check others
     //    for (int i = 0; i < player.getInventoryEnderChest().getSizeInventory(); i++) {
     //      ItemStack temp = player.getInventoryEnderChest().getStackInSlot(i);
@@ -51,7 +71,7 @@ public class CuriosUtil {
     return stackFound;
   }
 
-  private static boolean isMatching(ItemStack current, Item match) {
+  public static boolean isMatching(ItemStack current, Item match) {
     return current.getItem() == match;
   }
 }
