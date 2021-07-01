@@ -2,10 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "g g",
-    "f f",
+    "fsf",
     "gag"
   ],
   "key": {
+    "s": {
+      "item": "minecraft:cobweb"
+    },
     "g": {
       "item": "minecraft:nether_bricks"
     },
