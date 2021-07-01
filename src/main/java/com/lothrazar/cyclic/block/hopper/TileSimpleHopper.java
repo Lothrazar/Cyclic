@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -20,7 +21,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileSimpleHopper extends TileEntityBase implements ITickableTileEntity {
+public class TileSimpleHopper extends TileEntityBase implements ITickableTileEntity, IHopper {
 
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -128,5 +129,20 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
   @Override
   public int getField(int field) {
     return 0;
+  }
+
+  @Override
+  public double getXPos() {
+    return this.getPos().getX();
+  }
+
+  @Override
+  public double getYPos() {
+    return this.getPos().getY();
+  }
+
+  @Override
+  public double getZPos() {
+    return this.getPos().getZ();
   }
 }

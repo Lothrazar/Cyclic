@@ -1,7 +1,7 @@
 {
   "name": "item.cyclic.chorus_spectral",
   "icon": "cyclic:chorus_spectral",
-  "category": "cyclic:items",
+  "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",

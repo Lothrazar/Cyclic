@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.CyclicFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

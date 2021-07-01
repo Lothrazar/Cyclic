@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_starvation",
+  "icon": "cyclic:charm_starvation",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_starvation.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_starvation",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.quiver_damage",
+  "icon": "cyclic:quiver_damage",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.quiver_damage.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:quiver_damage",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

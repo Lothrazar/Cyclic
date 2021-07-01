@@ -46,7 +46,9 @@ public abstract class CharmBase extends ItemBaseToggle {
 
   private void tryFireTick(ItemStack stack, LivingEntity living) {
     if (this.fireProt && living.isBurning() && !living.isPotionActive(Effects.FIRE_RESISTANCE)) { // do nothing if you already have
-      living.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, fireProtSeconds * Const.TICKS_PER_SEC, Const.Potions.I));
+      EffectInstance eff = new EffectInstance(Effects.FIRE_RESISTANCE, fireProtSeconds * Const.TICKS_PER_SEC, Const.Potions.I);
+      eff.showParticles = false;
+      living.addPotionEffect(eff);
       UtilItemStack.damageItem(living, stack);
       UtilSound.playSound(living, living.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
       UtilParticle.spawnParticle(living.world, ParticleTypes.DRIPPING_WATER, living.getPosition(), 9);

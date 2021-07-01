@@ -139,6 +139,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CHARM_STARVATION = ITEMS.register("charm_starvation", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_VENOM = ITEMS.register("charm_venom", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_WATER = ITEMS.register("charm_water", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  // water walking - shaman
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")

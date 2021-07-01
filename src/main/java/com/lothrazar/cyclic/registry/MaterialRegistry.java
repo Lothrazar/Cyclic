@@ -58,7 +58,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getSoundEvent() {
-        return SoundRegistry.item_armor_equip_emerald;
+        return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
       }
 
       @Override
@@ -100,7 +100,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getSoundEvent() {
-        return SoundRegistry.item_armor_equip_emerald;
+        return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
       }
 
       @Override
@@ -144,7 +144,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getSoundEvent() {
-        return SoundRegistry.item_armor_equip_emerald;
+        return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
       }
 
       @Override

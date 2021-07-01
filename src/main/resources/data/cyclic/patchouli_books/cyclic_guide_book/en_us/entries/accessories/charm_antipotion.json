@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_antipotion",
+  "icon": "cyclic:charm_antipotion",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_antipotion.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_antipotion",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

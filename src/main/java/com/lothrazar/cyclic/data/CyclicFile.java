@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.event;
+package com.lothrazar.cyclic.data;
 
 import com.lothrazar.cyclic.ModCyclic;
 import java.util.ArrayList;

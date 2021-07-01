@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;

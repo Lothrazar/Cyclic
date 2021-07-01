@@ -159,7 +159,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     if (player.world.isRemote) {
       player.sendStatusMessage(getModeTooltip(stack), true);
-      UtilSound.playSound(player, SoundRegistry.tool_mode);
+      UtilSound.playSound(player, SoundRegistry.TOOL_MODE);
     }
   }
 }

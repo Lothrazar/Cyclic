@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.quiver_lightning",
+  "icon": "cyclic:quiver_lightning",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.quiver_lightning.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:quiver_lightning",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

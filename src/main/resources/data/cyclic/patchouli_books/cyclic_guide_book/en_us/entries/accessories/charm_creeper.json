@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_creeper",
+  "icon": "cyclic:charm_creeper",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_creeper.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_creeper",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

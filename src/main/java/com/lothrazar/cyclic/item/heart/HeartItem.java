@@ -44,7 +44,7 @@ public class HeartItem extends ItemBase {
       //finish up
       playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
       playerIn.getHeldItem(handIn).shrink(1);
-      UtilSound.playSound(playerIn, SoundRegistry.fill);
+      UtilSound.playSound(playerIn, SoundRegistry.FILL);
     }
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }

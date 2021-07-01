@@ -1,15 +1,15 @@
 {
-  "name": "item.cyclic.apple_chocolate",
-  "icon": "cyclic:apple_chocolate",
+  "name": "item.cyclic.apple_bone",
+  "icon": "cyclic:apple_bone",
   "category": "cyclic:consume",
   "pages": [
     {
       "type": "text",
-      "text": "item.cyclic.apple_chocolate.guide"
+      "text": "item.cyclic.apple_bone.guide"
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:apple_chocolate"
+      "recipe": "cyclic:apple_bone"
     }
   ]
 }

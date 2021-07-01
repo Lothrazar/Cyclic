@@ -47,15 +47,13 @@ public class PacketStorageBagScreen extends PacketBase {
         if (0 <= message.slot && message.slot < player.inventory.getSizeInventory()) {
           serverStack = player.inventory.getStackInSlot(message.slot);
         }
-        //TODO: fix refactor this whole thing with RefilMode enum or somee shit
+        //TODO: fix refactor this whole thing with a RefilMode Enum 
         String key = message.nbtKey.getString();
         if (!serverStack.isEmpty()
             && serverStack.getItem() == ItemRegistry.storage_bag
             && (key.equals("refill_mode") || key.equals("deposit_mode") || key.equals("pickup_mode"))) {
-          System.out.println("message.nbtKey.getString()" + message.nbtKey.getString());
-          //          System.out.printf("Before set on stack %s%n", serverStack.getOrCreateTag().getString());
+          //its validated this item and nbt key so now save value in the tag
           serverStack.getOrCreateTag().put(key, message.nbtValue);
-          //          System.out.printf("After set on stack %s%n", serverStack.getOrCreateTag().getString());
         }
       }
     });

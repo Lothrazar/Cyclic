@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "f f",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "f": {
+      "item": "minecraft:end_crystal"
+    },
+    "a": {
+      "item": "cyclic:apple_ender"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_stone"
+  }
+}

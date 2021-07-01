@@ -37,6 +37,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
@@ -92,11 +93,12 @@ public class ItemEvents {
         AbstractArrowEntity arrow = event.getArrow();
         double boost = arrow.getDamage() / 2;
         arrow.setDamage(arrow.getDamage() + boost);
+        UtilItemStack.damageItem(ply, find);
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_LIT.get());
       if (!find.isEmpty() && world.rand.nextDouble() < 0.25) {
-        if (hit == RayTraceResult.Type.ENTITY && event.getEntity() instanceof LivingEntity) {
-          LivingEntity target = (LivingEntity) event.getEntity();
+        if (hit == RayTraceResult.Type.ENTITY && ((EntityRayTraceResult) event.getRayTraceResult()).getEntity() instanceof LivingEntity) {
+          LivingEntity target = (LivingEntity) ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
           target.setGlowing(true);
           //          ModCyclic.LOGGER.info(event.getEntity() + " eeeee" + event.getArrow().getDamage());
           BlockPos p = target.getPosition();
@@ -104,6 +106,7 @@ public class ItemEvents {
           LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
           lightningboltentity.moveForced(p.getX(), p.getY(), p.getZ());
           world.addEntity(lightningboltentity);
+          UtilItemStack.damageItem(ply, find);
         }
       }
     }
@@ -161,7 +164,10 @@ public class ItemEvents {
       else if (src == DamageSource.DROWN) {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_WATER.get(), 0)) {
           //and a holdover bonus
-          player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 20 * 10, 1));
+          EffectInstance eff = new EffectInstance(Effects.WATER_BREATHING, 20 * 10, 1);
+          eff.showParticles = false;
+          eff.showIcon = false;
+          player.addPotionEffect(eff);
         }
       }
       else if (src == DamageSource.LAVA || src == DamageSource.IN_FIRE || src == DamageSource.ON_FIRE) {
@@ -335,7 +341,7 @@ public class ItemEvents {
         if (!world.isRemote) {
           BuilderActionType.toggle(held);
         }
-        UtilSound.playSound(player, SoundRegistry.tool_mode);
+        UtilSound.playSound(player, SoundRegistry.TOOL_MODE);
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
       }
     }

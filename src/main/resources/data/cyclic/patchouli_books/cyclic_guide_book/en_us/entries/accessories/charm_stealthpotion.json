@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_stealthpotion",
+  "icon": "cyclic:charm_stealthpotion",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_stealthpotion.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_stealthpotion",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

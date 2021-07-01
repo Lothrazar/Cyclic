@@ -54,9 +54,13 @@
 		"item.cyclic.charm_invisible.tooltip": "Grants consistent invisibility",
 		"item.cyclic.charm_invisible.guide": "Applies the invisibility potion effect like a beacon would",
 		
-		"item.cyclic.charm_boostpotion": "Broken Phylactery",
+		"item.cyclic.charm_boostpotion": "Incomplete Phylactery",
 		"item.cyclic.charm_boostpotion.tooltip": "Potion duration increased by 50%",
 		"item.cyclic.charm_boostpotion.guide": "Potion duration increased by 50%",
+		
+		"item.cyclic.charm_magicdefense": "Arcane Relic",
+		"item.cyclic.charm_magicdefense.tooltip": "Magic damage taken decreased by 50%",
+		"item.cyclic.charm_magicdefense.guide": "All magic damage to player reduced by 50%",
 		
 		"item.cyclic.charm_stealthpotion": "Runic Signet of Alchemy",
 		"item.cyclic.charm_stealthpotion.tooltip": "Disables potion particles",
@@ -137,14 +141,14 @@
     
     "block.cyclic.apple_sprout": "Apple Sprout",
     "block.cyclic.apple_sprout.tooltip": "Apple growing on a leaf",
-    "block.cyclic.apple_sprout.guide": "Plant below a leaf block to grow an apple.  ",
+    "block.cyclic.apple_sprout.guide": "Plant below a leaf block to grow an apple. ",
     
     "block.cyclic.apple_sprout_emerald": "Emerald Apple Sprout",
-    "block.cyclic.apple_sprout_emerald.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_emerald.tooltip": "Grows Emerald Apples",
     "block.cyclic.apple_sprout_emerald.guide": "Plant below a leaf block to grow an emerald apple.  ",
     
     "block.cyclic.apple_sprout_diamond": "Diamond Apple Sprout",
-    "block.cyclic.apple_sprout_diamond.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_diamond.tooltip": "Grows Diamond Apples",
     "block.cyclic.apple_sprout_diamond.guide": "Plant below a leaf block to grow a diamond apple.  ",
     
     "block.cyclic.apple_sprout_chocolate": "Apple Sprout",
@@ -199,9 +203,11 @@
     "block.cyclic.dark_glass.tooltip": "Immune to light, explosions, and wither blasts",
     "block.cyclic.dark_glass.guide": "Dark Glass, unlike regular glass, does not let light pass through.$(br2)Oh, and it's also immune explosions, including those caused by the Wither.",
     "block.cyclic.light_camo": "Concentrated Glowstone",
-    "block.cyclic.light_camo.tooltip": "Contains a block projection",
+    "block.cyclic.light_camo.tooltip": "Use block on it to copy appearance",
+    "block.cyclic.light_camo.guide": "Produces light, and copies a block appearance.  Contains a block projection",
     "block.cyclic.soundproofing_ghost": "Concentrated Soundproofing",
-    "block.cyclic.soundproofing_ghost.tooltip": "Contains a block projection",
+    "block.cyclic.soundproofing_ghost.guide": "Prevents sound, and copies a block appearance.  Use block on it to copy appearance",
+    "block.cyclic.soundproofing_ghost.tooltip": "Use block on it to copy appearance",
     "block.cyclic.soundproofing": "Soundproofing",
     "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
     "block.cyclic.soundproofing.guide": "Place to reduce the volume of nearby sounds in the world.$(br2)Multiple can be placed in close proximity for a stronger effect.",
@@ -681,8 +687,11 @@
  		"potion.potency.8": "IX",
  		"potion.potency.9": "X",
  		"item.cyclic.apple_bone": "Bone Apple",
+ 		"item.cyclic.apple_bone.guide": "Grants potion effects when eaten",
  		"item.cyclic.apple_chorus": "Chorus Apple",
+ 		"item.cyclic.apple_chorus.guide": "Grants potion effects when eaten",
  		"item.cyclic.apple_prismarine": "Prismarine Apple",
+ 		"item.cyclic.apple_prismarine.guide": "Grants potion effects when eaten",
     "item.cyclic.apple_diamond": "Diamond Apple",
     "item.cyclic.apple_diamond.tooltip": "Major defense buffs",
     "item.cyclic.apple_diamond.guide": "60 seconds worth of Resistance V and health boost V for short tough fights",
@@ -1579,9 +1588,9 @@
     "block.dehydrator.tooltip": "Process dehydration recipes",
     "block.dehydrator.guide": "Dehydrate certain items.  Add more recipes using CraftTweaker.  Lava is optional but will increase processing speed.",
 
-    "block.shearing": "Shearing Station",
-    "block.shearing.tooltip": "Shears sheep like mobs on contact",
-    "block.shearing.guide": "Shears sheep for wool when touched.  Block has no durability like the shears item.  Works on all compatible mobs, not only Sheep, using IForgeShearable",
+    "block.cyclic.shearing": "Shearing Station",
+    "block.cyclic.shearing.tooltip": "Shears sheep like mobs on contact",
+    "block.cyclic.shearing.guide": "Shears sheep for wool when touched.  Block has no durability like the shears item.  Works on all compatible mobs, not only Sheep, using IForgeShearable",
 
     "item.cyclic.shears_obsidian": "Obsidian Shears",
     "item.cyclic.shears_obsidian.tooltip": "Very Durable Shears",

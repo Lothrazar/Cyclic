@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gag",
+    "fif",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:golden_apple"
+    },
+    "f": {
+      "item": "minecraft:cake"
+    },
+    "a": {
+      "item": "cyclic:apple_chocolate"
+    },
+    "i": {
+      "item": "minecraft:ghast_tear"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_starvation"
+  }
+}

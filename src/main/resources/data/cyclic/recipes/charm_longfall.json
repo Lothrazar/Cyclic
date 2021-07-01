@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "g g",
+    "f f",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:nether_bricks"
+    },
+    "f": {
+      "item": "minecraft:feather"
+    },
+    "a": {
+      "item": "minecraft:diamond_boots"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_longfall"
+  }
+}

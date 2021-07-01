@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.event.CyclicFile;
+import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

@@ -70,16 +70,11 @@ page at http://checkstyle.sourceforge.net/config.html -->
         <!--<property name="severity" value="warning"/>-->
     <!--</module>-->
 	
+	
 <module name="SuppressionSingleFilter">
   <property name="checks" value="StaticVariableName"/>
   <property name="files" value="TileRegistry.java"/>
   <property name="lines" value="1-300"/>
-</module>
-	
-<module name="SuppressionSingleFilter">
-  <property name="checks" value="StaticVariableName"/>
-  <property name="files" value="SoundRegistry.java"/>
-  <property name="lines" value="16-40"/>
 </module>
 <module name="SuppressionSingleFilter">
   <property name="checks" value="StaticVariableName"/>
