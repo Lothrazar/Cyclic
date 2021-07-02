@@ -28,7 +28,7 @@
 		
 		"item.cyclic.charm_luck": "Harlequin Ring of Luck",
 		"item.cyclic.charm_luck.tooltip": "Increase player luck",
-		"item.cyclic.charm_luck.guide": "Increase players passive luck attribute by 10% of the original, plus 10 points. Luck and Unluck potions give +1 or -1 points per level, respectively. ",
+		"item.cyclic.charm_luck.guide": "Increase players passive luck attribute by 10 percent of the original, plus 10 points. Luck and Unluck potions give +1 or -1 points per level, respectively. ",
 		
 		"item.cyclic.charm_creeper": "Dormant Creeper Spore",
 		"item.cyclic.charm_creeper.tooltip": "Immune to explosion damage",
@@ -36,7 +36,7 @@
 		
 		"item.cyclic.charm_knockback_resistance": "Steelrend Armlet of Resistance",
 		"item.cyclic.charm_knockback_resistance.tooltip": "Immune to Knockback",
-		"item.cyclic.charm_knockback_resistance.guide": "Immune knockback",
+		"item.cyclic.charm_knockback_resistance.guide": "Immune to knockback; when you take damage the player will not be moved",
 		
 		"item.cyclic.charm_crit": "Bracers of the Titans",
 		"item.cyclic.charm_crit.tooltip": "Critical hit damage is doubled",
