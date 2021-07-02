@@ -1,22 +1,17 @@
 {
   "replace": "false",
   "values": [
-    "cyclic:glowing_helmet",
     "cyclic:charm_speed",
     "cyclic:charm_void",
     "cyclic:charm_antidote",
-    "cyclic:charm_ultimate",
     "cyclic:charm_wither",
     "cyclic:charm_fire",
     "cyclic:charm_water",
     "cyclic:charm_antipotion",
     "cyclic:charm_boostpotion",
     "cyclic:charm_creeper",
-    "cyclic:charm_crit",
-    "cyclic:charm_invisible",
     "cyclic:charm_magicdefense",
     "cyclic:charm_starvation",
-    "cyclic:charm_stealthpotion",
-    "cyclic:charm_stone"
+    "cyclic:charm_stealthpotion"
   ]
 }

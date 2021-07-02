@@ -7,7 +7,7 @@
   ],
   "key": {
     "g": {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     },
     "f": {
       "item": "minecraft:arrow"

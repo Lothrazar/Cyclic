@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:stone"
+  },
+  "inputMiddle": {
+    "item": "minecraft:stone"
+  },
+  "inputBottom": {
+    "item": "minecraft:stone"
+  },
+  "mix": {
+    "fluid": "cyclic:magma",
+    "count": 2700
+  },
+  "result": {
+    "item": "minecraft:magma_block",
+	"count": 3
+  }
+}

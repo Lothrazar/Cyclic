@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_luck",
+  "icon": "cyclic:charm_luck",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_luck.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_luck",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

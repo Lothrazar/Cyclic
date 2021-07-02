@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "gfg",
-    "faf",
-    "g g"
+    "ww ",
+    "iew",
+    "iiw"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:diamond"
-    },
-    "f": {
-      "item": "minecraft:sugar"
-    },
-    "a": {
+    "e": {
       "item": "cyclic:gem_amber"
+    },
+    "i": {
+      "item": "cyclic:mason_iron"
+    },
+    "w": {
+      "item": "minecraft:sugar"
     }
   },
   "result": {

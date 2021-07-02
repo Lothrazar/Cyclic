@@ -1,0 +1,7 @@
+{
+  "replace": "false",
+  "values": [
+    "cyclic:charm_knockback_resistance",
+    "cyclic:charm_crit"
+  ]
+}

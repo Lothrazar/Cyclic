@@ -2,6 +2,7 @@
 	"_comments": "Thanks to https://tterrag.com/lang2json/",
 
 	  "curios.identifier.feet":"Feet",
+	  "curios.identifier.charm":"Charm",
 
     "itemGroup.cyclic": "Cyclic Blocks",
     "itemGroup.cyclicitems": "Cyclic Items",
@@ -22,7 +23,7 @@
 		"item.cyclic.charm_stone.guide": "Prevents damage when elytra crashing into walls.  Also suffocation if you noClip or teleport into solid wall of blocks",
 
 		"item.cyclic.charm_attack_speed": "Windforce Gauntlets",
-		"item.cyclic.charm_attack_speed.tooltip": "Increase attack and mining speed by 50%",
+		"item.cyclic.charm_attack_speed.tooltip": "Increase attack speed by 50%",
 		"item.cyclic.charm_attack_speed.guide": "Increase attack speed.  This causes the recovery bar by the crosshairs to recover faster for increased damage overall.  ",
 		
 		"item.cyclic.charm_luck": "Harlequin Ring of Luck",
@@ -33,7 +34,7 @@
 		"item.cyclic.charm_creeper.tooltip": "Immune to explosion damage",
 		"item.cyclic.charm_creeper.guide": "Immune to explosion damage",
 		
-		"item.cyclic.charm_knockback_resistance": "Steelrend Ring of Resistance",
+		"item.cyclic.charm_knockback_resistance": "Steelrend Armlet of Resistance",
 		"item.cyclic.charm_knockback_resistance.tooltip": "Immune to Knockback",
 		"item.cyclic.charm_knockback_resistance.guide": "Immune knockback",
 		

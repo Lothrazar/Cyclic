@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "gfg",
+    "glg",
     "faf",
-    "g g"
+    "gbg"
   ],
   "key": {
     "g": {
@@ -14,6 +14,12 @@
     },
     "a": {
       "item": "cyclic:gem_amber"
+    },
+    "b": {
+      "item": "minecraft:blue_concrete_powder"
+    },
+    "l": {
+      "tag": "forge:leather"
     }
   },
   "result": {
