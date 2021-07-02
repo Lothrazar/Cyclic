@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
+import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
@@ -60,9 +61,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ItemEvents {
 
   @SubscribeEvent
-  public void onLivingKnockBackEvent(LivingKnockBackEvent event) {}
-
-  @SubscribeEvent
   public void onCriticalHitEvent(CriticalHitEvent event) {
     //LivingJumpEvent  
     if (event.getEntityLiving() instanceof PlayerEntity) {
@@ -72,6 +70,17 @@ public class ItemEvents {
       if (!find.isEmpty()) {
         // This is by default 1.5F for ciritcal hits and 1F for normal hits . 
         event.setDamageModifier(3F);
+      }
+    }
+  }
+
+  @SubscribeEvent
+  public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
+    if (event.getEntityLiving() instanceof PlayerEntity) {
+      PlayerEntity ply = (PlayerEntity) event.getEntityLiving();
+      ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_KNOCKBACK_RESIST.get());
+      if (!find.isEmpty()) {
+        event.setCanceled(true);
       }
     }
   }
@@ -216,6 +225,17 @@ public class ItemEvents {
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     LivingEntity liv = event.getEntityLiving();
+    tryItemHorseEnder(liv);
+    if (liv instanceof PlayerEntity) {
+      PlayerEntity player = (PlayerEntity) liv;
+      CharmBase.charmSpeed(player);
+      CharmBase.charmLuck(player);
+      CharmBase.charmAttackSpeed(player);
+      //      CharmBase.charmKnockResist(player);
+    }
+  }
+
+  private void tryItemHorseEnder(LivingEntity liv) {
     if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
         && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
       // 

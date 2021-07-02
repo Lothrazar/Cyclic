@@ -18,10 +18,10 @@ public class CyclicLogger {
     logger.error(string, e);
   }
 
-  public void info(String string, Object... params) {
+  public void info(String string) {
     //default for all releases is false to prevent spam-logs slipping out
     if (ConfigRegistry.LOGINFO.get()) {
-      logger.info(string, params);
+      logger.info(string);
     }
   }
 }

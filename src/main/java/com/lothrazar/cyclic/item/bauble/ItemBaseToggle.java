@@ -51,7 +51,7 @@ public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
     if (held.getTag() == null) {
       return false;
     }
-    return held.getTag().getInt(NBT_STATUS) == 0;
+    return held.getTag().getInt(NBT_STATUS) == 1;
   }
 
   @Override

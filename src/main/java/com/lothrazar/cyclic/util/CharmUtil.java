@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,8 +42,7 @@ public class CharmUtil {
         }
       }
       catch (Exception e) {
-        // if API not installed or fails
-        ModCyclic.LOGGER.info("curios api error", e);
+        // if API not installed or fails 
       }
     }
     //is "baubles" in 1.16? 

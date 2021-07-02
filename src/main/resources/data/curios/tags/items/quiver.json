@@ -1,0 +1,7 @@
+{
+  "replace": "false",
+  "values": [
+    "cyclic:quiver_lightning",
+    "cyclic:quiver_damage"
+  ]
+}

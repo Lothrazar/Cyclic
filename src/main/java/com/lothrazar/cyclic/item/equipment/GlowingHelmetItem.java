@@ -43,7 +43,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   @Override
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(new TranslationTextComponent(UtilChat.lang(this.getTranslationKey() + ".tooltip")));
+    tooltip.add(new TranslationTextComponent(UtilChat.lang(this.getTranslationKey() + ".tooltip")).mergeStyle(TextFormatting.GRAY));
     String onoff = this.isOn(stack) ? "on" : "off";
     TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang("item.cantoggle.tooltip.info") + " " + UtilChat.lang("item.cantoggle.tooltip." + onoff));
     t.mergeStyle(TextFormatting.DARK_GRAY);

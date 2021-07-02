@@ -1,7 +1,7 @@
 {
 	"_comments": "Thanks to https://tterrag.com/lang2json/",
 
-	"curios.identifier.feet":"Feet",
+	  "curios.identifier.feet":"Feet",
 
     "itemGroup.cyclic": "Cyclic Blocks",
     "itemGroup.cyclicitems": "Cyclic Items",
@@ -21,9 +21,21 @@
 		"item.cyclic.charm_stone.tooltip": "Immune to suffocation & elytra crash damage",
 		"item.cyclic.charm_stone.guide": "Prevents damage when elytra crashing into walls.  Also suffocation if you noClip or teleport into solid wall of blocks",
 
+		"item.cyclic.charm_attack_speed": "Windforce Gauntlets",
+		"item.cyclic.charm_attack_speed.tooltip": "Increase attack and mining speed by 50%",
+		"item.cyclic.charm_attack_speed.guide": "Increase attack speed.  This causes the recovery bar by the crosshairs to recover faster for increased damage overall.  ",
+		
+		"item.cyclic.charm_luck": "Harlequin Ring of Luck",
+		"item.cyclic.charm_luck.tooltip": "Increase player luck",
+		"item.cyclic.charm_luck.guide": "Increase players passive luck attribute by 10% of the original, plus 10 points. Luck and Unluck potions give +1 or -1 points per level, respectively. ",
+		
 		"item.cyclic.charm_creeper": "Dormant Creeper Spore",
 		"item.cyclic.charm_creeper.tooltip": "Immune to explosion damage",
 		"item.cyclic.charm_creeper.guide": "Immune to explosion damage",
+		
+		"item.cyclic.charm_knockback_resistance": "Steelrend Ring of Resistance",
+		"item.cyclic.charm_knockback_resistance.tooltip": "Immune to Knockback",
+		"item.cyclic.charm_knockback_resistance.guide": "Immune knockback",
 		
 		"item.cyclic.charm_crit": "Bracers of the Titans",
 		"item.cyclic.charm_crit.tooltip": "Critical hit damage is doubled",
@@ -531,9 +543,11 @@
     "item.cyclic.charm_fire": "Fire Charm",
     "item.cyclic.charm_fire.tooltip": "Fire and lava protection",
     "item.cyclic.charm_fire.guide": "When in your inventory or worn as an accessory, protects you from fire damage at the expense of durability.",
-    "item.charm_speed.guide": "Gives you a passive speed boost, can be stacked with speed potions.  Right click in your inventory to turn it off.  Compatible with baubles API.",
-    "item.charm_speed": "Speed Charm",
-    "item.charm_speed.tooltip": "Speeds up you and your mount",
+    
+    "item.cyclic.charm_speed.guide": "Gives you a passive speed boost, can be stacked with speed potions.  Right click in your inventory to turn it off.  Compatible with baubles API.",
+    "item.cyclic.charm_speed": "Speed Charm",
+    "item.cyclic.charm_speed.tooltip": "Increase movement speed by 50%",
+    
     "item.cyclic.charm_void.guide": "Works in your inventory or in a Baubles slot.  This charm saves you from the void; it detects if you have fallen down below y=-30 and teleports you way up into the sky instead.",
     "item.cyclic.charm_void": "Void Charm",
     "item.cyclic.charm_void.tooltip": "Saves you from falling into the void",

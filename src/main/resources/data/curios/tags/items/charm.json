@@ -1,6 +1,8 @@
 {
   "replace": "false",
   "values": [
+    "cyclic:glowing_helmet",
+    "cyclic:charm_speed",
     "cyclic:charm_void",
     "cyclic:charm_antidote",
     "cyclic:charm_ultimate",
@@ -15,8 +17,6 @@
     "cyclic:charm_magicdefense",
     "cyclic:charm_starvation",
     "cyclic:charm_stealthpotion",
-    "cyclic:quiver_lightning",
-    "cyclic:quiver_damage",
     "cyclic:charm_stone"
   ]
 }

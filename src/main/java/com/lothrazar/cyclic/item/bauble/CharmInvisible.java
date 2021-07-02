@@ -25,7 +25,10 @@ public class CharmInvisible extends ItemBaseToggle {
     if (worldIn.getGameTime() % 20 == 0) {
       LivingEntity living = (LivingEntity) entityIn;
       final int seconds = 6;
-      living.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 20 * seconds, 0));
+      EffectInstance eff = new EffectInstance(Effects.INVISIBILITY, 20 * seconds, 0);
+      eff.showIcon = false;
+      eff.showParticles = false;
+      living.addPotionEffect(eff);
       if (worldIn.rand.nextDouble() < 0.1) {
         UtilItemStack.damageItem(living, stack);
       }
