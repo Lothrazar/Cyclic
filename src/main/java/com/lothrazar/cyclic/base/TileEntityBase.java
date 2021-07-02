@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -41,6 +42,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class TileEntityBase extends TileEntity implements IInventory {
 
@@ -231,6 +233,40 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     }
     BlockPos posTarget = pos.offset(myFacingDir);
     UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
+  }
+
+  public void tryExtract(IItemHandler myself, Direction extractSide, int qty, ItemStackHandler nullableFilter) {
+    if (extractSide == null) {
+      return;
+    }
+    if (extractSide == null || !myself.getStackInSlot(0).isEmpty()) {
+      return;
+    }
+    BlockPos posTarget = pos.offset(extractSide);
+    TileEntity tile = world.getTileEntity(posTarget);
+    if (tile != null) {
+      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
+      //
+      ItemStack itemTarget;
+      if (itemHandlerFrom != null) {
+        //ok go
+        for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
+          itemTarget = itemHandlerFrom.extractItem(i, qty, true);
+          if (itemTarget.isEmpty()) {
+            continue;
+          }
+          // and then pull 
+          if (nullableFilter != null &&
+              !FilterCardItem.filterAllowsExtract(nullableFilter.getStackInSlot(0), itemTarget)) {
+            continue;
+          }
+          itemTarget = itemHandlerFrom.extractItem(i, qty, false);
+          ItemStack result = myself.insertItem(0, itemTarget.copy(), false);
+          itemTarget.setCount(result.getCount());
+          return;
+        }
+      }
+    }
   }
 
   public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {

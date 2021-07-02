@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -48,8 +47,8 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     if (this.isPowered()) {
       return;
     }
-    tryPullFromWorld(pos.offset(Direction.UP));
-    tryExtract(Direction.UP);
+    this.tryPullFromWorld(pos.offset(Direction.UP));
+    this.tryExtract(inventory, Direction.UP, getFlow(), null);
     Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
     this.moveItems(exportToSide, getFlow(), inventory);
   }
@@ -77,36 +76,6 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
       stackEntity.setItem(remainder);
       if (remainder.isEmpty()) {
         stackEntity.remove();
-      }
-    }
-  }
-
-  private void tryExtract(Direction extractSide) {
-    if (extractSide == null) {
-      return;
-    }
-    BlockPos posTarget = this.pos.offset(extractSide);
-    TileEntity tile = world.getTileEntity(posTarget);
-    if (tile != null) {
-      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
-      if (itemHandlerFrom != null) {
-        //ok go
-        ItemStack itemTarget;
-        for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
-          itemTarget = itemHandlerFrom.extractItem(i, getFlow(), true);
-          if (itemTarget.isEmpty()) {
-            continue; // nothing extracted
-          }
-          ItemStack resultSimulate = inventory.insertItem(0, itemTarget.copy(), true);
-          if (resultSimulate.getCount() < itemTarget.getCount()) {
-            //simulate worked
-            // and then pull 
-            itemTarget = itemHandlerFrom.extractItem(i, getFlow(), false);
-            //            ItemStack result =
-            inventory.insertItem(0, itemTarget, false);
-            return;
-          }
-        }
       }
     }
   }
