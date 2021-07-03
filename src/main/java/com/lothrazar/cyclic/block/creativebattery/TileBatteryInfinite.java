@@ -22,7 +22,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileBatteryInfinite extends TileEntityBase implements ITickableTileEntity {
 
-  static final int MAX = 6400000;
+  static final int MAX = 960000000;
 
   static enum Fields {
     N, E, S, W, U, D;
