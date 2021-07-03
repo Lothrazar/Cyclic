@@ -48,6 +48,13 @@
 		step = true
 
 	#####################################################################################
+	# Worldgen settings  
+	#####################################################################################
+	[cyclic.worldgen]
+		#Does this generate in the world
+		flower_cyan = true
+
+	#####################################################################################
 	# Block specific configs
 	#####################################################################################
 	[cyclic.blocks]
@@ -88,12 +95,14 @@
 			#Range: 1 ~ 20
 			frequency = 5
 
-	#####################################################################################
-	# Worldgen settings  
-	#####################################################################################
-	[cyclic.worldgen]
-		#Does this generate in the world
-		flower_cyan = false
+		#Sprinkler settings
+		[cyclic.blocks.sprinkler]
+			#Tick rate.  20 will fire one block per second
+			#Range: 1 ~ 20
+			ticks = 20
+			#Water consumption
+			#Range: 0 ~ 1000
+			water = 5
 
 	#####################################################################################
 	# Logging related configs
@@ -113,6 +122,17 @@
 		[cyclic.items.tile_transporter]
 			#Block these from being picked up
 			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
+
+		#####################################################################################
+		# Obsidian gear settings
+		#####################################################################################
+		[cyclic.items.obsidian]
+			#Weapon damage
+			#Range: 0.10000000149011612 ~ 99.0
+			damage = 10.5
+			#Armor toughness
+			#Range: 0.10000000149011612 ~ 99.0
+			toughness = 6.0
 
 		#Wand settings
 		[cyclic.items.teleport_wand]
@@ -135,6 +155,17 @@
 			#Range: 0 ~ 99999
 			experience = 500
 
+		#####################################################################################
+		# Emerald gear settings
+		#####################################################################################
+		[cyclic.items.emerald]
+			#Weapon damage
+			#Range: 0.10000000149011612 ~ 99.0
+			damage = 4.5
+			#Armor toughness
+			#Range: 0.10000000149011612 ~ 99.0
+			toughness = 3.0
+
 	#####################################################################################
 	# Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  
 	#####################################################################################
@@ -149,8 +180,6 @@
 		pingnether = false
 		#True means only players with OP can use this /cyclic command
 		gethome = false
-		#True means only players with OP can use this /cyclic command
-		worldspawn = true
 		#True means only players with OP can use this /cyclic command
 		home = true
 		#True means only players with OP can use this /cyclic command

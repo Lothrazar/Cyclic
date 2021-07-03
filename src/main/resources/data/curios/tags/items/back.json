@@ -1,0 +1,8 @@
+{
+  "replace": "false",
+  "values": [
+    "cyclic:quiver_lightning",
+    "cyclic:quiver_damage",
+    "cyclic:charm_invisible"
+  ]
+}

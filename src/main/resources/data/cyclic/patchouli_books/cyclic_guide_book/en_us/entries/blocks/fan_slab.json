@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.fan_slab",
+  "icon": "cyclic:fan_slab",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.fan_slab.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:fan_slab"
+    }
+  ]
+}

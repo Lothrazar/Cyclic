@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.anvil.ContainerAnvil;
 import com.lothrazar.cyclic.block.anvilmagma.ContainerAnvilMagma;
+import com.lothrazar.cyclic.block.anvilvoid.ContainerAnvilVoid;
 import com.lothrazar.cyclic.block.battery.ContainerBattery;
 import com.lothrazar.cyclic.block.beaconpotion.ContainerPotion;
 import com.lothrazar.cyclic.block.breaker.ContainerBreaker;
@@ -166,6 +167,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerCableFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fluid_pipe"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerAnvilVoid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("anvil_void"));
     //
     //  Items with containers
     //
@@ -199,6 +203,8 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerPlacer> placer;
   @ObjectHolder(ModCyclic.MODID + ":anvil")
   public static ContainerType<ContainerAnvil> anvil;
+  @ObjectHolder(ModCyclic.MODID + ":anvil_void")
+  public static ContainerType<ContainerAnvilVoid> anvil_void;
   @ObjectHolder(ModCyclic.MODID + ":battery")
   public static ContainerType<ContainerBattery> batteryCont;
   @ObjectHolder(ModCyclic.MODID + ":collector")

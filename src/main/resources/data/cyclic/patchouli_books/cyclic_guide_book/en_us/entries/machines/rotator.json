@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.rotator",
+  "icon": "cyclic:rotator",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.rotator.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:rotator"
+    }
+  ]
+}

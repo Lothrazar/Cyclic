@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.hopper",
+  "icon": "cyclic:hopper",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.hopper.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:hopper"
+    }
+  ]
+}

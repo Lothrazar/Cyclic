@@ -27,7 +27,7 @@ public class SnowScepter extends ItemBase {
     shootMe(world, player, new SnowEntity(player, world), -10);
     player.getCooldownTracker().setCooldown(stack.getItem(), 6);
     UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.frost_staff_launch);
+    UtilSound.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH);
     return super.onItemRightClick(world, player, handIn);
   }
 }

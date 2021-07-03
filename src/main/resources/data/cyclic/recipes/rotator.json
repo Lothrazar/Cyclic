@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "lml",
+    "ooo"
+  ],
+  "key": {
+    "o": {
+      "item": "cyclic:mason_cobble"
+    },
+    "s": {
+      "item": "minecraft:dispenser"
+    },
+    "l": {
+      "item": "minecraft:string"
+    },
+    "m": {
+      "item": "cyclic:workbench"
+    }
+  },
+  "result": {
+    "item": "cyclic:rotator",
+    "count": 1
+  }
+}

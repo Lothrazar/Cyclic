@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "cyclic:blocks/weather/thunder",
+        "down": "cyclic:blocks/weather/thunder",
+        "up": "cyclic:blocks/weather/thunder",
+        "north": "cyclic:blocks/weather/thunder",
+        "south": "cyclic:blocks/weather/thunder",
+        "west": "cyclic:blocks/weather/thunder",
+        "east": "cyclic:blocks/weather/thunder"
+    }
+}

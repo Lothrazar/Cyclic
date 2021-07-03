@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "fcf",
+    " a "
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:polished_blackstone_pressure_plate"
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "f": {
+      "item": "minecraft:ender_pearl"
+    },
+    "a": {
+      "item": "cyclic:heart"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_magicdefense"
+  }
+}

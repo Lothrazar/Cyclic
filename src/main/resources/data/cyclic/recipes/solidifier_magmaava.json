@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:gravel"
+  },
+  "inputMiddle": {
+    "item": "minecraft:gravel"
+  },
+  "inputBottom": {
+    "item": "minecraft:gravel"
+  },
+  "mix": {
+    "fluid": "minecraft:lava",
+    "count": 1000
+  },
+  "result": {
+    "item": "minecraft:magma_block",
+	"count": 1
+  }
+}

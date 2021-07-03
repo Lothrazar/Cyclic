@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cac",
+    "cpc",
+    "cac"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:dyes/yellow"
+    },
+    "c": {
+      "item": "minecraft:iron_nugget"
+    },
+	"p": {
+		"item":"cyclic:carbon_paper"
+	}
+  },
+  "result": {
+    "item": "cyclic:blockstate_data",
+    "count": 4
+  }
+}

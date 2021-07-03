@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "glg",
+    "faf",
+    "gbg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:emerald"
+    },
+    "f": {
+      "item": "minecraft:blaze_powder"
+    },
+    "a": {
+      "item": "cyclic:gem_amber"
+    },
+    "b": {
+      "item": "minecraft:blue_concrete_powder"
+    },
+    "l": {
+      "tag": "forge:leather"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_attack_speed"
+  }
+}

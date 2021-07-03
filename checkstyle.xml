@@ -70,16 +70,11 @@ page at http://checkstyle.sourceforge.net/config.html -->
         <!--<property name="severity" value="warning"/>-->
     <!--</module>-->
 	
+	
 <module name="SuppressionSingleFilter">
   <property name="checks" value="StaticVariableName"/>
   <property name="files" value="TileRegistry.java"/>
   <property name="lines" value="1-300"/>
-</module>
-	
-<module name="SuppressionSingleFilter">
-  <property name="checks" value="StaticVariableName"/>
-  <property name="files" value="SoundRegistry.java"/>
-  <property name="lines" value="16-40"/>
 </module>
 <module name="SuppressionSingleFilter">
   <property name="checks" value="StaticVariableName"/>
@@ -293,7 +288,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         <module name="LineLength">
             <!-- Checks if a line is too long. -->
-            <property name="max" value="200" default="180" />
+            <property name="max" value="300" default="180" />
             <property name="severity" value="error" />
 
             <!--

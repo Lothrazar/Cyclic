@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "f f",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:leather"
+    },
+    "f": {
+      "item": "minecraft:arrow"
+    },
+    "a": {
+      "item": "cyclic:lightning_scepter"
+    }
+  },
+  "result": {
+    "item": "cyclic:quiver_lightning"
+  }
+}

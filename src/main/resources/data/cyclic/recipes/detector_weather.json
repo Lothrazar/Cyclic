@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c c",
+    " q ",
+    "r r"
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:daylight_detector"
+    },
+    "q": {
+      "item": "minecraft:observer"
+    },
+    "c": {
+      "item": "minecraft:tripwire_hook"
+    }
+  },
+  "result": {
+    "item": "cyclic:detector_weather",
+    "count": 1
+  }
+}

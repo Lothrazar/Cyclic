@@ -1,7 +1,8 @@
 {
 	"_comments": "Thanks to https://tterrag.com/lang2json/",
 
-	"curios.identifier.feet":"Feet",
+	  "curios.identifier.feet":"Feet",
+	  "curios.identifier.charm":"Charm",
 
     "itemGroup.cyclic": "Cyclic Blocks",
     "itemGroup.cyclicitems": "Cyclic Items",
@@ -12,11 +13,78 @@
     "block.cyclic.experience_pylon": "Experience Pylon",
     "block.cyclic.experience_pylon.tooltip": "Collects nearby XP orbs, players above",
     "block.cyclic.experience_pylon.guide": "The Experience Pylon automatically collects nearby experience orbs and stores them as Fluid Experience in its internal buffer. $(l:misc/fluid_experience)Fluid Experience$(/l) can be pumped into and out of the pylon.$(br2)Additionally, the player may right click a filled Experience Pylon with a piece of Sugar to enrich it with experience, creating an $(l:misc/experience_food)Experience Confection$(/l).",
-	"item.cyclic.experience_food": "Experience Confection",
-	"item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
+	  "item.cyclic.experience_food": "Experience Confection",
+	  "item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
     "item.cyclic.experience_food.guide": "Created by using a piece of Sugar on a filled Experience Pylon. Eat the confection to gain the experience held within, or use it on an Experience Pylon to put experience back into the pylon.",
     "item.cyclic.experience_food.guide0": "Can also be created by combining Fluid Experience and Sugar in a $(l:machines/solidifier)Solidification Chamber$(/l), and turned back into Fluid Experience in a $(l:machines/melter)Melting Chamber$(/l).",
 
+		"item.cyclic.charm_stone": "Ethereal Circlet",
+		"item.cyclic.charm_stone.tooltip": "Immune to suffocation & elytra crash damage",
+		"item.cyclic.charm_stone.guide": "Prevents damage when elytra crashing into walls.  Also suffocation if you noClip or teleport into solid wall of blocks",
+
+		"item.cyclic.charm_attack_speed": "Windforce Gauntlets",
+		"item.cyclic.charm_attack_speed.tooltip": "Increase attack speed by 50%",
+		"item.cyclic.charm_attack_speed.guide": "Increase attack speed.  This causes the recovery bar by the crosshairs to recover faster for increased damage overall.  ",
+		
+		"item.cyclic.charm_luck": "Harlequin Ring of Luck",
+		"item.cyclic.charm_luck.tooltip": "Increase player luck",
+		"item.cyclic.charm_luck.guide": "Increase players passive luck attribute by 10 percent of the original, plus 10 points. Luck and Unluck potions give +1 or -1 points per level, respectively. ",
+		
+		"item.cyclic.charm_creeper": "Dormant Creeper Spore",
+		"item.cyclic.charm_creeper.tooltip": "Immune to explosion damage",
+		"item.cyclic.charm_creeper.guide": "Immune to explosion damage",
+		
+		"item.cyclic.charm_knockback_resistance": "Steelrend Armlet of Resistance",
+		"item.cyclic.charm_knockback_resistance.tooltip": "Immune to Knockback",
+		"item.cyclic.charm_knockback_resistance.guide": "Immune to knockback; when you take damage the player will not be moved",
+		
+		"item.cyclic.charm_crit": "Bracers of the Titans",
+		"item.cyclic.charm_crit.tooltip": "Critical hit damage is doubled",
+		"item.cyclic.charm_crit.guide": "Critical hit damage is doubled",
+		
+		"item.cyclic.quiver_lightning": "Paladin's Quiver",
+		"item.cyclic.quiver_lightning.tooltip": "Living targets have a 25% chance of retribution",
+		"item.cyclic.quiver_lightning.guide": "When arrow hits a living target, randomly decides to summon a lightning bolt on the target",
+		
+		"item.cyclic.quiver_damage": "Crusader's Quiver",
+		"item.cyclic.quiver_damage.tooltip": "Arrow damage increased by 50%",
+		"item.cyclic.quiver_damage.guide": "Arrow damage increased while this is worn in inventory or curios.  Can be disabled with right click just like other baubles",
+		
+		"item.cyclic.charm_venom": "Spiderfang Amulet",
+		"item.cyclic.charm_venom.tooltip": "Attacks have 25% chance to poison target",
+		"item.cyclic.charm_venom.guide": "When damage dealt from the player as a source, this adds a chance to give the poison potion effect for a few seconds on the target",
+		
+		"item.cyclic.charm_water": "Waterbreathing Charm",
+		"item.cyclic.charm_water.tooltip": "Immune to Drowning Damage",
+		"item.cyclic.charm_water.guide": "Prevent drowning damage after air is empty",
+		
+		"item.cyclic.charm_starvation": "Everlasting Rock Candy",
+		"item.cyclic.charm_starvation.tooltip": "Immune to damage and death by starvation",
+		"item.cyclic.charm_starvation.guide": "Immune to damage and death by starvation",
+		
+		"item.cyclic.charm_invisible": "Cloak of Invisibility",
+		"item.cyclic.charm_invisible.tooltip": "Grants consistent invisibility",
+		"item.cyclic.charm_invisible.guide": "Applies the invisibility potion effect like a beacon would",
+		
+		"item.cyclic.charm_boostpotion": "Incomplete Phylactery",
+		"item.cyclic.charm_boostpotion.tooltip": "Potion duration increased by 50%",
+		"item.cyclic.charm_boostpotion.guide": "Potion duration increased when consumed, while this is worn in inventory or curios.  Can be disabled with right click just like other baubles",
+		
+		"item.cyclic.charm_magicdefense": "Arcane Relic",
+		"item.cyclic.charm_magicdefense.tooltip": "Magic damage taken decreased by 50%",
+		"item.cyclic.charm_magicdefense.guide": "All magic that wearer takes is reduced while this is worn in inventory or curios.  Can be disabled with right click just like other baubles",
+		
+		"item.cyclic.charm_stealthpotion": "Runic Signet of Alchemy",
+		"item.cyclic.charm_stealthpotion.tooltip": "Disables potion particles",
+		"item.cyclic.charm_stealthpotion.guide": "Disables potion particles at the moment you gain the effect, or drink the potion.  Does not work on existing effects, so if you drink a potion and then equip it does not know",
+		
+		"item.cyclic.charm_antipotion": "Alchemical Veil",
+		"item.cyclic.charm_antipotion.tooltip": "Immune to ailments and effects",
+		"item.cyclic.charm_antipotion.guide": "Potion duration is nullified at the time of consumption.  Treats positive and negative effects the same.  Ignores instant effects",
+		
+		"item.cyclic.charm_longfall": "Silkweave Slippers",
+		"item.cyclic.charm_longfall.tooltip": "Immune to fall damage",
+		"item.cyclic.charm_longfall.guide": "Immune to fall damage, and cactus and sweetberry damage",
 
 		"item.cyclic.crafting_stick": "Crafting Stick",
 		"item.cyclic.crafting_stick.tooltip": "Handheld crafting table",
@@ -25,7 +93,23 @@
 		"item.cyclic.crafting_bag": "Advanced Crafting Stick",
 		"item.cyclic.crafting_bag.tooltip": "Saves inventory",
 		"item.cyclic.crafting_bag.guide": "Handheld crafting table with an inventory that is saved in itself like a backpack",
+		
+		"block.cyclic.terra_glass":"Terra Glass",
+		"block.cyclic.terra_glass.tooltip":"Reactive to sunlight, promotes crop growth",
+		"block.cyclic.terra_glass.guide":"Reacts to sunlight if it is in direct contact.  Produces light and lights up crops when in the sun.  ",
+		
+		"block.cyclic.detector_weather":"Weather Detector",
+		"block.cyclic.detector_weather.tooltip":"Redstone output level depends on weather",
+		"block.cyclic.detector_weather.guide":"Full power when thunderstorm, half power in the rain",
 
+		"block.cyclic.detector_moon":"Moon Phase Detector",
+		"block.cyclic.detector_moon.tooltip":"Redstone output level depends on phase of the moon",
+		"block.cyclic.detector_moon.guide":"The eight phases of the moon each output a different power level",
+		
+		"block.cyclic.rotator":"Block Rotator",
+		"block.cyclic.rotator.tooltip":"Rotates targeted block when triggered with redstone",
+		"block.cyclic.rotator.guide":"Triggers when redstone power goes from off to on.  Rotates common valid block states",
+		
 		"block.cyclic.eye_teleport":"Ender Anchor",
 		"block.cyclic.eye_teleport.tooltip":"Look and crouch to teleport onto it",
 		"block.cyclic.eye_teleport.guide":"Whenever a player is looking at this while crouching, the player is teleported on top of this block.  If solid blocks are above it, there is some leeway where you will appear above all of those blocks.  Same logic as $(l:items/teleport_wand)Ender Scepter$(/l).  Can cost hunger and experience based on config values. ",
@@ -38,11 +122,24 @@
 		"block.cyclic.ghost_phantom.tooltip":"Vanishing barrier powered by redstone",
 		"block.cyclic.ghost_phantom.guide":"While this block has redstone power, it is not selectable or breakable, and all entities pass through it.  Remove the power to break it. ",
 
+		"block.cyclic.hopper":"Wooden Hopper",
+		"block.cyclic.hopper.tooltip":"Simple item hopper",
+		"block.cyclic.hopper.guide":"Moves items one per tick with similar logic to regular hoppers.  Is disabled with redstone.  Collects only from the are directly above the hopper",
+
+		"block.cyclic.hopper_gold":"Golden Hopper",
+		"block.cyclic.hopper_gold.tooltip":"Simple fast hopper",
+		"block.cyclic.hopper_gold.guide":"Moves items 64 per tick with similar logic to regular hoppers.  Is disabled with redstone.  Collects only from the are directly above the hopper",
+
+		"block.cyclic.hopper_fluid":"Fluid Hopper",
+		"block.cyclic.hopper_fluid.tooltip":"Collect and move fluids",
+		"block.cyclic.hopper_fluid.guide":"Moves fluids one bucket per tick with similar logic to regular hoppers.  Is disabled with redstone.  Collects only from the are directly above the hopper",
+
+
 		"block.cyclic.eye_redstone":"Ender Trigger",
 		"block.cyclic.eye_redstone.tooltip":"Redstone powered while a player is looking",
 		"block.cyclic.eye_redstone.guide":"This block detects nearby players, and checks their eye position to see if the player is looking at the block.  Whenever its being looked at, the blockstate is updated and it produces redstone power. ",
 
-	"block.cyclic.experience_pylon.notenough": "Not enough stored",
+	  "block.cyclic.experience_pylon.notenough": "Not enough stored",
     "block.cyclic.collector": "Item Collector",
     "block.cyclic.collector.tooltip": "Picks up nearby items",
     "block.cyclic.collector.guide": "The Collector picks up nearby items and stores them in its internal buffer. Items can be taken directly out of the buffer, or piped out.",
@@ -55,14 +152,14 @@
     
     "block.cyclic.apple_sprout": "Apple Sprout",
     "block.cyclic.apple_sprout.tooltip": "Apple growing on a leaf",
-    "block.cyclic.apple_sprout.guide": "Plant below a leaf block to grow an apple.  ",
+    "block.cyclic.apple_sprout.guide": "Plant below a leaf block to grow an apple. ",
     
     "block.cyclic.apple_sprout_emerald": "Emerald Apple Sprout",
-    "block.cyclic.apple_sprout_emerald.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_emerald.tooltip": "Grows Emerald Apples",
     "block.cyclic.apple_sprout_emerald.guide": "Plant below a leaf block to grow an emerald apple.  ",
     
     "block.cyclic.apple_sprout_diamond": "Diamond Apple Sprout",
-    "block.cyclic.apple_sprout_diamond.tooltip": "Apple growing on a leaf",
+    "block.cyclic.apple_sprout_diamond.tooltip": "Grows Diamond Apples",
     "block.cyclic.apple_sprout_diamond.guide": "Plant below a leaf block to grow a diamond apple.  ",
     
     "block.cyclic.apple_sprout_chocolate": "Apple Sprout",
@@ -83,6 +180,10 @@
     "block.cyclic.computer_shape.tooltip":"Read buildings into a Shape Card",
     "block.cyclic.computer_shape.guide":"Place two  $(l:misc/location)GPS Card$(/l) cards and one  $(l:misc/shape_data)Shape Card$(/l), then you can read, copy, paste, and merge shapes together. ",
        
+    "item.cyclic.blockstate_data":"BlockState Data Card",
+    "item.cyclic.blockstate_data.tooltip":"Read and save BlockStates to filter Miners",
+    "item.cyclic.blockstate_data.guide":"Use on a block to read its block state.  Craft to erase the list.  It can distinguish between identical blocks in different states such as rotated stairs, double slabs, etc.  ",
+    
     "item.cyclic.filter_data":"Filter Data Card",
     "item.cyclic.filter_data.tooltip":"Holds items and settings used for filters",
     "item.cyclic.filter_data.guide":"Fill with items to adjust machine or cable settings that are filtered",
@@ -94,6 +195,7 @@
     "item.cyclic.shape_data.state":"Empty block, select one with a click first",
     "item.cyclic.shape_data.empty":"Out of materials",
     "item.cyclic.shape_data.nothing":"Card requires a shape and a selected block",
+    "item.cyclic.shape_data.count":"Shape Size: ",
     
     "item.cyclic.settings_data":"Settings Data Card",
     "item.cyclic.settings_data.tooltip":"Copy settings between cyclic machines",
@@ -112,15 +214,20 @@
     "block.cyclic.dark_glass.tooltip": "Immune to light, explosions, and wither blasts",
     "block.cyclic.dark_glass.guide": "Dark Glass, unlike regular glass, does not let light pass through.$(br2)Oh, and it's also immune explosions, including those caused by the Wither.",
     "block.cyclic.light_camo": "Concentrated Glowstone",
-    "block.cyclic.light_camo.tooltip": "Contains a block projection",
+    "block.cyclic.light_camo.tooltip": "Use block on it to copy appearance",
+    "block.cyclic.light_camo.guide": "Produces light, and copies a block appearance.  Contains a block projection",
     "block.cyclic.soundproofing_ghost": "Concentrated Soundproofing",
-    "block.cyclic.soundproofing_ghost.tooltip": "Contains a block projection",
+    "block.cyclic.soundproofing_ghost.guide": "Prevents sound, and copies a block appearance.  Use block on it to copy appearance",
+    "block.cyclic.soundproofing_ghost.tooltip": "Use block on it to copy appearance",
     "block.cyclic.soundproofing": "Soundproofing",
     "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
     "block.cyclic.soundproofing.guide": "Place to reduce the volume of nearby sounds in the world.$(br2)Multiple can be placed in close proximity for a stronger effect.",
     "block.cyclic.fan": "Fan",
     "block.cyclic.fan.tooltip": "Pushes entities",
     "block.cyclic.fan.guide": "The Fan is a configurable machine designed to push players, mobs, items and other entities.$(br2)Right-click on a fan to configure its range and speed.",
+    "block.cyclic.fan_slab": "Fan Slab",
+    "block.cyclic.fan_slab.tooltip": "Pushes entities away",
+    "block.cyclic.fan_slab.guide": "The Fan Slab is a simple block machine designed to push players, mobs, items and other entities.",
 
     "cyclic.fan.range":"Range",
     "cyclic.fan.speed":"Speed",
@@ -139,7 +246,7 @@
     "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
 
     "block.cyclic.conveyor": "Conveyor Belt",
-    "block.cyclic.conveyor.tooltip": "Conveyor with many settings to move entities",
+    "block.cyclic.conveyor.tooltip": "Set speed with redstone torch, rotation type with wrench, color with dye",
     "block.cyclic.conveyor.guide": "Moves all entities standing on it.   Many properties of this block are stored in the blockstate such as type, speed, and dye color.  Types include straight, corner, and up/down ramps.  To toggle the type, place in world and use the $(l:items/wrench)Wooden Wrench$(/l) on the placed rail, this toggles the type.",
     "block.cyclic.conveyor.guide0": "Hold a redstone torch and interact to toggle the speed.   Hold dye and use it on the block to toggle the color.  These updates propogate to nearby connected rails.  (check F3 to view these properties in detail) ",
 
@@ -437,9 +544,11 @@
     "item.cyclic.charm_fire": "Fire Charm",
     "item.cyclic.charm_fire.tooltip": "Fire and lava protection",
     "item.cyclic.charm_fire.guide": "When in your inventory or worn as an accessory, protects you from fire damage at the expense of durability.",
-    "item.charm_speed.guide": "Gives you a passive speed boost, can be stacked with speed potions.  Right click in your inventory to turn it off.  Compatible with baubles API.",
-    "item.charm_speed": "Speed Charm",
-    "item.charm_speed.tooltip": "Speeds up you and your mount",
+    
+    "item.cyclic.charm_speed.guide": "Gives you a passive speed boost, can be stacked with speed potions.  Right click in your inventory to turn it off.  Compatible with baubles API.",
+    "item.cyclic.charm_speed": "Speed Charm",
+    "item.cyclic.charm_speed.tooltip": "Increase movement speed by 50%",
+    
     "item.cyclic.charm_void.guide": "Works in your inventory or in a Baubles slot.  This charm saves you from the void; it detects if you have fallen down below y=-30 and teleports you way up into the sky instead.",
     "item.cyclic.charm_void": "Void Charm",
     "item.cyclic.charm_void.tooltip": "Saves you from falling into the void",
@@ -455,9 +564,7 @@
     "item.cyclic.tile_transporter.inventory": "Only works on inventories",
     "item.cyclic.tile_transporter_empty": "Empty Sack of Holding",
     "item.cyclic.tile_transporter_empty.tooltip": "Transport a container with its contents",
-    "item.corrupted_chorus.guide": "Eat this to phase through walls for a few seconds.  It teleports you back to the starting point if you would end up in a wall.  Otherwise you stay at the end with a few negative effects.",
-    "item.corrupted_chorus": "Corrupted Chorus Fruit",
-    "item.corrupted_chorus.tooltip": "Lets you phase through walls for a few seconds",
+   
     "item.crafting_food.guide": "Unlock a permanent 3x3 crafting table inside your inventory.  Once unlocked, you can open it with a keybinding or with a button in your inventory.",
     "item.crafting_food": "Inventory Crafting Table",
     "item.crafting_food.tooltip": "Eat to Upgrade your inventory",
@@ -547,12 +654,17 @@
     "item.cyclic.fire_killer.guide": "Extinguish all nearby fire.",
     "item.cyclic.fire_killer": "Fire Slayer",
     "item.cyclic.fire_killer.tooltip": "Extinguish nearby fire",
-    "item.cyclic.food_step.guide": "Eating increases your step height to a full block like a horse (eat again to undo)",
-    "item.cyclic.food_step": "Apple of Lofty Stature",
-    "item.cyclic.food_step.tooltip": "Eating increases your step height to a full block like a horse (eat again to undo)",
-    "item.cyclic.glowing_chorus.guide": "A balanced way to get the power of flight.  Gives you a few (stackable) minutes of creative flight each time its eaten.  Use milk to remove.",
-    "item.cyclic.glowing_chorus": "Glowing Chorus Fruit",
-    "item.cyclic.glowing_chorus.tooltip": "Gives you a few (stackable) minutes of creative flight each time its eaten.",
+    "item.cyclic.apple_step.guide": "Eating increases your step height to a full block like a horse (eat again to undo)",
+    "item.cyclic.apple_step": "Apple of Lofty Stature",
+    "item.cyclic.apple_step.tooltip": "Eating increases your step height to a full block like a horse (eat again to undo)",
+    "item.cyclic.chorus_flight.guide": "A balanced way to get the power of flight.  Gives you a few (stackable) minutes of creative flight each time its eaten.  Use milk to remove.",
+    "item.cyclic.chorus_flight": "Glistering Chorus Fruit",
+    "item.cyclic.chorus_flight.tooltip": "A burst of flight",
+    
+    "item.cyclic.chorus_spectral.guide": "Eat this to phase through walls for a few seconds. Does not include flight, you will fall into the void without extra items or abilities, and you can get stuck inside a wall",
+    "item.cyclic.chorus_spectral": "Corrupted Chorus Fruit",
+    "item.cyclic.chorus_spectral.tooltip": "Grants the curse of noClip",
+    
     "item.cyclic.glowing_helmet": "Vision Helmet",
     "item.cyclic.glowing_helmet.tooltip": "Glowing night vision",
     "item.cyclic.glowing_helmet.guide": "Enables glowing night vision while worn, you can also turn it on and off by right-clicking (works in most inventory screens)",
@@ -570,7 +682,7 @@
     "item.cyclic.apple_chocolate.guide": "Similar to milk, when eaten it clears out potion effects.  However it only removes harmful ones like poison, and not beneficial ones such as regeneration or night vision. ",
  
     "item.cyclic.apple_honey": "Honey Apple",
-    "item.cyclic.apple_honey.tooltip": "",
+    "item.cyclic.apple_honey.tooltip": "Sweet and filling",
     "item.cyclic.apple_honey.guide": "Rich food that has no effects.  Used for crafting.  ",
  
     "item.cyclic.apple_ender": "Ender Apple",
@@ -588,8 +700,11 @@
  		"potion.potency.8": "IX",
  		"potion.potency.9": "X",
  		"item.cyclic.apple_bone": "Bone Apple",
+ 		"item.cyclic.apple_bone.guide": "Grants potion effects when eaten",
  		"item.cyclic.apple_chorus": "Chorus Apple",
+ 		"item.cyclic.apple_chorus.guide": "Grants potion effects when eaten",
  		"item.cyclic.apple_prismarine": "Prismarine Apple",
+ 		"item.cyclic.apple_prismarine.guide": "Grants potion effects when eaten",
     "item.cyclic.apple_diamond": "Diamond Apple",
     "item.cyclic.apple_diamond.tooltip": "Major defense buffs",
     "item.cyclic.apple_diamond.guide": "60 seconds worth of Resistance V and health boost V for short tough fights",
@@ -1096,12 +1211,10 @@
     "block.cyclic.spikes_curse": "Cursed Spikes",
     "block.cyclic.spikes_curse.tooltip": "Powered by redstone; curses on contact",
     "block.cyclic.spikes_curse.guide": "Curses enemies with various negative effects on contact.",
-    "block.cyclic.sprinkler.empty": "Put water below to enable",
-    "block.cyclic.sprinkler.particles.false": "Particle splashes turned off",
-    "block.cyclic.sprinkler.particles.true": "Particle splashes turned on",
-    "block.cyclic.sprinkler.guide": "This only runs while water is directly below.  It will water nearby crops, increasing their growing speed.  Multiple sprinklers in the same area do stack.  Sneak right-click with an empty hand to disable particles from rendering.",
+
+    "block.cyclic.sprinkler.guide": "This only runs while water is inside the internal tank (fill with a bucket or pipes).  It will water nearby crops, increasing their growing speed.  Consumes water source blocks from below.  Multiple sprinklers in the same area do stack. ",
     "block.cyclic.sprinkler": "Sprinkler",
-    "block.cyclic.sprinkler.tooltip": "Place over water and near crops",
+    "block.cyclic.sprinkler.tooltip": "Consumes water and grows nearby crops",
     "block.cyclic.sprout.guide": "When this is harvested it randomly drops a block from a custom loot table (listed in config file)",
     "block.cyclic.sprout": "Magic Bean Sprout",
     "block.cyclic.tool_trade.button.tooltip": "Quick Trade",
@@ -1381,9 +1494,9 @@
     "block.fire_frost.tooltip": "Low intermittent damage; slowness and weakness",
     "block.fire_frost.guide": "Low intermittent damage; slowness and weakness",
 
-    "block.void_anvil": "Void Anvil",
-    "block.void_anvil.tooltip": "Delete enchantments off anything",
-    "block.void_anvil.guide": "Delete enchantments off anything",
+    "block.cyclic.anvil_void": "Void Anvil",
+    "block.cyclic.anvil_void.tooltip": "Deletes all enchantments",
+    "block.cyclic.anvil_void.guide": "Delete enchantments off anything by wiping out the enchantments NBT tag.  Uses no power",
 
     "block.sound_player": "SFX Block",
     "block.sound_player.tooltip": "Can play almost any sound",
@@ -1487,6 +1600,10 @@
     "block.dehydrator": "Dehydrator",
     "block.dehydrator.tooltip": "Process dehydration recipes",
     "block.dehydrator.guide": "Dehydrate certain items.  Add more recipes using CraftTweaker.  Lava is optional but will increase processing speed.",
+
+    "block.cyclic.shearing": "Shearing Station",
+    "block.cyclic.shearing.tooltip": "Shears sheep like mobs on contact",
+    "block.cyclic.shearing.guide": "Shears sheep for wool when touched.  Block has no durability like the shears item.  Works on all compatible mobs, not only Sheep, using IForgeShearable",
 
     "item.cyclic.shears_obsidian": "Obsidian Shears",
     "item.cyclic.shears_obsidian.tooltip": "Very Durable Shears",

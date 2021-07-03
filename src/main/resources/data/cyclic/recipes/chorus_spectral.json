@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lgl",
+    "gag",
+    "lgl"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    "l": {
+      "item": "minecraft:chorus_fruit"
+    },
+    "a": {
+      "item": "cyclic:apple_iron"
+    }
+  },
+  "result": {
+    "item": "cyclic:chorus_spectral",
+    "count": 4
+  }
+}

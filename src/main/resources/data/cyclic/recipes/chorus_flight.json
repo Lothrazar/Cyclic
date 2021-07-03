@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lgl",
+    "gag",
+    "lgl"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "l": {
+      "item": "minecraft:chorus_fruit"
+    },
+    "a": {
+      "item": "cyclic:apple_ender"
+    }
+  },
+  "result": {
+    "item": "cyclic:chorus_flight",
+    "count": 4
+  }
+}

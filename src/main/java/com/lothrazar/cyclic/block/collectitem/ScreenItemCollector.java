@@ -85,5 +85,6 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
       this.drawSlot(ms, 7 + i * Const.SQ, y);
       this.drawSlot(ms, 7 + i * Const.SQ, y + Const.SQ);
     }
+    this.drawSlot(ms, 151, 8, TextureRegistry.SLOT_FILTER, 18);
   }
 }

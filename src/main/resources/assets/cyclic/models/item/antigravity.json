@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/charm/charm_air"
+        "layer0": "cyclic:items/charm/air"
     }
 }

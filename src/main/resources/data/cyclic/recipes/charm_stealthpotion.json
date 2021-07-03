@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gag",
+    "fsf",
+    "gag"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:shield"
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "f": {
+      "item": "minecraft:gunpowder"
+    },
+    "a": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_stealthpotion"
+  }
+}

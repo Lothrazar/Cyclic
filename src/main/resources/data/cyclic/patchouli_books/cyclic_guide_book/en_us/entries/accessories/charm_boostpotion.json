@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_boostpotion",
+  "icon": "cyclic:charm_boostpotion",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_boostpotion.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_boostpotion",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

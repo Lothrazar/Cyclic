@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
@@ -20,9 +19,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -62,47 +59,14 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
-    for (Direction side : Direction.values()) {
-      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+    for (Direction extractSide : Direction.values()) {
+      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
       if (connection.isExtraction()) {
-        tryExtract(side);
+        IItemHandler sideHandler = flow.get(extractSide).orElse(null);
+        tryExtract(sideHandler, extractSide, extractQty, filter);
       }
     }
     normalFlow();
-  }
-
-  private void tryExtract(Direction extractSide) {
-    if (extractSide == null) {
-      return;
-    }
-    IItemHandler sideHandler = flow.get(extractSide).orElse(null);
-    if (extractSide == null || !sideHandler.getStackInSlot(0).isEmpty()) {
-      return;
-    }
-    BlockPos posTarget = this.pos.offset(extractSide);
-    TileEntity tile = world.getTileEntity(posTarget);
-    if (tile != null) {
-      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
-      //
-      ItemStack itemTarget;
-      if (itemHandlerFrom != null) {
-        //ok go
-        for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
-          itemTarget = itemHandlerFrom.extractItem(i, extractQty, true);
-          if (itemTarget.isEmpty()) {
-            continue;
-          }
-          // and then pull 
-          if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), itemTarget)) {
-            continue;
-          }
-          itemTarget = itemHandlerFrom.extractItem(i, extractQty, false);
-          ItemStack result = sideHandler.insertItem(0, itemTarget.copy(), false);
-          itemTarget.setCount(result.getCount());
-          return;
-        }
-      }
-    }
   }
 
   private void normalFlow() {

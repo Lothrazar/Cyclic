@@ -27,7 +27,7 @@ public class LightningScepter extends ItemBase {
     //    worldIn.addEntity(ent);
     player.getCooldownTracker().setCooldown(stack.getItem(), 20);
     UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.lightning_staff_launch);
+    UtilSound.playSound(player, SoundRegistry.LIGHTNING_STAFF_LAUNCH);
     return super.onItemRightClick(worldIn, player, handIn);
   }
 }

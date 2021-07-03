@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gfg",
+    "faf",
+    "g g"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:diamond"
+    },
+    "f": {
+      "item": "minecraft:blaze_powder"
+    },
+    "a": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_crit"
+  }
+}

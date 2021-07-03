@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.chorus_spectral",
+  "icon": "cyclic:chorus_spectral",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.chorus_spectral.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:chorus_spectral"
+    }
+  ]
+}

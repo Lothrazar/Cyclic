@@ -22,13 +22,13 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileBatteryInfinite extends TileEntityBase implements ITickableTileEntity {
 
-  static final int MAX = 6400000;
+  static final int MAX = 960000000;
 
   static enum Fields {
     N, E, S, W, U, D;
   }
 
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private Map<Direction, Boolean> poweredSides;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
@@ -85,7 +85,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
 
   @Override
   public void tick() {
-    energy.receiveEnergy(MAX / 4, false);
+    energy.receiveEnergy(MAX, false);
     //now go
     this.tickCableFlow();
   }

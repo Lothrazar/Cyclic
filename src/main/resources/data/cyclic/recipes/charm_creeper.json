@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dgd",
+    "fbf",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "d": {
+      "item": "minecraft:lime_concrete_powder"
+    },
+    "f": {
+      "item": "minecraft:gunpowder"
+    },
+    "a": {
+      "item": "cyclic:apple_ender"
+    },
+    "b": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_creeper"
+  }
+}

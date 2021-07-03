@@ -6,9 +6,6 @@
     "r r"
   ],
   "key": {
-    "r": {
-      "item": "minecraft:redstone"
-    },
     "s": {
       "item": "cyclic:mason_steel"
     },

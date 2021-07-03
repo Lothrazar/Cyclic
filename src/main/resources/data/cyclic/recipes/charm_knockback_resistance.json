@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gfg",
+    "faf",
+    "gfg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:diamond"
+    },
+    "f": {
+      "item": "minecraft:obsidian"
+    },
+    "a": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_knockback_resistance"
+  }
+}

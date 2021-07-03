@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.blockstate_data",
+  "icon": "cyclic:blockstate_data",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.blockstate_data.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:blockstate_data"
+    }
+  ]
+}

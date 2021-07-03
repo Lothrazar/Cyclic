@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.apple_chorus",
+  "icon": "cyclic:apple_chorus",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.apple_chorus.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:apple_chorus"
+    }
+  ]
+}

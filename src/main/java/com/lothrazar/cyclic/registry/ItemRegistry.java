@@ -11,6 +11,8 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.CarbonPaperItem;
+import com.lothrazar.cyclic.item.EdibleFlightItem;
+import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
 import com.lothrazar.cyclic.item.EnderCookie;
@@ -28,11 +30,13 @@ import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmAntidote;
 import com.lothrazar.cyclic.item.bauble.CharmFire;
+import com.lothrazar.cyclic.item.bauble.CharmInvisible;
 import com.lothrazar.cyclic.item.bauble.CharmOverpowered;
 import com.lothrazar.cyclic.item.bauble.CharmVoid;
 import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.FlippersItem;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
+import com.lothrazar.cyclic.item.bauble.ItemBaseToggle;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
@@ -45,6 +49,7 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseRedstoneSpeed;
 import com.lothrazar.cyclic.item.carrot.ItemHorseToxic;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.craftingsimple.CraftingStickItem;
+import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
@@ -95,14 +100,57 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModCyclic.MODID);
+  public static final RegistryObject<Item> FLUIDHOPPER = ITEMS.register("hopper_fluid", () -> new BlockItem(BlockRegistry.FLUIDHOPPER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> HOPPER = ITEMS.register("hopper", () -> new BlockItem(BlockRegistry.HOPPER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> HOPPERGOLD = ITEMS.register("hopper_gold", () -> new BlockItem(BlockRegistry.HOPPERGOLD.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ANVILVOID = ITEMS.register("anvil_void", () -> new BlockItem(BlockRegistry.ANVILVOID.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FANSLAB = ITEMS.register("fan_slab", () -> new BlockItem(BlockRegistry.FANSLAB.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ROTATOR = ITEMS.register("rotator", () -> new BlockItem(BlockRegistry.ROTATOR.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DETECTORMOON = ITEMS.register("detector_moon", () -> new BlockItem(BlockRegistry.DETECTORMOON.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DETECTORWEATHER = ITEMS.register("detector_weather", () -> new BlockItem(BlockRegistry.DETECTORWEATHER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> TERRAGLASS = ITEMS.register("terra_glass", () -> new BlockItem(BlockRegistry.TERRAGLASS.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> STATECARD = ITEMS.register("blockstate_data", () -> new BlockstateCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SPRINKLER = ITEMS.register("sprinkler", () -> new BlockItem(BlockRegistry.SPRINKLER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SHEARING = ITEMS.register("shearing", () -> new BlockItem(BlockRegistry.SHEARING.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CHORUS_FLIGHT = ITEMS.register("chorus_flight", () -> new EdibleFlightItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHORUS_SPECTRAL = ITEMS.register("chorus_spectral", () -> new EdibleSpecItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_LONGFALL = ITEMS.register("charm_longfall", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_CREEPER = ITEMS.register("charm_creeper", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_STONE = ITEMS.register("charm_stone", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 246).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_ANTIPOTION = ITEMS.register("charm_antipotion", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_STEALTHPOTION = ITEMS.register("charm_stealthpotion", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_BOOSTPOTION = ITEMS.register("charm_boostpotion", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_CRIT = ITEMS.register("charm_crit", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> QUIVER_DMG = ITEMS.register("quiver_damage", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> QUIVER_LIT = ITEMS.register("quiver_lightning", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CLOAK_INVISIBLE = ITEMS.register("charm_invisible", () -> new CharmInvisible(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_MAGICDEF = ITEMS.register("charm_magicdefense", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_STARVATION = ITEMS.register("charm_starvation", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_VENOM = ITEMS.register("charm_venom", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_WATER = ITEMS.register("charm_water", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_SPEED = ITEMS.register("charm_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_KNOCKBACK_RESIST = ITEMS.register("charm_knockback_resistance", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_LUCK = ITEMS.register("charm_luck", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_ATTACKSPEED = ITEMS.register("charm_attack_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> CHARM_WALKINGWATER = ITEMS.register("charm_walkingwater", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  // charm_strength - a glove with a name 
+  // charm_speed - attribute . and/or enchantment? 
+  // charm_walkingwater - shaman
+  //
   public static List<ItemBase> items = new ArrayList<>();
+  @ObjectHolder(ModCyclic.MODID + ":charm_fire")
+  public static Item charm_fire;
   @ObjectHolder(ModCyclic.MODID + ":gem_amber")
   public static Item gem_amber;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
@@ -287,7 +335,7 @@ public class ItemRegistry {
     r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
     r.register(new CraftingStickItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("crafting_stick"));
-    r.register(new AntimatterEvaporatorWandItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).maxDamage(1024)).setRegistryName("antimatter_wand"));
+    r.register(new AntimatterEvaporatorWandItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024)).setRegistryName("antimatter_wand"));
     ///////////////////////// apples
     final int smallPotionDur = 20 * 90; // 1:30
     final int largePotionDur = 3 * 20 * 60; // 3:00

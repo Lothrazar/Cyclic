@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " r ",
+    "rer",
+    " r "
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:shears"
+    },
+    "e": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "result": {
+    "item": "cyclic:shearing",
+    "count": 4
+  }
+}

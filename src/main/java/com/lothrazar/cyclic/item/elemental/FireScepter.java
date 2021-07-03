@@ -36,7 +36,7 @@ public class FireScepter extends ItemBase {
     ItemStack stack = player.getHeldItem(handIn);
     player.getCooldownTracker().setCooldown(stack.getItem(), 16);
     UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.fireball_staff_launch);
+    UtilSound.playSound(player, SoundRegistry.FIREBALL_STAFF_LAUNCH);
     return super.onItemRightClick(worldIn, player, handIn);
   }
 }

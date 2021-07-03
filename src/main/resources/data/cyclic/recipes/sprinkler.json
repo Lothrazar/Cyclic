@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c c",
+    "dbd",
+    "c c"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:cauldron"
+    },
+    "c": {
+      "item": "cyclic:terra_glass"
+    },
+    "b": {
+      "item": "cyclic:hopper_fluid"
+    }
+  },
+  "result": {
+    "item": "cyclic:sprinkler",
+    "count": 1
+  }
+}

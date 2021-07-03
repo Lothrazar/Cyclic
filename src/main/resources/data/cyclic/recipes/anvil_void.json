@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ddd",
+    " s ",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "cyclic:mason_steel"
+    },
+    "d": {
+      "item": "cyclic:mason_iron"
+    }
+  },
+  "result": {
+    "item": "cyclic:anvil_void",
+    "count": 1
+  }
+}

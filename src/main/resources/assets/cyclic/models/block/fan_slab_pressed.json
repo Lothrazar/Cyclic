@@ -1,0 +1,6 @@
+{
+  "parent": "cyclic:parent/plate_fan_on",
+  "textures": {
+    "texture": "cyclic:blocks/machine/bottom"
+  }
+}

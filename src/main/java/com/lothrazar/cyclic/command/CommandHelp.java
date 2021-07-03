@@ -25,8 +25,7 @@ public class CommandHelp implements ICyclicCommand {
     UtilChat.addServerChatMessage(player,
         "[" + String.join(", ", CommandRegistry.SUBCOMMANDS) + "]");
     for (ICyclicCommand cmd : CommandRegistry.COMMANDS) {
-      UtilChat.addServerChatMessage(player,
-          cmd.getName());
+      UtilChat.addServerChatMessage(player, cmd.getName());
     }
     return 1;
   }

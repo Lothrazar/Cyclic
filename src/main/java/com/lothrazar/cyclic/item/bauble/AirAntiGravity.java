@@ -1,35 +1,21 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.base.IHasClickToggle;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.List;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AirAntiGravity extends ItemBase implements IHasClickToggle {
+public class AirAntiGravity extends ItemBaseToggle {
 
   private static final int TICKS_FALLDIST_SYNC = 22; //tick every so often
   private static final double DOWNWARD_SPEED_SNEAKING = -0.32;
 
   public AirAntiGravity(Properties properties) {
     super(properties);
-  }
-
-  private boolean canUse(ItemStack stack) {
-    return stack.getDamage() < stack.getMaxDamage();
   }
 
   @Override
@@ -63,35 +49,5 @@ public class AirAntiGravity extends ItemBase implements IHasClickToggle {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
       }
     }
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
-    TranslationTextComponent t = new TranslationTextComponent("item.cyclic.bauble.on." + this.isOn(stack));
-    t.mergeStyle(TextFormatting.DARK_GRAY);
-    tooltip.add(t);
-  }
-
-  @Override
-  public void toggle(PlayerEntity player, ItemStack held) {
-    CompoundNBT tag = held.getTag();
-    if (tag == null) {
-      tag = new CompoundNBT();
-    }
-    tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
-    held.setTag(tag);
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public boolean hasEffect(ItemStack stack) {
-    return isOn(stack);
-  }
-
-  @Override
-  public boolean isOn(ItemStack held) {
-    return held.getOrCreateTag().getInt(NBT_STATUS) == 0;
   }
 }

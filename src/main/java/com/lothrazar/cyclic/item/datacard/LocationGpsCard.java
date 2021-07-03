@@ -64,7 +64,6 @@ public class LocationGpsCard extends ItemBase {
     player.swingArm(hand);
     UtilNBT.setItemStackBlockPos(held, pos);
     held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.world));
-    //    UtilNBT.setItemStackNBTVal(held, NBT_DIM, player.dimension.getId());
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getHorizontalFacing().ordinal());
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")

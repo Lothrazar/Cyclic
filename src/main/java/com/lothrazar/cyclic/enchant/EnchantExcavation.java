@@ -26,6 +26,7 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -110,7 +111,7 @@ public class EnchantExcavation extends EnchantBase {
       int harvested = this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
       if (harvested > 0) {
         //damage but also respect the unbreaking chant  
-        player.getHeldItem(player.swingingHand).attemptDamageItem(1, world.getRandom(), null);
+        UtilItemStack.damageItem(player, stackHarvestingWith);
       }
     }
     else {

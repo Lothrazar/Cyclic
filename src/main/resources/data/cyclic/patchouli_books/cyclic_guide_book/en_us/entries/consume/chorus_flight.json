@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.chorus_flight",
+  "icon": "cyclic:chorus_flight",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.chorus_flight.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:chorus_flight"
+    }
+  ]
+}

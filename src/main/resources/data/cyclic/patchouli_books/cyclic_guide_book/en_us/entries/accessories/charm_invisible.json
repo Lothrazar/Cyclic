@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_invisible",
+  "icon": "cyclic:charm_invisible",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_invisible.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_invisible",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

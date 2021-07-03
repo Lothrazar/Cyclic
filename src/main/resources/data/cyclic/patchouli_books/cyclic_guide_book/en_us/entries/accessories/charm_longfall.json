@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_longfall",
+  "icon": "cyclic:charm_longfall",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_longfall.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_longfall",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "replace": "false",
   "values": [
+    "cyclic:charm_attack_speed",
     "cyclic:glove_climb"
   ]
 }

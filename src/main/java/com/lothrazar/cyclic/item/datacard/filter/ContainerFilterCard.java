@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.item.datacard.filter;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
+import javax.annotation.Nonnull;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -40,11 +42,16 @@ public class ContainerFilterCard extends ContainerBase {
         int col = j % 9;
         int xPos = 8 + col * Const.SQ;
         int yPos = 32 + row * Const.SQ;
-        this.addSlot(new SlotItemHandler(h, j, xPos, yPos));
-        //        ItemStack inBag = h.getStackInSlot(j);
-        //        if (!inBag.isEmpty()) {
-        //          h.setInventorySlotContents(j, h.getStackInSlot(j));
-        //        }
+        this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
+
+          @Override
+          public boolean isItemValid(@Nonnull ItemStack stack) {
+            if (stack.getItem() == ItemRegistry.filter_data) {
+              return false;
+            }
+            return super.isItemValid(stack);
+          }
+        });
       }
     });
     layoutPlayerInventorySlots(8, 84);

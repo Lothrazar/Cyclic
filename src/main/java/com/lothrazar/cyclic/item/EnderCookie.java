@@ -31,7 +31,7 @@ public class EnderCookie extends ItemBase {
   private static final int COOLDOWN = 60;
 
   public EnderCookie(Properties properties) {
-    super(properties);
+    super(properties); // .food(new Food.Builder().hunger(h).saturation(0)
   }
 
   @Override

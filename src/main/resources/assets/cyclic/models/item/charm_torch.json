@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"0": "cyclic:items/charm_torch"
+		"0": "cyclic:items/charm/torch"
 	},
 	"elements": [
 		{

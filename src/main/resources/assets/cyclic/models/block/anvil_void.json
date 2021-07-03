@@ -1,0 +1,9 @@
+{
+   "parent": "cyclic:parent/anvil",
+   "textures": {
+        "particle": "cyclic:blocks/anvil/hopper",
+        "body": "cyclic:blocks/anvil/iron",
+        "base": "cyclic:blocks/anvil/hopper",
+        "pillar": "cyclic:blocks/anvil/hopper"
+    }
+}

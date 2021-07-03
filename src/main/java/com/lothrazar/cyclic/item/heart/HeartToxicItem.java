@@ -40,7 +40,7 @@ public class HeartToxicItem extends ItemBase {
       //actually DO the eating of the thing
       playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
       playerIn.getHeldItem(handIn).shrink(1);
-      UtilSound.playSound(playerIn, SoundRegistry.fill);
+      UtilSound.playSound(playerIn, SoundRegistry.FILL);
       playerIn.getFoodStats().addStats(3, 1);
       playerIn.giveExperiencePoints(ConfigRegistry.HEARTXPMINUS.get());
     }

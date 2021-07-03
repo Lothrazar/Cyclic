@@ -40,7 +40,9 @@ public class ShapeCard extends ItemBase {
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
-      tooltip.add(new TranslationTextComponent(getTranslationKey() + ".count" + shape.getCount()));
+      TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".count");
+      t.appendString(shape.getCount() + "");
+      tooltip.add(t);
       BlockState target = BuilderActionType.getBlockState(stack);
       String block = "scepter.cyclic.nothing";
       if (target != null) {
@@ -55,11 +57,10 @@ public class ShapeCard extends ItemBase {
         //        tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()));
       }
     }
-    else {
-      TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
-      t.mergeStyle(TextFormatting.GRAY);
-      tooltip.add(t);
-    }
+    TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
+    t.mergeStyle(TextFormatting.GRAY);
+    tooltip.add(t);
+    //    }
   }
 
   @Override

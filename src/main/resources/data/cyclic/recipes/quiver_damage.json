@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "f f",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:leather"
+    },
+    "f": {
+      "item": "minecraft:arrow"
+    },
+    "a": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "item": "cyclic:quiver_damage"
+  }
+}

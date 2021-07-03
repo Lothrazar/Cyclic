@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "b b",
+    "bcb",
+    " b "
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:brick"
+    },
+    "c": {
+      "item": "cyclic:hopper"
+    }
+  },
+  "result": {
+    "item": "cyclic:hopper_fluid",
+    "count": 1
+  }
+}

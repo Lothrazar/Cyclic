@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.light_camo",
+  "icon": "cyclic:light_camo",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.light_camo.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:light_camo"
+    }
+  ]
+}

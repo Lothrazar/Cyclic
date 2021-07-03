@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.block.cable.CableWrench;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,7 +69,7 @@ public class BlockConveyor extends BlockBase {
   public static final List<SimpleImmutableEntry<ConveyorType, Direction>> STATE_PAIRS = generateStatePairs();
 
   public BlockConveyor(Properties properties) {
-    super(properties.notSolid());
+    super(properties.hardnessAndResistance(0.6F).notSolid());
   }
 
   /**
@@ -209,7 +209,7 @@ public class BlockConveyor extends BlockBase {
       return ActionResultType.SUCCESS;
       //  }
     }
-    else if (heldItem == ItemRegistry.cable_wrench || heldItem == Items.REDSTONE_TORCH) {
+    else if (heldItem == Items.REDSTONE_TORCH) {
       //speed toggle
       ConveyorSpeed speed = state.get(SPEED);
       if (world.setBlockState(pos, state.with(SPEED, speed.getNext()))) {
@@ -217,7 +217,7 @@ public class BlockConveyor extends BlockBase {
         return ActionResultType.SUCCESS;
       }
     }
-    else if (heldItem == ItemRegistry.wrench) { //heldItem == this.asItem() || 
+    else if (heldItem.isIn(CableWrench.WRENCH)) {
       SimpleImmutableEntry<ConveyorType, Direction> nextState = nextConnectedState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
       boolean success = world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
       if (success) {

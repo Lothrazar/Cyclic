@@ -199,11 +199,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     }
     String age = CropsBlock.AGE.getName();
     ResourceLocation bid = blockState.getBlock().getRegistryName();
-    if (CompatConstants.RESYNTH_MODID.equalsIgnoreCase(bid.getNamespace())) {
+    if (CompatConstants.RESYNTH.equalsIgnoreCase(bid.getNamespace())) {
       //some silly old mods dont use age for compatibility
       // https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/blob/a9f47439d103c1c17ca7a4ffd05c2dc0397e5e5f/src/main/java/com/ki11erwolf/resynth/plant/block/BlockBiochemicalPlant.java#L59
       //so we hack it
-      age = CompatConstants.RESYNTH_CROPSAGE;
+      age = CompatConstants.CROPSTAGE_RESYNTH;
     }
     for (Property<?> p : blockState.getProperties()) {
       if (p != null && p.getName() != null

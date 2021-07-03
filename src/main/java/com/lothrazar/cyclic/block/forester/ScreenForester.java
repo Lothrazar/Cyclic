@@ -65,7 +65,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     int relX = this.getXSize() / 2 - 9;
-    this.drawSlot(ms, relX, 24, TextureRegistry.SLOTSAPLING, Const.SQ);
+    this.drawSlot(ms, relX, 24, TextureRegistry.SLOT_SAPLING, Const.SQ);
     energy.draw(ms, container.getEnergy());
   }
 }

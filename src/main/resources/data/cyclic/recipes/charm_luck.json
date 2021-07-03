@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gfg",
+    " a ",
+    "gbg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:redstone"
+    },
+    "f": {
+      "item": "minecraft:brain_coral_block"
+    },
+    "a": {
+      "item": "cyclic:gem_amber"
+    },
+    "b": {
+      "item": "minecraft:light_weighted_pressure_plate"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_luck"
+  }
+}

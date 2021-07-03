@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c c",
+    " q ",
+    "r r"
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:daylight_detector"
+    },
+    "q": {
+      "item": "minecraft:daylight_detector"
+    },
+    "c": {
+      "item": "minecraft:observer"
+    }
+  },
+  "result": {
+    "item": "cyclic:detector_moon",
+    "count": 1
+  }
+}

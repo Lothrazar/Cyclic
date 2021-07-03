@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "fpf",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "p": {
+      "item": "minecraft:poisonous_potato"
+    },
+    "f": {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    "a": {
+      "item": "cyclic:apple_bone"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_venom"
+  }
+}

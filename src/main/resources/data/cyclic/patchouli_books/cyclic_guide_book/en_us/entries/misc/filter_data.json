@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.filter_data",
+  "icon": "cyclic:filter_data",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.filter_data.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:filter_data"
+    }
+  ]
+}

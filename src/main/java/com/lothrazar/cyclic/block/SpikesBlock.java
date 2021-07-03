@@ -148,13 +148,13 @@ public class SpikesBlock extends BlockBase {
     if (state.get(ACTIVATED).booleanValue() == false && world.isBlockPowered(pos)) {
       world.setBlockState(pos, state.with(ACTIVATED, true));
       if (world.isRemote) {
-        UtilSound.playSound(pos, SoundRegistry.spikes_on);
+        UtilSound.playSound(pos, SoundRegistry.SPIKES_ON);
       }
     }
     else if (state.get(ACTIVATED).booleanValue()
         && world.isBlockPowered(pos) == false) {
           if (world.isRemote) {
-            UtilSound.playSound(pos, SoundRegistry.spikes_off);
+            UtilSound.playSound(pos, SoundRegistry.SPIKES_OFF);
           }
           world.setBlockState(pos, state.with(ACTIVATED, false));
         }

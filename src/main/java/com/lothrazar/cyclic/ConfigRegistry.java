@@ -17,6 +17,7 @@ import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
+import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
@@ -37,6 +38,8 @@ import com.lothrazar.cyclic.enchant.EnchantStep;
 import com.lothrazar.cyclic.enchant.EnchantTraveller;
 import com.lothrazar.cyclic.enchant.EnchantVenom;
 import com.lothrazar.cyclic.enchant.EnchantXp;
+import com.lothrazar.cyclic.item.EdibleFlightItem;
+import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
@@ -72,7 +75,6 @@ public class ConfigRegistry {
   public static BooleanValue COMMANDHOME;
   public static BooleanValue COMMANDHUNGER;
   public static BooleanValue COMMANDPINGNETHER;
-  public static BooleanValue COMMANDWORLDSPAWN;
   public static BooleanValue COMMANDGETHELP;
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
@@ -182,7 +184,6 @@ public class ConfigRegistry {
     COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define("hunger", true);
     COMMANDNBT = CFG.comment("True means only players with OP can use this /cyclic command").define("nbtprint", false);
     COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define("pingnether", false);
-    COMMANDWORLDSPAWN = CFG.comment("True means only players with OP can use this /cyclic command").define("worldspawn", true);
     CFG.pop(); //command
     CFG.comment(WALL, " Logging related configs", WALL)
         .push("logging");
@@ -236,6 +237,11 @@ public class ConfigRegistry {
     MaterialRegistry.OBS_DMG = CFG.comment("Weapon damage").defineInRange("damage", 10.5F, 0.1F, 99F);
     CFG.pop();
     //
+    CFG.comment(WALL, " Edible chorus settings", WALL).push("chorus");
+    EdibleFlightItem.TICKS = CFG.comment("Seconds of flight per chorus_flight").defineInRange("ticks", 20 * 60, 1, 20 * 1000);
+    //
+    EdibleSpecItem.TICKS = CFG.comment("Seconds of noClip per chorus_spectral").defineInRange("ticks", 20 * 30, 1, 20 * 1000);
+    CFG.pop();
     //
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");
@@ -260,13 +266,17 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL)
         .push("blocks");
+    CFG.comment("Sprinkler settings").push("sprinkler");
+    TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
+    TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);
+    CFG.pop(); // sprinkler
     CFG.comment("Ender Anchor settings").push("eye_teleport");
-    TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 32, 2, 256);
+    TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 128, 2, 256);
     TileEyeTp.HUNGER = CFG.comment("Hunger cost on teleport").defineInRange("hunger", 1, 0, 20);
     TileEyeTp.EXP = CFG.comment("Exp cost on teleport").defineInRange("exp", 0, 0, 500);
     TileEyeTp.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")
         .defineInRange("frequency", 5, 1, 20);
-    CFG.pop();
+    CFG.pop(); // eye_teleport
     CFG.comment("Ender Trigger settings").push("eye_redstone");
     TileEye.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 32, 2, 256);
     TileEye.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")
