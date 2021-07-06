@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.expcollect;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -62,7 +63,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   public Predicate<FluidStack> isFluidValid() {
-    return p -> p.getFluid() == FluidXpJuiceHolder.STILL.get();
+    return p -> p.getFluid().isIn(DataTags.XP);
   }
 
   @Override
@@ -78,7 +79,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
     tank.readFromNBT(tag.getCompound("fluid"));
     int legacy = tag.getInt("storedXp");
     if (legacy > 0) {
-      tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * 20));
+      tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
     }
     super.read(bs, tag);
   }
@@ -125,8 +126,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
         //at level 100+ this is way too slow
         if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
           p.giveExperiencePoints(-1 * addMeXp);
-          tank.fill(new FluidStack(
-              FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
+          tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
           //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
           UtilSound.playSound(p, p.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
           this.markDirty();

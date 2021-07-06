@@ -2,13 +2,16 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.tags.ItemTags;
 
 public class DataTags {
 
+  public static final INamedTag<Fluid> XP = FluidTags.makeWrapperTag("forge:experience");
   public static final INamedTag<Block> PLANTS = BlockTags.makeWrapperTag("forge:plants");
   public static final INamedTag<Block> MUSHROOMS = BlockTags.makeWrapperTag("forge:mushrooms");
   public static final INamedTag<Block> VINES = BlockTags.makeWrapperTag("forge:vines");
