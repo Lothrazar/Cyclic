@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dgd",
+    "g g",
+    "dad"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:iron_nugget"
+    },
+    "d": {
+      "item": "minecraft:gray_concrete_powder"
+    },
+    "a": {
+      "item": "cyclic:experience_food"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_xp_blocker"
+  }
+}

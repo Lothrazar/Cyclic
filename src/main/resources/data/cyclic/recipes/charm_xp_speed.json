@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " f ",
+    "fgf",
+    " a "
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:vine"
+    },
+    "f": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "a": {
+      "item": "cyclic:charm_xp_blocker"
+    }
+  },
+  "result": {
+    "item": "cyclic:charm_xp_speed"
+  }
+}

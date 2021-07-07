@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_xp_blocker",
+  "icon": "cyclic:charm_xp_blocker",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_xp_blocker.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_xp_blocker",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

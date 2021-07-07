@@ -143,7 +143,8 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CHARM_KNOCKBACK_RESIST = ITEMS.register("charm_knockback_resistance", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_LUCK = ITEMS.register("charm_luck", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_ATTACKSPEED = ITEMS.register("charm_attack_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> CHARM_WALKINGWATER = ITEMS.register("charm_walkingwater", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_XPSPEED = ITEMS.register("charm_xp_speed", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_XPSTOPPER = ITEMS.register("charm_xp_blocker", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   // charm_strength - a glove with a name 
   // charm_speed - attribute . and/or enchantment? 
   // charm_walkingwater - shaman

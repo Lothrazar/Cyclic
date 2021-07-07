@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_xp_speed",
+  "icon": "cyclic:charm_xp_speed",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_xp_speed.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_xp_speed",
+      "text": "item.iscurios.guide"
+    }
+  ]
+}

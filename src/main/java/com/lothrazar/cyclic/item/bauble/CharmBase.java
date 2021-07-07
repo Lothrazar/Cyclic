@@ -128,7 +128,11 @@ public abstract class CharmBase extends ItemBaseToggle {
   public static void charmAttackSpeed(PlayerEntity player) {
     toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, 0.5F, 0);
   }
-  //  public static void charmKnockResist(PlayerEntity player) {
-  //    toggleAttribute(player, ItemRegistry.CHARM_KNOCKBACK_RESIST.get(), Attributes.ATTACK_KNOCKBACK, ID_KNOCKRESIST, 0.25F);
-  //  }
+
+  public static void charmExpSpeed(PlayerEntity player) {
+    ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSPEED.get());
+    if (!charmStack.isEmpty()) {
+      player.xpCooldown = 0;
+    }
+  }
 }

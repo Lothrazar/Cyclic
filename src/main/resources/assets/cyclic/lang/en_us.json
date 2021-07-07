@@ -30,6 +30,14 @@
 		"item.cyclic.charm_luck.tooltip": "Increase player luck",
 		"item.cyclic.charm_luck.guide": "Increase players passive luck attribute by 10 percent of the original, plus 10 points. Luck and Unluck potions give +1 or -1 points per level, respectively. ",
 		
+		"item.cyclic.charm_xp_blocker": "Cursed Ring of Experience",
+		"item.cyclic.charm_xp_blocker.tooltip": "Blocks pickup of XP Orbs",
+		"item.cyclic.charm_xp_blocker.guide": "Blocks pickup of XP Orbs.  They are still attracted to and float around the player",
+		
+		"item.cyclic.charm_xp_speed": "Ring of Experience",
+		"item.cyclic.charm_xp_speed.tooltip": "Pickup XP Orbs as fast as possible",
+		"item.cyclic.charm_xp_speed.guide": "Pickup XP Orbs as fast as possible by removing the internal cooldown on pickup",
+		
 		"item.cyclic.charm_creeper": "Dormant Creeper Spore",
 		"item.cyclic.charm_creeper.tooltip": "Immune to explosion damage",
 		"item.cyclic.charm_creeper.guide": "Immune to explosion damage",

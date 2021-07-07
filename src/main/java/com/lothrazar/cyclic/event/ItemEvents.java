@@ -54,6 +54,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -231,7 +232,16 @@ public class ItemEvents {
       CharmBase.charmSpeed(player);
       CharmBase.charmLuck(player);
       CharmBase.charmAttackSpeed(player);
-      //      CharmBase.charmKnockResist(player);
+      CharmBase.charmExpSpeed(player);
+    }
+  }
+
+  @SubscribeEvent
+  public void onXpPickup(PlayerXpEvent.PickupXp event) {
+    PlayerEntity player = event.getPlayer();
+    ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSTOPPER.get());
+    if (!charmStack.isEmpty()) {
+      event.setCanceled(true);
     }
   }
 

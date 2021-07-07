@@ -28,7 +28,7 @@ public class FluidXpJuiceHolder {
   public static RegistryObject<FlowingFluid> STILL = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(FluidXpJuiceHolder.properties));
   public static RegistryObject<FlowingFluid> FLOWING = FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidXpJuiceHolder.properties));
   public static RegistryObject<FlowingFluidBlock> BLOCK = BLOCKS.register(id + "_block",
-      () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
+      () -> new FlowingFluidBlock(STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().setLightLevel(s -> 8).hardnessAndResistance(100.0F).noDrops()));
   public static RegistryObject<Item> BUCKET = ITEMS.register(id + "_bucket",
       () -> new BucketItem(STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
