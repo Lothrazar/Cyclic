@@ -71,7 +71,7 @@ public class MaterialRegistry {
           default:
           break;
         }
-        return 0;//ArmorMaterial.DIAMOND.getDamageReductionAmount(slot) + ArmorMaterial.IRON.getDamageReductionAmount(slot);
+        return 0; //ArmorMaterial.DIAMOND.getDamageReductionAmount(slot) + ArmorMaterial.IRON.getDamageReductionAmount(slot);
       }
 
       @Override
@@ -127,7 +127,7 @@ public class MaterialRegistry {
           default:
           break;
         }
-        return 0;// ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) * 3;
+        return 0; // ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) * 3;
       }
 
       @Override
@@ -301,7 +301,6 @@ public class MaterialRegistry {
 
       @Override
       public Ingredient getRepairMaterial() {
-        //        Ingredient.fromTag(Tag.)
         return Ingredient.fromStacks(new ItemStack(net.minecraft.block.Blocks.SANDSTONE));
       }
     };
