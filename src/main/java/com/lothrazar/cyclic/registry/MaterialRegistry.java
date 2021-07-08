@@ -12,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class MaterialRegistry {
 
@@ -29,6 +30,14 @@ public class MaterialRegistry {
       return new ItemStack(ItemRegistry.gem_amber);
     }
   };
+  public static IntValue EMERALD_BOOTS;
+  public static IntValue EMERALD_LEG;
+  public static IntValue EMERALD_CHEST;
+  public static IntValue EMERALD_HELM;
+  public static IntValue OBS_BOOTS;
+  public static IntValue OBS_LEG;
+  public static IntValue OBS_CHEST;
+  public static IntValue OBS_HELM;
   public static DoubleValue EMERALD_TOUGH;
   public static DoubleValue EMERALD_DMG;
   public static DoubleValue OBS_TOUGH;
@@ -47,8 +56,22 @@ public class MaterialRegistry {
       }
 
       @Override
-      public int getDamageReductionAmount(EquipmentSlotType slotIn) {
-        return ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) + ArmorMaterial.IRON.getDamageReductionAmount(slotIn);
+      public int getDamageReductionAmount(EquipmentSlotType slot) {
+        switch (slot) {
+          case CHEST:
+            return EMERALD_CHEST.get();
+          case FEET:
+            return EMERALD_BOOTS.get();
+          case HEAD:
+            return EMERALD_HELM.get();
+          case LEGS:
+            return EMERALD_LEG.get();
+          case MAINHAND:
+          case OFFHAND:
+          default:
+          break;
+        }
+        return 0;//ArmorMaterial.DIAMOND.getDamageReductionAmount(slot) + ArmorMaterial.IRON.getDamageReductionAmount(slot);
       }
 
       @Override
@@ -89,8 +112,22 @@ public class MaterialRegistry {
       }
 
       @Override
-      public int getDamageReductionAmount(EquipmentSlotType slotIn) {
-        return ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) * 3;
+      public int getDamageReductionAmount(EquipmentSlotType slot) {
+        switch (slot) {
+          case CHEST:
+            return OBS_CHEST.get();
+          case FEET:
+            return OBS_BOOTS.get();
+          case HEAD:
+            return OBS_HELM.get();
+          case LEGS:
+            return OBS_LEG.get();
+          case MAINHAND:
+          case OFFHAND:
+          default:
+          break;
+        }
+        return 0;// ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) * 3;
       }
 
       @Override

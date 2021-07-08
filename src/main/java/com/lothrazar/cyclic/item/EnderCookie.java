@@ -49,37 +49,31 @@ public class EnderCookie extends ItemBase {
       return super.onItemUseFinish(stack, worldIn, entityLiving);
     }
     player.getCooldownTracker().setCooldown(this, COOLDOWN);
-    //    LocateCommand yy;
     if (worldIn instanceof ServerWorld) {
-      //      final String[] stuff = new String[] {
-      //          "minecraft:mansion",
-      //          "minecraft:jungle_pyramid",
-      //          "minecraft:desert_pyramid",
-      //          "minecraft:igloo",
-      //          "minecraft:ruined_portal",
-      //          "minecraft:swamp_hut",
-      //          "minecraft:monument",
-      //          "minecraft:ocean_ruin",
-      //          "minecraft:fortress",
-      //          "minecraft:bastion_remnant",
-      //          "minecraft:endcity",
-      //      };
       final List<String> structIgnoreList = Arrays.asList(ignoreMe);
       //
-      //
       ServerWorld serverWorld = (ServerWorld) worldIn;
-      //      List<BlockPos> foundStructs = new ArrayList<BlockPos>();
       Map<String, Integer> distanceStructNames = new HashMap<>();
       for (Structure<?> structureFeature : net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
-        String name = structureFeature.getRegistryName().toString();
-        if (!structIgnoreList.contains(name)) {
-          //then we are allowed to look fori t, we are not in ignore list 
-          BlockPos targetPos = entityLiving.getPosition();
-          final BlockPos posOfStructure = serverWorld.func_241117_a_(structureFeature, targetPos, 100, false);
-          if (posOfStructure != null) {
-            double distance = UtilWorld.distanceBetweenHorizontal(posOfStructure, targetPos);
-            distanceStructNames.put(name, (int) distance);
+        try {
+          String name = structureFeature.getRegistryName().toString();
+          if (!structIgnoreList.contains(name)) {
+            //then we are allowed to look fori t, we are not in ignore list 
+            BlockPos targetPos = entityLiving.getPosition();
+            final BlockPos posOfStructure = serverWorld.func_241117_a_(structureFeature, targetPos, 100, false);
+            if (posOfStructure != null) {
+              double distance = UtilWorld.distanceBetweenHorizontal(posOfStructure, targetPos);
+              distanceStructNames.put(name, (int) distance);
+            }
           }
+        }
+        catch (Exception e) {
+          //third party non vanilla mods can crash, or cause ServerWatchdog errors. example:
+          //          java.lang.Error: ServerHangWatchdog detected that a single server tick took 192.11 seconds (should be max 0.05)
+          // ...
+          //          at com.telepathicgrunt.repurposedstructures.world.structures.AbstractBaseStructure.locateStructureFast(AbstractBaseStructure.java:61) ~[repurposed_structures:2.7.5] {re:classloading}
+          //          at com.telepathicgrunt.repurposedstructures.world.structures.AbstractBaseStructure.func_236388_a_(AbstractBaseStructure.java:41) ~[repurposed_structures:2.7.5] {re:classloading}
+          //          
         }
       }
       //done loopiong on features

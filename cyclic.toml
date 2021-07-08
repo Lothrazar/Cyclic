@@ -63,7 +63,7 @@
 		[cyclic.blocks.eye_teleport]
 			#Maximum distance to activate
 			#Range: 2 ~ 256
-			range = 32
+			range = 128
 			#Exp cost on teleport
 			#Range: 0 ~ 500
 			exp = 0
@@ -109,7 +109,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
+		info = false
 
 	#####################################################################################
 	# Item specific configs
@@ -118,11 +118,6 @@
 		#Entity ids that cannot be picked up with the Monster all
 		monster_ball_ignore_list = ["minecraft:ender_dragon", "minecraft:wither"]
 
-		#Sack of Holding settings
-		[cyclic.items.tile_transporter]
-			#Block these from being picked up
-			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
-
 		#####################################################################################
 		# Obsidian gear settings
 		#####################################################################################
@@ -130,9 +125,34 @@
 			#Weapon damage
 			#Range: 0.10000000149011612 ~ 99.0
 			damage = 10.5
+			#Damage Reduction
+			#Range: 1 ~ 99
+			chest = 11
+			#Damage Reduction
+			#Range: 1 ~ 99
+			boots = 7
 			#Armor toughness
 			#Range: 0.10000000149011612 ~ 99.0
 			toughness = 6.0
+			#Damage Reduction
+			#Range: 1 ~ 99
+			helm = 7
+			#Damage Reduction
+			#Range: 1 ~ 99
+			leg = 10
+
+		#Sack of Holding settings
+		[cyclic.items.tile_transporter]
+			#Block these from being picked up
+			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
+
+		#####################################################################################
+		# Edible chorus settings
+		#####################################################################################
+		[cyclic.items.chorus]
+			#Seconds of noClip per chorus_spectral
+			#Range: 1 ~ 20000
+			ticks = 600
 
 		#Wand settings
 		[cyclic.items.teleport_wand]
@@ -146,6 +166,29 @@
 			#Range: 0.0010000000474974513 ~ 1.0
 			conversionChance = 0.07999999821186066
 
+		#####################################################################################
+		# Emerald gear settings
+		#####################################################################################
+		[cyclic.items.emerald]
+			#Weapon damage
+			#Range: 0.10000000149011612 ~ 99.0
+			damage = 4.5
+			#Damage Reduction
+			#Range: 1 ~ 99
+			chest = 7
+			#Damage Reduction
+			#Range: 1 ~ 99
+			boots = 3
+			#Armor toughness
+			#Range: 0.10000000149011612 ~ 99.0
+			toughness = 3.0
+			#Damage Reduction
+			#Range: 1 ~ 99
+			helm = 4
+			#Damage Reduction
+			#Range: 1 ~ 99
+			leg = 6
+
 		#Heart items
 		[cyclic.items.heart]
 			#Maximum number of hearts that can be attained (including initial 10)
@@ -154,17 +197,6 @@
 			#Experience given when eating a poisoned heart
 			#Range: 0 ~ 99999
 			experience = 500
-
-		#####################################################################################
-		# Emerald gear settings
-		#####################################################################################
-		[cyclic.items.emerald]
-			#Weapon damage
-			#Range: 0.10000000149011612 ~ 99.0
-			damage = 4.5
-			#Armor toughness
-			#Range: 0.10000000149011612 ~ 99.0
-			toughness = 3.0
 
 	#####################################################################################
 	# Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  

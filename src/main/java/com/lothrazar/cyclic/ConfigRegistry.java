@@ -214,8 +214,6 @@ public class ConfigRegistry {
     TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm", 500, 0, 64000);
     TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter", 500, 0, 64000);
     TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure", 10, 0, 64000);
-    //    TilePlacer.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("placer", 0, 0, 64000);
-    //  TileBreaker.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("breaker", 0, 0, 64000);
     TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon", 0, 0, 64000);
     CFG.pop(); //cost
     CFG.pop(); //energy
@@ -223,18 +221,20 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
     MaterialRegistry.EMERALD_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 3.0F, 0.1F, 99F);
     MaterialRegistry.EMERALD_DMG = CFG.comment("Weapon damage").defineInRange("damage", 4.5F, 0.1F, 99F);
+    MaterialRegistry.EMERALD_BOOTS = CFG.comment("Damage Reduction").defineInRange("boots", 4, 1, 99);
+    MaterialRegistry.EMERALD_HELM = CFG.comment("Damage Reduction").defineInRange("helm", 4, 1, 99);
+    MaterialRegistry.EMERALD_CHEST = CFG.comment("Damage Reduction").defineInRange("chest", 9, 1, 99);
+    MaterialRegistry.EMERALD_LEG = CFG.comment("Damage Reduction").defineInRange("leg", 7, 1, 99);
     CFG.pop();
     //
-    //CRYSTAL TOUGH 6.0
-    //emerald TOUGH 3.0
-    //
-    // CRYSTAL DAMAGE 10.5
-    // 
-    //  EMERALD DAMAGE 4.5
     // 
     CFG.comment(WALL, " Obsidian gear settings", WALL).push("obsidian");
     MaterialRegistry.OBS_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 6.0F, 0.1F, 99F);
     MaterialRegistry.OBS_DMG = CFG.comment("Weapon damage").defineInRange("damage", 10.5F, 0.1F, 99F);
+    MaterialRegistry.OBS_BOOTS = CFG.comment("Damage Reduction").defineInRange("boots", 7, 1, 99);
+    MaterialRegistry.OBS_HELM = CFG.comment("Damage Reduction").defineInRange("helm", 7, 1, 99);
+    MaterialRegistry.OBS_CHEST = CFG.comment("Damage Reduction").defineInRange("chest", 11, 1, 99);
+    MaterialRegistry.OBS_LEG = CFG.comment("Damage Reduction").defineInRange("leg", 10, 1, 99);
     CFG.pop();
     //
     CFG.comment(WALL, " Edible chorus settings", WALL).push("chorus");

@@ -53,12 +53,9 @@ public class MattockItem extends ToolItem {
         shape = UtilShape.squareVerticalX(pos, radius, radius);
       }
       for (BlockPos posCurrent : shape) {
-        //
         BlockState bsCurrent = world.getBlockState(posCurrent);
-        //        ln(bsCurrent.getBlock() + " " + this.getDestroySpeed(stack, bsCurrent)
-        //            + " " + ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
-        //            + " BUT IS IT " + this.efficiency);
-        if (player.canPlayerEdit(posCurrent, sideHit, stack)
+        if (bsCurrent.hardness >= 0 // -1 is unbreakable
+            && player.canPlayerEdit(posCurrent, sideHit, stack)
             && ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
             && this.getDestroySpeed(stack, bsCurrent) > 1) {
           stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);

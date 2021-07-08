@@ -343,7 +343,7 @@ public class ItemRegistry {
     int h = Foods.APPLE.getHealing();
     float s = Foods.APPLE.getSaturation();
     //honey is basic. fast to eat, gives lots of food but no potion effects 
-    r.register(new EnderCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0)
+    r.register(new EnderCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
         .build())).setRegistryName("apple_ender"));
     //
     r.register(new ItemBase(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h * 4).saturation(s * 4)
