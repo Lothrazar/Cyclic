@@ -70,7 +70,7 @@ public class EnchantAutoSmelt extends EnchantBase {
     return ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE && super.canApplyTogether(ench);
   }
 
-  private static class EnchantAutoSmeltModifier extends LootModifier {
+  public static class EnchantAutoSmeltModifier extends LootModifier {
 
     public EnchantAutoSmeltModifier(ILootCondition[] conditionsIn) {
       super(conditionsIn);

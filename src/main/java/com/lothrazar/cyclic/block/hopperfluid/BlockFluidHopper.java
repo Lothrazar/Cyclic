@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.hopperfluid;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -15,7 +15,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-@SuppressWarnings("deprecation")
 public class BlockFluidHopper extends BlockBase {
 
   public static final DirectionProperty FACING = BlockStateProperties.FACING_EXCEPT_UP;
@@ -41,12 +40,12 @@ public class BlockFluidHopper extends BlockBase {
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return Blocks.HOPPER.getShape(state, worldIn, pos, context);
+    return BlockSimpleHopper.getShapeHopper(state, worldIn, pos, context);
   }
 
   @Override
   public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return Blocks.HOPPER.getRaytraceShape(state, worldIn, pos);
+    return BlockSimpleHopper.getRaytraceShapeHopper(state, worldIn, pos);
   }
 
   @Override

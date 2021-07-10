@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.hopper;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,6 +14,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
 @SuppressWarnings("deprecation")
@@ -40,12 +42,12 @@ public class BlockSimpleHopper extends BlockBase {
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return Blocks.HOPPER.getShape(state, worldIn, pos, context);
+    return BlockSimpleHopper.getShapeHopper(state, worldIn, pos, context);
   }
 
   @Override
   public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return Blocks.HOPPER.getRaytraceShape(state, worldIn, pos);
+    return BlockSimpleHopper.getRaytraceShapeHopper(state, worldIn, pos);
   }
 
   @Override
@@ -56,5 +58,25 @@ public class BlockSimpleHopper extends BlockBase {
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new TileSimpleHopper();
+  }
+
+  public static VoxelShape getShapeHopper(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    try {
+      return Blocks.HOPPER.getShape(state, worldIn, pos, context);
+    }
+    catch (Exception e) {
+      ModCyclic.LOGGER.error("An unknown has broken the vanilla hopper, causing compatibility issues", e);
+      return VoxelShapes.fullCube();
+    }
+  }
+
+  public static VoxelShape getRaytraceShapeHopper(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    try {
+      return Blocks.HOPPER.getRaytraceShape(state, worldIn, pos);
+    }
+    catch (Exception e) {
+      ModCyclic.LOGGER.error("An unknown has broken the vanilla hopper, causing compatibility issues", e);
+      return VoxelShapes.fullCube();
+    }
   }
 }
