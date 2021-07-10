@@ -3,6 +3,9 @@ package com.lothrazar.cyclic.command;
 import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.List;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,6 +28,14 @@ public class CommandNbt implements ICyclicCommand {
     ItemStack held = player.getHeldItemMainhand();
     if (held.hasTag()) {
       UtilChat.sendFeedback(ctx, held.getTag().toString());
+      try {
+        StringSelection selection = new StringSelection(held.getTag().toString());
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(selection, selection);
+      }
+      catch (Exception e) {
+        //
+      }
     }
     else {
       UtilChat.sendFeedback(ctx, "command.cyclic.nbtprint.null");

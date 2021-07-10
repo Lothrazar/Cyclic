@@ -4,31 +4,31 @@ import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.mojang.brigadier.context.CommandContext;
-import java.util.List;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import java.util.Optional;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 
-public class CommandHome implements ICyclicCommand {
+public class CommandHome {
 
-  @Override
-  public String getName() {
-    return "home";
-  }
-
-  @Override
   public boolean needsOp() {
     return ConfigRegistry.COMMANDHOME.get();
   }
 
-  @Override
-  public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    BlockPos bedLocation = player.getBedPosition().orElse(null);
-    if (bedLocation == null) {
-      UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");
-      return 0;
+  public static int execute(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
+    ServerPlayerEntity player = ctx.getSource().asPlayer();
+    BlockPos respawnPos = player.func_241140_K_();
+    Optional<Vector3d> optional = PlayerEntity.func_242374_a(player.getServerWorld(), respawnPos, 0.0F, true, true);
+    if (optional.isPresent()) {
+      BlockPos bedLocation = new BlockPos(optional.get());
+      UtilEntity.enderTeleportEvent(player, player.world, bedLocation);
     }
-    UtilEntity.enderTeleportEvent(player, player.world, bedLocation);
-    return 1;
+    else {
+      UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");
+    }
+    return 0;
   }
 }
