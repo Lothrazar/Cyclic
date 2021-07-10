@@ -27,7 +27,7 @@ public class CommandRegistry {
 
   public enum CyclicCommands {
 
-    HOME, GETHOME, HEALTH, HUNGER, NBT, PING, TODO;
+    HOME, GETHOME, HEALTH, HUNGER, DEV, PING, TODO, HEARTS;
 
     @Override
     public String toString() {
@@ -62,6 +62,15 @@ public class CommandRegistry {
                     .executes(x -> {
                       return CommandHealth.execute(x, EntityArgument.getPlayers(x, ARG_PLAYER), FloatArgumentType.getFloat(x, ARG_VALUE));
                     }))))
+        .then(Commands.literal(CyclicCommands.HEARTS.toString())
+            .requires((p) -> {
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
+            })
+            .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(1, 100))
+                    .executes(x -> {
+                      return CommandHealth.executeHearts(x, EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                    }))))
         .then(Commands.literal(CyclicCommands.HUNGER.toString())
             .requires((p) -> {
               return p.hasPermissionLevel(ConfigRegistry.COMMANDHUNGER.get() ? 3 : 0);
@@ -71,12 +80,12 @@ public class CommandRegistry {
                     .executes(x -> {
                       return CommandHunger.execute(x, EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                     }))))
-        .then(Commands.literal(CyclicCommands.NBT.toString())
+        .then(Commands.literal(CyclicCommands.DEV.toString())
             .requires((p) -> {
               return p.hasPermissionLevel(ConfigRegistry.COMMANDNBT.get() ? 3 : 0);
             })
             //TODO: copy version. send network packet to client for clipboard
-            .then(Commands.literal("print")
+            .then(Commands.literal("printnbt")
                 .executes(x -> {
                   return CommandNbt.executePrint(x);
                 })))
