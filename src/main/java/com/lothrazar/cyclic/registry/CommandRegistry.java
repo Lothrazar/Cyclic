@@ -8,9 +8,11 @@ import com.lothrazar.cyclic.command.CommandHome;
 import com.lothrazar.cyclic.command.CommandHunger;
 import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
+import com.lothrazar.cyclic.command.CommandTask;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -19,6 +21,9 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CommandRegistry {
+
+  private static final String ARG_VALUE = "value";
+  private static final String ARG_PLAYER = "player";
 
   public enum CyclicCommands {
 
@@ -52,19 +57,19 @@ public class CommandRegistry {
             .requires((p) -> {
               return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
             })
-            .then(Commands.argument("player", EntityArgument.players())
-                .then(Commands.argument("value", FloatArgumentType.floatArg(0, 100F))
+            .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                .then(Commands.argument(ARG_VALUE, FloatArgumentType.floatArg(0, 100F))
                     .executes(x -> {
-                      return CommandHealth.execute(x, EntityArgument.getPlayers(x, "player"), FloatArgumentType.getFloat(x, "value"));
+                      return CommandHealth.execute(x, EntityArgument.getPlayers(x, ARG_PLAYER), FloatArgumentType.getFloat(x, ARG_VALUE));
                     }))))
         .then(Commands.literal(CyclicCommands.HUNGER.toString())
             .requires((p) -> {
               return p.hasPermissionLevel(ConfigRegistry.COMMANDHUNGER.get() ? 3 : 0);
             })
-            .then(Commands.argument("player", EntityArgument.players())
-                .then(Commands.argument("value", IntegerArgumentType.integer(0, 20))
+            .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 20))
                     .executes(x -> {
-                      return CommandHunger.execute(x, EntityArgument.getPlayers(x, "player"), IntegerArgumentType.getInteger(x, "value"));
+                      return CommandHunger.execute(x, EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                     }))))
         .then(Commands.literal(CyclicCommands.NBT.toString())
             .requires((p) -> {
@@ -86,6 +91,28 @@ public class CommandRegistry {
             .then(Commands.literal("here")
                 .executes(x -> {
                   return CommandNetherping.execute(x);
+                })))
+        .then(Commands.literal(CyclicCommands.TODO.toString())
+            .requires((p) -> {
+              return p.hasPermissionLevel(0);
+            })
+            .then(Commands.literal("add")
+                .then(Commands.argument("arguments", StringArgumentType.greedyString())
+                    .executes(x -> {
+                      return CommandTask.add(x, StringArgumentType.getString(x, "arguments"));
+                    })))
+            .then(Commands.literal("remove")
+                .then(Commands.argument("index", IntegerArgumentType.integer(0, 20))
+                    .executes(x -> {
+                      return CommandTask.remove(x, IntegerArgumentType.getInteger(x, "index"));
+                    })))
+            //            .then(Commands.literal("toggle")
+            //                .executes(x -> {
+            //                  return CommandTask.toggle(x);
+            //                }))
+            .then(Commands.literal("list")
+                .executes(x -> {
+                  return CommandTask.list(x);
                 })))
     //
     );
