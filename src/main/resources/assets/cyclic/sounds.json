@@ -51,6 +51,7 @@
 	"fan_off"       			: {"category" : "block",  "sounds" : [{"name":"cyclic:fan_off"}]}         ,
 	"fan_on"			        : {"category" : "block",  "sounds" : [{"name":"cyclic:fan_on"}]}         ,
 	"doorbell_mikekoenig"       : {"category" : "block",  "sounds" : [{"name":"cyclic:doorbell_mikekoenig"}]}         ,
+	"dice_mike_koenig_short"          : {"category" : "block",  "sounds" : [{"name":"cyclic:dice_mike_koenig_short"}]}   , 
 	"dice_mike_koenig"          : {"category" : "block",  "sounds" : [{"name":"cyclic:dice_mike_koenig"}]}   ,  
   "equip_emerald": {
     "sounds": [

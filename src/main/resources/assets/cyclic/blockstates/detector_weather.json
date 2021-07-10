@@ -2,6 +2,7 @@
     "variants": {
         "level=0": { "model": "cyclic:block/detector_weather" },
         "level=1": { "model": "cyclic:block/detector_weather1" },
-        "level=2": { "model": "cyclic:block/detector_weather2" }
+        "level=2": { "model": "cyclic:block/detector_weather2" },
+        "level=3": { "model": "cyclic:block/detector_weather3" }
     }
 }

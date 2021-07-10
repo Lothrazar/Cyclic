@@ -58,7 +58,6 @@ public class SoundRegistry {
   public static final SoundEvent DUNGEONFINDER = make("dungeonfinder");
   public static final SoundEvent SPIKES_ON = make("spikes_on");
   public static final SoundEvent SPIKES_OFF = make("spikes_off");
-  public static final SoundEvent ECHO = make("echo");
   public static final SoundEvent WARP_ECHO = make("warp_echo");
   public static final SoundEvent TOOL_MODE = make("tool_mode");
   public static final SoundEvent DICE_MIKE_KOENIG = make("dice_mike_koenig");
