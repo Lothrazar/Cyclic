@@ -8,19 +8,9 @@ import java.util.List;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class CommandTask implements ICyclicCommand {
+public class CommandTask {
 
-  @Override
-  public String getName() {
-    return "todo";
-  }
-
-  @Override
-  public boolean needsOp() {
-    return false;
-  }
-
-  @Override
+  //TODO:
   public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
     String subtask = arguments.get(0);
     CyclicFile file = PlayerDataEvents.getOrCreate(player);

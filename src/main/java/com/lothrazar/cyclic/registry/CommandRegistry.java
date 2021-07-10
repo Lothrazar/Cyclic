@@ -6,6 +6,8 @@ import com.lothrazar.cyclic.command.CommandGetHome;
 import com.lothrazar.cyclic.command.CommandHealth;
 import com.lothrazar.cyclic.command.CommandHome;
 import com.lothrazar.cyclic.command.CommandHunger;
+import com.lothrazar.cyclic.command.CommandNbt;
+import com.lothrazar.cyclic.command.CommandNetherping;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -20,7 +22,7 @@ public class CommandRegistry {
 
   public enum CyclicCommands {
 
-    HOME, GETHOME, HEALTH, HUNGER, NBT, TODO;
+    HOME, GETHOME, HEALTH, HUNGER, NBT, PING, TODO;
 
     @Override
     public String toString() {
@@ -64,6 +66,27 @@ public class CommandRegistry {
                     .executes(x -> {
                       return CommandHunger.execute(x, EntityArgument.getPlayers(x, "player"), IntegerArgumentType.getInteger(x, "value"));
                     }))))
+        .then(Commands.literal(CyclicCommands.NBT.toString())
+            .requires((p) -> {
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDNBT.get() ? 3 : 0);
+            })
+            //TODO: copy version. send network packet to client for clipboard
+            .then(Commands.literal("print")
+                .executes(x -> {
+                  return CommandNbt.executePrint(x);
+                })))
+        .then(Commands.literal(CyclicCommands.PING.toString())
+            .requires((p) -> {
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDPINGNETHER.get() ? 3 : 0);
+            })
+            .then(Commands.literal("nether")
+                .executes(x -> {
+                  return CommandNetherping.exeNether(x);
+                }))
+            .then(Commands.literal("here")
+                .executes(x -> {
+                  return CommandNetherping.execute(x);
+                })))
     //
     );
   }

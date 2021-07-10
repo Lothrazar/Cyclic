@@ -1,30 +1,26 @@
 package com.lothrazar.cyclic.command;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
-import java.util.List;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class CommandNetherping implements ICyclicCommand {
+public class CommandNetherping {
 
   static final double NETHER_RATIO = 8.0;
 
-  @Override
-  public String getName() {
-    return "pingnether";
+  public static int execute(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
+    ServerPlayerEntity player = ctx.getSource().asPlayer();
+    BlockPos pos = player.getPosition();
+    UtilChat.sendFeedback(ctx, UtilChat.blockPosToString(pos));
+    return 0;
   }
 
-  @Override
-  public boolean needsOp() {
-    return ConfigRegistry.COMMANDPINGNETHER.get();
-  }
-
-  @Override
-  public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
+  public static int exeNether(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
+    ServerPlayerEntity player = ctx.getSource().asPlayer();
     double factor = 1 / NETHER_RATIO; //overworld: use 1/8th
     boolean isnether = player.world.getDimensionKey() == World.THE_NETHER;
     if (isnether) {
@@ -39,6 +35,6 @@ public class CommandNetherping implements ICyclicCommand {
         UtilChat.blockPosToString(pos)
             + " -> " +
             UtilChat.blockPosToString(netherpos));
-    return 1;
+    return 0;
   }
 }
