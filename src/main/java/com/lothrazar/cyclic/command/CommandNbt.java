@@ -14,9 +14,9 @@ public class CommandNbt {
     ItemStack held = player.getHeldItemMainhand();
     if (held.hasTag()) {
       UtilChat.sendFeedback(ctx, held.getTag().toString());
+      // TODO: send network packet for clipboard. maybe in future
       //      try {
-      //        StringSelection selection = new StringSelection(held.getTag().toString());
-      //        System.out.println(" " + Toolkit.getDefaultToolkit());
+      //        StringSelection selection = new StringSelection(held.getTag().toString()); 
       //        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
       //        clipboard.setContents(selection, selection);
       //      }
