@@ -21,7 +21,11 @@ public class CommandHome {
   public static int execute(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
     ServerPlayerEntity player = ctx.getSource().asPlayer();
     BlockPos respawnPos = player.func_241140_K_();
-    Optional<Vector3d> optional = PlayerEntity.func_242374_a(player.getServerWorld(), respawnPos, 0.0F, true, true);
+    Optional<Vector3d> optional = Optional.empty();
+    if (respawnPos != null) {
+      optional = PlayerEntity.func_242374_a(player.getServerWorld(), respawnPos, 0.0F, true, true);
+    }
+    optional = PlayerEntity.func_242374_a(player.getServerWorld(), respawnPos, 0.0F, true, true);
     if (optional.isPresent()) {
       BlockPos bedLocation = new BlockPos(optional.get());
       UtilEntity.enderTeleportEvent(player, player.world, bedLocation);

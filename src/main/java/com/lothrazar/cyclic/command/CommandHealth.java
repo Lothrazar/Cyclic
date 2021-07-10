@@ -1,27 +1,16 @@
 package com.lothrazar.cyclic.command;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.mojang.brigadier.context.CommandContext;
-import java.util.List;
+import java.util.Collection;
 import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 
-public class CommandHealth implements ICyclicCommand {
+public class CommandHealth {
 
-  @Override
-  public String getName() {
-    return "health";
-  }
-
-  @Override
-  public boolean needsOp() {
-    return ConfigRegistry.COMMANDHEALTH.get();
-  }
-
-  @Override
-  public int execute(CommandContext<CommandSource> ctx, List<String> arguments, PlayerEntity player) {
-    float newlevel = Float.parseFloat(arguments.get(0));
-    player.setHealth(newlevel);
-    return 1;
+  public static int execute(CommandContext<CommandSource> ctx, Collection<ServerPlayerEntity> players, float newlevel) {
+    for (ServerPlayerEntity player : players) {
+      player.setHealth(newlevel);
+    }
+    return 0;
   }
 }

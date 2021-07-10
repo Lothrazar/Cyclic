@@ -27,7 +27,10 @@ public class CommandGetHome {
      * 
      * -- the location of their Respawn Anchor in the Nether */
     BlockPos respawnPos = player.func_241140_K_();
-    Optional<Vector3d> optional = PlayerEntity.func_242374_a(player.getServerWorld(), respawnPos, 0.0F, true, true);
+    Optional<Vector3d> optional = Optional.empty();
+    if (respawnPos != null) {
+      optional = PlayerEntity.func_242374_a(player.getServerWorld(), respawnPos, 0.0F, true, true);
+    }
     if (optional.isPresent()) {
       BlockPos bedLocation = new BlockPos(optional.get());
       UtilChat.sendFeedback(ctx, UtilChat.lang("command.cyclic.gethome.yours") + " " + UtilChat.blockPosToString(bedLocation));
