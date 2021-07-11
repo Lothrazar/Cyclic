@@ -95,7 +95,13 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
     }
     //starts at 1 for current one
     if (isAnySingleOk) {
-      this.harvestSurrounding(world, player, pos, block, 1, level, player.swingingHand);
+      try {
+        this.harvestSurrounding(world, player, pos, block, 1, level, player.swingingHand);
+      }
+      catch (Exception e) {
+        // out of memory, java.lang.StackOverflowError, etc.  if a server has a heavy load and cant keep up, 
+        //or other unexpected problems
+      }
     }
   }
 
@@ -117,7 +123,15 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
       return totalBroken;
     }
     int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
-    List<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
+    List<BlockPos> theFuture = new ArrayList<>();
+    try {
+      theFuture = this.getMatchingSurrounding(world, posIn, block);
+    }
+    catch (Exception e) {
+      // out of memory, java.lang.StackOverflowError, etc.  if a server has a heavy load and cant keep up, 
+      //or other unexpected problems
+      return totalBroken;
+    }
     List<BlockPos> wasHarvested = new ArrayList<BlockPos>();
     for (BlockPos targetPos : theFuture) {
       if (UtilItemStack.isBroken(player.getHeldItem(player.swingingHand))) {
@@ -157,8 +171,10 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
     List<EnumFacing> targetFaces = Arrays.asList(EnumFacing.values());
     Collections.shuffle(targetFaces);
     for (EnumFacing fac : targetFaces) {
-      if (world.getBlockState(start.offset(fac)).getBlock() == blockIn) {
-        list.add(start.offset(fac));
+      BlockPos current = start.offset(fac);
+      IBlockState currentState = world.getBlockState(current);
+      if (currentState.getBlock() == blockIn) {
+        list.add(current);
       }
     }
     return list;
