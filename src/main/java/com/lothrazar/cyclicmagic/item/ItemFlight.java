@@ -104,10 +104,12 @@ public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent
   }
 
   public static void setNonFlying(EntityPlayer player) {
-    player.capabilities.allowFlying = false;
-    player.capabilities.isFlying = false;
-    if (player instanceof EntityPlayerMP) { //force clientside  to  update
-      ModCyclic.network.sendTo(new PacketSyncPlayerFlying(false), (EntityPlayerMP) player);
+    if(!player.isCreative()) {
+      player.capabilities.allowFlying = false;
+      player.capabilities.isFlying = false;
+      if (player instanceof EntityPlayerMP) { //force clientside  to  update
+        ModCyclic.network.sendTo(new PacketSyncPlayerFlying(false), (EntityPlayerMP) player);
+      }
     }
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
     props.setFlyingTimer(0);
