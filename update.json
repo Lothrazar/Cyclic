@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.30",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12.2-latest": "1.20.9",
-    "1.12.2-recommended": "1.20.9"
+    "1.12.2-latest": "1.20.10",
+    "1.12.2-recommended": "1.20.10"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -345,5 +345,6 @@
 	,"1.20.7":"If a block has its fuelcost config set to zero, it now will also hide the energy display in GUI screen, and block capability connections.  New config added for energy cost to run machine I:peat_farm=64 [range: 0 ~ 500000, default: 64] in cyclicmagic.cfg file (prevously was hardcoded 64 default).  "
 	,"1.20.8":"Fixed crash introduced in 1.20.7 energy cable"
 	,"1.20.9":"Fix crash in peat farm GUIs when config has I:peat_farm=0.  Fix unchant pylon leaving an empty NBT tag when all enchantments are removed (this allows unenchanted items to go through uncrafting grinder and other compatibility things).  Fix Structure Builder offset directions in CV - Circle Vertical setting.  Fix typo in Diamond and Iron spikes config.  Fix stat.killEntity.robot compatibility error. Fix Random and Pattern gui settings of the Range building scepter.  Fix Peat-fired Generator Gui energy bar not rendering bug.  "
+	,"1.20.10":"PR merged from embeddedt: Prevent milk bucket from removing flight when player is in creative mode.  "
   }
 }
