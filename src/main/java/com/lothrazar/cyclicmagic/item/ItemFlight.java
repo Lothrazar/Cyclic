@@ -104,7 +104,7 @@ public class ItemFlight extends ItemFoodCreative implements IHasRecipe, IContent
   }
 
   public static void setNonFlying(EntityPlayer player) {
-    if(!player.isCreative()) {
+    if (!player.isCreative()) {
       player.capabilities.allowFlying = false;
       player.capabilities.isFlying = false;
       if (player instanceof EntityPlayerMP) { //force clientside  to  update
