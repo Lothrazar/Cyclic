@@ -56,7 +56,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
     super(12);
     tank = new FluidTankFixDesync(TANK_FULL, this);
     tank.setFluidAllowed(FluidRegistry.WATER);
-    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), 0);
+    this.initEnergy(new EnergyStore(MENERGY, MENERGY, MENERGY), BlockPeatFarm.FUEL_COST);
     timer = TIMER_FULL;
     this.setSlotsForInsert(0, this.getSizeInventory());
   }
@@ -66,10 +66,12 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
   List<BlockPos> outer = null;
 
   private void init() {
-    if (baked == null)
+    if (baked == null) {
       baked = Block.getBlockFromName(Const.MODRES + "peat_baked");
-    if (unbaked == null)
+    }
+    if (unbaked == null) {
       unbaked = Block.getBlockFromName(Const.MODRES + "peat_unbaked");
+    }
     if (outer == null) {
       outer = getShape();
       List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.pos, 6);
@@ -90,7 +92,7 @@ public class TileEntityPeatFarm extends TileEntityBaseMachineFluid implements IT
       return;
     }
     energyStorage.extractEnergy(BlockPeatFarm.FUEL_COST, false);
-    if (energyStorage.getEnergyStored() == 0) {
+    if (energyStorage.getEnergyStored() < BlockPeatFarm.FUEL_COST && BlockPeatFarm.FUEL_COST > 0) {
       return;
     }
     //GET VALIDATE ITEM

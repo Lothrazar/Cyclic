@@ -58,9 +58,7 @@ public class BlockPeatFarm extends BlockBaseHasTile implements IHasRecipe, IHasC
 
   @Override
   public void syncConfig(Configuration config) {
-    //    enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 64, 0, 500000, Const.ConfigText.fuelCost);
-    //    UtilRepairItem.syncConfig(config);
+    FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 0, 0, 500000, Const.ConfigText.fuelCost);
   }
 
   private String getContentName() {

@@ -59,7 +59,7 @@ public class EnergyBar {
   }
 
   public void draw(IEnergyStorage energy) {
-    if (!visible) {
+    if (!visible || energy == null) {
       return;
     }
     int u = 0, v = 0;
