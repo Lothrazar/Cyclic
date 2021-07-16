@@ -58,6 +58,9 @@ public class RenderResizableCuboid {
     throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
   }
 
+  /**
+   * model 3d cube is the fluid
+   */
   public void renderCube(Model3D cube, MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
     float red = UtilRender.getRed(argb);
     float green = UtilRender.getGreen(argb);

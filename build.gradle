@@ -109,7 +109,7 @@ dependencies {
 
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3250068")
 	  
-	  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3361660")
+	//  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3361660")
 	
   //  implementation fg.deobf("curse.maven:cofh-core-69162:3249453")
 	//  implementation fg.deobf("curse.maven:ensorcellation-349447:3246996")
