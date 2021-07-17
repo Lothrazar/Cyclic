@@ -195,6 +195,7 @@ public class ItemEvents {
       if (!find.isEmpty() && ply.world.rand.nextDouble() < 0.25F) {
         int seconds = 2 + ply.world.rand.nextInt(4);
         event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.POISON, 20 * seconds, 0));
+        UtilItemStack.damageItem(ply, find);
       }
       if (ply.getActiveHand() != null && ply.getHeldItem(ply.getActiveHand()).isEmpty()) {
         //            ModCyclic.LOGGER.info("EMPTY hand damage");
