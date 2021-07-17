@@ -81,6 +81,9 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   public static BooleanValue CYAN_GENERATES;
+  public static IntValue CHARM_LUCK;
+  public static DoubleValue CHARM_SPEED;
+  public static DoubleValue CHARM_ATTACKSPEED;
   static {
     buildDefaults();
     initConfig();
@@ -237,11 +240,20 @@ public class ConfigRegistry {
     MaterialRegistry.OBS_LEG = CFG.comment("Damage Reduction").defineInRange("leg", 10, 1, 99);
     CFG.pop();
     //
+    CFG.comment(WALL, " Settings for varios charms (curios)", WALL).push("charms");
+    //
+    CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("luck", 10, 0, 100);
+    CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("speed", 0.5F, 0, 2F);
+    CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("attackspeed", 0.5F, 0, 2F);
+    //
+    CFG.pop(); // charms
+    //
+    //
     CFG.comment(WALL, " Edible chorus settings", WALL).push("chorus");
     EdibleFlightItem.TICKS = CFG.comment("Seconds of flight per chorus_flight").defineInRange("ticks", 20 * 60, 1, 20 * 1000);
     //
     EdibleSpecItem.TICKS = CFG.comment("Seconds of noClip per chorus_spectral").defineInRange("ticks", 20 * 30, 1, 20 * 1000);
-    CFG.pop();
+    CFG.pop(); // chorus
     //
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");

@@ -12,6 +12,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -109,7 +109,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       player.swingArm(context.getHand());
       UtilItemStack.damageItem(player, itemstack);
       if (world.isRemote) {
-        UtilSound.playSound(pos, SoundEvents.ITEM_BUCKET_FILL);
+        UtilSound.playSound(pos, SoundRegistry.PSCHEW_FIRE);
       }
     }
     return ActionResultType.SUCCESS;
@@ -118,7 +118,14 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
   private boolean removeLiquid(World world, BlockState blockHere, BlockPos pos) {
     if (blockHere.getBlock() instanceof IBucketPickupHandler) {
       IBucketPickupHandler block = (IBucketPickupHandler) blockHere.getBlock();
-      return block.pickupFluid(world, pos, blockHere) != null;
+      Fluid res = block.pickupFluid(world, pos, blockHere);
+      if (res == null || res == Fluids.EMPTY) {
+        // flowing block
+        return world.setBlockState(pos, Blocks.AIR.getDefaultState(), 18);
+      }
+      else {
+        return true; // was source block
+      }
     }
     else if (blockHere.hasProperty(BlockStateProperties.WATERLOGGED)) {
       // un-water log

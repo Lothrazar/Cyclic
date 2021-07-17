@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -78,35 +77,20 @@ public class EnchantMultishot extends EnchantBase {
     PlayerEntity player = event.getPlayer();
     World worldIn = player.world;
     if (worldIn.isRemote == false) {
-      float charge = BowItem.getArrowVelocity(stackBow.getUseDuration() - event.getCharge());
       //use cross product to push arrows out to left and right
       Vector3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
       Vector3d left = playerDirection.crossProduct(new Vector3d(0, 1, 0));
       Vector3d right = playerDirection.crossProduct(new Vector3d(0, -1, 0));
-      spawnArrow(worldIn, player, stackBow, charge, left.normalize());
-      spawnArrow(worldIn, player, stackBow, charge, right.normalize());
+      spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
+      spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
     }
   }
 
-  /**
-   * Gets the velocity of the arrow entity from the bow's charge
-   */
-  public static float getArrowVelocity(float charge) {
-    float f = charge / 20.0F;
-    f = (f * f + f * 2.0F) / 3.0F;
-    if (f > 1.0F) {
-      f = 1.0F;
-    }
-    return f;
-  }
-
-  public void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, float charge, Vector3d offsetVector) {
-    //    ArrowItem item;
-    //    BowItem yy;
+  public void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, int charge, Vector3d offsetVector) {
     ArrowItem arrowitem = (ArrowItem) Items.ARROW;
     AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, stackBow, player);
-    //    abstractarrowentity = customArrow(abstractarrowentity);
-    float f = getArrowVelocity(charge);
+    abstractarrowentity.forceSetPosition(abstractarrowentity.getPosX() + offsetVector.getX(), abstractarrowentity.getPosY(), abstractarrowentity.getPosZ() + offsetVector.getZ());
+    float f = BowItem.getArrowVelocity(charge); // i
     abstractarrowentity.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F, f * 3.0F, 1.0F);
     if (f == 1.0F) {
       abstractarrowentity.setIsCritical(true);
@@ -125,41 +109,6 @@ public class EnchantMultishot extends EnchantBase {
     stackBow.damageItem(1, player, (p) -> {
       p.sendBreakAnimation(player.getActiveHand());
     });
-    //    if (flag1 || playerentity.abilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW)) {
-    //       abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-    //    }
-    ModCyclic.LOGGER.info("new arrow" + abstractarrowentity);
     worldIn.addEntity(abstractarrowentity);
-    //    ArrowItem itemarrow = (ArrowItem) (Items.ARROW);
-    //    //    itemarrow.createArrow(worldIn, stack, shooter)
-    //    AbstractArrowEntity entityarrow = itemarrow.createArrow(worldIn, stackBow, player);
-    //    entityarrow.pickupStatus = ArrowEntity.PickupStatus.DISALLOWED;
-    //    //off set bow to the side using the vec, and then aim
-    //    entityarrow.prevPosX += offsetVector.x;
-    //    entityarrow.prevPosY += offsetVector.y;
-    //    entityarrow.prevPosZ += offsetVector.z;
-    //    //    entityarrow.shoot(x, y, z, velocity, inaccuracy); 
-    //    ModCyclic.LOGGER.info("charge arrow multi " + charge);
-    //    //see CrossbowItem
-    //    BowItem yy;
-    //    entityarrow.shoot(offsetVector.x, offsetVector.y, offsetVector.z, charge, 0.1F);
-    //    //from ItemBow vanilla class
-    //    if (charge == 1.0F) {
-    //      entityarrow.setIsCritical(true);
-    //    }
-    //    //extract enchants from bow
-    //    int power = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stackBow);
-    //    if (power > 0) {
-    //      entityarrow.setDamage(entityarrow.getDamage() + power * 0.5D + 0.5D);
-    //    }
-    //    int punch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stackBow);
-    //    if (punch > 0) {
-    //      entityarrow.setKnockbackStrength(punch);
-    //    }
-    //    if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stackBow) > 0) {
-    //      entityarrow.setFire(100);
-    //    }
-    //    //and go
-    //    worldIn.addEntity(entityarrow);
   }
 }

@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.item.storagebag;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -119,6 +121,9 @@ public class StorageBagItem extends ItemBase {
     TileEntity te = world.getTileEntity(pos);
     ItemStack bag = context.getItem();
     DepositMode mode = getDepositMode(bag);
+    if (mode == DepositMode.NOTHING) {
+      return ActionResultType.PASS;
+    }
     ItemStackHandler handler = getInventory(bag);
     if (handler != null && te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
       IItemHandler teHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).orElse(null);
@@ -138,6 +143,7 @@ public class StorageBagItem extends ItemBase {
           }
         }
       }
+      UtilSound.playSound(context.getPlayer(), SoundRegistry.BASEY);
       return ActionResultType.SUCCESS;
     }
     return ActionResultType.PASS;

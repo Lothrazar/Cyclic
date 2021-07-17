@@ -26,6 +26,7 @@ package com.lothrazar.cyclic.item.transporter;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
@@ -42,7 +43,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -74,7 +74,7 @@ public class TileTransporterEmptyItem extends ItemBase {
       UtilChat.sendStatusMessage(player, "chest_sack.error.config");
       return ActionResultType.FAIL;
     }
-    UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT); //SoundRegistry.chest_sack_capture);
+    UtilSound.playSound(player, pos, SoundRegistry.THUNK);
     if (world.isRemote) {
       PacketRegistry.INSTANCE.sendToServer(new PacketChestSack(pos));
     }

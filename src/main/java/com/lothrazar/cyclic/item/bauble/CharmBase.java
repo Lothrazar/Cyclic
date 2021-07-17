@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
+import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -118,15 +119,15 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   public static void charmSpeed(PlayerEntity player) {
-    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED, ID_SPEED, 0.5F, 0);
+    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED, ID_SPEED, ConfigRegistry.CHARM_SPEED.get().floatValue(), 0);
   }
 
   public static void charmLuck(PlayerEntity player) {
-    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK, ID_LUCK, 0.1F, 100);
+    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK, ID_LUCK, 0, ConfigRegistry.CHARM_LUCK.get());
   }
 
   public static void charmAttackSpeed(PlayerEntity player) {
-    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, 0.5F, 0);
+    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACKSPEED.get().floatValue(), 0);
   }
 
   public static void charmExpSpeed(PlayerEntity player) {

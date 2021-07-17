@@ -26,6 +26,7 @@ package com.lothrazar.cyclic.item.transporter;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -43,7 +44,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -81,8 +81,8 @@ public class TileTransporterItem extends ItemBase {
     }
     if (placeStoredTileEntity(player, stack, offset)) {
       player.setHeldItem(context.getHand(), ItemStack.EMPTY);
-      UtilSound.playSound(player, pos, SoundEvents.BLOCK_ANVIL_HIT); //SoundRegistry.chest_sack_capture);
-      if (player.isCreative() == false) { //its never really null tho
+      UtilSound.playSound(player, pos, SoundRegistry.THUNK);
+      if (player.isCreative() == false) {
         UtilItemStack.drop(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
       }
     }

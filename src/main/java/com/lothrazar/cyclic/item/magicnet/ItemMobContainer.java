@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.item.magicnet;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -49,6 +51,7 @@ public class ItemMobContainer extends ItemBase {
       pos = pos.offset(context.getFace());
     }
     World world = context.getWorld();
+    UtilSound.playSound(player, pos, SoundRegistry.MONSTER_BALL_RELEASE, 0.3F, 1F);
     if (!world.isRemote) {
       Entity entity = ForgeRegistries.ENTITIES.getValue(
           new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))

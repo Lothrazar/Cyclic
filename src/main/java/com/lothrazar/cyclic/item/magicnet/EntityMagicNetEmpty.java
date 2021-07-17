@@ -4,7 +4,9 @@ import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilString;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -75,6 +77,7 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       targetHeightOffset = target.getHeight() / 2;
       particleType = ParticleTypes.PORTAL;
       UtilItemStack.drop(world, this.getPosition(), drop);
+      UtilSound.playSound(target, target.getPosition(), SoundRegistry.MONSTER_BALL_CAPTURE);
       target.remove();
     }
     else if (type == RayTraceResult.Type.BLOCK) {

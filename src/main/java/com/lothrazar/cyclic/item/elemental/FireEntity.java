@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.elemental;
 
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import net.minecraft.entity.Entity;
@@ -43,12 +44,12 @@ public class FireEntity extends ProjectileItemEntity {
       EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), MathHelper.nextInt(world.rand, 1, 3));
-        if (target.isBurning() == false
+        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), MathHelper.nextInt(world.rand, 2, 6));
+        if (!target.world.isRemote && target.isBurning() == false
             && target instanceof LivingEntity) {
-          target.attackEntityFrom(DamageSource.IN_FIRE, MathHelper.nextInt(world.rand, 1, 4));
+          target.attackEntityFrom(DamageSource.IN_FIRE, MathHelper.nextInt(world.rand, 3, 5));
           LivingEntity living = (LivingEntity) target;
-          living.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, 20, 1));
+          living.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 4, 1));
           living.setFire(MathHelper.nextInt(world.rand, 1, 5));
         }
       }

@@ -23,12 +23,12 @@
 		"item.cyclic.charm_stone.guide": "Prevents damage when elytra crashing into walls.  Also suffocation if you noClip or teleport into solid wall of blocks",
 
 		"item.cyclic.charm_attack_speed": "Windforce Gauntlets",
-		"item.cyclic.charm_attack_speed.tooltip": "Increase attack speed by 50%",
-		"item.cyclic.charm_attack_speed.guide": "Increase attack speed.  This causes the recovery bar by the crosshairs to recover faster for increased damage overall.  ",
+		"item.cyclic.charm_attack_speed.tooltip": "Increase attack speed",
+		"item.cyclic.charm_attack_speed.guide": "Increase attack speed.  This causes the recovery bar by the crosshairs to recover faster for increased damage overall.  Default is 50 percent increase, depends on config file.   ",
 		
 		"item.cyclic.charm_luck": "Harlequin Ring of Luck",
 		"item.cyclic.charm_luck.tooltip": "Increase player luck",
-		"item.cyclic.charm_luck.guide": "Increase players passive luck attribute by 10 percent of the original, plus 10 points. Luck and Unluck potions give +1 or -1 points per level, respectively. ",
+		"item.cyclic.charm_luck.guide": "Increase players passive luck attribute, which affects some loot tables such as mobs, fishing, treasure chests.  Default is 10 points, depends on config file ",
 		
 		"item.cyclic.charm_xp_blocker": "Cursed Ring of Experience",
 		"item.cyclic.charm_xp_blocker.tooltip": "Blocks pickup of XP Orbs",
@@ -553,9 +553,9 @@
     "item.cyclic.charm_fire.tooltip": "Fire and lava protection",
     "item.cyclic.charm_fire.guide": "When in your inventory or worn as an accessory, protects you from fire damage at the expense of durability.",
     
-    "item.cyclic.charm_speed.guide": "Gives you a passive speed boost, can be stacked with speed potions.  Right click in your inventory to turn it off.  Compatible with baubles API.",
+    "item.cyclic.charm_speed.guide": "Gives you a passive speed boost, can be stacked with speed potions.  Default is 50 percent boost, depends on config file.  Right click in your inventory to turn it off.  ",
     "item.cyclic.charm_speed": "Speed Charm",
-    "item.cyclic.charm_speed.tooltip": "Increase movement speed by 50%",
+    "item.cyclic.charm_speed.tooltip": "Increase movement speed",
     
     "item.cyclic.charm_void.guide": "Works in your inventory or in a Baubles slot.  This charm saves you from the void; it detects if you have fallen down below y=-30 and teleports you way up into the sky instead.",
     "item.cyclic.charm_void": "Void Charm",
@@ -605,7 +605,7 @@
     "item.cyclic.ender_eye_reuse.tooltip": "Reuseable ender eye for finding strongholds",
     "item.cyclic.ender_eye_reuse.guide": "Reuseable Ender Eye for finding strongholds. Can be thrown multiple times and will not break.",
     "item.cyclic.fire_scepter": "Duskflame Hex",
-    "item.cyclic.fire_scepter.tooltip": "Shoot 3 fire missiles that burn enemies",
+    "item.cyclic.fire_scepter.tooltip": "Paralyzing triple shot",
     "item.cyclic.fire_scepter.guide": "Launch three projectiles that burn and damage entities.  Does not set fire to the world.",
     "item.cyclic.fire_dark_anim": "Duskflame Essence",
     "item.cyclic.fire_dark_anim.tooltip": "Used for Duskflame Hex",
