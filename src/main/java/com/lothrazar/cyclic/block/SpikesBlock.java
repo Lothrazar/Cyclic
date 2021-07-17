@@ -25,6 +25,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -96,39 +97,7 @@ public class SpikesBlock extends BlockBase {
       //extra effects
       switch (this.type) {
         case CURSE:
-          if (worldIn.rand.nextDouble() < CURSE_CHANCE) {
-            LivingEntity living = (LivingEntity) entity;
-            switch (worldIn.rand.nextInt(4)) { //[0,3] if nextInt(4) given 
-              case 0:
-                if (!living.isPotionActive(Effects.SLOWNESS)) {
-                  living.addPotionEffect(new EffectInstance(Effects.SLOWNESS, CURSE_TIME, 2));
-                }
-              break;
-              case 1:
-                if (!living.isPotionActive(Effects.WEAKNESS)) {
-                  living.addPotionEffect(new EffectInstance(Effects.WEAKNESS, CURSE_TIME, 2));
-                }
-              break;
-              case 2:
-                if (!living.isPotionActive(Effects.UNLUCK)) {
-                  living.addPotionEffect(new EffectInstance(Effects.UNLUCK, CURSE_TIME, 1));
-                }
-              break;
-              case 3:
-                if (!living.isPotionActive(Effects.MINING_FATIGUE)) {
-                  living.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, CURSE_TIME, 2));
-                }
-              break;
-              case 4:
-                entity.attackEntityFrom(DamageSource.MAGIC, 1);
-              break;
-              case 5:
-                if (!living.isPotionActive(Effects.BLINDNESS)) {
-                  living.addPotionEffect(new EffectInstance(Effects.BLINDNESS, CURSE_TIME, 1));
-                }
-              break;
-            }
-          }
+          triggerCurse(worldIn, entity);
         break;
         case FIRE:
           entity.setFire(FIRE_TIME);
@@ -142,22 +111,58 @@ public class SpikesBlock extends BlockBase {
     }
   }
 
+  private void triggerCurse(World worldIn, Entity entity) {
+    if (worldIn.rand.nextDouble() < CURSE_CHANCE) {
+      LivingEntity living = (LivingEntity) entity;
+      switch (worldIn.rand.nextInt(4)) { //[0,3] if nextInt(4) given 
+        case 0:
+          if (!living.isPotionActive(Effects.SLOWNESS)) {
+            living.addPotionEffect(new EffectInstance(Effects.SLOWNESS, CURSE_TIME, 2));
+          }
+        break;
+        case 1:
+          if (!living.isPotionActive(Effects.WEAKNESS)) {
+            living.addPotionEffect(new EffectInstance(Effects.WEAKNESS, CURSE_TIME, 2));
+          }
+        break;
+        case 2:
+          if (!living.isPotionActive(Effects.UNLUCK)) {
+            living.addPotionEffect(new EffectInstance(Effects.UNLUCK, CURSE_TIME, 1));
+          }
+        break;
+        case 3:
+          if (!living.isPotionActive(Effects.MINING_FATIGUE)) {
+            living.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, CURSE_TIME, 2));
+          }
+        break;
+        case 4:
+          entity.attackEntityFrom(DamageSource.MAGIC, 1);
+        break;
+        case 5:
+          if (!living.isPotionActive(Effects.BLINDNESS)) {
+            living.addPotionEffect(new EffectInstance(Effects.BLINDNESS, CURSE_TIME, 1));
+          }
+        break;
+      }
+    }
+  }
+
   @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     if (state.get(ACTIVATED).booleanValue() == false && world.isBlockPowered(pos)) {
       world.setBlockState(pos, state.with(ACTIVATED, true));
-      if (world.isRemote) {
-        UtilSound.playSound(pos, SoundRegistry.SPIKES_ON);
+      if (!world.isRemote) {
+        //playSoundFromServer
+        UtilSound.playSoundFromServer((ServerWorld) world, pos, SoundRegistry.SPIKES_ON);
       }
     }
-    else if (state.get(ACTIVATED).booleanValue()
-        && world.isBlockPowered(pos) == false) {
-          if (world.isRemote) {
-            UtilSound.playSound(pos, SoundRegistry.SPIKES_OFF);
-          }
-          world.setBlockState(pos, state.with(ACTIVATED, false));
-        }
+    else if (state.get(ACTIVATED).booleanValue() && world.isBlockPowered(pos) == false) {
+      world.setBlockState(pos, state.with(ACTIVATED, false));
+      if (!world.isRemote) {
+        UtilSound.playSoundFromServer((ServerWorld) world, pos, SoundRegistry.SPIKES_OFF);
+      }
+    }
     super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
   }
 

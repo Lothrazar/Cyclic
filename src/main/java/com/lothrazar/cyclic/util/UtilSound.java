@@ -9,6 +9,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,6 +32,23 @@ public class UtilSound {
     if (entityIn != null) {
       entityIn.playSound(soundIn, volume, pitch);
     }
+  }
+
+  public static void playSoundFromServer(ServerWorld world, BlockPos pos, SoundEvent soundIn) {
+    for (ServerPlayerEntity sp : world.getPlayers()) {
+      playSoundFromServer(sp, pos, soundIn);
+    }
+  }
+
+  public static void playSoundFromServer(ServerPlayerEntity entityIn, BlockPos pos, SoundEvent soundIn) {
+    if (soundIn == null || entityIn == null) {
+      return;
+    }
+    entityIn.connection.sendPacket(new SPlaySoundEffectPacket(
+        soundIn,
+        SoundCategory.BLOCKS,
+        pos.getX(), pos.getY(), pos.getZ(),
+        1.0f, 1.0f));
   }
 
   public static void playSoundFromServer(ServerPlayerEntity entityIn, SoundEvent soundIn) {
