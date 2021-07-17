@@ -101,12 +101,13 @@ public abstract class CharmBase extends ItemBaseToggle {
     ModifiableAttributeInstance attrPlayer = player.getAttribute(attr);
     AttributeModifier oldValue = attrPlayer.getModifier(id);
     if (charmStack.isEmpty()) {
-      ///i am NOT holding it. remove my modifier
+      ///i am NOT holding it. OR im holding but its OFF
+      //remove my modifier
       if (oldValue != null) {
         attrPlayer.removeModifier(id);
       }
     }
-    else { // im   holding it
+    else { // im   holding it AND its enabled
       if (oldValue == null) {
         /// add new
         double baseSpeed = attrPlayer.getBaseValue();
@@ -115,6 +116,8 @@ public abstract class CharmBase extends ItemBaseToggle {
         //        ModCyclic.LOGGER.info(baseSpeed + " becinesNEW value " + newValue.getAmount() + " -> " + attrPlayer.getValue());
         UtilItemStack.damageItem(player, charmStack);
       }
+      //not newly triggered so countdown tick damage  
+      UtilItemStack.damageItemRandomly(player, charmStack);
     }
   }
 

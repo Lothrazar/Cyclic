@@ -134,15 +134,15 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CHARM_CRIT = ITEMS.register("charm_crit", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> QUIVER_DMG = ITEMS.register("quiver_damage", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> QUIVER_LIT = ITEMS.register("quiver_lightning", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> CLOAK_INVISIBLE = ITEMS.register("charm_invisible", () -> new CharmInvisible(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CLOAK_INVISIBLE = ITEMS.register("charm_invisible", () -> new CharmInvisible(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_MAGICDEF = ITEMS.register("charm_magicdefense", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_STARVATION = ITEMS.register("charm_starvation", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_VENOM = ITEMS.register("charm_venom", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_WATER = ITEMS.register("charm_water", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> CHARM_SPEED = ITEMS.register("charm_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_SPEED = ITEMS.register("charm_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_KNOCKBACK_RESIST = ITEMS.register("charm_knockback_resistance", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> CHARM_LUCK = ITEMS.register("charm_luck", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> CHARM_ATTACKSPEED = ITEMS.register("charm_attack_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_LUCK = ITEMS.register("charm_luck", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_ATTACKSPEED = ITEMS.register("charm_attack_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_XPSPEED = ITEMS.register("charm_xp_speed", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_XPSTOPPER = ITEMS.register("charm_xp_blocker", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   // charm_strength - a glove with a name 
@@ -415,8 +415,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("item_pipe"));
     r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fluid_pipe"));
     r.register(new CableWrench(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("cable_wrench"));
-    r.register(new GloveItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("glove_climb"));
-    r.register(new FlippersItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("flippers"));
+    r.register(new GloveItem(new Item.Properties().maxDamage(256 * 8).group(MaterialRegistry.ITEM_GROUP)).setRegistryName("glove_climb"));
+    r.register(new FlippersItem(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)).setRegistryName("flippers"));
     r.register(new AirAntiGravity(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024 * 4)).setRegistryName("antigravity"));
     r.register(new CharmVoid(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(64)).setRegistryName("charm_void"));
     r.register(new CharmAntidote(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(64)).setRegistryName("charm_antidote"));

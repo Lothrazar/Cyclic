@@ -10,8 +10,10 @@ import net.minecraft.world.World;
 
 public class CharmInvisible extends ItemBaseToggle {
 
+  final int seconds = 30;
+
   public CharmInvisible(Properties properties) {
-    super(properties.maxDamage(256 * 256));
+    super(properties);
   }
 
   @Override
@@ -22,14 +24,13 @@ public class CharmInvisible extends ItemBaseToggle {
     if (!this.isOn(stack)) {
       return;
     }
-    if (worldIn.getGameTime() % 20 == 0) {
+    if (worldIn.getGameTime() % 20 == 0 && entityIn instanceof LivingEntity) {
       LivingEntity living = (LivingEntity) entityIn;
-      final int seconds = 6;
-      EffectInstance eff = new EffectInstance(Effects.INVISIBILITY, 20 * seconds, 0);
-      eff.showIcon = false;
-      eff.showParticles = false;
-      living.addPotionEffect(eff);
-      if (worldIn.rand.nextDouble() < 0.1) {
+      if (living.getActivePotionEffect(Effects.INVISIBILITY) == null) {
+        EffectInstance eff = new EffectInstance(Effects.INVISIBILITY, 20 * seconds, 0);
+        eff.showIcon = false;
+        eff.showParticles = false;
+        living.addPotionEffect(eff);
         UtilItemStack.damageItem(living, stack);
       }
     }

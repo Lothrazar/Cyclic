@@ -38,7 +38,14 @@ public class CharmUtil {
       try {
         final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
         if (equipped != null && isMatching(equipped.right, match)) {
-          return Triple.of("curios", equipped.middle, equipped.right);
+          ItemStack found = equipped.right;
+          if (found.getItem() instanceof IHasClickToggle) {
+            IHasClickToggle testMe = (IHasClickToggle) found.getItem();
+            if (testMe.isOn(found)) {
+              return Triple.of("curios", equipped.middle, equipped.right);
+            }
+            //else its found but turned off , keep looking
+          }
         }
       }
       catch (Exception e) {
@@ -56,7 +63,12 @@ public class CharmUtil {
     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
       ItemStack temp = player.inventory.getStackInSlot(i);
       if (isMatching(temp, match)) {
-        return Triple.of("player", i, temp);
+        if (temp.getItem() instanceof IHasClickToggle) {
+          IHasClickToggle testMe = (IHasClickToggle) temp.getItem();
+          if (testMe.isOn(temp)) {
+            return Triple.of("player", i, temp);
+          }
+        }
       }
     }
     //default

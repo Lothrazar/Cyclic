@@ -71,6 +71,7 @@ public class ItemEvents {
       if (!find.isEmpty()) {
         // This is by default 1.5F for ciritcal hits and 1F for normal hits . 
         event.setDamageModifier(3F);
+        UtilItemStack.damageItem(ply, find);
       }
     }
   }
@@ -82,6 +83,7 @@ public class ItemEvents {
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_KNOCKBACK_RESIST.get());
       if (!find.isEmpty()) {
         event.setCanceled(true);
+        UtilItemStack.damageItem(ply, find);
       }
     }
   }
@@ -129,6 +131,7 @@ public class ItemEvents {
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_ANTIPOTION.get());
       if (!find.isEmpty()) {
         event.getPotionEffect().duration = 0;
+        UtilItemStack.damageItem(ply, find);
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_STEALTHPOTION.get());
       if (!find.isEmpty()) {
@@ -141,6 +144,7 @@ public class ItemEvents {
       if (!find.isEmpty()) {
         int boost = event.getPotionEffect().duration / 2;
         event.getPotionEffect().duration += boost;
+        UtilItemStack.damageItem(ply, find);
       }
     }
   }

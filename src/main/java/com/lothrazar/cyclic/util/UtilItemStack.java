@@ -42,17 +42,15 @@ public class UtilItemStack {
     stack.damageItem(1, player, (p) -> {
       p.sendBreakAnimation(Hand.MAIN_HAND);
     });
+    if (stack.getDamage() >= stack.getMaxDamage()) {
+      stack.setCount(0);
+      stack = ItemStack.EMPTY;
+    }
   }
 
-  public static void damageItem(PlayerEntity player, ItemStack stack) {
-    if (!player.isCreative()) {
-      stack.damageItem(1, player, (p) -> {
-        p.sendBreakAnimation(Hand.MAIN_HAND);
-      });
-      if (stack.getDamage() >= stack.getMaxDamage()) {
-        stack.setCount(0);
-        stack = ItemStack.EMPTY;
-      }
+  public static void damageItemRandomly(LivingEntity player, ItemStack stack) {
+    if (player.world.rand.nextDouble() < 0.001) {
+      damageItem(player, stack);
     }
   }
 
