@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilParticle;
@@ -17,7 +18,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -87,7 +87,7 @@ public class TeleporterWandItem extends ItemBase {
           UtilItemStack.damageItem(player, stack);
           if (world.isRemote) {
             UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
-            UtilSound.playSound(player, SoundEvents.ENTITY_ENDERMAN_TELEPORT);
+            UtilSound.playSound(player, newPos, SoundRegistry.WARP_ECHO);
           }
         }
       }

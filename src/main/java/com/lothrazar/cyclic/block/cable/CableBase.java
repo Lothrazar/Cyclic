@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.block.cable;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -174,9 +176,14 @@ public abstract class CableBase extends BlockBase {
           newState = state.with(prop, EnumConnectType.BLOCKED);
         break;
       }
-      world.setBlockState(pos, newState);
-      if (updatePost) {
-        newState.updatePostPlacement(sideToToggle, world.getBlockState(pos.offset(sideToToggle)), world, pos, pos.offset(sideToToggle));
+      if (world.setBlockState(pos, newState)) {
+        if (updatePost) {
+          newState.updatePostPlacement(sideToToggle, world.getBlockState(pos.offset(sideToToggle)), world, pos, pos.offset(sideToToggle));
+        }
+        player.swingArm(handIn);
+        if (world.isRemote) {
+          UtilSound.playSound(player, pos, SoundRegistry.THUNK, 0.2F, 1F);
+        }
       }
     }
     return super.onBlockActivated(state, world, pos, player, handIn, hit);

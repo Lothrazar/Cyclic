@@ -63,6 +63,10 @@ public class SoundRegistry {
   public static final SoundEvent DICE_MIKE_KOENIG = make("dice_mike_koenig");
   public static final SoundEvent FILL = make("fill");
   public static final SoundEvent THUNK = make("thunk");
+  public static final SoundEvent FAN_LOOP = make("fan_loop");
+  public static final SoundEvent FAN_OFF = make("fan_off");
+  public static final SoundEvent FAN_ON = make("fan_on");
+  public static final SoundEvent METAL_PITCH = make("metal_pitch");
   public static final SoundEvent ITEM_ARMOR_EQUIP_EMERALD = make("equip_emerald");
   //update: forge sound type exists apparently
   public static SoundType SCAFFOLD = new ForgeSoundType(1.0F, 1.0F,

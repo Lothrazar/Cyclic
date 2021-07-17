@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -38,16 +39,16 @@ public class ElevationWandItem extends ItemBase {
     BlockPos destination = UtilWorld.getFirstBlockAbove(world, target.getPosition());
     if (destination != null) {
       //play sound at old locaiton on leaving
-      UtilSound.playSound(target, target.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+      UtilSound.playSound(target, target.getPosition(), SoundRegistry.WARP_ECHO);
       if (!world.isRemote) {
         UtilEntity.enderTeleportEvent(target, world, destination);
         UtilItemStack.damageItem(playerIn, stack);
       }
       //play sound att new location also, may be far away
-      UtilSound.playSound(target, target.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+      UtilSound.playSound(target, target.getPosition(), SoundRegistry.WARP_ECHO);
       return true;
     }
-    UtilSound.playSound(target, target.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
+    UtilSound.playSound(target, target.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.1F, 1F);
     return false;
   }
 }

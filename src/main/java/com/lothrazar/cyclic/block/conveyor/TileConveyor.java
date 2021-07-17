@@ -76,8 +76,7 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     if (type.isCorner()) {
       //      Direction rotated = type == ConveyorType.CORNER_RIGHT ? facing.rotateYCCW() : facing.rotateY();
       //
-      //      if (Math.random() < 0.1)
-      //        System.out.printf("Corner %s to %s. Entity at normalized [%f, %f]%n", facing.getString(), rotated.getString(), normalizedX, normalizedZ);
+      //      if (Math.random() < 0.1) 
       //      if ((facing == Direction.NORTH && normalizedZ < 0.5D) || (facing == Direction.SOUTH && normalizedZ > 0.5D)) {
       //        ModCyclic.LOGGER.info("first half");
       //        xSpeed = rotated.getXOffset() * speed;

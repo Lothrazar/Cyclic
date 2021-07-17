@@ -365,6 +365,8 @@ public class ItemEvents {
         BlockState target = world.getBlockState(event.getPos());
         BuilderActionType.setBlockState(held, target);
         UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
+        event.setCanceled(true);
+        UtilSound.playSound(player, event.getPos(), SoundRegistry.DCOIN, 0.3F, 1F);
       }
       else {
         //change size
@@ -373,6 +375,7 @@ public class ItemEvents {
         }
         UtilSound.playSound(player, SoundRegistry.TOOL_MODE);
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
+        event.setCanceled(true);
       }
     }
     if (held.getItem() instanceof AntimatterEvaporatorWandItem) {

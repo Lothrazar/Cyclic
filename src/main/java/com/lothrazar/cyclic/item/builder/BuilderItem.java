@@ -62,6 +62,7 @@ public class BuilderItem extends ItemBase {
       BuilderActionType type = getActionType(stack);
       PacketSwapBlock message = new PacketSwapBlock(pos, type, side, context.getHand());
       PacketRegistry.INSTANCE.sendToServer(message);
+      return ActionResultType.SUCCESS;
     }
     return super.onItemUse(context);
   }
