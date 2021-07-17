@@ -154,6 +154,20 @@
 			#Range: 1 ~ 20000
 			ticks = 600
 
+		#####################################################################################
+		# Settings for varios charms (curios)
+		#####################################################################################
+		[cyclic.items.charms]
+			#Boost given by item charm_luck
+			#Range: 0 ~ 100
+			luck = 10
+			#Boost given by item charm_attackspeed
+			#Range: 0.0 ~ 2.0
+			attackspeed = 0.5
+			#Boost given by item charm_speed
+			#Range: 0.0 ~ 2.0
+			speed = 0.5
+
 		#Wand settings
 		[cyclic.items.teleport_wand]
 			#Maximum distance to activate
