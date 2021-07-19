@@ -11,28 +11,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class PacketTileInventory extends PacketBase {
+public class PacketTileInventoryToClient extends PacketBase {
 
   private BlockPos blockPos;
   private int slot;
   private ItemStack itemStack;
-  private TYPE type;
+  private SyncPacketType type;
 
-  public enum TYPE {
+  public static enum SyncPacketType {
     CHANGE, SET
   }
 
-  public PacketTileInventory(BlockPos blockPos, int slot, ItemStack itemStack, TYPE type) {
+  public PacketTileInventoryToClient(BlockPos blockPos, int slot, ItemStack itemStack, SyncPacketType type) {
     this.blockPos = blockPos;
     this.slot = slot;
     this.itemStack = itemStack;
     this.type = type;
   }
 
-  public PacketTileInventory() {}
+  public PacketTileInventoryToClient() {}
 
   @SuppressWarnings("unused")
-  public static void handle(PacketTileInventory message, Supplier<NetworkEvent.Context> ctx) {
+  public static void handle(PacketTileInventoryToClient message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       if (Minecraft.getInstance().world == null) {
         message.done(ctx);
@@ -41,7 +41,7 @@ public class PacketTileInventory extends PacketBase {
       TileEntity tile = Minecraft.getInstance().world.getTileEntity(message.blockPos);
       if (tile != null) {
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-          if (message.type == TYPE.SET && h instanceof EnderShelfItemHandler) {
+          if (message.type == SyncPacketType.SET && h instanceof EnderShelfItemHandler) {
             //            ItemStack was = h.getStackInSlot(message.slot);
             ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
           }
@@ -52,16 +52,16 @@ public class PacketTileInventory extends PacketBase {
     message.done(ctx);
   }
 
-  public static PacketTileInventory decode(PacketBuffer buf) {
-    PacketTileInventory p = new PacketTileInventory();
+  public static PacketTileInventoryToClient decode(PacketBuffer buf) {
+    PacketTileInventoryToClient p = new PacketTileInventoryToClient();
     p.blockPos = buf.readBlockPos();
     p.slot = buf.readInt();
     p.itemStack = buf.readItemStack();
-    p.type = buf.readEnumValue(TYPE.class);
+    p.type = buf.readEnumValue(SyncPacketType.class);
     return p;
   }
 
-  public static void encode(PacketTileInventory msg, PacketBuffer buf) {
+  public static void encode(PacketTileInventoryToClient msg, PacketBuffer buf) {
     buf.writeBlockPos(msg.blockPos);
     buf.writeInt(msg.slot);
     buf.writeItemStack(msg.itemStack);

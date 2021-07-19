@@ -53,7 +53,7 @@ public class BlockEnderCtrl extends BlockBase {
       TileEnderCtrl ctrl = (TileEnderCtrl) world.getTileEntity(pos);
       //i placed a shelf? find nearby
       if (ctrl != null) {
-        ctrl.setShelves(EnderShelfHelper.findConnectedShelves(world, pos));
+        ctrl.setShelves(EnderShelfHelper.findConnectedShelves(world, pos, ctrl.getCurrentFacing()));
       }
     }
   }
@@ -62,13 +62,12 @@ public class BlockEnderCtrl extends BlockBase {
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     boolean isCurrentlyShelf = EnderShelfHelper.isShelf(state);
     boolean isNewShelf = EnderShelfHelper.isShelf(newState);
-    TileEnderCtrl teCtrl = (TileEnderCtrl) worldIn.getTileEntity(pos);
-    if (isCurrentlyShelf && !isNewShelf && teCtrl != null) {
+    TileEnderCtrl ctrl = (TileEnderCtrl) worldIn.getTileEntity(pos);
+    if (isCurrentlyShelf && !isNewShelf && ctrl != null) {
       //trigger controller reindex
-      teCtrl.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos));
+      ctrl.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos, ctrl.getCurrentFacing()));
     }
     if (state.getBlock() != newState.getBlock()) {
-      //      TileEntity tileentity = worldIn.getTileEntity(pos); 
       worldIn.removeTileEntity(pos);
       worldIn.updateComparatorOutputLevel(pos, this);
     }
@@ -92,12 +91,15 @@ public class BlockEnderCtrl extends BlockBase {
 
   private void insertIntoController(PlayerEntity player, Hand hand, ItemStack heldItem, IItemHandler h) {
     Map<Enchantment, Integer> allofthem = EnchantmentHelper.getEnchantments(heldItem);
-    if (allofthem.size() == 1) {
+    if (allofthem == null || allofthem.size() == 0) {
+      return;
+    }
+    else if (allofthem.size() == 1) {
       ItemStack insertResult = h.insertItem(0, heldItem, false);
       player.setHeldItem(hand, insertResult);
     }
     else {
-      //loop and make books of each
+      //loop and make books of each, if we have any 
       Enchantment[] flatten = allofthem.keySet().toArray(new Enchantment[0]);
       for (Enchantment entry : flatten) {
         // try it

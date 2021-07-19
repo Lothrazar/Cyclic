@@ -6,9 +6,9 @@ import com.lothrazar.cyclic.util.UtilEnchant;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class EnderControllerItemHandler extends ItemStackHandler {
@@ -23,8 +23,11 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   }
 
   @Override
-  public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-    ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
+  public ItemStack insertItem(int slot, ItemStack remaining, boolean simulate) {
+    if (remaining.getItem() != Items.ENCHANTED_BOOK) {
+      return remaining;
+    }
+    //    ItemStack remaining = stack; //ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
     remaining = insertItemElsewhere(remaining, false, simulate); //first try to put it in a matching slot
     if (!remaining.isEmpty()) {
       remaining = insertItemElsewhere(remaining, true, simulate); //then try to put it in the first open slot
@@ -40,32 +43,25 @@ public class EnderControllerItemHandler extends ItemStackHandler {
       TileEntity te = controller.getWorld().getTileEntity(shelfPos);
       if (te != null && EnderShelfHelper.isShelf(te.getBlockState())) {
         TileEnderShelf shelf = (TileEnderShelf) te;
-        stack = insertItemElsewhere(shelf, stack, insertWhenEmpty, simulate);
+        stack = insertItemActual(shelf, stack, insertWhenEmpty, simulate);
       }
     }
     return stack;
   }
 
-  private ItemStack insertItemElsewhere(TileEnderShelf shelf, ItemStack stack, boolean insertWhenEmpty, boolean simulate) {
-    if (EnderShelfHelper.isController(shelf.getBlockState())) {
-      return stack;
-    }
-    EnderShelfItemHandler h = EnderShelfHelper.getShelfHandler(shelf);
-    if (h == null) {
-      return stack;
-    }
+  private ItemStack insertItemActual(TileEnderShelf shelf, ItemStack stack, boolean insertWhenEmpty, boolean simulate) {
     List<Integer> emptySlots = new ArrayList<>();
-    for (int i = 0; i < h.getSlots(); i++) {
-      ItemStack slotStack = h.getStackInSlot(i);
+    for (int i = 0; i < shelf.inventory.getSlots(); i++) {
+      ItemStack slotStack = shelf.inventory.getStackInSlot(i);
       if (slotStack.isEmpty()) {
         emptySlots.add(i);
       }
-      else if (slotStack.getCount() < h.getStackLimit(i, stack) && UtilEnchant.doBookEnchantmentsMatch(stack, slotStack)) {
-        return h.insertItem(i, stack, simulate);
+      else if (slotStack.getCount() < shelf.inventory.getStackLimit(i, stack) && UtilEnchant.doBookEnchantmentsMatch(stack, slotStack)) {
+        return shelf.inventory.insertItem(i, stack, simulate);
       }
     }
     if (emptySlots.size() > 0 && insertWhenEmpty) {
-      return h.insertItem(emptySlots.get(0), stack, simulate);
+      return shelf.inventory.insertItem(emptySlots.get(0), stack, simulate);
     }
     return stack;
   }

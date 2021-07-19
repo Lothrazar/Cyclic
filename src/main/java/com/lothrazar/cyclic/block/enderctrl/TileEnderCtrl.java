@@ -20,6 +20,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEnderCtrl extends TileEntityBase {
 
+  private static final String NBT_SHELVES = "shelves";
   EnderControllerItemHandler controllerInv = new EnderControllerItemHandler(this);
   private final LazyOptional<EnderControllerItemHandler> controllerInventoryCap = LazyOptional.of(() -> controllerInv);
   private List<BlockPos> connectedShelves;
@@ -60,8 +61,8 @@ public class TileEnderCtrl extends TileEntityBase {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    if (tag.contains("shelves")) {
-      ListNBT shelves = tag.getList("shelves", Constants.NBT.TAG_COMPOUND);
+    if (tag.contains(NBT_SHELVES)) {
+      ListNBT shelves = tag.getList(NBT_SHELVES, Constants.NBT.TAG_COMPOUND);
       for (int i = 0; i < shelves.size(); i++) {
         BlockPos pos = NBTUtil.readBlockPos(shelves.getCompound(i));
         this.connectedShelves.add(pos);
@@ -72,15 +73,11 @@ public class TileEnderCtrl extends TileEntityBase {
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    //    inventoryCap.ifPresent(h -> {
-    //      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-    //      tag.put("inv", compound);
-    //    });
     ListNBT shelves = new ListNBT();
     for (BlockPos pos : this.connectedShelves) {
       shelves.add(NBTUtil.writeBlockPos(pos));
     }
-    tag.put("shelves", shelves);
+    tag.put(NBT_SHELVES, shelves);
     return super.write(tag);
   }
 }

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.endershelf;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -9,7 +10,6 @@ import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -91,10 +91,16 @@ public class BlockEnderShelf extends BlockBase {
       //otherwise: main hand inserts, off hand takes out right away
       return ActionResultType.PASS;
     }
+    TileEnderShelf shelf = getTileEntity(world, pos);
+    if (heldItem.getItem().isIn(CableWrench.WRENCH)) {
+      //wrench tag
+      shelf.toggleShowText();
+      player.swingArm(Hand.MAIN_HAND);
+      return ActionResultType.PASS;
+    }
     Direction face = hit.getFace();
     Vector3d hitVec = hit.getHitVec();
     int slot = getSlotFromHitVec(pos, face, hitVec);
-    TileEnderShelf shelf = getTileEntity(world, pos);
     if (hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
       //
       // single shelf
@@ -150,11 +156,12 @@ public class BlockEnderShelf extends BlockBase {
     TileEnderShelf shelf = (TileEnderShelf) tileentity;
     BlockPos controllerPos = EnderShelfHelper.findConnectedController(world, pos);
     if (controllerPos != null) {
-      shelf.setControllerLocation(controllerPos);
+      //      shelf.setControllerLocation(controllerPos);
       TileEnderCtrl controller = (TileEnderCtrl) world.getTileEntity(controllerPos);
       if (controllerPos != null && controller != null) {
-        Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos);
-        controller.setShelves(shelves);
+        controller.getShelves().add(pos);
+        //                Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos, controller.getCurrentFacing());
+        //        controller.setShelves(shelves);
       }
     }
     if (stack.getTag() != null) {

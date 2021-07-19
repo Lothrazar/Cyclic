@@ -12,11 +12,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class EnderShelfHelper {
 
-  public static final int MAX_ITERATIONS = 64; // TODO config entry
+  public static IntValue MAX_DIST;
+  public static final int MAX_ITERATIONS = 6400; // TODO config entry
 
   public static BlockPos findConnectedController(World world, BlockPos shelfPos) {
     return recursivelyFindConnectedController(world, shelfPos, new HashMap<BlockPos, Integer>(), 0);
@@ -49,11 +51,11 @@ public class EnderShelfHelper {
     return returnController;
   }
 
-  public static Set<BlockPos> findConnectedShelves(World world, BlockPos controllerPos) {
-    return recursivelyFindConnectedShelves(world, controllerPos, new HashSet<>(), new HashSet<>(), 0);
+  public static Set<BlockPos> findConnectedShelves(World world, BlockPos controllerPos, Direction facing) {
+    return recursivelyFindConnectedShelves(controllerPos, world, controllerPos, new HashSet<>(), new HashSet<>(), 0);
   }
 
-  public static Set<BlockPos> recursivelyFindConnectedShelves(World world, BlockPos pos, Set<BlockPos> visitedLocations, Set<BlockPos> shelves, int iterations) {
+  public static Set<BlockPos> recursivelyFindConnectedShelves(final BlockPos controllerPos, World world, BlockPos pos, Set<BlockPos> visitedLocations, Set<BlockPos> shelves, int iterations) {
     BlockState state = world.getBlockState(pos);
     if (visitedLocations.contains(pos)) {
       return shelves; //We've already traveled here and didn't find anything, stop here.
@@ -61,6 +63,10 @@ public class EnderShelfHelper {
     visitedLocations.add(pos);
     if (iterations > MAX_ITERATIONS) {
       return shelves; //We tried for too long, stop now before there's an infinite loop
+    }
+    //are we too far away
+    if (pos.manhattanDistance(controllerPos) > MAX_DIST.get()) {
+      return shelves;
     }
     if (iterations > 0 && !isShelf(state)) {
       return shelves; //We left the group of connected shelves, stop here.
@@ -72,7 +78,7 @@ public class EnderShelfHelper {
     iterations++;
     for (Direction direction : Direction.values()) {
       if (state.get(BlockStateProperties.HORIZONTAL_FACING) != direction) {
-        shelves.addAll(recursivelyFindConnectedShelves(world, pos.offset(direction), visitedLocations, shelves, iterations));
+        shelves.addAll(recursivelyFindConnectedShelves(controllerPos, world, pos.offset(direction), visitedLocations, shelves, iterations));
       }
     }
     return shelves;

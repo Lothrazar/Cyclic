@@ -8,6 +8,8 @@ import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
+import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
+import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.eye.TileEye;
 import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.forester.TileForester;
@@ -278,6 +280,10 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL)
         .push("blocks");
+    CFG.comment("Sprinkler settings").push("ender_shelf");
+    EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
+    EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
+    CFG.pop(); // ender_shelf*6
     CFG.comment("Sprinkler settings").push("sprinkler");
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
     TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);

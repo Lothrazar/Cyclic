@@ -16,7 +16,7 @@ import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.net.PacketStorageBagScreen;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.net.PacketTileInventory;
+import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileString;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -51,17 +51,19 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketRandomize.class, PacketRandomize::encode, PacketRandomize::decode, PacketRandomize::handle);
     INSTANCE.registerMessage(id++, PacketTileString.class, PacketTileString::encode, PacketTileString::decode, PacketTileString::handle);
     INSTANCE.registerMessage(id++, PacketEnergySync.class, PacketEnergySync::encode, PacketEnergySync::decode, PacketEnergySync::handle);
-    INSTANCE.registerMessage(id++, PacketTileInventory.class, PacketTileInventory::encode, PacketTileInventory::decode, PacketTileInventory::handle);
+    INSTANCE.registerMessage(id++, PacketTileInventoryToClient.class, PacketTileInventoryToClient::encode, PacketTileInventoryToClient::decode, PacketTileInventoryToClient::handle);
     INSTANCE.registerMessage(id++, PacketStorageBagScreen.class, PacketStorageBagScreen::encode, PacketStorageBagScreen::decode, PacketStorageBagScreen::handle);
     INSTANCE.registerMessage(id++, PacketCraftAction.class, PacketCraftAction::encode, PacketCraftAction::decode, PacketCraftAction::handle);
     INSTANCE.registerMessage(id++, PacketFilterCard.class, PacketFilterCard::encode, PacketFilterCard::decode, PacketFilterCard::handle);
   }
 
   public static void sendToAllClients(World world, PacketBase packet) {
+    if (world.isRemote) {
+      return;
+    }
     for (PlayerEntity player : world.getPlayers()) {
       ServerPlayerEntity sp = ((ServerPlayerEntity) player);
-      PacketRegistry.INSTANCE.sendTo(packet,
-          sp.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+      PacketRegistry.INSTANCE.sendTo(packet, sp.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
     }
   }
 }

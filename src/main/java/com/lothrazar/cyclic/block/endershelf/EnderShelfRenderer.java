@@ -1,11 +1,14 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.util.UtilRenderText;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Map.Entry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.enchantment.Enchantment;
@@ -17,26 +20,20 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
 
-  private static final float OFFSET = -0.01F;
-
   public EnderShelfRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
     super(rendererDispatcherIn);
   }
 
   @Override
-  public void render(TileEnderShelf tile, float partialTicks, MatrixStack ms,
-      IRenderTypeBuffer buffer, int light, int overlayLight) {
+  public void render(TileEnderShelf tile, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlayLight) {
     Direction side = tile.getCurrentFacing();
     UtilRenderText.alignRendering(ms, side);
-    //    if (EnderShelfHelper.isShelf(tile.getBlockState())) {
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
-        renderSlot(i, h.getStackInSlot(i), ms, buffer, light);
+        renderSlot(tile, i, h.getStackInSlot(i), ms, buffer, light);
       }
     });
-    //    }
-    //    else { // if (EnderShelfHelper.isController(tile.getBlockState())) {
-    //      //TODO: this branch never fires
+    //    if (EnderShelfHelper.isController(tile.getBlockState())) { 
     //      EnderControllerItemHandler h = EnderShelfHelper.getControllerHandler(tile);
     //      if (h != null) {
     //        int count = tile.getShelves().size();
@@ -54,41 +51,68 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
     //    }
   }
 
-  private void renderSlot(int slot, ItemStack itemStack, MatrixStack ms, IRenderTypeBuffer buffer, int light) {
-    if (itemStack.isEmpty()) {
+  private void renderSlot(TileEnderShelf tile, int slot, ItemStack stack, MatrixStack ms, IRenderTypeBuffer buffer, int light) {
+    if (stack.isEmpty()) {
       return;
     }
-    ms.push();
+    final float sh = 16F;
+    final int color = 0;
+    final double x = 1.5F / sh;
+    final double y = (3 * slot + 2) / sh;
+    final float scaleNum = 0.1F;
     FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
-    AtomicReference<String> displayName = new AtomicReference<>("Nothing");
-    String displayCount = "x" + itemStack.getCount();
-    displayName.set(itemStack.getDisplayName().getString());
-    if (!itemStack.isEmpty()) {
-      Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(EnchantedBookItem.getEnchantments(itemStack));
-      enchantments.forEach((enchantment, level) -> {
-        displayName.set(enchantment.getDisplayName(level).getString());
-      });
+    if (tile.renderStyle == RenderTextType.STACK) {
+      //similar to but different, i didnt use rotation
+      //https://github.com/InnovativeOnlineIndustries/Industrial-Foregoing/blob/1.16/src/main/java/com/buuz135/industrial/proxy/client/render/BlackHoleUnitTESR.java#L76
+      ms.push();
+      ms.translate(0, 0, 1);
+      final float sp = 0.19F;
+      final float yf = 0.88F - slot * sp;
+      ms.translate(0.6, yf, 0);
+      float size = 0.12F;
+      ms.scale(size, size, size);
+      // 0xF000F0
+      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, 0x500050, light, ms, buffer);
+      ms.pop();
+      ms.push();
+      ms.translate(x, y, 1.01F);
+      ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
+      String displayCount = "x" + stack.getCount();
+      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+      ms.pop();
     }
-    double x = 1.5F / 16F;
-    double y = (3 * slot + 2) / 16F;
-    float scale = 0.1F * getScaleFactor(displayName.get());
-    ms.translate(x, y, 1 - OFFSET);
-    ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-    int color = 0;
-    fontRenderer.renderString(displayName.get(), 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
-    ms.pop();
-    ms.push();
-    scale = 0.1F;
-    ms.translate(x, y, 1 - OFFSET);
-    ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-    fontRenderer.renderString(displayCount, 110, 0, color,
-        false, ms.getLast().getMatrix(), buffer, false, 0, light);
-    ms.pop();
+    else if (tile.renderStyle == RenderTextType.TEXT) {
+      if (tile.inventory.nameCache[slot] == null || tile.inventory.nameCache[slot].isEmpty()) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(EnchantedBookItem.getEnchantments(stack));
+        for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+          tile.inventory.nameCache[slot] = entry.getKey().getDisplayName(entry.getValue()).getString();
+          break;
+        }
+      }
+      String displayName = tile.inventory.nameCache[slot];
+      if (displayName.isEmpty()) {
+        displayName = stack.getDisplayName().getString();
+      }
+      final float scaleName = 0.01F + scaleNum * getScaleFactor(displayName);
+      ms.push();
+      ms.translate(x, y, 1.01F);
+      ms.scale(1 / sh * scaleName, -1 / sh * scaleName, 0.00005F);
+      fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+      ms.pop();
+      //
+      ms.push();
+      ms.translate(x, y, 1.01F);
+      ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
+      String displayCount = "x" + stack.getCount();
+      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+      ms.pop();
+    }
   }
 
   private float getScaleFactor(String displayName) {
-    if (displayName.length() > 18) { // TODO const
-      return 1.0F - 1 / 36F * (displayName.length() - 18);
+    int lv = 17;
+    if (displayName.length() > lv) {
+      return 1.0F - 1 / 36F * (displayName.length() - lv);
     }
     return 1.0F;
   }
