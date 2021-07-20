@@ -59,26 +59,21 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
     final int color = 0;
     final double x = 1.5F / sh;
     final double y = (3 * slot + 2) / sh;
-    final float scaleNum = 0.1F;
+    final float scaleNum = 0.094F;
     FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
     if (tile.renderStyle == RenderTextType.STACK) {
+      final float sp = 0.19F;
+      final float xf = 0.16F + slot * sp / 1.5F;
+      final float yf = 1 - (0.88F - slot * sp);
+      float size = 0.12F;
       //similar to but different, i didnt use rotation
       //https://github.com/InnovativeOnlineIndustries/Industrial-Foregoing/blob/1.16/src/main/java/com/buuz135/industrial/proxy/client/render/BlackHoleUnitTESR.java#L76
       ms.push();
       ms.translate(0, 0, 1);
-      final float sp = 0.19F;
-      final float yf = 0.88F - slot * sp;
-      ms.translate(0.6, yf, 0);
-      float size = 0.12F;
+      ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
       // 0xF000F0
       Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, 0x500050, light, ms, buffer);
-      ms.pop();
-      ms.push();
-      ms.translate(x, y, 1.01F);
-      ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
-      String displayCount = "x" + stack.getCount();
-      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
       ms.pop();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
@@ -93,15 +88,17 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
       if (displayName.isEmpty()) {
         displayName = stack.getDisplayName().getString();
       }
-      final float scaleName = 0.01F + scaleNum * getScaleFactor(displayName);
+      final float scaleName = 0.02832999F + 0.1F * getScaleFactor(displayName);
       ms.push();
       ms.translate(x, y, 1.01F);
       ms.scale(1 / sh * scaleName, -1 / sh * scaleName, 0.00005F);
       fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
       ms.pop();
-      //
+    }
+    if (tile.renderStyle != RenderTextType.NONE) {
+      //render stack count
       ms.push();
-      ms.translate(x, y, 1.01F);
+      ms.translate(x + 0.081F, y, 1.01F);
       ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
       String displayCount = "x" + stack.getCount();
       fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
