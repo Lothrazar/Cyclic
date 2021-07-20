@@ -13,8 +13,7 @@ public class TileEnderShelf extends TileEntityBase {
 
   public final EnderShelfItemHandler inventory = new EnderShelfItemHandler(this);
   private final LazyOptional<EnderShelfItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  //  private BlockPos controllerLocation;
-  RenderTextType renderStyle = RenderTextType.TEXT;
+  public RenderTextType renderStyle = RenderTextType.TEXT;
 
   public static enum RenderTextType {
     TEXT, STACK, NONE;
@@ -22,7 +21,6 @@ public class TileEnderShelf extends TileEntityBase {
 
   public TileEnderShelf() {
     super(TileRegistry.ender_shelf);
-    //    this.controllerLocation = null;
   }
 
   @Override
@@ -32,13 +30,6 @@ public class TileEnderShelf extends TileEntityBase {
   public int getField(int field) {
     return 0;
   }
-  //  public void setControllerLocation(BlockPos pos) {
-  //    this.controllerLocation = pos;
-  //  }
-  //
-  //  public BlockPos getControllerLocation() {
-  //    return this.controllerLocation;
-  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {

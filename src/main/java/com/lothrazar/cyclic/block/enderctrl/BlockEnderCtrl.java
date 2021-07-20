@@ -1,6 +1,9 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.cable.CableWrench;
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import java.util.Map;
 import net.minecraft.block.Block;
@@ -79,6 +82,19 @@ public class BlockEnderCtrl extends BlockBase {
     if (hand != Hand.MAIN_HAND && heldItem.isEmpty()) {
       //if your hand is empty, dont process if its the OFF hand
       //otherwise: main hand inserts, off hand takes out right away
+      return ActionResultType.PASS;
+    }
+    if (heldItem.getItem().isIn(CableWrench.WRENCH)) {
+      TileEnderCtrl contrl = (TileEnderCtrl) world.getTileEntity(pos);
+      contrl.toggleShowText();
+      RenderTextType nt = contrl.renderStyle;
+      for (BlockPos shelf : contrl.getShelves()) {
+        TileEntity shelfy = world.getTileEntity(shelf);
+        if (shelfy instanceof TileEnderShelf) {
+          ((TileEnderShelf) shelfy).renderStyle = nt;
+        }
+      }
+      player.swingArm(Hand.MAIN_HAND);
       return ActionResultType.PASS;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
