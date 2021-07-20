@@ -59,6 +59,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
     final int color = 0;
     final double x = 1.5F / sh;
     final double y = (3 * slot + 2) / sh;
+    final double z = 1.01;
     final float scaleNum = 0.094F;
     FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
     if (tile.renderStyle == RenderTextType.STACK) {
@@ -90,7 +91,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
       }
       final float scaleName = 0.02832999F + 0.1F * getScaleFactor(displayName);
       ms.push();
-      ms.translate(x, y, 1.01F);
+      ms.translate(x - 0.02, y + 0.06, z);
       ms.scale(1 / sh * scaleName, -1 / sh * scaleName, 0.00005F);
       fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
       ms.pop();
@@ -98,7 +99,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
     if (tile.renderStyle != RenderTextType.NONE) {
       //render stack count
       ms.push();
-      ms.translate(x + 0.081F, y, 1.01F);
+      ms.translate(x + 0.081F, y, z);
       ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
       String displayCount = "x" + stack.getCount();
       fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
