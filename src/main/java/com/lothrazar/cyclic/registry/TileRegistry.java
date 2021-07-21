@@ -54,6 +54,7 @@ import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmuffTile;
+import com.lothrazar.cyclic.block.spikes.TileDiamondSpikes;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
@@ -94,6 +95,7 @@ public class TileRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
+    r.register(TileEntityType.Builder.create(TileDiamondSpikes::new, BlockRegistry.spikes_diamond).build(null).setRegistryName("spikes_diamond"));
     r.register(TileEntityType.Builder.create(TileLightCamo::new, BlockRegistry.light_camo).build(null).setRegistryName("light_camo"));
     r.register(TileEntityType.Builder.create(SoundmuffTile::new, BlockRegistry.soundproofing_ghost).build(null).setRegistryName("soundproofing_ghost"));
     r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.terra_preta).build(null).setRegistryName("terra_preta"));
@@ -151,6 +153,8 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":spikes_diamond")
+  public static TileEntityType<TileDiamondSpikes> spikes_diamond;
   @ObjectHolder(ModCyclic.MODID + ":light_camo")
   public static TileEntityType<TileLightCamo> light_camo;
   @ObjectHolder(ModCyclic.MODID + ":soundproofing_ghost")

@@ -64,7 +64,7 @@ public abstract class CharmBase extends ItemBaseToggle {
       eff.showParticles = false;
       living.addPotionEffect(eff);
       UtilItemStack.damageItem(living, stack);
-      UtilSound.playSound(living, living.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
+      UtilSound.playSound(living, SoundEvents.BLOCK_FIRE_EXTINGUISH);
       UtilParticle.spawnParticle(living.world, ParticleTypes.DRIPPING_WATER, living.getPosition(), 9);
     }
   }
@@ -73,7 +73,7 @@ public abstract class CharmBase extends ItemBaseToggle {
     if (this.witherProt && living.isPotionActive(Effects.WITHER)) {
       living.removeActivePotionEffect(Effects.WITHER);
       UtilItemStack.damageItem(living, stack);
-      UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_GENERIC_DRINK);
+      UtilSound.playSound(entityIn, SoundEvents.ENTITY_GENERIC_DRINK);
     }
   }
 
@@ -81,7 +81,7 @@ public abstract class CharmBase extends ItemBaseToggle {
     if (this.poisonProt && living.isPotionActive(Effects.POISON)) {
       living.removeActivePotionEffect(Effects.POISON);
       UtilItemStack.damageItem(living, stack);
-      UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_GENERIC_DRINK);
+      UtilSound.playSound(entityIn, SoundEvents.ENTITY_GENERIC_DRINK);
     }
   }
 
@@ -92,7 +92,7 @@ public abstract class CharmBase extends ItemBaseToggle {
       if (entityIn instanceof LivingEntity) {
         UtilItemStack.damageItem((LivingEntity) entityIn, stack);
       }
-      UtilSound.playSound(entityIn, entityIn.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT);
+      UtilSound.playSound(entityIn, SoundEvents.ENTITY_ENDERMAN_TELEPORT);
     }
   }
 

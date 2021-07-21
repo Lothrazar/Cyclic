@@ -34,7 +34,7 @@ public class FireplaceBlock extends BlockBase {
     }
     if (isPowered && !state.get(LIT)) { //set fire
       if (setFire(worldIn, posFire, false) && worldIn.isRemote) {
-        UtilSound.playSound(pos, SoundEvents.ITEM_FLINTANDSTEEL_USE);
+        UtilSound.playSound(worldIn, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE);
       }
     }
     else if (!isPowered && state.get(LIT)) { //put out fire

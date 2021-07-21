@@ -286,7 +286,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
           LivingEntity live = (LivingEntity) entityHit;
           if (live.isPotionActive(PotionRegistry.PotionEffects.stun) == false) {
             live.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
-            UtilSound.playSound(live, live.getPosition(), SoundEvents.ENTITY_IRON_GOLEM_ATTACK);
+            UtilSound.playSound(live, SoundEvents.ENTITY_IRON_GOLEM_ATTACK);
           }
         }
       break;

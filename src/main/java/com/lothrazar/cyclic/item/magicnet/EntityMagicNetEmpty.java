@@ -77,7 +77,7 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       targetHeightOffset = target.getHeight() / 2;
       particleType = ParticleTypes.PORTAL;
       UtilItemStack.drop(world, this.getPosition(), drop);
-      UtilSound.playSound(target, target.getPosition(), SoundRegistry.MONSTER_BALL_CAPTURE);
+      UtilSound.playSound(target, SoundRegistry.MONSTER_BALL_CAPTURE);
       target.remove();
     }
     else if (type == RayTraceResult.Type.BLOCK) {

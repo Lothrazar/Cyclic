@@ -81,7 +81,7 @@ public class TileTransporterItem extends ItemBase {
     }
     if (placeStoredTileEntity(player, stack, offset)) {
       player.setHeldItem(context.getHand(), ItemStack.EMPTY);
-      UtilSound.playSound(player, pos, SoundRegistry.THUNK);
+      UtilSound.playSound(player, SoundRegistry.THUNK);
       if (player.isCreative() == false) {
         UtilItemStack.drop(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
       }

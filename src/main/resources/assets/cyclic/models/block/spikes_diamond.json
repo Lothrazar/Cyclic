@@ -1,0 +1,10 @@
+{
+	"parent": "cyclic:parent/spikes_off",
+
+	"textures": {
+		"side": "cyclic:blocks/spike/spikes_diamond_side",
+		"base_up": "cyclic:blocks/spike/spikes_diamond_base_up",
+		"down": "cyclic:blocks/spike/spikes_diamond_base_down",
+		"particle": "cyclic:blocks/spike/spikes_diamond_side"
+	}
+}

@@ -57,6 +57,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     super(tileEntityTypeIn);
   }
 
+  public int getTimer() {
+    return timer;
+  }
+
   protected PlayerEntity getLookingPlayer(int maxRange, boolean mustCrouch) {
     List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(
         this.pos.getX() - maxRange, this.pos.getY() - maxRange, this.pos.getZ() - maxRange, this.pos.getX() + maxRange, this.pos.getY() + maxRange, this.pos.getZ() + maxRange));

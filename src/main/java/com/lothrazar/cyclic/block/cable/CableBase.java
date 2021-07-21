@@ -182,7 +182,7 @@ public abstract class CableBase extends BlockBase {
         }
         player.swingArm(handIn);
         if (world.isRemote) {
-          UtilSound.playSound(player, pos, SoundRegistry.THUNK, 0.2F, 1F);
+          UtilSound.playSound(player, SoundRegistry.THUNK, 0.2F, 1F);
         }
       }
     }

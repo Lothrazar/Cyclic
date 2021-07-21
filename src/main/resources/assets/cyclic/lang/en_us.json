@@ -3,6 +3,9 @@
 
 	  "curios.identifier.feet":"Feet",
 	  "curios.identifier.charm":"Charm",
+	  
+	  "cyclic.fake_player.spikes_diamond":"Diamond Spikes",
+	  "cyclic.fake_player.user":"Item User",
 
     "itemGroup.cyclic": "Cyclic Blocks",
     "itemGroup.cyclicitems": "Cyclic Items",
@@ -190,7 +193,7 @@
        
     "item.cyclic.blockstate_data":"BlockState Data Card",
     "item.cyclic.blockstate_data.tooltip":"Read and save BlockStates to filter Miners",
-    "item.cyclic.blockstate_data.guide":"Use on a block to read its block state.  Craft to erase the list.  It can distinguish between identical blocks in different states such as rotated stairs, double slabs, etc.  ",
+    "item.cyclic.blockstate_data.guide":"Use on a block to read its block state.  Craft to erase the list.  It can distinguish between identical blocks in different states such as rotated stairs, double slabs, etc.  See $(l:machines/miner)Miner$(/l)",
     
     "item.cyclic.filter_data":"Filter Data Card",
     "item.cyclic.filter_data.tooltip":"Holds items and settings used for filters",
@@ -261,6 +264,10 @@
     "block.cyclic.conveyor.guide": "Moves all entities standing on it.   Many properties of this block are stored in the blockstate such as type, speed, and dye color.  Types include straight, corner, and up/down ramps.  To toggle the type, place in world and use the $(l:items/wrench)Wooden Wrench$(/l) on the placed rail, this toggles the type.",
     "block.cyclic.conveyor.guide0": "Hold a redstone torch and interact to toggle the speed.   Hold dye and use it on the block to toggle the color.  These updates propogate to nearby connected rails.  (check F3 to view these properties in detail) ",
 
+    "block.cyclic.ender_item_shelf":"Item Shelf",
+    "block.cyclic.ender_item_shelf.tooltip": "Small item storage",
+    "block.cyclic.ender_item_shelf.guide": "Stores 5 slots items.  Use any normal $(l:items/cable_wrench)Wrench$(/l) to toggle display mode, or a $(l:items/wrench)Rotation Tool$(/l) to rotate its facing direction ",
+  
 
     "block.cyclic.ender_shelf":"Ender Shelf",
     "block.cyclic.ender_shelf.tooltip": "Enchantment Storage",
@@ -1436,7 +1443,7 @@
 
     "block.cyclic.miner": "Miner",
     "block.cyclic.miner.tooltip": "Mines a configurable area in front of the Miner",
-    "block.cyclic.miner.guide": "Mines a configurable area in front of the Miner. Will attempt to mine with any tool you provide it.",
+    "block.cyclic.miner.guide": "Mines a configurable area in front of the Miner. Will attempt to mine with any tool you provide it.  See $(l:misc/blockstate_data)Blockstate Data Card$(/l)",
 
 
     "block.cyclic.forester": "Forester",

@@ -51,7 +51,7 @@ public class ItemMobContainer extends ItemBase {
       pos = pos.offset(context.getFace());
     }
     World world = context.getWorld();
-    UtilSound.playSound(player, pos, SoundRegistry.MONSTER_BALL_RELEASE, 0.3F, 1F);
+    UtilSound.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE, 0.3F, 1F);
     if (!world.isRemote) {
       Entity entity = ForgeRegistries.ENTITIES.getValue(
           new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))

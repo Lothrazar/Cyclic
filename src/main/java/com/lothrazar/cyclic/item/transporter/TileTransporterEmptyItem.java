@@ -74,7 +74,7 @@ public class TileTransporterEmptyItem extends ItemBase {
       UtilChat.sendStatusMessage(player, "chest_sack.error.config");
       return ActionResultType.FAIL;
     }
-    UtilSound.playSound(player, pos, SoundRegistry.THUNK);
+    UtilSound.playSound(player, SoundRegistry.THUNK);
     if (world.isRemote) {
       PacketRegistry.INSTANCE.sendToServer(new PacketChestSack(pos));
     }

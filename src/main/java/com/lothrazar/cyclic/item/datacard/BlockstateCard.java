@@ -70,19 +70,26 @@ public class BlockstateCard extends ItemBase {
     ItemStack held = player.getHeldItem(hand);
     BlockState state = context.getWorld().getBlockState(pos);
     CompoundNBT stateTag = NBTUtil.writeBlockState(state);
-    ListNBT states = null;
+    ListNBT stateTags = null;
     if (held.getOrCreateTag().contains(STATESTAG)) {
       //get it
-      states = held.getOrCreateTag().getList(STATESTAG, 10);
+      stateTags = held.getOrCreateTag().getList(STATESTAG, 10);
     }
     else {
-      states = new ListNBT();
+      stateTags = new ListNBT();
     }
-    if (states.size() >= MAXSIZE) {
+    if (stateTags.size() >= MAXSIZE) {
       return ActionResultType.PASS;
     }
-    states.add(stateTag);
-    held.getOrCreateTag().put(STATESTAG, states);
+    //wait wait wait does it exist
+    for (int i = 0; i < stateTags.size(); ++i) {
+      BlockState stateFound = NBTUtil.readBlockState(stateTags.getCompound(i));
+      if (stateFound.equals(state)) {
+        return ActionResultType.PASS;
+      }
+    }
+    stateTags.add(stateTag);
+    held.getOrCreateTag().put(STATESTAG, stateTags);
     player.swingArm(hand);
     return ActionResultType.SUCCESS;
   }

@@ -1,0 +1,20 @@
+{
+
+
+	"variants": {
+	
+		"facing=up,lit=true":{    "model": "cyclic:block/spikes_diamond_on"  },
+		"facing=down,lit=true":{  "model": "cyclic:block/spikes_diamond_on", "x": 180 },
+		"facing=north,lit=true":{ "model": "cyclic:block/spikes_diamond_on", "x": 90  },
+		"facing=south,lit=true":{ "model": "cyclic:block/spikes_diamond_on","x": 90, "y": 180 },
+		"facing=east,lit=true":{  "model": "cyclic:block/spikes_diamond_on","x": 90, "y": 90  },
+		"facing=west,lit=true":{  "model": "cyclic:block/spikes_diamond_on", "x": 90, "y": 270  },
+
+		"facing=up,lit=false":{   "model": "cyclic:block/spikes_diamond"  },
+		"facing=down,lit=false":{ "model": "cyclic:block/spikes_diamond" , "x": 180},
+		"facing=north,lit=false":{"model": "cyclic:block/spikes_diamond", "x": 90   },
+		"facing=south,lit=false":{"model": "cyclic:block/spikes_diamond","x": 90, "y": 180 },
+		"facing=east,lit=false":{ "model": "cyclic:block/spikes_diamond","x": 90, "y": 90   },
+		"facing=west,lit=false":{ "model": "cyclic:block/spikes_diamond"  , "x": 90, "y": 270  } 
+	}
+}

@@ -39,16 +39,16 @@ public class ElevationWandItem extends ItemBase {
     BlockPos destination = UtilWorld.getFirstBlockAbove(world, target.getPosition());
     if (destination != null) {
       //play sound at old locaiton on leaving
-      UtilSound.playSound(target, target.getPosition(), SoundRegistry.WARP_ECHO);
+      UtilSound.playSound(target, SoundRegistry.WARP_ECHO);
       if (!world.isRemote) {
         UtilEntity.enderTeleportEvent(target, world, destination);
         UtilItemStack.damageItem(playerIn, stack);
       }
       //play sound att new location also, may be far away
-      UtilSound.playSound(target, target.getPosition(), SoundRegistry.WARP_ECHO);
+      UtilSound.playSound(target, SoundRegistry.WARP_ECHO);
       return true;
     }
-    UtilSound.playSound(target, target.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.1F, 1F);
+    UtilSound.playSound(target, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.1F, 1F);
     return false;
   }
 }

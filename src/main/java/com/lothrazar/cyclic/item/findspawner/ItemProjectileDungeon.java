@@ -27,7 +27,7 @@ public class ItemProjectileDungeon extends ItemBase {
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
     shootMe(world, player, ball);
     stack.shrink(1);
-    UtilSound.playSound(player, player.getPosition(), SoundRegistry.DUNGEONFINDER, 0.1F, 1.0F);
+    UtilSound.playSound(player, SoundRegistry.DUNGEONFINDER, 0.1F, 1.0F);
     findTargetLocation(player, ball);
     return super.onItemRightClick(world, player, hand);
   }

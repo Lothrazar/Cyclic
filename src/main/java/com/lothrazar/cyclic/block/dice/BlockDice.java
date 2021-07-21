@@ -85,7 +85,7 @@ public class BlockDice extends BlockBase {
     if (hand == Hand.MAIN_HAND && tile instanceof TileDice) {
       ((TileDice) tile).startSpinning();
       if (world.isRemote) {
-        UtilSound.playSound(pos, SoundRegistry.DICE_MIKE_KOENIG);
+        UtilSound.playSound(world, pos, SoundRegistry.DICE_MIKE_KOENIG);
       }
       return ActionResultType.SUCCESS;
     }

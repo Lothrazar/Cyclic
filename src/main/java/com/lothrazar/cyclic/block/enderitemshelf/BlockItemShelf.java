@@ -1,12 +1,13 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilSound;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.Block;
@@ -33,7 +34,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockItemShelf extends BlockBase {
 
   public BlockItemShelf(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.hardnessAndResistance(0.8F));
   }
 
   @Override
@@ -67,7 +68,7 @@ public class BlockItemShelf extends BlockBase {
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     ItemStack heldItem = player.getHeldItem(hand);
-    if (hand != Hand.MAIN_HAND && heldItem.isEmpty()) {
+    if (hand != Hand.MAIN_HAND) {
       //if your hand is empty, dont process if its the OFF hand
       //otherwise: main hand inserts, off hand takes out right away
       return ActionResultType.PASS;
@@ -85,29 +86,29 @@ public class BlockItemShelf extends BlockBase {
     if (hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
       //
       // single shelf
-      //
-      if (!heldItem.isEmpty()) {
-        //try to insert 
-        //        if (!world.isRemote) {
-        ModCyclic.LOGGER.info("insert " + slot);
+      ItemStack shelfStack = shelf.inventory.getStackInSlot(slot);
+      boolean oldEmpty = shelfStack.isEmpty();
+      boolean doDeposit = oldEmpty || heldItem.getItem() == shelfStack.getItem();
+      if (doDeposit) {
+        //try to insert  
         ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
-        ModCyclic.LOGGER.info("remain " + remaining);
-        if (remaining.getCount() != shelf.inventory.getStackInSlot(slot).getCount()) {
+        if (remaining.isEmpty() || remaining.getCount() != shelfStack.getCount()) {
           player.setHeldItem(hand, remaining);
           player.swingArm(hand);
+          UtilSound.playSound(player, SoundRegistry.CRACKLE, oldEmpty ? 0.3F : 0.1F, 0.3F);
+          //          UtilSound.playSound(player, SoundRegistry.POW, 0.06F, 0.3F);
+          //          UtilSound.playSound(player, SoundRegistry.GUITAR, 0.1F, 0.3F);
           return ActionResultType.CONSUME;
         }
-        //        }
       }
-      else { // if (heldItem.isEmpty()) {
-        //try to withdraw 
-        ModCyclic.LOGGER.info("withdraw  " + slot);
+      else { // doWithdraw
+        //try to withdraw  
         int q = player.isCrouching() ? 1 : 64;
         ItemStack retrieved = shelf.inventory.extractItem(slot, q, false);
         player.setHeldItem(hand, retrieved);
         player.swingArm(hand);
-        return ActionResultType.PASS;
       }
+      return ActionResultType.PASS;
     }
     return ActionResultType.PASS;
   }

@@ -11,8 +11,6 @@ import com.lothrazar.cyclic.block.LaunchBlock;
 import com.lothrazar.cyclic.block.MasonBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
-import com.lothrazar.cyclic.block.SpikesBlock;
-import com.lothrazar.cyclic.block.SpikesBlock.EnumSpikeType;
 import com.lothrazar.cyclic.block.WaterCandleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
@@ -74,6 +72,9 @@ import com.lothrazar.cyclic.block.shears.BlockShearing;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmufflerBlockGhost;
+import com.lothrazar.cyclic.block.spikes.EnumSpikeType;
+import com.lothrazar.cyclic.block.spikes.SpikesBlock;
+import com.lothrazar.cyclic.block.spikes.SpikesDiamond;
 import com.lothrazar.cyclic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
@@ -116,7 +117,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new BlockSprinkler(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> SHEARING = BLOCKS.register("shearing", () -> new BlockShearing(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> DARK_GLASS_CONNECTED = BLOCKS.register("dark_glass_connected", () -> new DarkGlassConnectedBlock(Block.Properties.create(Material.EARTH)));
-  public static final RegistryObject<Block> ENDER_ITEM_SHELF = BLOCKS.register("ender_item_shelf", () -> new BlockItemShelf(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> ENDER_ITEM_SHELF = BLOCKS.register("ender_item_shelf", () -> new BlockItemShelf(Block.Properties.create(Material.WOOD)));
   //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;
@@ -174,6 +175,8 @@ public class BlockRegistry {
   public static Block spikes_curse;
   @ObjectHolder(ModCyclic.MODID + ":spikes_fire")
   public static Block spikes_fire;
+  @ObjectHolder(ModCyclic.MODID + ":spikes_diamond")
+  public static Block spikes_diamond;
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
   public static Block fluid_pipe;
   @ObjectHolder(ModCyclic.MODID + ":item_pipe")
@@ -355,6 +358,7 @@ public class BlockRegistry {
     r.register(new SpikesBlock(Block.Properties.create(Material.ROCK), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
     r.register(new SpikesBlock(Block.Properties.create(Material.ROCK), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
     r.register(new SpikesBlock(Block.Properties.create(Material.ROCK), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
+    r.register(new SpikesDiamond(Block.Properties.create(Material.IRON)).setRegistryName("spikes_diamond"));
     r.register(new BlockBatteryInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));

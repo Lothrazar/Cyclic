@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
@@ -42,6 +43,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -85,6 +87,10 @@ public class ItemEvents {
         event.setCanceled(true);
         UtilItemStack.damageItem(ply, find);
       }
+    }
+    if (event.getEntityLiving() instanceof FakePlayer) {
+      // 
+      ModCyclic.LOGGER.info("KB fake" + event.getEntityLiving().getDisplayName().getString());
     }
   }
 
@@ -371,7 +377,7 @@ public class ItemEvents {
         BuilderActionType.setBlockState(held, target);
         UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
         event.setCanceled(true);
-        UtilSound.playSound(player, event.getPos(), SoundRegistry.DCOIN, 0.3F, 1F);
+        UtilSound.playSound(player, SoundRegistry.DCOIN, 0.3F, 1F);
       }
       else {
         //change size

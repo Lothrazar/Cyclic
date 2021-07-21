@@ -10,13 +10,18 @@ import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
 import com.lothrazar.cyclic.command.CommandTask;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import java.util.Collection;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.GameType;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -27,7 +32,7 @@ public class CommandRegistry {
 
   public enum CyclicCommands {
 
-    HOME, GETHOME, HEALTH, HUNGER, DEV, PING, TODO, HEARTS;
+    HOME, GETHOME, HEALTH, HUNGER, DEV, PING, TODO, HEARTS, GAMEMODE, GRAVITY, GLOWING;
 
     @Override
     public String toString() {
@@ -70,6 +75,33 @@ public class CommandRegistry {
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(1, 100))
                     .executes(x -> {
                       return CommandHealth.executeHearts(x, EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                    }))))
+        .then(Commands.literal(CyclicCommands.GAMEMODE.toString())
+            .requires((p) -> {
+              return p.hasPermissionLevel(3); // 3 for gamemode
+            })
+            .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 3))
+                    .executes(x -> {
+                      return CommandRegistry.executeGamemode(x, EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                    }))))
+        .then(Commands.literal(CyclicCommands.GRAVITY.toString())
+            .requires((p) -> {
+              return p.hasPermissionLevel(3); // 3 for  
+            })
+            .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                .then(Commands.argument(ARG_VALUE, BoolArgumentType.bool())
+                    .executes(x -> {
+                      return CommandRegistry.executeGravity(x, EntityArgument.getPlayers(x, ARG_PLAYER), BoolArgumentType.getBool(x, ARG_VALUE));
+                    }))))
+        .then(Commands.literal(CyclicCommands.GLOWING.toString())
+            .requires((p) -> {
+              return p.hasPermissionLevel(3); // 3 for  
+            })
+            .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                .then(Commands.argument(ARG_VALUE, BoolArgumentType.bool())
+                    .executes(x -> {
+                      return CommandRegistry.executeGlowing(x, EntityArgument.getPlayers(x, ARG_PLAYER), BoolArgumentType.getBool(x, ARG_VALUE));
                     }))))
         .then(Commands.literal(CyclicCommands.HUNGER.toString())
             .requires((p) -> {
@@ -115,15 +147,45 @@ public class CommandRegistry {
                     .executes(x -> {
                       return CommandTask.remove(x, IntegerArgumentType.getInteger(x, "index"));
                     })))
-            //            .then(Commands.literal("toggle")
-            //                .executes(x -> {
-            //                  return CommandTask.toggle(x);
-            //                }))
             .then(Commands.literal("list")
                 .executes(x -> {
                   return CommandTask.list(x);
                 })))
     //
     );
+  }
+
+  private static int executeGlowing(CommandContext<CommandSource> x, Collection<ServerPlayerEntity> players, boolean bool) {
+    for (ServerPlayerEntity p : players) {
+      p.setGlowing(bool);
+    }
+    return 0;
+  }
+
+  private static int executeGravity(CommandContext<CommandSource> x, Collection<ServerPlayerEntity> players, boolean bool) {
+    for (ServerPlayerEntity p : players) {
+      p.setNoGravity(bool);
+    }
+    return 0;
+  }
+
+  private static int executeGamemode(CommandContext<CommandSource> x, Collection<ServerPlayerEntity> players, int integer) {
+    for (ServerPlayerEntity p : players) {
+      switch (integer) {
+        case 0:
+          p.setGameType(GameType.SURVIVAL);
+        break;
+        case 1:
+          p.setGameType(GameType.CREATIVE);
+        break;
+        case 2:
+          p.setGameType(GameType.ADVENTURE);
+        break;
+        case 3:
+          p.setGameType(GameType.SPECTATOR);
+        break;
+      }
+    }
+    return 0;
   }
 }

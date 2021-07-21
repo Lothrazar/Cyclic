@@ -109,7 +109,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       player.swingArm(context.getHand());
       UtilItemStack.damageItem(player, itemstack);
       if (world.isRemote) {
-        UtilSound.playSound(pos, SoundRegistry.PSCHEW_FIRE);
+        UtilSound.playSound(world, pos, SoundRegistry.PSCHEW_FIRE);
       }
     }
     return ActionResultType.SUCCESS;

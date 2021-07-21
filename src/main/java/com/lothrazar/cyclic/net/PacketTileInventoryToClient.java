@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
@@ -41,10 +42,18 @@ public class PacketTileInventoryToClient extends PacketBase {
       TileEntity tile = Minecraft.getInstance().world.getTileEntity(message.blockPos);
       if (tile != null) {
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-          if (message.type == SyncPacketType.SET && h instanceof EnderShelfItemHandler) {
-            //            ItemStack was = h.getStackInSlot(message.slot);
-            ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
+          if (message.type == SyncPacketType.SET) {
+            if (h instanceof EnderShelfItemHandler) {
+              ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
+            } // TODO better fix lol
+            else if (h instanceof ClientAutoSyncItemHandler) {
+              ItemStack extracted = ((ClientAutoSyncItemHandler) h).emptySlot(message.slot);
+            }
+            else {
+              h.extractItem(message.slot, 64, false);
+            }
           }
+          //not set, just insert
           h.insertItem(message.slot, message.itemStack, false);
         });
       }

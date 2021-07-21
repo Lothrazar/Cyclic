@@ -14,7 +14,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileItemShelf extends TileEntityBase {
 
-  public final ItemStackHandler inventory = new ItemStackHandler(EnderShelfItemHandler.ROWS);
+  public final ItemStackHandler inventory = new ClientAutoSyncItemHandler(this, EnderShelfItemHandler.ROWS);
   private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public RenderTextType renderStyle = RenderTextType.STACK;
 

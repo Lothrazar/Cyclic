@@ -1,11 +1,14 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEnchant;
+import java.util.Map;
+import java.util.Map.Entry;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -20,6 +23,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   public static final int ROWS = 5;
   public TileEnderShelf shelf;
   String[] nameCache = new String[ROWS];
+  String[] enchantmentIdCache = new String[ROWS];
   int[] extraBooks = new int[ROWS];
 
   public void resetNameCache() {
@@ -36,6 +40,10 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     CompoundNBT tag = super.serializeNBT();
     for (int i = 0; i < ROWS; i++) {
       tag.putInt(Const.MODID + ":idc" + i, extraBooks[i]);
+      if (enchantmentIdCache[i] == null) {
+        enchantmentIdCache[i] = "";
+      }
+      tag.putString(Const.MODID + ":oh yeah the enchantmentIdCacheench", enchantmentIdCache[i]);
     }
     return tag;
   }
@@ -45,6 +53,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     super.deserializeNBT(nbt);
     for (int i = 0; i < ROWS; i++) {
       extraBooks[i] = nbt.getInt(Const.MODID + ":idc" + i);
+      enchantmentIdCache[i] = nbt.getString(Const.MODID + ":ench");
     }
   }
 
@@ -66,10 +75,13 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     }
     boolean oldEmpty = stacks.get(slot).isEmpty();
     ItemStack extracted = super.extractItem(slot, amount, simulate);
-    if (extracted.getCount() < amount) {
-      //
-      int rem = amount - extracted.getCount();
-      ModCyclic.LOGGER.info("EXTRACT: still some rem" + rem);
+    boolean newEmpty = stacks.get(slot).isEmpty();
+    //    if (extracted.getCount() < amount) {
+    //      int rem = amount - extracted.getCount();
+    //      ModCyclic.LOGGER.info("EXTRACT: still some rem" + rem);
+    //    }
+    if (oldEmpty != newEmpty) {
+      this.refreshId(slot);
     }
     if (!simulate) {
       PacketRegistry.sendToAllClients(shelf.getWorld(), new PacketTileInventoryToClient(shelf.getPos(), slot, getStackInSlot(slot), SyncPacketType.SET));
@@ -85,14 +97,35 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     if (!this.isItemValid(slot, stack)) {
       return stack; // not valid
     }
+    boolean oldEmpty = stacks.get(slot).isEmpty();
     ItemStack remaining = super.insertItem(slot, stack, simulate);
-    if (!remaining.isEmpty()) {
-      ModCyclic.LOGGER.info("still some left on insert" + remaining);
+    boolean newEmpty = stacks.get(slot).isEmpty();
+    //    if (!remaining.isEmpty()) {
+    //      ModCyclic.LOGGER.info("still some left on insert" + remaining);
+    //    }
+    if (oldEmpty != newEmpty) {
+      this.refreshId(slot);
     }
     if (!simulate) {
       PacketRegistry.sendToAllClients(shelf.getWorld(), new PacketTileInventoryToClient(shelf.getPos(), slot, getStackInSlot(slot), SyncPacketType.SET));
     }
     return remaining;
+  }
+
+  private void refreshId(int slot) {
+    ItemStack stackIn = this.getStackInSlot(slot);
+    if (stackIn.isEmpty()) {
+      this.enchantmentIdCache[slot] = "";
+    }
+    else {
+      ListNBT chantsIn = EnchantedBookItem.getEnchantments(stackIn);
+      this.enchantmentIdCache[slot] = ((CompoundNBT) chantsIn.get(0)).getString("id");
+      Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(chantsIn);
+      for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+        nameCache[slot] = entry.getKey().getDisplayName(entry.getValue()).getString();
+        break;
+      }
+    }
   }
 
   @Override
@@ -112,18 +145,11 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     //target slot is also not empty, enchants must match
     ItemStack stackHere = this.getStackInSlot(slot);
     //
-    //we have exactly one enchantment on incoming stack
-    //    if (idCache[slot] > 0) {
-    //      //try to match on cache 
-    //      //      int hashStackIn = getHashForStack(stackIn);
-    //      //      String id = chantsHere.getCompound(0).getString("id");
-    //      if (getHashForStack(stackIn) != idCache[slot]) {
-    //        //
-    //        ModCyclic.LOGGER.error("mismatch cache, block by incoming idc " + EnchantedBookItem.getEnchantments(stackIn).getCompound(0).getString("id") + "vs " + idCache[slot]);
-    //        return false;
-    //      }
-    //    }
-    //    ModCyclic.LOGGER.error(slot + " no cache, old way do match " + stackIn.getTag() + " vs " + getStackInSlot(slot).getTag());
+    if (this.enchantmentIdCache[slot] != null || !this.enchantmentIdCache[slot].isEmpty()) {
+      //      ModCyclic.LOGGER.info("match on id cache");
+      boolean match = this.enchantmentIdCache[slot].equals(((CompoundNBT) chantsIn.get(0)).getString("id"));
+      return match;
+    }
     //else no cache, old way
     return UtilEnchant.doBookEnchantmentsMatch(stackIn, stackHere);
   }

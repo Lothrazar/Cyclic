@@ -87,7 +87,7 @@ public class TeleporterWandItem extends ItemBase {
           UtilItemStack.damageItem(player, stack);
           if (world.isRemote) {
             UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
-            UtilSound.playSound(player, newPos, SoundRegistry.WARP_ECHO);
+            UtilSound.playSound(player, SoundRegistry.WARP_ECHO);
           }
         }
       }

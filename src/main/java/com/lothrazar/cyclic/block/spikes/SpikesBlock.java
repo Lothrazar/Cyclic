@@ -1,9 +1,8 @@
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.spikes;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.Locale;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
@@ -18,7 +17,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -31,36 +29,22 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SpikesBlock extends BlockBase {
 
-  private static final double CURSE_CHANCE = 0.2;
-  private static final int CURSE_TIME = 8 * 20;
-  private static final int FIRE_TIME = 20;
-
-  public static enum EnumSpikeType implements IStringSerializable {
-
-    PLAIN, FIRE, CURSE;
-
-    @Override
-    public String getString() {
-      return this.name().toLowerCase(Locale.ENGLISH);
-    }
-  }
-
+  public static final double CURSE_CHANCE = 0.2;
+  public static final int CURSE_TIME = 8 * 20;
+  public static final int FIRE_TIME = 20;
   public static final BooleanProperty ACTIVATED = BooleanProperty.create("lit");
   private static final float LARGE = 0.9375F;
   private static final float SMALL = 0.0625F;
-  private static final VoxelShape NORTH_BOX = Block.makeCuboidShape(0.0F, 0.0F, LARGE, 15.0F, 15.0F, 1.0F);
-  private static final VoxelShape EAST_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, SMALL * 15, 15.0F, 15.0F);
+  private static final VoxelShape NORTH_BOX = Block.makeCuboidShape(0.0F, 0.0F, 15, 15.0F, 15.0F, 16);
   private static final VoxelShape SOUTH_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, 15.0F, 15.0F, SMALL * 15);
+  private static final VoxelShape EAST_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, SMALL * 15, 15.0F, 15.0F);
   private static final VoxelShape WEST_BOX = Block.makeCuboidShape(LARGE, 0.0F, 0.0F, 15.0F, 15.0F, 15.0F);
   private static final VoxelShape UP_BOX = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, 15.0F, SMALL * 15, 15.0F);
   private static final VoxelShape DOWN_BOX = Block.makeCuboidShape(0.0F, LARGE, 0.0F, 15.0F, 15.0F, 15.0F);
-  protected static final VoxelShape UNPRESSED_AABB = Block.makeCuboidShape(
-      1.0D, 0.0D, 1.0D,
-      15.0D, 1.0D, 15.0D);
   private EnumSpikeType type;
 
   public SpikesBlock(Properties properties, EnumSpikeType type) {
-    super(properties.hardnessAndResistance(1.1F).notSolid());
+    super(properties.hardnessAndResistance(1.1F).notSolid().doesNotBlockMovement());
     this.type = type;
   }
 
@@ -106,6 +90,7 @@ public class SpikesBlock extends BlockBase {
           entity.attackEntityFrom(DamageSource.CACTUS, 1);
         break;
         default:
+        case NONE:
         break;
       }
     }
