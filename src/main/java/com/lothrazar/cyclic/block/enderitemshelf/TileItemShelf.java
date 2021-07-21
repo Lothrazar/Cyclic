@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -13,12 +14,12 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileItemShelf extends TileEntityBase {
 
-  public final ItemStackHandler inventory = new ItemStackHandler(5);
+  public final ItemStackHandler inventory = new ItemStackHandler(EnderShelfItemHandler.ROWS);
   private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  public RenderTextType renderStyle = RenderTextType.TEXT;
+  public RenderTextType renderStyle = RenderTextType.STACK;
 
   public TileItemShelf() {
-    super(TileRegistry.ender_shelf);
+    super(TileRegistry.ENDER_ITEM_SHELF.get());
   }
 
   @Override

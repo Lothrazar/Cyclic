@@ -1,10 +1,11 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.cable.CableWrench;
+import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
-import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -29,7 +29,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class BlockItemShelf extends BlockBase {
 
@@ -40,7 +39,7 @@ public class BlockItemShelf extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.ENDER_ITEM_SHELF, ItemShelfRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.ENDER_ITEM_SHELF.get(), ItemShelfRenderer::new);
   }
 
   @Override
@@ -63,22 +62,6 @@ public class BlockItemShelf extends BlockBase {
     if (state.hasTileEntity() && (!state.isIn(newState.getBlock()) || !newState.hasTileEntity())) {
       worldIn.removeTileEntity(pos);
     }
-    //    if (state.getBlock() != newState.getBlock()) {
-    //      TileEntity tileentity = worldIn.getTileEntity(pos);
-    //      if (tileentity != null) {
-    //        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-    //        if (items != null) {
-    //          for (int i = 0; i < items.getSlots(); ++i) {
-    //            ItemStack is = items.getStackInSlot(i);
-    //            while (!is.isEmpty()) {
-    //              InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), is.split(1));
-    //            }
-    //          }
-    //          worldIn.updateComparatorOutputLevel(pos, this);
-    //          worldIn.removeTileEntity(pos);
-    //        }
-    //      }
-    //    }
   }
 
   @Override
@@ -93,39 +76,40 @@ public class BlockItemShelf extends BlockBase {
     if (heldItem.getItem().isIn(CableWrench.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
-      player.swingArm(Hand.MAIN_HAND);
+      player.swingArm(hand);
       return ActionResultType.PASS;
     }
     Direction face = hit.getFace();
     Vector3d hitVec = hit.getHitVec();
-    int slot = getSlotFromHitVec(pos, face, hitVec);
+    int slot = BlockEnderShelf.getSlotFromHitVec(pos, face, hitVec);
     if (hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
       //
       // single shelf
       //
-      if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-        shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-          if (h.getStackInSlot(slot) == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(h.getStackInSlot(slot), heldItem)) {
-            if (!world.isRemote) {
-              ItemStack remaining = h.insertItem(slot, heldItem, false);
-              player.setHeldItem(hand, remaining);
-            }
-          }
-        });
+      if (!heldItem.isEmpty()) {
+        //try to insert 
+        //        if (!world.isRemote) {
+        ModCyclic.LOGGER.info("insert " + slot);
+        ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
+        ModCyclic.LOGGER.info("remain " + remaining);
+        if (remaining.getCount() != shelf.inventory.getStackInSlot(slot).getCount()) {
+          player.setHeldItem(hand, remaining);
+          player.swingArm(hand);
+          return ActionResultType.CONSUME;
+        }
+        //        }
       }
-      else if (heldItem.isEmpty()) {
-        shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-          ItemStack retrievedBook = h.extractItem(slot, 1, false);
-          player.setHeldItem(hand, retrievedBook);
-        });
+      else { // if (heldItem.isEmpty()) {
+        //try to withdraw 
+        ModCyclic.LOGGER.info("withdraw  " + slot);
+        int q = player.isCrouching() ? 1 : 64;
+        ItemStack retrieved = shelf.inventory.extractItem(slot, q, false);
+        player.setHeldItem(hand, retrieved);
+        player.swingArm(hand);
+        return ActionResultType.PASS;
       }
     }
     return ActionResultType.PASS;
-  }
-
-  private int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {
-    double normalizedY = hitVec.getY() - pos.getY();
-    return (int) Math.floor(normalizedY / 0.20);
   }
 
   public TileItemShelf getTileEntity(World world, BlockPos pos) {

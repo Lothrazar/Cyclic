@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.block.dice.TileDice;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
+import com.lothrazar.cyclic.block.enderitemshelf.TileItemShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.eye.TileEye;
@@ -88,7 +89,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileWeather>> DETECTORWEATHER = TILES.register("detector_weather", () -> TileEntityType.Builder.create(() -> new TileWeather(), BlockRegistry.DETECTORWEATHER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileTerraGlass>> TERRAGLASS = TILES.register("terra_glass", () -> TileEntityType.Builder.create(() -> new TileTerraGlass(), BlockRegistry.TERRAGLASS.get()).build(null));
   public static final RegistryObject<TileEntityType<TileSprinkler>> SPRINKLER = TILES.register("sprinkler", () -> TileEntityType.Builder.create(() -> new TileSprinkler(), BlockRegistry.SPRINKLER.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileSprinkler>> ENDER_ITEM_SHELF = TILES.register("ender_item_shelf", () -> TileEntityType.Builder.create(() -> new TileSprinkler(), BlockRegistry.ENDER_ITEM_SHELF.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileItemShelf>> ENDER_ITEM_SHELF = TILES.register("ender_item_shelf", () -> TileEntityType.Builder.create(() -> new TileItemShelf(), BlockRegistry.ENDER_ITEM_SHELF.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

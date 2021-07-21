@@ -25,12 +25,12 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
   }
 
   @Override
-  public void render(TileEnderShelf tile, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlayLight) {
+  public void render(TileEnderShelf tile, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
     Direction side = tile.getCurrentFacing();
     UtilRenderText.alignRendering(ms, side);
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
-        renderSlot(tile, i, h.getStackInSlot(i), ms, buffer, light);
+        renderSlot(tile, i, h.getStackInSlot(i), ms, buffer, combinedLightIn, combinedOverlayIn);
       }
     });
     //    if (EnderShelfHelper.isController(tile.getBlockState())) { 
@@ -51,7 +51,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
     //    }
   }
 
-  private void renderSlot(TileEnderShelf tile, int slot, ItemStack stack, MatrixStack ms, IRenderTypeBuffer buffer, int light) {
+  private void renderSlot(TileEnderShelf tile, int slot, ItemStack stack, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
     if (stack.isEmpty()) {
       return;
     }
@@ -74,7 +74,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
       // 0xF000F0
-      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, 0x500050, light, ms, buffer);
+      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer);
       ms.pop();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
@@ -93,7 +93,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
       ms.push();
       ms.translate(x - 0.02, y + 0.06, z);
       ms.scale(1 / sh * scaleName, -1 / sh * scaleName, 0.00005F);
-      fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+      fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, combinedLightIn);
       ms.pop();
     }
     if (tile.renderStyle != RenderTextType.NONE) {
@@ -102,7 +102,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
       ms.translate(x + 0.081F, y, z);
       ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
       String displayCount = "x" + stack.getCount();
-      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, combinedLightIn);
       ms.pop();
     }
   }

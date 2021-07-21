@@ -31,7 +31,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class BlockEnderShelf extends BlockBase {
 
@@ -95,7 +94,7 @@ public class BlockEnderShelf extends BlockBase {
     if (heldItem.getItem().isIn(CableWrench.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
-      player.swingArm(Hand.MAIN_HAND);
+      player.swingArm(hand);
       return ActionResultType.PASS;
     }
     Direction face = hit.getFace();
@@ -106,26 +105,25 @@ public class BlockEnderShelf extends BlockBase {
       // single shelf
       //
       if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-        shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-          if (h.getStackInSlot(slot) == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(h.getStackInSlot(slot), heldItem)) {
-            if (!world.isRemote) {
-              ItemStack remaining = h.insertItem(slot, heldItem, false);
-              player.setHeldItem(hand, remaining);
-            }
+        ItemStack stackInSlot = shelf.inventory.getStackInSlot(slot);
+        if (stackInSlot == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(stackInSlot, heldItem)) {
+          if (!world.isRemote) {
+            ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
+            player.setHeldItem(hand, remaining);
+            player.swingArm(hand);
           }
-        });
+        }
       }
       else if (heldItem.isEmpty()) {
-        shelf.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-          ItemStack retrievedBook = h.extractItem(slot, 1, false);
-          player.setHeldItem(hand, retrievedBook);
-        });
+        ItemStack retrievedBook = shelf.inventory.extractItem(slot, 1, false);
+        player.setHeldItem(hand, retrievedBook);
+        player.swingArm(hand);
       }
     }
     return ActionResultType.PASS;
   }
 
-  private int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {
+  public static int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {
     double normalizedY = hitVec.getY() - pos.getY();
     return (int) Math.floor(normalizedY / 0.20);
   }

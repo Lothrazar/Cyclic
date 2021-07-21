@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
 
@@ -20,14 +19,12 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
   }
 
   @Override
-  public void render(TileItemShelf tile, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlayLight) {
+  public void render(TileItemShelf tile, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
     Direction side = tile.getCurrentFacing();
     UtilRenderText.alignRendering(ms, side);
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      for (int i = 0; i < h.getSlots(); i++) {
-        renderSlot(tile, i, h.getStackInSlot(i), ms, buffer, light);
-      }
-    });
+    for (int i = 0; i < tile.inventory.getSlots(); i++) {
+      renderSlot(tile, i, tile.inventory.getStackInSlot(i), ms, buffer, combinedLightIn, combinedOverlayIn);
+    }
     //    if (EnderShelfHelper.isController(tile.getBlockState())) { 
     //      EnderControllerItemHandler h = EnderShelfHelper.getControllerHandler(tile);
     //      if (h != null) {
@@ -46,7 +43,7 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
     //    }
   }
 
-  private void renderSlot(TileItemShelf tile, int slot, ItemStack stack, MatrixStack ms, IRenderTypeBuffer buffer, int light) {
+  private void renderSlot(TileItemShelf tile, int slot, ItemStack stack, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
     if (stack.isEmpty()) {
       return;
     }
@@ -69,7 +66,9 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
       // 0xF000F0
-      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, 0x500050, light, ms, buffer);
+      // FIXED
+      //      int itemColour = 15728880;
+      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, combinedLightIn + 5005000, combinedOverlayIn, ms, buffer);
       ms.pop();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
@@ -88,7 +87,7 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
       ms.push();
       ms.translate(x - 0.02, y + 0.06, z);
       ms.scale(1 / sh * scaleName, -1 / sh * scaleName, 0.00005F);
-      fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+      fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, combinedLightIn);
       ms.pop();
     }
     if (tile.renderStyle != RenderTextType.NONE) {
@@ -97,7 +96,7 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
       ms.translate(x + 0.081F, y, z);
       ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
       String displayCount = "x" + stack.getCount();
-      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, light);
+      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, combinedLightIn);
       ms.pop();
     }
   }
