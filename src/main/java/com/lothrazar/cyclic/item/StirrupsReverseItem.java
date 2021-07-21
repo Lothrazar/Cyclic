@@ -30,20 +30,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 
-public class StirrupsItem extends ItemBase {
+public class StirrupsReverseItem extends ItemBase {
 
-  public StirrupsItem(Properties properties) {
+  public StirrupsReverseItem(Properties properties) {
     super(properties);
   }
 
   @Override
   public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
     playerIn.swingArm(hand);
-    //    if (target.isPassenger(playerIn)) {
-    //      target.dismount();
-    //      playerIn.dismount();
-    //      return ActionResultType.SUCCESS;
-    //    }
-    return playerIn.startRiding(target, true) ? ActionResultType.SUCCESS : super.itemInteractionForEntity(stack, playerIn, target, hand);
+    if (playerIn.isPassenger(target)) {
+      target.dismount();
+      playerIn.dismount();
+      return ActionResultType.SUCCESS;
+    }
+    return target.startRiding(playerIn, true) ? ActionResultType.SUCCESS : super.itemInteractionForEntity(stack, playerIn, target, hand);
   }
 }

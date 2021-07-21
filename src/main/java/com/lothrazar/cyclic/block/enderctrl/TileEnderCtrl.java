@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -42,10 +43,11 @@ public class TileEnderCtrl extends TileEntityBase {
   /**
    * Converts to sorted list
    * 
-   * @param shelves
+   * @param shelvesIn
    */
-  public void setShelves(Set<BlockPos> shelves) {
-    this.connectedShelves = shelves.stream().sorted(Comparator.comparing(o -> o.distanceSq(this.pos))).collect(Collectors.toList());
+  public void setShelves(Set<BlockPos> shelvesIn) {
+    ModCyclic.LOGGER.info("resetting and sorting the shelves " + shelvesIn.size());
+    this.connectedShelves = shelvesIn.stream().sorted(Comparator.comparing(o -> o.distanceSq(this.pos))).collect(Collectors.toList());
   }
 
   public List<BlockPos> getShelves() {

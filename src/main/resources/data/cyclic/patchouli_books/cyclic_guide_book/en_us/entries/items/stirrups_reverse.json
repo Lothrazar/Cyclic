@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.stirrups_reverse",
+  "icon": "cyclic:stirrups_reverse",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.stirrups_reverse.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:stirrups_reverse"
+    }
+  ]
+}

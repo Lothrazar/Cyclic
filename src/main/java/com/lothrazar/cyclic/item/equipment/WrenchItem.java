@@ -16,6 +16,7 @@ public class WrenchItem extends ItemBase {
   public ActionResultType onItemUse(ItemUseContext context) {
     if (context.getWorld().isRemote) {
       PacketRegistry.INSTANCE.sendToServer(new PacketRotateBlock(context.getPos(), context.getFace(), context.getHand()));
+      context.getPlayer().swingArm(context.getHand());
     }
     return super.onItemUse(context);
   }

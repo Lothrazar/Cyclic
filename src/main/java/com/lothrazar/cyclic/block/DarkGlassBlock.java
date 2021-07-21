@@ -22,7 +22,7 @@ public class DarkGlassBlock extends BlockBase {
   @Override
   @Deprecated
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return 255; //zero is transparent fully
+    return 255; //zero is transparent fullyworld.getMaxLightLevel();
   }
 
   @Override

@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"particle": "cyclic:blocks/glass/dark_island",
+		"down": "cyclic:blocks/glass/dark_ew",
+		"up": "cyclic:blocks/glass/dark_news",
+		"north": "cyclic:blocks/glass/dark_new",
+		"south": "cyclic:blocks/glass/dark_new",
+		"west": "cyclic:blocks/glass/dark_news",
+		"east": "cyclic:blocks/glass/dark_news"
+	}
+}

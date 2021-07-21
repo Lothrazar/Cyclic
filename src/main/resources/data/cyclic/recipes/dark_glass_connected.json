@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gg",
+    "gg"
+  ],
+  "key": {
+    "g": {
+      "item": "cyclic:dark_glass"
+    }
+  },
+  "result": {
+    "item": "cyclic:dark_glass_connected",
+    "count": 4
+  }
+}

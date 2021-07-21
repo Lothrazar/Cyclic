@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " dl",
+    "ild",
+    "ii "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "d": {
+      "item": "minecraft:lead"
+    },
+    "l": {
+      "tag": "forge:leather"
+    }
+  },
+  "result": {
+    "item": "cyclic:stirrups_reverse"
+  }
+}

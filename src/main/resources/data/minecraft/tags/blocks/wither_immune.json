@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "cyclic:dark_glass",
+    "cyclic:dark_glass_connected",
     "cyclic:crate",
     "cyclic:unbreakable_block",
     "cyclic:unbreakable_reactive"

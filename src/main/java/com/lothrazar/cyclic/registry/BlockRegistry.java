@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.DarkGlassBlock;
+import com.lothrazar.cyclic.block.DarkGlassConnectedBlock;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.GhostBlock;
@@ -41,6 +42,7 @@ import com.lothrazar.cyclic.block.dice.BlockDice;
 import com.lothrazar.cyclic.block.disenchant.BlockDisenchant;
 import com.lothrazar.cyclic.block.dropper.BlockDropper;
 import com.lothrazar.cyclic.block.enderctrl.BlockEnderCtrl;
+import com.lothrazar.cyclic.block.enderitemshelf.BlockItemShelf;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
 import com.lothrazar.cyclic.block.eye.BlockEye;
@@ -113,6 +115,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> TERRAGLASS = BLOCKS.register("terra_glass", () -> new BlockTerraGlass(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new BlockSprinkler(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> SHEARING = BLOCKS.register("shearing", () -> new BlockShearing(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> DARK_GLASS_CONNECTED = BLOCKS.register("dark_glass_connected", () -> new DarkGlassConnectedBlock(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> ENDER_ITEM_SHELF = BLOCKS.register("ender_item_shelf", () -> new BlockItemShelf(Block.Properties.create(Material.EARTH)));
   //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;

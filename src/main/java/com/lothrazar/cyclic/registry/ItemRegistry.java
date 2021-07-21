@@ -24,6 +24,7 @@ import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
+import com.lothrazar.cyclic.item.StirrupsReverseItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
@@ -145,6 +146,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CHARM_ATTACKSPEED = ITEMS.register("charm_attack_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_XPSPEED = ITEMS.register("charm_xp_speed", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_XPSTOPPER = ITEMS.register("charm_xp_blocker", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> DARK_GLASS_CONNECTED = ITEMS.register("dark_glass_connected", () -> new BlockItem(BlockRegistry.DARK_GLASS_CONNECTED.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   // charm_strength - a glove with a name 
   // charm_speed - attribute . and/or enchantment? 
   // charm_walkingwater - shaman
@@ -299,6 +301,7 @@ public class ItemRegistry {
     r.register(new ScytheForage(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_forage"));
     r.register(new ScytheLeaves(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_leaves"));
     r.register(new StirrupsItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("stirrups"));
+    r.register(new StirrupsReverseItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("stirrups_reverse"));
     r.register(new LeverRemote(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1)).setRegistryName("lever_remote"));
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.NORMAL).setRegistryName("build_scepter"));
     r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE).setRegistryName("replace_scepter"));
