@@ -34,6 +34,7 @@ public class DarkGlassConnectedBlock extends DarkGlassBlock {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   @OnlyIn(Dist.CLIENT)
   public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
