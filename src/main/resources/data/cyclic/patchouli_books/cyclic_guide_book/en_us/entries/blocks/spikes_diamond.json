@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.spikes_diamond",
+  "icon": "cyclic:spikes_diamond",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.spikes.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:spikes_diamond",
+      "text": "block.cyclic.spikes_diamond.guide"
+    }
+  ]
+}

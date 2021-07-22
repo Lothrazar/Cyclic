@@ -895,7 +895,7 @@
     "item.cyclic.stirrups.guide": "Mount any entity (without the control of the saddle)",
     "item.cyclic.stirrups_reverse": "Inverted Stirrups",
     "item.cyclic.stirrups_reverse.tooltip": "Pickup mobs and entities",
-    "item.cyclic.stirrups_reverse.guide": "Mount target entity on top of you (without the control of the saddle)",
+    "item.cyclic.stirrups_reverse.guide": "Pickup target entity on top of you.  Use it on the mob again to put down",
     "item.cyclic.mount_inverse": "Inverted Stirrups",
     "item.cyclic.mount_inverse.tooltip": "Pickup a living entity and mount it on your head.",
     "item.cyclic.mount_inverse.guide": "Pickup a living entity and mount it on your head.",
@@ -1232,7 +1232,10 @@
     "block.cyclic.spikes_curse": "Cursed Spikes",
     "block.cyclic.spikes_curse.tooltip": "Powered by redstone; curses on contact",
     "block.cyclic.spikes_curse.guide": "Curses enemies with various negative effects on contact.",
-
+    "block.cyclic.spikes_diamond": "Diamond Spikes",
+    "block.cyclic.spikes_diamond.tooltip": "Powered by redstone; damage on contact",
+    "block.cyclic.spikes_diamond.guide": "Damage entities on contact.  Attacks using a fake player to trigger loot tables",
+    
     "block.cyclic.sprinkler.guide": "This only runs while water is inside the internal tank (fill with a bucket or pipes).  It will water nearby crops, increasing their growing speed.  Consumes water source blocks from below.  Multiple sprinklers in the same area do stack. ",
     "block.cyclic.sprinkler": "Sprinkler",
     "block.cyclic.sprinkler.tooltip": "Consumes water and grows nearby crops",

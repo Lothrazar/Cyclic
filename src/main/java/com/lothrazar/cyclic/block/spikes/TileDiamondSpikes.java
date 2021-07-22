@@ -1,10 +1,15 @@
 package com.lothrazar.cyclic.block.spikes;
 
+import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.lang.ref.WeakReference;
+import java.util.Map;
 import java.util.UUID;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -45,7 +50,7 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
       timer--;
       return;
     }
-    timer = MathHelper.nextInt(world.rand, 5, 15);
+    timer = MathHelper.nextInt(world.rand, 1, 5);
     if (fakePlayer == null && world instanceof ServerWorld) {
       if (uuid == null) {
         uuid = UUID.randomUUID();
@@ -53,7 +58,11 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "spikes_diamond", uuid);
       if (fakePlayer.get().getHeldItem(Hand.MAIN_HAND).isEmpty()) {
         //        ModCyclic.LOGGER.
-        fakePlayer.get().setHeldItem(Hand.MAIN_HAND, new ItemStack(Items.DIAMOND_SWORD));
+        Map<Enchantment, Integer> map = Maps.newHashMap();
+        map.put(Enchantments.SHARPNESS, 5);
+        ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+        EnchantmentHelper.setEnchantments(map, sword);
+        fakePlayer.get().setHeldItem(Hand.MAIN_HAND, sword);
         //        ModifiableAttributeInstance attrPlayer = fakePlayer.get().getAttribute(Attributes.ATTACK_KNOCKBACK);
         //        AttributeModifier newValue = new AttributeModifier(uuid, "Bonus from " + ModCyclic.MODID, -10, AttributeModifier.Operation.ADDITION);
         //        attrPlayer.applyPersistentModifier(newValue);

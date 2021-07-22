@@ -37,8 +37,8 @@ public class SpikesDiamond extends SpikesBlock {
         return;
       }
       if (tile.getTimer() == 1) {
-        ModCyclic.LOGGER.error(tile.fakePlayer.get().getHeldItemMainhand() + "spikes attack" + entity);
         tile.fakePlayer.get().attackTargetEntityWithCurrentItem(entity);
+        tile.fakePlayer.get().resetCooldown();
       }
     }
   }
