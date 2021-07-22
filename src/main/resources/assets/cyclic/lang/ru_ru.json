@@ -1,7 +1,7 @@
 {
 	"_comments": "Transtated by Bytegm",
 
-	"curios.identifier.feet":"Feet",
+	"curios.identifier.feet":"Ноги",
 
     "itemGroup.cyclic": "Cyclic: Блоки",
     "itemGroup.cyclicitems": "Cyclic: Предметы",
@@ -17,7 +17,83 @@
     "item.cyclic.experience_food.guide": "Создается с помощью кусочка сахара на заполненном пилоне опыта. Съешьте его, чтобы получить опыт, хранящийся в нем, или используйте его на пилоне опыта, чтобы вернуть опыт обратно в пилон.",
     "item.cyclic.experience_food.guide0": "Его также можно создать, смешав жидкий опыт и сахар в $(l:machines/solidifier)камере затвердевания$(/l), а снова превратить в жидкий опыт в $(l:machines/melter)плавильной камере$(/l).",
 
+        "item.cyclic.charm_stone": "Эфирное кольцо",
+		"item.cyclic.charm_stone.tooltip": "Иммунитет к удушью и урону при столкновениях в Элитрах",
+		"item.cyclic.charm_stone.guide": "Предотвращает урон при столкновении со стенами в элитрах.  А также удушье под действием неосязаемости или телепортировались в стену из твёрдых блоков.",
 
+		"item.cyclic.charm_attack_speed": "Перчатки силы ветра",
+		"item.cyclic.charm_attack_speed.tooltip": "Увеличивает скорость атаки",
+		"item.cyclic.charm_attack_speed.guide": "Увеличивает скорость атаки.  Это приводит к тому, что шкала индикатора атаки восстанавливается быстрее, что увеличит общий урон.  По умолчанию значение увеличивается на 50%, зависит от файла конфигурации.",
+		
+		"item.cyclic.charm_luck": "Кольцо удачи Арлекина",
+		"item.cyclic.charm_luck.tooltip": "Увеличивает удачу игрока",
+		"item.cyclic.charm_luck.guide": "Увеличьте атрибут пассивной удачи игроков, который влияет на некоторые таблицы добычи, такие как мобы, рыбалка, сундуки с сокровищами.  По умолчанию - 10 очков, зависит от файла конфигурации.",
+		
+		"item.cyclic.charm_xp_blocker": "Проклятое кольцо опыта",
+		"item.cyclic.charm_xp_blocker.tooltip": "Блокирует сбор сфер опыта",
+		"item.cyclic.charm_xp_blocker.guide": "Блокирует сбор сфер опыта.  Они всё ещё притягиваются к игроку и парят вокруг него",
+		
+		"item.cyclic.charm_xp_speed": "Кольцо опыта",
+		"item.cyclic.charm_xp_speed.tooltip": "Собирайте сферы опыта ещё быстрее",
+		"item.cyclic.charm_xp_speed.guide": "Собирайте сферы опыта ещё быстрее, убрав внутреннее время восстановления при сборе.",
+		
+		"item.cyclic.charm_creeper": "Спора спящего крипера",
+		"item.cyclic.charm_creeper.tooltip": "Иммунитет к урону от взрывов",
+		"item.cyclic.charm_creeper.guide": "Иммунитет к урону от взрывов",
+		
+		"item.cyclic.charm_knockback_resistance": "Стальной браслет сопротивления",
+		"item.cyclic.charm_knockback_resistance.tooltip": "Иммунитет к отбрасыванию",
+		"item.cyclic.charm_knockback_resistance.guide": "Иммунитет к отбрасыванию; когда вы получаете урон, игрок не перемещается",
+		
+		"item.cyclic.charm_crit": "Наручи титанов",
+		"item.cyclic.charm_crit.tooltip": "Урон от критического удара удваивается",
+		"item.cyclic.charm_crit.guide": "Урон от критического удара удваивается",
+		
+		"item.cyclic.quiver_lightning": "Колчан паладина",
+		"item.cyclic.quiver_lightning.tooltip": "Живые цели имеют 25% шанс на возмездие",
+		"item.cyclic.quiver_lightning.guide": "Когда стрела поражает живую цель, то случайным образом может вызвать молнию на цель",
+		
+		"item.cyclic.quiver_damage": "Колчан крестоносца",
+		"item.cyclic.quiver_damage.tooltip": "Урон от стрел увеличен на 50%",
+		"item.cyclic.quiver_damage.guide": "Урон от стрел увеличивается, когда он находятся в инвентаре или в слотах curios. Может быть отключен щелчком ПКМ, как и другие аксессуары",
+		
+		"item.cyclic.charm_venom": "Амулет с клыками паука",
+		"item.cyclic.charm_venom.tooltip": "Атаки имеют 25% шанс отравить цель",
+		"item.cyclic.charm_venom.guide": "Когда урон наносится игроком в качестве источника, он добавляет шанс наложить на цель эффект зелья отравления на несколько секунд.",
+		
+		"item.cyclic.charm_water": "Амулет водного дыхания",
+		"item.cyclic.charm_water.tooltip": "Иммунитет к урону от утопления",
+		"item.cyclic.charm_water.guide": "Поглощает урон от утопления, после того как кончится воздух",
+		
+		"item.cyclic.charm_starvation": "Вечный леденец",
+		"item.cyclic.charm_starvation.tooltip": "Иммунитет к урону и смерти от голода",
+		"item.cyclic.charm_starvation.guide": "Иммунитет к урону и смерти от голода",
+		
+		"item.cyclic.charm_invisible": "Плащ невидимости",
+		"item.cyclic.charm_invisible.tooltip": "Дарует постоянную невидимость",
+		"item.cyclic.charm_invisible.guide": "Применяет эффект зелья невидимости, как маяк",
+		
+		"item.cyclic.charm_boostpotion": "Незаполненная филактерия",
+		"item.cyclic.charm_boostpotion.tooltip": "Продолжительность зелий увеличена 50%",
+		"item.cyclic.charm_boostpotion.guide": "Продолжительность действия зелья увеличивается при употреблении, во время, когда она носится в инвентаре или в слотах curios. Может быть отключена щелчком ПКМ, как и другие аксессуары",
+		
+		"item.cyclic.charm_magicdefense": "Таинственная реликвия",
+		"item.cyclic.charm_magicdefense.tooltip": "Получаемый магический урон уменьшен на 50%",
+		"item.cyclic.charm_magicdefense.guide": "Вся магия, которую получает владелец уменьшается, пока реликвия находится в инвентаре или в слотах curios.  Может быть отключена щелчком ПКМ, как и другие аксессуары",
+		
+		"item.cyclic.charm_stealthpotion": "Руническая печать алхимии",
+		"item.cyclic.charm_stealthpotion.tooltip": "Отключает частицы зелий",
+		"item.cyclic.charm_stealthpotion.guide": "Отключает частицы зелья в момент получения эффекта или употребления зелья. Не работает с уже полученными эффектами, поэтому если вы выпьете зелье, а затем наденете печать, то ничего не выйдет",
+		
+		"item.cyclic.charm_antipotion": "Алхимическая маска",
+		"item.cyclic.charm_antipotion.tooltip": "Иммунитет к болезням и эффектам",
+		"item.cyclic.charm_antipotion.guide": "Продолжительность действия зелья аннулируется во время употребления. Лечит положительные и отрицательные эффекты одинаково. Игнорирует уже имеющиеся эффекты",
+		
+		"item.cyclic.charm_longfall": "Шёлковые тапочки",
+		"item.cyclic.charm_longfall.tooltip": "Иммунитет к урону от падения",
+		"item.cyclic.charm_longfall.guide": "Иммунитет к урону от падения, а также к урону от кактуса и сладких ягод",
+		
+		
 		"item.cyclic.crafting_stick": "Палка с верстаком",
 		"item.cyclic.crafting_stick.tooltip": "Ручной верстак",
 		"item.cyclic.crafting_stick.guide": "Ручной верстак.  Не сохраняет свой инвентарь",
@@ -25,6 +101,22 @@
 		"item.cyclic.crafting_bag": "Продвинутая палка с верстаком",
 		"item.cyclic.crafting_bag.tooltip": "Сохраняет инвентарь",
 		"item.cyclic.crafting_bag.guide": "Ручной верстак с инвентарём, что само по себе напоминает рюкзак",
+		
+		"block.cyclic.terra_glass":"Тепличное стекло",
+		"block.cyclic.terra_glass.tooltip":"Реагирует на солнечный свет, способствует росту урожая",
+		"block.cyclic.terra_glass.guide":"Реагирует на солнечный свет при прямом контакте. Пропускает свет и освещает посевы, когда они находятся под солнцем.  ",
+		
+		"block.cyclic.detector_weather":"Погодный детектор",
+		"block.cyclic.detector_weather.tooltip":"Сила сигнала редстоуна на выходе зависит от погоды",
+		"block.cyclic.detector_weather.guide":"Выдаёт максимульный уровень силы во время грозы, а во время дождя половину",
+
+		"block.cyclic.detector_moon":"Детектор фазы Луны",
+		"block.cyclic.detector_moon.tooltip":"Сила сигнала редстоуна на выходе зависит от фазы Луны",
+		"block.cyclic.detector_moon.guide":"Каждая из восьми фаз Луны выдает разный уровень силы",
+		
+		"block.cyclic.rotator":"Вращатель блоков",
+		"block.cyclic.rotator.tooltip":"Поворачивает твёрдый блок по активации редстоуном",
+		"block.cyclic.rotator.guide":"Срабатывает, когда получает сигнал редстоуна.  Поворачивает общие допустимые состояния блока",
 
 		"block.cyclic.eye_teleport":"Якорь Энда",
 		"block.cyclic.eye_teleport.tooltip":"Посмотрите и присядьте, чтобы телепортироваться на него.",
@@ -37,6 +129,18 @@
 		"block.cyclic.ghost_phantom":"Фантомный блок",
 		"block.cyclic.ghost_phantom.tooltip":"Исчезающий барьер, питаемый редстоуном",
 		"block.cyclic.ghost_phantom.guide":"Если запитан сигналом редстоуна, его нельзя выделить или разрушить, а все сущности смогут проходить через него.  Чтобы разрушить, не должен запитываться редстоуном. ",
+		
+		"block.cyclic.hopper":"Деревянная воронка",
+		"block.cyclic.hopper.tooltip":"Простейшая воронка для предметов",
+		"block.cyclic.hopper.guide":"Перемещает предметы по одному за тик с той же логикой, что и обычные воронки. Отключается редстоуном. Собирает только из позиции над собой.",
+
+		"block.cyclic.hopper_gold":"Золотая воронка",
+		"block.cyclic.hopper_gold.tooltip":"Обычная ускоренная воронка",
+		"block.cyclic.hopper_gold.guide":"Перемещает 64 предмета за тик с той же логикой, что и обычные воронки. Отключается редстоуном. Собирает только из позиции над собой",
+
+		"block.cyclic.hopper_fluid":"Воронка для жидкостей",
+		"block.cyclic.hopper_fluid.tooltip":"Собирает и перемещает жидкости",
+		"block.cyclic.hopper_fluid.guide":"Перемещает жидкости, по одному ведру за тик",
 
 		"block.cyclic.eye_redstone":"Эндер-триггер",
 		"block.cyclic.eye_redstone.tooltip":"Выдаёт сигнал редстоуна, пока смотрит игрок",
@@ -78,6 +182,10 @@
     "item.cyclic.location.tooltip": "Сохраняет местоположение блока",
     "item.cyclic.location.guide": "Щёлкните ПКМ по блоку с картой данных GPS в руке, чтобы сохранить его местоположение в карте данных.$(br2)Карты данных с сохраненными местоположениями можно использовать в некоторых машинах из этого мода, например, в $(l:machines/structure)Строителе Конструкций$(/l).",
     "item.location.saved": "Сохранено ",
+	
+	"item.cyclic.blockstate_data":"Карта данных: Состояние блока",
+    "item.cyclic.blockstate_data.tooltip":"Читает и сохраняет состояние блока для использования в фильтрах шахтёров",
+    "item.cyclic.blockstate_data.guide":"Используйте на блоке, чтобы прочитать его состояние. Поместив в сетку крафта, можно стереть данные. Он может различать идентичные блоки в разных состояниях, такие как повёрнутые лестницы, двойные плиты и т.д.  ",
     
     "block.cyclic.computer_shape":"Shape Computer",
     "block.cyclic.computer_shape.tooltip":"Read buildings into a Shape Card",
@@ -103,7 +211,7 @@
 				
     "block.cyclic.terra_preta":"Терра Прета",
     "block.cyclic.terra_preta.tooltip":"Поместите под пашней для ускорения роста, подобного дождеванию.",
-    "block.cyclic.terra_preta.guide":"Поместите Терра Прета под пашню, чтобы увеличить скорость роста посевов. Работает точно так же, как дождеватель, за исключением отсутствия частиц, и работает только на блок выше. ",
+    "block.cyclic.terra_preta.guide":"Поместите Терра Прета под пашню, чтобы увеличить скорость роста посевов. Работает точно так же, как разбрызгиватель, за исключением отсутствия частиц, и работает только на блок выше. ",
 
     "block.cyclic.crate": "Ящик",
     "block.cyclic.crate.tooltip": "Укреплённое хранилище предметов",
@@ -121,6 +229,9 @@
     "block.cyclic.fan": "Вентилятор",
     "block.cyclic.fan.tooltip": "Отталкивает существ",
     "block.cyclic.fan.guide": "Вентилятор - это настраиваемая машина, предназначенная для перемещения игроков, мобов, предметов и других сущностей .$(br2)Для настройки скорости перемещения и дальности используйте его интерфейс.",
+	"block.cyclic.fan_slab": "Плита с вентилятором",
+    "block.cyclic.fan_slab.tooltip": "Отталкивает существ",
+    "block.cyclic.fan_slab.guide": "Плита с вентилятором - это простая блочная машина, предназначенная для перемещения игроков, мобов, предметов и других существ.",
 
     "cyclic.fan.range":"Дальность",
     "cyclic.fan.speed":"Скорость",
@@ -431,9 +542,9 @@
     "item.cyclic.charm_fire": "Амулет огня",
     "item.cyclic.charm_fire.tooltip": "Защищает от огня и лавы",
     "item.cyclic.charm_fire.guide": "Когда он находится в вашем инвентаре или надет как аксессуар, защищает вас от огня за счет прочности.",
-    "item.charm_speed.guide": "Дает вам пассивный эффект повышения скорости, который может сочетаться с зельем скорости.  Щёлкните ПКМ, держа амулет в руке, чтобы выключить его.  Совместим с API Сurios.",
-    "item.charm_speed": "Амулет скорости",
-    "item.charm_speed.tooltip": "Ускорит вас и вашу лошадь",
+    "item.cyclic.charm_speed.guide": "Даёт вам пассивный прирост скорости, который может быть увеличен зельями скорости. По умолчанию значение - 50%, зависит от файла конфигурации. Чтобы выключить его, нажмите ПКМ в инвентаре.  ",
+    "item.cyclic.charm_speed": "Амулет скорости",
+    "item.cyclic.charm_speed.tooltip": "Увеличивает скорость передвижения",
     "item.cyclic.charm_void.guide": "Работает, находясь в инвентаре или надет как аксессуар.  Этот амулет спасёт вас от падения в пустоту; он обнаружит, если вы упадёте ниже y=-30, то телепортирует вас наверх. ",
     "item.cyclic.charm_void": "Амулет пустоты",
     "item.cyclic.charm_void.tooltip": "Спасёт вас от падания в пустоту",
@@ -449,9 +560,6 @@
     "item.cyclic.tile_transporter.inventory": "Может перемещать только контейнеры с содержимым",
     "item.cyclic.tile_transporter_empty": "Пустой мешочек удержания",
     "item.cyclic.tile_transporter_empty.tooltip": "Перемещает контейнер вместе с его содержимым",
-    "item.corrupted_chorus.guide": "Съев его, вы сможете проходить сквозь блоки в течении нескольких секунд.  Если вы окажетесь в блоках после истечения времени, плод телепортирует вас обратно к начальной точке, и наложит некоторые негативные эффекты.",
-    "item.corrupted_chorus": "Искажённый плод хоруса",
-    "item.corrupted_chorus.tooltip": "Позволяет проходить сквозь блоки в течении нескольких секунд",
     "item.crafting_food.guide": "Разблокирует верстак с полем 3x3 для крафта внутри вашего инвентаря.  Вы можете назначить кнопку для его открытия или делать это вручную, нажимая на специальную иконку в инвентаре.",
     "item.crafting_food": "Верстак в инвентаре",
     "item.crafting_food.tooltip": "Съешь, чтобы добавить верстак в инвентарь",
@@ -544,9 +652,15 @@
     "item.cyclic.food_step.guide": "Съев его, Вы увеличите высоту своего шага до полного блока, как у лошади (для отмены съешьте его снова)",
     "item.cyclic.food_step": "Яблоко высокого роста",
     "item.cyclic.food_step.tooltip": "Съев его, Вы увеличите высоту своего шага до полного блока, как у лошади (для отмены съешьте его снова)",
-    "item.cyclic.glowing_chorus.guide": "Балансный способ получить силу полёта. При употреблении дает вам несколько (складываемых) минут творческого полета. Чтобы убрать эффект используйте молоко.",
-    "item.cyclic.glowing_chorus": "Светящийся плод хоруса",
-    "item.cyclic.glowing_chorus.tooltip": "При употреблении дает вам несколько (складываемых) минут творческого полета.",
+    "item.cyclic.chorus_flight.guide": "Балансный способ получить силу полёта. При употреблении дает вам несколько (складываемых) минут творческого полета. Чтобы убрать эффект используйте молоко.",
+    "item.cyclic.chorus_flight": "Светящийся плод хоруса",
+    "item.cyclic.chorus_flight.tooltip": "Взлетите в воздух",
+    
+    "item.cyclic.chorus_spectral.guide": "Съев его, вы сможете проходить сквозь блоки в течении минуты. Не включает в себя полёт, вы можете упасть в пустоту без дополнительных предметов или способностей, а также можете застрять внутри стены.",
+    "item.cyclic.chorus_spectral": "Искажённый плод хоруса",
+    "item.cyclic.chorus_spectral.tooltip": "Дарует проклятие неосязаемости",
+	
+	
     "item.cyclic.glowing_helmet": "Шлем ночного видения",
     "item.cyclic.glowing_helmet.tooltip": "Накладывает эффект ночного зрения во время ношения",
     "item.cyclic.glowing_helmet.guide": "Накладывает эффект ночного зрения во время ношения.  Вы также можете включать и выключать его, щёлкая ПКМ, держа шлем в руке (работает в большинстве интерфейсов предметных панелей)",
@@ -828,7 +942,7 @@
     "key.keyWheel": "Extended Inventory Tool Belt (if unlocked)",
     "minecart.fuel": "Топливо:",
     "screentext.flying.seconds": "Полёт:",
-    "screentext.noclip.seconds": "Прохождение сквозь блоки:",
+    "screentext.noclip.seconds": "Неосязаемость:",
 
     "teleport.dimension": "Нельзя переносить между измерениями",
     "button.trash.fluid.tooltip": "Принимать и удалять жидкости",
@@ -1091,12 +1205,9 @@
     "block.cyclic.spikes_curse": "Проклятые шипы",
     "block.cyclic.spikes_curse.tooltip": "Пока запитаны редстоуном, накладывает негативные эффекты на существ при соприкосновении",
     "block.cyclic.spikes_curse.guide": "Проклинает, накладывая негативные эффекты на существ при соприкосновении.",
-    "block.cyclic.sprinkler.empty": "Put water below to enable",
-    "block.cyclic.sprinkler.particles.false": "Particle splashes turned off",
-    "block.cyclic.sprinkler.particles.true": "Particle splashes turned on",
-    "block.cyclic.sprinkler.guide": "This only runs while water is directly below.  It will water nearby crops, increasing their growing speed.  Multiple sprinklers in the same area do stack.  Sneak right-click with an empty hand to disable particles from rendering.",
-    "block.cyclic.sprinkler": "Sprinkler",
-    "block.cyclic.sprinkler.tooltip": "Place over water and near crops",
+    "block.cyclic.sprinkler.guide": "Он работает только тогда, когда вода находится внутри его внутреннего резервуара (заполните его ведром или трубами). Он будет поливать близлежащие посевы, увеличивая их скорость роста. Потребляет блоки-источники воды снизу. Несколько разбрызгивателей в одной области суммируются. ",
+    "block.cyclic.sprinkler": "Разбрызгиватель",
+    "block.cyclic.sprinkler.tooltip": "Потребляет воду и выращивает близлежащие посевы",
     "block.cyclic.sprout.guide": "When this is harvested it randomly drops a block from a custom loot table (listed in config file)",
     "block.cyclic.sprout": "Magic Bean Sprout",
     "block.cyclic.tool_trade.button.tooltip": "Быстрый обмен",
@@ -1299,10 +1410,6 @@
     "block.target.tooltip": "Emits redstone based on where the arrow lands",
     "block.target.guide": "Emits redstone based on where the arrow lands.  Only works on the side, not top or bottom.",
 
-    "block.moon_sensor": "Moon Phase Sensor",
-    "block.moon_sensor.tooltip": "Emits signal based on current moons phase",
-    "block.moon_sensor.guide": "Emits signal based on current moons phase.  Power ranges along 1,3,5,7,9,11,13,15 and back down again.  Stays powered during the day, and changes every night as the moon shifts phases.",
-
     "item.robot_spawner": "Target Dummy Spawner",
     "item.robot_spawner.tooltip": "[EXPERIMENTAL FEATURE] Spawn a Target Dummy Spawner that measures damage done by a player",
     "item.robot_spawner.guide": "Spawn a Target Dummy Spawner that measures damage done by a player.  Can be given armor that will affect damage taken, and drop on death.  Has no movement or attacks.  Can be killed, or removed instantly by using the spawner on it again.",
@@ -1332,9 +1439,9 @@
     "block.fire_frost.tooltip": "Low intermittent damage; slowness and weakness",
     "block.fire_frost.guide": "Low intermittent damage; slowness and weakness",
 
-    "block.void_anvil": "Void Anvil",
-    "block.void_anvil.tooltip": "Delete enchantments off anything",
-    "block.void_anvil.guide": "Delete enchantments off anything",
+    "block.cyclic.anvil_void": "Пустотная наковальня",
+    "block.cyclic.anvil_void.tooltip": "Удаляет все зачарования",
+    "block.cyclic.anvil_void.guide": "Удалите зачарования с чего угодно, удалив  NBT тег зачарований. Не требует энергию.",
 
     "block.sound_player": "SFX Block",
     "block.sound_player.tooltip": "Can play almost any sound",
@@ -1438,6 +1545,10 @@
     "block.dehydrator": "Осушитель",
     "block.dehydrator.tooltip": "Process dehydration recipes",
     "block.dehydrator.guide": "Dehydrate certain items.  Add more recipes using CraftTweaker.  Lava is optional but will increase processing speed.",
+	
+	"block.cyclic.shearing": "Станция стрижки",
+    "block.cyclic.shearing.tooltip": "Стрижёт овец как мобов при контакте",
+    "block.cyclic.shearing.guide": "Стрижет овец на шерсть при прикосновении. Блок не обладает прочностью, как ножницы. Работает на всех совместимых мобах, а не только на овцах, используя IForgeShearable",
 
     "item.cyclic.shears_obsidian": "Обсидиановые ножницы",
     "item.cyclic.shears_obsidian.tooltip": "Очень прочные ножницы",
