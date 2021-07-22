@@ -3,6 +3,7 @@ package com.lothrazar.cyclic;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
+import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
@@ -204,7 +205,7 @@ public class ConfigRegistry {
     CFG.pop(); //fuel
     CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
         .push("cost");
-    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("disenchanter", 1500, 0, 64000);
+    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("disenchanter", 2500, 0, 64000);
     TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 50, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
     TileMelter.POWERCONF = CFG.comment("Power per recipe melter").defineInRange("melter", 5000, 0, 64000);
@@ -222,6 +223,11 @@ public class ConfigRegistry {
     TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon", 0, 0, 64000);
     CFG.pop(); //cost
     CFG.pop(); //energy
+    CFG.comment(WALL, "Fluid cost for various machines", WALL)
+        .push("fluid");
+    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost per").defineInRange("anvil_magma", 100, 1, 64000);
+    TileDisenchant.FLUIDCOST = CFG.comment("Cost per").defineInRange("disenchanter", 100, -1000, 16000);
+    CFG.pop(); //fluid
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
     CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
     MaterialRegistry.EMERALD_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 3.0F, 0.1F, 99F);

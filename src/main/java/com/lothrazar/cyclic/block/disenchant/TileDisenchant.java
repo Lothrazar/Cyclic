@@ -2,9 +2,11 @@ package com.lothrazar.cyclic.block.disenchant;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -14,6 +16,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -29,6 +32,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -56,15 +62,21 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return stack.getItem() == Items.ENCHANTED_BOOK;
     }
   };
+  public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
   ItemStackHandler outputSlots = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static IntValue POWERCONF;
+  public static IntValue FLUIDCOST;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  public FluidTankBase tank;
 
   public TileDisenchant() {
     super(TileRegistry.disenchanter);
+    tank = new FluidTankBase(this, CAPACITY, p -> {
+      return p.getFluid().isIn(DataTags.XP);
+    });
   }
 
   @Override
@@ -75,6 +87,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     }
     Integer cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && (cost > 0)) {
+      return;
+    }
+    if (FLUIDCOST.get() > 0 && tank.getFluidAmount() < FLUIDCOST.get()) {
       return;
     }
     ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
@@ -104,7 +119,20 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     //success happening
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
     energy.extractEnergy(cost, false);
-    //do all the moving over
+    System.out.println("f cost eh" + FLUIDCOST.get());
+    if (FLUIDCOST.get() > 0) {
+      tank.drain(FLUIDCOST.get(), FluidAction.EXECUTE);
+    }
+    else if (FLUIDCOST.get() < 0) {
+      Fluid newFluid = FluidXpJuiceHolder.STILL.get();
+      if (!this.getFluid().isEmpty()) {
+        //if its holding a tag compatible but different fluid, just fill 
+        newFluid = this.getFluid().getFluid();
+      }
+      //      int fill = (-1 * FLUIDCOST.get());
+      //      FluidStack fs = new FluidStack(newFluid, fill);
+      tank.fill(new FluidStack(newFluid, -1 * FLUIDCOST.get()), FluidAction.EXECUTE);
+    }
     inputEnchants.remove(keyMoved);
     ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
     EnchantmentHelper.setEnchantments(outEnchants, eBook); //add to book
@@ -135,10 +163,6 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     input = inputSlots.getStackInSlot(SLOT_INPUT);
     inputEnchants = EnchantmentHelper.getEnchantments(input);
     if (!input.isEmpty() && inputEnchants.size() == 0) {
-      ModCyclic.LOGGER.info("bump to new finished slot");
-      ModCyclic.LOGGER.info("bump to new finished slot");
-      ModCyclic.LOGGER.info("bump to new finished slot");
-      ModCyclic.LOGGER.info("bump to new finished slot");
       //hey we done, bump it over to the ALL NEW finished slot
       if (outputSlots.getStackInSlot(1).isEmpty()) {
         //only if there is space, then do it
@@ -177,15 +201,21 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    CompoundNBT fluid = new CompoundNBT();
+    tank.writeToNBT(fluid);
+    tag.put("fluid", fluid);
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inputSlots.deserializeNBT(tag.getCompound(NBTINV));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inputSlots.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT());
+    CompoundNBT fluid = new CompoundNBT();
+    tank.writeToNBT(fluid);
+    tag.put("fluid", fluid);
     return super.write(tag);
   }
 
@@ -210,5 +240,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
         return timer;
     }
     return 0;
+  }
+
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 }

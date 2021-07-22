@@ -42,11 +42,10 @@ public class PlayerDataEvents {
         FileOutputStream fileoutputstream = new FileOutputStream(mctomb);
         CompressedStreamTools.writeCompressed(data, fileoutputstream);
         fileoutputstream.close();
-        ModCyclic.LOGGER.error("Cyclic PlayerEvent.SaveToFile" + data);
-        //        ModCyclic.LOGGER.error("# of tombs " + dataToSave.playerGraves.size());
+        //        ModCyclic.LOGGER.info("Cyclic PlayerEvent.SaveToFile" + data); 
       }
       catch (IOException e) {
-        ModCyclic.LOGGER.error("IO", e);
+        ModCyclic.LOGGER.error("IO cyclic file error", e);
       }
     }
   }

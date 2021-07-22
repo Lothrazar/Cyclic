@@ -20,6 +20,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -37,6 +38,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   }
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
+  public static IntValue FLUIDCOST;
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
@@ -77,7 +79,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
       outputSlots.insertItem(0, stack.copy(), false);
       inputSlots.extractItem(0, stack.getCount(), false);
     }
-    final int repair = 100; // fluid
+    final int repair = FLUIDCOST.get(); // fluid
     boolean work = false;
     if (tank != null &&
         tank.getFluidAmount() >= repair &&

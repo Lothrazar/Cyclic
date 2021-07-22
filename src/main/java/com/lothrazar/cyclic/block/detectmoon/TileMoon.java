@@ -16,17 +16,16 @@ public class TileMoon extends TileEntityBase implements ITickableTileEntity {
     //if we are going from unpowered to powered, meaning state isnt set but power is
     if (world instanceof ServerWorld) {
       ServerWorld sw = (ServerWorld) world;
-      //      WeatherCommand test;
-      //      IServerWorldInfo t = sw.field_241103_E_;
-      //      t.getThunderTime();
-      //      t.getRainTime();
-      //      t.getDayTime();
-      int level = this.getBlockState().get(BlockMoon.LEVEL);
-      int newPower = sw.getMoonPhase();
-      if (level != newPower) {
-        world.setBlockState(pos, this.getBlockState().with(BlockMoon.LEVEL, newPower));
-        //        world.notifyNeighborsOfStateChange(pos, this.getBlockState().getBlock());
+      if (sw == null) {
+        return;
       }
+      try {
+        int newPower = sw.getMoonPhase();
+        if (newPower != this.getBlockState().get(BlockMoon.LEVEL)) {
+          world.setBlockState(pos, this.getBlockState().with(BlockMoon.LEVEL, newPower));
+        }
+      }
+      catch (Exception e) {}
     }
   }
 

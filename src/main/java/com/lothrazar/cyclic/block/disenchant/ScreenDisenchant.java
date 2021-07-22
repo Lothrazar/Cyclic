@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.disenchant;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,17 +13,19 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
 
   private EnergyBar energy;
   private ButtonMachineRedstone btnRedstone;
+  private FluidBar fluid;
 
   public ScreenDisenchant(ContainerDisenchant screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileDisenchant.MAX);
+    energy = new EnergyBar(this, TileDisenchant.MAX);
+    fluid = new FluidBar(this, 134, 8, TileDisenchant.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
-    energy.guiLeft = guiLeft;
-    energy.guiTop = guiTop;
+    fluid.guiLeft = energy.guiLeft = guiLeft;
+    fluid.guiTop = energy.guiTop = guiTop;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
@@ -36,6 +39,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
+    fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
   }
 
   @Override
@@ -52,8 +56,9 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     int y = 39;
     this.drawSlot(ms, x, y);
     this.drawSlot(ms, x + 24, y, TextureRegistry.SLOT_BOOK, 18);
-    this.drawSlotLarge(ms, 119, y - 16);
-    this.drawSlotLarge(ms, 119, y + 14);
+    this.drawSlotLarge(ms, 103, y - 20);
+    this.drawSlotLarge(ms, 103, y + 12);
     energy.draw(ms, container.tile.getEnergy());
+    fluid.draw(ms, container.tile.getFluid());
   }
 }
