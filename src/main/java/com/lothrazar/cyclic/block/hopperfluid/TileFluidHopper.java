@@ -96,7 +96,7 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    tank.readFromNBT(tag.getCompound("fluid"));
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
   }
 
@@ -104,7 +104,7 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
   public CompoundNBT write(CompoundNBT tag) {
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     return super.write(tag);
   }
 

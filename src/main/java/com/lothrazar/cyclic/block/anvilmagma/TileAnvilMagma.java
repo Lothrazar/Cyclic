@@ -127,7 +127,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    tank.readFromNBT(tag.getCompound("fluid"));
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
   }
 
@@ -135,7 +135,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   public CompoundNBT write(CompoundNBT tag) {
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }

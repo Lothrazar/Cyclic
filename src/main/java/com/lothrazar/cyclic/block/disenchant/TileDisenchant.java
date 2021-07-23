@@ -34,6 +34,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -194,6 +195,9 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
+    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return LazyOptional.of(() -> tank).cast();
+    }
     return super.getCapability(cap, side);
   }
 
@@ -201,7 +205,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   public void read(BlockState bs, CompoundNBT tag) {
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -213,7 +217,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     tag.put(NBTINV, inventory.serializeNBT());
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     return super.write(tag);
   }
 

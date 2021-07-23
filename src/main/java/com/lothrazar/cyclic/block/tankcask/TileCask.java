@@ -51,7 +51,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
     }
     this.flowing = (tag.getInt("flowing"));
-    tank.readFromNBT(tag.getCompound("fluid"));
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
   }
 
@@ -63,7 +63,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
     tag.putInt("flowing", this.flowing);
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     return super.write(tag);
   }
 

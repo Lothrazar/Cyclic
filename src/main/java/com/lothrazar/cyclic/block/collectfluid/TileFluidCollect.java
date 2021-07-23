@@ -173,7 +173,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     shapeIndex = tag.getInt("shapeIndex");
-    tank.readFromNBT(tag.getCompound("fluid"));
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -185,7 +185,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     tag.put(NBTINV, inventory.serializeNBT());
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     tag.putInt("shapeIndex", shapeIndex);
     return super.write(tag);
   }

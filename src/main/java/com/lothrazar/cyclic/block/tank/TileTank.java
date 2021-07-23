@@ -28,7 +28,7 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    CompoundNBT fluid = tag.getCompound("fluid");
+    CompoundNBT fluid = tag.getCompound(NBTFLUID);
     tank.readFromNBT(fluid);
     super.read(bs, tag);
   }
@@ -37,7 +37,7 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
   public CompoundNBT write(CompoundNBT tag) {
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     return super.write(tag);
   }
 

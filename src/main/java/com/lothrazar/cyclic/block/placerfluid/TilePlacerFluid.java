@@ -90,7 +90,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    tank.readFromNBT(tag.getCompound("fluid"));
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
   }
 
@@ -98,7 +98,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   public CompoundNBT write(CompoundNBT tag) {
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     return super.write(tag);
   }
 

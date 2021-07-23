@@ -76,7 +76,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    tank.readFromNBT(tag.getCompound("fluid"));
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     int legacy = tag.getInt("storedXp");
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
@@ -88,7 +88,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public CompoundNBT write(CompoundNBT tag) {
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tag.put(NBTFLUID, fluid);
     tag.putInt("storedXp", getStoredXp());
     return super.write(tag);
   }

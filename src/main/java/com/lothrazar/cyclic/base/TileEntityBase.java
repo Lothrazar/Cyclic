@@ -47,6 +47,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static final String NBTINV = "inv";
+  public static final String NBTFLUID = "fluid";
   public static final String NBTENERGY = "energy";
   public static final int MENERGY = 64 * 1000;
   protected int needsRedstone = 1;

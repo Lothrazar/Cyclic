@@ -26,6 +26,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -75,21 +76,25 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
+    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return LazyOptional.of(() -> tank).cast();
+    }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    CompoundNBT fluid = new CompoundNBT();
-    tank.writeToNBT(fluid);
-    tag.put("fluid", fluid);
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTINV, inventory.serializeNBT());
+    CompoundNBT fluid = new CompoundNBT();
+    tank.writeToNBT(fluid);
+    tag.put(NBTFLUID, fluid);
     return super.write(tag);
   }
 
