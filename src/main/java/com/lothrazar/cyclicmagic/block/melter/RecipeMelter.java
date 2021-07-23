@@ -26,6 +26,7 @@ package com.lothrazar.cyclicmagic.block.melter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.registry.FluidsRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -195,12 +196,14 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.OBSIDIAN) },
         "lava", 1000));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.GHAST_TEAR) },
-        "xpjuice", 10));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.BONE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.GUNPOWDER) },
-        "xpjuice", 10));
+    if (FluidsRegistry.fluid_exp != null) {
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Items.GHAST_TEAR) },
+          "xpjuice", 10));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Items.BONE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.GUNPOWDER) },
+          "xpjuice", 10));
+    }
     addRecipe(new RecipeMelter(
         new ItemStack[] { new ItemStack(Blocks.LOG2) },
         "amber", 100));
