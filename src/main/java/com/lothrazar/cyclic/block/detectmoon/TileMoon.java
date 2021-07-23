@@ -25,7 +25,9 @@ public class TileMoon extends TileEntityBase implements ITickableTileEntity {
           world.setBlockState(pos, this.getBlockState().with(BlockMoon.LEVEL, newPower));
         }
       }
-      catch (Exception e) {}
+      catch (Exception e) {
+        //
+      }
     }
   }
 

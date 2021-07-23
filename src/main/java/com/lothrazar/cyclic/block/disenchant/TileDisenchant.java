@@ -120,7 +120,6 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     //success happening
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
     energy.extractEnergy(cost, false);
-    System.out.println("f cost eh" + FLUIDCOST.get());
     if (FLUIDCOST.get() > 0) {
       tank.drain(FLUIDCOST.get(), FluidAction.EXECUTE);
     }
@@ -203,9 +202,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
-    tank.writeToNBT(fluid);
-    tag.put(NBTFLUID, fluid);
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
