@@ -16,7 +16,7 @@
 		beekeeper = true
 		#Set false to disable enchantment
 		experience_boost = true
-		#Set false to disable enchantment
+		#Set false to disable Multi Jump enchantment
 		launch = true
 		#Set false to disable enchantment
 		ender = true
@@ -58,6 +58,15 @@
 	# Block specific configs
 	#####################################################################################
 	[cyclic.blocks]
+
+		#Ender shelf settings
+		[cyclic.blocks.ender_shelf]
+			#Controller Max distance to search (using manhattan distance)
+			#Range: 1 ~ 256
+			controller_distance = 64
+			#Each shelf has five rows.  Set the number of books stored per row here
+			#Range: 1 ~ 64
+			books_per_row = 64
 
 		#Ender Anchor settings
 		[cyclic.blocks.eye_teleport]
@@ -112,6 +121,20 @@
 		info = false
 
 	#####################################################################################
+	#Fluid cost for various machines
+	#####################################################################################
+	[cyclic.fluid]
+		#Cost of magma fluid per action
+		#Range: 1 ~ 64000
+		anvil_magma = 100
+		#Cost of (or payment for if negative) per enchanted book generated
+		#Range: -1000 ~ 16000
+		disenchanter = 100
+		#Payment per void action, if not zero
+		#Range: 0 ~ 16000
+		void_anvil = 25
+
+	#####################################################################################
 	# Item specific configs
 	#####################################################################################
 	[cyclic.items]
@@ -147,14 +170,6 @@
 			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
 
 		#####################################################################################
-		# Edible chorus settings
-		#####################################################################################
-		[cyclic.items.chorus]
-			#Seconds of noClip per chorus_spectral
-			#Range: 1 ~ 20000
-			ticks = 600
-
-		#####################################################################################
 		# Settings for varios charms (curios)
 		#####################################################################################
 		[cyclic.items.charms]
@@ -167,6 +182,14 @@
 			#Boost given by item charm_speed
 			#Range: 0.0 ~ 2.0
 			speed = 0.5
+
+		#####################################################################################
+		# Edible chorus settings
+		#####################################################################################
+		[cyclic.items.chorus]
+			#Seconds of noClip per chorus_spectral
+			#Range: 1 ~ 20000
+			ticks = 600
 
 		#Wand settings
 		[cyclic.items.teleport_wand]
@@ -189,10 +212,10 @@
 			damage = 4.5
 			#Damage Reduction
 			#Range: 1 ~ 99
-			chest = 7
+			chest = 9
 			#Damage Reduction
 			#Range: 1 ~ 99
-			boots = 3
+			boots = 4
 			#Armor toughness
 			#Range: 0.10000000149011612 ~ 99.0
 			toughness = 3.0
@@ -201,7 +224,7 @@
 			helm = 4
 			#Damage Reduction
 			#Range: 1 ~ 99
-			leg = 6
+			leg = 7
 
 		#Heart items
 		[cyclic.items.heart]
@@ -216,8 +239,6 @@
 	# Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  
 	#####################################################################################
 	[cyclic.command]
-		#True means only players with OP can use this /cyclic command
-		help = false
 		#True means only players with OP can use this /cyclic command
 		nbtprint = false
 		#True means only players with OP can use this /cyclic command
@@ -242,7 +263,7 @@
 		[cyclic.energy.cost]
 			#Power per use disenchanter
 			#Range: 0 ~ 64000
-			disenchanter = 1500
+			disenchanter = 2500
 			#Power per repair anvil
 			#Range: 0 ~ 64000
 			anvil = 250

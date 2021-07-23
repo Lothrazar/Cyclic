@@ -79,7 +79,6 @@ public class ConfigRegistry {
   public static BooleanValue COMMANDHOME;
   public static BooleanValue COMMANDHUNGER;
   public static BooleanValue COMMANDPINGNETHER;
-  public static BooleanValue COMMANDGETHELP;
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
@@ -164,7 +163,7 @@ public class ConfigRegistry {
     EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
     EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.ID, true);
     EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.ID, true);
-    EnchantLaunch.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLaunch.ID, true);
+    EnchantLaunch.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(EnchantLaunch.ID, true);
     EnchantLifeLeech.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLifeLeech.ID, true);
     EnchantMagnet.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMagnet.ID, true);
     EnchantMultishot.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMultishot.ID, true);
@@ -185,7 +184,6 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
     COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);
-    COMMANDGETHELP = CFG.comment("True means only players with OP can use this /cyclic command").define("help", false);
     COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define("health", true);
     COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("home", true);
     COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define("hunger", true);
@@ -288,7 +286,7 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL)
         .push("blocks");
-    CFG.comment("Sprinkler settings").push("ender_shelf");
+    CFG.comment("Ender shelf settings").push("ender_shelf");
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
