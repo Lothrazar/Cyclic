@@ -129,8 +129,6 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
         //if its holding a tag compatible but different fluid, just fill 
         newFluid = this.getFluid().getFluid();
       }
-      //      int fill = (-1 * FLUIDCOST.get());
-      //      FluidStack fs = new FluidStack(newFluid, fill);
       tank.fill(new FluidStack(newFluid, -1 * FLUIDCOST.get()), FluidAction.EXECUTE);
     }
     inputEnchants.remove(keyMoved);

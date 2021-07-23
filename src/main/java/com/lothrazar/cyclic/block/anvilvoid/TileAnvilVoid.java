@@ -1,12 +1,16 @@
 package com.lothrazar.cyclic.block.anvilvoid;
 
+import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -14,11 +18,15 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -29,6 +37,8 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
     TIMER, REDSTONE;
   }
 
+  public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
+  public static IntValue FLUIDPAY;
   public static IntValue POWERCONF;
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
@@ -40,10 +50,14 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  public FluidTankBase tank;
 
   public TileAnvilVoid() {
     super(TileRegistry.ANVILVOID.get());
     this.needsRedstone = 1;
+    tank = new FluidTankBase(this, CAPACITY, p -> {
+      return p.getFluid().isIn(DataTags.XP);
+    });
   }
 
   @Override
@@ -67,6 +81,9 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    CompoundNBT fluid = new CompoundNBT();
+    tank.writeToNBT(fluid);
+    tag.put("fluid", fluid);
     super.read(bs, tag);
   }
 
@@ -89,17 +106,32 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
       return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
+    boolean doCost = false;
     if (stack.getItem() == Items.ENCHANTED_BOOK) {
       inputSlots.extractItem(0, 1, false);
       outputSlots.insertItem(0, new ItemStack(Items.BOOK), false);
+      doCost = true;
     }
-    else if (stack.getTag() != null && stack.getTag().contains("Enchantments")
-        && !stack.getItem().isIn(DataTags.IMMUNE)) {
-          //is enchanted
-          stack.getTag().remove("Enchantments");
-          outputSlots.insertItem(0, stack.copy(), false);
-          inputSlots.extractItem(0, stack.getCount(), false);
-        }
+    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.getItem().isIn(DataTags.IMMUNE)) {
+      //is enchanted
+      stack.getTag().remove("Enchantments");
+      outputSlots.insertItem(0, stack.copy(), false);
+      inputSlots.extractItem(0, stack.getCount(), false);
+      doCost = true;
+    }
+    if (doCost && FLUIDPAY.get() > 0) {
+      UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+      Fluid newFluid = FluidXpJuiceHolder.STILL.get();
+      if (!this.getFluid().isEmpty()) {
+        //if its holding a tag compatible but different fluid, just fill 
+        newFluid = this.getFluid().getFluid();
+      }
+      tank.fill(new FluidStack(newFluid, FLUIDPAY.get()), FluidAction.EXECUTE);
+    }
+  }
+
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
   @Override

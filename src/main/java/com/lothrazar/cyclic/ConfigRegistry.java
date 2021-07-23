@@ -4,6 +4,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
+import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
@@ -225,8 +226,9 @@ public class ConfigRegistry {
     CFG.pop(); //energy
     CFG.comment(WALL, "Fluid cost for various machines", WALL)
         .push("fluid");
-    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost per").defineInRange("anvil_magma", 100, 1, 64000);
-    TileDisenchant.FLUIDCOST = CFG.comment("Cost per").defineInRange("disenchanter", 100, -1000, 16000);
+    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost of magma fluid per action").defineInRange("anvil_magma", 100, 1, 64000);
+    TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("disenchanter", 100, -1000, 16000);
+    TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("void_anvil", 25, 0, 16000);
     CFG.pop(); //fluid
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
     CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
