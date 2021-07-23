@@ -65,10 +65,9 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
       ms.translate(0, 0, 1);
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
-      // 0xF000F0
-      // FIXED
-      //      int itemColour = 15728880;
-      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, combinedLightIn + 5005000, combinedOverlayIn, ms, buffer);
+      // TODO: use light offset
+      //      float lf = tile.getWorld().getLight(tile.getPos().offset(tile.getCurrentFacing()));
+      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer);
       ms.pop();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {

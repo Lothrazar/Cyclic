@@ -34,7 +34,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockItemShelf extends BlockBase {
 
   public BlockItemShelf(Properties properties) {
-    super(properties.hardnessAndResistance(0.8F));
+    super(properties.hardnessAndResistance(0.8F).notSolid());
   }
 
   @Override
