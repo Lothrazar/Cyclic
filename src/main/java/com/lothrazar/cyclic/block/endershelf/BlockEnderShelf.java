@@ -35,7 +35,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class BlockEnderShelf extends BlockBase {
 
   public BlockEnderShelf(Properties properties, boolean isController) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.hardnessAndResistance(1.2F).notSolid());
   }
 
   @Override
