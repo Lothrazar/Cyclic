@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
-import com.lothrazar.cyclic.item.storagebag.StorageBagItem;
+import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
@@ -33,7 +33,7 @@ public class ClientRegistry {
           return 0xFFFFFFFF;
         }
         //layer 1 is overlay  
-        int c = StorageBagItem.getColour(stack);
+        int c = ItemStorageBag.getColour(stack);
         return c;
       }
       else if (stack.getItem() == ItemRegistry.mob_container) {

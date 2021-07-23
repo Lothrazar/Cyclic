@@ -16,6 +16,6 @@ public class StorageBagContainerProvider implements INamedContainerProvider {
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
-    return new StorageBagContainer(i, playerInventory, player);
+    return new ContainerStorageBag(i, playerInventory, player);
   }
 }

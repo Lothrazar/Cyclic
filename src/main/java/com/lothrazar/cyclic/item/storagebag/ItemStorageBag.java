@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.util.UtilSound;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,7 +26,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -40,56 +38,15 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class StorageBagItem extends ItemBase {
+public class ItemStorageBag extends ItemBase {
 
   private static final String NBT_COLOUR = "COLOUR";
   public static final int REFILL_TICKS = 4;
+  public static final int SLOTS = 81;
   public int timer = 0;
-  private int slots;
 
-  public enum PickupMode implements IStringSerializable {
-
-    NOTHING, EVERYTHING, FILTER;
-
-    public static final String NBT = "pickup_mode";
-
-    @Override
-    public String getString() {
-      return this.name().toLowerCase(Locale.ENGLISH);
-    }
-  }
-
-  public enum DepositMode implements IStringSerializable {
-
-    NOTHING, DUMP, MERGE;
-
-    public static final String NBT = "deposit_mode";
-
-    @Override
-    public String getString() {
-      return this.name().toLowerCase(Locale.ENGLISH);
-    }
-  }
-
-  public enum RefillMode implements IStringSerializable {
-
-    NOTHING, HOTBAR;
-
-    public static final String NBT = "refill_mode";
-
-    @Override
-    public String getString() {
-      return this.name().toLowerCase(Locale.ENGLISH);
-    }
-  }
-
-  public StorageBagItem(Properties properties) {
+  public ItemStorageBag(Properties properties) {
     super(properties);
-  }
-
-  public StorageBagItem(Properties properties, int slots) {
-    this(properties);
-    this.slots = slots;
   }
 
   @Override
@@ -178,12 +135,12 @@ public class StorageBagItem extends ItemBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.storage_bag, StorageBagScreen::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.storage_bag, ScreenStorageBag::new);
   }
 
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
-    return new StorageBagCapabilityProvider(stack, slots);
+    return new StorageBagCapability(stack, nbt);
   }
 
   @Override
@@ -264,17 +221,18 @@ public class StorageBagItem extends ItemBase {
     });
     return hasItem.get();
   }
+
   //unused but possibly useful
-  //  private static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
-  //    AtomicInteger slot = new AtomicInteger(-1);
-  //    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-  //      for (int i = 0; i < h.getSlots(); i++) {
-  //        if (h.getStackInSlot(i).getItem() == stack.getItem())
-  //          slot.set(i);
-  //      }
-  //    });
-  //    return slot.get();
-  //  }
+  public static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
+    AtomicInteger slot = new AtomicInteger(-1);
+    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      for (int i = 0; i < h.getSlots(); i++) {
+        if (h.getStackInSlot(i).getItem() == stack.getItem())
+          slot.set(i);
+      }
+    });
+    return slot.get();
+  }
 
   private static int getLastSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
@@ -327,16 +285,17 @@ public class StorageBagItem extends ItemBase {
     }
     return slots;
   }
+
   //unused but possibly useful
-  //  private static int getFirstBagSlot(PlayerEntity player) {
-  //    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-  //      if (isBag(player.inventory.getStackInSlot(i)))
-  //        return i;
-  //    }
-  //    return -1;
-  //  }
+  public static int getFirstBagSlot(PlayerEntity player) {
+    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+      if (isBag(player.inventory.getStackInSlot(i)))
+        return i;
+    }
+    return -1;
+  }
 
   private static boolean isBag(ItemStack stack) {
-    return stack.getItem() instanceof StorageBagItem;
+    return stack.getItem() instanceof ItemStorageBag;
   }
 }

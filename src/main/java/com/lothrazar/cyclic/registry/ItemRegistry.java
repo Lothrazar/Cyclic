@@ -77,7 +77,7 @@ import com.lothrazar.cyclic.item.scythe.ScytheBrush;
 import com.lothrazar.cyclic.item.scythe.ScytheForage;
 import com.lothrazar.cyclic.item.scythe.ScytheHarvest;
 import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
-import com.lothrazar.cyclic.item.storagebag.StorageBagItem;
+import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
@@ -335,7 +335,7 @@ public class ItemRegistry {
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("shape_data"));
     r.register(new FilterCardItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("filter_data"));
     r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024)).setRegistryName("scythe_harvest"));
-    r.register(new StorageBagItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair(), 81).setRegistryName("storage_bag"));
+    r.register(new ItemStorageBag(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
     r.register(new CraftingStickItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("crafting_stick"));
     r.register(new AntimatterEvaporatorWandItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024)).setRegistryName("antimatter_wand"));

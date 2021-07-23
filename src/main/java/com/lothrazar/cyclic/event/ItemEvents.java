@@ -10,7 +10,7 @@ import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.heart.HeartItem;
-import com.lothrazar.cyclic.item.storagebag.StorageBagItem;
+import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
@@ -401,14 +401,14 @@ public class ItemEvents {
       ItemEntity itemEntity = event.getItem();
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();
-      for (Integer i : StorageBagItem.getAllBagSlots(player)) {
+      for (Integer i : ItemStorageBag.getAllBagSlots(player)) {
         ItemStack bag = player.inventory.getStackInSlot(i);
-        switch (StorageBagItem.getPickupMode(bag)) {
+        switch (ItemStorageBag.getPickupMode(bag)) {
           case EVERYTHING:
-            resultStack = StorageBagItem.tryInsert(bag, resultStack);
+            resultStack = ItemStorageBag.tryInsert(bag, resultStack);
           break;
           case FILTER:
-            resultStack = StorageBagItem.tryFilteredInsert(bag, resultStack);
+            resultStack = ItemStorageBag.tryFilteredInsert(bag, resultStack);
           break;
           case NOTHING:
           break;

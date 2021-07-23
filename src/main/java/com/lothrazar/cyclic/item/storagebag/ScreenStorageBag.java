@@ -16,12 +16,12 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
+public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
   private static final int BUTTON_OFFSET_Y = 10;
   private static final int BUTTON_GAP = 28;
 
-  public StorageBagScreen(StorageBagContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenStorageBag(ContainerStorageBag screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.ySize = 256;
   }
@@ -115,7 +115,7 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
       super(x, y, 0, 20, defaultTitle, (p -> {
         //do nothing
       }), Button::renderToolTip);
-      this.width = StorageBagScreen.this.font.getStringWidth(defaultTitle.getString()) + 8;
+      this.width = ScreenStorageBag.this.font.getStringWidth(defaultTitle.getString()) + 8;
       index = 0;
       titles = new LinkedList<>();
       tooltips = new LinkedList<>();
@@ -129,7 +129,7 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
 
     @Override
     public void renderToolTip(MatrixStack matrixStack, int mouseX, int mouseY) {
-      StorageBagScreen.this.renderTooltip(matrixStack, tooltips.get(index), mouseX, mouseY);
+      ScreenStorageBag.this.renderTooltip(matrixStack, tooltips.get(index), mouseX, mouseY);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class StorageBagScreen extends ScreenBase<StorageBagContainer> {
       }
       this.setMessage(titles.get(index));
       PacketRegistry.INSTANCE.sendToServer(new PacketStorageBagScreen(
-          StorageBagScreen.this.container.bag, StorageBagScreen.this.container.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
+          ScreenStorageBag.this.container.bag, ScreenStorageBag.this.container.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
 
     public void addState(ITextComponent title, ITextComponent tooltip, INBT nbtValue) {

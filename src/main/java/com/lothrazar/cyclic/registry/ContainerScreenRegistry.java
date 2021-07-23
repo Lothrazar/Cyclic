@@ -41,7 +41,7 @@ import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
-import com.lothrazar.cyclic.item.storagebag.StorageBagContainer;
+import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -173,7 +173,7 @@ public class ContainerScreenRegistry {
     //
     //  Items with containers
     //
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new StorageBagContainer(windowId, inv, inv.player))).setRegistryName("storage_bag"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player))).setRegistryName("storage_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
@@ -254,7 +254,7 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":screen")
   public static ContainerType<ContainerScreentext> screen;
   @ObjectHolder(ModCyclic.MODID + ":storage_bag")
-  public static ContainerType<StorageBagContainer> storage_bag;
+  public static ContainerType<ContainerStorageBag> storage_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
   public static ContainerType<CraftingBagContainer> crafting_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
