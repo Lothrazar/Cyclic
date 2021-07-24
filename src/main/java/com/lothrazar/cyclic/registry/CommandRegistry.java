@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.command.CommandHunger;
 import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
 import com.lothrazar.cyclic.command.CommandTask;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
@@ -114,16 +115,20 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.DEV.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDNBT.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDDEV.get() ? 3 : 0);
             })
             //TODO: copy version. send network packet to client for clipboard
-            .then(Commands.literal("printnbt")
+            .then(Commands.literal("nbt")
                 .executes(x -> {
-                  return CommandNbt.executePrint(x);
+                  return CommandNbt.executePrintNbt(x);
+                }))
+            .then(Commands.literal("tags")
+                .executes(x -> {
+                  return CommandNbt.executePrintTags(x);
                 })))
         .then(Commands.literal(CyclicCommands.PING.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDPINGNETHER.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDPING.get() ? 3 : 0);
             })
             .then(Commands.literal("nether")
                 .executes(x -> {
@@ -143,9 +148,9 @@ public class CommandRegistry {
                       return CommandTask.add(x, StringArgumentType.getString(x, "arguments"));
                     })))
             .then(Commands.literal("remove")
-                .then(Commands.argument("index", IntegerArgumentType.integer(0, 20))
+                .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 20))
                     .executes(x -> {
-                      return CommandTask.remove(x, IntegerArgumentType.getInteger(x, "index"));
+                      return CommandTask.remove(x, IntegerArgumentType.getInteger(x, ARG_VALUE));
                     })))
             .then(Commands.literal("list")
                 .executes(x -> {
@@ -183,6 +188,9 @@ public class CommandRegistry {
         break;
         case 3:
           p.setGameType(GameType.SPECTATOR);
+        break;
+        default:
+          UtilChat.sendFeedback(x, integer + " = ?!");
         break;
       }
     }

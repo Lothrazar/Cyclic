@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import java.util.Map;
 import net.minecraft.block.Block;
@@ -92,7 +92,7 @@ public class BlockEnderCtrl extends BlockBase {
       //otherwise: main hand inserts, off hand takes out right away
       return ActionResultType.PASS;
     }
-    if (heldItem.getItem().isIn(CableWrench.WRENCH)) {
+    if (heldItem.getItem().isIn(DataTags.WRENCH)) {
       TileEnderCtrl contrl = (TileEnderCtrl) world.getTileEntity(pos);
       contrl.toggleShowText();
       RenderTextType nt = contrl.renderStyle;

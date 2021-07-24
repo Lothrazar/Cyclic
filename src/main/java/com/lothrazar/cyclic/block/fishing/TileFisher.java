@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.fishing;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.DataTags;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.List;

@@ -47,6 +47,7 @@ import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
+import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -73,12 +74,12 @@ public class ConfigRegistry {
   public static IntValue PEATERICHPOWER;
   public static IntValue PEATPOWER;
   public static DoubleValue PEATCHANCE;
-  public static BooleanValue COMMANDNBT;
+  public static BooleanValue COMMANDDEV;
   public static BooleanValue COMMANDGETHOME;
   public static BooleanValue COMMANDHEALTH;
   public static BooleanValue COMMANDHOME;
   public static BooleanValue COMMANDHUNGER;
-  public static BooleanValue COMMANDPINGNETHER;
+  public static BooleanValue COMMANDPING;
   public static BooleanValue LOGINFO;
   public static IntValue HEARTXPMINUS;
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
@@ -183,12 +184,12 @@ public class ConfigRegistry {
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
-    COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("gethome", false);
-    COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define("health", true);
-    COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define("home", true);
-    COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define("hunger", true);
-    COMMANDNBT = CFG.comment("True means only players with OP can use this /cyclic command").define("nbtprint", false);
-    COMMANDPINGNETHER = CFG.comment("True means only players with OP can use this /cyclic command").define("pingnether", false);
+    COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.GETHOME.toString(), false);
+    COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HEALTH.toString(), true);
+    COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HOME.toString(), true);
+    COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HUNGER.toString(), true);
+    COMMANDDEV = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.DEV.toString(), false);
+    COMMANDPING = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.PING.toString(), false);
     CFG.pop(); //command
     CFG.comment(WALL, " Logging related configs", WALL)
         .push("logging");

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
@@ -74,7 +74,7 @@ public class BlockItemShelf extends BlockBase {
       return ActionResultType.PASS;
     }
     TileItemShelf shelf = getTileEntity(world, pos);
-    if (heldItem.getItem().isIn(CableWrench.WRENCH)) {
+    if (heldItem.getItem().isIn(DataTags.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
       player.swingArm(hand);

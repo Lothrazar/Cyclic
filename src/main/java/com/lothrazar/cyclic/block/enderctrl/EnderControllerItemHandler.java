@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.util.UtilEnchant;
@@ -43,7 +44,12 @@ public class EnderControllerItemHandler extends ItemStackHandler {
       TileEntity te = controller.getWorld().getTileEntity(shelfPos);
       if (te != null && EnderShelfHelper.isShelf(te.getBlockState())) {
         TileEnderShelf shelf = (TileEnderShelf) te;
-        stack = insertItemActual(shelf, stack, insertWhenEmpty, simulate);
+        try {
+          stack = insertItemActual(shelf, stack, insertWhenEmpty, simulate);
+        }
+        catch (Exception e) {
+          ModCyclic.LOGGER.error("Insert item shelf error", e);
+        }
       }
     }
     return stack;
@@ -51,7 +57,8 @@ public class EnderControllerItemHandler extends ItemStackHandler {
 
   private ItemStack insertItemActual(TileEnderShelf shelf, ItemStack stack, boolean insertWhenEmpty, boolean simulate) {
     List<Integer> emptySlots = new ArrayList<>();
-    for (int i = 0; i < shelf.inventory.getSlots(); i++) {
+    final int slots = shelf.inventory.getSlots();
+    for (int i = 0; i < slots; i++) {
       ItemStack slotStack = shelf.inventory.getStackInSlot(i);
       if (slotStack.isEmpty()) {
         emptySlots.add(i);

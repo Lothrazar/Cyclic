@@ -27,7 +27,6 @@ public class SpikesDiamond extends SpikesBlock {
   }
 
   @Override
-  @Deprecated
   public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
     if (entity instanceof LivingEntity && state.get(ACTIVATED) && worldIn instanceof ServerWorld) {
       //attck from fake player
@@ -37,6 +36,8 @@ public class SpikesDiamond extends SpikesBlock {
         return;
       }
       if (tile.getTimer() == 1) {
+        //public net.minecraft.entity.LivingEntity field_184617_aD # ticksSinceLastSwing
+        tile.fakePlayer.get().ticksSinceLastSwing = (int) tile.fakePlayer.get().getCooldownPeriod();
         tile.fakePlayer.get().attackTargetEntityWithCurrentItem(entity);
         tile.fakePlayer.get().resetCooldown();
       }

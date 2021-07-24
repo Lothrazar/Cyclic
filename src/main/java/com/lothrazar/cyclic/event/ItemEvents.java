@@ -2,7 +2,9 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
+import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
@@ -326,6 +328,14 @@ public class ItemEvents {
     if (event.getItemStack().getItem() instanceof ItemScaffolding
         && event.getPlayer().isCrouching()) {
       scaffoldHit(event);
+    }
+    if (event.getPlayer().isCrouching() && event.getItemStack().getItem().isIn(DataTags.WRENCH)) {
+      if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof CableBase) {
+        //cyclic cable
+        //test? maybe config disable? 
+        event.getPlayer().swingArm(event.getHand());
+        event.getWorld().destroyBlock(event.getPos(), true);
+      }
     }
   }
 

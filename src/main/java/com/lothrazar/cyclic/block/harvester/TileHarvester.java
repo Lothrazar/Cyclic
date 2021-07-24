@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.api.IHarvesterOverride;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
-import com.lothrazar.cyclic.registry.DataTags;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;

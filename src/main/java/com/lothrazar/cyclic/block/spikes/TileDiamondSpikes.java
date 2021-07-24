@@ -50,25 +50,21 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
       timer--;
       return;
     }
-    timer = MathHelper.nextInt(world.rand, 1, 5);
+    timer = MathHelper.nextInt(world.rand, 12, 36);
     if (fakePlayer == null && world instanceof ServerWorld) {
       if (uuid == null) {
         uuid = UUID.randomUUID();
       }
       fakePlayer = setupBeforeTrigger((ServerWorld) world, "spikes_diamond", uuid);
       if (fakePlayer.get().getHeldItem(Hand.MAIN_HAND).isEmpty()) {
-        //        ModCyclic.LOGGER.
         Map<Enchantment, Integer> map = Maps.newHashMap();
-        map.put(Enchantments.SHARPNESS, 5);
+        map.put(Enchantments.BANE_OF_ARTHROPODS, 2);
+        map.put(Enchantments.SWEEPING, 3);
+        map.put(Enchantments.SHARPNESS, 1);
         ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
         EnchantmentHelper.setEnchantments(map, sword);
         fakePlayer.get().setHeldItem(Hand.MAIN_HAND, sword);
-        //        ModifiableAttributeInstance attrPlayer = fakePlayer.get().getAttribute(Attributes.ATTACK_KNOCKBACK);
-        //        AttributeModifier newValue = new AttributeModifier(uuid, "Bonus from " + ModCyclic.MODID, -10, AttributeModifier.Operation.ADDITION);
-        //        attrPlayer.applyPersistentModifier(newValue);
-        //        fakePlayer.get().ticksSinceLastSwing = 20;
       }
-      //      fakePlayer.get().setc
       if (world.rand.nextDouble() < 0.001F) {
         tryDumpFakePlayerInvo(fakePlayer, false);
       }

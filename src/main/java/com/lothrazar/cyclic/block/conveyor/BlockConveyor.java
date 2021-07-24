@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.cable.CableWrench;
+import com.lothrazar.cyclic.data.DataTags;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
@@ -217,7 +217,7 @@ public class BlockConveyor extends BlockBase {
         return ActionResultType.SUCCESS;
       }
     }
-    else if (heldItem.isIn(CableWrench.WRENCH)) {
+    else if (heldItem.isIn(DataTags.WRENCH)) {
       SimpleImmutableEntry<ConveyorType, Direction> nextState = nextConnectedState(state.get(TYPE), state.get(BlockStateProperties.HORIZONTAL_FACING));
       boolean success = world.setBlockState(pos, state.with(TYPE, nextState.getKey()).with(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
       if (success) {

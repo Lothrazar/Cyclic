@@ -6,8 +6,8 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
-import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Map;
@@ -86,15 +86,15 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
+    ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
+    if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHIMMUNE)) {
+      return;
+    }
     Integer cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && (cost > 0)) {
       return;
     }
     if (FLUIDCOST.get() > 0 && tank.getFluidAmount() < FLUIDCOST.get()) {
-      return;
-    }
-    ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
-    if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHIMMUNE)) {
       return;
     }
     ItemStack book = inputSlots.getStackInSlot(SLOT_BOOK);
@@ -118,7 +118,12 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     }
     //and input has at least one enchantment 
     //success happening
-    UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+    if (world.rand.nextDouble() < 0.5) {
+      UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+    }
+    else {
+      UtilSound.playSound(world, pos, SoundEvents.BLOCK_ANVIL_USE);
+    }
     energy.extractEnergy(cost, false);
     if (FLUIDCOST.get() > 0) {
       tank.drain(FLUIDCOST.get(), FluidAction.EXECUTE);

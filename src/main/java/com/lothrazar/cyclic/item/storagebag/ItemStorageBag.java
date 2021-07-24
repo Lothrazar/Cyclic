@@ -227,8 +227,9 @@ public class ItemStorageBag extends ItemBase {
     AtomicInteger slot = new AtomicInteger(-1);
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
-        if (h.getStackInSlot(i).getItem() == stack.getItem())
+        if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);
+        }
       }
     });
     return slot.get();
@@ -289,13 +290,21 @@ public class ItemStorageBag extends ItemBase {
   //unused but possibly useful
   public static int getFirstBagSlot(PlayerEntity player) {
     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-      if (isBag(player.inventory.getStackInSlot(i)))
+      if (isBag(player.inventory.getStackInSlot(i))) {
         return i;
+      }
     }
     return -1;
   }
 
   private static boolean isBag(ItemStack stack) {
     return stack.getItem() instanceof ItemStorageBag;
+  }
+
+  public static void setTimestamp(ItemStack myBag) {
+    if (myBag.isEmpty()) {
+      return;
+    }
+    myBag.getOrCreateTag().putLong("ts", System.currentTimeMillis());
   }
 }

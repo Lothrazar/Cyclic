@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
-import com.lothrazar.cyclic.registry.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.endershelf;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilEnchant;
@@ -91,7 +91,7 @@ public class BlockEnderShelf extends BlockBase {
       return ActionResultType.PASS;
     }
     TileEnderShelf shelf = getTileEntity(world, pos);
-    if (heldItem.getItem().isIn(CableWrench.WRENCH)) {
+    if (heldItem.getItem().isIn(DataTags.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
       player.swingArm(hand);

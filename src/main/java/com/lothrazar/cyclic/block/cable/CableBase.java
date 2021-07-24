@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.cable;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -92,8 +93,7 @@ public abstract class CableBase extends BlockBase {
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world,
-      BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
     if (hit.getFace() == null) {
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
@@ -101,7 +101,7 @@ public abstract class CableBase extends BlockBase {
       return super.onBlockActivated(state, world, pos, player, handIn, hit);
     }
     ItemStack stack = player.getHeldItem(handIn);
-    if (!stack.getItem().isIn(CableWrench.WRENCH)) {
+    if (!stack.getItem().isIn(DataTags.WRENCH)) {
       //ex
       boolean hasExtractor = false;
       for (Direction side : Direction.values()) {

@@ -13,7 +13,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerStorageBag extends ContainerBase {
 
-  public ItemStack bag;
+  public ItemStack bag = ItemStack.EMPTY;
   public int slot;
   public int slots;
 
@@ -47,7 +47,14 @@ public class ContainerStorageBag extends ContainerBase {
         int col = j % 9;
         int xPos = 8 + col * Const.SQ;
         int yPos = 8 + row * Const.SQ;
-        this.addSlot(new SlotItemHandler(h, j, xPos, yPos));
+        this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
+
+          @Override
+          public void onSlotChange(ItemStack oldStackIn, ItemStack newStackIn) {
+            ItemStorageBag.setTimestamp(bag);
+            super.onSlotChange(oldStackIn, newStackIn);
+          }
+        });
       }
     });
     layoutPlayerInventorySlots(8, 174);
@@ -60,15 +67,15 @@ public class ContainerStorageBag extends ContainerBase {
 
   @Override
   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    ItemStorageBag.setTimestamp(bag);
     if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
-      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
-      if (myBag.getItem() instanceof ItemStorageBag) {
+      if (this.inventorySlots.get(slotId).getStack().getItem() instanceof ItemStorageBag) {
         // if its a normal click with a Dye item, then update stack color
         if (clickTypeIn == ClickType.PICKUP) {
           ItemStack mouseStack = player.inventory.getItemStack();
           if (mouseStack.getItem() instanceof DyeItem) {
             DyeItem dye = (DyeItem) mouseStack.getItem();
-            ItemStorageBag.setColour(myBag, dye.getDyeColor());
+            ItemStorageBag.setColour(inventorySlots.get(slotId).getStack(), dye.getDyeColor());
           }
         }
         //lock the bag in place by returning empty
