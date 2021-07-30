@@ -208,44 +208,61 @@ public class RecipeSolidifier extends IForgeRegistryEntry.Impl<IRecipe> implemen
     }, new ItemStack(Blocks.OBSIDIAN),
         "lava", 1000));
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.BUCKET)
-    }, new ItemStack(Items.MILK_BUCKET),
-        "milk", 1000));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.ARROW)
-    }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionTypes.STRONG_POISON),
-        "poison", 100));
-    //    addRecipe(new RecipeSolidifier(new ItemStack[] {
-    //        new ItemStack(Items.ARROW)
-    //    }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), ItemPotionContent.potionTypeButterII),
-    //        "poison", 100));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
         new ItemStack(Items.ARROW), new ItemStack(Items.ARROW), new ItemStack(Items.ARROW), new ItemStack(Items.FLINT)
     }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW, 3), PotionTypes.STRONG_HARMING),
         "lava", 500));
-    Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
     addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.GOLD_NUGGET)
-    }, new ItemStack(amber), "amber", 1000));
-    Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.IRON_NUGGET)
-    }, new ItemStack(crystal),
-        "crystal", 1000));
-    Item biomass = Item.getByNameOrId(Const.MODRES + "peat_biomass");
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.WHEAT_SEEDS)
-    }, new ItemStack(biomass),
-        "biomass", 1000));
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Items.APPLE)
-    }, new ItemStack(biomass),
-        "biomass", 800));
-    Item peat = Item.getByNameOrId(Const.MODRES + "peat_unbaked");
-    addRecipe(new RecipeSolidifier(new ItemStack[] {
-        new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT)
-    }, new ItemStack(peat, 2),
-        "biomass", 100));
+        new ItemStack(Items.BUCKET)
+    }, new ItemStack(Items.MILK_BUCKET),
+        "milk", 1000));
+    if (FluidRegistry.isFluidRegistered("poison")) {
+      addRecipe(new RecipeSolidifier(new ItemStack[] {
+          new ItemStack(Items.ARROW)
+      }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionTypes.STRONG_POISON),
+          "poison", 100));
+      // addRecipe(new RecipeSolidifier(new ItemStack[] {
+      //     new ItemStack(Items.ARROW)
+      // }, PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), ItemPotionContent.potionTypeButterII),
+      //     "poison", 100));
+    }
+    if (FluidRegistry.isFluidRegistered("amber")) {
+      Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
+      if (amber != null) {
+        addRecipe(new RecipeSolidifier(new ItemStack[] {
+            new ItemStack(Items.GOLD_NUGGET)
+        }, new ItemStack(amber), 
+            "amber", 1000));
+      }
+    }
+    if (FluidRegistry.isFluidRegistered("crystal")) {
+      Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
+      if (crystal != null) {
+        addRecipe(new RecipeSolidifier(new ItemStack[] {
+            new ItemStack(Items.IRON_NUGGET)
+        }, new ItemStack(crystal),
+            "crystal", 1000));
+      }
+    }
+    if (FluidRegistry.isFluidRegistered("biomass")) {
+      Item biomass = Item.getByNameOrId(Const.MODRES + "peat_biomass");
+      if (biomass != null) {
+        addRecipe(new RecipeSolidifier(new ItemStack[] {
+            new ItemStack(Items.WHEAT_SEEDS)
+        }, new ItemStack(biomass),
+            "biomass", 1000));
+        addRecipe(new RecipeSolidifier(new ItemStack[] {
+            new ItemStack(Items.APPLE)
+        }, new ItemStack(biomass),
+            "biomass", 800));
+      }
+      Item peat = Item.getByNameOrId(Const.MODRES + "peat_unbaked");
+      if (peat != null) {
+        addRecipe(new RecipeSolidifier(new ItemStack[] {
+            new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT), new ItemStack(Blocks.DIRT)
+        }, new ItemStack(peat, 2),
+            "biomass", 100));
+      }
+    }
   }
 
   public static void addRecipe(RecipeSolidifier rec) {
