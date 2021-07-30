@@ -204,56 +204,70 @@ public class RecipeMelter extends IForgeRegistryEntry.Impl<IRecipe> implements I
           new ItemStack[] { new ItemStack(Items.BONE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.GUNPOWDER) },
           "xpjuice", 10));
     }
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.LOG2) },
-        "amber", 100));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.LOG2), new ItemStack(Blocks.LOG2),
-            new ItemStack(Blocks.VINE), new ItemStack(Blocks.NETHERRACK) },
-        "amber", 1000));
-    Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(amber) },
-        "amber", 1000));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.POISONOUS_POTATO) },
-        "poison", 2000));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE),
-            new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
-        "poison", 500));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.EMERALD), new ItemStack(amber) },
-        "crystal", 1000));
-    Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(crystal) },
-        "crystal", 1000));
-    Item biomass = Item.getByNameOrId(Const.MODRES + "peat_biomass");
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(biomass) },
-        "biomass", 1000));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.WATERLILY) },
-        "biomass", 100));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.CARROT) },
-        "biomass", 100));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.VINE) },
-        "biomass", 50));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.CACTUS) },
-        "biomass", 50));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Blocks.TALLGRASS) },
-        "biomass", 25));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.WHEAT_SEEDS) },
-        "biomass", 25));
-    addRecipe(new RecipeMelter(
-        new ItemStack[] { new ItemStack(Items.APPLE) },
-        "biomass", 100));
+    if (FluidRegistry.isFluidRegistered("amber")) {
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Blocks.LOG2) },
+          "amber", 100));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Blocks.LOG2), new ItemStack(Blocks.LOG2),
+              new ItemStack(Blocks.VINE), new ItemStack(Blocks.NETHERRACK) },
+          "amber", 1000));
+      Item amber = Item.getByNameOrId(Const.MODRES + "crystallized_amber");
+      if (amber != null) {
+        addRecipe(new RecipeMelter(
+            new ItemStack[] { new ItemStack(amber) },
+            "amber", 1000));
+      }
+    }
+    if (FluidRegistry.isFluidRegistered("poison")) {
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Items.POISONOUS_POTATO) },
+          "poison", 2000));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE),
+              new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH) },
+          "poison", 500));
+    }
+    if (FluidRegistry.isFluidRegistered("crystal")) {
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.EMERALD), new ItemStack(amber) },
+          "crystal", 1000));
+      Item crystal = Item.getByNameOrId(Const.MODRES + "crystallized_obsidian");
+      if (crystal != null) {
+        addRecipe(new RecipeMelter(
+            new ItemStack[] { new ItemStack(crystal) },
+            "crystal", 1000));
+      }
+    }
+    if (FluidRegistry.isFluidRegistered("biomass")) {
+      Item biomass = Item.getByNameOrId(Const.MODRES + "peat_biomass");
+      if (biomass != null) {
+        addRecipe(new RecipeMelter(
+            new ItemStack[] { new ItemStack(biomass) },
+            "biomass", 1000));
+      }
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Blocks.WATERLILY) },
+          "biomass", 100));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Items.CARROT) },
+          "biomass", 100));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Blocks.VINE) },
+          "biomass", 50));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Blocks.CACTUS) },
+          "biomass", 50));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Blocks.TALLGRASS) },
+          "biomass", 25));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Items.WHEAT_SEEDS) },
+          "biomass", 25));
+      addRecipe(new RecipeMelter(
+          new ItemStack[] { new ItemStack(Items.APPLE) },
+          "biomass", 100));
+    }
   }
 
   public static void addRecipe(RecipeMelter rec) {
