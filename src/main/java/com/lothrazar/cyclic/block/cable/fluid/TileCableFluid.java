@@ -41,7 +41,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCableFluid extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  ItemStackHandler filter = new ItemStackHandler(1) {
+  final ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
@@ -81,7 +81,8 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     BlockPos target = this.pos.offset(extractSide);
     Direction incomingSide = extractSide.getOpposite();
     IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
-    if (stuff == null) {
+    if (stuff == null || stuff.getTanks() == 0) {
+      //some tanks can have zero tanks       //      at tfar.tanknull.inventory.FluidStackHandler.getFluidInTank(FluidStackHandler.java:40) ~[tanknull:2.3-1.16.4] 
       return;
     }
     if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {

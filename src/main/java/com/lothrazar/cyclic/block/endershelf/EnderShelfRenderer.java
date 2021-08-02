@@ -86,7 +86,7 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
         }
       }
       String displayName = tile.inventory.nameCache[slot];
-      if (displayName.isEmpty()) {
+      if (displayName == null || displayName.isEmpty()) {
         displayName = stack.getDisplayName().getString();
       }
       final float scaleName = 0.02832999F + 0.1F * getScaleFactor(displayName);
