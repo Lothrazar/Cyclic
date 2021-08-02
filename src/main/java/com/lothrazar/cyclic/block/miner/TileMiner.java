@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.miner;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.item.datacard.BlockStateMatcher;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -217,11 +218,15 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     if (filter.isEmpty()) {
       return true; //ya go
     }
-    for (BlockState st : BlockstateCard.getSavedStates(filter)) {
+    for (BlockStateMatcher m : BlockstateCard.getSavedStates(filter)) {
+      BlockState st = m.getState();
       if (targetState.getBlock() == st.getBlock()) {
-        //only this
-        boolean propy = this.propertiesMatch(targetState, st);
-        return propy;
+        if (m.isExactProperties() == false) {
+          // the blocks DO match, isExact is flagged as no, so we are good
+          return true;
+        }
+        //tag DOES want to match Exactly on Properties
+        return this.propertiesMatch(targetState, st);
       }
     }
     return false;

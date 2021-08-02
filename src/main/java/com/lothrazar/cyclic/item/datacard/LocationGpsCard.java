@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -38,13 +39,13 @@ public class LocationGpsCard extends ItemBase {
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     BlockPosDim dim = getPosition(stack);
     if (dim != null) {
-      tooltip.add(new TranslationTextComponent(dim.toString()));
-      if (flagIn.isAdvanced()) {
+      tooltip.add(new TranslationTextComponent(dim.toString()).mergeStyle(TextFormatting.GRAY));
+      if (flagIn.isAdvanced() || Screen.hasShiftDown()) {
         String side = "S: " + dim.getSide().toString().toUpperCase();
-        tooltip.add(new TranslationTextComponent(side));
+        tooltip.add(new TranslationTextComponent(side).mergeStyle(TextFormatting.GRAY));
         String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
-        tooltip.add(new TranslationTextComponent(sideF));
-        tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()));
+        tooltip.add(new TranslationTextComponent(sideF).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()).mergeStyle(TextFormatting.GRAY));
       }
     }
     else {
