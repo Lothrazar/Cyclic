@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,9 +40,8 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
   private static final int TICK_DELAY = 10;
   public static final int LIGHT_LIMIT = 9;
   private static final int MAX_DISTANCE_SQ = (int) Math.pow(16, 2);
-  private static final int MAX_LIST_SIZE = 200;
+  private static final int MAX_LIST_SIZE = 100;
   private int timer = 0;
-  private boolean ticking = false;
 
   public AutoCaveTorchItem(Properties properties) {
     super(properties);
@@ -63,18 +63,14 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
       stack.setDamage(stack.getMaxDamage());
       return;
     }
-    timer--;
-    if (timer <= 0 && !ticking) {
-      ticking = true;
+    if (timer > 0) {
+      timer--;
+    }
+    if (timer == 0) {
       BlockPos pos = entityIn.getPosition();
       if (world.getLightValue(pos) <= LIGHT_LIMIT) {
-        List<BlockPos> blockHashList = UtilShape.caveInterior(world, pos, player.getHorizontalFacing(), MAX_LIST_SIZE / 2);
-        int count = 0;
+        List<BlockPos> blockHashList = UtilShape.caveInterior(world, pos, player.getHorizontalFacing(), MAX_LIST_SIZE);
         for (BlockPos testPos : blockHashList) {
-          count++;
-          if (count > MAX_LIST_SIZE) {
-            break; // break loop.  mimic previous "iterator next and remove" that was causing the ConcurrentModificationExceptions
-          }
           if (shouldPlaceTorch(world, player, testPos)) {
             if (UtilPlaceBlocks.placeTorchSafely(world, testPos)) {
               UtilItemStack.damageItem(player, stack);
@@ -83,12 +79,9 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
             break;
           }
         }
-        ticking = false;
       }
     }
-    if (!ticking) {
-      tryRepairWith(stack, player, Blocks.TORCH.asItem());
-    }
+    tryRepairWith(stack, player, Blocks.TORCH.asItem());
   }
 
   private boolean shouldPlaceTorch(World world, PlayerEntity player, BlockPos pos) {

@@ -310,6 +310,7 @@ public class UtilShape {
     return shape;
   }
 
+  //Guaranteed to return a list of `distance` or less blocks.
   public static List<BlockPos> caveInterior(World world, BlockPos posCurrent, Direction pfacing, int distance) {
     List<BlockPos> shape = new ArrayList<>();
     if (pfacing == Direction.WEST || pfacing == Direction.EAST) {
