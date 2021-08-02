@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -24,6 +25,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockstateCard extends ItemBase {
 
+  private static final String EXACT_TAG = "doExactState";
   private static final String STATESTAG = "states";
   private static final int MAXSIZE = 18;
 
@@ -35,26 +37,36 @@ public class BlockstateCard extends ItemBase {
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack held, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
-      for (BlockState st : getSavedStates(held)) {
-        tooltip.add(new TranslationTextComponent(st.getBlock().getTranslationKey()).mergeStyle(TextFormatting.DARK_GRAY));
+      for (BlockStateMatcher m : getSavedStates(held)) {
+        BlockState st = m.getState();
+        TextFormatting c = m.isExactProperties() ? TextFormatting.LIGHT_PURPLE : TextFormatting.DARK_PURPLE;
+        String extra = m.isExactProperties() ? " [state]" : " [block]"; // star for not exact
+        tooltip.add(new TranslationTextComponent(st.getBlock().getTranslationKey()).appendString(extra).mergeStyle(c));
+        if (m.isExactProperties() && Screen.hasShiftDown()) {
+          tooltip.add(new TranslationTextComponent(st.toString()).mergeStyle(TextFormatting.DARK_GRAY));
+        }
       }
-      //get it
-      //      states = held.getTag().getList(STATESTAG, 10);
-      //      for (int i = 0; i < states.size(); ++i) {
-      //        tooltip.add(new TranslationTextComponent("" + states.getCompound(i)).mergeStyle(TextFormatting.GRAY));
-      //      }
+    }
+    else {
+      super.addInformation(held, worldIn, tooltip, flagIn);
     }
   }
 
-  public static List<BlockState> getSavedStates(ItemStack held) {
-    List<BlockState> st = new ArrayList<>();
+  public static List<BlockStateMatcher> getSavedStates(ItemStack held) {
+    List<BlockStateMatcher> st = new ArrayList<>();
     if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
       //get it
       ListNBT stateTags = held.getTag().getList(STATESTAG, 10);
       for (int i = 0; i < stateTags.size(); ++i) {
-        BlockState stateFound = NBTUtil.readBlockState(stateTags.getCompound(i));
+        CompoundNBT currTag = stateTags.getCompound(i);
+        BlockState stateFound = NBTUtil.readBlockState(currTag);
         if (stateFound != null && stateFound.getBlock() != Blocks.AIR) {
-          st.add(stateFound);
+          BlockStateMatcher matcher = new BlockStateMatcher();
+          matcher.setState(stateFound);
+          if (currTag.contains(EXACT_TAG)) {
+            matcher.setExactProperties(currTag.getBoolean(EXACT_TAG));
+          }
+          st.add(matcher);
         }
       }
     }
@@ -88,6 +100,9 @@ public class BlockstateCard extends ItemBase {
         return ActionResultType.PASS;
       }
     }
+    //not crouching: default and match exact
+    //is crouching: do exact state is false, do only block
+    stateTag.putBoolean(EXACT_TAG, !player.isCrouching());
     stateTags.add(stateTag);
     held.getOrCreateTag().put(STATESTAG, stateTags);
     player.swingArm(hand);

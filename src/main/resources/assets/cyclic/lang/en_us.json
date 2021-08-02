@@ -192,8 +192,8 @@
     "block.cyclic.computer_shape.guide":"Place two  $(l:misc/location)GPS Card$(/l) cards and one  $(l:misc/shape_data)Shape Card$(/l), then you can read, copy, paste, and merge shapes together. ",
        
     "item.cyclic.blockstate_data":"BlockState Data Card",
-    "item.cyclic.blockstate_data.tooltip":"Read and save BlockStates to filter Miners",
-    "item.cyclic.blockstate_data.guide":"Use on a block to read its block state.  Craft to erase the list.  It can distinguish between identical blocks in different states such as rotated stairs, double slabs, etc.  See $(l:machines/miner)Miner$(/l)",
+    "item.cyclic.blockstate_data.tooltip":"Use to remember target block or blockstate",
+    "item.cyclic.blockstate_data.guide":"Use on a block to read and remember its block state.  Crouch while using to filter on the block only.  Can store a list of 18 blockstates.  Craft to erase the list.  It can distinguish between identical blocks in different states such as rotated stairs, double slabs, etc if in exact [blockstate] mode. Used for machine filters, See $(l:machines/miner)Miner$(/l)",
     
     "item.cyclic.filter_data":"Filter Data Card",
     "item.cyclic.filter_data.tooltip":"Holds items and settings used for filters",
@@ -1005,8 +1005,8 @@
     "block.cyclic.enchanter.tooltip": "Add enchantments using experience fluid and energy",
     "block.cyclic.enchanter.guide": "Feed in experience as a fluid, and then add any enchantable item. Can be automated with pipes & hoppers.",
     "block.cyclic.fisher": "Fishing Net",
-    "block.cyclic.fisher.tooltip": "Fishes in nearby water if given a fishing rod",
-    "block.cyclic.fisher.guide": "Place near water and give it a fishing rod and it will automatically catch fish.$(br2)Caught fish will be dropped in the world and need to be picked up manually or by other machines.",
+    "block.cyclic.fisher.tooltip": "Uses fishing rods while underwater",
+    "block.cyclic.fisher.guide": "Place near water and give it a fishing rod and it will automatically catch fish.  Works best when under or surrounded by water$(br2)Caught fish will be dropped in the world and need to be picked up manually or by other machines.",
     "block.cyclic.scaffold.guide.title": "Scaffolding",
     "block.cyclic.scaffold.guide": "Scaffolding is a cheap, easy to break block that can be used when building. All Scaffolding can be placed in mid-air and climbed like a ladder.",
     "block.cyclic.scaffold_fragile": "Fragile Scaffolding",
