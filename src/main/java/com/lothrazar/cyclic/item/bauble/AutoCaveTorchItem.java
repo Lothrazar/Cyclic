@@ -68,7 +68,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     }
     if (timer == 0) {
       BlockPos pos = entityIn.getPosition();
-      if (world.getLightValue(pos) <= LIGHT_LIMIT) {
+      if (world.getLight(pos) <= LIGHT_LIMIT) {
         List<BlockPos> blockHashList = UtilShape.caveInterior(world, pos, player.getHorizontalFacing(), MAX_LIST_SIZE);
         for (BlockPos testPos : blockHashList) {
           if (shouldPlaceTorch(world, player, testPos)) {
