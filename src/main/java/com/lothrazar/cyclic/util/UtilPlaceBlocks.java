@@ -149,9 +149,9 @@ public class UtilPlaceBlocks {
     return world.setBlockState(pos, Blocks.AIR.getDefaultState()); // world.destroyBlock(pos, false);
   }
 
-  public static boolean placeTorchSafely(World world, BlockPos blockPos) {
+  public static boolean placeTorchSafely(World world, BlockPos blockPos, Direction solidBlockDirection) {
     BlockItem torch = (BlockItem) Items.TORCH;
-    BlockItemUseContext context = new DirectionalPlaceContext(world, blockPos, Direction.DOWN, Items.TORCH.getDefaultInstance(), Direction.DOWN);
+    BlockItemUseContext context = new DirectionalPlaceContext(world, blockPos, solidBlockDirection, Items.TORCH.getDefaultInstance(), solidBlockDirection);
     return torch.tryPlace(context).isSuccessOrConsume();
   }
 }
