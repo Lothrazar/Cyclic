@@ -140,24 +140,25 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     HashMap<BlockPos, Integer> distances = new HashMap<>();
     queue.add(playerPos);
     distances.put(playerPos, 0);
-    ArrayList<TorchPos> validTorchPositions = bfs(world, queue, distances, targetDistance, fallbackTargetDistance);
+    final int playerElevation = playerPos.getY();
+    ArrayList<TorchPos> validTorchPositions = bfs(world, queue, distances, targetDistance, fallbackTargetDistance, playerElevation);
 
     final boolean preferWalls = isPreferWalls();
-    final int playerElevation = playerPos.getY();
     validTorchPositions.sort(
-        // If preferWalls is enabled, always prefer torches that are not on the ground, and are at feet level or above.
-        Comparator.<TorchPos, Boolean>comparing(torchPos -> preferWalls && torchPos.isNotOnGround())
+        // If preferWalls is enabled, always prefer torches that are not on the ground and are at feet level or above.
+        // This is to prevent torches from being placed on the edge of platforms / cliffs.
+        Comparator.<TorchPos, Boolean>comparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.relativeHeight >= 0)
             // Prefer torch positions which are currently darker.
             // This needs to be before the below. If the two were swapped, torches would be placed CLOSER to existing
             // light sources when digging a tunnel!
             // Additionally, prefer torches which are closer in elevation to the current position.
             // This is a naive heuristic to prevent torches from being placed too high from the ground, therefore
             // lighting up less of the ground.
-            // The two heuristics are combined, with the elevation being weighted double. Separating the two
-            // heuristics either results in torches being redundantly placed too high up, or torches being placed in
-            // brighter areas just because they have a lower elevation. Using a weighted mix combination fixes both of
-            // these problems.
-            .thenComparing(torchPos -> -(torchPos.currentLightLevel + 2*Math.abs(torchPos.pos.getY() - playerElevation)))
+            // The two heuristics are combined, with the elevation being weighted double (or quadruple if it's beneath
+            // the player). Separating the two heuristics either results in torches being redundantly placed too high
+            // up, or torches being placed in brighter areas just because they have a lower elevation. Using a weighted
+            // mix fixes both of these problems.
+            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.relativeHeight >= 0 ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
             // Prefer torches with a LOWER player light level as a heuristic to light up a bigger area.
             // In other words, torches which are further away from the player.
             .thenComparing(torchPos -> -torchPos.playerLightLevel)
@@ -177,14 +178,14 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
 
     // Couldn't find a valid position. Fall back on ANY torch which could increase the player light level above
     // lightLimit + 1.
-    validTorchPositions = bfs(world, queue, distances, fallbackTargetDistance, fallbackTargetDistance);
+    validTorchPositions = bfs(world, queue, distances, fallbackTargetDistance, fallbackTargetDistance, playerElevation);
     validTorchPositions.sort(
         // Prefer torches with the HIGHEST player light level, as we should compensate for not being able light up this
         // block to the expected light value.
         Comparator.<TorchPos, Integer>comparing(torchPos -> torchPos.playerLightLevel)
             // Same as above.
-            .thenComparing(torchPos -> preferWalls && torchPos.isNotOnGround())
-            .thenComparing(torchPos -> -(torchPos.currentLightLevel + 2*Math.abs(torchPos.pos.getY() - playerElevation)))
+            .thenComparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.relativeHeight >= 0)
+            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.relativeHeight >= 0 ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
             .thenComparing(TorchPos::isNotOnGround)
             .reversed()
     );
@@ -200,9 +201,10 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
   /**
    * @param maxPoppedDist The maximum distance that a pos can be popped off of the BFS.
    * @param maxPushedDist The maximum distance that a pos can be pushed onto the BFS.
+   * @param playerElevation The y value of the player's feet.
    * @return Newly found valid torch positions.
    */
-  private ArrayList<TorchPos> bfs(World world, Queue<BlockPos> queue, HashMap<BlockPos, Integer> distances, int maxPoppedDist, int maxPushedDist) {
+  private ArrayList<TorchPos> bfs(World world, Queue<BlockPos> queue, HashMap<BlockPos, Integer> distances, int maxPoppedDist, int maxPushedDist, int playerElevation) {
     ArrayList<TorchPos> validTorchPositions = new ArrayList<>();
     while (!queue.isEmpty()) {
       final BlockPos poppedPos = queue.peek();
@@ -230,8 +232,8 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
 
       if (isValidTorch && world.isAirBlock(poppedPos)) {
         // TODO: don't add torches which would update floating sand or gravel
-        validTorchPositions.add(new TorchPos(poppedPos, TORCH_LIGHT_LEVEL - poppedDistance,
-            world.getLight(poppedPos), solidDirections));
+        validTorchPositions.add(new TorchPos(poppedPos, poppedPos.getY() - playerElevation,
+            TORCH_LIGHT_LEVEL - poppedDistance, world.getLight(poppedPos), solidDirections));
       }
     }
     return validTorchPositions;
@@ -243,6 +245,11 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
    */
   private static class TorchPos {
     final BlockPos pos;
+    /**
+     * The height of this torch relative to the player's feet. 1 means it is at eye level, -1 means it is at the level
+     * of the block the player is standing on.
+     */
+    final int relativeHeight;
     /**
      * The expected light level at playerPos if this position is used.
      */
@@ -256,9 +263,10 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
      */
     final EnumSet<Direction> solidDirections;
 
-    public TorchPos(BlockPos pos, int playerLightLevel, int currentLightLevel, EnumSet<Direction> solidDirections) {
+    public TorchPos(BlockPos pos, int relativeHeight, int playerLightLevel, int currentLightLevel, EnumSet<Direction> solidDirections) {
       assert !solidDirections.isEmpty();
       this.pos = pos;
+      this.relativeHeight = relativeHeight;
       this.playerLightLevel = playerLightLevel;
       this.currentLightLevel = currentLightLevel;
       this.solidDirections = solidDirections;
