@@ -29,7 +29,9 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FallingBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -216,10 +218,12 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
 
       // Enumerate all successors while keeping track whether a torch can be placed here.
       boolean isValidTorch = false;
+      boolean wouldUpdateFloatingFallingBlock = false;
       EnumSet<Direction> solidDirections = EnumSet.noneOf(Direction.class);
       for (Direction direction : Direction.values()) {
         final BlockPos nextPos = poppedPos.offset(direction);
-        if (world.getBlockState(nextPos).isSolid()) {
+        final BlockState state = world.getBlockState(nextPos);
+        if (state.isSolid()) {
           solidDirections.add(direction);
           if (direction != Direction.UP) {
             isValidTorch = true;
@@ -228,10 +232,16 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
           distances.put(nextPos, poppedDistance + 1);
           queue.add(nextPos);
         }
+
+        // Check if placing a torch here would cause a floating block to fall.
+        // Placing a torch BELOW a floating block is okay, though.
+        if (direction != Direction.UP && state.getBlock() instanceof FallingBlock &&
+            FallingBlock.canFallThrough(world.getBlockState(nextPos.down()))) {
+          wouldUpdateFloatingFallingBlock = true;
+        }
       }
 
-      if (isValidTorch && world.isAirBlock(poppedPos)) {
-        // TODO: don't add torches which would update floating sand or gravel
+      if (isValidTorch && !wouldUpdateFloatingFallingBlock && world.isAirBlock(poppedPos)) {
         validTorchPositions.add(new TorchPos(poppedPos, poppedPos.getY() - playerElevation,
             TORCH_LIGHT_LEVEL - poppedDistance, world.getLight(poppedPos), solidDirections));
       }
