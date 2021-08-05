@@ -118,12 +118,6 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
       return;
     }
 
-    // We will be doing some slightly expensive calculations below (a BFS over N nodes, sorting and trying to place N
-    // torches, where N <= 3303).
-    // We should be able to place down a torch here - but if we can't, we should still wait TICK_DELAY ticks before
-    // trying to place the next torch anyway as it is likely that subsequent attempts will also fail.
-    timer.set(TICK_DELAY);
-
     // Increase the light target the darker the current light level is, compared to the light limit.
     // For example, if the player was moving very quickly away from a light source, it's possible that
     // `playerPosLight == lightLimit-1`, i.e. they moved over the block which would have `playerPosLight == lightLimit`.
@@ -174,6 +168,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     for (TorchPos torchPos : validTorchPositions) {
       if (UtilPlaceBlocks.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
         UtilItemStack.damageItem(player, stack);
+        timer.set(TICK_DELAY);
         return;
       }
     }
@@ -195,9 +190,13 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     for (TorchPos torchPos : validTorchPositions) {
       if (UtilPlaceBlocks.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
         UtilItemStack.damageItem(player, stack);
+        timer.set(TICK_DELAY);
         return;
       }
     }
+
+    // Didn't find a match. We'll probably get the same result next time, so delay the next placement attempt.
+    timer.set(TICK_DELAY);
   }
 
   /**
