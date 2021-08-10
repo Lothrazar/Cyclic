@@ -143,7 +143,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     validTorchPositions.sort(
         // If preferWalls is enabled, always prefer torches that are not on the ground and are at feet level or above.
         // This is to prevent torches from being placed on the edge of platforms / cliffs.
-        Comparator.<TorchPos, Boolean>comparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.relativeHeight >= 0)
+        Comparator.<TorchPos, Boolean>comparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.isNotBelowFeet())
             // Prefer torch positions which are currently darker.
             // This needs to be before the below. If the two were swapped, torches would be placed CLOSER to existing
             // light sources when digging a tunnel!
@@ -154,7 +154,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
             // the player). Separating the two heuristics either results in torches being redundantly placed too high
             // up, or torches being placed in brighter areas just because they have a lower elevation. Using a weighted
             // mix fixes both of these problems.
-            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.relativeHeight >= 0 ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
+            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.isNotBelowFeet() ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
             // Prefer torches with a LOWER player light level as a heuristic to light up a bigger area.
             // In other words, torches which are further away from the player.
             .thenComparing(torchPos -> -torchPos.playerLightLevel)
@@ -181,8 +181,8 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
         // block to the expected light value.
         Comparator.<TorchPos, Integer>comparing(torchPos -> torchPos.playerLightLevel)
             // Same as above.
-            .thenComparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.relativeHeight >= 0)
-            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.relativeHeight >= 0 ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
+            .thenComparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.isNotBelowFeet())
+            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.isNotBelowFeet() ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
             .thenComparing(TorchPos::isNotOnGround)
             .reversed()
     );
@@ -286,6 +286,13 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
      */
     public boolean isNotOnGround() {
       return !solidDirections.contains(Direction.DOWN);
+    }
+
+    /**
+     * @return Whether the torch is at feet level or higher.
+     */
+    public boolean isNotBelowFeet() {
+      return relativeHeight >= 0;
     }
 
     /**
