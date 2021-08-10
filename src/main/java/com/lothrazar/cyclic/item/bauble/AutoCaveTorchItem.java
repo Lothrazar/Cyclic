@@ -39,6 +39,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class AutoCaveTorchItem extends ItemBaseToggle {
   private static final int TORCH_LIGHT_LEVEL = 14;
@@ -47,11 +49,10 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
    * Maximum number of blocks to move the current players' position down by to find a surface block.
    */
   private static final int BLOCKS_TO_MOVE_FEET_DOWN = 2;
-  // TODO: Replace the constants below with configurable options.
-  private static final int LIGHT_LIMIT = 7;
-  private static final int LIGHT_TARGET = 10;
-  private static final boolean PREFER_WALLS = true;
-  private static final boolean PREFER_LEFT_WALL = false;
+  public static IntValue LIGHT_LIMIT;
+  public static IntValue LIGHT_TARGET;
+  public static BooleanValue PREFER_WALLS;
+  public static BooleanValue PREFER_LEFT_WALL;
 
   private final AtomicInteger timer = new AtomicInteger();
   private final Lock lock = new ReentrantLock();
@@ -328,16 +329,16 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
    * @return The light level at which to start placing down a torch.
    */
   private static int getLightLimit() {
-    return Math.min(LIGHT_LIMIT, TORCH_LIGHT_LEVEL - 1);
+    return Math.min(LIGHT_LIMIT.get(), TORCH_LIGHT_LEVEL - 1);
   }
 
   /**
    * @return The light level of the current block after placing down a torch. The higher this is, the closer torches
    * will be placed to you.
-   * In general, you can walk lightTarget - lightLimit blocks before needing to place down another torch.
+   * In general, you can walk at least lightTarget - lightLimit blocks before needing to place down another torch.
    */
   private static int getLightTarget() {
-    return Math.min(Math.max(getLightLimit() + 1, LIGHT_TARGET), TORCH_LIGHT_LEVEL);
+    return Math.min(Math.max(getLightLimit() + 1, LIGHT_TARGET.get()), TORCH_LIGHT_LEVEL);
   }
 
   /**
@@ -345,7 +346,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
    * with a wall torch).
    */
   private static boolean isPreferWalls() {
-    return PREFER_WALLS;
+    return PREFER_WALLS.get();
   }
 
   /**
@@ -354,6 +355,6 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
    * large caves, torches will always be placed in the best position to light up the area regardless of side.
    */
   private static boolean isPreferLeftWall() {
-    return PREFER_LEFT_WALL;
+    return PREFER_LEFT_WALL.get();
   }
 }

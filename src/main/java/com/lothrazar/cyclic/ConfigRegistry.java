@@ -45,6 +45,7 @@ import com.lothrazar.cyclic.enchant.EnchantXp;
 import com.lothrazar.cyclic.item.EdibleFlightItem;
 import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
+import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
@@ -254,6 +255,16 @@ public class ConfigRegistry {
     CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("luck", 10, 0, 100);
     CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("speed", 0.5F, 0, 2F);
     CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("attackspeed", 0.5F, 0, 2F);
+    CFG.comment(WALL, " Caving Torch Charm settings", WALL).push("caving_torch");
+    AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 13);
+    AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
+        "Light level of the current block after placing down a torch. Must be greater than light_limit",
+        "Higher values means torches will be placed closer to you. Lower values means torches will overlap less,",
+        "but might result in small dark spots between torches"
+    ).defineInRange("light_target", 10, 1, 14);
+    AutoCaveTorchItem.PREFER_WALLS = CFG.comment("Whether to prioritise placing torches on walls").define("prefer_walls", true);
+    AutoCaveTorchItem.PREFER_LEFT_WALL = CFG.comment("Which wall to place torches on when digging a 1-wide tunnel", "True means left, False means right").define("prefer_left_wall", false);
+    CFG.pop();
     //
     CFG.pop(); // charms
     //
