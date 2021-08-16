@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,10 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
 
-import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.List;
 
 public class UtilString {
 
@@ -48,37 +49,29 @@ public class UtilString {
 
   /**
    * If the list has "hc:*_sapling" and input is "hc:whatever_sapling" then match is true
-   * 
+   *
    * @param list
    * @param toMatch
    * @return
    */
-  public static boolean isInList(final List<String> list, ResourceLocation toMatch) {
+  public static boolean isInList(final List<ResourceLocation> list, ResourceLocation toMatch) {
     if (toMatch == null || list == null) {
       return false;
     }
-    String id = toMatch.getNamespace();
-    for (String strFromList : list) {
-      if (strFromList == null || strFromList.isEmpty()) {
-        continue;//just ignore me
+
+    for (ResourceLocation resourceLocationInList : list) {
+      //Definitely not a match
+      if (!resourceLocationInList.getNamespace().equals(toMatch.getNamespace())) {
+        continue;
       }
-      if (strFromList.equals(id)) {
+      //Perfect match
+      if (resourceLocationInList.getPath().equals(toMatch.getPath())) {
         return true;
       }
-      if (matchWildcard) {
-        String[] blockIdArray = strFromList.split(":");
-        if (blockIdArray.length <= 1) {
-          ModCyclic.logger.error("Invalid config value for block : " + strFromList);
-          return false;
-        }
-        String modIdFromList = blockIdArray[0];
-        String blockIdFromList = blockIdArray[1];//has the *
-        String modIdToMatch = toMatch.getNamespace();
+      if (matchWildcard && resourceLocationInList.getPath().contains("*")) {
         String blockIdToMatch = toMatch.getPath();
-        if (modIdFromList.equals(modIdToMatch) == false) {
-          continue;
-        }
-        String blockIdListWC = blockIdFromList.replace("*", "");
+        //resourceLocationInList.getPath() has the *
+        String blockIdListWC = resourceLocationInList.getPath().replace("*", "");
         if (blockIdToMatch.contains(blockIdListWC)) {
           return true;
         }
@@ -91,8 +84,11 @@ public class UtilString {
    * TODO: make a unit testing module, or install a framework for now these pass so i removed call to them
    */
   public static void unitTests() {
-    NonNullList<String> blacklist = NonNullList.from("",
-        "terraqueous:pergola", "harvestcraft:*_sapling", "croparia:block_cane_*");
+    NonNullList<ResourceLocation> blacklist = NonNullList.from(new ResourceLocation("", ""),
+        new ResourceLocation("terraqueous:pergola"),
+            new ResourceLocation("harvestcraft:*_sapling"),
+            new ResourceLocation("croparia:block_cane_*")
+    );
     ModCyclic.logger.logTestResult("1] expect true " + isInList(blacklist, new ResourceLocation("harvestcraft:fruit_sapling")));
     ModCyclic.logger.logTestResult("2] expect true " + isInList(blacklist, new ResourceLocation("croparia:block_cane_zzzzzz")));
     ModCyclic.logger.logTestResult("3] expect false " + isInList(blacklist, new ResourceLocation("harvestcraft:pampeach")));

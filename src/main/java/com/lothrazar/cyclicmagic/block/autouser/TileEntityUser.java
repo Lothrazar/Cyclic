@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,26 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.block.autouser;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.core.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.capability.EnergyStore;
 import com.lothrazar.cyclicmagic.data.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.data.ITileRedstoneToggle;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilFluid;
-import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilShape;
-import com.lothrazar.cyclicmagic.util.UtilString;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
+import com.lothrazar.cyclicmagic.util.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -64,14 +50,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -80,13 +59,16 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidActionResult;
 
+import java.lang.ref.WeakReference;
+import java.util.*;
+
 public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   private static final String NBT_LR = "lr";
-  private static final int MAX_SIZE = 9;//WAS 4 9x9 area 
+  private static final int MAX_SIZE = 9;//WAS 4 9x9 area
   //  public final static int TIMER_FULL = 120;
   public static int MAX_SPEED = 200;
   public static int MIN_SPEED = 1;
@@ -101,7 +83,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int vRange = 2;
   public int yOffset = 0;
   private int tickDelay;
-  private static List<String> blacklistAll;
+  private static List<ResourceLocation> blacklistAll;
 
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, Y_OFFSET;
@@ -147,7 +129,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         if (this.isInBlacklist(targetPos) == false) {
           //todo if fluid
           boolean fluidSuccess = interactFluid(targetPos);
-          //now the rightclick 
+          //now the rightclick
           if (fluidSuccess == false &&
               world.isAirBlock(targetPos) == false) {
             this.rightClickBlock(targetPos);
@@ -155,13 +137,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
     }
-    catch (Throwable e) {//exception could come from external third party block/mod/etc 
+    catch (Throwable e) {//exception could come from external third party block/mod/etc
       ModCyclic.logger.error("Automated User [rightClickBlock] Error '" + e.getMessage() + "'" + e.getClass(), e);
     }
     try {
       interactEntities(targetPos);
     }
-    catch (Throwable e) {//exception could come from external third party block/mod/etc 
+    catch (Throwable e) {//exception could come from external third party block/mod/etc
       ModCyclic.logger.error("Automated User [interactEntities] Error '" + e.getMessage() + "'" + e.getClass(), e);
     }
   }
@@ -196,7 +178,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       List<EntityMinecart> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
       List<Entity> all = new ArrayList<Entity>(living);
       all.addAll(carts);//works since  they share a base class but no overlap
-      // 
+      //
       rightClickEntities(all);
       this.getWorld().markChunkDirty(targetPos, this);
     }
@@ -206,7 +188,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   private void leftClickEntities(List<EntityLivingBase> living) {
-    // left click (attack) entities 
+    // left click (attack) entities
     ItemStack held = fakePlayer.get().getHeldItemMainhand();
     fakePlayer.get().onGround = true;
     int countDamaged = 0;
@@ -258,7 +240,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private boolean interactFluid(BlockPos targetPos) {
     FakePlayer player = fakePlayer.get();
     ItemStack playerHeld = player.getHeldItemMainhand();
-    //if both block and itemstack are fluid compatible 
+    //if both block and itemstack are fluid compatible
     if (UtilFluid.stackHasFluidHandler(playerHeld) &&
         UtilFluid.hasFluidHandler(world.getTileEntity(targetPos), this.getCurrentFacing().getOpposite())) {//tile has fluid
       boolean success = rightClickFluidTank(targetPos);
@@ -269,7 +251,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     else if (UtilFluid.stackHasFluidHandler(playerHeld)) {
       if (rightClickFluidAir(targetPos)) {
-        //bucket on fluid-in-world   
+        //bucket on fluid-in-world
         syncPlayerTool();
         return true;
       }
@@ -278,7 +260,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
 
   private void rightClickBlock(BlockPos targetPos) throws Exception {
-    //if both block and itemstack are fluid compatible 
+    //if both block and itemstack are fluid compatible
     ItemStack before = fakePlayer.get().getHeldItemMainhand();
     boolean wasEmpty = fakePlayer.get().getHeldItemMainhand().isEmpty();
     //dont ever place a block. they want to use it on an entity
@@ -289,7 +271,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         syncPlayerTool();
       }
       else if (!eq) {
-        //       
+        //
         this.tryDumpFakePlayerInvo(true);
         syncPlayerTool();
       }
@@ -362,7 +344,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   /**
    * Interact with a block that has fluid capabilities
-   * 
+   *
    * @param targetPos
    * @return
    */
@@ -386,7 +368,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   /**
    * Pickup or place fluid in the world
-   * 
+   *
    * @param targetPos
    * @return
    */
@@ -517,7 +499,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           value = MIN_SPEED;
         }
         if (value <= MAX_SPEED && value != 0) {
-          tickDelay = value;//progress bar prevent overflow 
+          tickDelay = value;//progress bar prevent overflow
           if (timer > tickDelay) {
             timer = tickDelay;
           }
@@ -619,7 +601,15 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     String[] deflist = new String[0];
     String[] blacklist = config.getStringList("AutoUserTargetBlacklist",
         category, deflist, "Blocks in-world that cannot be targeted by the auto user.  Use block id; for example minecraft:chest");
-    blacklistAll = NonNullList.from("",
-        blacklist);
+    blacklistAll = NonNullList.from(new ResourceLocation("", ""),
+            Arrays.stream(blacklist).map(s -> {
+              String[] split = s.split(":");
+              if (split.length < 2) {
+                ModCyclic.logger.error("Invalid AutoUserTargetBlacklist config value for block : " + s);
+                return null;
+              }
+              return new ResourceLocation(split[0], split[1]);
+            }).filter(Objects::nonNull).filter(r -> !r.getPath().isEmpty()).toArray(ResourceLocation[]::new)
+    );
   }
 }

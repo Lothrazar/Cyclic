@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,11 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.util;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import com.google.common.collect.UnmodifiableIterator;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
@@ -44,6 +39,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
+import java.util.*;
+import java.util.Map.Entry;
+
 public class UtilHarvester {
 
   private static final int FORTUNE = 5;
@@ -51,19 +49,19 @@ public class UtilHarvester {
   static final boolean tryRemoveOneSeed = true;
   //a break config means ignore age and go right for it
   //  a harvest config means check AGE
-  private static NonNullList<String> breakGetDrops;
-  private static NonNullList<String> breakSilkTouch;
-  private static NonNullList<String> blockIgnore;
-  private static NonNullList<String> blockIgnoreInternal;
-  private static NonNullList<String> harvestReflectionRegrow;
-  private static NonNullList<String> harvestGetDropsDeprecated;
-  private static NonNullList<String> breakGetDropsDeprecated;
-  private static NonNullList<String> blocksBreakAboveIfMatching;
-  private static NonNullList<String> blocksBreakAboveIfMatchingAfterHarvest;
+  private static NonNullList<ResourceLocation> breakGetDrops;
+  private static NonNullList<ResourceLocation> breakSilkTouch;
+  private static NonNullList<ResourceLocation> blockIgnore;
+  private static NonNullList<ResourceLocation> blockIgnoreInternal;
+  private static NonNullList<ResourceLocation> harvestReflectionRegrow;
+  private static NonNullList<ResourceLocation> harvestGetDropsDeprecated;
+  private static NonNullList<ResourceLocation> breakGetDropsDeprecated;
+  private static NonNullList<ResourceLocation> blocksBreakAboveIfMatching;
+  private static NonNullList<ResourceLocation> blocksBreakAboveIfMatchingAfterHarvest;
   private static Map<String, Integer> harvestCustomMaxAge;
   private static Map<String, String> modsThatDontUseAge = new HashMap<String, String>();
   private static Map<String, String> useBooleanProperty = new HashMap<String, String>();
-  private static NonNullList<String> blocksDoNotRemoveSeeds;
+  private static NonNullList<ResourceLocation> blocksDoNotRemoveSeeds;
 
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
@@ -73,96 +71,104 @@ public class UtilHarvester {
     String[] blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  A star is for a wildcard");
     //TODO: config it after its decided? maybe? maybe not?
     /* @formatter:off */
-    blockIgnore = NonNullList.from("",
-        blacklist);
-  internalStaticConfig();
+    blockIgnore = NonNullList.from(
+            new ResourceLocation("", ""),
+            Arrays.stream(blacklist).map(s -> {
+              String[] split = s.split(":");
+              if (split.length < 2) {
+                ModCyclic.logger.error("Invalid HarvesterBlacklist config value for block : " + s);
+                return null;
+              }
+              return new ResourceLocation(split[0], split[1]);
+            }).filter(Objects::nonNull).filter(r -> !r.getPath().isEmpty()).toArray(ResourceLocation[]::new)
+    );
+    internalStaticConfig();
   }
-  
-  private static void internalStaticConfig() {
-    
-    breakGetDrops = NonNullList.from("",
-        "minecraft:pumpkin"
-        , "croparia:block_plant_*"
-        , "croparia:block_cane_*"
-        ,"extrautils2:redorchid"
-        );
-    blockIgnoreInternal = NonNullList.from(""
 
-        ,"pizzacraft:corn_plant_bottom"
-        );
-    breakSilkTouch = NonNullList.from(""
-        ,"minecraft:melon_block"
-        );
+  private static void internalStaticConfig() {
+
+    breakGetDrops = NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("minecraft:pumpkin"),
+            new ResourceLocation("croparia:block_plant_*"),
+            new ResourceLocation("croparia:block_cane_*"),
+            new ResourceLocation("extrautils2:redorchid")
+    );
+    blockIgnoreInternal = NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("pizzacraft:corn_plant_bottom")
+    );
+    breakSilkTouch = NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("minecraft:melon_block")
+    );
     //there are two versions of the getDrops method in block class
     //and re check it for harvest vs break
-    harvestGetDropsDeprecated = NonNullList.from(""
-        ,"rustic:tomato_crop"
-        ,"rustic:chili_crop"
-        ,"harvestcraft:pamapple"
-        ,"harvestcraft:pamalmond"
-        ,"harvestcraft:pamapricot"
-        ,"harvestcraft:pamavocado"
-        ,"harvestcraft:pamcashew"
-        ,"harvestcraft:pamcherry"
-        ,"harvestcraft:pamchestnut"
-        ,"harvestcraft:pamcoconut"
-        ,"harvestcraft:pamdate"
-        ,"harvestcraft:pamdragonfruit"
-        ,"harvestcraft:pamdurian"
-        ,"harvestcraft:pamfig"
-        ,"harvestcraft:pamgooseberry"
-        ,"harvestcraft:pamlemon"
-        ,"harvestcraft:pamlime"
-        ,"harvestcraft:pammango"
-        ,"harvestcraft:pamnutmeg"
-        ,"harvestcraft:pamolive"
-        ,"harvestcraft:pamorange"
-        ,"harvestcraft:pampapaya"
-        ,"harvestcraft:pampeach"
-        ,"harvestcraft:pampear"
-        ,"harvestcraft:pampecan"
-        ,"harvestcraft:pampeppercorn"
-        ,"harvestcraft:pampersimmon"
-        ,"harvestcraft:pampistachio"
-        ,"harvestcraft:pamplum"
-        ,"harvestcraft:pampomegranate"
-        ,"harvestcraft:pamstarfruit"
-        ,"harvestcraft:pamvanillabean"
-        ,"harvestcraft:pamwalnut"
-        ,"harvestcraft:pamspiderweb"
-        ,"harvestcraft:pamcinnamon"
-        ,"harvestcraft:pammaple"
-        ,"harvestcraft:pampaperbark" 
-        );    
-    harvestReflectionRegrow =  NonNullList.from(""
-        ,"natura:overworld_berrybush_*"
-        ,"natura:overworld_berrybush_blackberry"
-        ,"natura:overworld_berrybush_raspberry"
-        ,"natura:overworld_berrybush_maloberry"
-        ,"natura:nether_berrybush_duskberry"
-        ,"natura:nether_berrybush_stingberry"
-        ,"natura:nether_berrybush_skyberry"
-        ,"natura:nether_berrybush_blightberry"
-        ,"natura:nether_berrybush_duskberry"
-        );    
-   breakGetDropsDeprecated = NonNullList.from(""
-        ,  "attaineddrops2:bulb"
-        );    
-    blocksBreakAboveIfMatching = NonNullList.from(""
-        ,"immersiveengineering:hemp"
-        ,"minecraft:reeds"
-        ,"minecraft:cactus"
-        );  
-    blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(""
-         ,"simplecorn:corn"
-        );  
-    blocksDoNotRemoveSeeds = NonNullList.from(""
-        ,"plants2:crop_1"
-       );  
-    
+    harvestGetDropsDeprecated = NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("rustic:tomato_crop"),
+            new ResourceLocation("rustic:chili_crop"),
+            new ResourceLocation("harvestcraft:pamapple"),
+            new ResourceLocation("harvestcraft:pamalmond"),
+            new ResourceLocation("harvestcraft:pamapricot"),
+            new ResourceLocation("harvestcraft:pamavocado"),
+            new ResourceLocation("harvestcraft:pamcashew"),
+            new ResourceLocation("harvestcraft:pamcherry"),
+            new ResourceLocation("harvestcraft:pamchestnut"),
+            new ResourceLocation("harvestcraft:pamcoconut"),
+            new ResourceLocation("harvestcraft:pamdate"),
+            new ResourceLocation("harvestcraft:pamdragonfruit"),
+            new ResourceLocation("harvestcraft:pamdurian"),
+            new ResourceLocation("harvestcraft:pamfig"),
+            new ResourceLocation("harvestcraft:pamgooseberry"),
+            new ResourceLocation("harvestcraft:pamlemon"),
+            new ResourceLocation("harvestcraft:pamlime"),
+            new ResourceLocation("harvestcraft:pammango"),
+            new ResourceLocation("harvestcraft:pamnutmeg"),
+            new ResourceLocation("harvestcraft:pamolive"),
+            new ResourceLocation("harvestcraft:pamorange"),
+            new ResourceLocation("harvestcraft:pampapaya"),
+            new ResourceLocation("harvestcraft:pampeach"),
+            new ResourceLocation("harvestcraft:pampear"),
+            new ResourceLocation("harvestcraft:pampecan"),
+            new ResourceLocation("harvestcraft:pampeppercorn"),
+            new ResourceLocation("harvestcraft:pampersimmon"),
+            new ResourceLocation("harvestcraft:pampistachio"),
+            new ResourceLocation("harvestcraft:pamplum"),
+            new ResourceLocation("harvestcraft:pampomegranate"),
+            new ResourceLocation("harvestcraft:pamstarfruit"),
+            new ResourceLocation("harvestcraft:pamvanillabean"),
+            new ResourceLocation("harvestcraft:pamwalnut"),
+            new ResourceLocation("harvestcraft:pamspiderweb"),
+            new ResourceLocation("harvestcraft:pamcinnamon"),
+            new ResourceLocation("harvestcraft:pammaple"),
+            new ResourceLocation("harvestcraft:pampaperbark")
+        );
+    harvestReflectionRegrow =  NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("natura:overworld_berrybush_*"),
+            new ResourceLocation("natura:overworld_berrybush_blackberry"),
+            new ResourceLocation("natura:overworld_berrybush_raspberry"),
+            new ResourceLocation("natura:overworld_berrybush_maloberry"),
+            new ResourceLocation("natura:nether_berrybush_duskberry"),
+            new ResourceLocation("natura:nether_berrybush_stingberry"),
+            new ResourceLocation("natura:nether_berrybush_skyberry"),
+            new ResourceLocation("natura:nether_berrybush_blightberry"),
+            new ResourceLocation("natura:nether_berrybush_duskberry")
+    );
+   breakGetDropsDeprecated = NonNullList.from(new ResourceLocation("", ""),
+           new ResourceLocation("attaineddrops2:bulb")
+   );
+    blocksBreakAboveIfMatching = NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("immersiveengineering:hemp"),
+            new ResourceLocation("minecraft:reeds"),
+            new ResourceLocation("minecraft:cactus")
+    );
+    blocksBreakAboveIfMatchingAfterHarvest = NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("simplecorn:corn")
+    );
+    blocksDoNotRemoveSeeds = NonNullList.from(new ResourceLocation("", ""),
+            new ResourceLocation("plants2:crop_1")
+    );
+
     useBooleanProperty.put("rustic:grape_leaves", "grapes");
-    modsThatDontUseAge.put("rustic:leaves_apple", "apple_age"); 
-    modsThatDontUseAge.put("extrautils2:enderlilly", "growth"); 
+    modsThatDontUseAge.put("rustic:leaves_apple", "apple_age");
+    modsThatDontUseAge.put("extrautils2:enderlilly", "growth");
     harvestCustomMaxAge = new HashMap<String, Integer>();
     //max metadata is 11, but 9 is the lowest level when full grown
     //its a 3high multiblock
@@ -285,14 +291,14 @@ public class UtilHarvester {
       PropertyBool propFlag = getBoolProperty(blockState, property);
       if (blockState.getValue(propFlag)) {
         blockCheck.getDrops(drops, world, posCurrent, blockState, FORTUNE);
-        if (drops.size() == 0)//use deprecated only if main is offline 
+        if (drops.size() == 0)//use deprecated only if main is offline
           drops.addAll(blockCheck.getDrops(world, posCurrent, blockState, FORTUNE));
-        // and then reset to off 
+        // and then reset to off
         world.setBlockState(posCurrent, blockState.withProperty(propFlag, false));
       }
     }
     PropertyInteger propInt = null;
-    //age growth 
+    //age growth
     propInt = getAgeProperty(blockState, blockId);
     if (propInt != null) {
       int currentAge = blockState.getValue(propInt);
@@ -313,11 +319,11 @@ public class UtilHarvester {
         return drops;
       }
       if (isHarvestReflectionRegrow(blockId)) {
-        //        
+        //
         Object toDrop = UtilReflection.getFirstPrivate(blockCheck, ItemStack.class);
         if (toDrop != null) {
           ItemStack crop = (ItemStack) toDrop;
-          if (crop.isEmpty() == false) {
+          if (!crop.isEmpty()) {
             drops.add(crop.copy());
             //regrow : so only do -1, not full reset
             world.setBlockState(posCurrent, blockState.withProperty(propInt, maxAge - 1));
@@ -337,7 +343,7 @@ public class UtilHarvester {
       }
       world.setBlockState(posCurrent, blockState.withProperty(propInt, minAge));
       if (isBreakAboveIfMatchingAfterHarvest(blockId)) {
-        //for example: a 3 high block like corn 
+        //for example: a 3 high block like corn
         if (doesBlockMatch(world, blockCheck, posCurrent.up())) {
           //ModCyclic.logger.log("[harvest] up(1) break " + blockId);
           //TODO: corn still drops a few from multiblock on ground. not the worst.

@@ -1,12 +1,17 @@
 package com.lothrazar.cyclicmagic.util;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 public class UtilRepairItem {
 
-  public static NonNullList<String> blacklistBlockIds;
+  public static NonNullList<ResourceLocation> blacklistBlockIds;
   public static boolean doNonRepairable;
 
   public static boolean isBlockAllowed(ItemStack thing) {
@@ -17,23 +22,32 @@ public class UtilRepairItem {
     String category = Const.ConfigCategory.modpackMisc + ".block_anvil";
     // @formatter:off
     String[] deflist = new String[] {
-        "galacticraftcore:battery" 
-        , "galacticraftcore:oxygen_tank_heavy_full" 
-        , "galacticraftcore:oxygen_tank_med_full" 
-        , "galacticraftcore:oil_canister_partial" 
+        "galacticraftcore:battery"
+        , "galacticraftcore:oxygen_tank_heavy_full"
+        , "galacticraftcore:oxygen_tank_med_full"
+        , "galacticraftcore:oil_canister_partial"
         , "galacticraftcore:oxygen_tank_light_full"
         ,"pneumaticcraft:*"
     };
     // @formatter:on
     String[] blacklist = config.getStringList("RepairBlacklist",
         category, deflist, "These cannot be repaired. Use star syntax to lock out an entire mod, otherwise use the standard modid:itemid for singles.  Applies to both diamond and magma anvil");
-    UtilRepairItem.blacklistBlockIds = NonNullList.from("", blacklist);
+    UtilRepairItem.blacklistBlockIds = NonNullList.from(new ResourceLocation("", ""),
+            Arrays.stream(blacklist).map(s -> {
+              String[] split = s.split(":");
+              if (split.length < 2) {
+                ModCyclic.logger.error("Invalid RepairBlacklist config value for block : " + s);
+                return null;
+              }
+              return new ResourceLocation(split[0], split[1]);
+            }).filter(Objects::nonNull).filter(r -> !r.getPath().isEmpty()).toArray(ResourceLocation[]::new)
+    );
     UtilRepairItem.doNonRepairable = config.getBoolean("ForceNonRepairable", category, false, "If this is set to true, this block will force-repair items that are set to be non-repairable (such as Tinkers Construct tools).  Of course it still respects the blacklist.  Applies to both diamond and magma anvil");
   }
 
   /**
    * if damaged, and repairable, then return true
-   * 
+   *
    * @param inputStack
    * @return
    */
@@ -58,9 +72,9 @@ public class UtilRepairItem {
 
   /**
    * return false if it was already full repaired and no changes were made.
-   * 
+   *
    * return true if damage value changed from actual repair
-   * 
+   *
    * @param inputStack
    * @return
    */

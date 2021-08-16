@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.mobcapture;
 
-import java.util.List;
 import com.lothrazar.cyclicmagic.IContent;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.guide.GuideCategory;
@@ -43,12 +43,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class ItemProjectileMagicNet extends BaseItemProjectile implements IContent, IHasRecipe {
 
@@ -159,6 +164,15 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IConte
     // @formatter:on
     String[] blacklist = config.getStringList("CaptureBlacklist",
         category, deflist, "Entities that cannot be captured.  (even without this, players and non-living entities do not work)");
-    EntityMagicNetEmpty.blacklistIds = NonNullList.from("", blacklist);
+    EntityMagicNetEmpty.blacklistIds = NonNullList.from(new ResourceLocation("", ""),
+            Arrays.stream(blacklist).map(s -> {
+              String[] split = s.split(":");
+              if (split.length < 2) {
+                ModCyclic.logger.error("Invalid CaptureBlacklist config value for entity : " + s);
+                return null;
+              }
+              return new ResourceLocation(split[0], split[1]);
+            }).filter(Objects::nonNull).filter(r -> !r.getPath().isEmpty()).toArray(ResourceLocation[]::new)
+    );
   }
 }

@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,20 +25,20 @@ package com.lothrazar.cyclicmagic.util;
 
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.scythe.ItemScythe.ScytheType;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockMushroom;
-import net.minecraft.block.BlockTallGrass;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 public class UtilScythe {
 
@@ -51,7 +51,7 @@ public class UtilScythe {
 
   private static class ScytheConfig {
 
-    NonNullList<String> blockWhitelist;
+    NonNullList<ResourceLocation> blockWhitelist;
     NonNullList<String> oreDictWhitelist;
   }
 
@@ -66,97 +66,113 @@ public class UtilScythe {
     blacklistAll = NonNullList.from("", config.getStringList("ScytheBlacklist", category, new String[] {
         "terraqueous:pergola", "harvestcraft:*_sapling"
     }, "Crops & leaves that are blocked from harvesting (Brush Scythe and Tree Scythe). A star is for a wildcard "));
-    leafConfig.blockWhitelist = NonNullList.from("", config.getStringList("tool_harvest_leaves.whitelist", category, new String[] {
-        /* @formatter:off */
-                "extratrees:leaves.decorative.0"
-               , "extratrees:leaves.decorative.1"
-               , "extratrees:leaves.decorative.2"
-               , "extratrees:leaves.decorative.3"
-               , "extratrees:leaves.decorative.4"
-               , "extratrees:leaves.decorative.5"
-               , "forestry:leaves.decorative.0"
-               , "forestry:leaves.decorative.1"
-               , "terraqueous:foliage3:5"
-               , "plants2:nether_leaves"
-               , "plants2:crystal_leaves"
-               , "plants2:leaves_0"
-               , "plants2:bush"
-               /* @formatter:on */
-    }, "Blocks that the Tree Scythe will attempt to harvest as if they are leaves.  A star is for a wildcard "));
+    leafConfig.blockWhitelist = NonNullList.from(new ResourceLocation("", ""),
+            Arrays.stream(config.getStringList("tool_harvest_leaves.whitelist", category, new String[] {
+                    /* @formatter:off */
+                    "extratrees:leaves.decorative.0"
+                    , "extratrees:leaves.decorative.1"
+                    , "extratrees:leaves.decorative.2"
+                    , "extratrees:leaves.decorative.3"
+                    , "extratrees:leaves.decorative.4"
+                    , "extratrees:leaves.decorative.5"
+                    , "forestry:leaves.decorative.0"
+                    , "forestry:leaves.decorative.1"
+                    , "terraqueous:foliage3:5"
+                    , "plants2:nether_leaves"
+                    , "plants2:crystal_leaves"
+                    , "plants2:leaves_0"
+                    , "plants2:bush"
+                    /* @formatter:on */
+            }, "Blocks that the Tree Scythe will attempt to harvest as if they are leaves.  A star is for a wildcard ")).map(s -> {
+              String[] split = s.split(":");
+              if (split.length < 2) {
+                ModCyclic.logger.error("Invalid tool_harvest_leaves.whitelist config value for block : " + s);
+                return null;
+              }
+              return new ResourceLocation(split[0], split[1]);
+            }).filter(Objects::nonNull).filter(r -> !r.getPath().isEmpty()).toArray(ResourceLocation[]::new));
     leafConfig.oreDictWhitelist = NonNullList.from("", config.getStringList("tool_harvest_leaves.whitelist_oredict", category, new String[] {
         "treeLeaves"
     }, "Ore dictionary entries that the Tree Scythe will attempt to harvest as if they are leaves.   "));
     brushConfig.oreDictWhitelist = NonNullList.from("", config.getStringList("tool_harvest_weeds.whitelist_oredict", category, new String[] {
         "vine", "plant", "flowerYellow", "stickWood" }, "Ore dictionary entries that the Brush Scythe will attempt to harvest as if they are leaves.  "));
-    brushConfig.blockWhitelist = NonNullList.from("", config.getStringList("tool_harvest_weeds.whitelist", category, new String[] {
-        /* @formatter:off */
-        "plants2:cosmetic_0"
-        ,"plants2:cosmetic_1"
-        ,"plants2:cosmetic_2"
-        ,"plants2:cosmetic_3"
-        ,"plants2:cosmetic_4"
-        ,"plants2:desert_0"
-        ,"plants2:desert_1"
-        ,"plants2:double_0"
-        ,"plants2:cataplant"
-        ,"botany:flower"
-        ,"biomesoplenty:bamboo"
-        ,"biomesoplenty:flower_0"
-        ,"biomesoplenty:flower_1"
-        ,"biomesoplenty:plant_0"
-        ,"biomesoplenty:plant_1"
-        ,"biomesoplenty:mushroom"
-        ,"biomesoplenty:doubleplant"
-        ,"biomesoplenty:flower_vine"
-        ,"biomesoplenty:ivy"
-        ,"biomesoplenty:tree_moss"
-        ,"biomesoplenty:willow_vine"
-        ,"croparia:fruit_grass"
-        ,"plants2:androsace_a"
-        ,"plants2:akebia_q_vine"
-        ,"plants2:ampelopsis_a_vine"
-        ,"plants2:adlumia_f"
-        ,"abyssalcraft:wastelandsthorn"
-        ,"abyssalcraft:luminousthistle"
-        ,"harvestcraft:garden"
-        ,"harvestcraft:windygarden"
-        ,"minecraft:double_plant"
-        ,"minecraft:red_flower"
-        ,"minecraft:yellow_flower"
-        ,"minecraft:brown_mushroom"
-        ,"minecraft:red_mushroom"
-        ,"ferdinandsflowers:block_cff_*"
-        ,"extraplanets:*_flowers"
-        ,"primal:cineris_grass"
-        ,"primal:cineris_bloom"
-        ,"primal:sinuous_weed"
-        ,"primal:dry_grass_root"
-        ,"primal:nether_root"
-        ,"primal:corypha_stalk"
-        ,"twilightforest:*_plant" 
-        ,"tconstruct:*_grass_tall"
-        ,"thebetweenlands:*_flower"
-        ,"thebetweenlands:*_tallgrass"
-        ,"thebetweenlands:*_stalk"
-        ,"thebetweenlands:moss"
-        ,"thebetweenlands:cattail"
-        ,"thebetweenlands:*_cattail" 
-        ,"thebetweenlands:*_plant" 
-        ,"thebetweenlands:*_coral" 
-        ,"thebetweenlands:*_bush" 
-        ,"thebetweenlands:*_ivy" 
-        ,"thebetweenlands:algae" 
-        ,"thebetweenlands:hanger"
-        ,"thebetweenlands:nettle"
-        ,"thebetweenlands:*_iris"
-        ,"thebetweenlands:*_kelp"
-        ,"thebetweenlands:fallen_leaves"
-        ,"thebetweenlands:swamp_reed_*"
-        ,"thebetweenlands:*_mushroom"
-        ,"natura:*_vines"
-        ,"nex:plant_thornstalk"
-        /* @formatter:on */
-    }, "Blocks that the Brush Scythe will attempt to harvest as if they are leaves.  A star is for a wildcard "));
+    brushConfig.blockWhitelist = NonNullList.from(new ResourceLocation("", ""),
+            Arrays.stream(config.getStringList("tool_harvest_weeds.whitelist", category, new String[] {
+                    /* @formatter:off */
+                    "plants2:cosmetic_0"
+                    ,"plants2:cosmetic_1"
+                    ,"plants2:cosmetic_2"
+                    ,"plants2:cosmetic_3"
+                    ,"plants2:cosmetic_4"
+                    ,"plants2:desert_0"
+                    ,"plants2:desert_1"
+                    ,"plants2:double_0"
+                    ,"plants2:cataplant"
+                    ,"botany:flower"
+                    ,"biomesoplenty:bamboo"
+                    ,"biomesoplenty:flower_0"
+                    ,"biomesoplenty:flower_1"
+                    ,"biomesoplenty:plant_0"
+                    ,"biomesoplenty:plant_1"
+                    ,"biomesoplenty:mushroom"
+                    ,"biomesoplenty:doubleplant"
+                    ,"biomesoplenty:flower_vine"
+                    ,"biomesoplenty:ivy"
+                    ,"biomesoplenty:tree_moss"
+                    ,"biomesoplenty:willow_vine"
+                    ,"croparia:fruit_grass"
+                    ,"plants2:androsace_a"
+                    ,"plants2:akebia_q_vine"
+                    ,"plants2:ampelopsis_a_vine"
+                    ,"plants2:adlumia_f"
+                    ,"abyssalcraft:wastelandsthorn"
+                    ,"abyssalcraft:luminousthistle"
+                    ,"harvestcraft:garden"
+                    ,"harvestcraft:windygarden"
+                    ,"minecraft:double_plant"
+                    ,"minecraft:red_flower"
+                    ,"minecraft:yellow_flower"
+                    ,"minecraft:brown_mushroom"
+                    ,"minecraft:red_mushroom"
+                    ,"ferdinandsflowers:block_cff_*"
+                    ,"extraplanets:*_flowers"
+                    ,"primal:cineris_grass"
+                    ,"primal:cineris_bloom"
+                    ,"primal:sinuous_weed"
+                    ,"primal:dry_grass_root"
+                    ,"primal:nether_root"
+                    ,"primal:corypha_stalk"
+                    ,"twilightforest:*_plant"
+                    ,"tconstruct:*_grass_tall"
+                    ,"thebetweenlands:*_flower"
+                    ,"thebetweenlands:*_tallgrass"
+                    ,"thebetweenlands:*_stalk"
+                    ,"thebetweenlands:moss"
+                    ,"thebetweenlands:cattail"
+                    ,"thebetweenlands:*_cattail"
+                    ,"thebetweenlands:*_plant"
+                    ,"thebetweenlands:*_coral"
+                    ,"thebetweenlands:*_bush"
+                    ,"thebetweenlands:*_ivy"
+                    ,"thebetweenlands:algae"
+                    ,"thebetweenlands:hanger"
+                    ,"thebetweenlands:nettle"
+                    ,"thebetweenlands:*_iris"
+                    ,"thebetweenlands:*_kelp"
+                    ,"thebetweenlands:fallen_leaves"
+                    ,"thebetweenlands:swamp_reed_*"
+                    ,"thebetweenlands:*_mushroom"
+                    ,"natura:*_vines"
+                    ,"nex:plant_thornstalk"
+                    /* @formatter:on */
+            }, "Blocks that the Brush Scythe will attempt to harvest as if they are leaves.  A star is for a wildcard ")).map(s -> {
+              String[] split = s.split(":");
+              if (split.length < 2) {
+                ModCyclic.logger.error("Invalid tool_harvest_weeds.whitelist config value for block : " + s);
+                return null;
+              }
+              return new ResourceLocation(split[0], split[1]);
+            }).filter(Objects::nonNull).filter(r -> !r.getPath().isEmpty()).toArray(ResourceLocation[]::new));
   }
 
   private static boolean doesMatch(Block blockCheck, ScytheConfig type) {
@@ -209,7 +225,7 @@ public class UtilScythe {
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
     //final NonNullList<ItemStack> drops = NonNullList.create();
-    // (A): garden scythe and harvester use this; 
+    // (A): garden scythe and harvester use this;
     //      BUT type LEAVES and WEEDS harvester use DIFFERENT NEW class
     //     then each scythe has config list of what it breaks (maybe just scythe for all the modplants. also maybe hardcoded)
     // (B):  use this new "age" finding thing by default for harvest/replant
@@ -222,7 +238,7 @@ public class UtilScythe {
     switch (type) {
       case WEEDS:
         if (weedsClassCheck) {
-          if (blockCheck instanceof BlockTallGrass) {// true for ItemScythe type WEEDS 
+          if (blockCheck instanceof BlockTallGrass) {// true for ItemScythe type WEEDS
             doBreak = true;
             if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
               doBreakAbove = true;
@@ -231,7 +247,7 @@ public class UtilScythe {
               doBreakBelow = true;
             }
           }
-          else if (blockCheck instanceof BlockDoublePlant) {// true for ItemScythe type WEEDS 
+          else if (blockCheck instanceof BlockDoublePlant) {// true for ItemScythe type WEEDS
             doBreak = true;
             if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
               doBreakAbove = true;
@@ -254,7 +270,7 @@ public class UtilScythe {
       break;
     }
     if (doBreak) {
-      //harvest block with player context: better mod compatibility 
+      //harvest block with player context: better mod compatibility
       blockCheck.harvestBlock(world, player, posCurrent, blockState, world.getTileEntity(posCurrent), player.getHeldItemMainhand());
       //sometimes this doesnt work and/or doesnt sync ot client, so force it
       world.destroyBlock(posCurrent, false);

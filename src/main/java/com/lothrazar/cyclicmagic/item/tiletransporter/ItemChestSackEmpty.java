@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,19 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.tiletransporter;
 
-import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.config.IHasConfig;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.core.BaseItem;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilString;
+import com.lothrazar.cyclicmagic.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,19 +39,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConfig {
 
   public static final String name = "chest_sack_empty";
-  private static List<String> blacklistAll;
+  private static List<ResourceLocation> blacklistAll;
 
   public ItemChestSackEmpty() {
     super();
@@ -148,7 +142,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
             //TileEntity tileCopy = world.getTileEntity(position);
             //  if (tileCopy != null) {
             //    tileCopy.readFromNBT(tileData);
-            //  } 
+            //  }
           }
           ItemStack drop = new ItemStack(chest_sack);
           drop.setTagCompound(itemData);
@@ -182,7 +176,15 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe, IHasConf
     };
     String[] blacklist = config.getStringList("SackHoldingBlacklist",
         category, deflist, "Containers that cannot be lifted up with the Empty Sack of Holding.  Use block id; for example minecraft:chest");
-    blacklistAll = NonNullList.from("",
-        blacklist);
+    blacklistAll = NonNullList.from(new ResourceLocation("", ""),
+            Arrays.stream(blacklist).map(s -> {
+              String[] split = s.split(":");
+              if (split.length < 2) {
+                ModCyclic.logger.error("Invalid SackHoldingBlacklist config value for block : " + s);
+                return null;
+              }
+              return new ResourceLocation(split[0], split[1]);
+            }).filter(Objects::nonNull).filter(r -> !r.getPath().isEmpty()).toArray(ResourceLocation[]::new)
+    );
   }
 }
