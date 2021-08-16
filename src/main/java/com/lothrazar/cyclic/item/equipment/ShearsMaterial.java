@@ -5,6 +5,8 @@ import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.dispenser.BeehiveDispenseBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -20,6 +22,7 @@ public class ShearsMaterial extends ShearsItem {
 
   public ShearsMaterial(Properties builder) {
     super(builder);
+    DispenserBlock.registerDispenseBehavior(this, new BeehiveDispenseBehavior());
   }
 
   @Override
