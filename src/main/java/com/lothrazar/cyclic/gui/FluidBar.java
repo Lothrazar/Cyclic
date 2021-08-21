@@ -17,6 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class FluidBar {
 
+  public String emtpyTooltip = "0";
   private Screen parent;
   private int x;
   private int y;
@@ -90,7 +91,7 @@ public class FluidBar {
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, FluidStack current) {
     if (this.isMouseover(mouseX, mouseY)) {
-      String tt = "0";
+      String tt = emtpyTooltip;
       if (current != null && !current.isEmpty()) {
         tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
       }

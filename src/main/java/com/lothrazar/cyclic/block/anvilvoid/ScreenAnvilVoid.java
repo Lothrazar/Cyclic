@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -16,6 +17,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
   public ScreenAnvilVoid(ContainerAnvilVoid screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     fluid = new FluidBar(this, 152, 8, TileAnvilVoid.CAPACITY);
+    fluid.emtpyTooltip = "0 " + UtilChat.lang("fluid.cyclic.xpjuice");
   }
 
   @Override
