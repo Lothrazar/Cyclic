@@ -41,7 +41,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShearsItem;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -51,6 +50,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -79,12 +79,12 @@ public class EnchantExcavation extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    return super.canApply(stack) || stack.getItem() instanceof ShearsItem;
+    return super.canApply(stack) || stack.getItem().isIn(Tags.Items.SHEARS);
   }
 
   @Override
   public boolean canApplyTogether(Enchantment ench) {
-    return super.canApplyTogether(ench) && ench != EnchantRegistry.EXCAVATE;
+    return super.canApplyTogether(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
   }
 
   private int getHarvestMax(int level) {

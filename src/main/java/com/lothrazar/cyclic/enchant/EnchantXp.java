@@ -74,7 +74,7 @@ public class EnchantXp extends EnchantBase {
 
   @Override
   public boolean canApplyTogether(Enchantment ench) {
-    return super.canApplyTogether(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
+    return super.canApplyTogether(ench) && ench != EnchantRegistry.EXCAVATE;
   }
 
   /**

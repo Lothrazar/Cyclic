@@ -17,7 +17,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
-import cofh.lib.util.helpers.MathHelper;
 
 public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEntity {
 
@@ -50,7 +49,7 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
       timer--;
       return;
     }
-    timer = MathHelper.nextInt(world.rand, 12, 36);
+    timer = world.rand.nextInt(24) + 12;
     if (fakePlayer == null && world instanceof ServerWorld) {
       if (uuid == null) {
         uuid = UUID.randomUUID();
