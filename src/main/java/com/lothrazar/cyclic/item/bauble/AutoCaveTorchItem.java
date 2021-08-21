@@ -25,7 +25,12 @@ package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -43,6 +48,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class AutoCaveTorchItem extends ItemBaseToggle {
+
   private static final int TORCH_LIGHT_LEVEL = 14;
   private static final int TICK_DELAY = 2;
   /**
@@ -53,7 +59,6 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
   public static IntValue LIGHT_TARGET;
   public static BooleanValue PREFER_WALLS;
   public static BooleanValue PREFER_LEFT_WALL;
-
   private final AtomicInteger timer = new AtomicInteger();
   private final Lock lock = new ReentrantLock();
 
@@ -82,10 +87,11 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     }
     // A lock is necessary here as it's possible for multiple torches to be placed at the same time.
     // If the lock is currently held, skip for now - we'll attempt placing a torch in the next tick.
-    if (timer.updateAndGet(n -> Math.max(n-1, 0)) == 0 && lock.tryLock()) {
+    if (timer.updateAndGet(n -> Math.max(n - 1, 0)) == 0 && lock.tryLock()) {
       try {
         placeTorchIfNecessary(stack, world, player);
-      } finally {
+      }
+      finally {
         lock.unlock();
       }
     }
@@ -94,31 +100,28 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
 
   private void placeTorchIfNecessary(ItemStack stack, World world, PlayerEntity player) {
     BlockPos playerPos = player.getPosition();
-
     if (world.getBlockState(playerPos).isSolid()) {
       return;
     }
-
     // Find the surface below the player's feet.
     for (int i = 0; i < BLOCKS_TO_MOVE_FEET_DOWN; i++) {
       BlockPos next = playerPos.down();
       if (world.getBlockState(next).isSolid()) {
         break;
-      } else {
+      }
+      else {
         playerPos = next;
       }
     }
     if (!world.getBlockState(playerPos.down()).isSolid()) {
       return;
     }
-
     final int lightLimit = getLightLimit();
     final int playerPosLight = world.getLight(playerPos);
     world.getLightFor(LightType.BLOCK, playerPos);
     if (playerPosLight > lightLimit) {
       return;
     }
-
     // Increase the light target the darker the current light level is, compared to the light limit.
     // For example, if the player was moving very quickly away from a light source, it's possible that
     // `playerPosLight == lightLimit-1`, i.e. they moved over the block which would have `playerPosLight == lightLimit`.
@@ -126,25 +129,22 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     // Note that lightTarget, as a result, can exceed TORCH_LIGHT_LEVEL. This is dealt with below (by falling back to
     // maximising the current position's light value if lightTarget is unreachable).
     final int lightTarget = getLightTarget() + lightLimit - playerPosLight;
-
     // Do an initial BFS to try hitting lightTarget.
     final int targetDistance = TORCH_LIGHT_LEVEL - lightTarget;
     // The worst case is that we need to BFS to try hitting lightLimit + 1, so never push those onto the BFS.
     final int fallbackTargetDistance = TORCH_LIGHT_LEVEL - (lightLimit + 1);
     assert targetDistance <= fallbackTargetDistance;
-
     Queue<BlockPos> queue = new ArrayDeque<>();
     HashMap<BlockPos, Integer> distances = new HashMap<>();
     queue.add(playerPos);
     distances.put(playerPos, 0);
     final int playerElevation = playerPos.getY();
     ArrayList<TorchPos> validTorchPositions = bfs(world, queue, distances, targetDistance, fallbackTargetDistance, playerElevation);
-
     final boolean preferWalls = isPreferWalls();
     validTorchPositions.sort(
         // If preferWalls is enabled, always prefer torches that are not on the ground and are at feet level or above.
         // This is to prevent torches from being placed on the edge of platforms / cliffs.
-        Comparator.<TorchPos, Boolean>comparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.isNotBelowFeet())
+        Comparator.<TorchPos, Boolean> comparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.isNotBelowFeet())
             // Prefer torch positions which are currently darker.
             // This needs to be before the below. If the two were swapped, torches would be placed CLOSER to existing
             // light sources when digging a tunnel!
@@ -155,16 +155,14 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
             // the player). Separating the two heuristics either results in torches being redundantly placed too high
             // up, or torches being placed in brighter areas just because they have a lower elevation. Using a weighted
             // mix fixes both of these problems.
-            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.isNotBelowFeet() ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
+            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.isNotBelowFeet() ? 2 : 4) * Math.abs(torchPos.relativeHeight)))
             // Prefer torches with a LOWER player light level as a heuristic to light up a bigger area.
             // In other words, torches which are further away from the player.
             .thenComparing(torchPos -> -torchPos.playerLightLevel)
             // Prefer torches which are on walls instead of on the ground.
             .thenComparing(TorchPos::isNotOnGround)
             // Reverse the comparator to get validTorchPositions from best to worst, instead of worst to best.
-            .reversed()
-    );
-
+            .reversed());
     final Direction facing = player.getHorizontalFacing();
     for (TorchPos torchPos : validTorchPositions) {
       if (UtilPlaceBlocks.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
@@ -173,21 +171,18 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
         return;
       }
     }
-
     // Couldn't find a valid position. Fall back on ANY torch which could increase the player light level above
     // lightLimit + 1.
     validTorchPositions = bfs(world, queue, distances, fallbackTargetDistance, fallbackTargetDistance, playerElevation);
     validTorchPositions.sort(
         // Prefer torches with the HIGHEST player light level, as we should compensate for not being able light up this
         // block to the expected light value.
-        Comparator.<TorchPos, Integer>comparing(torchPos -> torchPos.playerLightLevel)
+        Comparator.<TorchPos, Integer> comparing(torchPos -> torchPos.playerLightLevel)
             // Same as above.
             .thenComparing(torchPos -> preferWalls && torchPos.isNotOnGround() && torchPos.isNotBelowFeet())
-            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.isNotBelowFeet() ? 2 : 4)*Math.abs(torchPos.relativeHeight)))
+            .thenComparing(torchPos -> -(torchPos.currentLightLevel + (torchPos.isNotBelowFeet() ? 2 : 4) * Math.abs(torchPos.relativeHeight)))
             .thenComparing(TorchPos::isNotOnGround)
-            .reversed()
-    );
-
+            .reversed());
     for (TorchPos torchPos : validTorchPositions) {
       if (UtilPlaceBlocks.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
         UtilItemStack.damageItem(player, stack);
@@ -195,15 +190,17 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
         return;
       }
     }
-
     // Didn't find a match. We'll probably get the same result next time, so delay the next placement attempt.
     timer.set(TICK_DELAY);
   }
 
   /**
-   * @param maxPoppedDist The maximum distance that a pos can be popped off of the BFS.
-   * @param maxPushedDist The maximum distance that a pos can be pushed onto the BFS.
-   * @param playerElevation The y value of the player's feet.
+   * @param maxPoppedDist
+   *          The maximum distance that a pos can be popped off of the BFS.
+   * @param maxPushedDist
+   *          The maximum distance that a pos can be pushed onto the BFS.
+   * @param playerElevation
+   *          The y value of the player's feet.
    * @return Newly found valid torch positions.
    */
   private ArrayList<TorchPos> bfs(World world, Queue<BlockPos> queue, HashMap<BlockPos, Integer> distances, int maxPoppedDist, int maxPushedDist, int playerElevation) {
@@ -215,7 +212,6 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
         break;
       }
       queue.remove();
-
       // Enumerate all successors while keeping track whether a torch can be placed here.
       boolean isValidTorch = false;
       boolean wouldUpdateFloatingFallingBlock = false;
@@ -228,11 +224,11 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
           if (direction != Direction.UP) {
             isValidTorch = true;
           }
-        } else if (poppedDistance < maxPushedDist && !distances.containsKey(nextPos)) {
+        }
+        else if (poppedDistance < maxPushedDist && !distances.containsKey(nextPos)) {
           distances.put(nextPos, poppedDistance + 1);
           queue.add(nextPos);
         }
-
         // Check if placing a torch here would cause a floating block to fall.
         // Placing a torch BELOW a floating block is okay, though.
         if (direction != Direction.UP && state.getBlock() instanceof FallingBlock &&
@@ -240,7 +236,6 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
           wouldUpdateFloatingFallingBlock = true;
         }
       }
-
       if (isValidTorch && !wouldUpdateFloatingFallingBlock && world.isAirBlock(poppedPos)) {
         validTorchPositions.add(new TorchPos(poppedPos, poppedPos.getY() - playerElevation,
             TORCH_LIGHT_LEVEL - poppedDistance, world.getLight(poppedPos), solidDirections));
@@ -249,15 +244,14 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     return validTorchPositions;
   }
 
-
   /**
    * Class for storing information about torch positions for placeTorchIfNecessary.
    */
   private static class TorchPos {
+
     final BlockPos pos;
     /**
-     * The height of this torch relative to the player's feet. 1 means it is at eye level, -1 means it is at the level
-     * of the block the player is standing on.
+     * The height of this torch relative to the player's feet. 1 means it is at eye level, -1 means it is at the level of the block the player is standing on.
      */
     final int relativeHeight;
     /**
@@ -297,7 +291,8 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     }
 
     /**
-     * @param facing The current direction the player is facing.
+     * @param facing
+     *          The current direction the player is facing.
      * @return The direction, relative to this block, of a solid block to place on.
      */
     public Direction getPlacementDirection(Direction facing) {
@@ -305,20 +300,24 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
       // - Ground. If isPreferWalls() is false, this may result in placing a torch on the top of a block that the player
       //   will mine soon (imagine digging a one-block wide tunnel, first mining a few blocks at eye level, then at feet
       //   level), but this is relatively rare and will be replaced once the user mines that block.
-      if (solidDirections.contains(Direction.DOWN)) return Direction.DOWN;
-
+      if (solidDirections.contains(Direction.DOWN)) {
+        return Direction.DOWN;
+      }
       // - Right of player / left of player, depending on isPreferLeftWall().
       final Direction preferredDirection = isPreferLeftWall() ? facing.rotateYCCW() : facing.rotateY();
-      if (solidDirections.contains(preferredDirection)) return preferredDirection;
-
+      if (solidDirections.contains(preferredDirection)) {
+        return preferredDirection;
+      }
       // - The other direction.
       final Direction otherDirection = preferredDirection.getOpposite();
-      if (solidDirections.contains(otherDirection)) return otherDirection;
-
+      if (solidDirections.contains(otherDirection)) {
+        return otherDirection;
+      }
       // - Behind the player - we'd rather do this than place it in the direction the player is facing.
       final Direction behindPlayer = facing.getOpposite();
-      if (solidDirections.contains(behindPlayer)) return behindPlayer;
-
+      if (solidDirections.contains(behindPlayer)) {
+        return behindPlayer;
+      }
       // - The direction the player is facing.
       assert solidDirections.contains(facing);
       return facing;
@@ -333,26 +332,23 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
   }
 
   /**
-   * @return The light level of the current block after placing down a torch. The higher this is, the closer torches
-   * will be placed to you.
-   * In general, you can walk at least lightTarget - lightLimit blocks before needing to place down another torch.
+   * @return The light level of the current block after placing down a torch. The higher this is, the closer torches will be placed to you. In general, you can walk at least lightTarget - lightLimit
+   *         blocks before needing to place down another torch.
    */
   private static int getLightTarget() {
     return Math.min(Math.max(getLightLimit() + 1, LIGHT_TARGET.get()), TORCH_LIGHT_LEVEL);
   }
 
   /**
-   * @return Whether to prioritise placing torches on walls (assuming it is possible to reach the target light level
-   * with a wall torch).
+   * @return Whether to prioritise placing torches on walls (assuming it is possible to reach the target light level with a wall torch).
    */
   private static boolean isPreferWalls() {
     return PREFER_WALLS.get();
   }
 
   /**
-   * @return Whether to prioritise placing torches on the left wall of a one-block wide tunnel instead of the right.
-   * This is only applicable to one-block wide tunnels where torches could be equivalently placed on either side - in
-   * large caves, torches will always be placed in the best position to light up the area regardless of side.
+   * @return Whether to prioritise placing torches on the left wall of a one-block wide tunnel instead of the right. This is only applicable to one-block wide tunnels where torches could be
+   *         equivalently placed on either side - in large caves, torches will always be placed in the best position to light up the area regardless of side.
    */
   private static boolean isPreferLeftWall() {
     return PREFER_LEFT_WALL.get();
