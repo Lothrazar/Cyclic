@@ -2,6 +2,12 @@
   "replace": "false",
   "values": [
     "cyclic:charm_knockback_resistance",
-    "cyclic:charm_crit"
+    "cyclic:charm_crit",
+    "cyclic:charm_creeper",
+    "cyclic:quiver_lightning",
+    "cyclic:quiver_damage",
+    "cyclic:antigravity",
+    "cyclic:charm_magicdefense",
+    "cyclic:charm_stone"
   ]
 }

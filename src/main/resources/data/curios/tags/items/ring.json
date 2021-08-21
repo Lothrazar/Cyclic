@@ -4,6 +4,8 @@
     "cyclic:charm_ultimate",
     "cyclic:charm_knockback_resistance",
     "cyclic:charm_luck",
+    "cyclic:charm_xp_speed",
+    "cyclic:charm_xp_blocker",
     "cyclic:antigravity"
   ]
 }

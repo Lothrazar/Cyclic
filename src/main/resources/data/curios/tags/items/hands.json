@@ -2,6 +2,8 @@
   "replace": "false",
   "values": [
     "cyclic:charm_attack_speed",
+    "cyclic:charm_crit",
+    "cyclic:charm_starvation",
     "cyclic:glove_climb"
   ]
 }

@@ -1,8 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.3.5",
-		"1.16.5-recommended": "1.3.5"
+		"1.16.5-latest": "1.3.6",
+		"1.16.5-recommended": "1.3.6"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -51,5 +51,6 @@
 		,"1.3.3":"Fix arrows shot from the multi-shot enchantment not shooting (not getting velocity).  Add config file entries for charm_speed, charm_luck, charm_attackspeed, and reduce default luck value from 100 to 10. Fix Antimatter Evaporator not affecting flowing (non-source) water.  Fix sound effects on some tools not playing (becoming more consistent with 1.12.2).  Fix some charms (curios) not taking durability damage when used/triggered.  "
 		,"1.3.4":"Ported Inverted Stirrups and Diamond Spikes from 1.12.2.  Added new wooden Item version of the ender shelf, stores any item.  Fix Storage Bag losing items sometimes on player-server re-connection.  Sneak-right click any wrench against a cyclic Cable and it will get harvested.  Void anvil now produces experience fluid while processing (extra fluid is voided internally, control in config).  Disenchanter now consumes experience fluid while processing (disable in config, or make it produce fluid).  Command updates /cyclic gamemode, glowing, gravity, dev. Blockstate data card now avoids saving duplicate blocks in the filter list (its the yellow card for the Miner).  Added new variant of Tempered Dark Glass with connected textures using block states.  Ender Shelf controller improved how it connects to nearby shelves; also tries to wrap around corners.  Each shelf caches/optimizes the enchant display name on client side, and the enchantment id serverside per stack, to optimize fps/tps use.  Use wrench on shelf or controller to toggle ender shelf rendering style. Update ru_ru.json by Bytegm "
 		,"1.3.5":"Fix NPE error with Optifine and Ender shelf.  Fix Fluid cable compatibility serer error with the 'tanknull'.  Blockstate data card now has the option to crouch and match only the block, ignoring the blockstate (default not crouching matches the exact state); tooltips updated.  PR: clarified info on fishing net for en_us #1889 by faizjami.  PR:  Various Caving Torch Charm fixes #1888 by mcpower "
+		,"1.3.6":"Updated some of the default curios data tags so gear is more equippable.  "
 	}
 }

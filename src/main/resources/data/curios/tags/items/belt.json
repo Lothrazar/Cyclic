@@ -3,6 +3,8 @@
   "values": [
     "cyclic:charm_ultimate",
     "cyclic:charm_torch_cave",
+    "cyclic:charm_creeper",
+    "cyclic:charm_stealthpotion",
     "cyclic:charm_torch"
   ]
 }

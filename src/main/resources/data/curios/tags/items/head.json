@@ -2,6 +2,8 @@
   "replace": "false",
   "values": [
     "cyclic:glowing_helmet",
+    "cyclic:charm_antipotion",
+    "cyclic:charm_boostpotion",
     "cyclic:charm_stone"
   ]
 }

@@ -3,6 +3,7 @@
   "values": [
     "cyclic:quiver_lightning",
     "cyclic:quiver_damage",
+    "cyclic:charm_magicdefense",
     "cyclic:charm_invisible"
   ]
 }

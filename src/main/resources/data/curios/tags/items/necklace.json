@@ -3,6 +3,9 @@
   "values": [
     "cyclic:charm_ultimate",
     "cyclic:charm_venom",
+    "cyclic:charm_creeper",
+    "cyclic:charm_antipotion",
+    "cyclic:charm_boostpotion",
     "cyclic:antigravity"
   ]
 }
