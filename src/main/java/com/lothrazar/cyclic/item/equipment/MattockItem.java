@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import com.google.common.collect.Sets;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import net.minecraft.block.Block;
@@ -39,7 +38,6 @@ public class MattockItem extends ToolItem {
     RayTraceResult ray = rayTrace(world, player, RayTraceContext.FluidMode.NONE);
     int yoff = 0;
     if (radius == 2 && player.isCrouching()) {
-      ModCyclic.LOGGER.error("now only is offsety");
       yoff = 1;
     }
     if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK) {

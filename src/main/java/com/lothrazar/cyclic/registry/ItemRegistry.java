@@ -66,7 +66,7 @@ import com.lothrazar.cyclic.item.enderpearl.EnderPearlReuse;
 import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.equipment.MattockItem;
 import com.lothrazar.cyclic.item.equipment.ShearsMaterial;
-import com.lothrazar.cyclic.item.equipment.WrenchItem;
+import com.lothrazar.cyclic.item.equipment.RotatorItem;
 import com.lothrazar.cyclic.item.findspawner.ItemProjectileDungeon;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.heart.HeartToxicItem;
@@ -295,7 +295,7 @@ public class ItemRegistry {
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024 * 1024)).setRegistryName("shears_obsidian"));
     //weak flint n steel 
     r.register(new ShearsMaterial(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(64)).setRegistryName("shears_flint"));
-    r.register(new WrenchItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("wrench"));
+    r.register(new RotatorItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("wrench"));
     r.register(new ScytheBrush(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_brush"));
     r.register(new ScytheForage(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_forage"));
     r.register(new ScytheLeaves(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_leaves"));

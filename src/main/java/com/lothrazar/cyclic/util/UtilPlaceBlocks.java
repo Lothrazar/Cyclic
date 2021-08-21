@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
@@ -12,14 +13,15 @@ import net.minecraft.item.Items;
 import net.minecraft.state.Property;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
 
-  public static boolean rotateBlockValidState(World worldObj, BlockPos pos, Direction side) {
-    BlockState clicked = worldObj.getBlockState(pos);
+  public static boolean rotateBlockValidState(World world, BlockPos pos, Direction side) {
+    BlockState clicked = world.getBlockState(pos);
     if (clicked.getBlock() == null) {
       return false;
     }
@@ -41,35 +43,58 @@ public class UtilPlaceBlocks {
         }
       }
     }
+    else if (clicked.hasProperty(RotatedPillarBlock.AXIS)) {
+      //axis 
+      Axis current = clicked.get(RotatedPillarBlock.AXIS);
+      switch (current) {
+        case X:
+          newState = clicked.with(RotatedPillarBlock.AXIS, Axis.Y);
+        break;
+        case Y:
+          newState = clicked.with(RotatedPillarBlock.AXIS, Axis.Z);
+        break;
+        case Z:
+          newState = clicked.with(RotatedPillarBlock.AXIS, Axis.X);
+        break;
+        default:
+        break;
+        //
+      }
+      //clicked.rot 
+    }
     else {
       //default whatever
       switch (side) {
         case DOWN:
-          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_180);
-        break;
-        case EAST:
-          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_90);
-        break;
-        case NORTH:
-          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
-        break;
-        case SOUTH:
-          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_90);
+          newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_180);
         break;
         case UP:
-          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.CLOCKWISE_180);
+          newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_180);
+        break;
+        case EAST:
+          newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_90);
+        break;
+        case NORTH:
+          newState = clicked.rotate(world, pos, Rotation.COUNTERCLOCKWISE_90);
+        break;
+        case SOUTH:
+          newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_90);
         break;
         case WEST:
-          newState = clickedBlock.rotate(clicked, worldObj, pos, Rotation.COUNTERCLOCKWISE_90);
+          newState = clicked.rotate(world, pos, Rotation.COUNTERCLOCKWISE_90);
         break;
         default:
         break;
       }
     }
+    boolean win = false;
     if (newState != null) {
-      return worldObj.setBlockState(pos, newState);
+      win = world.setBlockState(pos, newState);
     }
-    return false;
+    if (!win) {
+      ModCyclic.LOGGER.error("Could not rotate " + clickedBlock);
+    }
+    return win;
   }
 
   public static boolean placeStateSafe(World world, PlayerEntity player,

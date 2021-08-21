@@ -6,9 +6,9 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 
-public class WrenchItem extends ItemBase {
+public class RotatorItem extends ItemBase {
 
-  public WrenchItem(Properties properties) {
+  public RotatorItem(Properties properties) {
     super(properties);
   }
 

@@ -260,8 +260,7 @@ public class ConfigRegistry {
     AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
         "Light level of the current block after placing down a torch. Must be greater than light_limit",
         "Higher values means torches will be placed closer to you. Lower values means torches will overlap less,",
-        "but might result in small dark spots between torches"
-    ).defineInRange("light_target", 10, 1, 14);
+        "but might result in small dark spots between torches").defineInRange("light_target", 10, 1, 14);
     AutoCaveTorchItem.PREFER_WALLS = CFG.comment("Whether to prioritise placing torches on walls").define("prefer_walls", true);
     AutoCaveTorchItem.PREFER_LEFT_WALL = CFG.comment("Which wall to place torches on when digging a 1-wide tunnel", "True means left, False means right").define("prefer_left_wall", false);
     CFG.pop();
@@ -277,7 +276,7 @@ public class ConfigRegistry {
     //
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");
-    TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 128, 16, 256);
+    TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 256, 8, 1024);
     CFG.pop();
     CFG.comment("Sack of Holding settings").push("tile_transporter");
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
