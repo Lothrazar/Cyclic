@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import com.google.common.collect.Sets;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import net.minecraft.block.Block;
@@ -36,6 +37,11 @@ public class MattockItem extends ToolItem {
   public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
     World world = player.world;
     RayTraceResult ray = rayTrace(world, player, RayTraceContext.FluidMode.NONE);
+    int yoff = 0;
+    if (radius == 2 && player.isCrouching()) {
+      ModCyclic.LOGGER.error("now only is offsety");
+      yoff = 1;
+    }
     if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK) {
       BlockRayTraceResult brt = (BlockRayTraceResult) ray;
       Direction sideHit = brt.getFace();
@@ -47,10 +53,14 @@ public class MattockItem extends ToolItem {
         }
       }
       else if (sideHit == Direction.EAST || sideHit == Direction.WEST) {
-        shape = UtilShape.squareVerticalZ(pos, radius, radius);
+        int y = 1 + radius - yoff;
+        int z = radius;
+        shape = UtilShape.squareVerticalZ(pos, y, z);
       }
       else { //has to be NORTHSOUTH
-        shape = UtilShape.squareVerticalX(pos, radius, radius);
+        int x = radius;
+        int y = 1 + radius - yoff;
+        shape = UtilShape.squareVerticalX(pos, x, y);
       }
       for (BlockPos posCurrent : shape) {
         BlockState bsCurrent = world.getBlockState(posCurrent);
