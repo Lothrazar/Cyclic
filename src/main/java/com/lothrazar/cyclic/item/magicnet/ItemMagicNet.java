@@ -59,6 +59,8 @@ public class ItemMagicNet extends ItemBase {
     e.shoot(lookVector.getX(), lookVector.getY(), lookVector.getZ(), velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
     worldIn.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
     worldIn.addEntity(e);
-    stack.shrink(1);
+    if (!player.isCreative()) {
+      stack.shrink(1);
+    }
   }
 }

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.magicnet;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
@@ -53,17 +54,22 @@ public class ItemMobContainer extends ItemBase {
     World world = context.getWorld();
     UtilSound.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE, 0.3F, 1F);
     if (!world.isRemote) {
-      Entity entity = ForgeRegistries.ENTITIES.getValue(
-          new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
+      Entity entity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
           .create(world);
       //    entity.egg
       entity.read(stack.getTag());
       entity.setPosition(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
       if (world.addEntity(entity)) {
+        //eat up that stack
         stack.setTag(null);
         stack.shrink(1);
         if (stack.isEmpty()) {
           player.setHeldItem(context.getHand(), ItemStack.EMPTY);
+        }
+        if (!player.isCreative()) {
+          //and replace with empty 
+          //if config says drop?
+          player.dropItem(new ItemStack(ItemRegistry.magic_net), true);
         }
         return ActionResultType.SUCCESS;
       }
