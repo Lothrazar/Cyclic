@@ -6,6 +6,7 @@
     "minecraft:warped_fungus",
     "minecraft:crimson_fungus",
      {"required":false, "id": "quark:glowshroom"      },
+     {"required":false, "id": "tconstruct:blood_slime_sapling"      },
      {"required":false, "id": "biomesoplenty:toadstool"      },
      {"required":false, "id": "biomesoplenty:glowshroom"      },
      {"required":false, "id": "botania:white_mushroom"      },
