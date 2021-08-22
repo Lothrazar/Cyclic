@@ -122,8 +122,12 @@ dependencies {
 		implementation fg.deobf("curse.maven:mekanism-268560:3206392")
   
    
- //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
- //  implementation fg.deobf("curse.maven:quark-243121:3366626")
+    implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
+    implementation fg.deobf("curse.maven:quark-243121:3394265")
+    implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
+ 
+ // BOP
+ 
 	// implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
   // implementation fg.deobf("curse.maven:cucumber-272335:3187116")
   // implementation fg.deobf("curse.maven:mystical-agriculture-246640:3152061")

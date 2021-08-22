@@ -1,11 +1,11 @@
 {
   "replace": "false",
   "values": [
-    "cyclic:charm_ultimate",
-    "cyclic:charm_knockback_resistance",
-    "cyclic:charm_luck",
-    "cyclic:charm_xp_speed",
-    "cyclic:charm_xp_blocker",
-    "cyclic:antigravity"
+     {"id": "cyclic:charm_ultimate","required":false}, 
+     {"id": "cyclic:charm_knockback_resistance","required":false}, 
+     {"id": "cyclic:charm_luck","required":false}, 
+     {"id": "cyclic:charm_xp_speed","required":false}, 
+     {"id": "cyclic:charm_xp_blocker","required":false}, 
+     {"id": "cyclic:antigravity","required":false}
   ]
 }

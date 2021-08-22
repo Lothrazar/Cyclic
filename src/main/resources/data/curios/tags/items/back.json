@@ -1,9 +1,9 @@
 {
   "replace": "false",
   "values": [
-    "cyclic:quiver_lightning",
-    "cyclic:quiver_damage",
-    "cyclic:charm_magicdefense",
-    "cyclic:charm_invisible"
+    {"id": "cyclic:quiver_lightning","required":false}, 
+    {"id": "cyclic:quiver_damage","required":false}, 
+    {"id":    "cyclic:charm_magicdefense","required":false}, 
+    {"id":    "cyclic:charm_invisible","required":false}
   ]
 }

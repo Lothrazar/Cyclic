@@ -1,6 +1,9 @@
 {
-  "replace": false,
-  "values": [
-    "cyclic:cable_wrench"
-  ]
+	"replace": false,
+	"values": [
+		{
+			"id": "cyclic:cable_wrench",
+			"required": false
+		}
+	]
 }

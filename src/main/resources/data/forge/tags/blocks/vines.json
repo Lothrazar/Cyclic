@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+     {"required":false, "id": "biomesoplenty:willow_vine"      },
+     {"required":false, "id": "biomesoplenty:spanish_moss"      },
+     {"required":false, "id": "quark:root"      },
     "minecraft:vine",
     "minecraft:weeping_vines",
     "minecraft:weeping_vines_plant",

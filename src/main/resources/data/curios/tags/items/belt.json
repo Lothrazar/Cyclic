@@ -1,10 +1,10 @@
 {
   "replace": "false",
-  "values": [
-    "cyclic:charm_ultimate",
-    "cyclic:charm_torch_cave",
-    "cyclic:charm_creeper",
-    "cyclic:charm_stealthpotion",
-    "cyclic:charm_torch"
+  "values": [                                      
+    {"id":  "cyclic:charm_ultimate",                  "required":false}, 
+    {"id":  "cyclic:charm_torch_cave",                "required":false}, 
+    {"id":  "cyclic:charm_creeper",                   "required":false}, 
+    {"id":  "cyclic:charm_stealthpotion",             "required":false}, 
+    {"id":  "cyclic:charm_torch"                  ,    "required":false}
   ]
 }

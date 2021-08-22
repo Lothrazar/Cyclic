@@ -1,9 +1,9 @@
 {
   "replace": "false",
   "values": [
-    "cyclic:glowing_helmet",
-    "cyclic:charm_antipotion",
-    "cyclic:charm_boostpotion",
-    "cyclic:charm_stone"
+     {"id":   "cyclic:glowing_helmet",                       "required":false}, 
+     {"id":   "cyclic:charm_antipotion","required":false}, 
+     {"id":   "cyclic:charm_boostpotion","required":false}, 
+     {"id":   "cyclic:charm_stone","required":false}
   ]
 }

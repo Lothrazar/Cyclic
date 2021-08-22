@@ -1,7 +1,13 @@
 {
-  "replace": false,
-  "values": [
-    "cyclic:torch_launcher",
-    "cyclic:charm_torch"
-  ]
+	"replace": false,
+	"values": [
+		{
+			"id": "cyclic:torch_launcher",
+			"required": false
+		},
+		{
+			"id": "cyclic:charm_torch",
+			"required": false
+		}
+	]
 }

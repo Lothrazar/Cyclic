@@ -1,13 +1,13 @@
 {
   "replace": "false",
   "values": [
-    "cyclic:charm_speed",
-    "cyclic:charm_void",
-    "cyclic:charm_antidote",
-    "cyclic:charm_wither",
-    "cyclic:charm_fire",
-    "cyclic:charm_water",
-    "cyclic:charm_starvation",
-    "cyclic:charm_stealthpotion"
+     {"id": "cyclic:charm_speed",                    "required":false}, 
+     {"id": "cyclic:charm_void","required":false}, 
+     {"id": "cyclic:charm_antidote","required":false}, 
+     {"id": "cyclic:charm_wither","required":false}, 
+     {"id": "cyclic:charm_fire","required":false}, 
+     {"id": "cyclic:charm_water","required":false}, 
+     {"id": "cyclic:charm_starvation","required":false}, 
+     {"id": "cyclic:charm_stealthpotion","required":false}
   ]
 }
