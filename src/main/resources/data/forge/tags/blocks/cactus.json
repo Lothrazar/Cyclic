@@ -3,6 +3,7 @@
   "values": [
      {"required":false, "id": "byg:mini_cactus"      },
      {"required":false, "id": "byg:spined_cactus"      },
+     {"required":false, "id": "byg:golden_spined_cactus"      },
      {"required":false, "id": "byg:prickly_pear_cactus"      },
      {"required":false, "id": "byg:warped_cactus"      },
      {"required":false, "id": "byg:oddity_cactus"      },

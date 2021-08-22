@@ -12,7 +12,6 @@
     "minecraft:dead_bubble_coral",
     "minecraft:dead_fire_coral",
     "minecraft:dead_horn_coral",
-     {"required":false, "id": "biomesoplenty:dune_grass"      },
      {"required":false, "id": "biomesoplenty:desert_grass"      },
      {"required":false, "id": "biomesoplenty:dead_grass"      },
      {"required":false, "id": "biomesoplenty:dead_branch"      }
