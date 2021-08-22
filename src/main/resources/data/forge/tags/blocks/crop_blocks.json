@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
+    "minecraft:kelp",
+    "minecraft:kelp_plant",
 		"minecraft:sugar_cane",
 		"minecraft:bamboo",
 		"minecraft:melon",

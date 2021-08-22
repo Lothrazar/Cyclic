@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+     {"required":false, "id": "gaiadimension:pyrite_torch"      },
+     "minecraft:soul_torch",
+     "minecraft:redstone_torch",
+     "minecraft:torch"
+  ]
+}

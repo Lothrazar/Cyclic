@@ -1,9 +1,16 @@
 {
   "replace": false,
   "values": [
+     {"required":false, "id": "tconstruct:sky_slime_vine"      },
+     {"required":false, "id": "tconstruct:ender_slime_vine"      },
      {"required":false, "id": "biomesoplenty:willow_vine"      },
      {"required":false, "id": "biomesoplenty:spanish_moss"      },
      {"required":false, "id": "quark:root"      },
+     {"required":false, "id": "byg:lament_vine"      },
+     {"required":false, "id": "byg:lament_vine_plant"      },
+     {"required":false, "id": "byg:imparius_vine"      },
+     {"required":false, "id": "byg:imparius_vine_plant"      },
+     {"required":false, "id": "byg:fungal_imparius_filament"      },
     "minecraft:vine",
     "minecraft:weeping_vines",
     "minecraft:weeping_vines_plant",

@@ -110,23 +110,19 @@ dependencies {
     implementation fg.deobf("curse.maven:industrial-foregoing-266515:3386008")
 	  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3361660")
     implementation fg.deobf("curse.maven:cofh-core-69162:3407019")
+	  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
 	  implementation fg.deobf("curse.maven:ensorcellation-349447:3407021")
-
     implementation fg.deobf("curse.maven:mantle-74924:3389377")
     implementation fg.deobf("curse.maven:simple-storage-network-268495:3230736")
     implementation fg.deobf("curse.maven:inspirations-284007:3170862")
     implementation fg.deobf("curse.maven:plain-grinder-452000:3389092")  
 	  implementation fg.deobf("curse.maven:liquid-blocks-301999:3323640")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:3412365")
-	  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
 		implementation fg.deobf("curse.maven:mekanism-268560:3206392")
-  
-   
     implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
     implementation fg.deobf("curse.maven:quark-243121:3394265")
     implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
  
- // BOP
  
 	// implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
   // implementation fg.deobf("curse.maven:cucumber-272335:3187116")
