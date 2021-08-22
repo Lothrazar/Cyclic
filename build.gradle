@@ -122,6 +122,7 @@ dependencies {
     implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
     implementation fg.deobf("curse.maven:quark-243121:3394265")
     implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
+  //  implementation fg.deobf("curse.maven:oh-the-biomes-youll-go-247560:3419778")
  
  
 	// implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
