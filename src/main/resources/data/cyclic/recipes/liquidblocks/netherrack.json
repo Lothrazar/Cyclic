@@ -1,0 +1,21 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+    "item": "minecraft:netherrack"
+  },
+  "result": {
+    "fluid": "liquidblocks:liquid_netherrack",
+    "count": 1000
+  },
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "liquidblocks",
+					"type": "forge:mod_loaded"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

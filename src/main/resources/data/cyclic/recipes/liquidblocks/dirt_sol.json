@@ -1,0 +1,25 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:dirt"
+  },
+  "mix": {
+    "fluid": "liquidblocks:liquid_dirt",
+    "count": 1000
+  },
+  "result": {
+    "item": "minecraft:dirt",
+	  "count": 4
+  },
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "liquidblocks",
+					"type": "forge:mod_loaded"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

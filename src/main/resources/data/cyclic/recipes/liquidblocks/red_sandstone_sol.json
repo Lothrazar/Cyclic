@@ -1,0 +1,25 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "tag": "forge:sand"
+  },
+  "mix": {
+    "fluid": "liquidblocks:liquid_red_sandstone",
+    "count": 1000
+  },
+  "result": {
+    "item": "minecraft:red_sandstone",
+	  "count": 2
+  },
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "liquidblocks",
+					"type": "forge:mod_loaded"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

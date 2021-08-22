@@ -1,0 +1,25 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:gravel"
+  },
+  "mix": {
+    "fluid": "liquidblocks:liquid_gravel",
+    "count": 1000
+  },
+  "result": {
+    "item": "minecraft:gravel",
+	  "count": 4
+  },
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "liquidblocks",
+					"type": "forge:mod_loaded"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

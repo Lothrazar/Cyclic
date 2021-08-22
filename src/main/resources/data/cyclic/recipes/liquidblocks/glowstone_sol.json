@@ -1,0 +1,25 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "tag": "forge:netherrack"
+  },
+  "mix": {
+    "fluid": "liquidblocks:liquid_glowstone",
+    "count": 1000
+  },
+  "result": {
+    "item": "minecraft:glowstone",
+	  "count": 2
+  },
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "liquidblocks",
+					"type": "forge:mod_loaded"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

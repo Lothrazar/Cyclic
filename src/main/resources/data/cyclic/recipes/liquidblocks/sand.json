@@ -1,0 +1,21 @@
+{
+  "type": "cyclic:melter",
+  "inputFirst": {
+    "item": "minecraft:sand"
+  },
+  "result": {
+    "fluid": "liquidblocks:liquid_sand",
+    "count": 1000
+  },
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "liquidblocks",
+					"type": "forge:mod_loaded"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}
