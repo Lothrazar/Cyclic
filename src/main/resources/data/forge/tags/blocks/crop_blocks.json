@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+     {"required":false, "id": "ashenwheat:ossid_root"      },
     "minecraft:kelp",
     "minecraft:kelp_plant",
 		"minecraft:sugar_cane",
