@@ -78,7 +78,12 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 32, 8);
+    if (container.tile.inventory.getStackInSlot(TileMiner.SLOT_TOOL).isEmpty()) {
+      this.drawSlot(ms, 32, 8, TextureRegistry.SLOT_TOOL, 18);
+    }
+    else {
+      this.drawSlot(ms, 32, 8);
+    }
     this.drawSlot(ms, 134, 8, TextureRegistry.SLOT_BSDATA, 18);
     energy.draw(ms, container.tile.getEnergy());
   }
