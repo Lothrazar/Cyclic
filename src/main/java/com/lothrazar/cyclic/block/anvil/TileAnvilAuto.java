@@ -96,7 +96,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     setLitProperty(true);
     //
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().isIn(DataTags.IMMUNE)) {
+    if (stack.isEmpty() || stack.getItem().isIn(DataTags.ANVIL_IMMUNE)) {
       return;
     }
     final int repair = POWERCONF.get();

@@ -45,7 +45,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem().isIn(DataTags.RODS);
+      return stack.getItem().isIn(DataTags.FISHING_RODS);
     }
   };
   LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -95,7 +95,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
       return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.getItem().isIn(DataTags.RODS)) {
+    if (stack.getItem().isIn(DataTags.FISHING_RODS)) {
       int x = pos.getX() + world.rand.nextInt(RADIUS * 2) - RADIUS;
       int y = pos.getY();
       int z = pos.getZ() + world.rand.nextInt(RADIUS * 2) - RADIUS;

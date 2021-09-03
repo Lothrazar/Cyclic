@@ -63,7 +63,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   public Predicate<FluidStack> isFluidValid() {
-    return p -> p.getFluid().isIn(DataTags.XP);
+    return p -> p.getFluid().isIn(DataTags.EXPERIENCE);
   }
 
   @Override

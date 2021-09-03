@@ -186,7 +186,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   private static boolean simpleBreakDrop(BlockState blockState) {
-    boolean breakit = blockState.isIn(DataTags.VINES) || blockState.isIn(DataTags.CROPBLOCKS);
+    boolean breakit = blockState.isIn(DataTags.VINES) || blockState.isIn(DataTags.CROP_BLOCKS);
     // the list tells all
     return breakit;
   }

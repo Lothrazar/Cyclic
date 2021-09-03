@@ -65,7 +65,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     }
     setLitProperty(true);
     ItemStack stack = inputSlots.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().isIn(DataTags.IMMUNE)) {
+    if (stack.isEmpty() || stack.getItem().isIn(DataTags.ANVIL_IMMUNE)) {
       //move it over and then done
       if (outputSlots.getStackInSlot(0).isEmpty()) {
         outputSlots.insertItem(0, stack.copy(), false);

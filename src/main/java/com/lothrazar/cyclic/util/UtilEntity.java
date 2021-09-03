@@ -66,6 +66,9 @@ public class UtilEntity {
    * @return true if teleport was a success
    */
   private static boolean enderTeleportEvent(LivingEntity player, World world, double x, double y, double z) {
+    if (player.getLowestRidingEntity() != null) {
+      return false;
+    }
     EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
     boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
     if (wasCancelled == false) {

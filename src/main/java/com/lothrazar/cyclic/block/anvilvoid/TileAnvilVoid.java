@@ -57,7 +57,7 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
     super(TileRegistry.ANVILVOID.get());
     this.needsRedstone = 1;
     tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().isIn(DataTags.XP);
+      return p.getFluid().isIn(DataTags.EXPERIENCE);
     });
   }
 
@@ -117,7 +117,7 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
       outputSlots.insertItem(0, new ItemStack(Items.BOOK), false);
       doCost = true;
     }
-    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.getItem().isIn(DataTags.IMMUNE)) {
+    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.getItem().isIn(DataTags.ANVIL_IMMUNE)) {
       //is enchanted
       stack.getTag().remove("Enchantments");
       outputSlots.insertItem(0, stack.copy(), false);

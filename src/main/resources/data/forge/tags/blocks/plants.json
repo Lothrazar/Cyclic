@@ -96,8 +96,20 @@
      {"required":false, "id": "byg:imparius_mushroom_branch"      },
      {"required":false, "id": "byg:fungal_imparius_filament"      },
      {"required":false, "id": "biomesoplenty:flower_patch"      },
-     {"required":false, "id": "byg:flower_patch"      },
-     {"required":false, "id": "byg:leaf_pile"      },
-     {"required":false, "id": "byg:clover_patch"      }
+     {"required":false, "id": "byg:flower_patch"        },
+     {"required":false, "id": "byg:leaf_pile"           },
+		 {"required":false, "id": "byg:short_grass"         },
+		 {"required":false, "id": "byg:prairie_grass"       },
+		 {"required":false, "id": "byg:ether_grass"         },
+		 {"required":false, "id": "byg:tall_ether_grass"    },
+		 {"required":false, "id": "byg:scorched_grass"      },
+		 {"required":false, "id": "byg:beach_grass"         },
+		 {"required":false, "id": "byg:short_beach_grass"   },
+		 {"required":false, "id": "byg:wilted_grass"        },
+		 {"required":false, "id": "byg:weed_grass"          },
+		 {"required":false, "id": "byg:winter_grass"        },
+		 {"required":false, "id": "byg:tall_prairie_grass"  },
+		 {"required":false, "id": "byg:short_grass"         },
+     {"required":false, "id": "byg:clover_patch"        }
   ]
 }

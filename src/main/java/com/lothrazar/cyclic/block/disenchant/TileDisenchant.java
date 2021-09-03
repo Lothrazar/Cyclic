@@ -76,7 +76,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   public TileDisenchant() {
     super(TileRegistry.disenchanter);
     tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().isIn(DataTags.XP);
+      return p.getFluid().isIn(DataTags.EXPERIENCE);
     });
   }
 
@@ -87,7 +87,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return;
     }
     ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
-    if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHIMMUNE)) {
+    if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHANTER_IMMUNE)) {
       return;
     }
     Integer cost = POWERCONF.get();

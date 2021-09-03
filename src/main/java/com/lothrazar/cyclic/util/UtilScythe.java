@@ -45,20 +45,12 @@ public class UtilScythe {
         doBreak = blockState.isIn(DataTags.PLANTS);
       break;
       case FORAGE:
-        //        "#minecraft:small_flowers",
-        //        "#minecraft:tall_flowers",
-        //        "#minecraft:corals",
-        //        "#minecraft:wall_corals",    
-        //        "#minecraft:coral_plants",
-        //        "#forge:mushrooms",
-        //        "#forge:vines",
-        //        "#forge:crop_blocks"
-        doBreak = blockState.isIn(BlockTags.SMALL_FLOWERS) || blockState.isIn(BlockTags.TALL_FLOWERS)
+        doBreak = blockState.isIn(BlockTags.FLOWERS)
             || blockState.isIn(BlockTags.CORALS) || blockState.isIn(BlockTags.WALL_CORALS)
-            || blockState.isIn(BlockTags.CORAL_PLANTS)
             || blockState.isIn(DataTags.MUSHROOMS)
             || blockState.isIn(DataTags.VINES)
-            || blockState.isIn(DataTags.CROPBLOCKS);
+            || blockState.isIn(DataTags.CACTUS)
+            || blockState.isIn(DataTags.CROP_BLOCKS);
       break;
     }
     if (doBreak) {
