@@ -66,7 +66,7 @@ public class UtilEntity {
    * @return true if teleport was a success
    */
   private static boolean enderTeleportEvent(LivingEntity player, World world, double x, double y, double z) {
-    if (player.getLowestRidingEntity() != null) {
+    if (player.getLowestRidingEntity() != player) {
       return false;
     }
     EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
