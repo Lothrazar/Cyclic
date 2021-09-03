@@ -269,9 +269,11 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       ItemStack shapeCard = inventory.getStackInSlot(SLOT_SHAPE);
       if (shapeCard.getItem() instanceof ShapeCard) {
         RelativeShape shape = RelativeShape.read(shapeCard);
-        shape.setWorldCenter(world, getPosTarget());
-        if (shape != null && shape.getShape() != null && shape.getShape().size() > 0) {
-          return shape.getShape();
+        if (shape != null) {
+          shape.setWorldCenter(world, getPosTarget());
+          if (shape.getShape() != null && shape.getShape().size() > 0) {
+            return shape.getShape();
+          }
         }
       }
     }
