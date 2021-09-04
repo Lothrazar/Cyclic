@@ -87,10 +87,10 @@ public class BlockItemShelf extends BlockBase {
       //
       // single shelf
       ItemStack shelfStack = shelf.inventory.getStackInSlot(slot);
-      boolean oldEmpty = shelfStack.isEmpty();
-      boolean doDeposit = oldEmpty || heldItem.getItem() == shelfStack.getItem();
-      if (doDeposit) {
+      //first , check if deposit spot is empty
+      if (shelfStack.isEmpty() || heldItem.getItem() == shelfStack.getItem()) {
         //try to insert  
+        boolean oldEmpty = shelfStack.isEmpty();
         ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
         if (remaining.isEmpty() || remaining.getCount() != shelfStack.getCount()) {
           player.setHeldItem(hand, remaining);
@@ -101,12 +101,22 @@ public class BlockItemShelf extends BlockBase {
           return ActionResultType.CONSUME;
         }
       }
-      else { // doWithdraw
-        //try to withdraw  
+      if (heldItem.isEmpty()) {
+        //withdraw direct to players empty hand
         int q = player.isCrouching() ? 1 : 64;
         ItemStack retrieved = shelf.inventory.extractItem(slot, q, false);
         player.setHeldItem(hand, retrieved);
         player.swingArm(hand);
+      }
+      if (!shelfStack.isEmpty() && !heldItem.isEmpty()) {
+        //
+        ItemStack forShelf = heldItem.copy();
+        //        ItemStack forPlayer = shelfStack.copy();
+        //extract all from shelf
+        ItemStack forPlayer = shelf.inventory.extractItem(slot, 64, false);
+        player.setHeldItem(hand, forPlayer);
+        player.swingArm(hand);
+        shelf.inventory.insertItem(slot, forShelf, false);
       }
       return ActionResultType.PASS;
     }

@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:fishing_rod"
+    "minecraft:fishing_rod",
+    {"required":false, "id":   "aquaculture:iron_fishing_rod"},
+    {"required":false, "id":   "aquaculture:gold_fishing_rod"},
+    {"required":false, "id":   "aquaculture:diamond_fishing_rod"},
+    {"required":false, "id":   "aquaculture:neptunium_fishing_rod"}
   ]
 }

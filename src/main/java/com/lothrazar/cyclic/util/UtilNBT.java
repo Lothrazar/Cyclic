@@ -41,7 +41,7 @@ public class UtilNBT {
   }
 
   public static BlockPos getItemStackBlockPos(ItemStack item) {
-    if (item.isEmpty() || !item.getOrCreateTag().contains("xpos")) {
+    if (item.isEmpty() || item.getTag() == null ||  !item.getTag().contains("xpos")) {
       return null;
     }
     CompoundNBT tag = item.getOrCreateTag();
