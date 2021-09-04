@@ -60,7 +60,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         return Block.getBlockFromItem(stack.getItem()) != null;
       }
       else if (slot == SLOT_SHAPE) {
-        return stack.getItem() instanceof ShapeCard; 
+        return stack.getItem() instanceof ShapeCard;
       }
       else { // if SLOT_GPS
         return stack.getItem() instanceof LocationGpsCard;

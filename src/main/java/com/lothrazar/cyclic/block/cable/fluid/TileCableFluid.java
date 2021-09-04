@@ -81,11 +81,9 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     BlockPos target = this.pos.offset(extractSide);
     Direction incomingSide = extractSide.getOpposite();
     IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
-    if (stuff == null || stuff.getTanks() == 0) {
-      //some tanks can have zero tanks       //      at tfar.tanknull.inventory.FluidStackHandler.getFluidInTank(FluidStackHandler.java:40) ~[tanknull:2.3-1.16.4] 
-      return;
-    }
-    if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
+    if (stuff != null
+        && stuff.getTanks() > 0
+        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
       return;
     }
     boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, EXTRACT_RATE);
@@ -94,11 +92,11 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       //test if its a source block, or a waterlogged block
       BlockState targetState = world.getBlockState(target);
-      FluidState fluid = targetState.getFluidState();
-      if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
+      FluidState fluidState = world.getFluidState(target);
+      if (fluidState != null && fluidState.isSource()) {
         //not just water. any fluid source block
         if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-          sideHandler.fill(new FluidStack(fluid.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          sideHandler.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
       else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {

@@ -79,7 +79,7 @@ public class RelativeShape {
   }
 
   public static RelativeShape read(CompoundNBT tag) {
-    if (tag==null || tag.getBoolean(ShapeCard.VALID_SHAPE) == false) {
+    if (tag == null || tag.getBoolean(ShapeCard.VALID_SHAPE) == false) {
       return null;
     }
     int count = tag.getInt("count");
