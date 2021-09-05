@@ -21,28 +21,8 @@ public class PacketItemScroll extends PacketBase {
   public static void handle(PacketItemScroll message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayerEntity player = ctx.get().getSender();
-      System.out.println("pkt item scroll" + message.slot + "" + message.isDown);
       player.getCooldownTracker().setCooldown(ItemRegistry.ENDER_BOOK.get(), 5);
       EnderBookItem.scroll(player, message.slot, message.isDown);
-      //      if (player.openContainer == null) {
-      //        return;
-      //      }
-      //      int scount = player.openContainer.inventorySlots.size();
-      //      //this is an edge case but it DID happen: put charmin your hotbar and then open a creative inventory tab. avoid index OOB
-      //      if (message.slot >= scount) {
-      //        //will NOT work in creative mode. slots are messed up
-      //        return;
-      //      }
-      //      Slot slotObj = player.openContainer.getSlot(message.slot);
-      //      if (slotObj != null
-      //          && !slotObj.getStack().isEmpty()) {
-      //        ItemStack maybeCharm = slotObj.getStack();
-      //        if (maybeCharm.getItem() instanceof IHasClickToggle) {
-      //          //example: is a charm or something
-      //          IHasClickToggle c = (IHasClickToggle) maybeCharm.getItem();
-      //          c.toggle(player, maybeCharm);
-      //        }
-      //      }
     });
     message.done(ctx);
   }

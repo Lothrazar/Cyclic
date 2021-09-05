@@ -32,6 +32,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class EnderBookItem extends ItemBase {
 
+  private static final int TP_COUNTDOWN = 60;
   private static final String ENDERSLOT = "enderslot";
   private static final String TELEPORT_COUNTDOWN = "TeleportCountdown";
 
@@ -65,7 +66,13 @@ public class EnderBookItem extends ItemBase {
       NetworkHooks.openGui((ServerPlayerEntity) playerIn, new ContainerProviderEnderBook(), playerIn.getPosition());
     }
     if (!worldIn.isRemote && playerIn.isCrouching()) {
-      playerIn.getHeldItem(handIn).getOrCreateTag().putInt(TELEPORT_COUNTDOWN, 60);
+      ItemStack stack = playerIn.getHeldItem(handIn);
+      int enderslot = stack.getTag().getInt(ENDERSLOT);
+      BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
+      if (loc != null) {
+        UtilChat.addServerChatMessage(playerIn, new TranslationTextComponent("item.cyclic.ender_book.start").appendString(loc.toString()));
+        stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, TP_COUNTDOWN);
+      }
     }
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
@@ -78,23 +85,24 @@ public class EnderBookItem extends ItemBase {
         cancelTeleport(stack);
         return;
       }
-      if (ct == 0) {
+      if (ct == 0 && entityIn instanceof PlayerEntity) {
         cancelTeleport(stack);
         int enderslot = stack.getTag().getInt(ENDERSLOT);
         BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
         if (loc != null &&
             loc.getPos() != null) {
           if (loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(worldIn))) {
-            UtilEntity.enderTeleportEvent((LivingEntity) entityIn, worldIn, loc.getPos());
+            UtilEntity.enderTeleportEvent((PlayerEntity) entityIn, worldIn, loc.getPos());
           }
           else {
-            //diff dim
+            //diff dim 
+            UtilEntity.dimensionTeleport((PlayerEntity) entityIn, worldIn, loc);
           }
           return;
         }
       }
       else if (ct % 20 == 0 && entityIn instanceof PlayerEntity) {
-        UtilChat.sendStatusMessage((PlayerEntity) entityIn, new TranslationTextComponent("item.cyclic.ender_book.coutndown").appendString("" + (ct / 20)));
+        UtilChat.sendStatusMessage((PlayerEntity) entityIn, new TranslationTextComponent("item.cyclic.ender_book.countdown").appendString("" + (ct / 20)));
       }
       ct--;
       stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, ct);
@@ -167,6 +175,9 @@ public class EnderBookItem extends ItemBase {
       enderslot += isDown ? -1 : 1;
       if (enderslot < 0) {
         enderslot = CapabilityProviderEnderBook.SLOTS - 1;
+      }
+      else if (enderslot > CapabilityProviderEnderBook.SLOTS) {
+        enderslot = 0;
       }
       book.getTag().putInt(ENDERSLOT, enderslot % CapabilityProviderEnderBook.SLOTS);
       BlockPosDim loc = EnderBookItem.getLocation(book, enderslot);

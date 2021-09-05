@@ -10,10 +10,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class UtilChat {
 
-  public static void addChatMessage(PlayerEntity player, String message) {
+  public static void addChatMessage(PlayerEntity player, IFormattableTextComponent message) {
     if (player.world.isRemote) {
-      player.sendMessage(new TranslationTextComponent(message), player.getUniqueID());
+      player.sendMessage(message, player.getUniqueID());
     }
+  }
+
+  public static void addChatMessage(PlayerEntity player, String message) {
+    addChatMessage(player, new TranslationTextComponent(message));
   }
 
   public static void addServerChatMessage(PlayerEntity player, String message) {

@@ -9,11 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenEnderBook extends ScreenBase<ContainerEnderBook> {
 
-  private final ContainerEnderBook screenContainer;
-
   public ScreenEnderBook(ContainerEnderBook screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.screenContainer = screenContainer;
   }
 
   @Override
@@ -24,25 +21,8 @@ public class ScreenEnderBook extends ScreenBase<ContainerEnderBook> {
   }
 
   @Override
-  public void init() {
-    super.init();
-    int x = guiLeft + 150;
-    int y = guiTop + 8;
-    final int size = 20;
-    //    btnType = this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.RENDER_HIDE, "", b -> {
-    //      //pressed
-    //      PacketRegistry.INSTANCE.sendToServer(new PacketFilterCard(CraftingActionEnum.EMPTY));
-    //      EnderBook.toggleFilterType(screenContainer.bag);
-    //    }));
-  }
-
-  @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
-    this.drawButtonTooltips(ms, mouseX, mouseY);
-    //    boolean filter = screenContainer.bag.getOrCreateTag().getBoolean("filter");
-    //    btnType.setTextureId(filter ? TextureEnum.RENDER_HIDE : TextureEnum.RENDER_SHOW);
-    //    btnType.setTooltip("cyclic.screen.filter." + filter);
   }
 
   @Override

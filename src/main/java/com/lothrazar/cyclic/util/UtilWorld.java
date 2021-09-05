@@ -12,7 +12,10 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class UtilWorld {
@@ -21,6 +24,10 @@ public class UtilWorld {
     //example: returns "minecraft:overworld" resource location
     return world.getDimensionKey().getLocation().toString();
     //RegistryKey.func_240903_a_(Registry.WORLD_KEY, new ResourceLocation("twilightforest", "twilightforest"));
+  }
+
+  public static RegistryKey<World> stringToDimension(String key) {
+    return RegistryKey.getOrCreateKey(Registry.WORLD_KEY, ResourceLocation.tryCreate(key));
   }
 
   public static double distanceBetweenHorizontal(BlockPos start, BlockPos end) {

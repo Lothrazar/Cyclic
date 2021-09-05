@@ -24,9 +24,11 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.Vector3;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.world.DimensionTransit;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -474,6 +477,13 @@ public class UtilEntity {
     } //setting fall distance on clientside wont work
     if (worldIn.isRemote && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
       PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+    }
+  }
+
+  public static void dimensionTeleport(PlayerEntity player, World world, BlockPosDim loc) {
+    if (world instanceof ServerWorld) {
+      DimensionTransit transit = new DimensionTransit((ServerWorld) world, loc);
+      transit.teleport(player);
     }
   }
 }
