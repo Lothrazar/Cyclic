@@ -4,6 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -16,8 +17,12 @@ public class UtilChat {
   }
 
   public static void addServerChatMessage(PlayerEntity player, String message) {
+    addServerChatMessage(player, new TranslationTextComponent(message));
+  }
+
+  public static void addServerChatMessage(PlayerEntity player, IFormattableTextComponent message) {
     if (!player.world.isRemote) {
-      player.sendMessage(new TranslationTextComponent(message), player.getUniqueID());
+      player.sendMessage(message, player.getUniqueID());
     }
   }
 

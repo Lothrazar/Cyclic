@@ -532,9 +532,10 @@
     "guide.title": "Cyclic Guidebook",
     "guide.landing_text": "Learn about everything Cyclic adds!",
 
-    "item.ender_book.guide": "A magical book that stores your current location as a waypoint.  Teleport to the waypoint at a later at the cost of experience, based on distance (configurable).  Cannot cross dimensions, but it can store locations in any dimension.",
-    "item.ender_book": "Ender Book",
-    "item.ender_book.tooltip": "Saved Waypoints:",
+    "item.cyclic.ender_book.guide": "A magical book that stores your current location as a waypoint.   Crouch and scroll to pick location.  Crouch and use to teleport.  Jump to cancel the port.  ",
+    "item.cyclic.ender_book": "Ender Book",
+    "item.cyclic.ender_book.countdown": "Teleporting in ",
+    "item.cyclic.ender_book.tooltip": "Crouch to teleport; scroll to use; open and fill with locations",
     "item.cantoggle.tooltip.info": "Right-Click to toggle:",
     "item.cantoggle.tooltip.off": "Off",
     "item.cantoggle.tooltip.on": "On",

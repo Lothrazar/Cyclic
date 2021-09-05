@@ -19,6 +19,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -44,10 +45,10 @@ public class EnderBookItem extends ItemBase {
     super.addInformation(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag()) {
       CompoundNBT stackTag = stack.getOrCreateTag();
-      if (stackTag.contains("itemTooltip")) {
-        String itemTooltip = stackTag.getString("itemTooltip");
-        tooltip.add(new TranslationTextComponent(itemTooltip).mergeStyle(TextFormatting.GRAY));
-      }
+      //      if (stackTag.contains("itemTooltip")) {
+      //        String itemTooltip = stackTag.getString("itemTooltip");
+      //        tooltip.add(new TranslationTextComponent(itemTooltip).mergeStyle(TextFormatting.GRAY));
+      //      }
       if (stackTag.contains("itemCount")) {
         int itemCount = stackTag.getInt("itemCount");
         TranslationTextComponent t = new TranslationTextComponent("cyclic.screen.filter.item.count");
@@ -74,18 +75,21 @@ public class EnderBookItem extends ItemBase {
     if (stack.hasTag() && stack.getTag().contains(TELEPORT_COUNTDOWN) && entityIn instanceof LivingEntity) {
       int ct = stack.getOrCreateTag().getInt(TELEPORT_COUNTDOWN);
       if (ct < 0) {
-        stack.getOrCreateTag().remove(TELEPORT_COUNTDOWN);
+        cancelTeleport(stack);
         return;
       }
       if (ct == 0) {
-        stack.getOrCreateTag().remove(TELEPORT_COUNTDOWN);
+        cancelTeleport(stack);
         int enderslot = stack.getTag().getInt(ENDERSLOT);
         BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
         if (loc != null &&
-            loc.getPos() != null &&
-            loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(worldIn))) {
-          System.out.println("TP matched dim");
-          UtilEntity.enderTeleportEvent((LivingEntity) entityIn, worldIn, loc.getPos());
+            loc.getPos() != null) {
+          if (loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(worldIn))) {
+            UtilEntity.enderTeleportEvent((LivingEntity) entityIn, worldIn, loc.getPos());
+          }
+          else {
+            //diff dim
+          }
           return;
         }
       }
@@ -95,6 +99,10 @@ public class EnderBookItem extends ItemBase {
       ct--;
       stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, ct);
     }
+  }
+
+  public static void cancelTeleport(ItemStack stack) {
+    stack.getOrCreateTag().remove(TELEPORT_COUNTDOWN);
   }
 
   private static BlockPosDim getLocation(ItemStack stack, int enderSlot) {
@@ -161,8 +169,13 @@ public class EnderBookItem extends ItemBase {
         enderslot = CapabilityProviderEnderBook.SLOTS - 1;
       }
       book.getTag().putInt(ENDERSLOT, enderslot % CapabilityProviderEnderBook.SLOTS);
-      System.out.println("CURRENT" + book.getTag().getInt(ENDERSLOT));
-      UtilChat.sendStatusMessage(player, "item.cyclic.ender_book.scroll" + (book.getTag().getInt(ENDERSLOT)));
+      BlockPosDim loc = EnderBookItem.getLocation(book, enderslot);
+      //      if (loc != null &&
+      String msg = "---";
+      if (loc != null) {
+        msg = loc.toString();
+      }
+      UtilChat.addServerChatMessage(player, new StringTextComponent(book.getTag().getInt(ENDERSLOT) + " : ").appendString(msg));
     }
   }
 }
