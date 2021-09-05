@@ -188,13 +188,7 @@ public class EnderBookItem extends ItemBase {
     ItemStack book = player.inventory.getStackInSlot(slot);
     if (book.hasTag()) {
       int enderslot = book.getTag().getInt(ENDERSLOT);
-      enderslot += isDown ? -1 : 1;
-      if (enderslot < 0) {
-        enderslot = CapabilityProviderEnderBook.SLOTS - 1;
-      }
-      else if (enderslot > CapabilityProviderEnderBook.SLOTS) {
-        enderslot = 0;
-      }
+      enderslot = scrollSlot(isDown, enderslot);
       book.getTag().putInt(ENDERSLOT, enderslot % CapabilityProviderEnderBook.SLOTS);
       BlockPosDim loc = EnderBookItem.getLocation(book, enderslot);
       //      if (loc != null &&
@@ -204,5 +198,16 @@ public class EnderBookItem extends ItemBase {
       }
       UtilChat.addServerChatMessage(player, new StringTextComponent(book.getTag().getInt(ENDERSLOT) + " : ").appendString(msg));
     }
+  }
+
+  private static int scrollSlot(final boolean isDown, int enderslot) {
+    enderslot += isDown ? -1 : 1;
+    if (enderslot < 0) {
+      enderslot = CapabilityProviderEnderBook.SLOTS - 1;
+    }
+    else if (enderslot >= CapabilityProviderEnderBook.SLOTS) {
+      enderslot = 0;
+    }
+    return enderslot;
   }
 }
