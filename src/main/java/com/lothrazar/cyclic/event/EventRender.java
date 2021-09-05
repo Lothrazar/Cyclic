@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.data.RelativeShape;
+import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
@@ -129,6 +130,7 @@ public class EventRender {
   //    }
   //  }
 
+  ///////////////////// asdfasdf TODO REFACTOR THIS
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void renderOverlay(RenderWorldLastEvent evt) {
@@ -171,6 +173,22 @@ public class EventRender {
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getPos(), lookingAt.getFace());
       for (BlockPos e : coords) {
         renderCubes.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? Color.GREEN : Color.RED);
+      }
+    }
+    stack = player.getHeldItemMainhand();
+    if (stack.getItem() instanceof OreProspector) {
+      //      BlockRayTraceResult lookingAt = UtilRender.getLookingAt(player, (int) range);
+      //      if (player.world.getBlockState(lookingAt.getPos()) == Blocks.AIR.getDefaultState()) {
+      //        return;
+      //      }
+      List<BlockPosDim> coords = OreProspector.getPosition(stack);
+      for (BlockPosDim loc : coords) {
+        if (loc != null) {
+          if (loc.getDimension() == null ||
+              loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
+            renderCubes.put(loc.getPos(), Color.ORANGE);
+          }
+        }
       }
     }
     ///////////////////// LocationGpsItem

@@ -19,6 +19,7 @@ import com.lothrazar.cyclic.item.EnderCookie;
 import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.LeverRemote;
+import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
 import com.lothrazar.cyclic.item.SleepingMatItem;
@@ -146,6 +147,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CHARM_ATTACKSPEED = ITEMS.register("charm_attack_speed", () -> new ItemBaseToggle(new Item.Properties().maxDamage(256 * 4).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_XPSPEED = ITEMS.register("charm_xp_speed", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_XPSTOPPER = ITEMS.register("charm_xp_blocker", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> PROSPECTOR = ITEMS.register("prospector", () -> new OreProspector(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> DARK_GLASS_CONNECTED = ITEMS.register("dark_glass_connected", () -> new BlockItem(BlockRegistry.DARK_GLASS_CONNECTED.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> ENDER_ITEM_SHELF = ITEMS.register("ender_item_shelf", () -> new BlockItem(BlockRegistry.ENDER_ITEM_SHELF.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SPIKES_DIAMOND = ITEMS.register("spikes_diamond", () -> new BlockItem(BlockRegistry.spikes_diamond, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
