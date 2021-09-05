@@ -53,6 +53,10 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     return super.keyPressed(keyCode, scanCode, modifiers);
   }
 
+  protected void drawSlot(MatrixStack ms, int x, int y, ResourceLocation texture) {
+    drawSlot(ms, x, y, texture, 18);
+  }
+
   protected void drawSlot(MatrixStack ms, int x, int y, ResourceLocation texture, int size) {
     this.minecraft.getTextureManager().bindTexture(texture);
     blit(ms, guiLeft + x, guiTop + y, 0, 0, size, size, size, size);

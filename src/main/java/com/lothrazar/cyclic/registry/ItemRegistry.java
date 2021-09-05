@@ -61,6 +61,7 @@ import com.lothrazar.cyclic.item.elemental.IceWand;
 import com.lothrazar.cyclic.item.elemental.LightningScepter;
 import com.lothrazar.cyclic.item.elemental.SnowScepter;
 import com.lothrazar.cyclic.item.elemental.WaterSpreaderItem;
+import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.item.endereye.ItemEnderEyeReuse;
 import com.lothrazar.cyclic.item.enderpearl.EnderPearlMount;
 import com.lothrazar.cyclic.item.enderpearl.EnderPearlReuse;
@@ -148,6 +149,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CHARM_XPSPEED = ITEMS.register("charm_xp_speed", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_XPSTOPPER = ITEMS.register("charm_xp_blocker", () -> new ItemBaseToggle(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> PROSPECTOR = ITEMS.register("prospector", () -> new OreProspector(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> ENDER_BOOK = ITEMS.register("ender_book", () -> new EnderBookItem(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> DARK_GLASS_CONNECTED = ITEMS.register("dark_glass_connected", () -> new BlockItem(BlockRegistry.DARK_GLASS_CONNECTED.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> ENDER_ITEM_SHELF = ITEMS.register("ender_item_shelf", () -> new BlockItem(BlockRegistry.ENDER_ITEM_SHELF.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SPIKES_DIAMOND = ITEMS.register("spikes_diamond", () -> new BlockItem(BlockRegistry.spikes_diamond, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
@@ -202,6 +204,8 @@ public class ItemRegistry {
   public static Item antimatter_wand;
   @ObjectHolder(ModCyclic.MODID + ":filter_data")
   public static Item filter_data;
+  @ObjectHolder(ModCyclic.MODID + ":location")
+  public static Item location;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent

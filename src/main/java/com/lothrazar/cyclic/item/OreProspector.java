@@ -41,13 +41,17 @@ public class OreProspector extends ItemBase {
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
-    World world = context.getWorld();
     Hand hand = context.getHand();
     ItemStack held = player.getHeldItem(hand);
+    if (player.getCooldownTracker().hasCooldown(held.getItem())) {
+      return ActionResultType.PASS;
+    }
+    player.getCooldownTracker().setCooldown(held.getItem(), 10);
     BlockPos pos = context.getPos();
     int radius = 32;
     List<BlockPos> shape = UtilShape.cubeSquareBase(pos.down(), radius, 2);
     List<BlockPos> ores = new ArrayList<>();
+    World world = context.getWorld();
     for (BlockPos p : shape) {
       if (world.getBlockState(p).isIn(Tags.Blocks.ORES)) {
         //donzo
@@ -63,13 +67,10 @@ public class OreProspector extends ItemBase {
       i++;
     }
     held.getTag().putInt(ORESIZE, i);
-    // fl 
     player.swingArm(hand);
     UtilItemStack.damageItem(player, held);
-    //    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
-    //        + UtilChat.blockPosToString(pos));
+    //    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")      + UtilChat.blockPosToString(pos));
     return ActionResultType.SUCCESS;
-    //this.write 
   }
 
   public static ArrayList<BlockPosDim> getPosition(ItemStack item) {

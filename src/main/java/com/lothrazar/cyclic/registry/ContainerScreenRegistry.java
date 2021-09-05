@@ -41,6 +41,7 @@ import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
+import com.lothrazar.cyclic.item.enderbook.ContainerEnderBook;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -173,12 +174,15 @@ public class ContainerScreenRegistry {
     //
     //  Items with containers
     //
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerEnderBook(windowId, inv, inv.player))).setRegistryName("ender_book"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player))).setRegistryName("storage_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":ender_book")
+  public static ContainerType<ContainerEnderBook> ender_book;
   @ObjectHolder(ModCyclic.MODID + ":filter_data")
   public static ContainerType<ContainerFilterCard> filter_data;
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")

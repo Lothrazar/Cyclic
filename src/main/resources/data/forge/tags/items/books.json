@@ -5,6 +5,7 @@
     "minecraft:writable_book",
     "minecraft:written_book",
     "minecraft:enchanted_book",
+   {"required":false, "id":   "cyclic:ender_book"},
    {"required":false, "id":   "tconstruct:materials_and_you"},
    {"required":false, "id":   "tconstruct:mighty_smelting"},
    {"required":false, "id":   "tconstruct:tinkers_gadgetry"},
