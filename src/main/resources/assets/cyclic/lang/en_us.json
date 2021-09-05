@@ -1,5 +1,5 @@
 {
-	"_comments": "Thanks to https://tterrag.com/lang2json/",
+	  "_comments": "Thanks to https://tterrag.com/lang2json/",
 
 	  "curios.identifier.feet":"Feet",
 	  "curios.identifier.charm":"Charm",
@@ -9,6 +9,9 @@
 
     "itemGroup.cyclic": "Cyclic Blocks",
     "itemGroup.cyclicitems": "Cyclic Items",
+    "block.cyclic.doorbell":"Doorbell",
+    "block.cyclic.doorbell.tooltip":"Doorbell",
+    "block.cyclic.doorbell.guide":"Light level 4 and redstone power of 1 while pressed.  Plays sound cyclic:doorbell_mikekoenig",
     "block.cyclic.trash": "Trash Void",
     "block.cyclic.trash.tooltip": "Deletes all items and fluids piped into it",
     "block.cyclic.trash.guide": "Deletes all items and fluids piped into it.",

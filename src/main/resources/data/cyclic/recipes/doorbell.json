@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iri"
+  ],
+  "key": {
+    "i": {
+      "tag": "minecraft:wooden_buttons"
+    },
+    "r": {
+      "item": "minecraft:note_block"
+    }
+  },
+  "result": {
+    "item": "cyclic:doorbell",
+    "count": 1
+  }
+}

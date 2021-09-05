@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.DarkGlassBlock;
 import com.lothrazar.cyclic.block.DarkGlassConnectedBlock;
+import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.GhostBlock;
@@ -118,6 +119,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> SHEARING = BLOCKS.register("shearing", () -> new BlockShearing(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> DARK_GLASS_CONNECTED = BLOCKS.register("dark_glass_connected", () -> new DarkGlassConnectedBlock(Block.Properties.create(Material.EARTH)));
   public static final RegistryObject<Block> ENDER_ITEM_SHELF = BLOCKS.register("ender_item_shelf", () -> new BlockItemShelf(Block.Properties.create(Material.WOOD)));
+  public static final RegistryObject<Block> DOORBELL = BLOCKS.register("doorbell", () -> new DoorbellButton(Block.Properties.create(Material.WOOD)));
   //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;

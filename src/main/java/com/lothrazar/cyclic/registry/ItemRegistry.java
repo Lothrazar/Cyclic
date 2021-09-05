@@ -149,6 +149,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> DARK_GLASS_CONNECTED = ITEMS.register("dark_glass_connected", () -> new BlockItem(BlockRegistry.DARK_GLASS_CONNECTED.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> ENDER_ITEM_SHELF = ITEMS.register("ender_item_shelf", () -> new BlockItem(BlockRegistry.ENDER_ITEM_SHELF.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SPIKES_DIAMOND = ITEMS.register("spikes_diamond", () -> new BlockItem(BlockRegistry.spikes_diamond, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DOORBELL = ITEMS.register("doorbell", () -> new BlockItem(BlockRegistry.DOORBELL.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
