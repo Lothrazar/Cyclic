@@ -133,7 +133,7 @@ public class EventRender {
   ///////////////////// asdfasdf TODO REFACTOR THIS
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public void renderOverlay(RenderWorldLastEvent evt) {
+  public void renderOverlay(RenderWorldLastEvent event) {
     PlayerEntity player = Minecraft.getInstance().player;
     if (player == null) {
       return;
@@ -186,7 +186,8 @@ public class EventRender {
         if (loc != null) {
           if (loc.getDimension() == null ||
               loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
-            renderCubes.put(loc.getPos(), Color.ORANGE);
+            //            renderCubes.put(loc.getPos(), Color.ORANGE);
+            UtilRender.createBox(event.getMatrixStack(), loc.getPos());
           }
         }
       }
@@ -218,7 +219,7 @@ public class EventRender {
     //
     //render the pos->colour map
     if (renderCubes.keySet().size() > 0) {
-      UtilRender.renderColourCubes(evt, renderCubes, alpha);
+      UtilRender.renderColourCubes(event, renderCubes, alpha);
     }
   }
 }

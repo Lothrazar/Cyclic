@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  g",
+    " i ",
+    "b  "
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:blaze_rod"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "g": {
+      "item": "minecraft:light_blue_stained_glass"
+    }
+  },
+  "result": {
+    "item": "cyclic:prospector",
+    "count": 1
+  }
+}

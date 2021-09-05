@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +26,16 @@ public class OreProspector extends ItemBase {
 
   public OreProspector(Properties properties) {
     super(properties);
+  }
+
+  @Override
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
+    ItemStack itemstack = player.getHeldItem(handIn);
+    if (player.isCrouching()) {
+      UtilItemStack.deleteTag(itemstack);
+      player.swingArm(handIn);
+    }
+    return ActionResult.resultFail(itemstack);
   }
 
   @Override
@@ -53,6 +65,7 @@ public class OreProspector extends ItemBase {
     held.getTag().putInt(ORESIZE, i);
     // fl 
     player.swingArm(hand);
+    UtilItemStack.damageItem(player, held);
     //    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
     //        + UtilChat.blockPosToString(pos));
     return ActionResultType.SUCCESS;

@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.prospector",
+  "icon": "cyclic:prospector",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.prospector.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:prospector"
+    }
+  ]
+}

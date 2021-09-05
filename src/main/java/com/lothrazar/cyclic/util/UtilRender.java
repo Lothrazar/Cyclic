@@ -394,4 +394,136 @@ public class UtilRender {
     RenderSystem.disableDepthTest();
     buffer.finish(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
   }
+
+  /**
+   * Box OUTLINE that you can see thru blocks.
+   * 
+   * From https://github.com/Lothrazar/SimpleTomb/blob/trunk/1.16/src/main/java/com/lothrazar/simpletomb/event/ClientEvents.java
+   * 
+   */
+  @SuppressWarnings("deprecation")
+  public static void createBox(MatrixStack matrixStack, BlockPos pos) {
+    final double offset = 1;
+    double x = pos.getX();
+    double y = pos.getY();
+    double z = pos.getZ();
+    Minecraft mc = Minecraft.getInstance();
+    RenderSystem.disableTexture();
+    RenderSystem.disableBlend();
+    RenderSystem.disableDepthTest();
+    RenderSystem.pushMatrix();
+    Vector3d viewPosition = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+    long c = (System.currentTimeMillis() / 15L) % 360L;
+    float[] color = getHSBtoRGBF(c / 360f, 1f, 1f);
+    matrixStack.push();
+    // get a closer pos if too far
+    Vector3d vec = new Vector3d(x, y, z).subtract(viewPosition);
+    if (vec.distanceTo(Vector3d.ZERO) > 200d) { // could be 300
+      vec = vec.normalize().scale(200d);
+      x += vec.x;
+      y += vec.y;
+      z += vec.z;
+    }
+    x -= viewPosition.getX();
+    y -= viewPosition.getY();
+    z -= viewPosition.getZ();
+    RenderSystem.multMatrix(matrixStack.getLast().getMatrix());
+    Tessellator tessellator = Tessellator.getInstance();
+    BufferBuilder renderer = tessellator.getBuffer();
+    renderer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
+    RenderSystem.color4f(color[0], color[1], color[2], 1f);
+    RenderSystem.lineWidth(2.5f);
+    renderer.pos(x, y, z).endVertex();
+    renderer.pos(x + offset, y, z).endVertex();
+    renderer.pos(x, y, z).endVertex();
+    renderer.pos(x, y + offset, z).endVertex();
+    renderer.pos(x, y, z).endVertex();
+    renderer.pos(x, y, z + offset).endVertex();
+    renderer.pos(x + offset, y + offset, z + offset).endVertex();
+    renderer.pos(x, y + offset, z + offset).endVertex();
+    renderer.pos(x + offset, y + offset, z + offset).endVertex();
+    renderer.pos(x + offset, y, z + offset).endVertex();
+    renderer.pos(x + offset, y + offset, z + offset).endVertex();
+    renderer.pos(x + offset, y + offset, z).endVertex();
+    renderer.pos(x, y + offset, z).endVertex();
+    renderer.pos(x, y + offset, z + offset).endVertex();
+    renderer.pos(x, y + offset, z).endVertex();
+    renderer.pos(x + offset, y + offset, z).endVertex();
+    renderer.pos(x + offset, y, z).endVertex();
+    renderer.pos(x + offset, y, z + offset).endVertex();
+    renderer.pos(x + offset, y, z).endVertex();
+    renderer.pos(x + offset, y + offset, z).endVertex();
+    renderer.pos(x, y, z + offset).endVertex();
+    renderer.pos(x + offset, y, z + offset).endVertex();
+    renderer.pos(x, y, z + offset).endVertex();
+    renderer.pos(x, y + offset, z + offset).endVertex();
+    tessellator.draw();
+    matrixStack.pop();
+    RenderSystem.popMatrix();
+    RenderSystem.lineWidth(1f);
+    RenderSystem.enableDepthTest();
+    RenderSystem.enableBlend();
+    RenderSystem.enableTexture();
+    //    RenderSystem.color4f(1f, 1f, 1f, 1f);
+  }
+
+  /**
+   * From https://github.com/Lothrazar/SimpleTomb/blob/704bad5a33731125285d700c489bfe2c3a9e387d/src/main/java/com/lothrazar/simpletomb/helper/WorldHelper.java#L163
+   * 
+   * @param hue
+   * @param saturation
+   * @param brightness
+   * @return
+   */
+  public static float[] getHSBtoRGBF(float hue, float saturation, float brightness) {
+    int r = 0;
+    int g = 0;
+    int b = 0;
+    if (saturation == 0.0F) {
+      r = g = b = (int) (brightness * 255.0F + 0.5F);
+    }
+    else {
+      float h = (hue - (float) Math.floor(hue)) * 6.0F;
+      float f = h - (float) Math.floor(h);
+      float p = brightness * (1.0F - saturation);
+      float q = brightness * (1.0F - saturation * f);
+      float t = brightness * (1.0F - saturation * (1.0F - f));
+      switch ((int) h) {
+        case 0:
+          r = (int) (brightness * 255.0F + 0.5F);
+          g = (int) (t * 255.0F + 0.5F);
+          b = (int) (p * 255.0F + 0.5F);
+        break;
+        case 1:
+          r = (int) (q * 255.0F + 0.5F);
+          g = (int) (brightness * 255.0F + 0.5F);
+          b = (int) (p * 255.0F + 0.5F);
+        break;
+        case 2:
+          r = (int) (p * 255.0F + 0.5F);
+          g = (int) (brightness * 255.0F + 0.5F);
+          b = (int) (t * 255.0F + 0.5F);
+        break;
+        case 3:
+          r = (int) (p * 255.0F + 0.5F);
+          g = (int) (q * 255.0F + 0.5F);
+          b = (int) (brightness * 255.0F + 0.5F);
+        break;
+        case 4:
+          r = (int) (t * 255.0F + 0.5F);
+          g = (int) (p * 255.0F + 0.5F);
+          b = (int) (brightness * 255.0F + 0.5F);
+        break;
+        case 5:
+          r = (int) (brightness * 255.0F + 0.5F);
+          g = (int) (p * 255.0F + 0.5F);
+          b = (int) (q * 255.0F + 0.5F);
+      }
+    }
+    return new float[] {
+        r / 255.0F,
+        g / 255.0F,
+        b / 255.0F,
+    };
+  }
 }

@@ -96,4 +96,15 @@ public class UtilItemStack {
       //      entityItem.motionX = entityItem.motionY = entityItem.motionZ = 0;
     }
   }
+
+  /**
+   * Preserve damage but delete the rest of the tag
+   * 
+   * @param itemstack
+   */
+  public static void deleteTag(ItemStack itemstack) {
+    int dmg = itemstack.getDamage();
+    itemstack.setTag(null);
+    itemstack.setDamage(dmg);
+  }
 }
