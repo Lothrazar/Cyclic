@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
 import net.minecraft.client.gui.ScreenManager;
@@ -15,6 +16,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -32,12 +34,15 @@ import net.minecraftforge.items.IItemHandler;
 
 public class EnderBookItem extends ItemBase {
 
+  private static final String ITEMCOUNT = "itemCount";
   private static final int TP_COUNTDOWN = 60;
+  // current slot
   private static final String ENDERSLOT = "enderslot";
+  //ticks counting down, when zero teleport fires off
   private static final String TELEPORT_COUNTDOWN = "TeleportCountdown";
 
   public EnderBookItem(Properties properties) {
-    super(properties.maxStackSize(1));
+    super(properties);
   }
 
   @Override
@@ -46,12 +51,8 @@ public class EnderBookItem extends ItemBase {
     super.addInformation(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag()) {
       CompoundNBT stackTag = stack.getOrCreateTag();
-      //      if (stackTag.contains("itemTooltip")) {
-      //        String itemTooltip = stackTag.getString("itemTooltip");
-      //        tooltip.add(new TranslationTextComponent(itemTooltip).mergeStyle(TextFormatting.GRAY));
-      //      }
-      if (stackTag.contains("itemCount")) {
-        int itemCount = stackTag.getInt("itemCount");
+      if (stackTag.contains(ITEMCOUNT)) {
+        int itemCount = stackTag.getInt(ITEMCOUNT);
         TranslationTextComponent t = new TranslationTextComponent("cyclic.screen.filter.item.count");
         t.appendString("" + itemCount);
         t.mergeStyle(TextFormatting.GRAY);
@@ -61,17 +62,28 @@ public class EnderBookItem extends ItemBase {
   }
 
   @Override
+  public boolean hasEffect(ItemStack stack) {
+    if (stack.hasTag() && stack.getTag().contains(TELEPORT_COUNTDOWN)) {
+      return true;
+    }
+    return super.hasEffect(stack);
+  }
+
+  @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
     if (!worldIn.isRemote && !playerIn.isCrouching()) {
       NetworkHooks.openGui((ServerPlayerEntity) playerIn, new ContainerProviderEnderBook(), playerIn.getPosition());
     }
     if (!worldIn.isRemote && playerIn.isCrouching()) {
+      //any damage?
       ItemStack stack = playerIn.getHeldItem(handIn);
-      int enderslot = stack.getTag().getInt(ENDERSLOT);
-      BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
-      if (loc != null) {
-        UtilChat.addServerChatMessage(playerIn, new TranslationTextComponent("item.cyclic.ender_book.start").appendString(loc.toString()));
-        stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, TP_COUNTDOWN);
+      if (stack.getDamage() < stack.getMaxDamage() - 1) {
+        int enderslot = stack.getTag().getInt(ENDERSLOT);
+        BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
+        if (loc != null) {
+          UtilChat.addServerChatMessage(playerIn, new TranslationTextComponent("item.cyclic.ender_book.start").appendString(loc.toString()));
+          stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, TP_COUNTDOWN);
+        }
       }
     }
     return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -86,18 +98,21 @@ public class EnderBookItem extends ItemBase {
         return;
       }
       if (ct == 0 && entityIn instanceof PlayerEntity) {
+        PlayerEntity p = (PlayerEntity) entityIn;
         cancelTeleport(stack);
         int enderslot = stack.getTag().getInt(ENDERSLOT);
         BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
         if (loc != null &&
             loc.getPos() != null) {
           if (loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(worldIn))) {
-            UtilEntity.enderTeleportEvent((PlayerEntity) entityIn, worldIn, loc.getPos());
+            UtilEntity.enderTeleportEvent(p, worldIn, loc.getPos());
           }
           else {
             //diff dim 
-            UtilEntity.dimensionTeleport((PlayerEntity) entityIn, worldIn, loc);
+            UtilEntity.dimensionTeleport(p, worldIn, loc);
           }
+          // done
+          UtilItemStack.damageItem(stack);
           return;
         }
       }
@@ -107,6 +122,16 @@ public class EnderBookItem extends ItemBase {
       ct--;
       stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, ct);
     }
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    return repair.getItem() == Items.ENDER_PEARL;
+  }
+
+  @Override
+  public boolean isRepairable(ItemStack stack) {
+    return true;
   }
 
   public static void cancelTeleport(ItemStack stack) {
@@ -140,20 +165,12 @@ public class EnderBookItem extends ItemBase {
     //set data for sync to client
     if (cap != null) {
       int count = 0;
-      ITextComponent first = null;
       for (int i = 0; i < cap.getSlots(); i++) {
         if (!cap.getStackInSlot(i).isEmpty()) {
-          //non empty stack eh
           count++;
-          if (first == null) {
-            first = cap.getStackInSlot(i).getDisplayName();
-          }
         }
       }
-      nbt.putInt("itemCount", count);
-      if (first != null) {
-        nbt.putString("itemTooltip", first.getString());
-      }
+      nbt.putInt(ITEMCOUNT, count);
     }
     return nbt;
   }
@@ -162,8 +179,7 @@ public class EnderBookItem extends ItemBase {
   public void readShareTag(ItemStack stack, CompoundNBT nbt) {
     if (nbt != null) {
       CompoundNBT stackTag = stack.getOrCreateTag();
-      stackTag.putString("itemTooltip", nbt.getString("itemTooltip"));
-      stackTag.putInt("itemCount", nbt.getInt("itemCount"));
+      stackTag.putInt(ITEMCOUNT, nbt.getInt(ITEMCOUNT));
     }
     super.readShareTag(stack, nbt);
   }

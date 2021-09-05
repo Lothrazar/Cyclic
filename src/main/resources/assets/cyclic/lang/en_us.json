@@ -532,7 +532,7 @@
     "guide.title": "Cyclic Guidebook",
     "guide.landing_text": "Learn about everything Cyclic adds!",
 
-    "item.cyclic.ender_book.guide": "A magical book that stores your current location as a waypoint.   Crouch and scroll to pick location.  Crouch and use to teleport.  Jump to cancel the port.  ",
+    "item.cyclic.ender_book.guide": "A magical book that stores your current location as a waypoint.   Crouch and scroll to pick location.  Crouch and use to teleport.  Jump to cancel the port.  Repair with energy or ender pearls",
     "item.cyclic.ender_book": "Ender Book",
     "item.cyclic.ender_book.countdown": "Teleporting in ",
     "item.cyclic.ender_book.start": "Teleporting... (jump to cancel)  ",
