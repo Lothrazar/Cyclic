@@ -28,11 +28,12 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileWirelessEnergy extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    RENDER, TRANSFER_RATE;
+    RENDER, TRANSFER_RATE, REDSTONE;
   }
 
   public TileWirelessEnergy() {
     super(TileRegistry.wireless_energy);
+    this.needsRedstone = 0;
   }
 
   static final int MAX = 64000;
@@ -88,11 +89,16 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
 
   @Override
   public void tick() {
+    this.syncEnergy();
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
     if (world.isRemote) {
       return;
     }
     boolean moved = false;
-    //    for (int s = 0; s < inventory.getSlots(); s++) {
+    //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot(0);
     if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
       moved = moveEnergy(Direction.UP, loc.getPos(), transferRate);
@@ -101,13 +107,15 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   }
 
   BlockPosDim getTargetInSlot(int s) {
-    ItemStack stack = inventory.getStackInSlot(s);
-    return LocationGpsCard.getPosition(stack);
+    return LocationGpsCard.getPosition(inventory.getStackInSlot(s));
   }
 
   @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
+      case REDSTONE:
+        this.needsRedstone = value % 2;
+      break;
       case RENDER:
         this.render = value % 2;
       break;
@@ -120,6 +128,8 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   @Override
   public int getField(int field) {
     switch (Fields.values()[field]) {
+      case REDSTONE:
+        return this.needsRedstone;
       case RENDER:
         return render;
       case TRANSFER_RATE:

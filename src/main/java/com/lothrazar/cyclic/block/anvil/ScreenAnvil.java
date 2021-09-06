@@ -15,7 +15,7 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
   public ScreenAnvil(ContainerAnvil screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, container.tile.getEnergyMax());
+    this.energy = new EnergyBar(this, TileAnvilAuto.MAX);
   }
 
   @Override
