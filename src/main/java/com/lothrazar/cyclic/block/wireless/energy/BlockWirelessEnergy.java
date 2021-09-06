@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,6 +20,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockWirelessEnergy extends BlockBase {
 
+  private static final double BOUNDS = 4;
+  public static final VoxelShape AABB = Block.makeCuboidShape(BOUNDS, BOUNDS, BOUNDS, 16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
+
   public BlockWirelessEnergy(Properties properties) {
     super(properties.hardnessAndResistance(1.2F).notSolid());
     this.setHasGui();
@@ -33,7 +35,7 @@ public class BlockWirelessEnergy extends BlockBase {
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return BlockTrash.AABB;
+    return AABB;
   }
 
   @Override

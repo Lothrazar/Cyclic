@@ -20,7 +20,13 @@ public class ContainerWirelessEnergy extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = tile.inventory.getSlots();
-    addSlot(new SlotItemHandler(tile.inventory, 0, 80, 36));
+    addSlot(new SlotItemHandler(tile.inventory, 0, 80, 36) {
+
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileWirelessEnergy.Fields.values().length);
   }

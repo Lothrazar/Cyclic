@@ -19,8 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BlockTrash extends BlockBase {
 
   private static final double BOUNDS = 1;
-  public static final VoxelShape AABB = Block.makeCuboidShape(BOUNDS, BOUNDS, BOUNDS,
-      16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
+  public static final VoxelShape AABB = Block.makeCuboidShape(BOUNDS, BOUNDS, BOUNDS, 16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
 
   public BlockTrash(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.METAL).notSolid());
