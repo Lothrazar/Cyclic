@@ -1,5 +1,5 @@
 {
-	"parent":"cyclic:parent/node",
+	"parent":"cyclic:parent/node_lit",
 	"textures": {
 		"main": "cyclic:blocks/node/main_energy",
 		"particle": "cyclic:blocks/node/main_energy",
