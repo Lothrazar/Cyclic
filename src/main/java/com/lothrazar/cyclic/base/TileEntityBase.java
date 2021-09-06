@@ -314,26 +314,26 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return false;
   }
 
-  protected void moveEnergy(Direction myFacingDir, int quantity) {
-    moveEnergy(myFacingDir, pos.offset(myFacingDir), quantity);
+  protected boolean moveEnergy(Direction myFacingDir, int quantity) {
+    return moveEnergy(myFacingDir, pos.offset(myFacingDir), quantity);
   }
 
-  protected void moveEnergy(Direction myFacingDir, BlockPos posTarget, int quantity) {
+  protected boolean moveEnergy(Direction myFacingDir, BlockPos posTarget, int quantity) {
     if (this.world.isRemote) {
-      return; //important to not desync cables
+      return false; //important to not desync cables
     }
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
     if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
-      return;
+      return false;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
-      return;
+      return false;
     }
     IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
-      return;
+      return false;
     }
     if (handlerHere != null && handlerOutput != null
         && handlerHere.canExtract() && handlerOutput.canReceive()) {
@@ -349,8 +349,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
           TileCableEnergy cable = (TileCableEnergy) tileTarget;
           cable.updateIncomingEnergyFace(themFacingMe);
         }
+        return filled > 0;
       }
     }
+    return false;
   }
 
   @Override

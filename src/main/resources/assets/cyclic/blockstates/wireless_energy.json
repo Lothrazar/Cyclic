@@ -1,5 +1,6 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/wireless_energy" }
+        "lit=false": { "model": "cyclic:block/wireless_energy" },
+        "lit=true": { "model": "cyclic:block/wireless_energy_lit" }
     }
 }

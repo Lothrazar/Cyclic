@@ -88,12 +88,16 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
 
   @Override
   public void tick() {
-    for (int s = 0; s < inventory.getSlots(); s++) {
-      BlockPosDim loc = getTargetInSlot(s);
-      if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-        moveEnergy(Direction.UP, loc.getPos(), transferRate);
-      }
+    if (world.isRemote) {
+      return;
     }
+    boolean moved = false;
+    //    for (int s = 0; s < inventory.getSlots(); s++) {
+    BlockPosDim loc = getTargetInSlot(0);
+    if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
+      moved = moveEnergy(Direction.UP, loc.getPos(), transferRate);
+    }
+    this.setLitProperty(moved);
   }
 
   BlockPosDim getTargetInSlot(int s) {

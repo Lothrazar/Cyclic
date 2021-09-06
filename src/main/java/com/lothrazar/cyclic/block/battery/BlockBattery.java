@@ -25,7 +25,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockBattery extends BlockBase {
 
-  public static EnumProperty<EnumBatteryPercent> PERCENT = EnumProperty.create("percent", EnumBatteryPercent.class);
+  public static final EnumProperty<EnumBatteryPercent> PERCENT = EnumProperty.create("percent", EnumBatteryPercent.class);
 
   public BlockBattery(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));

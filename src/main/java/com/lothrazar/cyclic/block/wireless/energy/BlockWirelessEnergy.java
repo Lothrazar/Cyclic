@@ -3,11 +3,13 @@ package com.lothrazar.cyclic.block.wireless.energy;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -23,7 +25,11 @@ public class BlockWirelessEnergy extends BlockBase {
     super(properties.hardnessAndResistance(1.2F).notSolid());
     this.setHasGui();
   }
-  //TODO: lit property based on if its in use or not-anim
+
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    builder.add(LIT);
+  }
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
