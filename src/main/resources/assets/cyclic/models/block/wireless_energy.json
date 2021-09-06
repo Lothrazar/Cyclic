@@ -1,0 +1,9 @@
+{
+	"parent":"cyclic:parent/node",
+	"textures": {
+		"main": "cyclic:blocks/node/main_energy",
+		"particle": "cyclic:blocks/node/main_energy",
+		"plate_front": "cyclic:blocks/node/front_energy",
+		"plate_back": "cyclic:blocks/node/back_energy"
+	}
+}

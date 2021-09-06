@@ -63,8 +63,9 @@ import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
-import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessRec;
-import com.lothrazar.cyclic.block.wirelessredstone.TileWirelessTransmit;
+import com.lothrazar.cyclic.block.wireless.energy.TileWirelessEnergy;
+import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessRec;
+import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.TileWorkbench;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -151,8 +152,11 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
     r.register(TileEntityType.Builder.create(TileEnderCtrl::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
     r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
+    r.register(TileEntityType.Builder.create(TileWirelessEnergy::new, BlockRegistry.WIRELESS_ENERGY.get()).build(null).setRegistryName("wireless_energy"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":wireless_energy")
+  public static TileEntityType<TileWirelessEnergy> wireless_energy;
   @ObjectHolder(ModCyclic.MODID + ":spikes_diamond")
   public static TileEntityType<TileDiamondSpikes> spikes_diamond;
   @ObjectHolder(ModCyclic.MODID + ":light_camo")

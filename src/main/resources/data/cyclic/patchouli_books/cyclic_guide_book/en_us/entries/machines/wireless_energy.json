@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.wireless_energy",
+  "icon": "cyclic:wireless_energy",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.wireless_energy.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:wireless_energy"
+    }
+  ]
+}

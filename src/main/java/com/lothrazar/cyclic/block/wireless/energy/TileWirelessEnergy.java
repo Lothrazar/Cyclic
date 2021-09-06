@@ -1,6 +1,7 @@
-package com.lothrazar.cyclic.block.wirelessredstone;
+package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -12,29 +13,34 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessTransmit extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileWirelessEnergy extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    RENDER;
+    RENDER, TRANSFER_RATE;
   }
 
-  public TileWirelessTransmit() {
-    super(TileRegistry.wireless_transmitter);
+  public TileWirelessEnergy() {
+    super(TileRegistry.wireless_energy);
   }
 
-  ItemStackHandler inventory = new ItemStackHandler(9) {
+  static final int MAX = 64000;
+  public static final int MAX_TRANSFER = MAX;
+  private int transferRate = MAX_TRANSFER / 4;
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
@@ -50,7 +56,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerTransmit(i, world, pos, playerInventory, playerEntity);
+    return new ContainerWirelessEnergy(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
@@ -58,47 +64,35 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
+    if (cap == CapabilityEnergy.ENERGY) {
+      return energyCap.cast();
+    }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    this.transferRate = tag.getInt("transferRate");
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("transferRate", transferRate);
     tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
-  }
-
-  private void toggleTarget(BlockPos targetPos) {
-    BlockState target = world.getBlockState(targetPos);
-    if (target.hasProperty(BlockStateProperties.POWERED)) {
-      boolean targetPowered = target.get(BlockStateProperties.POWERED);
-      //update target based on my state
-      boolean isPowered = world.isBlockPowered(pos);
-      if (targetPowered != isPowered) {
-        world.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
-        //and update myself too   
-        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
-        //TODO: send exact 1-16 power level
-        //        world.getTileEntity(targetPos) instanceof TileWirelessRec
-        //        && target.getBlock() instanceof BlockWirelessRec
-      }
-    }
   }
 
   @Override
   public void tick() {
     for (int s = 0; s < inventory.getSlots(); s++) {
-      BlockPosDim targetPos = getTargetInSlot(s);
-      if (targetPos == null ||
-          UtilWorld.dimensionIsEqual(targetPos, world) == false) {
-        continue;
+      BlockPosDim loc = getTargetInSlot(s);
+      if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
+        moveEnergy(Direction.UP, loc.getPos(), transferRate);
       }
-      toggleTarget(targetPos.getPos());
     }
   }
 
@@ -113,6 +107,9 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
       case RENDER:
         this.render = value % 2;
       break;
+      case TRANSFER_RATE:
+        transferRate = value;
+      break;
     }
   }
 
@@ -121,6 +118,8 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     switch (Fields.values()[field]) {
       case RENDER:
         return render;
+      case TRANSFER_RATE:
+        return this.transferRate;
     }
     return 0;
   }

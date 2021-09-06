@@ -1604,17 +1604,17 @@
     "wireless.empty": "Bind a location to a GPS Marker",
     "wireless.dimension": "Cannot cross dimensions",
 
-    "block.cable_wireless": "Item Transfer Node",
-    "block.cable_wireless.tooltip": "Wireless transmission of items",
-    "block.cable_wireless.guide": "Wireless transmission of items",
+    "block.cyclic.wireless_item": "Item Transfer Node",
+    "block.cyclic.wireless_item.tooltip": "Wireless transmission of items",
+    "block.cyclic.wireless_item.guide": "Wireless transmission of items",
 
-    "block.cable_wireless_fluid": "Fluid Transfer Node",
-    "block.cable_wireless_fluid.tooltip": "Wireless transmission of fluid",
-    "block.cable_wireless_fluid.guide": "Wireless transmission of fluid",
+    "block.cyclic.wireless_fluid": "Fluid Transfer Node",
+    "block.cyclic.wireless_fluid.tooltip": "Wireless transmission of fluid",
+    "block.cyclic.wireless_fluid.guide": "Wireless transmission of fluid",
 
-    "block.cable_wireless_energy": "Energy Transfer Node",
-    "block.cable_wireless_energy.tooltip": "Wireless transmission of energy",
-    "block.cable_wireless_energy.guide": "Wireless transmission of energy",
+    "block.cyclic.wireless_energy": "Energy Transfer Node",
+    "block.cyclic.wireless_energy.tooltip": "Wireless transmission of energy",
+    "block.cyclic.wireless_energy.guide": "Wireless transmission of energy",
 
     "chest_sack.error.pickup": "Error detected when attempting pickup - action cancelled (see logs for details)",
     "chest_sack.error.place": "Error detected when attempting to place - action cancelled (see logs for details)",

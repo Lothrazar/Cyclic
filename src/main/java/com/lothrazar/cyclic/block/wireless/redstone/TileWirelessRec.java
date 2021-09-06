@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.wirelessredstone;
+package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;

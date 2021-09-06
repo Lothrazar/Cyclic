@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.wirelessredstone;
+package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;

@@ -84,8 +84,9 @@ import com.lothrazar.cyclic.block.terrasoil.BlockTerraPreta;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
 import com.lothrazar.cyclic.block.user.BlockUser;
-import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessRec;
-import com.lothrazar.cyclic.block.wirelessredstone.BlockWirelessTransmit;
+import com.lothrazar.cyclic.block.wireless.energy.BlockWirelessEnergy;
+import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
+import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +121,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> DARK_GLASS_CONNECTED = BLOCKS.register("dark_glass_connected", () -> new DarkGlassConnectedBlock(Block.Properties.create(Material.EARTH)));
   public static final RegistryObject<Block> ENDER_ITEM_SHELF = BLOCKS.register("ender_item_shelf", () -> new BlockItemShelf(Block.Properties.create(Material.WOOD)));
   public static final RegistryObject<Block> DOORBELL = BLOCKS.register("doorbell", () -> new DoorbellButton(Block.Properties.create(Material.WOOD)));
+  public static final RegistryObject<Block> WIRELESS_ENERGY = BLOCKS.register("wireless_energy", () -> new BlockWirelessEnergy(Block.Properties.create(Material.IRON)));
   //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;

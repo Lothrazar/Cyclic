@@ -32,13 +32,14 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileUser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
+  public static IntValue POWERCONF;
+
   static enum Fields {
     REDSTONE, TIMER, TIMERDEL, RENDER;
   }
 
   ItemStackHandler inventory = new ItemStackHandler(1);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  public static IntValue POWERCONF;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;

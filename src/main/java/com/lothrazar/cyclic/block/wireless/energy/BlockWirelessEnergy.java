@@ -1,9 +1,10 @@
-package com.lothrazar.cyclic.block.trash;
+package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import net.minecraft.block.Block;
+import com.lothrazar.cyclic.block.trash.BlockTrash;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.fluid.FluidState;
@@ -16,19 +17,17 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockTrash extends BlockBase {
+public class BlockWirelessEnergy extends BlockBase {
 
-  private static final double BOUNDS = 1;
-  public static final VoxelShape AABB = Block.makeCuboidShape(BOUNDS, BOUNDS, BOUNDS,
-      16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
-
-  public BlockTrash(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.METAL).notSolid());
+  public BlockWirelessEnergy(Properties properties) {
+    super(properties.hardnessAndResistance(1.2F).notSolid());
+    this.setHasGui();
   }
+  //TODO: lit property based on if its in use or not-anim
 
   @Override
   public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return AABB;
+    return BlockTrash.AABB;
   }
 
   @Override
@@ -39,7 +38,9 @@ public class BlockTrash extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
+    ScreenManager.registerFactory(ContainerScreenRegistry.wireless_energy, ScreenWirelessEnergy::new);
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    //    ClientRegistry.bindTileEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
   }
 
   @Override
@@ -49,6 +50,6 @@ public class BlockTrash extends BlockBase {
 
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileTrash();
+    return new TileWirelessEnergy();
   }
 }

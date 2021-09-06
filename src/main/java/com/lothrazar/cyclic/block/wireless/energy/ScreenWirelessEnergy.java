@@ -1,31 +1,15 @@
-package com.lothrazar.cyclic.block.wirelessredstone;
+package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
-import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
-public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
+public class ScreenWirelessEnergy extends ScreenBase<ContainerWirelessEnergy> {
 
-  private ButtonMachineRedstone btnRender;
-
-  public ScreenTransmit(ContainerTransmit screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenWirelessEnergy(ContainerWirelessEnergy screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-  }
-
-  @Override
-  public void init() {
-    super.init();
-    super.init();
-    int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 16;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 
   @Override
@@ -39,14 +23,14 @@ public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
-    btnRender.onValueUpdate(container.tile);
+    //    btnRender.onValueUpdate(container.tile);
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    for (int s = 0; s < 9; s++) {
-      this.drawSlot(ms, 8 + 18 * s, 48, TextureRegistry.SLOT_GPS, Const.SQ);
+    for (int s = 0; s < 1; s++) {
+      this.drawSlot(ms, 8 + 18 * s, 48, TextureRegistry.SLOT_GPS);
     }
   }
 }

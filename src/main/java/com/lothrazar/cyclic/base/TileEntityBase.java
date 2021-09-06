@@ -315,6 +315,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   protected void moveEnergy(Direction myFacingDir, int quantity) {
+    moveEnergy(myFacingDir, pos.offset(myFacingDir), quantity);
+  }
+
+  protected void moveEnergy(Direction myFacingDir, BlockPos posTarget, int quantity) {
     if (this.world.isRemote) {
       return; //important to not desync cables
     }
@@ -323,7 +327,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
-    BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return;
