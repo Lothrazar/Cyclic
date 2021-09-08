@@ -275,6 +275,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
+    return moveItems(myFacingDir, pos.offset(myFacingDir), max, handlerHere, 0);
+  }
+
+  public boolean moveItems(Direction myFacingDir, BlockPos posTarget, int max, IItemHandler handlerHere, int theslot) {
     if (this.world.isRemote()) {
       return false;
     }
@@ -282,7 +286,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return false;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
-    BlockPos posTarget = pos.offset(myFacingDir);
     TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return false;
@@ -292,9 +295,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return false;
     }
     if (handlerHere != null && handlerOutput != null) {
-      int theslot = 0;
       //first simulate 
-      ItemStack drain = handlerHere.getStackInSlot(theslot).copy();
+      ItemStack drain = handlerHere.extractItem(theslot, max, true); // handlerHere.getStackInSlot(theslot).copy();
       int sizeStarted = drain.getCount();
       if (!drain.isEmpty()) {
         //now push it into output, but find out what was ACTUALLY taken
@@ -309,7 +311,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       if (sizeAfter > 0) {
         handlerHere.extractItem(theslot, sizeAfter, false);
       }
-      return true;
+      return sizeAfter > 0;
     }
     return false;
   }

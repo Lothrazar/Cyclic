@@ -19,6 +19,7 @@ import com.lothrazar.cyclic.registry.RecipeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.registry.WorldGenRegistry;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.tileentity.PistonTileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -46,6 +47,7 @@ public class ModCyclic {
     BlockRegistry.BLOCKS.register(bus);
     ItemRegistry.ITEMS.register(bus);
     TileRegistry.TILES.register(bus);
+    PistonTileEntity p;
   }
 
   private void setupClient(final FMLClientSetupEvent event) {

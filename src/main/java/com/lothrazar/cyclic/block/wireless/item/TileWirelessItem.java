@@ -1,7 +1,6 @@
-package com.lothrazar.cyclic.block.wireless.energy;
+package com.lothrazar.cyclic.block.wireless.item;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -19,33 +18,30 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessEnergy extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileWirelessItem extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+
+  static final int SLOT_GPS = 0;
+  static final int SLOT_ITEMS = 1;
 
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;
   }
 
-  public TileWirelessEnergy() {
-    super(TileRegistry.WIRELESS_ENERGY.get());
+  public TileWirelessItem() {
+    super(TileRegistry.WIRELESS_ITEM.get());
     this.needsRedstone = 0;
   }
 
-  static final int MAX = 64000;
-  public static final int MAX_TRANSFER = MAX;
-  private int transferRate = MAX_TRANSFER / 4;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler inventory = new ItemStackHandler(1) {
+  private int transferRate = 1;
+  ItemStackHandler inventory = new ItemStackHandler(2) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem() instanceof LocationGpsCard;
+      return (slot == SLOT_ITEMS) || stack.getItem() instanceof LocationGpsCard;
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -57,7 +53,7 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerWirelessEnergy(i, world, pos, playerInventory, playerEntity);
+    return new ContainerWirelessItem(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
@@ -65,16 +61,12 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY) {
-      return energyCap.cast();
-    }
     return super.getCapability(cap, side);
   }
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
     this.transferRate = tag.getInt("transferRate");
     super.read(bs, tag);
   }
@@ -83,7 +75,6 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("transferRate", transferRate);
     tag.put(NBTINV, inventory.serializeNBT());
-    tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }
 
@@ -99,9 +90,9 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
     }
     boolean moved = false;
     //run the transfer. one slot only
-    BlockPosDim loc = getTargetInSlot(0);
+    BlockPosDim loc = getTargetInSlot(SLOT_GPS);
     if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-      moved = moveEnergy(Direction.UP, loc.getPos(), transferRate);
+      moved = moveItems(Direction.UP, loc.getPos(), this.transferRate, this.inventory, SLOT_ITEMS);
     }
     this.setLitProperty(moved);
   }

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/wireless_item" },
+        "lit=true": { "model": "cyclic:block/wireless_item_lit" }
+    }
+}

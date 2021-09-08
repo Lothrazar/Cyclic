@@ -37,6 +37,7 @@ import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wireless.energy.ContainerWirelessEnergy;
+import com.lothrazar.cyclic.block.wireless.item.ContainerWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.ContainerTransmit;
 import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
@@ -175,6 +176,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerWirelessEnergy(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("wireless_energy"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerWirelessItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("wireless_item"));
     //
     //  Items with containers
     //
@@ -185,6 +189,8 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":wireless_item")
+  public static ContainerType<ContainerWirelessItem> wireless_item;
   @ObjectHolder(ModCyclic.MODID + ":wireless_energy")
   public static ContainerType<ContainerWirelessEnergy> wireless_energy;
   @ObjectHolder(ModCyclic.MODID + ":ender_book")
