@@ -24,9 +24,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessItem extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  static final int SLOT_GPS = 0;
-  static final int SLOT_ITEMS = 1;
-
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;
   }
@@ -36,12 +33,14 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
     this.needsRedstone = 0;
   }
 
+  //TWO INVENTORIES: ONE FOR GETCAP IO AND ONE FOR HIDDEN CARD
   private int transferRate = 1;
-  ItemStackHandler inventory = new ItemStackHandler(2) {
+  ItemStackHandler inventory = new ItemStackHandler(1);
+  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return (slot == SLOT_ITEMS) || stack.getItem() instanceof LocationGpsCard;
+      return stack.getItem() instanceof LocationGpsCard;
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -67,6 +66,7 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    gpsSlots.deserializeNBT(tag.getCompound(NBTINV + "gps"));
     this.transferRate = tag.getInt("transferRate");
     super.read(bs, tag);
   }
@@ -75,6 +75,7 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("transferRate", transferRate);
     tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV + "gps", gpsSlots.serializeNBT());
     return super.write(tag);
   }
 
@@ -90,15 +91,15 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
     }
     boolean moved = false;
     //run the transfer. one slot only
-    BlockPosDim loc = getTargetInSlot(SLOT_GPS);
+    BlockPosDim loc = getTargetInSlot();
     if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-      moved = moveItems(Direction.UP, loc.getPos(), this.transferRate, this.inventory, SLOT_ITEMS);
+      moved = moveItems(Direction.UP, loc.getPos(), this.transferRate, this.inventory, 0);
     }
     this.setLitProperty(moved);
   }
 
-  BlockPosDim getTargetInSlot(int s) {
-    return LocationGpsCard.getPosition(inventory.getStackInSlot(s));
+  BlockPosDim getTargetInSlot() {
+    return LocationGpsCard.getPosition(this.gpsSlots.getStackInSlot(0));
   }
 
   @Override

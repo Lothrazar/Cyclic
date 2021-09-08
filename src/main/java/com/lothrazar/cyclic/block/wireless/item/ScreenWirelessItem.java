@@ -42,6 +42,6 @@ public class ScreenWirelessItem extends ScreenBase<ContainerWirelessItem> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 79, 35, TextureRegistry.SLOT_GPS);
-    this.drawSlot(ms, 20, 35);
+    this.drawSlot(ms, 142, 35);
   }
 }

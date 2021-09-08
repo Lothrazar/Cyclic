@@ -20,14 +20,14 @@ public class ContainerWirelessItem extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = tile.inventory.getSlots();
-    addSlot(new SlotItemHandler(tile.inventory, TileWirelessItem.SLOT_GPS, 80, 36) {
+    addSlot(new SlotItemHandler(tile.gpsSlots, 0, 80, 36) {
 
       @Override
       public int getSlotStackLimit() {
         return 1;
       }
     });
-    addSlot(new SlotItemHandler(tile.inventory, TileWirelessItem.SLOT_ITEMS, 40, 36));
+    addSlot(new SlotItemHandler(tile.inventory, 0, 143, 36));
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileWirelessItem.Fields.values().length);
   }
