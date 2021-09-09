@@ -19,7 +19,7 @@ public class ContainerWirelessItem extends ContainerBase {
     tile = (TileWirelessItem) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.endInv = tile.inventory.getSlots();
+    this.endInv = tile.inventory.getSlots() + 1; //+1 for output slot
     addSlot(new SlotItemHandler(tile.gpsSlots, 0, 80, 36) {
 
       @Override
