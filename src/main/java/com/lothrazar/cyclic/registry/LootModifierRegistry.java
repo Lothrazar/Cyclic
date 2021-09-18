@@ -12,6 +12,8 @@ public class LootModifierRegistry {
 
   @SubscribeEvent
   public static void registerModifierSerializers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-    event.getRegistry().register(new EnchantAutoSmelt.Serializer().setRegistryName(ModCyclic.MODID + ":auto_smelt"));
+    if (EnchantAutoSmelt.CFG.get()) {
+      event.getRegistry().register(new EnchantAutoSmelt.Serializer().setRegistryName(ModCyclic.MODID + ":" + EnchantAutoSmelt.ID));
+    }
   }
 }
