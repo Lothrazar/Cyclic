@@ -30,8 +30,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EnchantRegistry {
 
-  public static final Enchantment EXCAVATE = new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantExcavation.ID);
-  public static final Enchantment EXPERIENCE_BOOST = new EnchantXp(Enchantment.Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantXp.ID);
+  public static final EnchantBase MULTIBOW = (EnchantBase) new EnchantMultishot(Enchantment.Rarity.VERY_RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND).setRegistryName(EnchantMultishot.ID);
+  public static final EnchantBase EXCAVATE = (EnchantBase) new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantExcavation.ID);
+  public static final EnchantBase EXPERIENCE_BOOST = (EnchantBase) new EnchantXp(Enchantment.Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantXp.ID);
 
   @SubscribeEvent
   public static void onEnchantRegister(final RegistryEvent.Register<Enchantment> event) {
@@ -43,7 +44,7 @@ public class EnchantRegistry {
     register(r, new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET).setRegistryName(EnchantLaunch.ID));
     register(r, new EnchantLifeLeech(Enchantment.Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName(EnchantLifeLeech.ID));
     register(r, new EnchantMagnet(Enchantment.Rarity.VERY_RARE, EnchantmentType.BREAKABLE, EquipmentSlotType.MAINHAND).setRegistryName(EnchantMagnet.ID));
-    register(r, new EnchantMultishot(Enchantment.Rarity.VERY_RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND).setRegistryName(EnchantMultishot.ID));
+    register(r, MULTIBOW);
     register(r, new EnchantQuickdraw(Enchantment.Rarity.RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND).setRegistryName(EnchantQuickdraw.ID));
     register(r, new EnchantReach(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_CHEST, EquipmentSlotType.CHEST).setRegistryName(EnchantReach.ID));
     register(r, new EnchantStep(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_LEGS, EquipmentSlotType.LEGS).setRegistryName(EnchantStep.ID));

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/ghost" }
+        "": { "model": "cyclic:block/ghost_phantom" }
     }
 }

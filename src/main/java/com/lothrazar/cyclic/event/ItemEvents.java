@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
@@ -14,11 +15,13 @@ import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -44,6 +47,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -51,6 +55,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionAddedEvent;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -77,6 +82,25 @@ public class ItemEvents {
         event.setDamageModifier(3F);
         UtilItemStack.damageItem(ply, find);
       }
+    }
+  }
+
+  @SubscribeEvent
+  public void onArrowLooseEvent(ArrowLooseEvent event) {
+    ItemStack stackBow = event.getBow();
+    int level = EnchantRegistry.MULTIBOW.getCurrentLevelTool(stackBow);
+    if (level <= 0) {
+      return;
+    }
+    PlayerEntity player = event.getPlayer();
+    World worldIn = player.world;
+    if (worldIn.isRemote == false) {
+      //use cross product to push arrows out to left and right
+      Vector3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
+      Vector3d left = playerDirection.crossProduct(new Vector3d(0, 1, 0));
+      Vector3d right = playerDirection.crossProduct(new Vector3d(0, -1, 0));
+      EnchantMultishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
+      EnchantMultishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
     }
   }
 

@@ -436,8 +436,13 @@
     "debug.spawn.distance": "From Spawn:",
     "enchantment.cyclic.excavate": "Excavate",
     "enchantment.cyclic.excavate.desc": "Harvests the whole vein of connected matching blocks, not including diagonals",
-    "enchantment.cyclic.multishot": "Multi-Shot",
-    "enchantment.cyclic.multishot.desc": "Fires extra arrows from your bow",
+    "enchantment.cyclic.excavate.guide": "Randomly reaches out in all direction and mines blocks matching the original target.  Higher levels have more [ maximum_blocks = 26 + 8 * ENCHANT_LEVEL]",
+    "enchantment.cyclic.multishot": "Multi-Bow",
+    "enchantment.cyclic.multishot.desc": "Fires extra horizontal arrows from your bow",
+    
+    "enchantment.cyclic.multishot.guide": "Bow enchantment that adds extra arrows to the left and right of your bow shot.  They show up to the left and right relative to the main arrow.  ",
+    
+    
     "enchantment.cyclic.beheading.guide": "This gives a chance for getting a mob head or a player head.  Creatures from other mods can be added in the config file, and need a players skin as a head.",
     "enchantment.cyclic.beheading": "Beheading",
     "enchantment.cyclic.beheading.desc": "This gives a chance for getting a mob head or a player head.  Creatures from other mods can be added in the config file, and need a players skin as a head.",
@@ -1671,14 +1676,15 @@
     "extended.toolbelt": "key to open in tool-belt mode",
 
     "item.cyclic.gem.guide.title": "Gems",
-    "item.cyclic.gem_obsidian.guide": "Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l). They are used as a crafting material in many things",
-    "item.cyclic.gem_amber.guide": "Amber Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l).  They are used as a crafting material in many things",
-
+    "item.cyclic.gem.guide": "Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l). They are used as a crafting material in many things",
+    
     "item.cyclic.gem_obsidian": "Crystallized Obsidian",
     "item.cyclic.gem_obsidian.tooltip": "Crafting material", 
-
+    "item.cyclic.gem_obsidian.guide": "Obsidian Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l).  They are used as a crafting material in many things",
+    
     "item.cyclic.gem_amber": "Crystallized Amber",
     "item.cyclic.gem_amber.tooltip": "Crafting material", 
+    "item.cyclic.gem_amber.guide": "Amber Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l).  They are used as a crafting material in many things",
     
     "item.cyclic.crystal_sword": "Crystal Sword",
     "item.cyclic.crystal_pickaxe": "Crystal Pickaxe",

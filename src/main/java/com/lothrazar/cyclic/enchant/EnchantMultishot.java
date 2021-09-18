@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
-import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -38,15 +37,11 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantMultishot extends EnchantBase {
 
   public EnchantMultishot(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
-    MinecraftForge.EVENT_BUS.register(this);
   }
 
   public static BooleanValue CFG;
@@ -67,26 +62,7 @@ public class EnchantMultishot extends EnchantBase {
     return 1;
   }
 
-  @SubscribeEvent
-  public void onPlayerUpdate(ArrowLooseEvent event) {
-    ItemStack stackBow = event.getBow();
-    int level = this.getCurrentLevelTool(stackBow);
-    if (level <= 0) {
-      return;
-    }
-    PlayerEntity player = event.getPlayer();
-    World worldIn = player.world;
-    if (worldIn.isRemote == false) {
-      //use cross product to push arrows out to left and right
-      Vector3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
-      Vector3d left = playerDirection.crossProduct(new Vector3d(0, 1, 0));
-      Vector3d right = playerDirection.crossProduct(new Vector3d(0, -1, 0));
-      spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
-      spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
-    }
-  }
-
-  public void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, int charge, Vector3d offsetVector) {
+  public static void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, int charge, Vector3d offsetVector) {
     ArrowItem arrowitem = (ArrowItem) Items.ARROW;
     AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, stackBow, player);
     abstractarrowentity.forceSetPosition(abstractarrowentity.getPosX() + offsetVector.getX(), abstractarrowentity.getPosY(), abstractarrowentity.getPosZ() + offsetVector.getZ());

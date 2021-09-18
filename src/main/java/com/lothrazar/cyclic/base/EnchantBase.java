@@ -16,7 +16,7 @@ public abstract class EnchantBase extends Enchantment {
 
   public abstract boolean isEnabled();
 
-  protected int getCurrentLevelTool(ItemStack stack) {
+  public int getCurrentLevelTool(ItemStack stack) {
     if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this)
         && stack.getItem() != Items.ENCHANTED_BOOK) {
       return EnchantmentHelper.getEnchantments(stack).get(this);

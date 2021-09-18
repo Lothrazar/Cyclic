@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "cyclic:blocks/ghost"
+        "all": "cyclic:blocks/fresh_membrane_block"
     }
 }

@@ -20,7 +20,8 @@ public class TileMoon extends TileEntityBase implements ITickableTileEntity {
         return;
       }
       try {
-        int newPower = sw.getMoonPhase();
+        //        int newPower = sw.getMoonPhase();
+        int newPower = sw.getDimensionType().getMoonPhase(sw.func_241851_ab());
         if (newPower != this.getBlockState().get(BlockMoon.LEVEL)) {
           world.setBlockState(pos, this.getBlockState().with(BlockMoon.LEVEL, newPower));
         }
