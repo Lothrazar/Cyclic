@@ -118,7 +118,7 @@ public class BlockItemShelf extends BlockBase {
         player.swingArm(hand);
         shelf.inventory.insertItem(slot, forShelf, false);
       }
-      return ActionResultType.PASS;
+      return ActionResultType.SUCCESS;
     }
     return ActionResultType.PASS;
   }
