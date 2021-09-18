@@ -450,7 +450,7 @@
     "enchantment.cyclic.experience_boost.desc": "Increases experience drops from killing and mining",
     "enchantment.cyclic.growth": "Growth",
     "enchantment.cyclic.growth.desc": "Grow nearby crops while held",
-    "enchantment.cyclic.growth.guide": "Grow nearby crops while held.  Can be applied to Hoe tools only.",
+    "enchantment.cyclic.growth.guide": "Grow nearby crops while held.  Radius is level + 2.  Passive aura type buff, no need to use the tool.  Can be applied to Hoe tools only.",
     "enchantment.cyclic.launch": "Multi-Jump",
     "enchantment.cyclic.launch.desc": "Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that cooldown kicks in; sneak to jump normally.",
     "enchantment.cyclic.launch.guide": "Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that cooldown kicks in; sneak to jump normally.",

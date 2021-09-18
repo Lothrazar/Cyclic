@@ -212,8 +212,8 @@
 		#Wand settings
 		[cyclic.items.teleport_wand]
 			#Maximum distance to activate
-			#Range: 16 ~ 256
-			range = 128
+			#Range: 8 ~ 1024
+			range = 256
 
 		#Peat blocks
 		[cyclic.items.peat]
