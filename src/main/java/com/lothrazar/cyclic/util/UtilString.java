@@ -72,4 +72,8 @@ public class UtilString {
     }
     return false;
   }
+
+  public static boolean isCyclic(ResourceLocation registryName) {
+    return registryName.getNamespace().equalsIgnoreCase(ModCyclic.MODID);
+  }
 }

@@ -326,6 +326,7 @@
     "scepter.cyclic.empty":"Out of materials",
     "item.cyclic.randomize_scepter":"Block Randomizer",
     "item.cyclic.randomize_scepter.tooltip":"Randomly shuffle around the blocks in a 5x5x1 area around the target block",
+    "item.cyclic.randomize_scepter.guide":"Randomly shuffle around the blocks in a 5x5x1 area around the target block",
     
     "buildertype.height.tooltip":"Height",
     "buildertype.size.tooltip":"Size",
@@ -1265,6 +1266,8 @@
     "block.cyclic.wireless_redstone.guide": "The Wireless Redstone Transmitter and Receiver allow you to transmit redstone signals between distant points.$(br)Place a Wireless Receiver in the world and use a $(l:misc/location)GPS Marker$(/l) on it to store its coordinates. Then insert the GPS Marker into a Redstone Transmitter.$(br)Anytime the Transmitter receives a redstone signal, it will cause all linked Receivers to receive the same signal.",
     "block.cyclic.wireless_transmitter": "Wireless Redstone Transmitter",
     "block.cyclic.wireless_transmitter.tooltip": "Transmit wireless redstone to any compatible block",
+    "block.cyclic.wireless_transmitter.guide": "The Wireless Redstone Transmitter and Receiver allow you to transmit redstone signals between distant points.$(br)Place a Wireless Receiver in the world and use a $(l:misc/location)GPS Marker$(/l) on it to store its coordinates. Then insert the GPS Marker into a Redstone Transmitter.$(br)Anytime the Transmitter receives a redstone signal, it will cause all linked Receivers to receive the same signal.",
+    "block.cyclic.wireless_receiver.guide": "The Wireless Redstone Transmitter and Receiver allow you to transmit redstone signals between distant points.$(br)Place a Wireless Receiver in the world and use a $(l:misc/location)GPS Marker$(/l) on it to store its coordinates. Then insert the GPS Marker into a Redstone Transmitter.$(br)Anytime the Transmitter receives a redstone signal, it will cause all linked Receivers to receive the same signal.",
     "block.cyclic.wireless_receiver": "Wireless Redstone Receiver",
     "block.cyclic.wireless_receiver.tooltip": "Receive wireless redstone signals from a Transmitter",
     "block.cyclic.xpjuice": "Experience",
@@ -1487,6 +1490,7 @@
 
     "block.cyclic.item_infinite": "Infinite Item-ator",
     "block.cyclic.item_infinite.tooltip": "Duplicate items for pack testing",
+    "block.cyclic.item_infinite.guide": "Duplicate items for pack testing.  Add an item with your hand or a hopper, then pull it out with another and it repeats itself including NBT and damage",
 
 
     "block.fire_dark.guide": "Does not destroy blocks or harm players.  Spawned by Duskflame Hex",

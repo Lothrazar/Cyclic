@@ -11,30 +11,40 @@ import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.util.UtilString;
 import java.util.Objects;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.registries.ForgeRegistries;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
+import mezz.jei.api.runtime.IJeiRuntime;
 
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {
 
   private static final int PLAYER_INV_SIZE = 4 * 9;
-  private static final ResourceLocation id = new ResourceLocation(ModCyclic.MODID, "jei");
+  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "jei");
+
+  @Override
+  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
 
   @Override
   public ResourceLocation getPluginUid() {
-    return id;
+    return ID;
   }
 
   @Override
@@ -59,6 +69,17 @@ public class CyclicPluginJEI implements IModPlugin {
     ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().world);
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.MELTER), MelterRecipeCategory.ID);
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
+    // 
+    for (Item item : ForgeRegistries.ITEMS.getValues()) {
+      if (UtilString.isCyclic(item.getRegistryName())) {
+        registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
+      }
+    }
+    for (Block item : ForgeRegistries.BLOCKS.getValues()) {
+      if (UtilString.isCyclic(item.getRegistryName())) {
+        registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
+      }
+    }
   }
 
   @Override
