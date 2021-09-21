@@ -7,8 +7,6 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.Direction;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * as of minecraft 1.16 parts of this file contains code from this mod which is MIT License, the same as this project
@@ -16,7 +14,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * https://github.com/jaquadro/StorageDrawers/blob/1.16/LICENSE
  * 
  */
-@OnlyIn(Dist.CLIENT)
 public class RenderScreentext extends TileEntityRenderer<TileScreentext> {
 
   public RenderScreentext(TileEntityRendererDispatcher d) {

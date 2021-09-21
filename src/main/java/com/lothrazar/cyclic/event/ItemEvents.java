@@ -12,6 +12,7 @@ import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
+import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -52,6 +53,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionAddedEvent;
@@ -71,8 +73,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ItemEvents {
 
   @SubscribeEvent
+  public void onLivingJumpEvent(LivingJumpEvent event) {
+    if (!(event.getEntityLiving() instanceof PlayerEntity)) {
+      return;
+    }
+    PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+    if (player.getHeldItemMainhand().getItem() == ItemRegistry.ENDER_BOOK.get()) {
+      EnderBookItem.cancelTeleport(player.getHeldItemMainhand());
+    }
+    if (player.getHeldItemOffhand().getItem() == ItemRegistry.ENDER_BOOK.get()) {
+      EnderBookItem.cancelTeleport(player.getHeldItemOffhand());
+    }
+  }
+
+  @SubscribeEvent
   public void onCriticalHitEvent(CriticalHitEvent event) {
-    //LivingJumpEvent  
     if (event.getEntityLiving() instanceof PlayerEntity) {
       PlayerEntity ply = (PlayerEntity) event.getEntityLiving();
       //      ply.getAttribute(Attributes.)

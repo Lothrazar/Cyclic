@@ -35,11 +35,6 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EventRender {
-  //  @OnlyIn(Dist.CLIENT)
-  //  @SubscribeEvent
-  //  public void drawScreen(GuiScreenEvent.DrawScreenEvent event) {
-  //    //
-  //  } 
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent

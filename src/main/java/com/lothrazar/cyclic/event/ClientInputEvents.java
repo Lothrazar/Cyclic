@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
-import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemScroll;
@@ -12,32 +11,16 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ClientInputEvents {
-
-  @SubscribeEvent
-  public void onLivingJumpEvent(LivingJumpEvent event) {
-    if (!(event.getEntityLiving() instanceof PlayerEntity)) {
-      return;
-    }
-    PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-    if (player.getHeldItemMainhand().getItem() == ItemRegistry.ENDER_BOOK.get()) {
-      EnderBookItem.cancelTeleport(player.getHeldItemMainhand());
-    }
-    if (player.getHeldItemOffhand().getItem() == ItemRegistry.ENDER_BOOK.get()) {
-      EnderBookItem.cancelTeleport(player.getHeldItemOffhand());
-    }
-  }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent

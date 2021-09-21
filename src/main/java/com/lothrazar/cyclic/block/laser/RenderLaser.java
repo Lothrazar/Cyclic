@@ -13,8 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * laser rendering by direwolf20-MC from this MIT project
@@ -23,7 +21,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
  *
  */
-@OnlyIn(Dist.CLIENT)
 public class RenderLaser extends TileEntityRenderer<TileLaser> {
 
   public RenderLaser(TileEntityRendererDispatcher d) {

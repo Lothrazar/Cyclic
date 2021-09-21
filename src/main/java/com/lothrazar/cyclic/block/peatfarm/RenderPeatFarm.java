@@ -6,10 +6,7 @@ import java.awt.Color;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class RenderPeatFarm extends TileEntityRenderer<TilePeatFarm> {
 
   public RenderPeatFarm(TileEntityRendererDispatcher d) {

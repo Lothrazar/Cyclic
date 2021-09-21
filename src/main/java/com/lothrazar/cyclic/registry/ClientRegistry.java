@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import net.minecraft.client.Minecraft;
@@ -10,12 +11,18 @@ import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@OnlyIn(Dist.CLIENT)
 public class ClientRegistry {
 
-  public static void setup() {
+  public ClientRegistry() {
+    //fired by mod constructor  DistExecutor.safeRunForDist
+    MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
+  }
+
+  public static void setupClient(final FMLClientSetupEvent event) {
     for (BlockBase b : BlockRegistry.blocks) {
       b.registerClient();
     }
@@ -25,6 +32,7 @@ public class ClientRegistry {
     initColours();
   }
 
+  @OnlyIn(Dist.CLIENT)
   private static void initColours() {
     Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> {
       if (stack.getItem() == ItemRegistry.storage_bag) {
