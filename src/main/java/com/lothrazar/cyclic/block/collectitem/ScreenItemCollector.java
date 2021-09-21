@@ -16,6 +16,7 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
   private ButtonMachineRedstone btnRender;
   private GuiSliderInteger sizeSlider;
   private ButtonMachineRedstone btnDirection;
+  private GuiSliderInteger heightslider;
 
   public ScreenItemCollector(ContainerItemCollector screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -49,7 +50,7 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
     y = guiTop + 22;
     x = guiLeft + 34;
     f = TileItemCollector.Fields.HEIGHT.ordinal();
-    GuiSliderInteger heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, TileItemCollector.Fields.HEIGHT.ordinal(), container.tile.getPos(),
+    heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, TileItemCollector.Fields.HEIGHT.ordinal(), container.tile.getPos(),
         0, TileItemCollector.MAX_HEIGHT, container.tile.getField(f)));
     heightslider.setTooltip("buildertype.height.tooltip");
     //then size

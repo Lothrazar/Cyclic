@@ -47,15 +47,18 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static enum Fields {
-    REDSTONE, RENDER, SIZE;
+    REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
   }
 
   public static final Set<IHarvesterOverride> HARVEST_OVERRIDES = Sets.newIdentityHashSet();
   public static final int MAX_SIZE = 12; // TODO: could be config . radius 7 translates to 15x15 area (center block + 7 each side)
   static final int MAX_ENERGY = 640000;
+  static final int MAX_HEIGHT = 16;
   public static IntValue POWERCONF;
   private int radius = MAX_SIZE;
   private int shapeIndex = 0;
+  private int height = 1;
+  private boolean directionIsUp = false;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX_ENERGY, MAX_ENERGY / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
@@ -103,14 +106,21 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   //for harvest
   public List<BlockPos> getShape() {
-    int height = 0;
-    List<BlockPos> shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, height);
+    List<BlockPos> shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, 0);
+    int diff = directionIsUp ? 1 : -1;
+    if (height > 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    }
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
+    int diff = directionIsUp ? 1 : -1;
+    if (height > 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    }
     return shape;
   }
 
@@ -225,6 +235,10 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         return render;
       case SIZE:
         return radius;
+      case HEIGHT:
+        return height;
+      case DIRECTION:
+        return directionIsUp ? 1 : 0;
     }
     return 0;
   }
@@ -241,6 +255,12 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
       break;
+      case DIRECTION:
+        this.directionIsUp = value == 1;
+      break;
+      case HEIGHT:
+        height = Math.min(value, MAX_HEIGHT);
+      break;
     }
   }
 
@@ -255,6 +275,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     radius = tag.getInt("radius");
+    height = tag.getInt("height");
+    directionIsUp = tag.getBoolean("directionIsUp");
     shapeIndex = tag.getInt("shapeIndex");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
@@ -264,6 +286,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("radius", radius);
     tag.putInt("shapeIndex", shapeIndex);
+    tag.putInt("height", height);
+    tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }

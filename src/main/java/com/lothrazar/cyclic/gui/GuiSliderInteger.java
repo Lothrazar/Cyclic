@@ -134,6 +134,15 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.field, val, pos));
   }
 
+  @Override
+  protected void onDrag(double mouseX, double mouseY, double dragX, double dragY) {
+    //    this.changeSliderValueActual(mouseX);
+    super.onDrag(mouseX, mouseY, dragX, dragY);
+    System.out.println("ondrag" + mouseX);
+    func_230972_a_();
+    func_230979_b_();
+  }
+
   /**
    * Set inner [0,1] value relative to maximum and trigger save/ & refresh
    */

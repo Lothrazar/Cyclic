@@ -16,6 +16,8 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   private ButtonMachineRedstone btnRedstone;
   private ButtonMachineRedstone btnRender;
   private GuiSliderInteger size;
+  private ButtonMachineRedstone btnDirection;
+  private GuiSliderInteger heightslider;
 
   public ScreenHarvester(ContainerHarvester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -36,9 +38,25 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     btnRender = addButton(new ButtonMachineRedstone(x, y, TileHarvester.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
-    int w = 130;
+    int f = TileHarvester.Fields.DIRECTION.ordinal();
+    y += 20;
+    btnDirection = addButton(new ButtonMachineRedstone(x, y, f,
+        container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"))
+    //.setSize(18)
+    ;
+    int w = 110;
     int h = 18;
-    int f = TileHarvester.Fields.SIZE.ordinal();
+    //now start sliders
+    //
+    y = guiTop + 22;
+    x = guiLeft + 34;
+    f = TileHarvester.Fields.HEIGHT.ordinal();
+    heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, TileHarvester.Fields.HEIGHT.ordinal(), container.tile.getPos(),
+        0, TileHarvester.MAX_HEIGHT, container.tile.getField(f)));
+    heightslider.setTooltip("buildertype.height.tooltip");
+    //     w = 130;
+    //    int h = 18;
+    f = TileHarvester.Fields.SIZE.ordinal();
     y += 26;
     size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, TileHarvester.MAX_SIZE, container.tile.getField(f)));
   }
@@ -55,6 +73,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(container.tile);
     btnRender.onValueUpdate(container.tile);
+    btnDirection.onValueUpdate(container.tile);
     size.setTooltip("cyclic.screen.size" + container.tile.getField(size.getField()));
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
