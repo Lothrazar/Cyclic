@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.event.ClientInputEvents;
+import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import net.minecraft.client.Minecraft;
@@ -20,6 +21,7 @@ public class ClientRegistry {
   public ClientRegistry() {
     //fired by mod constructor  DistExecutor.safeRunForDist
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
+    MinecraftForge.EVENT_BUS.register(new EventRender());
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {

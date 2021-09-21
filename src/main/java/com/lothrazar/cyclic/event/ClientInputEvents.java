@@ -13,8 +13,6 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -22,7 +20,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ClientInputEvents {
 
-  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void onMouseEvent(InputEvent.MouseScrollEvent event) {
     //    PlayerEvent.Visibility
@@ -37,7 +34,6 @@ public class ClientInputEvents {
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent(priority = EventPriority.HIGH)
   public void onMouseEvent(GuiScreenEvent.MouseClickedEvent.Pre event) {
     if (event.getGui() == null || !(event.getGui() instanceof ContainerScreen<?>)) {

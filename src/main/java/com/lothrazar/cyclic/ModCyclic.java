@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic;
 
-import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ClientRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry;
@@ -32,7 +31,6 @@ public class ModCyclic {
     FluidRegistry.setup();
     FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());
-    MinecraftForge.EVENT_BUS.register(new EventRender());
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
     BlockRegistry.BLOCKS.register(bus);
     ItemRegistry.ITEMS.register(bus);
