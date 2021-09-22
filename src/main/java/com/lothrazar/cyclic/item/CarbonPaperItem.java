@@ -49,6 +49,7 @@ public class CarbonPaperItem extends ItemBase {
     PlayerEntity player = context.getPlayer();
     Hand hand = context.getHand();
     BlockPos pos = context.getPos();
+    //test spawn detetc
     //    Direction side = context.getFace();
     ItemStack held = player.getHeldItem(hand);
     TileEntity tile = context.getWorld().getTileEntity(pos);
