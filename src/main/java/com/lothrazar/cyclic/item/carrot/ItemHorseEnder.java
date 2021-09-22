@@ -76,7 +76,12 @@ public class ItemHorseEnder extends ItemEntityInteractable {
       event.getPlayer().getCooldownTracker().setCooldown(this, 1);
       event.getItemStack().shrink(1);
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
-      UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);
+      UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("item.cyclic.carrot_ender.count") + current);
+      //
+      //test
+      //      if (ahorse.getType() == EntityType.ZOMBIE_HORSE) {
+      //        ahorse.setTamedBy(event.getPlayer());
+      //      }
     }
   }
 }

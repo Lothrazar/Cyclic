@@ -33,7 +33,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
     FLOWING, REDSTONE, RENDER, BURNTIME;
   }
 
-  private static final int BURNTIME = 40;
+  public static final int BURNTIME = 40;
   ItemStackHandler inventory = new ItemStackHandler(1);
   CustomEnergyStorage energy = new CustomEnergyStorage(MENERGY, MENERGY / 2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);

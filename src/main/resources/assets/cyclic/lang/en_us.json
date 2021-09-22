@@ -756,6 +756,7 @@
     "item.cyclic.carrot_ender": "Ender Carrot",
     "item.cyclic.carrot_ender.tooltip": "Stackable hidden shields",
     "item.cyclic.carrot_ender.guide": "Give your horse some magic shields.  These trigger when the mount is drowning, falling, burning, or low on health.  When triggered, it will consume one tick of the count and buff the mount accordingly. ",
+		"item.cyclic.carrot_ender.count":"Ender Shields applied: ",
 
     "item.cyclic.toxic_carrot": "Toxic Carrot",
     "item.cyclic.toxic_carrot.tooltip": "Zombify your horse",
