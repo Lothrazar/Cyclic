@@ -20,8 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockScreentext extends BlockBase {
@@ -37,7 +35,6 @@ public class BlockScreentext extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.screen, ScreenScreentext::new);

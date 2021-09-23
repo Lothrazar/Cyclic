@@ -13,8 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockPotion extends BlockBase {
 
@@ -36,7 +34,6 @@ public class BlockPotion extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.beacon, ScreenPotion::new);

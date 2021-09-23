@@ -11,8 +11,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -35,7 +33,6 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     if (storage != null) {

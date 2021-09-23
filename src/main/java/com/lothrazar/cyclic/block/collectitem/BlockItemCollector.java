@@ -16,8 +16,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockItemCollector extends BlockBase {
@@ -50,7 +48,6 @@ public class BlockItemCollector extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_ITEM, RenderItemCollect::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.collector, ScreenItemCollector::new);

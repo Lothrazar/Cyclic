@@ -18,8 +18,6 @@ import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockScaffolding extends BlockBase {
 
@@ -37,7 +35,6 @@ public class BlockScaffolding extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());
   }

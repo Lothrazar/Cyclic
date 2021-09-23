@@ -19,8 +19,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -87,7 +85,6 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
   public void tick() {}
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }

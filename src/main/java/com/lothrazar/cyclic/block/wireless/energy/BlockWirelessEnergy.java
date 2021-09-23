@@ -15,8 +15,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockWirelessEnergy extends BlockBase {
 
@@ -44,7 +42,6 @@ public class BlockWirelessEnergy extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ScreenManager.registerFactory(ContainerScreenRegistry.wireless_energy, ScreenWirelessEnergy::new);
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());

@@ -162,7 +162,6 @@ public abstract class BlockBase extends Block {
   /**
    * Override per block for render-ers/screens/etc
    */
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {}
 
   public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {

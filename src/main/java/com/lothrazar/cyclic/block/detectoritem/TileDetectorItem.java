@@ -19,8 +19,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class TileDetectorItem extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
@@ -85,7 +83,6 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }

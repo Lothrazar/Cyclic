@@ -95,7 +95,6 @@ public class EventRender {
     int height = mc.getMainWindow().getScaledHeight();
     mc.getItemRenderer().renderItemAndEffectIntoGUI(stack, width / 2, height / 2);
   }
-  //  @OnlyIn(Dist.CLIENT)
   //  @SubscribeEvent
   //  public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
   //   

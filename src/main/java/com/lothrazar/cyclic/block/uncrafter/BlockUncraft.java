@@ -8,8 +8,6 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockUncraft extends BlockBase {
 
@@ -34,7 +32,6 @@ public class BlockUncraft extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     //    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
     ScreenManager.registerFactory(ContainerScreenRegistry.uncraft, ScreenUncraft::new);

@@ -13,8 +13,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AppleBuffs extends ItemBase {
 
@@ -23,7 +21,6 @@ public class AppleBuffs extends ItemBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (this.getFood() != null && this.getFood().getEffects() != null) {
       List<Pair<EffectInstance, Float>> eff = this.getFood().getEffects();

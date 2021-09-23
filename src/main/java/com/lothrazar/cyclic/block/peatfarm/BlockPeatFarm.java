@@ -32,8 +32,6 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
@@ -45,7 +43,6 @@ public class BlockPeatFarm extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.peat_farm, ScreenPeatFarm::new);

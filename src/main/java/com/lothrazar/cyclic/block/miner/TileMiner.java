@@ -29,8 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -93,7 +91,6 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }

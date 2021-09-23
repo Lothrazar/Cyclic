@@ -23,8 +23,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockAnvilVoid extends BlockBase {
 
@@ -40,7 +38,6 @@ public class BlockAnvilVoid extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.anvil_void, ScreenAnvilVoid::new);

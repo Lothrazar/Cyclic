@@ -14,8 +14,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockSprinkler extends BlockBase {
@@ -53,14 +51,12 @@ public class BlockSprinkler extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
     return false;
   }

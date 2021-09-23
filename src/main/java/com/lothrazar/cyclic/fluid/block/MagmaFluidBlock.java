@@ -8,8 +8,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -19,8 +17,6 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class MagmaFluidBlock extends FlowingFluidBlock {
@@ -80,11 +76,6 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
   @Deprecated
   public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return shapes[state.get(LEVEL).intValue()];
-  }
-
-  @OnlyIn(Dist.CLIENT)
-  public IParticleData getDripParticleData() {
-    return ParticleTypes.DRIPPING_LAVA;
   }
 
   @SuppressWarnings("deprecation")

@@ -15,8 +15,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
@@ -35,7 +33,6 @@ public class BlockSolidifier extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
     return false;
   }
@@ -66,7 +63,6 @@ public class BlockSolidifier extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
     ScreenManager.registerFactory(ContainerScreenRegistry.solidifier, ScreenSolidifier::new);

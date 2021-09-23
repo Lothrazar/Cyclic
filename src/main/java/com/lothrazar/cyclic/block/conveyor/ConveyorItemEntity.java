@@ -9,8 +9,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ConveyorItemEntity extends ItemEntity {
 
@@ -37,7 +35,6 @@ public class ConveyorItemEntity extends ItemEntity {
     super.setInfinitePickupDelay();
   }
 
-  @OnlyIn(Dist.CLIENT)
   @Override
   public float getItemHover(float partialTicks) {
     return 0.0F;

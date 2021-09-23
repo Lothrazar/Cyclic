@@ -20,8 +20,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -83,7 +81,6 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }

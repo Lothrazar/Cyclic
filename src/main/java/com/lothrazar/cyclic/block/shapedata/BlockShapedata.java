@@ -7,8 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockShapedata extends BlockBase {
@@ -19,7 +17,6 @@ public class BlockShapedata extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.computer_shape, RenderShapedata::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.computer_shape, ScreenShapedata::new);

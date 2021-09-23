@@ -21,8 +21,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockAnvilMagma extends BlockBase {
 
@@ -37,7 +35,6 @@ public class BlockAnvilMagma extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ScreenManager.registerFactory(ContainerScreenRegistry.anvil_magma, ScreenAnvilMagma::new);
   }

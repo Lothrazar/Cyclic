@@ -17,8 +17,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockDisenchant extends BlockBase {
 
@@ -44,7 +42,6 @@ public class BlockDisenchant extends BlockBase {
    * will always be called regardless of whether the block can receive random update ticks
    */
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
     super.animateTick(stateIn, worldIn, pos, rand);
     for (int i = -2; i <= 2; ++i) {
@@ -74,7 +71,6 @@ public class BlockDisenchant extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.disenchanter, ScreenDisenchant::new);

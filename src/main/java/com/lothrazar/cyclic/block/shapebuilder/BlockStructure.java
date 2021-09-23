@@ -15,8 +15,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockStructure extends BlockBase {
@@ -27,7 +25,6 @@ public class BlockStructure extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.STRUCTURE, RenderStructure::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.structure, ScreenStructure::new);
