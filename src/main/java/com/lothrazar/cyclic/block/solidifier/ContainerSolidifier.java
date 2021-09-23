@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -27,7 +28,13 @@ public class ContainerSolidifier extends ContainerBase {
     addSlot(new SlotItemHandler(h, 0, 37, 17));
     addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
     addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
-    addSlot(new SlotItemHandler(tile.outputSlots, 0, 121, 31));
+    addSlot(new SlotItemHandler(tile.outputSlots, 0, 121, 31) {
+
+      @Override
+      public boolean isItemValid(ItemStack stack) {
+        return false;
+      }
+    });
     this.endInv = h.getSlots() + 1; //for shiftclick out of the out slot
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileSolidifier.Fields.values().length);

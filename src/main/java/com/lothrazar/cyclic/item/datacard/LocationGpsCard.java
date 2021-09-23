@@ -85,7 +85,8 @@ public class LocationGpsCard extends ItemBase {
     }
     //    this.read 
     CompoundNBT tag = item.getOrCreateTag();
-    BlockPosDim dim = new BlockPosDim(pos, tag.getString(NBT_DIM));
+    item.getDisplayName();
+    BlockPosDim dim = new BlockPosDim(pos, tag.getString(NBT_DIM), tag);
     try {
       dim.setSidePlayerFacing(Direction.values()[tag.getInt(NBT_SIDE + "facing")]);
       dim.setSide(Direction.values()[tag.getInt(NBT_SIDE)]);

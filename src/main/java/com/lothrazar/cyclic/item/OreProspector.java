@@ -82,7 +82,7 @@ public class OreProspector extends ItemBase {
     String dim = item.getTag().getString(NBT_DIM);
     for (int i = 0; i < size; i++) {
       BlockPos pos = UtilNBT.getBlockPos(item.getTag().getCompound("tag" + i));
-      list.add(new BlockPosDim(pos, dim));
+      list.add(new BlockPosDim(pos, dim, item.getTag()));
     }
     //    this.read  
     return list;

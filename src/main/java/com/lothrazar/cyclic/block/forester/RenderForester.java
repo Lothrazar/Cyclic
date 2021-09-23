@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.forester;
 
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -13,11 +14,10 @@ public class RenderForester extends TileEntityRenderer<TileForester> {
   }
 
   @Override
-  public void render(TileForester te, float v, MatrixStack matrixStack,
-      IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
+  public void render(TileForester te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
     if (te.getField(TileForester.Fields.RENDER.ordinal()) == 1) {
-      UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrixStack);
+      UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrixStack, 0.7F, ClientConfigCyclic.getColor(te));
     }
   }
 }

@@ -55,6 +55,14 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   ItemStackHandler inventory = new ItemStackHandler(3) {
 
     @Override
+    public ItemStack getStackInSlot(int slot) {
+      if (slot < 0 || slot >= this.stacks.size()) {
+        return ItemStack.EMPTY; // failsafe for slot not in range legacy worlds
+      }
+      return super.getStackInSlot(slot); //this.stacks.get(slot);
+    }
+
+    @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       if (slot == SLOT_BUILD) {
         return Block.getBlockFromItem(stack.getItem()) != null;

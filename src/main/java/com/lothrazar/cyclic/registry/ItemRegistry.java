@@ -23,7 +23,6 @@ import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
 import com.lothrazar.cyclic.item.SleepingMatItem;
-import com.lothrazar.cyclic.item.SpawnInspectorTool;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
 import com.lothrazar.cyclic.item.StirrupsReverseItem;
@@ -157,8 +156,13 @@ public class ItemRegistry {
   public static final RegistryObject<Item> DOORBELL = ITEMS.register("doorbell", () -> new BlockItem(BlockRegistry.DOORBELL.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_ENERGY = ITEMS.register("wireless_energy", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_ITEM = ITEMS.register("wireless_item", () -> new BlockItem(BlockRegistry.WIRELESS_ITEM.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> SPAWNINSPECTOR = ITEMS.register("spawn_inspector", () -> new SpawnInspectorTool(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
-  //
+  //  public static final RegistryObject<Item> SPAWNINSPECTOR = ITEMS.register("spawn_inspector", () -> new SpawnInspectorTool(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> WINGCHARM = ITEMS.register("charm_wing", () -> new CharmWing(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> BUILD_SCEPTER = ITEMS.register("build_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.NORMAL));
+  public static final RegistryObject<Item> REPLACE_SCEPTER = ITEMS.register("replace_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE));
+  public static final RegistryObject<Item> OFFSET_SCEPTER = ITEMS.register("offset_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE));
+  public static final RegistryObject<Item> RANDOMIZE_SCEPTER = ITEMS.register("randomize_scepter", () -> new RandomizerItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  //  //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
@@ -210,6 +214,8 @@ public class ItemRegistry {
   public static Item filter_data;
   @ObjectHolder(ModCyclic.MODID + ":location")
   public static Item location;
+  @ObjectHolder(ModCyclic.MODID + ":shape_data")
+  public static Item shape_data;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -313,10 +319,6 @@ public class ItemRegistry {
     r.register(new StirrupsItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("stirrups"));
     r.register(new StirrupsReverseItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("stirrups_reverse"));
     r.register(new LeverRemote(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1)).setRegistryName("lever_remote"));
-    r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.NORMAL).setRegistryName("build_scepter"));
-    r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE).setRegistryName("replace_scepter"));
-    r.register(new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.OFFSET).setRegistryName("offset_scepter"));
-    r.register(new RandomizerItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("randomize_scepter"));
     // magic tools
     r.register(new CarbonPaperItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("carbon_paper"));
     r.register(new SnowScepter(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("ice_scepter"));

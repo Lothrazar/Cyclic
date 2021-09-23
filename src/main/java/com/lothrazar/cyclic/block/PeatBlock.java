@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.ArrayList;

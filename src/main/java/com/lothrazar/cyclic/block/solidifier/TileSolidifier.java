@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.solidifier;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -64,6 +65,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     this.syncEnergy();
     this.findMatchingRecipe();
     if (currentRecipe == null) {
+      this.timer = TIMER_FULL;
       return;
     }
     this.timer--;
@@ -181,9 +183,10 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   private boolean tryProcessRecipe() {
     FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
-    if (test.getAmount() == this.currentRecipe.getRecipeFluid().getAmount()) {
+    if (test.getAmount() >= this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
       if (!outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), true).isEmpty()) {
+        ModCyclic.LOGGER.info(pos + "recipe stop on output is full");
         return false;
         //there was non-empty left after this, so no room for all
       }
@@ -195,6 +198,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), false);
       return true;
     }
+    ModCyclic.LOGGER.info(pos + " recipe stop on fluid not enoughl");
     return false;
   }
 

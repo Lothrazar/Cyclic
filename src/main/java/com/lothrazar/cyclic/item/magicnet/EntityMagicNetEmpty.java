@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.magicnet;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;

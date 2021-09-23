@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import java.util.List;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;

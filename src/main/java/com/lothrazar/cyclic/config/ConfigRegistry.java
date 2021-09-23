@@ -1,7 +1,8 @@
-package com.lothrazar.cyclic;
+package com.lothrazar.cyclic.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -50,7 +51,6 @@ import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,10 +60,12 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 public class ConfigRegistry {
 
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
+  private static final ForgeConfigSpec.Builder CFGC = new ForgeConfigSpec.Builder();
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> UNCRAFT = new ArrayList<>();
@@ -72,6 +74,7 @@ public class ConfigRegistry {
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final String WALL = "####################################################################################";
   private static ForgeConfigSpec COMMON_CONFIG;
+  private static ForgeConfigSpec CLIENT_CONFIG;
   public static IntValue PEATERICHPOWER;
   public static IntValue PEATPOWER;
   public static DoubleValue PEATCHANCE;
@@ -330,16 +333,56 @@ public class ConfigRegistry {
     CFG.pop(); //blocks
     CFG.pop(); //ROOT
     COMMON_CONFIG = CFG.build();
+    CFGC.comment(WALL, "Client-side properties", WALL)
+        .push(ModCyclic.MODID);
+    CFGC.comment(WALL, "Block Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
+        .push("blocks");
+    CFGC.push("colors");
+    ClientConfigCyclic.COLLECTOR_ITEM = CFGC.comment("Specify hex color of preview mode.  default #444044").define("collector_item", "#444044");
+    ClientConfigCyclic.COLLECTOR_FLUID = CFGC.comment("Specify hex color of preview mode.  default #444044").define("collector_fluid", "#444044");
+    ClientConfigCyclic.DETECTOR_ENTITY = CFGC.comment("Specify hex color of preview mode.  default #00FF00").define("detector_entity", "#00FF00");
+    ClientConfigCyclic.DETECTOR_ITEM = CFGC.comment("Specify hex color of preview mode.  default #00AA00").define("detector_item", "#00AA00");
+    ClientConfigCyclic.PEAT_FARM = CFGC.comment("Specify hex color of preview mode.  default #404040").define("peat_farm", "#404040");
+    ClientConfigCyclic.MINER = CFGC.comment("Specify hex color of preview mode.  default #0000AA").define("miner", "#0000AA");
+    ClientConfigCyclic.DROPPER = CFGC.comment("Specify hex color of preview mode.  default #AA0011").define("dropper", "#AA0011");
+    ClientConfigCyclic.FORESTER = CFGC.comment("Specify hex color of preview mode.  default #11BB00").define("forester", "#11BB00");
+    ClientConfigCyclic.HARVESTER = CFGC.comment("Specify hex color of preview mode.  default #00EE00").define("harvester", "#00EE00");
+    ClientConfigCyclic.STRUCTURE = CFGC.comment("Specify hex color of preview mode.  default #FF0000").define("structure", "#FF0000");
+    CFGC.pop();
+    CFGC.pop(); //end of blocks
+    CFGC.comment(WALL, "Item Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
+        .push("items");
+    CFGC.push("colors");
+    ClientConfigCyclic.LOCATION = CFGC.comment("Specify hex color of preview mode for the GPS data card.  default #0000FF").define("location", "#0000FF");
+    ClientConfigCyclic.SHAPE_DATA = CFGC.comment("Specify hex color of preview mode.  default #FFC800").define("shape_data", "#FFC800"); // orange
+    ClientConfigCyclic.RANDOMIZE_SCEPTER = CFGC.comment("Specify hex color of preview mode.  default #0000FF").define("randomize_scepter", "#00EE00");
+    ClientConfigCyclic.OFFSET_SCEPTER = CFGC.comment("Specify hex color of preview mode.  default #0000FF").define("offset_scepter", "#00FF00");
+    ClientConfigCyclic.REPLACE_SCEPTER = CFGC.comment("Specify hex color of preview mode.  default #0000FF").define("replace_scepter", "#FFFF00");
+    ClientConfigCyclic.BUILD_SCEPTER = CFGC.comment("Specify hex color of preview mode.  default #0000FF").define("build_scepter", "#0000FF");
+    CFGC.pop();
+    CFGC.pop(); //end of items
+    CFGC.pop();
+    CLIENT_CONFIG = CFGC.build();
   }
 
-  public static void setup(Path path) {
-    final CommentedFileConfig configData = CommentedFileConfig.builder(path)
+  public static void setup() {
+    final CommentedFileConfig configData = CommentedFileConfig.builder(FMLPaths.CONFIGDIR.get().resolve(ModCyclic.MODID + ".toml"))
         .sync()
         .autosave()
         .writingMode(WritingMode.REPLACE)
         .build();
     configData.load();
     COMMON_CONFIG.setConfig(configData);
+  }
+
+  public static void setupClient() {
+    final CommentedFileConfig configData = CommentedFileConfig.builder(FMLPaths.CONFIGDIR.get().resolve(ModCyclic.MODID + "-client.toml"))
+        .sync()
+        .autosave()
+        .writingMode(WritingMode.REPLACE)
+        .build();
+    configData.load();
+    CLIENT_CONFIG.setConfig(configData);
   }
 
   @SuppressWarnings("unchecked")

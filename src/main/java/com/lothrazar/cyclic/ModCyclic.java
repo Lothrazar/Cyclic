@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic;
 
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ClientRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry;
@@ -14,7 +15,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 
 @Mod(ModCyclic.MODID)
@@ -27,7 +27,8 @@ public class ModCyclic {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(EventRegistry::setup);
     FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistry::setupClient);
     DistExecutor.safeRunForDist(() -> ClientRegistry::new, () -> EventRegistry::new);
-    ConfigRegistry.setup(FMLPaths.CONFIGDIR.get().resolve(MODID + ".toml"));
+    ConfigRegistry.setup();
+    ConfigRegistry.setupClient();
     FluidRegistry.setup();
     FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());

@@ -138,7 +138,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   protected void onDrag(double mouseX, double mouseY, double dragX, double dragY) {
     //    this.changeSliderValueActual(mouseX);
     super.onDrag(mouseX, mouseY, dragX, dragY);
-    System.out.println("ondrag" + mouseX);
+    //     ("ondrag" + mouseX);
     func_230972_a_();
     func_230979_b_();
   }

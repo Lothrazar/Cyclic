@@ -1,0 +1,52 @@
+
+#####################################################################################
+#Client-side properties
+#####################################################################################
+[cyclic]
+
+	#####################################################################################
+	#Block Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF
+	#####################################################################################
+	[cyclic.blocks]
+
+		[cyclic.blocks.colors]
+			#Specify hex color of preview mode.  default #00EE00
+			harvester = "#00EE00"
+			#Specify hex color of preview mode.  default #11BB00
+			forester = "#11BB00"
+			#Specify hex color of preview mode.  default #444044
+			collector_item = "#444044"
+			#Specify hex color of preview mode.  default #AA0011
+			dropper = "#AA0011"
+			#Specify hex color of preview mode.  default #00AA00
+			detector_item = "#00AA00"
+			#Specify hex color of preview mode.  default #404040
+			peat_farm = "#404040"
+			#Specify hex color of preview mode.  default #444044
+			collector_fluid = "#444044"
+			#Specify hex color of preview mode.  default #0000AA
+			miner = "#0000AA"
+			#Specify hex color of preview mode.  default #FF0000
+			structure = "#FF0000"
+			#Specify hex color of preview mode.  default #00FF00
+			detector_entity = "#00FF00"
+
+	#####################################################################################
+	#Item Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF
+	#####################################################################################
+	[cyclic.items]
+
+		[cyclic.items.colors]
+			#Specify hex color of preview mode.  default #FFC800
+			shape_data = "#FFC800"
+			#Specify hex color of preview mode.  default #0000FF
+			replace_scepter = "#FFFF00"
+			#Specify hex color of preview mode.  default #0000FF
+			offset_scepter = "#00FF00"
+			#Specify hex color of preview mode.  default #0000FF
+			build_scepter = "#0000FF"
+			#Specify hex color of preview mode for the GPS data card.  default #0000FF
+			location = "#0000FF"
+			#Specify hex color of preview mode.  default #0000FF
+			randomize_scepter = "#00EE00"
+

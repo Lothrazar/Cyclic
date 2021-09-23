@@ -3,18 +3,12 @@
 	"inputTop": {
     "tag": "forge:slimeballs"
 	},
-	"inputMiddle": {
-    "tag": "forge:slimeballs"
-	},
-	"inputBottom": {
-    "tag": "forge:slimeballs"
-	},
 	"mix": {
 		"fluid": "cyclic:magma",
-		"count": 150
+		"count": 50
 	},
 	"result": {
 		"item": "minecraft:magma_cream",
-		"count": 3
+		"count": 1
 	}
 }

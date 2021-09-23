@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.event;
 
-import com.lothrazar.cyclic.ConfigRegistry;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;

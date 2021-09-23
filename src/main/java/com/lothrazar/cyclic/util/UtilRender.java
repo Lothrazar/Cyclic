@@ -349,12 +349,6 @@ public class UtilRender {
     buffer.finish(FakeBlockRenderTypes.SOLID_COLOUR);
   }
 
-  public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix) {
-    renderOutline(view, coords, matrix,
-        0.7F,
-        Color.BLUE);
-  }
-
   public static BlockRayTraceResult getLookingAt(PlayerEntity player, int range) {
     return (BlockRayTraceResult) player.pick(range, 0F, false);
   }

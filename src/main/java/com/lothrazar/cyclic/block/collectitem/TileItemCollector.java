@@ -49,7 +49,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   private int radius = 8;
 
   public TileItemCollector() {
-    super(TileRegistry.collectortile);
+    super(TileRegistry.collector_item);
     this.needsRedstone = 0; // default on
   }
 

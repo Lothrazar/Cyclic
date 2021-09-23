@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.command;
 
-import com.lothrazar.cyclic.ConfigRegistry;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.mojang.brigadier.context.CommandContext;

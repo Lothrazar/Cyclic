@@ -1,25 +1,25 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ssl",
-    "skl",
-    "lli"
-  ],
-  "key": {
-    "s": {
-      "item": "minecraft:slime_ball"
-    },
-    "i": {
-      "item": "cyclic:gem_amber"
-    },
-    "k": {
-      "item": "minecraft:scute"
-    },
-    "l": {
-      "tag": "forge:leather"
-    }
-  },
-  "result": {
-    "item": "cyclic:glove_climb"
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ssl",
+		"skl",
+		"lli"
+	],
+	"key": {
+		"s": {
+			"tag": "forge:slimeballs"
+		},
+		"i": {
+			"item": "cyclic:gem_amber"
+		},
+		"k": {
+			"item": "minecraft:scute"
+		},
+		"l": {
+			"tag": "forge:leather"
+		}
+	},
+	"result": {
+		"item": "cyclic:glove_climb"
+	}
 }

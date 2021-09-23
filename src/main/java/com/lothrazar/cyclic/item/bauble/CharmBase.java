@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
@@ -28,9 +28,11 @@ import net.minecraft.world.World;
 
 public abstract class CharmBase extends ItemBaseToggle {
 
-  private static final int yLowest = -30;
-  private static final int yDest = 255;
-  private static final int fireProtSeconds = 10;
+  private static final int YLOWEST = -30;
+  private static final int YDEST = 255;
+  private static final int FIREPROTSECONDS = 10;
+  private static final int FALLDISTANCESECONDS = 30;
+  private static final int FALLDISTANCELIMIT = 10; // was 6 in 1.12.2
   public static final UUID ID_SPEED = UUID.fromString("12230aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID ID_LUCK = UUID.fromString("acc30aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID ID_ATTACKSPEED = UUID.fromString("b4678aa2-eff2-4a81-b92b-a1cb95f115c6");
@@ -38,6 +40,7 @@ public abstract class CharmBase extends ItemBaseToggle {
   boolean poisonProt;
   boolean witherProt;
   boolean voidProt;
+  boolean wingCharm;
 
   public CharmBase(Properties properties) {
     super(properties);
@@ -55,12 +58,22 @@ public abstract class CharmBase extends ItemBaseToggle {
     LivingEntity living = (LivingEntity) entityIn;
     tryPoisonTick(stack, entityIn, living);
     tryWitherTick(stack, entityIn, living);
+    tryWingTick(stack, entityIn, living);
     tryFireTick(stack, living);
+  }
+
+  private void tryWingTick(ItemStack stack, Entity entityIn, LivingEntity living) {
+    if (this.wingCharm && living.fallDistance > FALLDISTANCELIMIT && !living.isPotionActive(Effects.SLOW_FALLING)) {
+      EffectInstance eff = new EffectInstance(Effects.SLOW_FALLING, FALLDISTANCESECONDS * Const.TICKS_PER_SEC, Const.Potions.I);
+      living.addPotionEffect(eff);
+      UtilItemStack.damageItem(living, stack);
+      UtilSound.playSound(living, SoundEvents.BLOCK_LADDER_FALL);
+    }
   }
 
   private void tryFireTick(ItemStack stack, LivingEntity living) {
     if (this.fireProt && living.isBurning() && !living.isPotionActive(Effects.FIRE_RESISTANCE)) { // do nothing if you already have
-      EffectInstance eff = new EffectInstance(Effects.FIRE_RESISTANCE, fireProtSeconds * Const.TICKS_PER_SEC, Const.Potions.I);
+      EffectInstance eff = new EffectInstance(Effects.FIRE_RESISTANCE, FIREPROTSECONDS * Const.TICKS_PER_SEC, Const.Potions.I);
       eff.showParticles = false;
       living.addPotionEffect(eff);
       UtilItemStack.damageItem(living, stack);
@@ -86,9 +99,9 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   private void tryVoidTick(ItemStack stack, World worldIn, Entity entityIn) {
-    if (this.voidProt && entityIn.getPosition().getY() < yLowest && entityIn instanceof LivingEntity) {
+    if (this.voidProt && entityIn.getPosition().getY() < YLOWEST && entityIn instanceof LivingEntity) {
       UtilEntity.enderTeleportEvent((LivingEntity) entityIn, worldIn,
-          new BlockPos(entityIn.getPosition().getX(), yDest, entityIn.getPosition().getZ()));
+          new BlockPos(entityIn.getPosition().getX(), YDEST, entityIn.getPosition().getZ()));
       if (entityIn instanceof LivingEntity) {
         UtilItemStack.damageItem((LivingEntity) entityIn, stack);
       }

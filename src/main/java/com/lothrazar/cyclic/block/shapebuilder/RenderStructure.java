@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -24,7 +25,7 @@ public class RenderStructure extends TileEntityRenderer<TileStructure> {
     if (1 == te.getField(TileStructure.Fields.RENDER.ordinal())) {
       ItemStack stack = inv.getStackInSlot(0);
       if (stack.isEmpty()) {
-        UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack);
+        UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.7F, ClientConfigCyclic.getColor(te));
       }
       else {
         UtilRender.renderAsBlock(te.getPos(), te.getShape(), matrixStack, stack, 1, 1);

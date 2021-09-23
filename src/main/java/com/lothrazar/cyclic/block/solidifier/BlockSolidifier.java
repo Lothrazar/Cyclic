@@ -25,6 +25,7 @@ public class BlockSolidifier extends BlockBase {
   public BlockSolidifier(Properties properties) {
     super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F).notSolid());
     this.setHasGui();
+    this.setHasFluidInteract();
   }
 
   @Override

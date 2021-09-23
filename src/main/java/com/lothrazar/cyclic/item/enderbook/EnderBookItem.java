@@ -194,7 +194,7 @@ public class EnderBookItem extends ItemBase {
       //      if (loc != null &&
       String msg = "---";
       if (loc != null) {
-        msg = loc.toString();
+        msg = loc.getDisplayString();
       }
       UtilChat.addServerChatMessage(player, new StringTextComponent(book.getTag().getInt(ENDERSLOT) + " : ").appendString(msg));
     }

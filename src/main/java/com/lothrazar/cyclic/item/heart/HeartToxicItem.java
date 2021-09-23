@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.heart;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.entity.ai.attributes.AttributeModifier;

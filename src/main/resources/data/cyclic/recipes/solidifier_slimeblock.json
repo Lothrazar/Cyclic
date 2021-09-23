@@ -1,0 +1,14 @@
+{
+  "type": "cyclic:solidifier",
+  "inputTop": {
+    "item": "minecraft:slime_ball"
+  },
+  "mix": {
+    "fluid": "cyclic:slime",
+    "count": 2000
+  },
+  "result": {
+    "item": "minecraft:slime_block",
+		"count": 1
+  }
+}

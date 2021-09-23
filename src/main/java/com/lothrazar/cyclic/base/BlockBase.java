@@ -84,18 +84,6 @@ public abstract class BlockBase extends Block {
   @SuppressWarnings("deprecation")
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    if (this.hasGui) {
-      if (!world.isRemote) {
-        TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity instanceof INamedContainerProvider) {
-          NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-        }
-        else {
-          throw new IllegalStateException("Our named container provider is missing!");
-        }
-      }
-      return ActionResultType.SUCCESS;
-    }
     if (hasFluidInteract) {
       if (!world.isRemote) {
         TileEntity tankHere = world.getTileEntity(pos);
@@ -121,6 +109,18 @@ public abstract class BlockBase extends Block {
       if (FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
         return ActionResultType.SUCCESS;
       }
+    }
+    if (this.hasGui) {
+      if (!world.isRemote) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof INamedContainerProvider) {
+          NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+        }
+        else {
+          throw new IllegalStateException("Our named container provider is missing!");
+        }
+      }
+      return ActionResultType.SUCCESS;
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);
   }

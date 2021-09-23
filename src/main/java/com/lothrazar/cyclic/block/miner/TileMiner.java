@@ -60,6 +60,14 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   ItemStackHandler inventory = new ItemStackHandler(2) {
 
     @Override
+    public ItemStack getStackInSlot(int slot) {
+      if (slot < 0 || slot >= this.stacks.size()) {
+        return ItemStack.EMPTY; // failsafe for slot not in range legacy worlds
+      }
+      return super.getStackInSlot(slot); //this.stacks.get(slot);
+    }
+
+    @Override
     public int getSlotLimit(int slot) {
       return 1;
     }

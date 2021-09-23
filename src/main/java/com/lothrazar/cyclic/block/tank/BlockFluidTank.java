@@ -18,8 +18,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
@@ -38,11 +41,20 @@ public class BlockFluidTank extends BlockBase {
 
   public static final BooleanProperty TANK_ABOVE = BooleanProperty.create("above");
   public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");
-  public static final int MAXHEIGHT = 16;
 
   public BlockFluidTank(Properties properties) {
     super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F).notSolid());
     this.setHasFluidInteract();
+  }
+
+  @Override
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    if (!player.isCrouching() && player.getHeldItem(hand).getItem() == this.asItem()
+        && (hit.getFace() == Direction.UP || hit.getFace() == Direction.DOWN)) {
+      //pass to allow quick building up and down
+      return ActionResultType.PASS;
+    }
+    return super.onBlockActivated(state, world, pos, player, hand, hit);
   }
 
   @Override
@@ -117,7 +129,6 @@ public class BlockFluidTank extends BlockBase {
       }
     }
     catch (Exception e) {
-      //
       ModCyclic.LOGGER.error("Error during fill from item ", e);
     }
     //set default state

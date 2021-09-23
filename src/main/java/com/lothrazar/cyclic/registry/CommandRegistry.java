@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.ConfigRegistry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.command.CommandGetHome;
 import com.lothrazar.cyclic.command.CommandHealth;
@@ -9,6 +8,7 @@ import com.lothrazar.cyclic.command.CommandHunger;
 import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
 import com.lothrazar.cyclic.command.CommandTask;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;

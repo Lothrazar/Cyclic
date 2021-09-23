@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.data.RelativeShape;
@@ -142,13 +143,11 @@ public class EventRender {
         if (buildStyle.isOffset() && lookingAt.getFace() != null) {
           pos = pos.offset(lookingAt.getFace());
         }
-        //NORMAL is blue, REPLACE is yellow, OFFSET is green
-        Color col = buildStyle.getColour();
         alpha = 0.4F;
         //now the item has a build area
         List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getFace(), buildStyle);
         for (BlockPos coordinate : coordinates) {
-          renderCubes.put(coordinate, col);
+          renderCubes.put(coordinate, ClientConfigCyclic.getColor(stack));
         }
       }
     }
@@ -161,7 +160,7 @@ public class EventRender {
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getPos(), lookingAt.getFace());
       for (BlockPos e : coords) {
-        renderCubes.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? Color.GREEN : Color.RED);
+        renderCubes.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
       }
     }
     stack = player.getHeldItemMainhand();
@@ -188,7 +187,7 @@ public class EventRender {
       if (loc != null) {
         if (loc.getDimension() == null ||
             loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
-          renderCubes.put(loc.getPos(), Color.BLUE);
+          renderCubes.put(loc.getPos(), ClientConfigCyclic.getColor(stack));
         }
       }
     }
@@ -200,7 +199,7 @@ public class EventRender {
         //TODO: offsetTo
         //        shape.offsetTo(pos)
         for (BlockPos s : shape.getShape()) {
-          renderCubes.put(here.add(s), Color.ORANGE);
+          renderCubes.put(here.add(s), ClientConfigCyclic.getColor(stack));
         }
       }
     }

@@ -24,26 +24,27 @@ public class SpawnInspectorTool extends ItemBase {
     super(properties);
   }
 
-  private static BlockPos getTopSolidOrLiquidBlock(IWorldReader worldIn, EntityType<?> p_208498_1_, int x, int z) {
-    int i = worldIn.getHeight(EntitySpawnPlacementRegistry.func_209342_b(p_208498_1_), x, z);
-    BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(x, i, z);
+  @SuppressWarnings("deprecation")
+  private static BlockPos getTopSolidOrLiquidBlock(IWorldReader worldIn, EntityType<?> etype, int x, int z) {
+    int i = worldIn.getHeight(EntitySpawnPlacementRegistry.func_209342_b(etype), x, z);
+    BlockPos.Mutable mutable = new BlockPos.Mutable(x, i, z);
     if (worldIn.getDimensionType().getHasCeiling()) {
       do {
-        blockpos$mutable.move(Direction.DOWN);
+        mutable.move(Direction.DOWN);
       }
-      while (!worldIn.getBlockState(blockpos$mutable).isAir());
+      while (!worldIn.getBlockState(mutable).isAir());
       do {
-        blockpos$mutable.move(Direction.DOWN);
+        mutable.move(Direction.DOWN);
       }
-      while (worldIn.getBlockState(blockpos$mutable).isAir() && blockpos$mutable.getY() > 0);
+      while (worldIn.getBlockState(mutable).isAir() && mutable.getY() > 0);
     }
-    if (EntitySpawnPlacementRegistry.getPlacementType(p_208498_1_) == EntitySpawnPlacementRegistry.PlacementType.ON_GROUND) {
-      BlockPos blockpos = blockpos$mutable.down();
+    if (EntitySpawnPlacementRegistry.getPlacementType(etype) == EntitySpawnPlacementRegistry.PlacementType.ON_GROUND) {
+      BlockPos blockpos = mutable.down();
       if (worldIn.getBlockState(blockpos).allowsMovement(worldIn, blockpos, PathType.LAND)) {
         return blockpos;
       }
     }
-    return blockpos$mutable.toImmutable();
+    return mutable.toImmutable();
   }
 
   @Override
@@ -59,15 +60,15 @@ public class SpawnInspectorTool extends ItemBase {
       //      UtilChat.addChatMessage(context.getPlayer(), new StringTextComponent(classif.getName()).mergeStyle(TextFormatting.DARK_PURPLE));
       List<MobSpawnInfo.Spawners> list = context.getWorld().getBiome(pos).getMobSpawnInfo().getSpawners(classif);
       //lop on abobe 
-      for (MobSpawnInfo.Spawners mobspawninfo$spawners : list) {
+      for (MobSpawnInfo.Spawners spawnerInfo : list) {
         //        int weight = mobspawninfo$spawners.itemWeight;
         StringTextComponent str = new StringTextComponent("[" + classif.getName() + "] ");
-        BlockPos top = getTopSolidOrLiquidBlock(world, mobspawninfo$spawners.type, pos.getX(), pos.getZ());
-        if (mobspawninfo$spawners.type.isSummonable() && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(mobspawninfo$spawners.type), world, top, mobspawninfo$spawners.type)) {
-          str.append(new StringTextComponent(mobspawninfo$spawners.type.getName().getString()).mergeStyle(TextFormatting.BLUE));
+        BlockPos top = getTopSolidOrLiquidBlock(world, spawnerInfo.type, pos.getX(), pos.getZ());
+        if (spawnerInfo.type.isSummonable() && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(spawnerInfo.type), world, top, spawnerInfo.type)) {
+          str.append(new StringTextComponent(spawnerInfo.type.getName().getString()).mergeStyle(TextFormatting.BLUE));
         }
         else {
-          str.append(new StringTextComponent(mobspawninfo$spawners.type.getName().getString()).mergeStyle(TextFormatting.RED));
+          str.append(new StringTextComponent(spawnerInfo.type.getName().getString()).mergeStyle(TextFormatting.RED));
         }
         UtilChat.addServerChatMessage(context.getPlayer(), str);
       }

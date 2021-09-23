@@ -52,7 +52,7 @@ public class BlockItemCollector extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.collectortile, RenderItemCollect::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.collector_item, RenderItemCollect::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.collector, ScreenItemCollector::new);
   }
 }

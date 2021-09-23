@@ -202,7 +202,7 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
   public static TileEntityType<TileCableFluid> fluid_pipeTile;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static TileEntityType<TileItemCollector> collectortile;
+  public static TileEntityType<TileItemCollector> collector_item;
   @ObjectHolder(ModCyclic.MODID + ":trash")
   public static TileEntityType<TileTrash> trashtile;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
