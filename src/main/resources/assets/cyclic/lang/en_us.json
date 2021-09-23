@@ -1395,7 +1395,27 @@
     "item.minecraft.potion.effect.cyclic_stun.guide": "The Potion of Paralyze completely immobilizes its target.",
 
 
+    "item.minecraft.potion.effect.cyclic_blind": "Potion of Blindness",
+    "item.minecraft.splash_potion.effect.cyclic_blind": "Splash Potion of Blindness",
+    "item.minecraft.lingering_potion.effect.cyclic_blind": "Lingering Potion of Blindness",
+    "item.minecraft.tipped_arrow.effect.cyclic_blind": "Arrow of Blindness",
 
+    "potion.effect.blind": "Potion of Blindness",
+    "splash_potion.effect.blind": "Splash Potion of Blindness",
+    "lingering_potion.effect.blind": "Lingering Potion of Blindness",
+    "tipped_arrow.effect.blind": "Arrow of Blindness",
+    
+    
+    "item.minecraft.potion.effect.cyclic_hunger": "Potion of Hunger",
+    "item.minecraft.splash_potion.effect.cyclic_hunger": "Splash Potion of Hunger",
+    "item.minecraft.lingering_potion.effect.cyclic_hunger": "Lingering Potion of Hunger",
+    "item.minecraft.tipped_arrow.effect.cyclic_hunger": "Arrow of Hunger",
+
+    "potion.effect.hunger": "Potion of Hunger",
+    "splash_potion.effect.hunger": "Splash Potion of Hunger",
+    "lingering_potion.effect.hunger": "Lingering Potion of Hunger",
+    "tipped_arrow.effect.hunger": "Arrow of Hunger",
+    
     "potion.effect.haste": "Potion of Haste",
     "splash_potion.effect.haste": "Splash Potion of Haste",
     "lingering_potion.effect.haste": "Lingering Potion of Haste",
@@ -1406,6 +1426,38 @@
     "tipped_arrow.effect.haste2": "Arrow of Haste",
 
 
+    
+    "item.minecraft.potion.effect.cyclic_resistance": "Potion of Resistance",
+    "item.minecraft.splash_potion.effect.cyclic_resistance": "Splash Potion of Resistance",
+    "item.minecraft.lingering_potion.effect.cyclic_resistance": "Lingering Potion of Resistance",
+    "item.minecraft.tipped_arrow.effect.cyclic_resistance": "Arrow of Resistance",
+
+    "potion.effect.resistance": "Potion of Resistance",
+    "splash_potion.effect.resistance": "Splash Potion of Resistance",
+    "lingering_potion.effect.resistance": "Lingering Potion of Resistance",
+    "tipped_arrow.effect.resistance": "Arrow of Resistance",
+    
+    "item.minecraft.potion.effect.cyclic_wither": "Potion of Wither",
+    "item.minecraft.splash_potion.effect.cyclic_wither": "Splash Potion of Wither",
+    "item.minecraft.lingering_potion.effect.cyclic_wither": "Lingering Potion of Wither",
+    "item.minecraft.tipped_arrow.effect.cyclic_wither": "Arrow of Wither",
+
+    "potion.effect.wither": "Potion of Wither",
+    "splash_potion.effect.wither": "Splash Potion of Wither",
+    "lingering_potion.effect.wither": "Lingering Potion of Wither",
+    "tipped_arrow.effect.wither": "Arrow of Wither",
+    
+    "item.minecraft.potion.effect.cyclic_levitation": "Potion of Levitation",
+    "item.minecraft.splash_potion.effect.cyclic_levitation": "Splash Potion of Levitation",
+    "item.minecraft.lingering_potion.effect.cyclic_levitation": "Lingering Potion of Levitation",
+    "item.minecraft.tipped_arrow.effect.cyclic_levitation": "Arrow of Levitation",
+
+    "potion.effect.levitation": "Potion of Levitation",
+    "splash_potion.effect.levitation": "Splash Potion of Levitation",
+    "lingering_potion.effect.levitation": "Lingering Potion of Levitation",
+    "tipped_arrow.effect.levitation": "Arrow of Levitation",
+    
+    
 
     "block.cyclic.placer_fluid": "Fluid Placer",
     "block.cyclic.placer_fluid.tooltip": "Place fluid in the world",

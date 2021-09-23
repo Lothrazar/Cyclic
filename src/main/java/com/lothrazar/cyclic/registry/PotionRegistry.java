@@ -44,12 +44,8 @@ public class PotionRegistry {
     //bouncy - slime + ender
     //frost walker ice + snow
     //magnetism - lapis + awk
-    //levitation chorus + ? slowfall
-    //resistance : strength pot + iron ingot
-    //wither : fermented spider eye + weakness pot
-    //blindness : fermented spider eye + invisibility (or nightvis change??)
-    //saturation = cake + hunger pot
-    //hunger = zombie flesh + resistance?
+    //saturation from hunger +cake
+    //    r.register(new Potion(ModCyclic.MODID + "_saturation", new EffectInstance(Effects.SATURATION, 3600)).setRegistryName(ModCyclic.MODID + ":saturation"));
   }
 
   private static TickableEffect register(IForgeRegistry<Effect> r, TickableEffect pot, String name) {
@@ -63,14 +59,17 @@ public class PotionRegistry {
   public static void onPotRegistry(RegistryEvent.Register<Potion> event) {
     IForgeRegistry<Potion> r = event.getRegistry();
     //TODO: config options for potions?
-    r.register(new Potion(ModCyclic.MODID + "_haste", new EffectInstance(Effects.HASTE, 3600)).setRegistryName(ModCyclic.MODID + ":haste"));
-    r.register(new Potion(ModCyclic.MODID + "_strong_haste", new EffectInstance(Effects.HASTE, 1800, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste"));
-    r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(PotionEffects.stun, 1800)).setRegistryName(ModCyclic.MODID + ":stun"));
-    r.register(new Potion(ModCyclic.MODID + "_swimspeed", new EffectInstance(PotionEffects.swimspeed, 3600)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
-    //    Effects.LEVITATION
-    //    Effects.WITHER
-    //    Effects.HUNGER 
-    //    Effects.BLINDNESS
+    int normal = 3600;
+    int smal = 1800;
+    r.register(new Potion(ModCyclic.MODID + "_haste", new EffectInstance(Effects.HASTE, normal)).setRegistryName(ModCyclic.MODID + ":haste"));
+    r.register(new Potion(ModCyclic.MODID + "_strong_haste", new EffectInstance(Effects.HASTE, smal, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste"));
+    r.register(new Potion(ModCyclic.MODID + "_stun", new EffectInstance(PotionEffects.stun, smal)).setRegistryName(ModCyclic.MODID + ":stun"));
+    r.register(new Potion(ModCyclic.MODID + "_swimspeed", new EffectInstance(PotionEffects.swimspeed, normal)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
+    r.register(new Potion(ModCyclic.MODID + "_blind", new EffectInstance(Effects.BLINDNESS, normal)).setRegistryName(ModCyclic.MODID + ":blind"));
+    r.register(new Potion(ModCyclic.MODID + "_levitation", new EffectInstance(Effects.LEVITATION, smal)).setRegistryName(ModCyclic.MODID + ":levitation"));
+    r.register(new Potion(ModCyclic.MODID + "_hunger", new EffectInstance(Effects.HUNGER, normal)).setRegistryName(ModCyclic.MODID + ":hunger"));
+    r.register(new Potion(ModCyclic.MODID + "_wither", new EffectInstance(Effects.WITHER, smal)).setRegistryName(ModCyclic.MODID + ":wither"));
+    r.register(new Potion(ModCyclic.MODID + "_resistance", new EffectInstance(Effects.RESISTANCE, smal)).setRegistryName(ModCyclic.MODID + ":resistance"));
     //    Effects.DOLPHINS_GRACE 
     //    Effects.GLOWING 
   }
@@ -95,26 +94,50 @@ public class PotionRegistry {
     public static Potion stun;
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
     public static Potion swimspeed;
+    @ObjectHolder(ModCyclic.MODID + ":blind")
+    public static Potion blind;
+    @ObjectHolder(ModCyclic.MODID + ":levitation")
+    public static Potion levitation;
+    @ObjectHolder(ModCyclic.MODID + ":hunger")
+    public static Potion hunger;
+    @ObjectHolder(ModCyclic.MODID + ":wither")
+    public static Potion wither;
+    @ObjectHolder(ModCyclic.MODID + ":resistance")
+    public static Potion resistance;
+    //    @ObjectHolder(ModCyclic.MODID + ":saturation")
+    //    public static Potion saturation;
   }
+  //resistance : strength pot + iron ingot
+  //wither : fermented spider eye + weakness pot 
+  //saturation = cake + hunger pot 
 
   public static void setup(FMLCommonSetupEvent event) {
     ///haste recipes
     final ItemStack awkwardPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD);
+    final ItemStack thickPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.THICK);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.haste, Items.EMERALD);
-    splashBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
+    //    splashBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
     basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste),
         PotionRegistry.PotionItem.strong_haste, Items.REDSTONE);
-    splashBrewing(PotionRegistry.PotionItem.strong_haste, Items.EMERALD);
-    lingerBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
+    //    splashBrewing(PotionRegistry.PotionItem.strong_haste, Items.EMERALD);
+    //    lingerBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
     //STUN recipes
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.stun, Items.CLAY);
-    splashBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
-    lingerBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
+    //    splashBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
+    //    lingerBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
     //swimspeed recipes
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
-    splashBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
-    lingerBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+    //    splashBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
+    //    lingerBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
     //    PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste).gr
+    basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.NIGHT_VISION), PotionRegistry.PotionItem.blind, Items.BEETROOT);
+    //    splashBrewing(PotionRegistry.PotionItem.blind, Items.BEETROOT);
+    //    lingerBrewing(PotionRegistry.PotionItem.blind, Items.BEETROOT);
+    basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.SLOW_FALLING), PotionItem.levitation, Items.FERMENTED_SPIDER_EYE);
+    basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.STRENGTH), PotionItem.resistance, Items.IRON_INGOT);
+    basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WEAKNESS), PotionItem.wither, Items.NETHER_BRICK);
+    //    basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.hunger), PotionItem.saturation, Items.CAKE);
+    basicBrewing(thickPotion.copy(), PotionRegistry.PotionItem.hunger, Items.ROTTEN_FLESH);
   }
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {
@@ -123,7 +146,7 @@ public class PotionRegistry {
         PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), pot)));
   }
 
-  private static void splashBrewing(Potion pot, Item item) {
+  static void splashBrewing(Potion pot, Item item) {
     BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(PotionUtils.addPotionToItemStack(
         new ItemStack(Items.SPLASH_POTION), Potions.AWKWARD),
         Ingredient.fromStacks(new ItemStack(item)),
@@ -131,7 +154,7 @@ public class PotionRegistry {
             new ItemStack(Items.SPLASH_POTION), pot)));
   }
 
-  private static void lingerBrewing(Potion pot, Item item) {
+  static void lingerBrewing(Potion pot, Item item) {
     BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(PotionUtils.addPotionToItemStack(
         new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD),
         Ingredient.fromStacks(new ItemStack(item)),
