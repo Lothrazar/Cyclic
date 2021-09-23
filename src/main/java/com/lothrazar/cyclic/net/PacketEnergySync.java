@@ -27,12 +27,9 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -55,10 +52,8 @@ public class PacketEnergySync extends PacketBase {
     message.done(ctx);
   }
 
-  @OnlyIn(Dist.CLIENT)
   private static void doWork(PacketEnergySync message) {
-    ClientWorld world = Minecraft.getInstance().world;
-    TileEntity te = world.getTileEntity(message.pos);
+    TileEntity te = Minecraft.getInstance().world.getTileEntity(message.pos);
     if (te instanceof TileEntityBase) {
       ((TileEntityBase) te).setEnergy(message.energy);
     }
