@@ -36,10 +36,10 @@ public class PotionRegistry {
     PotionEffects.stun = register(r, new StunEffect(EffectType.HARMFUL, 0xcccc00), "stun");
     PotionEffects.swimspeed = register(r, new SwimEffect(EffectType.BENEFICIAL, 0x663300), "swimspeed");
     //from 1.12.2 
+    //slowfall NIX in vanilla
     //ender aura - pearl + awkward - no pearl/tp dmg
     //snow - snowball + awkward(change?) = snow
     //butterfingers - gold + awkward (change to ?)
-    //slowfall NIX in vanilla
     //waterwalking-  fish + snow
     //bouncy - slime + ender
     //frost walker ice + snow
@@ -70,8 +70,6 @@ public class PotionRegistry {
     r.register(new Potion(ModCyclic.MODID + "_hunger", new EffectInstance(Effects.HUNGER, normal)).setRegistryName(ModCyclic.MODID + ":hunger"));
     r.register(new Potion(ModCyclic.MODID + "_wither", new EffectInstance(Effects.WITHER, smal)).setRegistryName(ModCyclic.MODID + ":wither"));
     r.register(new Potion(ModCyclic.MODID + "_resistance", new EffectInstance(Effects.RESISTANCE, smal)).setRegistryName(ModCyclic.MODID + ":resistance"));
-    //    Effects.DOLPHINS_GRACE 
-    //    Effects.GLOWING 
   }
 
   public static class PotionEffects {

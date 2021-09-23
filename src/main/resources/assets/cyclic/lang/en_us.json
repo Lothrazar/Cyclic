@@ -1102,6 +1102,7 @@
  
     "block.cyclic.structure": "Shape Builder",
     "block.cyclic.structure.tooltip": "Automate building simple shapes",
+    "block.cyclic.structure.guide": "This advanced building machine has a fixed set of shapes such as Pyramid, Sphere, Cylander, etc.  Using power and blocks you can build any shape with this.  Also can use Shape Data Cards for custom shapes.  ",
     "block.builder_pattern.flip": "Flip Regions (purple is source, white is target)",
     "block.builder_pattern.guide": "This advanced building machine can copy almost anything.  Select two nearby regions of the world of equal size and shape, give it materials, and it will copy the build from one area to the other.",
     "block.builder_pattern.rotation": "Rotation",
