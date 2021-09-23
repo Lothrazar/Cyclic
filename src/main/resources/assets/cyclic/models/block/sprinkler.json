@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "cyclic:blocks/machine/steel",
 		"1": "cyclic:blocks/machine/lapis",
-		"2": "cyclic:blocks/mason/iron",
+		"2": "cyclic:blocks/machine/iron",
 		"particle": "cyclic:blocks/machine/steel"
 	},
 	"elements": [

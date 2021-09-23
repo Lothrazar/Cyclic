@@ -2,6 +2,6 @@
  	"parent": "cyclic:parent/machine_classic",
     "textures": { 
         "base": "cyclic:blocks/machine/mossy",
-        "stem": "cyclic:blocks/mason/stone"
+        "stem": "cyclic:blocks/machine/stone"
     }
 }

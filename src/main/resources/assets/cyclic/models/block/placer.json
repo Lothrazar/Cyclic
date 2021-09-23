@@ -1,7 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
     "textures": { 
-        "base": "cyclic:blocks/mason/stone",
+        "base": "cyclic:blocks/machine/stone",
         "stem": "cyclic:blocks/machine/white"
     }
 }

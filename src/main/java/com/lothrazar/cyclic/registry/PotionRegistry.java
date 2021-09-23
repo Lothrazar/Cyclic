@@ -35,6 +35,21 @@ public class PotionRegistry {
     IForgeRegistry<Effect> r = event.getRegistry();
     PotionEffects.stun = register(r, new StunEffect(EffectType.HARMFUL, 0xcccc00), "stun");
     PotionEffects.swimspeed = register(r, new SwimEffect(EffectType.BENEFICIAL, 0x663300), "swimspeed");
+    //from 1.12.2 
+    //ender aura - pearl + awkward - no pearl/tp dmg
+    //snow - snowball + awkward(change?) = snow
+    //butterfingers - gold + awkward (change to ?)
+    //slowfall NIX in vanilla
+    //waterwalking-  fish + snow
+    //bouncy - slime + ender
+    //frost walker ice + snow
+    //magnetism - lapis + awk
+    //levitation chorus + ? slowfall
+    //resistance : strength pot + iron ingot
+    //wither : fermented spider eye + weakness pot
+    //blindness : fermented spider eye + invisibility (or nightvis change??)
+    //saturation = cake + hunger pot
+    //hunger = zombie flesh + resistance?
   }
 
   private static TickableEffect register(IForgeRegistry<Effect> r, TickableEffect pot, String name) {

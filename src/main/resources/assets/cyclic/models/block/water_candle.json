@@ -4,7 +4,7 @@
   "textures": {
     "pillar": "cyclic:blocks/machine/lapis",
     "center": "cyclic:blocks/machine/gold",
-    "base": "cyclic:blocks/mason/stone",
+    "base": "cyclic:blocks/machine/stone",
     "particle": "cyclic:blocks/machine/gold"
   },
   "elements": [

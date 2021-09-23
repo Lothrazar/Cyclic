@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "cyclic:blocks/mason/plate"
+        "all": "cyclic:blocks/machine/plate"
     }
 }
