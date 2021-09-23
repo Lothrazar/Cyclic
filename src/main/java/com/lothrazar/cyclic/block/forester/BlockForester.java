@@ -29,7 +29,7 @@ public class BlockForester extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.forester, RenderForester::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.FORESTER, RenderForester::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.forester, ScreenForester::new);
   }
 

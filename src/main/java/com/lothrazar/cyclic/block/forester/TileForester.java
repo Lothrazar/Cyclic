@@ -68,7 +68,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   private int shapeIndex = 0;
 
   public TileForester() {
-    super(TileRegistry.forester);
+    super(TileRegistry.FORESTER);
     this.needsRedstone = 1;
     this.render = 0;
   }

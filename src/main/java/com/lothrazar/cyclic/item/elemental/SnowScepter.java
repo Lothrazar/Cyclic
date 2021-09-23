@@ -12,6 +12,8 @@ import net.minecraft.world.World;
 
 public class SnowScepter extends ItemBase {
 
+  private static final int COOLDOWN = 6;
+
   public SnowScepter(Properties properties) {
     super(properties);
   }
@@ -22,10 +24,10 @@ public class SnowScepter extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemRightClick(world, player, handIn);
     }
-    shootMe(world, player, new SnowEntity(player, world));
-    shootMe(world, player, new SnowEntity(player, world), 10);
-    shootMe(world, player, new SnowEntity(player, world), -10);
-    player.getCooldownTracker().setCooldown(stack.getItem(), 6);
+    shootMe(world, player, new SnowEntity(player, world), 0, ItemBase.VELOCITY_MAX);
+    shootMe(world, player, new SnowEntity(player, world), 10, ItemBase.VELOCITY_MAX);
+    shootMe(world, player, new SnowEntity(player, world), -10, ItemBase.VELOCITY_MAX);
+    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, stack);
     UtilSound.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH);
     return super.onItemRightClick(world, player, handIn);

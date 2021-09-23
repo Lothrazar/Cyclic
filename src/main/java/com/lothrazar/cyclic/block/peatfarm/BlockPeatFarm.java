@@ -47,7 +47,7 @@ public class BlockPeatFarm extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.peat_farm, RenderPeatFarm::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.peat_farm, ScreenPeatFarm::new);
   }
 

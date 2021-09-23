@@ -173,7 +173,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   }
 
   public TilePeatFarm() {
-    super(TileRegistry.peat_farm);
+    super(TileRegistry.PEAT_FARM);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

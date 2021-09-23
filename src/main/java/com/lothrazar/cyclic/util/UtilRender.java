@@ -38,8 +38,6 @@ import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.FluidStack;
@@ -250,7 +248,6 @@ public class UtilRender {
    * Render this BLOCK right here in the world, start with alpha and scale near 1. Call from TESR perspective
    * 
    */
-  @OnlyIn(Dist.CLIENT)
   public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, MatrixStack matrix, BlockState renderBlockState, float alpha, float scale) {
     World world = Minecraft.getInstance().world;
     //render 
@@ -360,7 +357,6 @@ public class UtilRender {
    * @param coords
    * @param alpha
    */
-  @OnlyIn(Dist.CLIENT)
   public static void renderColourCubes(RenderWorldLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
     ClientPlayerEntity player = Minecraft.getInstance().player;
     if (player == null) {

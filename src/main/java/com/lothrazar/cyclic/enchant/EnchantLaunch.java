@@ -39,9 +39,6 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -103,10 +100,7 @@ public class EnchantLaunch extends EnchantBase {
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
-  @SubscribeEvent
-  public void onKeyInput(KeyInputEvent event) {
-    PlayerEntity player = Minecraft.getInstance().player;
+  public void onKeyInput(PlayerEntity player) {
     if (player == null || player.getRidingEntity() instanceof BoatEntity) {
       return;
     }

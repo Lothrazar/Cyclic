@@ -25,7 +25,7 @@ public class ItemTorchThrower extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity shooter, Hand hand) {
-    shootMe(world, shooter, new EntityTorchBolt(shooter, world));
+    shootMe(world, shooter, new EntityTorchBolt(shooter, world), 0, ItemBase.VELOCITY_MAX);
     shooter.getHeldItem(hand).damageItem(1, shooter, (p) -> {
       p.sendBreakAnimation(hand);
     });

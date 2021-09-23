@@ -15,7 +15,6 @@ import com.lothrazar.cyclic.item.EdibleFlightItem;
 import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
-import com.lothrazar.cyclic.item.EnderCookie;
 import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.LeverRemote;
@@ -23,6 +22,7 @@ import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
 import com.lothrazar.cyclic.item.SleepingMatItem;
+import com.lothrazar.cyclic.item.SpawnInspectorTool;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
 import com.lothrazar.cyclic.item.StirrupsReverseItem;
@@ -35,6 +35,7 @@ import com.lothrazar.cyclic.item.bauble.CharmFire;
 import com.lothrazar.cyclic.item.bauble.CharmInvisible;
 import com.lothrazar.cyclic.item.bauble.CharmOverpowered;
 import com.lothrazar.cyclic.item.bauble.CharmVoid;
+import com.lothrazar.cyclic.item.bauble.CharmWing;
 import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.FlippersItem;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
@@ -70,6 +71,8 @@ import com.lothrazar.cyclic.item.equipment.MattockItem;
 import com.lothrazar.cyclic.item.equipment.RotatorItem;
 import com.lothrazar.cyclic.item.equipment.ShearsMaterial;
 import com.lothrazar.cyclic.item.findspawner.ItemProjectileDungeon;
+import com.lothrazar.cyclic.item.food.EnderCookie;
+import com.lothrazar.cyclic.item.food.StepHeightCookie;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.heart.HeartToxicItem;
 import com.lothrazar.cyclic.item.magicnet.ItemMagicNet;
@@ -79,6 +82,7 @@ import com.lothrazar.cyclic.item.scythe.ScytheBrush;
 import com.lothrazar.cyclic.item.scythe.ScytheForage;
 import com.lothrazar.cyclic.item.scythe.ScytheHarvest;
 import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
+import com.lothrazar.cyclic.item.slingshot.SlingshotItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
@@ -156,12 +160,15 @@ public class ItemRegistry {
   public static final RegistryObject<Item> DOORBELL = ITEMS.register("doorbell", () -> new BlockItem(BlockRegistry.DOORBELL.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_ENERGY = ITEMS.register("wireless_energy", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_ITEM = ITEMS.register("wireless_item", () -> new BlockItem(BlockRegistry.WIRELESS_ITEM.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> SPAWNINSPECTOR = ITEMS.register("spawn_inspector", () -> new SpawnInspectorTool(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> WINGCHARM = ITEMS.register("charm_wing", () -> new CharmWing(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> BUILD_SCEPTER = ITEMS.register("build_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.NORMAL));
   public static final RegistryObject<Item> REPLACE_SCEPTER = ITEMS.register("replace_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE));
   public static final RegistryObject<Item> OFFSET_SCEPTER = ITEMS.register("offset_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE));
   public static final RegistryObject<Item> RANDOMIZE_SCEPTER = ITEMS.register("randomize_scepter", () -> new RandomizerItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SPAWNINSPECTOR = ITEMS.register("spawn_inspector", () -> new SpawnInspectorTool(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CHARM_WING = ITEMS.register("charm_wing", () -> new CharmWing(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SLINGSHOT = ITEMS.register("slingshot", () -> new SlingshotItem(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SOULSTONE = ITEMS.register("soulstone", () -> new ItemBase(new Item.Properties().maxDamage(8).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> WIRELESS_FLUID = ITEMS.register("wireless_fluid", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   //  //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
@@ -360,6 +367,9 @@ public class ItemRegistry {
     //honey is basic. fast to eat, gives lots of food but no potion effects 
     r.register(new EnderCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
         .build())).setRegistryName("apple_ender"));
+    //
+    r.register(new StepHeightCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
+        .build())).setRegistryName("apple_lofty_stature"));
     //
     r.register(new ItemBase(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h * 4).saturation(s * 4)
         .build())).setRegistryName("apple_honey"));

@@ -40,7 +40,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   private boolean isPoweredNow = false;
 
   public TileDetector() {
-    super(TileRegistry.detector_entity);
+    super(TileRegistry.DETECTOR_ENTITY);
   }
 
   @Override

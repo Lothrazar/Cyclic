@@ -22,7 +22,7 @@ public class LightningScepter extends ItemBase {
     if (player.getCooldownTracker().hasCooldown(this)) {
       return super.onItemRightClick(worldIn, player, handIn);
     }
-    shootMe(worldIn, player, new LightningEntity(player, worldIn));
+    shootMe(worldIn, player, new LightningEntity(player, worldIn), 0, ItemBase.VELOCITY_MAX);
     //    ent.shoot(player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
     //    worldIn.addEntity(ent);
     player.getCooldownTracker().setCooldown(stack.getItem(), 20);

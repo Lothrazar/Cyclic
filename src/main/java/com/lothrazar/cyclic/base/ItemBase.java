@@ -29,23 +29,19 @@ public class ItemBase extends Item {
     ItemRegistry.items.add(this);
   }
 
-  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball) {
-    shootMe(world, shooter, ball, 0F);
-  }
-
-  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball, float pitch) {
+  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball, float pitch, float velocityFactor) {
     if (world.isRemote) {
       return;
     }
     Vector3d vector3d1 = shooter.getUpVector(1.0F);
-    //      float projectileAngle = 0;//is degrees so can be -10, +10, etc
+    // pitch is degrees so can be -10, +10, etc
     Quaternion quaternion = new Quaternion(new Vector3f(vector3d1), pitch, true);
     Vector3d vector3d = shooter.getLook(1.0F);
     Vector3f vector3f = new Vector3f(vector3d);
     vector3f.transform(quaternion);
-    ball.shoot(
-        vector3f.getX(), vector3f.getY(), vector3f.getZ(),
-        VELOCITY_MAX * VELOCITY_MAX, INACCURACY_DEFAULT);
+    ball.shoot(vector3f.getX(), vector3f.getY(), vector3f.getZ(), velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    //    worldIn.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(),
+    //        SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
     world.addEntity(ball);
   }
 

@@ -63,7 +63,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileHarvester() {
-    super(TileRegistry.harvesterTile);
+    super(TileRegistry.HARVESTER);
     timer = 1;
   }
 

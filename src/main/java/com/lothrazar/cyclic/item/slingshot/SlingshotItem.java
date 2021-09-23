@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.boomerang;
+package com.lothrazar.cyclic.item.slingshot;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.entity.LivingEntity;
@@ -11,19 +11,12 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class BoomerangItem extends ItemBase {
+public class SlingshotItem extends ItemBase {
 
   private static final int TICKS_USING = 93000;
 
-  public static enum Boomer {
-    STUN, DAMAGE, CARRY;
-  }
-
-  private Boomer type;
-
-  public BoomerangItem(Boomer type, Properties properties) {
+  public SlingshotItem(Properties properties) {
     super(properties);
-    this.type = type;
   }
 
   @Override
@@ -50,31 +43,16 @@ public class BoomerangItem extends ItemBase {
     if (percentageCharged < 0.1) {
       return; //not enough force to go with any realistic path 
     }
-    //    float amountCharged = percentageCharged * MAX_CHARGE;
-    //    float velocityFactor = percentageCharged * 1.5F;
     if (entity instanceof PlayerEntity == false) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entity;
-    BoomerangEntity e;
-    switch (this.type) {
-      case CARRY:
-        e = new BoomerangEntityCarry(world, player);
-      break;
-      case DAMAGE:
-        e = new BoomerangEntityDamage(world, player);
-      break;
-      default:
-      case STUN:
-        e = new BoomerangEntityStun(world, player);
-      break;
-    }
-    shootMe(world, player, e, 0, percentageCharged * ItemBase.VELOCITY_MAX);
+    shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBase.VELOCITY_MAX);
     stack.damageItem(1, player, (p) -> {
       p.sendBreakAnimation(Hand.MAIN_HAND);
     });
-    player.setHeldItem(player.getActiveHand(), ItemStack.EMPTY);
-    e.setBoomerangThrown(stack.copy());
-    e.setOwner(player);
+    //    player.setHeldItem(player.getActiveHand(), ItemStack.EMPTY);
+    //    e.setBoomerangThrown(stack.copy());
+    //    e.setOwner(player);
   }
 }

@@ -13,8 +13,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -54,7 +52,6 @@ public class EnchantPearl extends EnchantBase {
     return this.canApply(stack);
   }
 
-  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
     World world = event.getWorld();

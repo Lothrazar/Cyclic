@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemScroll;
 import com.lothrazar.cyclic.net.PacketItemToggle;
+import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.Minecraft;
@@ -13,12 +14,21 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ClientInputEvents {
+
+  @OnlyIn(Dist.CLIENT)
+  @SubscribeEvent
+  public void onKeyInput(KeyInputEvent event) {
+    EnchantRegistry.LAUNCH.onKeyInput(Minecraft.getInstance().player);
+  }
 
   @SubscribeEvent
   public void onMouseEvent(InputEvent.MouseScrollEvent event) {

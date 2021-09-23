@@ -18,9 +18,9 @@ public class FireScepter extends ItemBase {
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
-    shootMe(worldIn, player, new FireEntity(player, worldIn));
-    shootMe(worldIn, player, new FireEntity(player, worldIn), 10);
-    shootMe(worldIn, player, new FireEntity(player, worldIn), -10);
+    shootMe(worldIn, player, new FireEntity(player, worldIn), 0, ItemBase.VELOCITY_MAX);
+    shootMe(worldIn, player, new FireEntity(player, worldIn), 10, ItemBase.VELOCITY_MAX);
+    shootMe(worldIn, player, new FireEntity(player, worldIn), -10, ItemBase.VELOCITY_MAX);
     //    ent = new FireEntity(player, worldIn);
     //    ent.shoot(player.rotationPitch, player.rotationYaw - 0.1F, 0.0F, 1.5F, 1.0F);
     //    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 1, ent.getPosZ());

@@ -67,7 +67,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileFluidCollect() {
-    super(TileRegistry.collector_fluid);
+    super(TileRegistry.COLLECTOR_FLUID);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 

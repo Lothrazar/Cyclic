@@ -33,6 +33,7 @@ public class EnchantRegistry {
   public static final EnchantBase MULTIBOW = (EnchantBase) new EnchantMultishot(Enchantment.Rarity.VERY_RARE, EnchantmentType.BOW, EquipmentSlotType.MAINHAND).setRegistryName(EnchantMultishot.ID);
   public static final EnchantBase EXCAVATE = (EnchantBase) new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantExcavation.ID);
   public static final EnchantBase EXPERIENCE_BOOST = (EnchantBase) new EnchantXp(Enchantment.Rarity.UNCOMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantXp.ID);
+  public static final EnchantLaunch LAUNCH = (EnchantLaunch) new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET).setRegistryName(EnchantLaunch.ID);
 
   @SubscribeEvent
   public static void onEnchantRegister(final RegistryEvent.Register<Enchantment> event) {
@@ -41,7 +42,7 @@ public class EnchantRegistry {
     register(r, EXPERIENCE_BOOST);
     register(r, new EnchantBeheading(Enchantment.Rarity.COMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName(EnchantBeheading.ID));
     register(r, new EnchantGrowth(Enchantment.Rarity.COMMON, EnchantmentType.DIGGER, EquipmentSlotType.MAINHAND).setRegistryName(EnchantGrowth.ID));
-    register(r, new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentType.ARMOR_FEET, EquipmentSlotType.FEET).setRegistryName(EnchantLaunch.ID));
+    register(r, LAUNCH);
     register(r, new EnchantLifeLeech(Enchantment.Rarity.UNCOMMON, EnchantmentType.WEAPON, EquipmentSlotType.MAINHAND).setRegistryName(EnchantLifeLeech.ID));
     register(r, new EnchantMagnet(Enchantment.Rarity.VERY_RARE, EnchantmentType.BREAKABLE, EquipmentSlotType.MAINHAND).setRegistryName(EnchantMagnet.ID));
     register(r, MULTIBOW);

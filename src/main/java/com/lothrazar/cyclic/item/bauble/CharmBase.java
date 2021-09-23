@@ -41,6 +41,7 @@ public abstract class CharmBase extends ItemBaseToggle {
   boolean witherProt;
   boolean voidProt;
   boolean wingCharm;
+  boolean sailboatCharm;
 
   public CharmBase(Properties properties) {
     super(properties);

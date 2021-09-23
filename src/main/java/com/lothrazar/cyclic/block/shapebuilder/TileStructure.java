@@ -85,7 +85,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private int shapeIndex = 0;
 
   public TileStructure() {
-    super(TileRegistry.structure);
+    super(TileRegistry.STRUCTURE);
   }
 
   @Override

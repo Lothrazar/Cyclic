@@ -2,20 +2,26 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistry {
 
   public ClientRegistry() {
@@ -60,5 +66,23 @@ public class ClientRegistry {
       }
       return -1;
     }, ItemRegistry.mob_container, ItemRegistry.storage_bag);
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  @SubscribeEvent
+  public static void registerModels(FMLClientSetupEvent event) {
+    // TODO: build list in EntityRegistry and loop it here since they are same SpriteRends
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.snowbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lightningbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_stun, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_carry, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_damage, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.netball, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dungeon, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.eye, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.fire_bolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.conveyor_item, render -> new ConveyorItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.stone_bolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
 }

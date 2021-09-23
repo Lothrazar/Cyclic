@@ -4,8 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class UtilParticle {
 
@@ -51,7 +49,6 @@ public class UtilParticle {
    * @param z
    * @param count
    */
-  @OnlyIn(Dist.CLIENT)
   private static void spawnParticle(World world, IParticleData sparkle, float x, float y, float z, int count) {
     for (int countparticles = 0; countparticles <= count; ++countparticles) {
       Minecraft.getInstance().particles.addParticle(sparkle,

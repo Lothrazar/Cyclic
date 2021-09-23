@@ -25,7 +25,7 @@ public class ItemProjectileDungeon extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
     ItemStack stack = player.getHeldItem(hand);
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
-    shootMe(world, player, ball);
+    shootMe(world, player, ball, 0, ItemBase.VELOCITY_MAX);
     stack.shrink(1);
     UtilSound.playSound(player, SoundRegistry.DUNGEONFINDER, 0.1F, 1.0F);
     findTargetLocation(player, ball);

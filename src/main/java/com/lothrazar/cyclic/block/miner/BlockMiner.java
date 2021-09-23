@@ -29,7 +29,7 @@ public class BlockMiner extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.miner, RenderMiner::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.MINER, RenderMiner::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.miner, ScreenMiner::new);
   }
 

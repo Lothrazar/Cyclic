@@ -31,32 +31,35 @@ public class ClientConfigCyclic {
   public static Color getColor(TileEntity tile) {
     //passing in tile in case of data overrides in future
     // but client config makes sense right now
-    if (tile.getType() == TileRegistry.collector_item) {
+    if (tile.getType() == TileRegistry.COLLECTOR_ITEM) {
       return parseColor(COLLECTOR_ITEM.get());
     }
-    else if (tile.getType() == TileRegistry.collector_fluid) {
+    else if (tile.getType() == TileRegistry.COLLECTOR_FLUID) {
       return parseColor(COLLECTOR_FLUID.get());
     }
-    else if (tile.getType() == TileRegistry.detector_item) {
-      return parseColor(DETECTOR_ITEM.get());
-    }
-    else if (tile.getType() == TileRegistry.detector_entity) {
+    else if (tile.getType() == TileRegistry.DETECTOR_ENTITY) {
       return parseColor(DETECTOR_ENTITY.get());
     }
-    else if (tile.getType() == TileRegistry.peat_farm) {
-      return parseColor(PEAT_FARM.get());
+    else if (tile.getType() == TileRegistry.DETECTOR_ITEM) {
+      return parseColor(DETECTOR_ITEM.get());
     }
-    else if (tile.getType() == TileRegistry.miner) {
+    else if (tile.getType() == TileRegistry.DROPPER) {
+      return parseColor(DROPPER.get());
+    }
+    else if (tile.getType() == TileRegistry.FORESTER) {
+      return parseColor(FORESTER.get());
+    }
+    else if (tile.getType() == TileRegistry.HARVESTER) {
+      return parseColor(HARVESTER.get());
+    }
+    else if (tile.getType() == TileRegistry.MINER) {
       return parseColor(MINER.get());
     }
-    else if (tile.getType() == TileRegistry.structure) {
+    else if (tile.getType() == TileRegistry.PEAT_FARM) {
+      return parseColor(PEAT_FARM.get());
+    }
+    else if (tile.getType() == TileRegistry.STRUCTURE) {
       return parseColor(STRUCTURE.get());
-    }
-    else if (tile.getType() == TileRegistry.dropper) {
-      return parseColor(DROPPER.get());
-    }
-    else if (tile.getType() == TileRegistry.dropper) {
-      return parseColor(DROPPER.get());
     }
     else {
       ModCyclic.LOGGER.info("Default color for tile " + tile);

@@ -178,15 +178,15 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
   public static TileEntityType<TileWirelessTransmit> wireless_transmitter;
   @ObjectHolder(ModCyclic.MODID + ":detector_item")
-  public static TileEntityType<TileDetectorItem> detector_item;
+  public static TileEntityType<TileDetectorItem> DETECTOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":detector_entity")
-  public static TileEntityType<TileDetector> detector_entity;
+  public static TileEntityType<TileDetector> DETECTOR_ENTITY;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static TileEntityType<TileSolidifier> solidifier;
   @ObjectHolder(ModCyclic.MODID + ":melter")
   public static TileEntityType<TileMelter> melter;
   @ObjectHolder(ModCyclic.MODID + ":structure")
-  public static TileEntityType<TileStructure> structure;
+  public static TileEntityType<TileStructure> STRUCTURE;
   @ObjectHolder(ModCyclic.MODID + ":anvil")
   public static TileEntityType<TileAnvilAuto> anvil;
   @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
@@ -202,15 +202,15 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
   public static TileEntityType<TileCableFluid> fluid_pipeTile;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static TileEntityType<TileItemCollector> collector_item;
+  public static TileEntityType<TileItemCollector> COLLECTOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":trash")
   public static TileEntityType<TileTrash> trashtile;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
   public static TileEntityType<TilePeatGenerator> peat_generator;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")
-  public static TileEntityType<TilePeatFarm> peat_farm;
+  public static TileEntityType<TilePeatFarm> PEAT_FARM;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
-  public static TileEntityType<TileHarvester> harvesterTile;
+  public static TileEntityType<TileHarvester> HARVESTER;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
   public static TileEntityType<TileBreaker> breakerTile;
   @ObjectHolder(ModCyclic.MODID + ":fan")
@@ -226,7 +226,7 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":disenchanter")
   public static TileEntityType<TileDisenchant> disenchanter;
   @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
-  public static TileEntityType<TileFluidCollect> collector_fluid;
+  public static TileEntityType<TileFluidCollect> COLLECTOR_FLUID;
   @ObjectHolder(ModCyclic.MODID + ":clock")
   public static TileEntityType<TileRedstoneClock> clock;
   @ObjectHolder(ModCyclic.MODID + ":crate")
@@ -244,11 +244,11 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":dice")
   public static TileEntityType<TileDice> dice;
   @ObjectHolder(ModCyclic.MODID + ":dropper")
-  public static TileEntityType<TileDropper> dropper;
+  public static TileEntityType<TileDropper> DROPPER;
   @ObjectHolder(ModCyclic.MODID + ":forester")
-  public static TileEntityType<TileForester> forester;
+  public static TileEntityType<TileForester> FORESTER;
   @ObjectHolder(ModCyclic.MODID + ":miner")
-  public static TileEntityType<TileMiner> miner;
+  public static TileEntityType<TileMiner> MINER;
   @ObjectHolder(ModCyclic.MODID + ":screen")
   public static TileEntityType<TileScreentext> screen;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")

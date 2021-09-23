@@ -19,7 +19,7 @@ public class EnderPearlMount extends ItemBase {
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
     ItemStack stack = playerIn.getHeldItem(handIn);
     EnderPearlEntity ent = new EnderPearlEntity(worldIn, playerIn);
-    shootMe(worldIn, playerIn, ent);
+    shootMe(worldIn, playerIn, ent, 0, ItemBase.VELOCITY_MAX);
     playerIn.startRiding(ent, true);
     playerIn.getCooldownTracker().setCooldown(stack.getItem(), 10);
     UtilItemStack.damageItem(playerIn, stack);

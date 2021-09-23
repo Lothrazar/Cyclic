@@ -29,7 +29,7 @@ public class BlockHarvester extends BlockBase {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.harvesterTile, RenderHarvester::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.HARVESTER, RenderHarvester::new);
     ScreenManager.registerFactory(ContainerScreenRegistry.harvester, ScreenHarvester::new);
   }
 

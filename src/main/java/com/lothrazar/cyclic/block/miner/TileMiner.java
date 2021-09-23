@@ -89,7 +89,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private boolean directionIsUp = false;
 
   public TileMiner() {
-    super(TileRegistry.miner);
+    super(TileRegistry.MINER);
   }
 
   @Override

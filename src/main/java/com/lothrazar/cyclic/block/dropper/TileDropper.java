@@ -48,7 +48,7 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   private int hOffset = 0;
 
   public TileDropper() {
-    super(TileRegistry.dropper);
+    super(TileRegistry.DROPPER);
   }
 
   @Override
