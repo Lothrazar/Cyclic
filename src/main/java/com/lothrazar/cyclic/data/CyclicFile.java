@@ -19,7 +19,8 @@ public class CyclicFile {
   public List<String> todoTasks = new ArrayList<>();
   public int flyTicks = 0;
   public int spectatorTicks = 0;
-  public ItemStackHandler inventory = new ItemStackHandler(4 * 9);
+  // first 27 slots are for inventory cake storage. remaining unused
+  public ItemStackHandler inventory = new ItemStackHandler(5 * 9);
   public boolean stepHeightForceOff;
 
   @Override
@@ -31,7 +32,7 @@ public class CyclicFile {
     this.playerId = playerId;
   }
 
-  public void read(CompoundNBT tag) { 
+  public void read(CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     flyTicks = tag.getInt("flyTicks");
     spectatorTicks = tag.getInt("spectatorTicks");
