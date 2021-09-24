@@ -157,7 +157,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
       if (this.poweredSides.get(exportToSide)) {
-        this.moveFluids(exportToSide, TRANSFER_FLUID_PER_TICK / 4, tank);
+        this.moveFluids(exportToSide, pos.offset(exportToSide), TRANSFER_FLUID_PER_TICK / 4, tank);
       }
     }
   }

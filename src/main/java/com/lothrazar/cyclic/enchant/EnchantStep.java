@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.util.UtilStepHeight;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -97,20 +98,15 @@ public class EnchantStep extends EnchantBase {
 
   private void turnOn(PlayerEntity player, ItemStack armor) {
     player.getPersistentData().putBoolean(NBT_ON, true);
-    if (player.isCrouching()) {
-      //make sure that, when sneaking, dont fall off!!
-      player.stepHeight = 0.9F;
-    }
-    else {
-      player.stepHeight = 1.0F + (1F / 16F); //PATH BLOCKS etc are 1/16th downif MY feature turns this on, then do it
-    }
+    UtilStepHeight.enableStepHeight(player);
     //    ModCyclic.log("ON " + player.getPersistentData().getBoolean(NBT_ON));
   }
 
   private void turnOff(PlayerEntity player, ItemStack armor) {
+    //skip if lofty stature has override
     //was it on before, do we need to do an off hit
     if (player.getPersistentData().contains(NBT_ON) && player.getPersistentData().getBoolean(NBT_ON)) {
-      player.stepHeight = 0.6F; // LivingEntity.class constructor defaults to this
+      UtilStepHeight.disableStepHeight(player);
       player.getPersistentData().putBoolean(NBT_ON, false);
     }
   }

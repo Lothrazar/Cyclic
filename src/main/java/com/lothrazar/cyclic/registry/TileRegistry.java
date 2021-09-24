@@ -64,6 +64,7 @@ import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.block.wireless.energy.TileWirelessEnergy;
+import com.lothrazar.cyclic.block.wireless.fluid.TileWirelessFluid;
 import com.lothrazar.cyclic.block.wireless.item.TileWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessTransmit;
@@ -95,6 +96,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileItemShelf>> ENDER_ITEM_SHELF = TILES.register("ender_item_shelf", () -> TileEntityType.Builder.create(() -> new TileItemShelf(), BlockRegistry.ENDER_ITEM_SHELF.get()).build(null));
   public static final RegistryObject<TileEntityType<TileWirelessEnergy>> WIRELESS_ENERGY = TILES.register("wireless_energy", () -> TileEntityType.Builder.create(() -> new TileWirelessEnergy(), BlockRegistry.WIRELESS_ENERGY.get()).build(null));
   public static final RegistryObject<TileEntityType<TileWirelessItem>> WIRELESS_ITEM = TILES.register("wireless_item", () -> TileEntityType.Builder.create(() -> new TileWirelessItem(), BlockRegistry.WIRELESS_ITEM.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileWirelessFluid>> WIRELESS_FLUID = TILES.register("wireless_fluid", () -> TileEntityType.Builder.create(() -> new TileWirelessFluid(), BlockRegistry.WIRELESS_FLUID.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

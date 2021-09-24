@@ -126,7 +126,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         if (connection.isExtraction() || connection.isBlocked()) {
           continue;
         }
-        this.moveFluids(outgoingSide, FLOW_RATE, sideHandler);
+        this.moveFluids(outgoingSide, pos.offset(outgoingSide), FLOW_RATE, sideHandler);
       }
     }
   }

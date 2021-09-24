@@ -231,12 +231,12 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return this.needsRedstone == 1;
   }
 
-  public void moveFluids(Direction myFacingDir, int toFlow, IFluidHandler tank) {
-    Direction themFacingMe = myFacingDir.getOpposite();
+  public void moveFluids(Direction myFacingDir, BlockPos posTarget, int toFlow, IFluidHandler tank) {
+    // posTarget = pos.offset(myFacingDir);
     if (tank == null || tank.getFluidInTank(0).getAmount() <= 0) {
       return;
     }
-    BlockPos posTarget = pos.offset(myFacingDir);
+    Direction themFacingMe = myFacingDir.getOpposite();
     UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
   }
 

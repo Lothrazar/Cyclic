@@ -52,7 +52,7 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
     //then pull from hopper facey side
     Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
     if (exportToSide != null && exportToSide != Direction.UP) {
-      moveFluids(exportToSide, FLOW, tank);
+      moveFluids(exportToSide, pos.offset(exportToSide), FLOW, tank);
     }
   }
 

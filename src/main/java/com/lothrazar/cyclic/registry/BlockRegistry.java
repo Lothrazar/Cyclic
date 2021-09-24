@@ -85,6 +85,7 @@ import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
 import com.lothrazar.cyclic.block.user.BlockUser;
 import com.lothrazar.cyclic.block.wireless.energy.BlockWirelessEnergy;
+import com.lothrazar.cyclic.block.wireless.fluid.BlockWirelessFluid;
 import com.lothrazar.cyclic.block.wireless.item.BlockWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
@@ -124,6 +125,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> DOORBELL = BLOCKS.register("doorbell", () -> new DoorbellButton(Block.Properties.create(Material.WOOD)));
   public static final RegistryObject<Block> WIRELESS_ENERGY = BLOCKS.register("wireless_energy", () -> new BlockWirelessEnergy(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> WIRELESS_ITEM = BLOCKS.register("wireless_item", () -> new BlockWirelessItem(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> WIRELESS_FLUID = BLOCKS.register("wireless_fluid", () -> new BlockWirelessFluid(Block.Properties.create(Material.IRON)));
   //
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
   public static Block terra_preta;

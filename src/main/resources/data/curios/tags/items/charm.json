@@ -9,6 +9,7 @@
      {"id": "cyclic:charm_water","required":false}, 
      {"id": "cyclic:charm_starvation","required":false}, 
      {"id": "cyclic:charm_wing","required":false}, 
+     {"id": "cyclic:soulstone","required":false}, 
      {"id": "cyclic:charm_stealthpotion","required":false}
   ]
 }

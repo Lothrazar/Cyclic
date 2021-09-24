@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.data;
+package com.lothrazar.cyclic.datagen;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.conveyor.BlockConveyor;

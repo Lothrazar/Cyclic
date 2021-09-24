@@ -833,9 +833,9 @@
     "item.cyclic.sleeping_mat.tooltip.on": "Sets Spawnpoint",
     "item.cyclic.sleeping_mat.tooltip.off": "Spawnpoint Off",
 
-    "item.cyclic.soulstone.guide": "A single use item that saves you from death, similar to totem of undying without the effects.  Does not have to be held or in your hotbar, just your inventory.  When it triggers, you come back with 3 hearts, a few positive potion effects, and 10 minutes of Bad Luck and Weakness II.",
+    "item.cyclic.soulstone.guide": "Triggers the Totem of Undying revival ritual.  Does not have to be held or in your hotbar, just your inventory.  Breaks when durability runs out",
     "item.cyclic.soulstone": "Soulstone",
-    "item.cyclic.soulstone.tooltip": "Saves you from death while carrying.  Single use only.",
+    "item.cyclic.soulstone.tooltip": "Concentrated essense from Totem of Undying",
     "item.cyclic.soulstone.used": "has revived using a Soulstone",
     "item.cyclic.sprout_seed.guide": "Grow a magical plant that gives a random junk or treasure when harvested.",
     "item.cyclic.sprout_seed": "Magic Bean",

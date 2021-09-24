@@ -8,11 +8,13 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
+import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
+import com.lothrazar.cyclic.item.food.LoftyStatureApple;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -53,6 +55,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -265,6 +268,19 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
+  public void onPlayerDeath(LivingDeathEvent event) {
+    //
+    if (event.getEntityLiving() instanceof PlayerEntity) {
+      PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+      //      Items.TOTEM_OF_UNDYING
+      ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.SOULSTONE.get());
+      if (SoulstoneCharm.checkTotemDeathProtection(event.getSource(), player, charmStack)) {
+        event.setCanceled(true);
+      }
+    }
+  }
+
+  @SubscribeEvent
   public void onPlayerCloneDeath(PlayerEvent.Clone event) {
     ModifiableAttributeInstance original = event.getOriginal().getAttribute(Attributes.MAX_HEALTH);
     if (original != null) {
@@ -285,6 +301,8 @@ public class ItemEvents {
       CharmBase.charmLuck(player);
       CharmBase.charmAttackSpeed(player);
       CharmBase.charmExpSpeed(player);
+      //step
+      LoftyStatureApple.onUpdate(player);
     }
   }
 

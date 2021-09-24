@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/wireless_fluid" },
+        "lit=true": { "model": "cyclic:block/wireless_fluid_lit" }
+    }
+}

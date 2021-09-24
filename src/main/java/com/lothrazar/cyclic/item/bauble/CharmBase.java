@@ -31,8 +31,8 @@ public abstract class CharmBase extends ItemBaseToggle {
   private static final int YLOWEST = -30;
   private static final int YDEST = 255;
   private static final int FIREPROTSECONDS = 10;
-  private static final int FALLDISTANCESECONDS = 30;
-  private static final int FALLDISTANCELIMIT = 10; // was 6 in 1.12.2
+  private static final int FALLDISTANCESECONDS = 5;
+  private static final int FALLDISTANCELIMIT = 5; // was 6 in 1.12.2
   public static final UUID ID_SPEED = UUID.fromString("12230aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID ID_LUCK = UUID.fromString("acc30aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID ID_ATTACKSPEED = UUID.fromString("b4678aa2-eff2-4a81-b92b-a1cb95f115c6");

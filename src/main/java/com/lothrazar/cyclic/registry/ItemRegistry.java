@@ -40,6 +40,7 @@ import com.lothrazar.cyclic.item.bauble.CharmWither;
 import com.lothrazar.cyclic.item.bauble.FlippersItem;
 import com.lothrazar.cyclic.item.bauble.GloveItem;
 import com.lothrazar.cyclic.item.bauble.ItemBaseToggle;
+import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
@@ -72,7 +73,7 @@ import com.lothrazar.cyclic.item.equipment.RotatorItem;
 import com.lothrazar.cyclic.item.equipment.ShearsMaterial;
 import com.lothrazar.cyclic.item.findspawner.ItemProjectileDungeon;
 import com.lothrazar.cyclic.item.food.EnderCookie;
-import com.lothrazar.cyclic.item.food.StepHeightCookie;
+import com.lothrazar.cyclic.item.food.LoftyStatureApple;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.heart.HeartToxicItem;
 import com.lothrazar.cyclic.item.magicnet.ItemMagicNet;
@@ -167,9 +168,9 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SPAWNINSPECTOR = ITEMS.register("spawn_inspector", () -> new SpawnInspectorTool(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_WING = ITEMS.register("charm_wing", () -> new CharmWing(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SLINGSHOT = ITEMS.register("slingshot", () -> new SlingshotItem(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> SOULSTONE = ITEMS.register("soulstone", () -> new ItemBase(new Item.Properties().maxDamage(8).group(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> WIRELESS_FLUID = ITEMS.register("wireless_fluid", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
-  //  //
+  public static final RegistryObject<Item> SOULSTONE = ITEMS.register("soulstone", () -> new SoulstoneCharm(new Item.Properties().maxDamage(8).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> WIRELESS_FLUID = ITEMS.register("wireless_fluid", () -> new BlockItem(BlockRegistry.WIRELESS_FLUID.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
@@ -368,7 +369,7 @@ public class ItemRegistry {
     r.register(new EnderCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
         .build())).setRegistryName("apple_ender"));
     //
-    r.register(new StepHeightCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
+    r.register(new LoftyStatureApple(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
         .build())).setRegistryName("apple_lofty_stature"));
     //
     r.register(new ItemBase(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h * 4).saturation(s * 4)
