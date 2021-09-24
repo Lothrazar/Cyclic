@@ -45,6 +45,7 @@ import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
 import com.lothrazar.cyclic.item.enderbook.ContainerEnderBook;
+import com.lothrazar.cyclic.item.food.CakeContainer;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -191,8 +192,11 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CakeContainer(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":inventory_cake")
+  public static ContainerType<CakeContainer> inventory_cake;
   @ObjectHolder(ModCyclic.MODID + ":wireless_fluid")
   public static ContainerType<ContainerWirelessFluid> wireless_fluid;
   @ObjectHolder(ModCyclic.MODID + ":wireless_item")

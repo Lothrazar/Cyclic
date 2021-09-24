@@ -31,8 +31,7 @@ public class CyclicFile {
     this.playerId = playerId;
   }
 
-  public void read(CompoundNBT tag) {
-    ModCyclic.LOGGER.info("READ file " + tag);
+  public void read(CompoundNBT tag) { 
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     flyTicks = tag.getInt("flyTicks");
     spectatorTicks = tag.getInt("spectatorTicks");
