@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.food;
+package com.lothrazar.cyclic.item.inventorycake;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -7,7 +7,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class CakeContainerProvider implements INamedContainerProvider {
+public class ContainerProviderCake implements INamedContainerProvider {
 
   @Override
   public ITextComponent getDisplayName() {
@@ -16,6 +16,6 @@ public class CakeContainerProvider implements INamedContainerProvider {
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
-    return new CakeContainer(i, playerInventory, player);
+    return new ContainerCake(i, playerInventory, player);
   }
 }

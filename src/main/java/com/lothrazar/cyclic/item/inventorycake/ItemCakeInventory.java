@@ -1,10 +1,12 @@
-package com.lothrazar.cyclic.item.food;
+package com.lothrazar.cyclic.item.inventorycake;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
+import com.lothrazar.cyclic.net.PacketKeyBind;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,23 +18,23 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class CakeInventoryItem extends ItemBase {
+public class ItemCakeInventory extends ItemBase {
 
-  public CakeInventoryItem(Properties properties) {
+  public ItemCakeInventory(Properties properties) {
     super(properties);
   }
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
     if (!worldIn.isRemote && playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayerEntity) playerIn, new CakeContainerProvider(), playerIn.getPosition());
+      NetworkHooks.openGui((ServerPlayerEntity) playerIn, new ContainerProviderCake(), playerIn.getPosition());
     }
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.inventory_cake, CakeScreen::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.inventory_cake, ScreenCake::new);
   }
 
   @Override
@@ -57,5 +59,11 @@ public class CakeInventoryItem extends ItemBase {
       ModCyclic.LOGGER.info(" storage toggle " + datFile);
     }
     return super.onItemUseFinish(stack, worldIn, entityLiving);
+  }
+
+  public static void onKeyInput(PlayerEntity player) {
+    //    CyclicFile datFile = PlayerDataEvents.getOrCreate(player); 
+    ModCyclic.LOGGER.info(" keybind  . send to server, then check datfile, then open cont ");
+    PacketRegistry.INSTANCE.sendToServer(new PacketKeyBind(""));
   }
 }

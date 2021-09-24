@@ -25,7 +25,8 @@ public class CyclicFile {
 
   @Override
   public String toString() {
-    return "CyclicFile [playerId=" + playerId + ", storageVisible=" + storageVisible + ", todoVisible=" + todoVisible + ", stepHeight=" + stepHeight + ", todoTasks=" + todoTasks + ", flyTicks=" + flyTicks + ", spectatorTicks=" + spectatorTicks + ", inventory=" + inventory + ", stepHeightForceOff=" + stepHeightForceOff + "]";
+    return "CyclicFile [playerId=" + playerId + ", storageVisible=" + storageVisible + ", todoVisible=" + todoVisible + ", stepHeight=" + stepHeight +
+        ", todoTasks=" + todoTasks + ", flyTicks=" + flyTicks + ", spectatorTicks=" + spectatorTicks + ", inventory=" + inventory + ", stepHeightForceOff=" + stepHeightForceOff + "]";
   }
 
   public CyclicFile(UUID playerId) {

@@ -15,9 +15,11 @@ import com.lothrazar.cyclic.item.EdibleFlightItem;
 import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
+import com.lothrazar.cyclic.item.EnderCookie;
 import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.LeverRemote;
+import com.lothrazar.cyclic.item.LoftyStatureApple;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
@@ -72,11 +74,9 @@ import com.lothrazar.cyclic.item.equipment.MattockItem;
 import com.lothrazar.cyclic.item.equipment.RotatorItem;
 import com.lothrazar.cyclic.item.equipment.ShearsMaterial;
 import com.lothrazar.cyclic.item.findspawner.ItemProjectileDungeon;
-import com.lothrazar.cyclic.item.food.CakeInventoryItem;
-import com.lothrazar.cyclic.item.food.EnderCookie;
-import com.lothrazar.cyclic.item.food.LoftyStatureApple;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.heart.HeartToxicItem;
+import com.lothrazar.cyclic.item.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.magicnet.ItemMagicNet;
 import com.lothrazar.cyclic.item.magicnet.ItemMobContainer;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
@@ -171,7 +171,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SLINGSHOT = ITEMS.register("slingshot", () -> new SlingshotItem(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SOULSTONE = ITEMS.register("soulstone", () -> new SoulstoneCharm(new Item.Properties().maxDamage(8).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WIRELESS_FLUID = ITEMS.register("wireless_fluid", () -> new BlockItem(BlockRegistry.WIRELESS_FLUID.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> INVENTORY_CAKE = ITEMS.register("inventory_cake", () -> new CakeInventoryItem(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> INVENTORY_CAKE = ITEMS.register("inventory_cake", () -> new ItemCakeInventory(new Item.Properties().maxStackSize(1).group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(1).saturation(10).setAlwaysEdible().build())));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.food;
+package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;

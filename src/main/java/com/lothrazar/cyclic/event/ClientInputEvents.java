@@ -2,10 +2,12 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
+import com.lothrazar.cyclic.item.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemScroll;
 import com.lothrazar.cyclic.net.PacketItemToggle;
+import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -25,6 +27,9 @@ public class ClientInputEvents {
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
     EnchantRegistry.LAUNCH.onKeyInput(Minecraft.getInstance().player);
+    if (ClientRegistryCyclic.CAKE.isPressed()) {
+      ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
+    }
   }
 
   @SubscribeEvent

@@ -26,9 +26,9 @@ import net.minecraftforge.registries.ObjectHolder;
 public class EntityRegistry {
 
   @ObjectHolder(ModCyclic.MODID + ":dungeon")
-  public static EntityType<EntityDungeonEye> dungeon;
+  public static EntityType<EntityDungeonEye> DUNGEON;
   @ObjectHolder(ModCyclic.MODID + ":magic_net")
-  public static EntityType<EntityMagicNetEmpty> netball;
+  public static EntityType<EntityMagicNetEmpty> NETBALL;
   @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
   public static EntityType<EntityTorchBolt> torchbolt;
   @ObjectHolder(ModCyclic.MODID + ":lightning_bolt")

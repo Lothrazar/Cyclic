@@ -36,7 +36,7 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
   }
 
   public EntityMagicNetEmpty(World worldIn, LivingEntity livingEntityIn) {
-    super(EntityRegistry.netball, livingEntityIn, worldIn);
+    super(EntityRegistry.NETBALL, livingEntityIn, worldIn);
   }
 
   @Override
