@@ -16,6 +16,7 @@ import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.eye.TileEye;
 import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.forester.TileForester;
+import com.lothrazar.cyclic.block.generatorfuel.TileGeneratorFuel;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
@@ -206,6 +207,8 @@ public class ConfigRegistry {
         .defineInRange("peat_fuel", 256, 1, 64000);
     PEATERICHPOWER = CFG.comment("Power gained burning one of this")
         .defineInRange("peat_fuel_enriched", 256 * 4, 1, 64000);
+    TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine")
+        .defineInRange("generator_fuel", 40, 1, 6400);
     CFG.pop(); //fuel
     CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
         .push("cost");

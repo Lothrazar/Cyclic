@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.generatorfuel;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -12,11 +13,13 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -28,26 +31,81 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileGeneratorFuel extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    TIMER, REDSTONE;
+    TIMER, REDSTONE, BURNMAX;
   }
 
-  static final int MAX = 64000;
-  public static IntValue POWERCONF;
+  static final int MAX = TileBattery.MENERGY * 10;
+  public static IntValue RF_PER_TICK;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isRepairable() && stack.getDamage() > 0;
+      return ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING) > 0; //stack.getBurnTime(IRecipeType.SMELTING) >= 0;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private int burnTimeMax = 0; //only non zero if processing
+  private int burnTime = 0; //how much of current fuel is left
 
   public TileGeneratorFuel() {
     super(TileRegistry.GENERATOR_FUEL.get());
+  }
+
+  @Override
+  public void tick() {
+    this.syncEnergy();
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
+    //
+    //are we EMPTY
+    if (this.burnTime == 0) {
+      tryConsumeFuel();
+    }
+    if (this.burnTime > 0 && this.energy.getEnergyStored() + RF_PER_TICK.get() <= this.energy.getMaxEnergyStored()) {
+      setLitProperty(true);
+      this.burnTime--;
+      //we have room in the tank, burn one tck and fill up
+      energy.receiveEnergy(RF_PER_TICK.get(), false);
+    }
+  }
+
+  private void tryConsumeFuel() {
+    this.burnTimeMax = 0;
+    //pull in new fuel
+    ItemStack stack = inputSlots.getStackInSlot(0);
+    int burnTimeTicks = ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING); // stack.getBurnTime(); 
+    FurnaceTileEntity y;
+    if (burnTimeTicks > 0) {
+      // 
+      //      int factor = 1;
+      //      int ticks = factor * burnTimeTicks;
+      //      int testTotal = RF_PER_TICK.get() * ticks;
+      //      System.out.println(stack.getItem() + " burn " + burnTimeTicks + "  gives ticks=" + ticks + " total would be " + testTotal);
+      // BURN IT
+      this.burnTimeMax = burnTimeTicks;
+      this.burnTime = this.burnTimeMax;
+      stack.shrink(1);
+      //what factor lol
+      //1 oak log is 6000 RF total (37 sec? no)
+      //1 coal 200 time is 38,000 RF total
+      //1 stick 12 time 2000 RF total
+      //for food
+      //1 bread is 867 time so total rf 69,420 
+      //1 cookie 60 time 4,800 RF total bee
+      //
+      //1 cooked beef 1920 time so total ?153,600 
+      //1 ender pearl 800 time is // 64,000
+      //TNT
+      //nether items, mob drops
+      // lava fluid
+      //exp fluid
+    }
   }
 
   @Override
@@ -86,51 +144,14 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
   }
 
   @Override
-  public void tick() {
-    this.syncEnergy();
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    setLitProperty(true);
-    //
-    ItemStack stack = inventory.getStackInSlot(0);
-    int burnTime = stack.getBurnTime(IRecipeType.SMELTING);
-    if (burnTime > 0) {
-      //what factor lol
-    }
-    //    if (stack.isEmpty() || stack.getItem().isIn(DataTags.ANVIL_IMMUNE)) {
-    //      return;
-    //    }
-    //    final int repair = POWERCONF.get();
-    //    boolean work = false;
-    //    if (repair > 0 &&
-    //        energy.getEnergyStored() >= repair &&
-    //        stack.isRepairable() &&
-    //        stack.getDamage() > 0) {
-    //      //we can repair so steal some power 
-    //      //ok drain power  
-    //      energy.extractEnergy(repair, false);
-    //      work = true;
-    //    }
-    //    //shift to other slot
-    //    if (work) {
-    //      UtilItemStack.repairItem(stack);
-    //      boolean done = stack.getDamage() == 0;
-    //      if (done && outputSlots.getStackInSlot(0).isEmpty()) {
-    //        outputSlots.insertItem(0, stack.copy(), false);
-    //        inputSlots.extractItem(0, stack.getCount(), false);
-    //      }
-    //    }
-  }
-
-  @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
-        return this.timer;
+        return this.burnTime;
+      case BURNMAX:
+        return this.burnTimeMax;
       default:
       break;
     }
@@ -144,7 +165,10 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
         this.needsRedstone = value % 2;
       break;
       case TIMER:
-        this.timer = value;
+        this.burnTime = value;
+      break;
+      case BURNMAX:
+        this.burnTimeMax = value;
       break;
     }
   }

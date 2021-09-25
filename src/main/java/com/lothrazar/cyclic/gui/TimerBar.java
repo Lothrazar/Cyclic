@@ -16,7 +16,7 @@ public class TimerBar {
   private ContainerScreen<?> parent;
   private int x = 20;
   private int y = 98;
-  private int capacity;
+  public int capacity;
   public int width = 26;
   private int height = 14;
   public int guiLeft;
@@ -55,10 +55,23 @@ public class TimerBar {
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int curr) {
     if (this.isMouseover(mouseX, mouseY)) {
+      String display = "";
       int seconds = curr / Const.TICKS_PER_SEC;
-      String tt = seconds + "";
+      if (curr > Const.TICKS_PER_SEC * 120) {
+        //if more than 120 secs which is two minutes
+        int minutes = seconds / 60;
+        int remainder = seconds % 60;
+        display = minutes + "m " + remainder + "s";
+      }
+      else if (curr > Const.TICKS_PER_SEC * 20) {
+        //if more than 20 seconds, show seconds not ticks 
+        display = seconds + "s";
+      }
+      else {
+        display = curr + "";
+      }
       List<ITextComponent> list = new ArrayList<>();
-      list.add(new TranslationTextComponent(tt));
+      list.add(new TranslationTextComponent(display));
       parent.func_243308_b(ms, list, mouseX, mouseY);
     }
   }
