@@ -13,9 +13,7 @@ import net.minecraft.world.World;
 
 public class ItemMagicNet extends ItemBase {
 
-  private static final float INACCURACY_DEFAULT = 1.0F;
-  private static final float VELOCITY_MAX = 1.5F;
-  private static final int TICKS_USING = 93000;
+  private static final int TICKS_USING = 93000; //bow has 72000
 
   public ItemMagicNet(Properties properties) {
     super(properties);
@@ -28,7 +26,7 @@ public class ItemMagicNet extends ItemBase {
 
   @Override
   public int getUseDuration(ItemStack stack) {
-    return TICKS_USING; //bow has 72000
+    return TICKS_USING;
   }
 
   @Override

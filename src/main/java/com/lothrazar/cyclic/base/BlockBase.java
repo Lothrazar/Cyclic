@@ -38,7 +38,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class BlockBase extends Block {
+public class BlockBase extends Block {
 
   public static final BooleanProperty LIT = BooleanProperty.create("lit");
   private boolean hasGui = false;

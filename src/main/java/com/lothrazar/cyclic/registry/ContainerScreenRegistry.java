@@ -22,6 +22,7 @@ import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.fan.ContainerFan;
 import com.lothrazar.cyclic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
+import com.lothrazar.cyclic.block.generatorfuel.ContainerGeneratorFuel;
 import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.laser.ContainerLaser;
@@ -184,6 +185,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerWirelessFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("wireless_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerGeneratorFuel(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("generator_fuel"));
     //
     //  Items with containers
     //
@@ -195,6 +199,8 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":generator_fuel")
+  public static ContainerType<ContainerGeneratorFuel> generator_fuel;
   @ObjectHolder(ModCyclic.MODID + ":inventory_cake")
   public static ContainerType<ContainerCake> inventory_cake;
   @ObjectHolder(ModCyclic.MODID + ":wireless_fluid")
