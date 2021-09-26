@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+    "textures": {
+        "down": "cyclic:blocks/sound_recorder_top",
+        "up": "cyclic:blocks/sound_recorder_top",
+        "north": "cyclic:blocks/sound_recorder",
+        "south": "cyclic:blocks/sound_recorder",
+        "east": "cyclic:blocks/sound_recorder",
+        "west": "cyclic:blocks/sound_recorder",
+        "particle": "cyclic:blocks/sound_recorder"
+    }
+}

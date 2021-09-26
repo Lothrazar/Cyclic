@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "cyclic:blocks/cask_bottom",
+        "down": "cyclic:blocks/machine/bottom",
+        "up": "cyclic:blocks/machine/stonecutter",
+        "north": "cyclic:blocks/machine/fuel",
+        "south": "cyclic:blocks/machine/fuel",
+        "west": "cyclic:blocks/machine/fuel",
+        "east": "cyclic:blocks/machine/fuel"
+    }
+}

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/inventory_food"
+        "layer0": "cyclic:items/inventory_cake"
     }
 }

@@ -36,8 +36,10 @@ import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.block.fanslab.TileFanSlab;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
+import com.lothrazar.cyclic.block.generatorfluid.TileGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.TileGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.TileGeneratorFuel;
+import com.lothrazar.cyclic.block.generatoritem.TileGeneratorDrops;
 import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.hopper.TileSimpleHopper;
@@ -103,6 +105,8 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<SoundRecorderTile>> SOUND_RECORDER = TILES.register("sound_recorder", () -> TileEntityType.Builder.create(() -> new SoundRecorderTile(), BlockRegistry.SOUND_RECORDER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorFuel>> GENERATOR_FUEL = TILES.register("generator_fuel", () -> TileEntityType.Builder.create(() -> new TileGeneratorFuel(), BlockRegistry.GENERATOR_FUEL.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorFood>> GENERATOR_FOOD = TILES.register("generator_food", () -> TileEntityType.Builder.create(() -> new TileGeneratorFood(), BlockRegistry.GENERATOR_FOOD.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> TileEntityType.Builder.create(() -> new TileGeneratorDrops(), BlockRegistry.GENERATOR_ITEM.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileGeneratorFluid>> GENERATOR_FLUID = TILES.register("generator_fluid", () -> TileEntityType.Builder.create(() -> new TileGeneratorFluid(), BlockRegistry.GENERATOR_FLUID.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

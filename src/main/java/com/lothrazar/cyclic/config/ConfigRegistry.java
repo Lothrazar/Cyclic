@@ -213,7 +213,7 @@ public class ConfigRegistry {
         .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
     TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
         .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
-    TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100 is 560 ticks burning.")
+    TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
         .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
     CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
         .push("cost");

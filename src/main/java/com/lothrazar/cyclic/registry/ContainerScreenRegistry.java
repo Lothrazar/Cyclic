@@ -22,8 +22,10 @@ import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.fan.ContainerFan;
 import com.lothrazar.cyclic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
+import com.lothrazar.cyclic.block.generatorfluid.ContainerGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.ContainerGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.ContainerGeneratorFuel;
+import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
 import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.laser.ContainerLaser;
@@ -192,6 +194,12 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerGeneratorFood(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("generator_food"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerGeneratorDrops(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("generator_item"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerGeneratorFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("generator_fluid"));
     //
     //  Items with containers
     //
@@ -203,6 +211,10 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":generator_fluid")
+  public static ContainerType<ContainerGeneratorFluid> generator_fluid;
+  @ObjectHolder(ModCyclic.MODID + ":generator_item")
+  public static ContainerType<ContainerGeneratorDrops> generator_item;
   @ObjectHolder(ModCyclic.MODID + ":generator_food")
   public static ContainerType<ContainerGeneratorFood> generator_food;
   @ObjectHolder(ModCyclic.MODID + ":generator_fuel")

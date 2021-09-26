@@ -1,10 +1,9 @@
-package com.lothrazar.cyclic.block.generatorfuel;
+package com.lothrazar.cyclic.block.generatorfluid;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -13,10 +12,10 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
-public class BlockGeneratorFuel extends BlockBase {
+public class BlockGeneratorFluid extends BlockBase {
 
-  public BlockGeneratorFuel(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.ANVIL));
+  public BlockGeneratorFluid(Properties properties) {
+    super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
   }
 
@@ -28,7 +27,7 @@ public class BlockGeneratorFuel extends BlockBase {
   @Override
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.generator_fuel, ScreenGeneratorFuel::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.generator_fluid, ScreenGeneratorFluid::new);
   }
 
   @Override
@@ -38,6 +37,6 @@ public class BlockGeneratorFuel extends BlockBase {
 
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TileGeneratorFuel();
+    return new TileGeneratorFluid();
   }
 }
