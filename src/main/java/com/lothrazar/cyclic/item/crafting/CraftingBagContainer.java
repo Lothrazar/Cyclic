@@ -33,7 +33,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   public CompoundNBT nbt;
 
   public CraftingBagContainer(int id, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.crafting_bag, id);
+    super(ContainerScreenRegistry.CRAFTING_BAG, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;

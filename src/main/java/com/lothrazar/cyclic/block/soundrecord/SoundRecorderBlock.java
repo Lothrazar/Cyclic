@@ -52,7 +52,7 @@ public class SoundRecorderBlock extends BlockBase {
     BlockPos nearby = blocks.stream().findFirst().orElse(null);
     if (nearby != null) {
       //tile=clientWorld
-      System.out.println(sound.getSound().getSoundLocation() + "Net packet with sound id to server on " + nearby);
+      //     n(sound.getSound().getSoundLocation() + "Net packet with sound id to server on " + nearby);
     }
     //    try {
     //      //WARNING": DO NOT USE getVolume anywhere here it just crashes

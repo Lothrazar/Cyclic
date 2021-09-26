@@ -34,6 +34,6 @@ public class BlockUncraft extends BlockBase {
   @Override
   public void registerClient() {
     //    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    ScreenManager.registerFactory(ContainerScreenRegistry.uncraft, ScreenUncraft::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.UNCRAFT, ScreenUncraft::new);
   }
 }

@@ -16,7 +16,7 @@ public class ContainerMiner extends ContainerBase {
   TileMiner tile;
 
   public ContainerMiner(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.miner, windowId);
+    super(ContainerScreenRegistry.MINER, windowId);
     tile = (TileMiner) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

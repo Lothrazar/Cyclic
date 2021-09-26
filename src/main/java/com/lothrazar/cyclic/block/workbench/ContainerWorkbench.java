@@ -43,7 +43,7 @@ public class ContainerWorkbench extends RecipeBookContainer<CraftingInventory>
   private boolean doneOpening = false;
 
   public ContainerWorkbench(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.workbench, windowId);
+    super(ContainerScreenRegistry.WORKBENCH, windowId);
     this.tile = (TileWorkbench) world.getTileEntity(pos);
     this.player = player;
     this.worldPosCallable = IWorldPosCallable.of(world, pos);

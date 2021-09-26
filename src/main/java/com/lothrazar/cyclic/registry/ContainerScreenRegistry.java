@@ -212,9 +212,9 @@ public class ContainerScreenRegistry {
   }
 
   @ObjectHolder(ModCyclic.MODID + ":generator_fluid")
-  public static ContainerType<ContainerGeneratorFluid> generator_fluid;
+  public static ContainerType<ContainerGeneratorFluid> GENERATOR_FLUID;
   @ObjectHolder(ModCyclic.MODID + ":generator_item")
-  public static ContainerType<ContainerGeneratorDrops> generator_item;
+  public static ContainerType<ContainerGeneratorDrops> GENERATOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":generator_food")
   public static ContainerType<ContainerGeneratorFood> generator_food;
   @ObjectHolder(ModCyclic.MODID + ":generator_fuel")
@@ -288,27 +288,27 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":fan")
   public static ContainerType<ContainerFan> fan;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
-  public static ContainerType<ContainerUncraft> uncraft;
+  public static ContainerType<ContainerUncraft> UNCRAFT;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
-  public static ContainerType<ContainerCrafter> crafter;
+  public static ContainerType<ContainerCrafter> CRAFTER;
   @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
-  public static ContainerType<ContainerAnvilMagma> anvil_magma;
+  public static ContainerType<ContainerAnvilMagma> ANVIL_MAGMA;
   @ObjectHolder(ModCyclic.MODID + ":beacon")
-  public static ContainerType<ContainerPotion> beacon;
+  public static ContainerType<ContainerPotion> BEACON;
   @ObjectHolder(ModCyclic.MODID + ":dropper")
-  public static ContainerType<ContainerDropper> dropper;
+  public static ContainerType<ContainerDropper> DROPPER;
   @ObjectHolder(ModCyclic.MODID + ":forester")
-  public static ContainerType<ContainerForester> forester;
+  public static ContainerType<ContainerForester> FORESTER;
   @ObjectHolder(ModCyclic.MODID + ":miner")
-  public static ContainerType<ContainerMiner> miner;
+  public static ContainerType<ContainerMiner> MINER;
   @ObjectHolder(ModCyclic.MODID + ":screen")
-  public static ContainerType<ContainerScreentext> screen;
+  public static ContainerType<ContainerScreentext> SCREEN;
   @ObjectHolder(ModCyclic.MODID + ":storage_bag")
-  public static ContainerType<ContainerStorageBag> storage_bag;
+  public static ContainerType<ContainerStorageBag> STORAGE_BAG;
   @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
-  public static ContainerType<CraftingBagContainer> crafting_bag;
+  public static ContainerType<CraftingBagContainer> CRAFTING_BAG;
   @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
-  public static ContainerType<CraftingStickContainer> crafting_stick;
+  public static ContainerType<CraftingStickContainer> CRAFTING_STICK;
   @ObjectHolder(ModCyclic.MODID + ":workbench")
-  public static ContainerType<ContainerWorkbench> workbench;
+  public static ContainerType<ContainerWorkbench> WORKBENCH;
 }

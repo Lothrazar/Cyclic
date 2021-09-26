@@ -23,12 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.recipe;
 
+import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.ITag.INamedTag;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
 
@@ -65,5 +71,39 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
   @Override
   public IRecipeSerializer<?> getSerializer() {
     return null;
+  }
+
+  public boolean matchFluid(FluidStack tileFluid) {
+    if (tileFluid == null || tileFluid.isEmpty()) {
+      return false;
+    }
+    if (tileFluid.getFluid() == this.getRecipeFluid().getFluid()) {
+      return true;
+    }
+    //if the fluids are not identical, they might have a matching tag
+    //see /data/forge/tags/fluids/
+    for (INamedTag<Fluid> fluidTag : FluidTags.getAllTags()) {
+      if (getRecipeFluid().getFluid().isIn(fluidTag) && tileFluid.getFluid().isIn(fluidTag)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static FluidStack getFluid(JsonObject json, String key) {
+    JsonObject mix = json.get(key).getAsJsonObject();
+    int count = mix.get("count").getAsInt();
+    if (count < 1) {
+      count = 1;
+    }
+    FluidStack fs = null;
+    String fluidId = JSONUtils.getString(mix, "fluid");
+    ResourceLocation resourceLocation = new ResourceLocation(fluidId);
+    Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
+    if (fluid == FluidStack.EMPTY.getFluid()) {
+      throw new IllegalArgumentException("Invalid fluid specified " + fluidId);
+    }
+    fs = new FluidStack(fluid, count);
+    return fs;
   }
 }

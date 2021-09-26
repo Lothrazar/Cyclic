@@ -30,6 +30,6 @@ public class ContainerLaser extends ContainerBase {
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.laser);
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.LASER.get());
   }
 }

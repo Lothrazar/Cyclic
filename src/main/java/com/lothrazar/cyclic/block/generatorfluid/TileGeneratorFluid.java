@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
+import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -20,6 +21,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -30,16 +34,13 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
     TIMER, REDSTONE, BURNMAX;
   }
 
+  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   static final int MAX = TileBattery.MENERGY * 10;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler inputSlots = new ItemStackHandler(1) {
-
-    @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isFood();
-    }
-  };
+  ItemStackHandler inputSlots = new ItemStackHandler(0);
+  FluidTankBase tank;
+  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -48,7 +49,12 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
 
   public TileGeneratorFluid() {
     super(TileRegistry.GENERATOR_FLUID.get());
+    tank = new FluidTankBase(this, CAPACITY, p -> true);
     this.needsRedstone = 0;
+  }
+
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
   @Override
@@ -80,7 +86,6 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
       //      float foodVal = stack.getItem().getFood().getHealing() + stack.getItem().getFood().getSaturation();
       //      int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
       //      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
-      //      System.out.println(stack.getItem() + "foodval=" + foodVal + " food to burntime is " + burnTimeTicks + " total would be " + testTotal);
       // BURN IT
       this.burnTimeMax = 11111111;
       this.burnTime = this.burnTimeMax;
@@ -117,6 +122,9 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();
     }
+    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return tankWrapper.cast();
+    }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
@@ -125,6 +133,7 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -132,6 +141,9 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    CompoundNBT fluid = new CompoundNBT();
+    tank.writeToNBT(fluid);
+    tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);

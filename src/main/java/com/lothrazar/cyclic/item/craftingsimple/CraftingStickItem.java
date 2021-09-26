@@ -27,6 +27,6 @@ public class CraftingStickItem extends ItemBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.crafting_stick, CraftingStickScreen::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.CRAFTING_STICK, CraftingStickScreen::new);
   }
 }

@@ -16,7 +16,7 @@ public class ContainerPotion extends ContainerBase {
   TilePotion tile;
 
   public ContainerPotion(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.beacon, windowId);
+    super(ContainerScreenRegistry.BEACON, windowId);
     tile = (TilePotion) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

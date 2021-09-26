@@ -18,7 +18,7 @@ public class ContainerForester extends ContainerBase {
   TileForester tile;
 
   public ContainerForester(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.forester, windowId);
+    super(ContainerScreenRegistry.FORESTER, windowId);
     tile = (TileForester) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class WorldGenEvents {
 
-  private static final BlockClusterFeatureConfig CYAN_FLOWER = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.flower_cyan.getDefaultState()),
+  private static final BlockClusterFeatureConfig CYAN_FLOWER = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.FLOWER_CYAN.get().getDefaultState()),
       new SimpleBlockPlacer())).tries(64).xSpread(20).ySpread(128).zSpread(20).build();
   public static final ConfiguredFeature<BlockClusterFeatureConfig, ?> CYAN_FLOWER_FEATURE = Feature.FLOWER.withConfiguration(CYAN_FLOWER);
 

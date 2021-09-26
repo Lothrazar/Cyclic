@@ -52,7 +52,7 @@ public class ContainerCrafter extends ContainerBase {
   public static final int PREVIEW_START_Y = 35;
 
   public ContainerCrafter(int windowId, World clientWorld, BlockPos pos, PlayerInventory inv, PlayerEntity clientPlayer) {
-    super(ContainerScreenRegistry.crafter, windowId);
+    super(ContainerScreenRegistry.CRAFTER, windowId);
     tile = (TileCrafter) clientWorld.getTileEntity(pos);
     trackEnergy(tile);
     this.endInv = TileCrafter.IO_NUM_COLS * TileCrafter.IO_NUM_ROWS;

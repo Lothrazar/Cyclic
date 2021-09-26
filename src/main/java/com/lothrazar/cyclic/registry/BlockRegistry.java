@@ -137,9 +137,10 @@ public class BlockRegistry {
   public static final RegistryObject<Block> GENERATOR_FLUID = BLOCKS.register("generator_fluid", () -> new BlockGeneratorFluid(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_ITEM = BLOCKS.register("generator_item", () -> new BlockGeneratorDrops(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> PACKAGER = BLOCKS.register("packager", () -> new BlockBase(Block.Properties.create(Material.IRON)));
-  //
-  @ObjectHolder(ModCyclic.MODID + ":terra_preta")
-  public static Block terra_preta;
+  public static final RegistryObject<Block> TERRA_PRETA = BLOCKS.register("terra_preta", () -> new BlockTerraPreta(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)));
+  public static final RegistryObject<Block> LIGHT_CAMO = BLOCKS.register("light_camo", () -> new BlockLightCamo(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> LASER = BLOCKS.register("laser", () -> new BlockLaser(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)));
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block solidifier;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -228,8 +229,6 @@ public class BlockRegistry {
   public static Block crate;
   @ObjectHolder(ModCyclic.MODID + ":cask")
   public static Block cask;
-  @ObjectHolder(ModCyclic.MODID + ":flower_cyan")
-  public static Block flower_cyan;
   @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
   public static Block placer_fluid;
   //
@@ -279,8 +278,6 @@ public class BlockRegistry {
   public static Block unbreakable_block;
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
   public static Block unbreakable_reactive;
-  @ObjectHolder(ModCyclic.MODID + ":laser")
-  public static Block laser;
   @ObjectHolder(ModCyclic.MODID + ":conveyor")
   public static Block conveyor;
   @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
@@ -297,19 +294,14 @@ public class BlockRegistry {
   public static Block ghost;
   @ObjectHolder(ModCyclic.MODID + ":ghost_phantom")
   public static Block ghost_phantom;
-  @ObjectHolder(ModCyclic.MODID + ":light_camo")
-  public static Block light_camo;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();
-    r.register(new BlockLightCamo(Block.Properties.create(Material.IRON)).setRegistryName("light_camo"));
-    r.register(new BlockLaser(Block.Properties.create(Material.IRON)).setRegistryName("laser"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_emerald"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), false).setRegistryName("apple_sprout_diamond"));
     r.register(new AppleCropBlock(Block.Properties.create(Material.PLANTS), true).setRegistryName("apple_sprout"));
     r.register(new BlockShapedata(Block.Properties.create(Material.IRON)).setRegistryName("computer_shape"));
-    r.register(new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)).setRegistryName("flower_cyan"));
     r.register(new BlockScaffolding(Block.Properties.create(Material.WOOD), true).setRegistryName("scaffold_fragile"));
     r.register(new BlockScaffoldingResponsive(Block.Properties.create(Material.WOOD), false).setRegistryName("scaffold_responsive"));
     r.register(new BlockScaffoldingReplace(Block.Properties.create(Material.WOOD)).setRegistryName("scaffold_replace"));
@@ -323,7 +315,6 @@ public class BlockRegistry {
     r.register(new PeatBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
     r.register(new PeatFuelBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
     r.register(new BlockPeatFarm(Block.Properties.create(Material.ROCK)).setRegistryName("peat_farm"));
-    r.register(new BlockTerraPreta(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("terra_preta"));
     r.register(new BlockSolidifier(Block.Properties.create(Material.ROCK)).setRegistryName("solidifier"));
     r.register(new BlockMelter(Block.Properties.create(Material.ROCK)).setRegistryName("melter"));
     r.register(new BlockBattery(Block.Properties.create(Material.ROCK)).setRegistryName("battery"));

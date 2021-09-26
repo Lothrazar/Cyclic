@@ -27,7 +27,7 @@ public class BlockMiner extends BlockBase {
   @Override
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.MINER, RenderMiner::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.miner, ScreenMiner::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.MINER, ScreenMiner::new);
   }
 
   @Override

@@ -18,7 +18,7 @@ public class ContainerStorageBag extends ContainerBase {
   public int slots;
 
   public ContainerStorageBag(int i, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.storage_bag, i);
+    super(ContainerScreenRegistry.STORAGE_BAG, i);
     if (player.getHeldItemMainhand().getItem() instanceof ItemStorageBag) {
       this.bag = player.getHeldItemMainhand();
       this.slot = player.inventory.currentItem;

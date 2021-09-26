@@ -27,7 +27,7 @@ public class BlockGeneratorFluid extends BlockBase {
   @Override
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.generator_fluid, ScreenGeneratorFluid::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.GENERATOR_FLUID, ScreenGeneratorFluid::new);
   }
 
   @Override

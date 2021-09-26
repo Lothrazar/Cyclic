@@ -26,7 +26,7 @@ public class BlockGeneratorDrops extends BlockBase {
   @Override
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.generator_item, ScreenGeneratorDrops::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.GENERATOR_ITEM, ScreenGeneratorDrops::new);
   }
 
   @Override

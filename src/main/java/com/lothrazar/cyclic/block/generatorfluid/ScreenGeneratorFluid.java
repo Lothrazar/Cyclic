@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -14,19 +16,21 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
   private TimerBar timer;
+  private FluidBar fluid;
 
   public ScreenGeneratorFluid(ContainerGeneratorFluid screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileGeneratorFluid.MAX);
     this.timer = new TimerBar(this, 70, 60, 1);
+    fluid = new FluidBar(this, 8, 8, TileSolidifier.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
     energy.visible = true; //TileGeneratorFuel.POWERCONF.get() > 0;
-    timer.guiLeft = energy.guiLeft = guiLeft;
-    timer.guiTop = energy.guiTop = guiTop;
+    fluid.guiLeft = timer.guiLeft = energy.guiLeft = guiLeft;
+    fluid.guiTop = timer.guiTop = energy.guiTop = guiTop;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
@@ -40,6 +44,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
     timer.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
+    fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
     btnRedstone.onValueUpdate(container.tile);
   }
 
@@ -58,5 +63,6 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     timer.capacity = container.tile.getField(TileGeneratorFluid.Fields.BURNMAX.ordinal());
     timer.visible = (timer.capacity > 0);
     timer.draw(ms, container.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
+    fluid.draw(ms, container.tile.getFluid());
   }
 }

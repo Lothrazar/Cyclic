@@ -82,7 +82,6 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
       float foodVal = stack.getItem().getFood().getHealing() + stack.getItem().getFood().getSaturation();
       int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
       int testTotal = RF_PER_TICK.get() * burnTimeTicks;
-      System.out.println(stack.getItem() + "foodval=" + foodVal + " food to burntime is " + burnTimeTicks + " total would be " + testTotal);
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;

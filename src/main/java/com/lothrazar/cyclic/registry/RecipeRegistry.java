@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
@@ -19,5 +20,7 @@ public class RecipeRegistry {
     event.getRegistry().register(RecipeMelter.SERIALMELTER);
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.GENERATOR_ITEM.toString(), CyclicRecipeType.GENERATOR_ITEM);
     event.getRegistry().register(RecipeGeneratorItem.SERIALGENERATOR);
+    Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.GENERATOR_FLUID.toString(), CyclicRecipeType.GENERATOR_FLUID);
+    event.getRegistry().register(RecipeGeneratorFluid.SERIALGENERATORF);
   }
 }

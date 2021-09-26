@@ -36,7 +36,7 @@ public class BlockPotion extends BlockBase {
   @Override
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.beacon, ScreenPotion::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.BEACON, ScreenPotion::new);
   }
 
   @Override

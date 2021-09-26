@@ -36,7 +36,7 @@ public class BlockAnvilMagma extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.anvil_magma, ScreenAnvilMagma::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.ANVIL_MAGMA, ScreenAnvilMagma::new);
   }
 
   @Override

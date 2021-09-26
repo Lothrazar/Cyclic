@@ -27,7 +27,7 @@ public class BlockWorkbench extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.workbench, ScreenWorkbench::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.WORKBENCH, ScreenWorkbench::new);
   }
 
   @Override

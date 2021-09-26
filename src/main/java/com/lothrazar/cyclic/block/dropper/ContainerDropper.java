@@ -18,7 +18,7 @@ public class ContainerDropper extends ContainerBase {
   TileDropper tile;
 
   public ContainerDropper(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.dropper, windowId);
+    super(ContainerScreenRegistry.DROPPER, windowId);
     tile = (TileDropper) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

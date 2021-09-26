@@ -14,7 +14,7 @@ public class ContainerScreentext extends ContainerBase {
   TileScreentext tile;
 
   public ContainerScreentext(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.screen, windowId);
+    super(ContainerScreenRegistry.SCREEN, windowId);
     tile = (TileScreentext) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

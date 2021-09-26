@@ -17,7 +17,7 @@ public class ContainerUncraft extends ContainerBase {
   protected TileUncraft tile;
 
   public ContainerUncraft(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.uncraft, windowId);
+    super(ContainerScreenRegistry.UNCRAFT, windowId);
     tile = (TileUncraft) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

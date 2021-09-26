@@ -8,18 +8,17 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerGeneratorFluid extends ContainerBase {
 
   TileGeneratorFluid tile;
 
   public ContainerGeneratorFluid(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.generator_fluid, windowId);
+    super(ContainerScreenRegistry.GENERATOR_FLUID, windowId);
     tile = (TileGeneratorFluid) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    addSlot(new SlotItemHandler(tile.inputSlots, 0, 75, 35));
+    //    addSlot(new SlotItemHandler(tile.inputSlots, 0, 75, 35));
     //    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35));
     this.endInv = tile.inputSlots.getSlots();
     layoutPlayerInventorySlots(8, 84);

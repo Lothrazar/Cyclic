@@ -6,21 +6,17 @@ import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
@@ -44,7 +40,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      return matchFluid(tile) && matchItems(tile);
+      return matchFluid(tile.getFluid()) && matchItems(tile);
     }
     catch (ClassCastException e) {
       return false; // i think we fixed this
@@ -77,23 +73,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       return false;
     }
     return matchingSlots.contains(0) && matchingSlots.contains(1) && matchingSlots.contains(2);
-  }
-
-  private boolean matchFluid(TileSolidifier tile) {
-    if (tile.getFluid() == null || tile.getFluid().isEmpty()) {
-      return false;
-    }
-    if (tile.getFluid().getFluid() == this.fluidInput.getFluid()) {
-      return true;
-    }
-    //if the fluids are not identical, they might have a matching tag
-    //see /data/forge/tags/fluids/
-    for (INamedTag<Fluid> fluidTag : FluidTags.getAllTags()) {
-      if (fluidInput.getFluid().isIn(fluidTag) && tile.getFluid().getFluid().isIn(fluidTag)) {
-        return true;
-      }
-    }
-    return false;
   }
 
   @Override
@@ -152,22 +131,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
           inputBottom = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputBottom"));
         }
         ItemStack resultStack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-        JsonObject mix = json.get("mix").getAsJsonObject();
-        int count = mix.get("count").getAsInt();
-        if (count < 1) {
-          count = 1;
-        }
-        String fluidId = JSONUtils.getString(mix, "fluid");
-        ResourceLocation resourceLocation = new ResourceLocation(fluidId);
-        Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
         if (inputTop == Ingredient.EMPTY) {
           throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
         }
-        if (fluid == FluidStack.EMPTY.getFluid()) {
-          throw new IllegalArgumentException("Invalid fluid specified " + fluidId);
-        }
+        FluidStack fs = getFluid(json, "mix");
         //valid recipe created
-        r = new RecipeSolidifier(recipeId, inputTop, inputMiddle, inputBottom, new FluidStack(fluid, count), resultStack);
+        r = new RecipeSolidifier(recipeId, inputTop, inputMiddle, inputBottom, fs, resultStack);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);

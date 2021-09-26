@@ -112,9 +112,9 @@ public class TileRegistry {
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
     IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
     r.register(TileEntityType.Builder.create(TileDiamondSpikes::new, BlockRegistry.spikes_diamond).build(null).setRegistryName("spikes_diamond"));
-    r.register(TileEntityType.Builder.create(TileLightCamo::new, BlockRegistry.light_camo).build(null).setRegistryName("light_camo"));
+    r.register(TileEntityType.Builder.create(TileLightCamo::new, BlockRegistry.LIGHT_CAMO.get()).build(null).setRegistryName("light_camo"));
     r.register(TileEntityType.Builder.create(SoundmuffTile::new, BlockRegistry.soundproofing_ghost).build(null).setRegistryName("soundproofing_ghost"));
-    r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.terra_preta).build(null).setRegistryName("terra_preta"));
+    r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.TERRA_PRETA.get()).build(null).setRegistryName("terra_preta"));
     r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.eye_redstone).build(null).setRegistryName("eye_redstone"));
     r.register(TileEntityType.Builder.create(TileEyeTp::new, BlockRegistry.eye_teleport).build(null).setRegistryName("eye_teleport"));
     //
@@ -162,7 +162,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
     r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
-    r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.laser).build(null).setRegistryName("laser"));
+    r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.LASER.get()).build(null).setRegistryName("laser"));
     r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.conveyor).build(null).setRegistryName("conveyor"));
     r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
     r.register(TileEntityType.Builder.create(TileEnderCtrl::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));

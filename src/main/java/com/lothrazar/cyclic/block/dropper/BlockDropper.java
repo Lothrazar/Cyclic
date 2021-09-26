@@ -27,7 +27,7 @@ public class BlockDropper extends BlockBase {
   @Override
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.DROPPER, RenderDropper::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.dropper, ScreenDropper::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.DROPPER, ScreenDropper::new);
   }
 
   @Override

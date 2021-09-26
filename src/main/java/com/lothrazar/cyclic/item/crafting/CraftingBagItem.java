@@ -29,7 +29,7 @@ public class CraftingBagItem extends ItemBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.crafting_bag, CraftingBagScreen::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.CRAFTING_BAG, CraftingBagScreen::new);
   }
 
   @Override

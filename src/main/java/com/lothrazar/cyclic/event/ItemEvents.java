@@ -356,13 +356,13 @@ public class ItemEvents {
     BlockPos pos = event.getPos();
     if (world.getBlockState(pos).getBlock() == Blocks.PODZOL
         && world.isAirBlock(pos.up())) {
-      world.setBlockState(pos.up(), BlockRegistry.flower_cyan.getDefaultState());
+      world.setBlockState(pos.up(), BlockRegistry.FLOWER_CYAN.get().getDefaultState());
       event.setResult(Result.ALLOW);
     }
-    else if (world.getBlockState(pos).getBlock() == BlockRegistry.flower_cyan) {
+    else if (world.getBlockState(pos).getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setResult(Result.ALLOW);
       if (world.rand.nextDouble() < 0.5) {
-        UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.flower_cyan));
+        UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_CYAN.get()));
       }
     }
   }

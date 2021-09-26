@@ -1,0 +1,26 @@
+{
+	"type": "cyclic:generator_fluid",
+	"fuel": {
+		"fluid": "minecraft:lava",
+		"count": 100
+	},
+	"energy": {
+		"ticks": 1600,
+		"rfpertick": 60
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:generator_fluid",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

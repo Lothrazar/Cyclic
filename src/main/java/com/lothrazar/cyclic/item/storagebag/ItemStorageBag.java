@@ -135,7 +135,7 @@ public class ItemStorageBag extends ItemBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.storage_bag, ScreenStorageBag::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.STORAGE_BAG, ScreenStorageBag::new);
   }
 
   @Override

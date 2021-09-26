@@ -17,7 +17,7 @@ public class ContainerAnvilMagma extends ContainerBase {
   TileAnvilMagma tile;
 
   public ContainerAnvilMagma(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.anvil_magma, windowId);
+    super(ContainerScreenRegistry.ANVIL_MAGMA, windowId);
     tile = (TileAnvilMagma) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

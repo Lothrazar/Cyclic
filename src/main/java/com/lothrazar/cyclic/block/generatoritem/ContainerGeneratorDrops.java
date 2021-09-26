@@ -15,7 +15,7 @@ public class ContainerGeneratorDrops extends ContainerBase {
   TileGeneratorDrops tile;
 
   public ContainerGeneratorDrops(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.generator_item, windowId);
+    super(ContainerScreenRegistry.GENERATOR_ITEM, windowId);
     tile = (TileGeneratorDrops) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

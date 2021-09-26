@@ -89,6 +89,6 @@ public class BlockCrafter extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.crafter, ScreenCrafter::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.CRAFTER, ScreenCrafter::new);
   }
 }

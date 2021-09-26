@@ -89,7 +89,6 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
       //      int factor = 1;
       //      int ticks = factor * burnTimeTicks;
       //      int testTotal = RF_PER_TICK.get() * ticks;
-      //      System.out.println(stack.getItem() + " burn " + burnTimeTicks + "  gives ticks=" + ticks + " total would be " + testTotal);
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;
