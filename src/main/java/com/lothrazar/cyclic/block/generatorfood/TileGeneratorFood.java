@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.generatorfuel;
+package com.lothrazar.cyclic.block.generatorfood;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -11,15 +11,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -28,7 +25,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorFuel extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileGeneratorFood extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX;
@@ -36,24 +33,24 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
 
   static final int MAX = TileBattery.MENERGY * 10;
   public static IntValue RF_PER_TICK;
+  public static IntValue TICKS_PER_FOOD;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING) > 0; //stack.getBurnTime(IRecipeType.SMELTING) >= 0;
+      return stack.isFood();
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  final int factor = 1;
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
 
-  public TileGeneratorFuel() {
-    super(TileRegistry.GENERATOR_FUEL.get());
+  public TileGeneratorFood() {
+    super(TileRegistry.GENERATOR_FOOD.get());
     this.needsRedstone = 0;
   }
 
@@ -81,19 +78,29 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
     this.burnTimeMax = 0;
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
-    final int factor = 1;
-    int burnTimeTicks = factor * ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING); // stack.getBurnTime(); 
-    FurnaceTileEntity y;
-    if (burnTimeTicks > 0) {
-      // 
-      //      int factor = 1;
-      //      int ticks = factor * burnTimeTicks;
-      //      int testTotal = RF_PER_TICK.get() * ticks;
-      //      System.out.println(stack.getItem() + " burn " + burnTimeTicks + "  gives ticks=" + ticks + " total would be " + testTotal);
+    if (stack.isFood()) {
+      float foodVal = stack.getItem().getFood().getHealing() + stack.getItem().getFood().getSaturation();
+      int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
+      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
+      System.out.println(stack.getItem() + "foodval=" + foodVal + " food to burntime is " + burnTimeTicks + " total would be " + testTotal);
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;
       stack.shrink(1);
+      //what factor lol
+      //1 oak log is 6000 RF total (37 sec? no)
+      //1 coal 200 time is 38,000 RF total
+      //1 stick 12 time 2000 RF total
+      //for food
+      //1 bread is 867 time so total rf 69,420 
+      //1 cookie 60 time 4,800 RF total bee
+      //
+      //1 cooked beef 1920 time so total ?153,600 
+      //1 ender pearl 800 time is // 64,000
+      //TNT
+      //nether items, mob drops
+      // lava fluid
+      //exp fluid
     }
   }
 
@@ -104,7 +111,7 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerGeneratorFuel(i, world, pos, playerInventory, playerEntity);
+    return new ContainerGeneratorFood(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
@@ -163,6 +170,6 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
   }
 
   public int getEnergyMax() {
-    return TileGeneratorFuel.MAX;
+    return TileGeneratorFood.MAX;
   }
 }

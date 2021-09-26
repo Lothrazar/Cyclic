@@ -22,6 +22,7 @@ import com.lothrazar.cyclic.block.expcollect.ContainerExpPylon;
 import com.lothrazar.cyclic.block.fan.ContainerFan;
 import com.lothrazar.cyclic.block.fishing.ContainerFisher;
 import com.lothrazar.cyclic.block.forester.ContainerForester;
+import com.lothrazar.cyclic.block.generatorfood.ContainerGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.ContainerGeneratorFuel;
 import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
@@ -188,6 +189,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerGeneratorFuel(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("generator_fuel"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerGeneratorFood(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("generator_food"));
     //
     //  Items with containers
     //
@@ -199,6 +203,8 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":generator_food")
+  public static ContainerType<ContainerGeneratorFood> generator_food;
   @ObjectHolder(ModCyclic.MODID + ":generator_fuel")
   public static ContainerType<ContainerGeneratorFuel> generator_fuel;
   @ObjectHolder(ModCyclic.MODID + ":inventory_cake")

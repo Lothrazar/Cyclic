@@ -50,6 +50,7 @@ import com.lothrazar.cyclic.block.fan.BlockFan;
 import com.lothrazar.cyclic.block.fanslab.BlockFanSlab;
 import com.lothrazar.cyclic.block.fishing.BlockFisher;
 import com.lothrazar.cyclic.block.forester.BlockForester;
+import com.lothrazar.cyclic.block.generatorfood.BlockGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.BlockGeneratorFuel;
 import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
@@ -130,7 +131,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> SOUND_RECORDER = BLOCKS.register("sound_recorder", () -> new BlockBase(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> SOUND_PLAYER = BLOCKS.register("sound_player", () -> new BlockBase(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_FUEL = BLOCKS.register("generator_fuel", () -> new BlockGeneratorFuel(Block.Properties.create(Material.IRON)));
-  public static final RegistryObject<Block> GENERATOR_FOOD = BLOCKS.register("generator_food", () -> new BlockBase(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> GENERATOR_FOOD = BLOCKS.register("generator_food", () -> new BlockGeneratorFood(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_FLUID = BLOCKS.register("generator_fluid", () -> new BlockBase(Block.Properties.create(Material.IRON)));
   //for item need json->energy recipes. for custom non-food items.  ender pearls, nether stars, etc
   public static final RegistryObject<Block> GENERATOR_ITEM = BLOCKS.register("generator_item", () -> new BlockBase(Block.Properties.create(Material.IRON)));
