@@ -1,10 +1,13 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -37,7 +40,7 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isFood();
+      return true; // stack.isFood();
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
@@ -45,6 +48,7 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
+  private RecipeGeneratorItem currentRecipe;
 
   public TileGeneratorDrops() {
     super(TileRegistry.GENERATOR_ITEM.get());
@@ -58,47 +62,49 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
       setLitProperty(false);
       return;
     }
-    //
     //TODO: RECIPE
     //are we EMPTY
-    if (this.burnTime == 0) {
-      tryConsumeFuel();
+    //is burntime zero?
+    if (this.burnTime <= 0) {
+      currentRecipe = null;
+      this.burnTimeMax = 0;
+      this.burnTime = 0;
     }
-    if (this.burnTime > 0 && this.energy.getEnergyStored() + 1 <= this.energy.getMaxEnergyStored()) {
-      setLitProperty(true);
-      this.burnTime--;
-      //we have room in the tank, burn one tck and fill up
-      energy.receiveEnergy(1, false);
-    }
+    //    if (currentRecipe != null && burnTime > 0) { // && energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()
+    tryConsumeFuel();
   }
 
   private void tryConsumeFuel() {
-    this.burnTimeMax = 0;
-    //pull in new fuel
-    ItemStack stack = inputSlots.getStackInSlot(0);
-    if (stack.isFood()) {
-      float foodVal = stack.getItem().getFood().getHealing() + stack.getItem().getFood().getSaturation();
-      int burnTimeTicks = (int) (1 * foodVal);
-      int testTotal = 1 * burnTimeTicks;
-      //      System.out.println(stack.getItem() + "foodval=" + foodVal + " food to burntime is " + burnTimeTicks + " total would be " + testTotal);
-      // BURN IT
-      this.burnTimeMax = burnTimeTicks;
-      this.burnTime = this.burnTimeMax;
-      stack.shrink(1);
-      //what factor lol
-      //1 oak log is 6000 RF total (37 sec? no)
-      //1 coal 200 time is 38,000 RF total
-      //1 stick 12 time 2000 RF total
-      //for food
-      //1 bread is 867 time so total rf 69,420 
-      //1 cookie 60 time 4,800 RF total bee
-      //
-      //1 cooked beef 1920 time so total ?153,600 
-      //1 ender pearl 800 time is // 64,000
-      //TNT
-      //nether items, mob drops
-      // lava fluid
-      //exp fluid
+    //    this.burnTimeMax = 0;
+    //to consume fuel we first need recipe
+    this.findMatchingRecipe();
+    if (currentRecipe == null) {
+      return;
+    }
+    setLitProperty(true); // has recipe so lit
+    int onSim = energy.receiveEnergy(currentRecipe.getRfpertick(), true);
+    if (onSim >= currentRecipe.getRfpertick()) {
+      //gen up. we burned away a tick of this fuel 
+      energy.receiveEnergy(currentRecipe.getRfpertick(), false);
+      this.burnTime--;
+    }
+  }
+
+  private void findMatchingRecipe() {
+    if (currentRecipe != null && currentRecipe.matches(this, world)) {
+      return;
+    }
+    currentRecipe = null;
+    List<RecipeGeneratorItem<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_ITEM);
+    for (RecipeGeneratorItem<?> rec : recipes) {
+      if (rec.matches(this, world)) {
+        this.currentRecipe = rec;
+        this.burnTimeMax = this.currentRecipe.getTicks();
+        this.burnTime = this.burnTimeMax;
+        this.inputSlots.extractItem(0, 1, false);
+        ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
+        return;
+      }
     }
   }
 
