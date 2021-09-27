@@ -16,7 +16,7 @@ public class ContainerTransmit extends ContainerBase {
   protected TileWirelessTransmit tile;
 
   public ContainerTransmit(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.wireless_transmitter, windowId);
+    super(ContainerScreenRegistry.WIRELESS_TRANSMITTER, windowId);
     tile = (TileWirelessTransmit) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

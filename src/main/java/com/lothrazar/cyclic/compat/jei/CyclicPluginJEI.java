@@ -60,8 +60,8 @@ public class CyclicPluginJEI implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_bag, 1), VanillaRecipeCategoryUid.CRAFTING);
     registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_stick, 1), VanillaRecipeCategoryUid.CRAFTING);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.workbench.asItem(), 1), VanillaRecipeCategoryUid.CRAFTING);
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.melter.asItem(), 1), MelterRecipeCategory.ID);
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.solidifier.asItem(), 1), SolidifierRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.MELTER.asItem(), 1), MelterRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.SOLIDIFIER.asItem(), 1), SolidifierRecipeCategory.ID);
   }
 
   @Override

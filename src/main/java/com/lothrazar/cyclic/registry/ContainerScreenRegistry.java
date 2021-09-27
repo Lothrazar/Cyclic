@@ -31,6 +31,7 @@ import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.laser.ContainerLaser;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.miner.ContainerMiner;
+import com.lothrazar.cyclic.block.packager.ContainerPackager;
 import com.lothrazar.cyclic.block.peatfarm.ContainerPeatFarm;
 import com.lothrazar.cyclic.block.placer.ContainerPlacer;
 import com.lothrazar.cyclic.block.placerfluid.ContainerPlacerFluid;
@@ -200,6 +201,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerGeneratorFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("generator_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerPackager(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("packager"));
     //
     //  Items with containers
     //
@@ -211,12 +215,8 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
-  @ObjectHolder(ModCyclic.MODID + ":generator_fluid")
-  public static ContainerType<ContainerGeneratorFluid> GENERATOR_FLUID;
-  @ObjectHolder(ModCyclic.MODID + ":generator_item")
-  public static ContainerType<ContainerGeneratorDrops> GENERATOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":generator_food")
-  public static ContainerType<ContainerGeneratorFood> generator_food;
+  public static ContainerType<ContainerGeneratorFood> GENERATOR_FOOD;
   @ObjectHolder(ModCyclic.MODID + ":generator_fuel")
   public static ContainerType<ContainerGeneratorFuel> generator_fuel;
   @ObjectHolder(ModCyclic.MODID + ":inventory_cake")
@@ -266,27 +266,27 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":harvester")
   public static ContainerType<ContainerHarvester> harvester;
   @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
-  public static ContainerType<ContainerExpPylon> experience_pylon;
+  public static ContainerType<ContainerExpPylon> EXPERIENCE_PYLON;
   @ObjectHolder(ModCyclic.MODID + ":user")
-  public static ContainerType<ContainerUser> user;
+  public static ContainerType<ContainerUser> USER;
   @ObjectHolder(ModCyclic.MODID + ":detector_entity")
-  public static ContainerType<ContainerDetector> detector_entity;
+  public static ContainerType<ContainerDetector> DETECTOR_ENTITY;
   @ObjectHolder(ModCyclic.MODID + ":detector_item")
-  public static ContainerType<ContainerDetectorItem> detector_item;
+  public static ContainerType<ContainerDetectorItem> DETECTOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":disenchanter")
-  public static ContainerType<ContainerDisenchant> disenchanter;
+  public static ContainerType<ContainerDisenchant> DISENCHANTER;
   @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
-  public static ContainerType<ContainerTransmit> wireless_transmitter;
+  public static ContainerType<ContainerTransmit> WIRELESS_TRANSMITTER;
   @ObjectHolder(ModCyclic.MODID + ":clock")
-  public static ContainerType<ContainerClock> clock;
+  public static ContainerType<ContainerClock> CLOCK;
   @ObjectHolder(ModCyclic.MODID + ":crate")
-  public static ContainerType<ContainerCrate> crate;
+  public static ContainerType<ContainerCrate> CRATE;
   @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
-  public static ContainerType<ContainerPlacerFluid> placer_fluid;
+  public static ContainerType<ContainerPlacerFluid> PLACER_FLUID;
   @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
-  public static ContainerType<ContainerFluidCollect> collector_fluid;
+  public static ContainerType<ContainerFluidCollect> COLLECTOR_FLUID;
   @ObjectHolder(ModCyclic.MODID + ":fan")
-  public static ContainerType<ContainerFan> fan;
+  public static ContainerType<ContainerFan> FAN;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static ContainerType<ContainerUncraft> UNCRAFT;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
@@ -311,4 +311,10 @@ public class ContainerScreenRegistry {
   public static ContainerType<CraftingStickContainer> CRAFTING_STICK;
   @ObjectHolder(ModCyclic.MODID + ":workbench")
   public static ContainerType<ContainerWorkbench> WORKBENCH;
+  @ObjectHolder(ModCyclic.MODID + ":packager")
+  public static ContainerType<ContainerPackager> PACKAGER;
+  @ObjectHolder(ModCyclic.MODID + ":generator_fluid")
+  public static ContainerType<ContainerGeneratorFluid> GENERATOR_FLUID;
+  @ObjectHolder(ModCyclic.MODID + ":generator_item")
+  public static ContainerType<ContainerGeneratorDrops> GENERATOR_ITEM;
 }

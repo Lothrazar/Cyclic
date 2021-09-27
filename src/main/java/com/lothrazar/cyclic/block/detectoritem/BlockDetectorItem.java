@@ -43,7 +43,7 @@ public class BlockDetectorItem extends BlockBase {
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ClientRegistry.bindTileEntityRenderer(TileRegistry.DETECTOR_ITEM, RenderDetectorItem::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.detector_item, ScreenDetectorItem::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.DETECTOR_ITEM, ScreenDetectorItem::new);
   }
 
   @Override

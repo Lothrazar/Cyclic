@@ -63,6 +63,7 @@ import com.lothrazar.cyclic.block.laser.BlockLaser;
 import com.lothrazar.cyclic.block.lightcompr.BlockLightCamo;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
+import com.lothrazar.cyclic.block.packager.BlockPackager;
 import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placerfluid.BlockPlacerFluid;
@@ -112,7 +113,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class BlockRegistry {
 
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
-  public static List<BlockBase> blocks = new ArrayList<>();
+  public static List<BlockBase> blocksClientRegistry = new ArrayList<>();
   public static final RegistryObject<Block> FLUIDHOPPER = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.create(Material.WOOD)));
   public static final RegistryObject<Block> HOPPERGOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.create(Material.IRON)));
@@ -136,15 +137,15 @@ public class BlockRegistry {
   public static final RegistryObject<Block> GENERATOR_FOOD = BLOCKS.register("generator_food", () -> new BlockGeneratorFood(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_FLUID = BLOCKS.register("generator_fluid", () -> new BlockGeneratorFluid(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_ITEM = BLOCKS.register("generator_item", () -> new BlockGeneratorDrops(Block.Properties.create(Material.IRON)));
-  public static final RegistryObject<Block> PACKAGER = BLOCKS.register("packager", () -> new BlockBase(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> PACKAGER = BLOCKS.register("packager", () -> new BlockPackager(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> TERRA_PRETA = BLOCKS.register("terra_preta", () -> new BlockTerraPreta(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)));
   public static final RegistryObject<Block> LIGHT_CAMO = BLOCKS.register("light_camo", () -> new BlockLightCamo(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> LASER = BLOCKS.register("laser", () -> new BlockLaser(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)));
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
-  public static Block solidifier;
+  public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
-  public static Block melter;
+  public static Block MELTER;
   @ObjectHolder(ModCyclic.MODID + ":structure")
   public static Block structure;
   @ObjectHolder(ModCyclic.MODID + ":anvil")

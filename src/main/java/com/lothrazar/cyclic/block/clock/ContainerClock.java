@@ -14,7 +14,7 @@ public class ContainerClock extends ContainerBase {
   protected TileRedstoneClock tile;
 
   public ContainerClock(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.clock, windowId);
+    super(ContainerScreenRegistry.CLOCK, windowId);
     tile = (TileRedstoneClock) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

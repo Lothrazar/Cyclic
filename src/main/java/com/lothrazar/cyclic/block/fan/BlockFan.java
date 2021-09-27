@@ -50,7 +50,7 @@ public class BlockFan extends BlockBase {
   @Override
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.fan, ScreenFan::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.FAN, ScreenFan::new);
   }
 
   @Override

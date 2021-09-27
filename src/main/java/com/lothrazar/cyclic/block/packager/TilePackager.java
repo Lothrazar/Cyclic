@@ -1,12 +1,10 @@
-package com.lothrazar.cyclic.block.generatorfluid;
+package com.lothrazar.cyclic.block.packager;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import net.minecraft.block.BlockState;
@@ -14,51 +12,45 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ICraftingRecipe;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TilePackager extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX;
   }
 
-  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   static final int MAX = TileBattery.MENERGY * 10;
+  public static IntValue POWERCONF;
+  public static final int TICKS = 10;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler inputSlots = new ItemStackHandler(0);
-  FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
-  ItemStackHandler outputSlots = new ItemStackHandler(0);
+  ItemStackHandler inputSlots = new ItemStackHandler(1);
+  ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
-  private RecipeGeneratorFluid<?> currentRecipe;
 
-  public TileGeneratorFluid() {
-    super(TileRegistry.GENERATOR_FLUID.get());
-    tank = new FluidTankBase(this, CAPACITY, p -> true);
+  public TilePackager() {
+    super(TileRegistry.PACKAGER.get());
     this.needsRedstone = 0;
-  }
-
-  public FluidStack getFluid() {
-    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
   @Override
@@ -68,54 +60,54 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
       setLitProperty(false);
       return;
     }
-    if (this.burnTime <= 0) {
-      currentRecipe = null;
-      this.burnTimeMax = 0;
-      this.burnTime = 0;
+    this.burnTime--;
+    if (burnTime <= 0) {
+      burnTime = TICKS;
+      tryDoPackage();
     }
-    //    if (currentRecipe != null && burnTime > 0) { // && energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()
-    tryConsumeFuel();
-    //
-    //are we EMPTY
-    //    if (this.burnTime == 0) {
-    //      tryConsumeFuel();
-    //    }
   }
 
-  private void tryConsumeFuel() {
-    //    this.burnTimeMax = 0;
+  private void tryDoPackage() {
+    if (POWERCONF.get() > 0 && energy.getEnergyStored() < POWERCONF.get()) {
+      return; //not enough pow
+    }
+    setLitProperty(true);
     //pull in new fuel
-    this.findMatchingRecipe();
-    if (currentRecipe == null) {
-      return;
-    }
-    if (this.burnTime > 0 && this.energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()) {
-      setLitProperty(true);
-      this.burnTime--;
-      //we have room in the tank, burn one tck and fill up 
-      energy.receiveEnergy(currentRecipe.getRfpertick(), false);
-    }
-  }
-
-  private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, world)) {
-      return;
-    }
-    currentRecipe = null;
-    List<RecipeGeneratorFluid<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_FLUID);
-    for (RecipeGeneratorFluid<?> rec : recipes) {
-      if (rec.matches(this, world)) {
-        this.currentRecipe = rec;
-        this.burnTimeMax = this.currentRecipe.getTicks();
-        this.burnTime = this.burnTimeMax;
-        //        this.inputSlots.extractItem(0, 1, false);
-        //no items to extract
-        tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
-        // ash?
-        ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
-        return;
+    ItemStack stack = inputSlots.getStackInSlot(0);
+    //shapeless recipes / shaped check either
+    List<ICraftingRecipe> recipes = world.getRecipeManager().getRecipesForType(IRecipeType.CRAFTING);
+    for (ICraftingRecipe rec : recipes) {
+      //test matching recipe and its size
+      int total = getCostIfMatched(stack, rec);
+      if (total > 0 &&
+          outputSlots.insertItem(0, rec.getRecipeOutput().copy(), true).isEmpty()) {
+        ModCyclic.LOGGER.error("Packager recipe match of size " + total + " producing -> " + rec.getRecipeOutput().copy());
+        //consume items, produce output
+        inputSlots.extractItem(0, total, false);
+        outputSlots.insertItem(0, rec.getRecipeOutput().copy(), false);
+        energy.extractEnergy(POWERCONF.get(), false);
       }
     }
+  }
+
+  private int getCostIfMatched(ItemStack stack, ICraftingRecipe rec) {
+    int total = 0, matched = 0;
+    for (Ingredient ingr : rec.getIngredients()) {
+      if (ingr == Ingredient.EMPTY) {
+        continue;
+      }
+      total++;
+      if (ingr.test(stack)) {
+        matched++;
+      }
+    }
+    if (total == matched &&
+        stack.getCount() >= total &&
+        (total == 4 || total == 9) &&
+        (rec.getRecipeOutput().getCount() == 1 || rec.getRecipeOutput().getCount() == total)) {
+      return total;
+    }
+    return -1;
   }
 
   @Override
@@ -125,16 +117,13 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerGeneratorFluid(i, world, pos, playerInventory, playerEntity);
+    return new ContainerPackager(i, world, pos, playerInventory, playerEntity);
   }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();
-    }
-    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return tankWrapper.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
@@ -144,7 +133,6 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -152,9 +140,6 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
-    tank.writeToNBT(fluid);
-    tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
@@ -191,6 +176,6 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
   }
 
   public int getEnergyMax() {
-    return TileGeneratorFluid.MAX;
+    return TilePackager.MAX;
   }
 }

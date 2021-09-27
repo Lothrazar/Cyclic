@@ -14,7 +14,7 @@ public class ContainerDetector extends ContainerBase {
   protected TileDetector tile;
 
   public ContainerDetector(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.detector_entity, windowId);
+    super(ContainerScreenRegistry.DETECTOR_ENTITY, windowId);
     tile = (TileDetector) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

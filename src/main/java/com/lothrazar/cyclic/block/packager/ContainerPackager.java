@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.generatorfood;
+package com.lothrazar.cyclic.block.packager;
 
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -10,25 +10,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerGeneratorFood extends ContainerBase {
+public class ContainerPackager extends ContainerBase {
 
-  TileGeneratorFood tile;
+  TilePackager tile;
 
-  public ContainerGeneratorFood(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.GENERATOR_FOOD, windowId);
-    tile = (TileGeneratorFood) world.getTileEntity(pos);
+  public ContainerPackager(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    super(ContainerScreenRegistry.PACKAGER, windowId);
+    tile = (TilePackager) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     addSlot(new SlotItemHandler(tile.inputSlots, 0, 75, 35));
-    //    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35));
-    this.endInv = tile.inputSlots.getSlots();
+    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35));
+    this.endInv = tile.inputSlots.getSlots() + tile.outputSlots.getSlots();
     layoutPlayerInventorySlots(8, 84);
-    this.trackAllIntFields(tile, TileGeneratorFood.Fields.values().length);
+    this.trackAllIntFields(tile, TilePackager.Fields.values().length);
     trackEnergy(tile);
   }
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.GENERATOR_FOOD.get());
+    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.PACKAGER.get());
   }
 }

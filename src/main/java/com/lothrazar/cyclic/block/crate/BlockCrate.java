@@ -45,7 +45,7 @@ public class BlockCrate extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.crate, ScreenCrate::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.CRATE, ScreenCrate::new);
   }
 
   @Override

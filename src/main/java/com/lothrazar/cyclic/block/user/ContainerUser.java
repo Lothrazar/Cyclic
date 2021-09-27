@@ -16,7 +16,7 @@ public class ContainerUser extends ContainerBase {
   protected TileUser tile;
 
   public ContainerUser(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.user, windowId);
+    super(ContainerScreenRegistry.USER, windowId);
     tile = (TileUser) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

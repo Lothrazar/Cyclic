@@ -34,7 +34,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   @Override
   public String getTitle() {
-    return UtilChat.lang(BlockRegistry.melter.getTranslationKey());
+    return UtilChat.lang(BlockRegistry.MELTER.getTranslationKey());
   }
 
   @Override

@@ -16,7 +16,7 @@ public class ContainerDisenchant extends ContainerBase {
   protected TileDisenchant tile;
 
   public ContainerDisenchant(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.disenchanter, windowId);
+    super(ContainerScreenRegistry.DISENCHANTER, windowId);
     tile = (TileDisenchant) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

@@ -49,6 +49,7 @@ import com.lothrazar.cyclic.block.laser.TileLaser;
 import com.lothrazar.cyclic.block.lightcompr.TileLightCamo;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
+import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
@@ -107,6 +108,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileGeneratorFood>> GENERATOR_FOOD = TILES.register("generator_food", () -> TileEntityType.Builder.create(() -> new TileGeneratorFood(), BlockRegistry.GENERATOR_FOOD.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> TileEntityType.Builder.create(() -> new TileGeneratorDrops(), BlockRegistry.GENERATOR_ITEM.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorFluid>> GENERATOR_FLUID = TILES.register("generator_fluid", () -> TileEntityType.Builder.create(() -> new TileGeneratorFluid(), BlockRegistry.GENERATOR_FLUID.get()).build(null));
+  public static final RegistryObject<TileEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> TileEntityType.Builder.create(() -> new TilePackager(), BlockRegistry.PACKAGER.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
@@ -139,8 +141,8 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileDisenchant::new, BlockRegistry.disenchanter).build(null).setRegistryName("disenchanter"));
     r.register(TileEntityType.Builder.create(TileDetectorItem::new, BlockRegistry.detector_item).build(null).setRegistryName("detector_item"));
     r.register(TileEntityType.Builder.create(TileDetector::new, BlockRegistry.detector_entity).build(null).setRegistryName("detector_entity"));
-    r.register(TileEntityType.Builder.create(TileSolidifier::new, BlockRegistry.solidifier).build(null).setRegistryName("solidifier"));
-    r.register(TileEntityType.Builder.create(TileMelter::new, BlockRegistry.melter).build(null).setRegistryName("melter"));
+    r.register(TileEntityType.Builder.create(TileSolidifier::new, BlockRegistry.SOLIDIFIER).build(null).setRegistryName("solidifier"));
+    r.register(TileEntityType.Builder.create(TileMelter::new, BlockRegistry.MELTER).build(null).setRegistryName("melter"));
     r.register(TileEntityType.Builder.create(TileTank::new, BlockRegistry.tank).build(null).setRegistryName("tank"));
     r.register(TileEntityType.Builder.create(TileBreaker::new, BlockRegistry.breaker).build(null).setRegistryName("breaker"));
     r.register(TileEntityType.Builder.create(TileItemCollector::new, BlockRegistry.collector).build(null).setRegistryName("collector"));

@@ -51,7 +51,7 @@ public class BlockRedstoneClock extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.clock, ScreenClock::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.CLOCK, ScreenClock::new);
   }
 
   @Override

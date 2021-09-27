@@ -16,7 +16,7 @@ public class ContainerFluidCollect extends ContainerBase {
   protected TileFluidCollect tile;
 
   public ContainerFluidCollect(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-    super(ContainerScreenRegistry.collector_fluid, windowId);
+    super(ContainerScreenRegistry.COLLECTOR_FLUID, windowId);
     tile = (TileFluidCollect) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

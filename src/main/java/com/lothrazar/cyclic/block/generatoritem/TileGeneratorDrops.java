@@ -48,7 +48,7 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
-  private RecipeGeneratorItem currentRecipe;
+  private RecipeGeneratorItem<?> currentRecipe;
 
   public TileGeneratorDrops() {
     super(TileRegistry.GENERATOR_ITEM.get());

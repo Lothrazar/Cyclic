@@ -24,7 +24,7 @@ public class BlockUser extends BlockBase {
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.user, ScreenUser::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.USER, ScreenUser::new);
   }
 
   @Override

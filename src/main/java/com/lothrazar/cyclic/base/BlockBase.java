@@ -46,7 +46,7 @@ public class BlockBase extends Block {
 
   public BlockBase(Properties properties) {
     super(properties);
-    BlockRegistry.blocks.add(this);
+    BlockRegistry.blocksClientRegistry.add(this);
   }
 
   protected BlockBase setHasGui() {

@@ -34,7 +34,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public String getTitle() {
-    return UtilChat.lang(BlockRegistry.solidifier.getTranslationKey());
+    return UtilChat.lang(BlockRegistry.SOLIDIFIER.getTranslationKey());
   }
 
   @Override

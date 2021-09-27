@@ -27,7 +27,7 @@ public class BlockFluidCollect extends BlockBase {
   @Override
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_FLUID, RenderFluidCollect::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.collector_fluid, ScreenFluidCollect::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.COLLECTOR_FLUID, ScreenFluidCollect::new);
   }
 
   @Override

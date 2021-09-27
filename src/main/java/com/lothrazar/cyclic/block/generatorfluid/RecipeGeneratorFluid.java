@@ -34,6 +34,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileGeneratorFluid tile = (TileGeneratorFluid) inv;
+      ModCyclic.LOGGER.info("test recipe +" + tile.getFluid());
       return this.matchFluid(tile.getFluid());
     }
     catch (ClassCastException e) {

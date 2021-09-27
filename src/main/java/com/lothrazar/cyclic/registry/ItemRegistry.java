@@ -260,9 +260,9 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_generator"));
     r.register(new BlockItem(BlockRegistry.peat_unbaked, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_unbaked"));
     r.register(new BlockItem(BlockRegistry.peat_baked, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_baked"));
-    r.register(new BlockItem(BlockRegistry.solidifier, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("solidifier"));
+    r.register(new BlockItem(BlockRegistry.SOLIDIFIER, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("solidifier"));
     r.register(new BlockItem(BlockRegistry.peat_farm, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_farm"));
-    r.register(new BlockItem(BlockRegistry.melter, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("melter"));
+    r.register(new BlockItem(BlockRegistry.MELTER, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("melter"));
     r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("placer"));
     r.register(new BlockItem(BlockRegistry.breaker, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("breaker"));
     r.register(new BlockItem(BlockRegistry.user, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("user"));

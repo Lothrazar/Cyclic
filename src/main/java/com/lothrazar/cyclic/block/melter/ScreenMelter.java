@@ -35,7 +35,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
     fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
   }
 
@@ -48,7 +48,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    energy.draw(ms, container.getEnergy());
+    energy.draw(ms, container.tile.getEnergy());
     timer.draw(ms, container.tile.getField(TileMelter.Fields.TIMER.ordinal()));
     fluid.draw(ms, container.tile.getFluid());
     this.drawSlot(ms, 16, 30);

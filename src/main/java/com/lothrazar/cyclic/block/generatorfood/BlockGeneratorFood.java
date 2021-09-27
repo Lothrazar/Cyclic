@@ -27,7 +27,7 @@ public class BlockGeneratorFood extends BlockBase {
   @Override
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.generator_food, ScreenGeneratorFood::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.GENERATOR_FOOD, ScreenGeneratorFood::new);
   }
 
   @Override

@@ -41,7 +41,7 @@ public class ClientRegistryCyclic {
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
-    for (BlockBase b : BlockRegistry.blocks) {
+    for (BlockBase b : BlockRegistry.blocksClientRegistry) {
       b.registerClient();
     }
     for (ItemBase i : ItemRegistry.items) {
