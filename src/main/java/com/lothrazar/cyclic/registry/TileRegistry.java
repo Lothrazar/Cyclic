@@ -40,7 +40,7 @@ import com.lothrazar.cyclic.block.generatorfluid.TileGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.TileGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.TileGeneratorFuel;
 import com.lothrazar.cyclic.block.generatoritem.TileGeneratorDrops;
-import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.TileGeneratorPeat;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.hopper.TileSimpleHopper;
 import com.lothrazar.cyclic.block.hopperfluid.TileFluidHopper;
@@ -149,7 +149,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileFan::new, BlockRegistry.fan).build(null).setRegistryName("fan"));
     r.register(TileEntityType.Builder.create(TileExpPylon::new, BlockRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
     r.register(TileEntityType.Builder.create(TileTrash::new, BlockRegistry.trash).build(null).setRegistryName("trash"));
-    r.register(TileEntityType.Builder.create(TilePeatGenerator::new, BlockRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
+    r.register(TileEntityType.Builder.create(TileGeneratorPeat::new, BlockRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
     r.register(TileEntityType.Builder.create(TilePeatFarm::new, BlockRegistry.peat_farm).build(null).setRegistryName("peat_farm"));
     r.register(TileEntityType.Builder.create(TileBattery::new, BlockRegistry.battery).build(null).setRegistryName("battery"));
     r.register(TileEntityType.Builder.create(TileCableEnergy::new, BlockRegistry.energy_pipe).build(null).setRegistryName("energy_pipe"));
@@ -220,7 +220,7 @@ public class TileRegistry {
   @ObjectHolder(ModCyclic.MODID + ":trash")
   public static TileEntityType<TileTrash> trashtile;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-  public static TileEntityType<TilePeatGenerator> peat_generator;
+  public static TileEntityType<TileGeneratorPeat> peat_generator;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")
   public static TileEntityType<TilePeatFarm> PEAT_FARM;
   @ObjectHolder(ModCyclic.MODID + ":harvester")

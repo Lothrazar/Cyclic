@@ -54,7 +54,7 @@ import com.lothrazar.cyclic.block.generatorfluid.BlockGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.BlockGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.BlockGeneratorFuel;
 import com.lothrazar.cyclic.block.generatoritem.BlockGeneratorDrops;
-import com.lothrazar.cyclic.block.generatorpeat.BlockPeatGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.BlockGeneratorPeat;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
@@ -163,7 +163,7 @@ public class BlockRegistry {
   @ObjectHolder(ModCyclic.MODID + ":harvester")
   public static BlockHarvester harvester;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-  public static BlockPeatGenerator peat_generator;
+  public static BlockGeneratorPeat peat_generator;
   @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
   public static PeatBlock peat_unbaked;
   @ObjectHolder(ModCyclic.MODID + ":peat_baked")
@@ -312,7 +312,7 @@ public class BlockRegistry {
     r.register(new MasonBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_iron"));
     r.register(new MasonBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_steel"));
     r.register(new MasonBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(5.0F, 6.0F)).setRegistryName("mason_plate"));
-    r.register(new BlockPeatGenerator(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
+    r.register(new BlockGeneratorPeat(Block.Properties.create(Material.ROCK)).setRegistryName("peat_generator"));
     r.register(new PeatBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_unbaked"));
     r.register(new PeatFuelBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND)).setRegistryName("peat_baked"));
     r.register(new BlockPeatFarm(Block.Properties.create(Material.ROCK)).setRegistryName("peat_farm"));

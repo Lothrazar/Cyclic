@@ -34,7 +34,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileGeneratorFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    TIMER, REDSTONE, BURNMAX;
+    TIMER, REDSTONE, BURNMAX, FLOWING;
   }
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
@@ -67,6 +67,9 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
+    }
+    if (this.flowing == 1) {
+      this.exportEnergyAllSides();
     }
     if (this.burnTime <= 0) {
       currentRecipe = null;
@@ -169,8 +172,8 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
         return this.burnTime;
       case BURNMAX:
         return this.burnTimeMax;
-      default:
-      break;
+      case FLOWING:
+        return this.flowing;
     }
     return 0;
   }
@@ -186,6 +189,9 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
       break;
       case BURNMAX:
         this.burnTimeMax = value;
+      break;
+      case FLOWING:
+        this.flowing = value;
       break;
     }
   }

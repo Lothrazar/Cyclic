@@ -4,10 +4,6 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,7 +23,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePeatGenerator extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileGeneratorPeat extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static enum Fields {
     FLOWING, REDSTONE, RENDER, BURNTIME;
@@ -38,10 +34,9 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
   CustomEnergyStorage energy = new CustomEnergyStorage(MENERGY, MENERGY / 2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  private int flowing = 1;
   private int fuelRate = 0;
 
-  public TilePeatGenerator() {
+  public TileGeneratorPeat() {
     super(TileRegistry.peat_generator);
     this.setNeedsRedstone(0);
   }
@@ -86,13 +81,13 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
       return;
     }
     if (this.isFull()) {
-      this.tickCableFlow();
+      this.exportIfFlowing();
       return;
     }
+    this.exportIfFlowing();
     if (this.isBurning() && fuelRate > 0) {
       --this.timer;
       this.addEnergy(fuelRate);
-      this.tickCableFlow();
       return;
     }
     fuelRate = 0;
@@ -108,19 +103,11 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
         this.timer = BURNTIME;
       }
     }
-    this.tickCableFlow();
   }
 
-  private void tickCableFlow() {
+  private void exportIfFlowing() {
     if (this.getFlowing() == 1) {
-      List<Integer> rawList = IntStream.rangeClosed(
-          0,
-          5).boxed().collect(Collectors.toList());
-      Collections.shuffle(rawList);
-      for (Integer i : rawList) {
-        Direction exportToSide = Direction.values()[i];
-        moveEnergy(exportToSide, MENERGY / 2);
-      }
+      exportEnergyAllSides();
     }
   }
 
@@ -147,7 +134,7 @@ public class TilePeatGenerator extends TileEntityBase implements ITickableTileEn
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerGenerator(i, world, pos, playerInventory, playerEntity);
+    return new ContainerGeneratorPeat(i, world, pos, playerInventory, playerEntity);
   }
 
   public int getFlowing() {

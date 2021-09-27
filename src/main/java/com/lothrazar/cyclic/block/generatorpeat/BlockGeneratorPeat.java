@@ -9,9 +9,9 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
-public class BlockPeatGenerator extends BlockBase {
+public class BlockGeneratorPeat extends BlockBase {
 
-  public BlockPeatGenerator(Properties properties) {
+  public BlockGeneratorPeat(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
   }
@@ -23,12 +23,12 @@ public class BlockPeatGenerator extends BlockBase {
 
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new TilePeatGenerator();
+    return new TileGeneratorPeat();
   }
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.generatorCont, ScreenGenerator::new);
+    ScreenManager.registerFactory(ContainerScreenRegistry.generatorCont, ScreenGeneratorPeat::new);
   }
 
   @Override

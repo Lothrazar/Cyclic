@@ -1,12 +1,12 @@
 {
 	"type": "cyclic:generator_fluid",
 	"fuel": {
-		"fluid": "minecraft:lava",
+		"fluid": "cyclic:xpjuice",
 		"count": 1000
 	},
 	"energy": {
 		"ticks": 1000,
-		"rfpertick": 40
+		"rfpertick": 80
 	},
 	"conditions": [
 		{

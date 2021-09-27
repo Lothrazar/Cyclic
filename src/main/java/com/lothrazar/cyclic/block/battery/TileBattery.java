@@ -29,7 +29,6 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private int flowing = 0;
   static final int MAX = 6400000;
 
   static enum Fields {
@@ -38,6 +37,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   public TileBattery() {
     super(TileRegistry.batterytile);
+    flowing = 0;
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);
@@ -115,7 +115,6 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
     }
-    setFlowing(tag.getInt("flowing"));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
   }

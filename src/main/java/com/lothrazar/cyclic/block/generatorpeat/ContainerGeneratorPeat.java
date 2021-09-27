@@ -11,13 +11,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerGenerator extends ContainerBase {
+public class ContainerGeneratorPeat extends ContainerBase {
 
-  TilePeatGenerator tile;
+  TileGeneratorPeat tile;
 
-  public ContainerGenerator(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerGeneratorPeat(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
     super(ContainerScreenRegistry.generatorCont, windowId);
-    tile = (TilePeatGenerator) world.getTileEntity(pos);
+    tile = (TileGeneratorPeat) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
@@ -26,7 +26,7 @@ public class ContainerGenerator extends ContainerBase {
     });
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
-    this.trackAllIntFields(tile, TilePeatGenerator.Fields.values().length);
+    this.trackAllIntFields(tile, TileGeneratorPeat.Fields.values().length);
   }
 
   @Override

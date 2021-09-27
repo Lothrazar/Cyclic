@@ -28,7 +28,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileGeneratorFood extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    TIMER, REDSTONE, BURNMAX;
+    TIMER, REDSTONE, BURNMAX, FLOWING;
   }
 
   static final int MAX = TileBattery.MENERGY * 10;
@@ -60,6 +60,9 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
+    }
+    if (this.flowing == 1) {
+      this.exportEnergyAllSides();
     }
     //
     //are we EMPTY
@@ -147,8 +150,8 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
         return this.burnTime;
       case BURNMAX:
         return this.burnTimeMax;
-      default:
-      break;
+      case FLOWING:
+        return this.flowing;
     }
     return 0;
   }
@@ -164,6 +167,9 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
       break;
       case BURNMAX:
         this.burnTimeMax = value;
+      break;
+      case FLOWING:
+        this.flowing = value;
       break;
     }
   }

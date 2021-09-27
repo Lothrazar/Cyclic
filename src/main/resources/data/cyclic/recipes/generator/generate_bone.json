@@ -1,12 +1,11 @@
 {
-	"type": "cyclic:generator_fluid",
+	"type": "cyclic:generator_item",
 	"fuel": {
-		"fluid": "minecraft:lava",
-		"count": 1000
+		"item": "minecraft:rotten_flesh"
 	},
 	"energy": {
-		"ticks": 1000,
-		"rfpertick": 40
+		"ticks": 400,
+		"rfpertick": 20
 	},
 	"conditions": [
 		{
@@ -16,7 +15,7 @@
 					"type": "forge:mod_loaded"
 				},
 				{
-					"item": "cyclic:generator_fluid",
+					"item": "cyclic:generator_item",
 					"type": "forge:item_exists"
 				}
 			],

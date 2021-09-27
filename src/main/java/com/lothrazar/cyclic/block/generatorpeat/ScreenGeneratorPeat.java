@@ -15,16 +15,16 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
-public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
+public class ScreenGeneratorPeat extends ScreenBase<ContainerGeneratorPeat> {
 
   private ButtonMachine btnToggle;
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
   private TimerBar timer;
 
-  public ScreenGenerator(ContainerGenerator screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenGeneratorPeat(ContainerGeneratorPeat screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TilePeatGenerator.MENERGY);
+    this.energy = new EnergyBar(this, TileGeneratorPeat.MENERGY);
     timer = new TimerBar(this, 78, 55, TileMelter.TIMER_FULL);
   }
 
@@ -37,11 +37,11 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
     int x = guiLeft + 132, y = guiTop + 8;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       container.tile.setFlowing((container.tile.getFlowing() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TilePeatGenerator.Fields.FLOWING.ordinal(), container.tile.getFlowing(), container.tile.getPos()));
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileGeneratorPeat.Fields.FLOWING.ordinal(), container.tile.getFlowing(), container.tile.getPos()));
     }));
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePeatGenerator.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileGeneratorPeat.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override
@@ -66,6 +66,6 @@ public class ScreenGenerator extends ScreenBase<ContainerGenerator> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, xSize / 2 - 9, 28);
     energy.draw(ms, container.tile.getEnergy());
-    timer.draw(ms, container.tile.getField(TilePeatGenerator.Fields.BURNTIME.ordinal()));
+    timer.draw(ms, container.tile.getField(TileGeneratorPeat.Fields.BURNTIME.ordinal()));
   }
 }

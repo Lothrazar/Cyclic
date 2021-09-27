@@ -1,16 +1,22 @@
 package com.lothrazar.cyclic.block.generatorfood;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.gui.TimerBar;
+import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
 public class ScreenGeneratorFood extends ScreenBase<ContainerGeneratorFood> {
 
+  private ButtonMachine btnToggle;
   private ButtonMachineRedstone btnRedstone;
   private EnergyBar energy;
   private TimerBar timer;
@@ -31,6 +37,13 @@ public class ScreenGeneratorFood extends ScreenBase<ContainerGeneratorFood> {
     x = guiLeft + 8;
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileGeneratorFood.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    x = guiLeft + 132;
+    y = guiTop + 8;
+    btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
+      int f = TileGeneratorFood.Fields.FLOWING.ordinal();
+      int tog = (container.tile.getField(f) + 1) % 2;
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, tog, container.tile.getPos()));
+    }));
   }
 
   @Override
@@ -47,6 +60,9 @@ public class ScreenGeneratorFood extends ScreenBase<ContainerGeneratorFood> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
+    int fld = TileGeneratorFood.Fields.FLOWING.ordinal();
+    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.tile.getField(fld)));
+    btnToggle.setTextureId(container.tile.getField(fld) == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
   }
 
   @Override

@@ -1,11 +1,10 @@
 {
-	"type": "cyclic:generator_fluid",
+	"type": "cyclic:generator_item",
 	"fuel": {
-		"fluid": "minecraft:lava",
-		"count": 1000
+		"tag": "forge:dusts/glowstone"
 	},
 	"energy": {
-		"ticks": 1000,
+		"ticks": 800,
 		"rfpertick": 40
 	},
 	"conditions": [
@@ -16,7 +15,7 @@
 					"type": "forge:mod_loaded"
 				},
 				{
-					"item": "cyclic:generator_fluid",
+					"item": "cyclic:generator_item",
 					"type": "forge:item_exists"
 				}
 			],

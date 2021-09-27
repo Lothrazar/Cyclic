@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pip",
+    "cbc",
+    "pip"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:bread"
+    },
+    "i": {
+      "item": "minecraft:piston"
+    },
+    "b": {
+      "item": "minecraft:iron_bars"
+    },
+    "c": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "result": {
+    "item": "cyclic:generator_fluid"
+  }
+}

@@ -1,11 +1,12 @@
 {
-	"type": "cyclic:generator_item",
+	"type": "cyclic:generator_fluid",
 	"fuel": {
-		"tag": "forge:stone"
+		"fluid": "cyclic:magma",
+		"count": 1000
 	},
 	"energy": {
-		"ticks": 500,
-		"rfpertick": 60
+		"ticks": 1000,
+		"rfpertick": 80
 	},
 	"conditions": [
 		{
@@ -15,7 +16,7 @@
 					"type": "forge:mod_loaded"
 				},
 				{
-					"item": "cyclic:generator_item",
+					"item": "cyclic:generator_fluid",
 					"type": "forge:item_exists"
 				}
 			],

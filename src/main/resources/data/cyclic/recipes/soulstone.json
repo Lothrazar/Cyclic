@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "igi",
+    "gog",
+    "igi"
+  ],
+  "key": {
+    "o": { 
+      "tag": "forge:nether_stars"
+    },
+    "i": {
+      "tag": "forge:ingots/gold"  
+    },
+    "g": { 
+      "item": "minecraft:totem_of_undying"
+    }
+  },
+  "result": {
+    "item": "cyclic:soulstone",
+    "count": 1
+  }
+}

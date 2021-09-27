@@ -26,7 +26,6 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = CAPACITY / 2;
   public FluidTankBase tank;
-  private int flowing = 0;
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;
@@ -34,6 +33,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
 
   public TileCask() {
     super(TileRegistry.cask);
+    flowing = 0;
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {

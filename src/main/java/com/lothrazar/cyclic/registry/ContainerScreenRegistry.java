@@ -26,7 +26,7 @@ import com.lothrazar.cyclic.block.generatorfluid.ContainerGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.ContainerGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.ContainerGeneratorFuel;
 import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
-import com.lothrazar.cyclic.block.generatorpeat.ContainerGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.ContainerGeneratorPeat;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.laser.ContainerLaser;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
@@ -73,7 +73,7 @@ public class ContainerScreenRegistry {
       return new ContainerItemCollector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("collector"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerGenerator(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+      return new ContainerGeneratorPeat(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("peat_generator"));
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerPeatFarm(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
@@ -260,7 +260,7 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":collector")
   public static ContainerType<ContainerItemCollector> collector;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-  public static ContainerType<ContainerGenerator> generatorCont;
+  public static ContainerType<ContainerGeneratorPeat> generatorCont;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")
   public static ContainerType<ContainerPeatFarm> peat_farm;
   @ObjectHolder(ModCyclic.MODID + ":harvester")

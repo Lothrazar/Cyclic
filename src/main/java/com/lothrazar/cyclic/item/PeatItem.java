@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.block.generatorpeat.TilePeatGenerator;
+import com.lothrazar.cyclic.block.generatorpeat.TileGeneratorPeat;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import java.util.List;
 import net.minecraft.client.util.ITooltipFlag;
@@ -30,7 +30,7 @@ public class PeatItem extends ItemBase {
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     super.addInformation(stack, worldIn, tooltip, flagIn);
-    tooltip.add(new StringTextComponent(getPeatFuelValue() + "RF/t for " + TilePeatGenerator.BURNTIME + " ticks").mergeStyle(TextFormatting.DARK_GREEN));
+    tooltip.add(new StringTextComponent(getPeatFuelValue() + "RF/t for " + TileGeneratorPeat.BURNTIME + " ticks").mergeStyle(TextFormatting.DARK_GREEN));
     //    if(stack.getBurnTime() > 0 )
   }
   //

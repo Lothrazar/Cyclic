@@ -13,8 +13,11 @@ import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -50,6 +53,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public static final String NBTFLUID = "fluid";
   public static final String NBTENERGY = "energy";
   public static final int MENERGY = 64 * 1000;
+  protected int flowing = 1;
   protected int needsRedstone = 1;
   protected int render = 0; // default to do not render
   protected int timer;
@@ -359,6 +363,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    flowing = tag.getInt("flowing");
     needsRedstone = tag.getInt("needsRedstone");
     render = tag.getInt("renderParticles");
     timer = tag.getInt("timer");
@@ -367,6 +372,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("flowing", flowing);
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", render);
     tag.putInt("timer", timer);
@@ -455,6 +461,15 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       if (energ != null) {
         PacketRegistry.sendToAllClients(this.getWorld(), new PacketEnergySync(this.getPos(), energ.getEnergyStored()));
       }
+    }
+  }
+
+  public void exportEnergyAllSides() {
+    List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
+    Collections.shuffle(rawList);
+    for (Integer i : rawList) {
+      Direction exportToSide = Direction.values()[i];
+      moveEnergy(exportToSide, MENERGY / 2);
     }
   }
 }
