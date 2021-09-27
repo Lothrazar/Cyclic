@@ -7,7 +7,7 @@
   ],
   "key": {
     "p": {
-      "item": "minecraft:empty_bucket"
+      "item": "minecraft:bucket"
     },
     "i": {
       "item": "minecraft:piston"

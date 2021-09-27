@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "btb",
+    "fcf",
+    "btb"
+  ],
+  "key": {
+    "b": {
+      "tag": "forge:dyes/light_blue"
+    },
+    "c": {
+      "item": "cyclic:crafter"
+    },
+    "t": {
+      "item": "minecraft:dropper"
+    },
+    "f": {
+      "item": "minecraft:piston"
+    }
+  },
+  "result": {
+    "item": "cyclic:packager"
+  }
+}

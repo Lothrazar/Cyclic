@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " fp",
+    " sf",
+    "s  "
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:blaze_rod"
+    },
+    "f": {
+      "item": "minecraft:flint"
+    },
+    "p": {
+      "tag": "forge:glass/purple"
+    }
+  },
+  "result": {
+    "item": "cyclic:spawn_inspector"
+  }
+}

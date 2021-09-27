@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ab",
+    "cd"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:dyes/cyan"
+    },
+    "b": {
+      "tag": "forge:dyes/orange"
+    },
+    "c": {
+      "tag": "forge:eggs"
+    },
+    "d": {
+      "item": "minecraft:apple"
+    }
+  },
+  "result": {
+    "item": "cyclic:apple_lofty_stature",
+    "count": 1
+  }
+}

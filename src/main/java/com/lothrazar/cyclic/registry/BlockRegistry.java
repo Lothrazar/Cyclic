@@ -142,6 +142,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> LIGHT_CAMO = BLOCKS.register("light_camo", () -> new BlockLightCamo(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> LASER = BLOCKS.register("laser", () -> new BlockLaser(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)));
+  public static final RegistryObject<Block> MEMBRANE_BLOCK = BLOCKS.register("membrane_block", () -> new BlockBase(Block.Properties.create(Material.EARTH)));
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
