@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -22,11 +24,13 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class SpikesBlock extends BlockBase {
 
+  public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final double CURSE_CHANCE = 0.2;
   public static final int CURSE_TIME = 8 * 20;
   public static final int FIRE_TIME = 20;
@@ -43,6 +47,7 @@ public class SpikesBlock extends BlockBase {
 
   public SpikesBlock(Properties properties, EnumSpikeType type) {
     super(properties.hardnessAndResistance(1.1F).notSolid().doesNotBlockMovement());
+    setDefaultState(getDefaultState().with(WATERLOGGED, false));
     this.type = type;
   }
 
@@ -158,13 +163,33 @@ public class SpikesBlock extends BlockBase {
     World worldIn = context.getWorld();
     BlockPos pos = context.getPos();
     Direction facing = context.getFace();
-    return worldIn.getBlockState(pos.offset(facing.getOpposite())).isSolid()
-        ? this.getDefaultState().with(BlockStateProperties.FACING, facing).with(ACTIVATED, false)
-        : this.getDefaultState().with(BlockStateProperties.FACING, Direction.DOWN).with(ACTIVATED, false);
+    boolean isSolid = worldIn.getBlockState(pos.offset(facing.getOpposite())).isSolid();
+    BlockState state = this.getDefaultState().with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
+    if (isSolid) {
+      return state.with(BlockStateProperties.FACING, facing).with(ACTIVATED, false);
+    }
+    else {
+      return state.with(BlockStateProperties.FACING, Direction.DOWN).with(ACTIVATED, false);
+    }
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  public FluidState getFluidState(BlockState state) {
+    return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+    if (stateIn.get(WATERLOGGED)) {
+      worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+    }
+    return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
   }
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.FACING).add(ACTIVATED);
+    builder.add(BlockStateProperties.FACING).add(ACTIVATED).add(WATERLOGGED);
   }
 }

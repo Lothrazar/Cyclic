@@ -103,6 +103,7 @@ public abstract class CableBase extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    super.fillStateContainer(builder);
     builder.add(WATERLOGGED);
   }
 

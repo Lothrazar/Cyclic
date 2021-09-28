@@ -13,11 +13,11 @@
       "item": "minecraft:iron_nugget"
     },
     "r": {
-      "item": "minecraft:phantom_membrane"
+      "item": "cyclic:membrane"
     }
   },
   "result": {
     "item": "cyclic:ghost_phantom",
-    "count": 8
+    "count": 2
   }
 }

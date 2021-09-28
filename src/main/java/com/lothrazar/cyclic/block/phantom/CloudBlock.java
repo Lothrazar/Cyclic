@@ -10,6 +10,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,7 +25,6 @@ public class CloudBlock extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
   }
@@ -31,6 +33,12 @@ public class CloudBlock extends BlockBase {
   @Deprecated
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
     return 1; // isPassable(worldIn, pos) ? 1 : 0;
+  }
+
+  @Override
+  @Deprecated
+  public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    return VoxelShapes.empty();
   }
 
   @Override
@@ -49,10 +57,6 @@ public class CloudBlock extends BlockBase {
       e.addPotionEffect(eff);
     }
   }
-  //  @Override
-  //  public VoxelShape getRayTraceShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-  //    return VoxelShapes.fullCube();
-  //  }
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
@@ -64,9 +68,4 @@ public class CloudBlock extends BlockBase {
   public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
     return adjacentBlockState.getBlock() == this;
   }
-  //  @Override
-  //  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-  //    return super.getShape(state, worldIn, pos, context);
-  //    //    return context.getEntity() instanceof PlayerEntity ? VoxelShapes.fullCube() : VoxelShapes.empty();
-  //  }
 }

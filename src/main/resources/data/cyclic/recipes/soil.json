@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lml",
+    "lbl",
+    "lml"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:dirt"
+    },
+    "m": {
+      "item": "minecraft:lily_pad"
+    },
+    "b": {
+      "item": "cyclic:biomass"
+    }
+  },
+  "result": {
+    "item": "cyclic:soil",
+    "count": 6
+  }
+}

@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
@@ -20,9 +21,11 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 
 public class BlockFanSlab extends BlockBase {
 
+  public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
   public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final EnumProperty<AttachFace> FACE = BlockStateProperties.FACE;
@@ -59,12 +62,27 @@ public class BlockFanSlab extends BlockBase {
 
   public BlockFanSlab(Properties properties) {
     super(properties.hardnessAndResistance(0.8F).notSolid());
-    this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(POWERED, Boolean.valueOf(false)).with(FACE, AttachFace.WALL));
+    this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false).with(HORIZONTAL_FACING, Direction.NORTH).with(POWERED, Boolean.valueOf(false)).with(FACE, AttachFace.WALL));
   }
 
   @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  public FluidState getFluidState(BlockState state) {
+    return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+    if (stateIn.get(WATERLOGGED)) {
+      worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+    }
+    return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
   }
 
   @Override
@@ -126,7 +144,7 @@ public class BlockFanSlab extends BlockBase {
         blockstate = this.getDefaultState().with(FACE, AttachFace.WALL).with(HORIZONTAL_FACING, direction.getOpposite());
       }
       if (blockstate.isValidPosition(context.getWorld(), context.getPos())) {
-        return blockstate;
+        return blockstate.with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
       }
     }
     return null;
@@ -136,10 +154,16 @@ public class BlockFanSlab extends BlockBase {
   //    if (entity != null) {
   //      world.setBlockState(pos, state.with(HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntity(pos, entity)), 2);
   //    }
+  //  } 
+  //  @Override
+  //  public BlockState getStateForPlacement(BlockItemUseContext context) {
+  //    return super.getStateForPlacement(context)
+  //        .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
   //  }
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(HORIZONTAL_FACING).add(POWERED).add(FACE);
+    super.fillStateContainer(builder);
+    builder.add(HORIZONTAL_FACING).add(POWERED).add(FACE).add(WATERLOGGED);
   }
 }

@@ -4,18 +4,13 @@ import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -26,7 +21,6 @@ public class CloudPlayerBlock extends BlockBase {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void registerClient() {
     RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
   }
@@ -41,29 +35,8 @@ public class CloudPlayerBlock extends BlockBase {
   @Deprecated
   public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
     //    return super.getCollisionShape(state, worldIn, pos, context);
-    return context.getEntity() instanceof PlayerEntity ? VoxelShapes.empty() : VoxelShapes.fullCube();
+    return (context.getEntity() instanceof PlayerEntity) ? VoxelShapes.empty() : VoxelShapes.fullCube();
   }
-
-  @Override
-  public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-    // 
-    if (!worldIn.isRemote && entityIn instanceof LivingEntity) {
-      LivingEntity e = (LivingEntity) entityIn;
-      //zscaler
-      EffectInstance eff = new EffectInstance(Effects.SLOW_FALLING, 20, 5);
-      eff.showParticles = false;
-      eff.showIcon = false;
-      e.addPotionEffect(eff);
-      eff = new EffectInstance(Effects.SLOWNESS, 20, 5);
-      eff.showParticles = false;
-      eff.showIcon = false;
-      e.addPotionEffect(eff);
-    }
-  }
-  //  @Override
-  //  public VoxelShape getRayTraceShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-  //    return VoxelShapes.fullCube();
-  //  }
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
@@ -75,9 +48,4 @@ public class CloudPlayerBlock extends BlockBase {
   public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
     return adjacentBlockState.getBlock() == this;
   }
-  //  @Override
-  //  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-  //    return super.getShape(state, worldIn, pos, context);
-  //    //    return context.getEntity() instanceof PlayerEntity ? VoxelShapes.fullCube() : VoxelShapes.empty();
-  //  }
 }
