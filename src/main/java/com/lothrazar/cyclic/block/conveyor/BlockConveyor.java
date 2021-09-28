@@ -10,11 +10,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -32,6 +35,7 @@ import net.minecraft.world.World;
 
 public class BlockConveyor extends BlockBase {
 
+  public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   private static final int MAX_CONNECTED_UPDATE = 16;
   //main flat shape
   protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
@@ -70,6 +74,7 @@ public class BlockConveyor extends BlockBase {
 
   public BlockConveyor(Properties properties) {
     super(properties.hardnessAndResistance(0.6F).notSolid());
+    setDefaultState(getDefaultState().with(WATERLOGGED, false));
   }
 
   /**
@@ -322,7 +327,13 @@ public class BlockConveyor extends BlockBase {
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(BlockStateProperties.HORIZONTAL_FACING).add(SPEED).add(TYPE).add(COLOUR);
+    builder.add(BlockStateProperties.HORIZONTAL_FACING).add(SPEED).add(TYPE).add(COLOUR).add(WATERLOGGED);
+  }
+
+  @Override
+  public BlockState getStateForPlacement(BlockItemUseContext context) {
+    return super.getStateForPlacement(context)
+        .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
   }
 
   public static SimpleImmutableEntry<ConveyorType, Direction> nextState(ConveyorType t, Direction d) {

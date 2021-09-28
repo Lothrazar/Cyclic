@@ -121,8 +121,9 @@ public abstract class CableBase extends BlockBase {
   @Override
   @SuppressWarnings("deprecation")
   public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-    if (stateIn.get(WATERLOGGED))
+    if (stateIn.get(WATERLOGGED)) {
       worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+    }
     return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
   }
 

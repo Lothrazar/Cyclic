@@ -182,6 +182,12 @@ public class ItemRegistry {
   public static final RegistryObject<Item> PACKAGER = ITEMS.register("packager", () -> new BlockItem(BlockRegistry.PACKAGER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SOUND_DATA = ITEMS.register("sound_data", () -> new SoundCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> ENDER_BUCKET = ITEMS.register("ender_bucket", () -> new ItemBase(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> MEMBRANE = ITEMS.register("membrane", () -> new BlockItem(BlockRegistry.MEMBRANE.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> LAMP = ITEMS.register("lamp", () -> new BlockItem(BlockRegistry.LAMP.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", () -> new BlockItem(BlockRegistry.BALLOON.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SOIL = ITEMS.register("soil", () -> new BlockItem(BlockRegistry.SOIL.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CLOUD = ITEMS.register("cloud", () -> new BlockItem(BlockRegistry.CLOUD.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CLOUD_MEMBRANE = ITEMS.register("cloud_membrane", () -> new BlockItem(BlockRegistry.CLOUD_MEMBRANE.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
@@ -241,8 +247,8 @@ public class ItemRegistry {
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
-    r.register(new BlockItem(BlockRegistry.ghost_phantom, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ghost_phantom"));
-    r.register(new BlockItem(BlockRegistry.ghost, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ghost"));
+    r.register(new BlockItem(BlockRegistry.GHOST_PHANTOM.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ghost_phantom"));
+    r.register(new BlockItem(BlockRegistry.GHOST.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ghost"));
     r.register(new BlockItem(BlockRegistry.LASER.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("laser"));
     r.register(new BlockItem(BlockRegistry.apple_sprout, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout"));
     r.register(new BlockItem(BlockRegistry.apple_sprout_diamond, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout_diamond"));
@@ -254,8 +260,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.mason_steel, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("mason_steel"));
     r.register(new BlockItem(BlockRegistry.mason_iron, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("mason_iron"));
     r.register(new BlockItem(BlockRegistry.mason_plate, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("mason_plate"));
-    r.register(new BlockItem(BlockRegistry.eye_redstone, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_redstone"));
-    r.register(new BlockItem(BlockRegistry.eye_teleport, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_teleport"));
+    r.register(new BlockItem(BlockRegistry.EYE_REDSTONE, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_redstone"));
+    r.register(new BlockItem(BlockRegistry.EYE_TELEPORT, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_teleport"));
     //
     r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("battery"));
     r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_generator"));
@@ -313,7 +319,7 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.conveyor, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("conveyor"));
     r.register(new BlockItem(BlockRegistry.ender_shelf, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_shelf"));
     r.register(new BlockItem(BlockRegistry.ender_controller, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_controller"));
-    r.register(new BlockItem(BlockRegistry.workbench, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("workbench"));
+    r.register(new BlockItem(BlockRegistry.WORKBENCH.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("workbench"));
     // exp machines
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("experience_pylon"));
     r.register(new ExpItemGain(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("experience_food"));

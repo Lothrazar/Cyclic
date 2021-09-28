@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "power=0": { "model":  "cyclic:block/lamp/p0" },
+        "power=1": { "model":  "cyclic:block/lamp/p1" },
+        "power=2": { "model":  "cyclic:block/lamp/p2" },
+        "power=3": { "model":  "cyclic:block/lamp/p3" },
+        "power=4": { "model":  "cyclic:block/lamp/p4" },
+        "power=5": { "model":  "cyclic:block/lamp/p5" },
+        "power=6": { "model":  "cyclic:block/lamp/p6" },
+        "power=7": { "model":  "cyclic:block/lamp/p7" },
+        "power=8": { "model":  "cyclic:block/lamp/p8" },
+        "power=9": { "model":  "cyclic:block/lamp/p9" },
+        "power=10": { "model": "cyclic:block/lamp/p10" },
+        "power=11": { "model": "cyclic:block/lamp/p11" },
+        "power=12": { "model": "cyclic:block/lamp/p12" },
+        "power=13": { "model": "cyclic:block/lamp/p13" },
+        "power=14": { "model": "cyclic:block/lamp/p14" },
+        "power=15": { "model": "cyclic:block/lamp/p15" }
+    }
+}

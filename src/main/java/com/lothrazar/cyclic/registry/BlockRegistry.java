@@ -2,12 +2,9 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.DarkGlassBlock;
-import com.lothrazar.cyclic.block.DarkGlassConnectedBlock;
 import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
-import com.lothrazar.cyclic.block.GhostBlock;
 import com.lothrazar.cyclic.block.LaunchBlock;
 import com.lothrazar.cyclic.block.MasonBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
@@ -55,6 +52,8 @@ import com.lothrazar.cyclic.block.generatorfood.BlockGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.BlockGeneratorFuel;
 import com.lothrazar.cyclic.block.generatoritem.BlockGeneratorDrops;
 import com.lothrazar.cyclic.block.generatorpeat.BlockGeneratorPeat;
+import com.lothrazar.cyclic.block.glass.DarkGlassBlock;
+import com.lothrazar.cyclic.block.glass.DarkGlassConnectedBlock;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
 import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
@@ -65,6 +64,13 @@ import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
 import com.lothrazar.cyclic.block.packager.BlockPackager;
 import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
+import com.lothrazar.cyclic.block.phantom.BalloonBlock;
+import com.lothrazar.cyclic.block.phantom.CloudBlock;
+import com.lothrazar.cyclic.block.phantom.CloudPlayerBlock;
+import com.lothrazar.cyclic.block.phantom.GhostBlock;
+import com.lothrazar.cyclic.block.phantom.MembraneBlock;
+import com.lothrazar.cyclic.block.phantom.MembraneLamp;
+import com.lothrazar.cyclic.block.phantom.SoilBlock;
 import com.lothrazar.cyclic.block.placer.BlockPlacer;
 import com.lothrazar.cyclic.block.placerfluid.BlockPlacerFluid;
 import com.lothrazar.cyclic.block.rotator.BlockRotator;
@@ -142,7 +148,15 @@ public class BlockRegistry {
   public static final RegistryObject<Block> LIGHT_CAMO = BLOCKS.register("light_camo", () -> new BlockLightCamo(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> LASER = BLOCKS.register("laser", () -> new BlockLaser(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)));
-  public static final RegistryObject<Block> MEMBRANE_BLOCK = BLOCKS.register("membrane_block", () -> new BlockBase(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> MEMBRANE = BLOCKS.register("membrane", () -> new MembraneBlock(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new MembraneLamp(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> BALLOON = BLOCKS.register("balloon", () -> new BalloonBlock(Block.Properties.create(Material.ROCK)));
+  public static final RegistryObject<Block> SOIL = BLOCKS.register("soil", () -> new SoilBlock(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> CLOUD = BLOCKS.register("cloud", () -> new CloudBlock(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> CLOUD_MEMBRANE = BLOCKS.register("cloud_membrane", () -> new CloudPlayerBlock(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> GHOST = BLOCKS.register("ghost", () -> new GhostBlock(Block.Properties.create(Material.ROCK), false));
+  public static final RegistryObject<Block> GHOST_PHANTOM = BLOCKS.register("ghost_phantom", () -> new GhostBlock(Block.Properties.create(Material.ROCK), true));
+  public static final RegistryObject<Block> WORKBENCH = BLOCKS.register("workbench", () -> new BlockWorkbench(Block.Properties.create(Material.ROCK)));
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -233,7 +247,6 @@ public class BlockRegistry {
   public static Block cask;
   @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
   public static Block placer_fluid;
-  //
   @ObjectHolder(ModCyclic.MODID + ":beacon")
   public static Block beacon;
   @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
@@ -286,16 +299,10 @@ public class BlockRegistry {
   public static Block ender_shelf;
   @ObjectHolder(ModCyclic.MODID + ":ender_controller")
   public static Block ender_controller;
-  @ObjectHolder(ModCyclic.MODID + ":workbench")
-  public static Block workbench;
   @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
-  public static Block eye_redstone;
+  public static Block EYE_REDSTONE;
   @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
-  public static Block eye_teleport;
-  @ObjectHolder(ModCyclic.MODID + ":ghost")
-  public static Block ghost;
-  @ObjectHolder(ModCyclic.MODID + ":ghost_phantom")
-  public static Block ghost_phantom;
+  public static Block EYE_TELEPORT;
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
@@ -345,8 +352,6 @@ public class BlockRegistry {
     r.register(new BlockAnvilAuto(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil"));
     r.register(new BlockAnvilMagma(Block.Properties.create(Material.ANVIL).sound(SoundType.ANVIL)).setRegistryName("anvil_magma"));
     r.register(new BlockPotion(Block.Properties.create(Material.IRON)).setRegistryName("beacon"));
-    r.register(new GhostBlock(Block.Properties.create(Material.ROCK), false).setRegistryName("ghost"));
-    r.register(new GhostBlock(Block.Properties.create(Material.ROCK), true).setRegistryName("ghost_phantom"));
     //
     r.register(new SoundmufflerBlockGhost(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing_ghost"));
     r.register(new SoundmufflerBlock(Block.Properties.create(Material.ROCK)).setRegistryName("soundproofing"));
@@ -375,7 +380,6 @@ public class BlockRegistry {
     r.register(new BlockItemInfinite(Block.Properties.create(Material.ROCK)).setRegistryName("item_infinite"));
     r.register(new WaterCandleBlock(Block.Properties.create(Material.ROCK)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.create(Material.ROCK)).setRegistryName("fireplace"));
-    r.register(new BlockWorkbench(Block.Properties.create(Material.ROCK)).setRegistryName("workbench"));
     r.register(new UnbreakableBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_block")); //stable, only changes with player interaction
     r.register(new UnbreakablePoweredBlock(Block.Properties.create(Material.ROCK)).setRegistryName("unbreakable_reactive")); //reactive and unstable, ignores players and reads redstone 
     r.register(new BlockEnderShelf(Block.Properties.create(Material.ROCK), false).setRegistryName("ender_shelf"));

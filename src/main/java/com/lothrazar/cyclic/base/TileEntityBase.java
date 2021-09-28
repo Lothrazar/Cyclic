@@ -231,6 +231,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return this.getWorld().isBlockPowered(this.getPos());
   }
 
+  public int getRedstonePower() {
+    return this.getWorld().getRedstonePowerFromNeighbors(this.getPos());
+  }
+
   public boolean requiresRedstone() {
     return this.needsRedstone == 1;
   }

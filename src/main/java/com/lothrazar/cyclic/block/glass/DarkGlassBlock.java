@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.glass;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;

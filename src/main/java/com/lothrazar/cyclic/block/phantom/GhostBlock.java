@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.BlockState;
@@ -32,6 +32,7 @@ public class GhostBlock extends BlockBase {
   @Override
   @Deprecated
   public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    //    this.onFallenUpon(null, pos, null, blastResistance);
     return isPassable(worldIn, pos) ? 1 : 0;
   }
 

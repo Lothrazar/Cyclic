@@ -51,6 +51,9 @@ import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
+import com.lothrazar.cyclic.block.phantom.BalloonTile;
+import com.lothrazar.cyclic.block.phantom.MembraneLampTile;
+import com.lothrazar.cyclic.block.phantom.SoilTile;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
 import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
 import com.lothrazar.cyclic.block.rotator.TileRotator;
@@ -109,6 +112,9 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> TileEntityType.Builder.create(() -> new TileGeneratorDrops(), BlockRegistry.GENERATOR_ITEM.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorFluid>> GENERATOR_FLUID = TILES.register("generator_fluid", () -> TileEntityType.Builder.create(() -> new TileGeneratorFluid(), BlockRegistry.GENERATOR_FLUID.get()).build(null));
   public static final RegistryObject<TileEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> TileEntityType.Builder.create(() -> new TilePackager(), BlockRegistry.PACKAGER.get()).build(null));
+  public static final RegistryObject<TileEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> TileEntityType.Builder.create(() -> new MembraneLampTile(), BlockRegistry.LAMP.get()).build(null));
+  public static final RegistryObject<TileEntityType<SoilTile>> SOIL = TILES.register("soil", () -> TileEntityType.Builder.create(() -> new SoilTile(), BlockRegistry.SOIL.get()).build(null));
+  public static final RegistryObject<TileEntityType<BalloonTile>> BALLOON = TILES.register("balloon", () -> TileEntityType.Builder.create(() -> new BalloonTile(), BlockRegistry.BALLOON.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
@@ -117,8 +123,8 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileLightCamo::new, BlockRegistry.LIGHT_CAMO.get()).build(null).setRegistryName("light_camo"));
     r.register(TileEntityType.Builder.create(SoundmuffTile::new, BlockRegistry.soundproofing_ghost).build(null).setRegistryName("soundproofing_ghost"));
     r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.TERRA_PRETA.get()).build(null).setRegistryName("terra_preta"));
-    r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.eye_redstone).build(null).setRegistryName("eye_redstone"));
-    r.register(TileEntityType.Builder.create(TileEyeTp::new, BlockRegistry.eye_teleport).build(null).setRegistryName("eye_teleport"));
+    r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.EYE_REDSTONE).build(null).setRegistryName("eye_redstone"));
+    r.register(TileEntityType.Builder.create(TileEyeTp::new, BlockRegistry.EYE_TELEPORT).build(null).setRegistryName("eye_teleport"));
     //
     r.register(TileEntityType.Builder.create(TileAnvilMagma::new, BlockRegistry.anvil_magma).build(null).setRegistryName("anvil_magma"));
     r.register(TileEntityType.Builder.create(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));
@@ -168,7 +174,7 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.conveyor).build(null).setRegistryName("conveyor"));
     r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
     r.register(TileEntityType.Builder.create(TileEnderCtrl::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
-    r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.workbench).build(null).setRegistryName("workbench"));
+    r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null).setRegistryName("workbench"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":spikes_diamond")

@@ -56,12 +56,12 @@ public class CyclicPluginJEI implements IModPlugin {
 
   @Override
   public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.crafter.asItem(), 1), VanillaRecipeCategoryUid.CRAFTING);
-    registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_bag, 1), VanillaRecipeCategoryUid.CRAFTING);
-    registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_stick, 1), VanillaRecipeCategoryUid.CRAFTING);
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.workbench.asItem(), 1), VanillaRecipeCategoryUid.CRAFTING);
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.MELTER.asItem(), 1), MelterRecipeCategory.ID);
-    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.SOLIDIFIER.asItem(), 1), SolidifierRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.crafter), VanillaRecipeCategoryUid.CRAFTING);
+    registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_bag), VanillaRecipeCategoryUid.CRAFTING);
+    registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_stick), VanillaRecipeCategoryUid.CRAFTING);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.WORKBENCH.get()), VanillaRecipeCategoryUid.CRAFTING);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.MELTER), MelterRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.SOLIDIFIER), SolidifierRecipeCategory.ID);
   }
 
   @Override
