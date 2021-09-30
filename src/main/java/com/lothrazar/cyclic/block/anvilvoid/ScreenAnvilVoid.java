@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.anvilvoid;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private FluidBar fluid;
 
   public ScreenAnvilVoid(ContainerAnvilVoid screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -28,7 +28,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileAnvilVoid.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileAnvilVoid.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

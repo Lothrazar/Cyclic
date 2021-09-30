@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.miner;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
@@ -12,10 +12,10 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenMiner extends ScreenBase<ContainerMiner> {
 
-  private ButtonMachineRedstone btnRedstone;
-  private ButtonMachineRedstone btnRender;
+  private ButtonMachineField btnRedstone;
+  private ButtonMachineField btnRender;
   private EnergyBar energy;
-  private ButtonMachineRedstone btnDirection;
+  private ButtonMachineField btnDirection;
   private GuiSliderInteger sizeSlider;
 
   public ScreenMiner(ContainerMiner screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -32,13 +32,13 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     int x = guiLeft + 8;
     int y = guiTop + 8;
     int f = TileMiner.Fields.REDSTONE.ordinal();
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, f, container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, f, container.tile.getPos()));
     f = TileMiner.Fields.RENDER.ordinal();
-    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, f,
+    btnRender = addButton(new ButtonMachineField(x, y + 20, f,
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //then toggle
     f = TileMiner.Fields.DIRECTION.ordinal();
-    btnDirection = addButton(new ButtonMachineRedstone(x, y + 40, f,
+    btnDirection = addButton(new ButtonMachineField(x, y + 40, f,
         container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
     //
     int w = 120;

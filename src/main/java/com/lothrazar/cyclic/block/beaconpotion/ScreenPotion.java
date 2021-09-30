@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.beaconpotion;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -15,7 +15,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenPotion extends ScreenBase<ContainerPotion> {
 
   private ButtonMachine btnEntity;
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private EnergyBar energy;
 
   public ScreenPotion(ContainerPotion screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -32,7 +32,7 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     energy.visible = TilePotion.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePotion.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TilePotion.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     y += 51;
     //TODO  refactor btn
     btnEntity = addButton(new ButtonMachine(x, y, 60, 20, "", (p) -> {

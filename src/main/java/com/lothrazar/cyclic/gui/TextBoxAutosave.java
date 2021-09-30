@@ -19,8 +19,7 @@ public class TextBoxAutosave extends TextFieldWidget {
   private BlockPos pos;
   private TileEntityBase tile;
 
-  public TextBoxAutosave(FontRenderer fontIn, int xIn, int yIn, int widthIn,
-      BlockPos pos, int field) {
+  public TextBoxAutosave(FontRenderer fontIn, int xIn, int yIn, int widthIn, BlockPos pos, int field) {
     super(fontIn, xIn, yIn, widthIn, 16, null);
     this.setEnableBackgroundDrawing(true);
     this.setVisible(true);

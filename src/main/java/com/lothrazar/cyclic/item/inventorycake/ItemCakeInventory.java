@@ -62,8 +62,6 @@ public class ItemCakeInventory extends ItemBase {
   }
 
   public static void onKeyInput(PlayerEntity player) {
-    //    CyclicFile datFile = PlayerDataEvents.getOrCreate(player); 
-    ModCyclic.LOGGER.info(" keybind  . send to server, then check datfile, then open cont ");
     PacketRegistry.INSTANCE.sendToServer(new PacketKeyBind(""));
   }
 }

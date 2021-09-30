@@ -39,6 +39,7 @@ import com.lothrazar.cyclic.block.screen.ContainerScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.ContainerStructure;
 import com.lothrazar.cyclic.block.shapedata.ContainerShapedata;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
+import com.lothrazar.cyclic.block.soundrecord.ContainerSoundRecorder;
 import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wireless.energy.ContainerWirelessEnergy;
@@ -204,6 +205,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerPackager(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("packager"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerSoundRecorder(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("sound_recorder"));
     //
     //  Items with containers
     //
@@ -215,6 +219,8 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":sound_recorder")
+  public static ContainerType<ContainerSoundRecorder> SOUND_RECORDER;
   @ObjectHolder(ModCyclic.MODID + ":generator_food")
   public static ContainerType<ContainerGeneratorFood> GENERATOR_FOOD;
   @ObjectHolder(ModCyclic.MODID + ":generator_fuel")

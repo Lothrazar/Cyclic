@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.fan;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -10,7 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenFan extends ScreenBase<ContainerFan> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
 
   public ScreenFan(ContainerFan screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -22,7 +22,7 @@ public class ScreenFan extends ScreenBase<ContainerFan> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileFan.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileFan.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     //
     int w = 160;
     int h = 20;

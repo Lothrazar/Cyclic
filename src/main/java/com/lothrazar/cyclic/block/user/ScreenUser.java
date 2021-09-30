@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.user;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
   private EnergyBar energy;
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
 
   public ScreenUser(ContainerUser screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -28,7 +28,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileUser.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileUser.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     //
     x = guiLeft + 32;
     y = guiTop + 26;

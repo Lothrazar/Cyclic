@@ -35,7 +35,7 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
 
   public TileWirelessFluid() {
-    super(TileRegistry.WIRELESS_ENERGY.get());
+    super(TileRegistry.WIRELESS_FLUID.get());
     this.needsRedstone = 0;
     tank = new FluidTankBase(this, CAPACITY, f -> true);
   }

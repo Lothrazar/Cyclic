@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.wireless.fluid;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.block.melter.TileMelter;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private FluidBar fluid;
 
   public ScreenWirelessFluid(ContainerWirelessFluid screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -27,7 +27,7 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileWirelessFluid.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileWirelessFluid.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

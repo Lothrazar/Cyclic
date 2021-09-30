@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.detectorentity;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
@@ -17,7 +17,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
 
   private ButtonMachine btnEntity;
   private ButtonMachine btnComp;
-  private ButtonMachineRedstone btnRender;
+  private ButtonMachineField btnRender;
 
   public ScreenDetector(ContainerDetector screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -29,7 +29,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 18;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, TileDetector.Fields.RENDER.ordinal(),
+    btnRender = addButton(new ButtonMachineField(x, y, TileDetector.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x += 22;
     int w = 50, h = 20;

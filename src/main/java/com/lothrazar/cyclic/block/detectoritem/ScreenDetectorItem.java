@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.detectoritem;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
@@ -16,7 +16,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
 
   private ButtonMachine btnComp;
-  private ButtonMachineRedstone btnRender;
+  private ButtonMachineField btnRender;
 
   public ScreenDetectorItem(ContainerDetectorItem screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -28,7 +28,7 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 18;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, TileDetectorItem.Fields.RENDER.ordinal(),
+    btnRender = addButton(new ButtonMachineField(x, y, TileDetectorItem.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x += 22;
     btnComp = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {

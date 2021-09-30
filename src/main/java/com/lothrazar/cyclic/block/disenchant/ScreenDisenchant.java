@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.disenchant;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -13,7 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
 
   private EnergyBar energy;
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private FluidBar fluid;
 
   public ScreenDisenchant(ContainerDisenchant screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -31,7 +31,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     energy.visible = TileDisenchant.POWERCONF.get() > 0;
   }
 

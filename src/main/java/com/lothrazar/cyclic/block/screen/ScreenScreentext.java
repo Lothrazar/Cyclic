@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.screen;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextBoxAutosave;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private TextBoxAutosave txtString;
 
   public ScreenScreentext(ContainerScreentext screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -23,7 +23,7 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     super.init();
     int x = guiLeft + 6;
     int y = guiTop + 6;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileScreentext.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileScreentext.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     int w = 140;
     x = guiLeft + 28;
     y = guiTop + 8;

@@ -62,7 +62,8 @@ import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmuffTile;
-import com.lothrazar.cyclic.block.soundrecord.SoundRecorderTile;
+import com.lothrazar.cyclic.block.soundplay.TileSoundPlayer;
+import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
 import com.lothrazar.cyclic.block.spikes.TileDiamondSpikes;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.tank.TileTank;
@@ -106,7 +107,8 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TileWirelessEnergy>> WIRELESS_ENERGY = TILES.register("wireless_energy", () -> TileEntityType.Builder.create(() -> new TileWirelessEnergy(), BlockRegistry.WIRELESS_ENERGY.get()).build(null));
   public static final RegistryObject<TileEntityType<TileWirelessItem>> WIRELESS_ITEM = TILES.register("wireless_item", () -> TileEntityType.Builder.create(() -> new TileWirelessItem(), BlockRegistry.WIRELESS_ITEM.get()).build(null));
   public static final RegistryObject<TileEntityType<TileWirelessFluid>> WIRELESS_FLUID = TILES.register("wireless_fluid", () -> TileEntityType.Builder.create(() -> new TileWirelessFluid(), BlockRegistry.WIRELESS_FLUID.get()).build(null));
-  public static final RegistryObject<TileEntityType<SoundRecorderTile>> SOUND_RECORDER = TILES.register("sound_recorder", () -> TileEntityType.Builder.create(() -> new SoundRecorderTile(), BlockRegistry.SOUND_RECORDER.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileSoundRecorder>> SOUND_RECORDER = TILES.register("sound_recorder", () -> TileEntityType.Builder.create(() -> new TileSoundRecorder(), BlockRegistry.SOUND_RECORDER.get()).build(null));
+  public static final RegistryObject<TileEntityType<TileSoundPlayer>> SOUND_PLAYER = TILES.register("sound_player", () -> TileEntityType.Builder.create(() -> new TileSoundPlayer(), BlockRegistry.SOUND_PLAYER.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorFuel>> GENERATOR_FUEL = TILES.register("generator_fuel", () -> TileEntityType.Builder.create(() -> new TileGeneratorFuel(), BlockRegistry.GENERATOR_FUEL.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorFood>> GENERATOR_FOOD = TILES.register("generator_food", () -> TileEntityType.Builder.create(() -> new TileGeneratorFood(), BlockRegistry.GENERATOR_FOOD.get()).build(null));
   public static final RegistryObject<TileEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> TileEntityType.Builder.create(() -> new TileGeneratorDrops(), BlockRegistry.GENERATOR_ITEM.get()).build(null));
@@ -171,9 +173,9 @@ public class TileRegistry {
     r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
     r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
     r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.LASER.get()).build(null).setRegistryName("laser"));
-    r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.conveyor).build(null).setRegistryName("conveyor"));
-    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ender_shelf).build(null).setRegistryName("ender_shelf"));
-    r.register(TileEntityType.Builder.create(TileEnderCtrl::new, BlockRegistry.ender_controller).build(null).setRegistryName("ender_controller"));
+    r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.CONVEYOR).build(null).setRegistryName("conveyor"));
+    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ENDER_SHELF).build(null).setRegistryName("ender_shelf"));
+    r.register(TileEntityType.Builder.create(TileEnderCtrl::new, BlockRegistry.ENDER_CONTROLLER).build(null).setRegistryName("ender_controller"));
     r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null).setRegistryName("workbench"));
   }
 

@@ -6,18 +6,18 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.util.math.BlockPos;
 
-public class ButtonMachineRedstone extends ButtonMachine {
+public class ButtonMachineField extends ButtonMachine {
 
   BlockPos tilePos;
   private TextureEnum textureOne;
   private TextureEnum textureZero;
   private String tooltipPrefix;
 
-  public ButtonMachineRedstone(int xPos, int yPos, int field, BlockPos pos) {
+  public ButtonMachineField(int xPos, int yPos, int field, BlockPos pos) {
     this(xPos, yPos, field, pos, TextureEnum.REDSTONE_ON, TextureEnum.REDSTONE_NEEDED, "gui.cyclic.redstone");
   }
 
-  public ButtonMachineRedstone(int xPos, int yPos, int field, BlockPos pos,
+  public ButtonMachineField(int xPos, int yPos, int field, BlockPos pos,
       TextureEnum toff, TextureEnum tonn, String tooltipPrefix) {
     super(xPos, yPos, 20, 20, "", (p) -> {
       //save included 
@@ -30,7 +30,7 @@ public class ButtonMachineRedstone extends ButtonMachine {
     this.tooltipPrefix = tooltipPrefix;
   }
 
-  public ButtonMachineRedstone setSize(int size) {
+  public ButtonMachineField setSize(int size) {
     this.height = size;
     this.width = size;
     return this;

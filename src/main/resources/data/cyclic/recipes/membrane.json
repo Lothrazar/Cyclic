@@ -1,20 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "cmc",
-    "mcm",
-    "cmc"
+    "aa",
+    "aa"
   ],
   "key": {
-    "m": {
+    "a": {
       "item": "minecraft:phantom_membrane"
-    },
-    "c": {
-      "item": "minecraft:chorus_fruit"
     }
   },
   "result": {
-    "item": "cyclic:membrane",
-    "count": 2
+    "item": "cyclic:membrane"
   }
 }

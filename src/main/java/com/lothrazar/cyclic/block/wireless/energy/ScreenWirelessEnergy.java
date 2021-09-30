@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -10,7 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenWirelessEnergy extends ScreenBase<ContainerWirelessEnergy> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private EnergyBar energy;
 
   public ScreenWirelessEnergy(ContainerWirelessEnergy screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -26,7 +26,7 @@ public class ScreenWirelessEnergy extends ScreenBase<ContainerWirelessEnergy> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileWirelessEnergy.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileWirelessEnergy.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

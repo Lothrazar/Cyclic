@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.laser;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -14,7 +14,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenLaser extends ScreenBase<ContainerLaser> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private ButtonMachine btnX;
   private ButtonMachine btnY;
   private ButtonMachine btnZ;
@@ -30,7 +30,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileLaser.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileLaser.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     //
     y += 26;
     int w = 160;

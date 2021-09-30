@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.forester;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
@@ -13,8 +13,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenForester extends ScreenBase<ContainerForester> {
 
-  private ButtonMachineRedstone btnRender;
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRender;
+  private ButtonMachineField btnRedstone;
   private EnergyBar energy;
   private GuiSliderInteger size;
 
@@ -32,9 +32,9 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     energy.visible = TileForester.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileForester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileForester.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     y += 20;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, TileForester.Fields.RENDER.ordinal(),
+    btnRender = addButton(new ButtonMachineField(x, y, TileForester.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     int w = 110;
     int h = 18;

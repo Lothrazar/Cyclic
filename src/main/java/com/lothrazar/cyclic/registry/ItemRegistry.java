@@ -316,9 +316,9 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.unbreakable_block, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("unbreakable_block"));
     r.register(new BlockItem(BlockRegistry.unbreakable_reactive, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("unbreakable_reactive"));
-    r.register(new BlockItem(BlockRegistry.conveyor, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("conveyor"));
-    r.register(new BlockItem(BlockRegistry.ender_shelf, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_shelf"));
-    r.register(new BlockItem(BlockRegistry.ender_controller, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_controller"));
+    r.register(new BlockItem(BlockRegistry.CONVEYOR, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("conveyor"));
+    r.register(new BlockItem(BlockRegistry.ENDER_SHELF, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_shelf"));
+    r.register(new BlockItem(BlockRegistry.ENDER_CONTROLLER, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_controller"));
     r.register(new BlockItem(BlockRegistry.WORKBENCH.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("workbench"));
     // exp machines
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)).setRegistryName("experience_pylon"));

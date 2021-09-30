@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -12,10 +12,10 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
 
-  private ButtonMachineRedstone btnRedstone;
-  private ButtonMachineRedstone btnRender;
+  private ButtonMachineField btnRedstone;
+  private ButtonMachineField btnRender;
   private GuiSliderInteger sizeSlider;
-  private ButtonMachineRedstone btnDirection;
+  private ButtonMachineField btnDirection;
   private GuiSliderInteger heightslider;
 
   public ScreenItemCollector(ContainerItemCollector screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -29,17 +29,17 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
     int x = guiLeft + 8;
     int y = guiTop + 8;
     int f = TileItemCollector.Fields.REDSTONE.ordinal();
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, f, container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, f, container.tile.getPos()));
     f = TileItemCollector.Fields.RENDER.ordinal();
     y += 20;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, f,
+    btnRender = addButton(new ButtonMachineField(x, y, f,
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"))
     //            .setSize(18)
     ;
     //then toggle
     f = TileItemCollector.Fields.DIRECTION.ordinal();
     y += 20;
-    btnDirection = addButton(new ButtonMachineRedstone(x, y, f,
+    btnDirection = addButton(new ButtonMachineField(x, y, f,
         container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"))
     //.setSize(18)
     ;

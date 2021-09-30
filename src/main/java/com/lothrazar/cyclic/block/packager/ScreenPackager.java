@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.packager;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenPackager extends ScreenBase<ContainerPackager> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private EnergyBar energy;
   private TimerBar timer;
 
@@ -30,7 +30,7 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TilePackager.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TilePackager.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

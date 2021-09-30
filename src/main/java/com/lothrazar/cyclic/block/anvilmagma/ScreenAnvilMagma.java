@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.anvilmagma;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -10,7 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenAnvilMagma extends ScreenBase<ContainerAnvilMagma> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private FluidBar fluid;
 
   public ScreenAnvilMagma(ContainerAnvilMagma screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -26,7 +26,7 @@ public class ScreenAnvilMagma extends ScreenBase<ContainerAnvilMagma> {
     fluid.guiTop = guiTop;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileAnvilMagma.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileAnvilMagma.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

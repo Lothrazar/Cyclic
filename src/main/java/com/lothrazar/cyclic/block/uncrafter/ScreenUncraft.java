@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.uncrafter;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -16,7 +16,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
 
   private TimerBar timer;
   private EnergyBar energy;
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
 
   public ScreenUncraft(ContainerUncraft screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -34,7 +34,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileUncraft.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileUncraft.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

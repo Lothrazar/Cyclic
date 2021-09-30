@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.Fields;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.StructCommands;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -17,7 +17,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
 
-  private ButtonMachineRedstone btnRender;
+  private ButtonMachineField btnRender;
   Map<StructCommands, ButtonMachine> map = new HashMap<>();
 
   public ScreenShapedata(ContainerShapedata screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -30,7 +30,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 6;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, TileShapedata.Fields.RENDER.ordinal(),
+    btnRender = addButton(new ButtonMachineField(x, y, TileShapedata.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
 
-  private ButtonMachineRedstone btnRender;
+  private ButtonMachineField btnRender;
 
   public ScreenTransmit(ContainerTransmit screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -24,7 +24,7 @@ public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 16;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
+    btnRender = addButton(new ButtonMachineField(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 

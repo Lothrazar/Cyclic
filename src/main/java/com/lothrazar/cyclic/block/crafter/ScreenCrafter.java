@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.block.crafter;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -36,7 +36,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
 
   private EnergyBar energy;
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private TimerBar timer;
 
   public ScreenCrafter(ContainerCrafter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -56,7 +56,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
     energy.visible = TileCrafter.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileCrafter.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileCrafter.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
   @Override

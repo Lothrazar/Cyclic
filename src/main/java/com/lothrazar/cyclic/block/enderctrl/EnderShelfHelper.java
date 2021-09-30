@@ -86,7 +86,7 @@ public class EnderShelfHelper {
 
   public static EnderShelfItemHandler getShelfHandler(TileEntity te) {
     if (te != null &&
-        te.getBlockState().getBlock() == BlockRegistry.ender_shelf &&
+        te.getBlockState().getBlock() == BlockRegistry.ENDER_SHELF &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderShelfItemHandler) {
       return (EnderShelfItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
@@ -96,7 +96,7 @@ public class EnderShelfHelper {
 
   public static EnderControllerItemHandler getControllerHandler(TileEntity te) {
     if (te != null &&
-        te.getBlockState().getBlock() == BlockRegistry.ender_controller &&
+        te.getBlockState().getBlock() == BlockRegistry.ENDER_CONTROLLER &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get() instanceof EnderControllerItemHandler) {
       return (EnderControllerItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
@@ -105,10 +105,10 @@ public class EnderShelfHelper {
   }
 
   public static boolean isController(BlockState state) {
-    return state.getBlock() == BlockRegistry.ender_controller;
+    return state.getBlock() == BlockRegistry.ENDER_CONTROLLER;
   }
 
   public static boolean isShelf(BlockState state) {
-    return state.getBlock() == BlockRegistry.ender_shelf;
+    return state.getBlock() == BlockRegistry.ENDER_SHELF;
   }
 }

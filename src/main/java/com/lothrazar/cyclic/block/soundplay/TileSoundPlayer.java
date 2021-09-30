@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.soundrecord;
+package com.lothrazar.cyclic.block.soundplay;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -11,13 +11,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class SoundRecorderTile extends TileEntityBase {
+public class TileSoundPlayer extends TileEntityBase {
 
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public SoundRecorderTile() {
-    super(TileRegistry.SOUND_RECORDER.get());
+  public TileSoundPlayer() {
+    super(TileRegistry.SOUND_PLAYER.get());
   }
 
   @Override

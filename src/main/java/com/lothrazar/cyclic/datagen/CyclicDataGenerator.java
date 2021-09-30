@@ -37,7 +37,7 @@ public class CyclicDataGenerator {
 
     @Override
     protected void registerStatesAndModels() {
-      VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.conveyor);
+      VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.CONVEYOR);
       builder.forAllStates((state -> {
         ConveyorType type = state.get(BlockConveyor.TYPE);
         ConveyorSpeed speed = state.get(BlockConveyor.SPEED);

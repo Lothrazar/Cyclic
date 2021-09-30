@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.shapebuilder;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
@@ -20,8 +20,8 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
   private EnergyBar energy;
   private List<ButtonMachine> shapeBtuns;
-  public ButtonMachineRedstone btnRedstone;
-  private ButtonMachineRedstone btnRender;
+  public ButtonMachineField btnRedstone;
+  private ButtonMachineField btnRender;
 
   public ScreenStructure(ContainerStructure screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -37,8 +37,8 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     energy.guiTop = guiTop;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileStructure.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    btnRender = addButton(new ButtonMachineRedstone(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileStructure.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRender = addButton(new ButtonMachineField(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     int w = 160;
     int h = 20;

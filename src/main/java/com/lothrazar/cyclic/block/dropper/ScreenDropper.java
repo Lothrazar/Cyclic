@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.dropper;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
@@ -13,8 +13,8 @@ import net.minecraft.util.text.ITextComponent;
 public class ScreenDropper extends ScreenBase<ContainerDropper> {
 
   private EnergyBar energy;
-  private ButtonMachineRedstone btnRedstone;
-  private ButtonMachineRedstone btnRender;
+  private ButtonMachineField btnRedstone;
+  private ButtonMachineField btnRender;
 
   public ScreenDropper(ContainerDropper screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -30,9 +30,9 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     energy.visible = TileDropper.POWERCONF.get() > 0;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileDropper.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileDropper.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     y += 20;
-    btnRender = addButton(new ButtonMachineRedstone(x, y, TileDropper.Fields.RENDER.ordinal(),
+    btnRender = addButton(new ButtonMachineField(x, y, TileDropper.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x = guiLeft + 32;
     y = guiTop + 18;

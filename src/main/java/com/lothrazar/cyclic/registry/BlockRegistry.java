@@ -84,6 +84,8 @@ import com.lothrazar.cyclic.block.shears.BlockShearing;
 import com.lothrazar.cyclic.block.solidifier.BlockSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmufflerBlockGhost;
+import com.lothrazar.cyclic.block.soundplay.BlockSoundPlayer;
+import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.spikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.spikes.SpikesBlock;
 import com.lothrazar.cyclic.block.spikes.SpikesDiamond;
@@ -137,8 +139,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> WIRELESS_ENERGY = BLOCKS.register("wireless_energy", () -> new BlockWirelessEnergy(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> WIRELESS_ITEM = BLOCKS.register("wireless_item", () -> new BlockWirelessItem(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> WIRELESS_FLUID = BLOCKS.register("wireless_fluid", () -> new BlockWirelessFluid(Block.Properties.create(Material.IRON)));
-  public static final RegistryObject<Block> SOUND_RECORDER = BLOCKS.register("sound_recorder", () -> new BlockBase(Block.Properties.create(Material.IRON)));
-  public static final RegistryObject<Block> SOUND_PLAYER = BLOCKS.register("sound_player", () -> new BlockBase(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> SOUND_RECORDER = BLOCKS.register("sound_recorder", () -> new BlockSoundRecorder(Block.Properties.create(Material.IRON)));
+  public static final RegistryObject<Block> SOUND_PLAYER = BLOCKS.register("sound_player", () -> new BlockSoundPlayer(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_FUEL = BLOCKS.register("generator_fuel", () -> new BlockGeneratorFuel(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_FOOD = BLOCKS.register("generator_food", () -> new BlockGeneratorFood(Block.Properties.create(Material.IRON)));
   public static final RegistryObject<Block> GENERATOR_FLUID = BLOCKS.register("generator_fluid", () -> new BlockGeneratorFluid(Block.Properties.create(Material.IRON)));
@@ -294,16 +296,17 @@ public class BlockRegistry {
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
   public static Block unbreakable_reactive;
   @ObjectHolder(ModCyclic.MODID + ":conveyor")
-  public static Block conveyor;
+  public static Block CONVEYOR;
   @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
-  public static Block ender_shelf;
+  public static Block ENDER_SHELF;
   @ObjectHolder(ModCyclic.MODID + ":ender_controller")
-  public static Block ender_controller;
+  public static Block ENDER_CONTROLLER;
   @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
   public static Block EYE_REDSTONE;
   @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
   public static Block EYE_TELEPORT;
 
+  //TODO: convert to dynams
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.generatorfuel;
 
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
-import com.lothrazar.cyclic.gui.ButtonMachineRedstone;
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.gui.TimerBar;
@@ -16,7 +16,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
 
-  private ButtonMachineRedstone btnRedstone;
+  private ButtonMachineField btnRedstone;
   private ButtonMachine btnToggle;
   private EnergyBar energy;
   private TimerBar timer;
@@ -36,7 +36,7 @@ public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileGeneratorFuel.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileGeneratorFuel.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     x = guiLeft + 132;
     y = guiTop + 8;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
