@@ -9,10 +9,15 @@ public class ButtonMachine extends ButtonTextured {
    * if we do this refactor, take the pos back from redstone button too
    */
   private int tileField;
-  //  BlockPos tilePos;
 
   public ButtonMachine(int xPos, int yPos, int width, int height, String displayString, IPressable handler) {
     super(xPos, yPos, width, height, displayString, handler);
+  }
+
+  public ButtonMachine(int xPos, int yPos, int width, int height, TextureEnum texture, int field, IPressable handler) {
+    super(xPos, yPos, width, height, "", handler);
+    this.tileField = field;
+    this.setTextureId(texture);
   }
 
   public int getTileField() {

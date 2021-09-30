@@ -5,6 +5,8 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -24,7 +26,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileSoundRecorder extends TileEntityBase implements INamedContainerProvider {
 
-  static final int MAX_SOUNDS = 12; // arbitrary
+  static final int MAX_SOUNDS = 8; // arbitrary
   private static final String SOUNDAT = "soundat";
   private static final String IGNORED = "ignored";
 
@@ -43,7 +45,7 @@ public class TileSoundRecorder extends TileEntityBase implements INamedContainer
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private NonNullList<String> sounds = NonNullList.withSize(MAX_SOUNDS, "");
-  private NonNullList<String> ignored = NonNullList.withSize(MAX_SOUNDS * 10, "");
+  private List<String> ignored = new ArrayList<>();
 
   public TileSoundRecorder() {
     super(TileRegistry.SOUND_RECORDER.get());
@@ -67,9 +69,9 @@ public class TileSoundRecorder extends TileEntityBase implements INamedContainer
         sounds.set(i, tag.getString(SOUNDAT + i));
       }
     }
-    for (int i = 0; i < ignored.size(); i++) {
+    for (int i = 0; i < MAX_SOUNDS * 100; i++) {
       if (tag.contains(IGNORED + i)) {
-        ignored.set(i, tag.getString(IGNORED + i));
+        ignored.add(tag.getString(IGNORED + i));
       }
     }
     super.read(bs, tag);
@@ -115,7 +117,7 @@ public class TileSoundRecorder extends TileEntityBase implements INamedContainer
     ModCyclic.LOGGER.error("TODO SAVE " + value + igme);
   }
 
-  private void ignoreSound(int value) {
+  public void ignoreSound(int value) {
     String igme = sounds.get(value);
     if (!ignored.contains(igme)) {
       ignored.add(igme);

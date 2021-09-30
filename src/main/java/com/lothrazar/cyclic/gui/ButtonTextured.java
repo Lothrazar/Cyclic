@@ -18,6 +18,8 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
 
   private TextureEnum textureId;
   private List<ITextComponent> tooltip;
+  public int xOffset = 0;
+  public int yOffset = 0;
 
   public ButtonTextured(int xPos, int yPos, int width, int height, String displayString, IPressable handler) {
     super(xPos, yPos, width, height,
@@ -45,8 +47,8 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
     if (textureId != null) {
       this.blit(ms,
           this.x + textureId.getOffsetX(), this.y + textureId.getOffsetY(),
-          textureId.getX(), textureId.getY(),
-          textureId.getWidth(), textureId.getHeight());
+          textureId.getX() + xOffset, textureId.getY() + yOffset,
+          textureId.getWidth() - yOffset, textureId.getHeight() - yOffset);
     }
     this.renderBg(ms, minecraft, mouseX, mouseY);
   }
