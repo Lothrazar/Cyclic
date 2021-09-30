@@ -71,7 +71,8 @@ public class CyclicPluginJEI implements IModPlugin {
     // 
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
-      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())) {
+      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
+          && item != BlockRegistry.SOLIDIFIER.asItem() && item != BlockRegistry.MELTER.asItem()) {
         registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
       }
     }

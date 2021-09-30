@@ -7,6 +7,6 @@
 			"right": "cyclic:blocks/machine/stone",
 			"back": "cyclic:blocks/machine/stone",
 		"side_flipped": "cyclic:blocks/machine/stone",
-			"front": "cyclic:blocks/machine/stone_front"
+			"front": "cyclic:blocks/machine/smooth_on"
     }
 }

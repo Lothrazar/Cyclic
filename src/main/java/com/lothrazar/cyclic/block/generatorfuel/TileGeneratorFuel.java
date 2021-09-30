@@ -60,14 +60,16 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
   @Override
   public void tick() {
     this.syncEnergy();
+    if (this.flowing == 1) {
+      this.exportEnergyAllSides();
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
     }
-    if (this.flowing == 1) {
-      this.exportEnergyAllSides();
+    if (world.isRemote) {
+      return;
     }
-    //
     //are we EMPTY
     if (this.burnTime == 0) {
       tryConsumeFuel();

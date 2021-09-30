@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -16,7 +15,8 @@ import net.minecraft.world.IBlockReader;
 public class BlockGeneratorFuel extends BlockBase {
 
   public BlockGeneratorFuel(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.ANVIL));
+    super(properties.hardnessAndResistance(1.8F));
+    setDefaultState(getDefaultState().with(LIT, false));
     this.setHasGui();
   }
 

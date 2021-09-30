@@ -62,14 +62,24 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
   }
 
   @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
+  @Override
   public void tick() {
     this.syncEnergy();
+    if (this.flowing == 1) {
+      this.exportEnergyAllSides();
+    }
+    if (world.isRemote) {
+      return;
+    }
+    //    System.out.println("sync fluid gen wtf");
+    //    tank.onContentsChanged();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
-    }
-    if (this.flowing == 1) {
-      this.exportEnergyAllSides();
     }
     if (this.burnTime <= 0) {
       currentRecipe = null;
@@ -90,6 +100,7 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
     //pull in new fuel
     this.findMatchingRecipe();
     if (currentRecipe == null) {
+      this.burnTime = 0;
       return;
     }
     if (this.burnTime > 0 && this.energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()) {

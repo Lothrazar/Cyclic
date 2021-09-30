@@ -15,6 +15,7 @@ public class BlockGeneratorDrops extends BlockBase {
 
   public BlockGeneratorDrops(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
+    setDefaultState(getDefaultState().with(LIT, false));
     this.setHasGui();
   }
 

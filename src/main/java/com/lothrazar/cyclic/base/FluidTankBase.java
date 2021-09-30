@@ -18,7 +18,7 @@ public class FluidTankBase extends FluidTank {
   }
 
   @Override
-  protected void onContentsChanged() {
+  public void onContentsChanged() {
     //send to client
     IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {

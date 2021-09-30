@@ -16,6 +16,7 @@ public class BlockGeneratorFluid extends BlockBase {
 
   public BlockGeneratorFluid(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
+    setDefaultState(getDefaultState().with(LIT, false));
     this.setHasGui();
   }
 

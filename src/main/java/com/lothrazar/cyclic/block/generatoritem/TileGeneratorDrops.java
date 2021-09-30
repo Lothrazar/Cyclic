@@ -58,16 +58,16 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
   @Override
   public void tick() {
     this.syncEnergy();
+    if (this.flowing == 1) {
+      this.exportEnergyAllSides();
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
     }
-    if (this.flowing == 1) {
-      this.exportEnergyAllSides();
+    if (world.isRemote) {
+      return;
     }
-    //TODO: RECIPE
-    //are we EMPTY
-    //is burntime zero?
     if (this.burnTime <= 0) {
       currentRecipe = null;
       this.burnTimeMax = 0;
