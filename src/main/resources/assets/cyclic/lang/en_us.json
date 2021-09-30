@@ -1506,7 +1506,8 @@
     "block.cyclic.pipe.guide": "Types of cables can be used to transport fluids, items, or energy between machines. They can be configured using a $(l:items/cable_wrench)Cable Wrench$(/l).",
     "block.cyclic.fluid_pipe": "Fluid Cable",
     "block.cyclic.fluid_pipe.tooltip": "Pipe liquid between blocks; use a Cable Wrench to customize",
-    "block.cyclic.fluid_pipe.guide": "Pipe liquid between blocks.  Has extraction mode with a filter GUI, and a yellow blocked state to disable the flow.  Maximum of 8 buckets per tick.  ",
+    "block.cyclic.fluid_pipe.tooltip0": "Also collects fluid source blocks from the world",
+    "block.cyclic.fluid_pipe.guide": "Pipe liquid between blocks.  Has extraction mode with a filter GUI, and a yellow blocked state to disable the flow.  Also collects fluid from the world.  Maximum of 16 buckets per tick.  ",
     "block.cyclic.bundled_pipe": "Bundled Cable",
     "block.cyclic.bundled_pipe.tooltip": "Transfer items, fluids, and energy",
 

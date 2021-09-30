@@ -4,9 +4,12 @@ import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,6 +23,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
@@ -32,6 +37,17 @@ public class BlockCableFluid extends CableBase {
 
   public BlockCableFluid(Properties properties) {
     super(properties.hardnessAndResistance(0.5F));
+  }
+
+  @Override
+  public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    super.addInformation(stack, worldIn, tooltip, flagIn);
+    if (Screen.hasShiftDown()) {
+      tooltip.add(new TranslationTextComponent("block.cyclic.fluid_pipe.tooltip0").mergeStyle(TextFormatting.GRAY));
+    }
+    else {
+      tooltip.add(new TranslationTextComponent("item.cyclic.shift").mergeStyle(TextFormatting.DARK_GRAY));
+    }
   }
 
   @Override

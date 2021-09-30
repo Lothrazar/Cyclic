@@ -13,7 +13,6 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilString;
 import java.util.Objects;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.Item;
@@ -71,15 +70,17 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
     // 
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
-      if (UtilString.isCyclic(item.getRegistryName())) {
+      ItemStack st = new ItemStack(item);
+      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())) {
         registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
       }
     }
-    for (Block item : ForgeRegistries.BLOCKS.getValues()) {
-      if (UtilString.isCyclic(item.getRegistryName())) {
-        registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
-      }
-    }
+    //    for (Block blk : ForgeRegistries.BLOCKS.getValues()) {
+    //      ItemStack st = new ItemStack(blk);
+    //      if (!st.isEmpty() && blk != Blocks.AIR && UtilString.isCyclic(blk.getRegistryName())) {
+    //        registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslationTextComponent(blk.getTranslationKey() + ".guide"));
+    //      }
+    //    }
   }
 
   @Override
