@@ -19,12 +19,10 @@ public class ContainerSoundRecorder extends ContainerBase {
     tile = (TileSoundRecorder) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    addSlot(new SlotItemHandler(tile.inputSlots, 0, 55, 35));
-    //    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35));
+    addSlot(new SlotItemHandler(tile.inputSlots, 0, 9, 209));
     this.endInv = 1;
-    layoutPlayerInventorySlots(52, 168);
+    layoutPlayerInventorySlots(53, 175);
     this.trackAllIntFields(tile, TileSoundRecorder.Fields.values().length);
-    //    trackEnergy(tile);
   }
 
   @Override

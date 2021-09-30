@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.soundrecord;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileSoundRecorder extends TileEntityBase implements INamedContainerProvider {
 
-  static final int MAX_SOUNDS = 8; // arbitrary
+  static final int MAX_SOUNDS = 10; // locked by gui size. TODO: scrollbar
   private static final String SOUNDAT = "soundat";
   private static final String IGNORED = "ignored";
 
@@ -115,6 +116,9 @@ public class TileSoundRecorder extends TileEntityBase implements INamedContainer
   private void saveSoundToCard(int value) {
     String igme = sounds.get(value);
     ModCyclic.LOGGER.error("TODO SAVE " + value + igme);
+    if (!inputSlots.getStackInSlot(0).isEmpty()) {
+      SoundCard.saveSound(inputSlots.getStackInSlot(0), igme);
+    }
   }
 
   public void ignoreSound(int value) {
@@ -150,6 +154,7 @@ public class TileSoundRecorder extends TileEntityBase implements INamedContainer
 
   public void clearSounds() {
     sounds = NonNullList.withSize(MAX_SOUNDS, "");
+    ModCyclic.LOGGER.error("clear success string ");
   }
 
   public boolean onSoundHeard(String soundIn) {

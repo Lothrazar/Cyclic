@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/cloud" }
+        "": { "model": "cyclic:block/cloud_membrane" }
     }
 }

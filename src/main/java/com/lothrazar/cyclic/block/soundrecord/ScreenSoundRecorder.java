@@ -21,22 +21,26 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
   public void init() {
     super.init();
     int x, y;
-    x = guiLeft + 150;
-    y = guiTop + 8;
-    //    ButtonMachine buttonClear = addButton(new ButtonMachine(x, y, 20, 20, "", (p) -> {
-    //      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.CLEARALL.ordinal(), 1, container.tile.getPos()));
-    //    }));
     x = guiLeft + 4;
-    //    y = guiTop+8;
-    int bsize = 16;
+    y = guiTop + 174;
+    int bsize = 20;
     final String pf = "block.cyclic.sound_recorder.";
+    ButtonMachine buttonClear = addButton(new ButtonMachine(x, y, bsize, bsize, TextureEnum.CRAFT_EMPTY, TileSoundRecorder.Fields.CLEARALL.ordinal(), (p) -> {
+      container.tile.clearSounds();
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.CLEARALL.ordinal(), 1, container.tile.getPos()));
+    }));
+    buttonClear.xOffset = -3;
+    buttonClear.yOffset = -2;
+    buttonClear.setTooltip(pf + "clear");
+    bsize = 16;
+    y = guiTop + 8;
     for (int i = 0; i < TileSoundRecorder.MAX_SOUNDS; i++) {
-      //      TextFieldWidget w = new TextFieldWidget(this.font, x, y - 20, width, ht, new StringTextComponent(""));
       ButtonMachine btnSave = addButton(new ButtonMachine(x, y, bsize, bsize,
           TextureEnum.RENDER_SHOW, i, (p) -> {
             int soundIndex = ((ButtonMachine) p).getTileField();
             PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.SAVE.ordinal(), soundIndex, container.tile.getPos()));
           }));
+      //      btnSave.active = !container.tile.inputSlots.getStackInSlot(0).isEmpty();
       btnSave.xOffset = 2;
       btnSave.yOffset = 2;
       btnSave.setTooltip(pf + "save");
@@ -78,6 +82,6 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_SOUND);
-    this.drawSlot(ms, 154, 34);
+    this.drawSlot(ms, 8, 208);
   }
 }

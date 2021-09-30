@@ -212,8 +212,33 @@
     
     
     "block.cyclic.sound_recorder":"Sound Recorder",
-    "block.cyclic.sound_recorder.tooltip":"Records nearby auto waves into Sound Cards",
-    "block.cyclic.sound_recorder.guide":"Record nearby sounds and play them later.  using Sound Data Cards",
+    "block.cyclic.sound_recorder.tooltip":"Records sounds; save into Sound Data Cards",
+    "block.cyclic.sound_recorder.guide":"Record any sounds up to 8 blocks away, and record in the block.  Comes with an ignore list that you can build up.  Save to Sound Data Card for use in Sound Player. ",
+    "block.cyclic.sound_recorder.save":"Save Sound",
+    
+    "block.cyclic.sound_recorder.ignore":"Ignore Sound",
+    "block.cyclic.sound_recorder.clear":"Clear all sounds",
+ 
+    "block.cyclic.lamp":"Waxed Lamp",
+    "block.cyclic.lamp.tooltip":"Light level depends on redstone input",
+    "block.cyclic.lamp.guide":"Light level depends on how much redstone power is given.  Max power is max light, a weak redstone signal is almost no light",
+   
+    "block.cyclic.membrane":"Membrane Block",
+    "block.cyclic.membrane.tooltip":"Walk on this while its wet",
+    "block.cyclic.membrane.guide":"Becomes wet similar to farmland while it is touching water.  Walking across the wet version will provide a brief speed and jump boost",
+  
+    "block.cyclic.cloud":"Cloud Block",
+    "block.cyclic.cloud.tooltip":"Slows falling and movement",
+    "block.cyclic.cloud.guide":"Whenever passing through, applies short slowness buff and removes current built up pending fall damage",
+  
+    "block.cyclic.cloud_membrane":"Phantom Cloud Block",
+    "block.cyclic.cloud_membrane.tooltip":"Solid for anything not a player",
+    "block.cyclic.cloud_membrane.guide":"Solid for most mobs, but players can pass through like air",
+  
+    "block.cyclic.soil":"Rich Soil",
+    "block.cyclic.soil.tooltip":"Keeps nearby Farmland damp without any water",
+    "block.cyclic.soil.guide":"Nearby farmland treats this just like water, and will become and stay damp",
+  
     
     "block.cyclic.sound_player":"Sound Player",
     "block.cyclic.sound_player.tooltip":"Plays sounds recorded on Sound Cards",
@@ -419,6 +444,7 @@
     "button.waypoint.dimension": "Only in dimension",
     "button.waypoint.cost": "Exp Cost:",
     "button.waypoint.distance": "Distance:",
+    
     "command.cyclic.arguments.null": "Second argument must be a valid cyclic command: ",
     "command.cyclic.gethome.bed": "Your home bed was missing or obstructed",
     "command.cyclic.gethome.overworld": "No home outside the overworld",
@@ -936,11 +962,11 @@
     "item.cyclic.rotate.guide": "Attempts to rotate the targeted block while respecting the same material type.  So it will turn a log to a different angle, but will not turn oak planks into spruce planks.  This can be used to get vanilla only blocks that are otherwise un-obainable blocks, like smooth stone double slabs with the flat side, extra smooth sandstone, and a log with bark on all six sides.",
     "item.cyclic.rotate": "Wooden Wrench",
     "item.cyclic.rotate.tooltip": "Rotates simple blocks/machines if they are able",
-    "item.cyclic.spawn_inspect.empty": "Nothing can spawn here",
-    "item.cyclic.spawn_inspect.guide": "Tells you exactly which mobs can spawn on the targeted block.  Natural spawns only, ignores mob spawner blocks.  Useful for making slime, witch, and wither skeleton farms.",
-    "item.cyclic.spawn_inspect": "Spawn Detector",
-    "item.cyclic.spawn_inspect.tooltip": "Detects mob spawns (including modded, slimes, and Wither skeletons)",
-    "item.cyclic.spawn_inspect.up": "Click on the top side of a block",
+    "item.cyclic.spawn_inspector.empty": "Nothing can spawn here",
+    "item.cyclic.spawn_inspector.guide": "Tells you exactly which mobs can spawn on the targeted block.  Natural spawns only, ignores mob spawner blocks.  Useful for making slime, witch, and wither skeleton farms.",
+    "item.cyclic.spawn_inspector": "Spawn Detector",
+    "item.cyclic.spawn_inspector.tooltip": "Detects mob spawns (including modded, slimes, and Wither skeletons)",
+    "item.cyclic.spawn_inspector.up": "Click on the top side of a block",
     "item.cyclic.spelunker": "Cave-finder",
     "item.cyclic.spelunker.tooltip": "Search for underground caves",
     "item.cyclic.spelunker.guide": "Searches out for empty space behind the block you click on.  Works in any direction.  If you hit the top of a block it searches down, if you hit the side it searches behind.  Always in a straight line.  Great for finding caves while branch mining.",
@@ -1106,6 +1132,7 @@
     "button.screen.fluid": "Fluid",
     "button.screen.energy": "Energy",
     
+
     "block.cyclic.library_ctrl": "Ender Library",
     "block.cyclic.library_ctrl.tooltip": "Surround this with Ender Bookshelves to deposit",
     "block.cyclic.library_ctrl.guide": "The controller block for Ender Bookshelves.  Surround it with Ender Bookshelves so it can connect and it will distribute enchantments.  Can be automated by piping in enchanted books and pulling out empty books.",

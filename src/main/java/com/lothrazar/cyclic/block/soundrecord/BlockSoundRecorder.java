@@ -23,7 +23,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BlockSoundRecorder extends BlockBase {
 
-  private static final int RADIUS = 8;
+  private static final int RADIUS = 8; // TODO: config
 
   public BlockSoundRecorder(Properties properties) {
     super(properties.hardnessAndResistance(1F).sound(SoundType.SCAFFOLDING));
