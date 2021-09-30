@@ -24,6 +24,7 @@ public class BlockWirelessFluid extends BlockBase {
   public BlockWirelessFluid(Properties properties) {
     super(properties.hardnessAndResistance(1.2F).notSolid());
     this.setHasGui();
+    this.setDefaultState(getDefaultState().with(LIT, false));
   }
 
   @Override

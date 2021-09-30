@@ -20,7 +20,7 @@
     "block.cyclic.experience_pylon.tooltip": "Collects nearby XP orbs, players above",
     "block.cyclic.experience_pylon.guide": "The Experience Pylon automatically collects nearby experience orbs and stores them as Fluid Experience in its internal buffer. $(l:misc/fluid_experience)Fluid Experience$(/l) can be pumped into and out of the pylon.$(br2)Additionally, the player may right click a filled Experience Pylon with a piece of Sugar to enrich it with experience, creating an $(l:consume/experience_food)Experience Confection$(/l).",
 	  "item.cyclic.experience_food": "Experience Confection",
-	  "item.cyclic.experience_food.tooltip": "Use sugar on an Experience Pylon ",
+	  "item.cyclic.experience_food.tooltip": "Eat to gain experience",
     "item.cyclic.experience_food.guide": "Created by using a piece of Sugar on a filled Experience Pylon. Eat the confection to gain the experience held within, or use it on an Experience Pylon to put experience back into the pylon.",
     "item.cyclic.experience_food.guide0": "Can also be created by combining Fluid Experience and Sugar in a $(l:machines/solidifier)Solidification Chamber$(/l), and turned back into Fluid Experience in a $(l:machines/melter)Melting Chamber$(/l).",
 
@@ -919,25 +919,23 @@
     "item.cyclic.sword_weakness.guide": "Unbreakable sword with a special right-click ability to launch a weakness potion",
     "item.cyclic.sword_weakness": "Sword of Atrophy",
     "item.cyclic.charm_torch": "Torch Charm",
-    "item.cyclic.charm_torch.tooltip": "Torches the darkness while in your inventory",
+    "item.cyclic.charm_torch.tooltip": "Torches the darkness at your feet while in your inventory",
     "item.cyclic.charm_torch.guide": "Whenever this detects darkness at your feet, it places a torch there and drains some durability.  Right click in your inventory to turn it off.",
     "item.cyclic.charm_torch_cave": "Caving Torch Charm",
-    "item.cyclic.charm_torch_cave.tooltip": "Torches your surroundings while in your inventory",
+ 
+    "item.cyclic.charm_torch_cave.tooltip": "Torches your dark surroundings while in your inventory",
     "item.cyclic.charm_torch_cave.guide": "Detects darkness in an area around you and places torches where necessary, draining some durability.  Right click in your inventory to turn it off.",
 
-    "item.tool_harvest_crops": "Garden Scythe",
-    "item.tool_harvest_crops.tooltip": "Harvest and replant large areas based on data tag",
-    "item.tool_harvest_crops.guide": "This will harvest & replant an area around where you use it; similar to the Harvester machine except it works all at once.",
-    "item.tool_harvest_leaves.guide": "Harvests all nearby leaves.",
+ 
     "item.cyclic.scythe_forage": "Scythe of Foraging",
     "item.cyclic.scythe_forage.tooltip": "Forage growing resources based on data tag",
-    "item.cyclic.scythe_forage.guide": "Forage growing resources based on data tags",
+    "item.cyclic.scythe_forage.guide": "Forage growing resources, using the following block data tags:  minecraft:flowers, minecraft:corals, forge:mushrooms, forge:vines, forge:cactus, forge:crop_blocks",
     "item.cyclic.scythe_leaves": "Tree Scythe",
     "item.cyclic.scythe_leaves.tooltip": "Mass leaf removal",
-    "item.cyclic.scythe_leaves.guide": "Harvests all nearby leaves on use",
+    "item.cyclic.scythe_leaves.guide": "Harvests all nearby leaves on use, using the forge:leaves block data tag",
     "item.cyclic.scythe_brush": "Brush Scythe",
-    "item.cyclic.scythe_brush.tooltip": "Harvest weeds and flowers based on data tag.",
-    "item.cyclic.scythe_brush.guide": "Harvest weeds and flowers based on data tag.",
+    "item.cyclic.scythe_brush.tooltip": "Harvest weeds based on data tag.",
+    "item.cyclic.scythe_brush.guide": "Harvest everything under the block data tag forge:plants.",
     "item.tool_launcher": "Player Launcher",
     "item.tool_launcher.tooltip": "Hold and use to launch yourself in the selected direction",
     "item.tool_launcher.guide": "Aim and then charge this up like a bow and then release it to get launched into the air.  It has two modes, forward and reverse, that you can toggle with attack (left-click).  Forward means you need to aim up into the air, and you fly the exact direction and angle that you look.  Reverse means you have to aim down at the ground and you get launched backwards.  Using this gives you the \"bouncy\" potion effect, which makes anything you land on bounce you up like a slime block.",
@@ -1738,7 +1736,7 @@
 
 
     "block.cyclic.packager": "Packager",
-    "block.cyclic.packager.tooltip": "Automate most crafting recipes with matching items",
+    "block.cyclic.packager.tooltip": "Automate recipes with matching items",
     "block.cyclic.packager.guide": "Package matching items together.  Compatible with all 2x2, 3x3 recipes that are specifically merging identical items together such as Iron Blocks or Bricks",
 
     "block.dehydrator": "Dehydrator",

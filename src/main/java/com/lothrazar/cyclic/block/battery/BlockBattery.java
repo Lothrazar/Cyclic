@@ -28,7 +28,7 @@ public class BlockBattery extends BlockBase {
   public BlockBattery(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
     this.setHasGui();
-    this.setDefaultState(this.stateContainer.getBaseState().with(PERCENT, EnumBatteryPercent.ZERO));
+    this.setDefaultState(getDefaultState().with(PERCENT, EnumBatteryPercent.ZERO));
   }
 
   @Override

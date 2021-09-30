@@ -33,7 +33,6 @@ import net.minecraft.world.World;
 
 public class UtilScythe {
 
-  //
   public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ScytheType type) {
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
