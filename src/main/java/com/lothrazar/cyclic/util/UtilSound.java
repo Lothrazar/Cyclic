@@ -1,13 +1,16 @@
 package com.lothrazar.cyclic.util;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SPlaySoundEffectPacket;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class UtilSound {
 
@@ -33,12 +36,6 @@ public class UtilSound {
     }
   }
 
-  public static void playSoundFromServer(ServerWorld world, BlockPos pos, SoundEvent soundIn) {
-    for (ServerPlayerEntity sp : world.getPlayers()) {
-      playSoundFromServer(sp, pos, soundIn);
-    }
-  }
-
   public static void playSoundFromServer(ServerPlayerEntity entityIn, BlockPos pos, SoundEvent soundIn) {
     if (soundIn == null || entityIn == null) {
       return;
@@ -59,5 +56,19 @@ public class UtilSound {
         SoundCategory.BLOCKS,
         entityIn.lastTickPosX, entityIn.lastTickPosY, entityIn.lastTickPosZ,
         1.0f, 1.0f));
+  }
+
+  public static void playSoundFromServer(ServerWorld world, BlockPos pos, SoundEvent soundIn) {
+    for (ServerPlayerEntity sp : world.getPlayers()) {
+      playSoundFromServer(sp, pos, soundIn);
+    }
+  }
+
+  public static void playSoundById(PlayerEntity player, String sid) {
+    //do the thing
+    SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(sid));
+    if (sound != null && player.world.isRemote) {
+      UtilSound.playSound(player, sound);
+    }
   }
 }

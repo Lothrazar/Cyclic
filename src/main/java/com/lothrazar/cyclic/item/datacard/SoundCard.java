@@ -4,19 +4,16 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class SoundCard extends ItemBase {
 
@@ -28,21 +25,20 @@ public class SoundCard extends ItemBase {
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
-    BlockPos pos = context.getPos();
-    World world = context.getWorld();
-    if (context.getPlayer().getCooldownTracker().hasCooldown(this)) {
+    //    BlockPos pos = context.getPos();
+    //    World world = context.getWorld();
+    PlayerEntity player = context.getPlayer();
+    if (player.getCooldownTracker().hasCooldown(this)) {
       return ActionResultType.PASS;
     }
     ItemStack stack = context.getItem();
     if (stack.hasTag() && stack.getTag().contains(SOUND_ID)) {
-      context.getPlayer().getCooldownTracker().setCooldown(this, 10);
+      //assume sound is valid
+      player.getCooldownTracker().setCooldown(this, 10);
+      player.swingArm(context.getHand());
+      //actually play it
       String sid = stack.getTag().getString(SOUND_ID);
-      //do the thing
-      SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(sid));
-      if (sound != null && world.isRemote) {
-        UtilSound.playSound(context.getPlayer(), sound);
-        context.getPlayer().swingArm(context.getHand());
-      }
+      UtilSound.playSoundById(player, sid);
     }
     return ActionResultType.PASS;
   }

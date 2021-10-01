@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import java.util.List;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.NoteBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ITickableSound;
@@ -29,6 +30,7 @@ public class BlockSoundRecorder extends BlockBase {
     super(properties.hardnessAndResistance(1F).sound(SoundType.SCAFFOLDING));
     MinecraftForge.EVENT_BUS.register(this);
     this.setHasGui();
+    NoteBlock xy;
   }
 
   @Override

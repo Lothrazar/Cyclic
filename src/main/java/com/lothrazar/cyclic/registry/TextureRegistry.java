@@ -15,6 +15,7 @@ public class TextureRegistry {
   public static final ResourceLocation INVENTORY_SOUND = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_sound.png");
   public static final ResourceLocation SLOT = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot.png");
   public static final ResourceLocation SLOT_SAPLING = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_sapling.png");
+  public static final ResourceLocation SLOT_SOUND = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_sound.png");
   public static final ResourceLocation SLOT_TOOL = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_tool.png");
   public static final ResourceLocation SLOT_BSDATA = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_bsdata.png");
   public static final ResourceLocation SHAPE_STASH = new ResourceLocation(ModCyclic.MODID, "textures/gui/shape_stash.png");

@@ -13,7 +13,6 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -87,13 +86,8 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     final int factor = 1;
-    int burnTimeTicks = factor * ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING); // stack.getBurnTime(); 
-    FurnaceTileEntity y;
+    int burnTimeTicks = factor * ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING);
     if (burnTimeTicks > 0) {
-      // 
-      //      int factor = 1;
-      //      int ticks = factor * burnTimeTicks;
-      //      int testTotal = RF_PER_TICK.get() * ticks;
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;

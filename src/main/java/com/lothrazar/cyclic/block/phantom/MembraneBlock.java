@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoulSandBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -77,8 +76,6 @@ public class MembraneBlock extends BlockBase {
 
   @Override
   public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
-    SoulSandBlock y;
-    //    double lenght = entityIn.getMotion().length();
     if (worldIn.isRemote || !(entityIn instanceof PlayerEntity)) {
       //not a server player
       return;

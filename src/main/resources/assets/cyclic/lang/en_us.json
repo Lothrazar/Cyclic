@@ -207,7 +207,7 @@
     "item.cyclic.shape_data.guide":"Place in a $(l:machines/computer_shape)Shape Computer$(/l) or a $(l:machines/structure)Shape Builder$(/l) to load with data, then click on a block to load its block",
     
     "item.cyclic.sound_data":"Sound Data Card",
-    "item.cyclic.sound_data.tooltip":"Records and stores sounds",
+    "item.cyclic.sound_data.tooltip":"Use to play the recorded sound",
     "item.cyclic.sound_data.guide":"Record nearby sounds and play them later.  See matching machines for details ",
     
     

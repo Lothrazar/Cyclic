@@ -82,6 +82,6 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_SOUND);
-    this.drawSlot(ms, 8, 208);
+    this.drawSlot(ms, 8, 208, TextureRegistry.SLOT_SOUND);
   }
 }

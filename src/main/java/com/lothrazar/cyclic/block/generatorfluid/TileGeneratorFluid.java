@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -117,7 +116,7 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
         //no items to extract
         tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
         // ash?
-        ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
+        //        ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
         return;
       }
     }

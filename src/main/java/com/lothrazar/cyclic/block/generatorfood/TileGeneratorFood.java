@@ -87,22 +87,11 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
     if (stack.isFood()) {
       float foodVal = stack.getItem().getFood().getHealing() + stack.getItem().getFood().getSaturation();
       int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
-      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
+      //      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;
       stack.shrink(1);
-      //what factor lol
-      //1 oak log is 6000 RF total (37 sec? no)
-      //1 coal 200 time is 38,000 RF total
-      //1 stick 12 time 2000 RF total
-      //for food
-      //1 bread is 867 time so total rf 69,420 
-      //1 cookie 60 time 4,800 RF total bee
-      //
-      //1 cooked beef 1920 time so total ?153,600 
-      //1 ender pearl 800 time is // 64,000
-      //TNT
       //nether items, mob drops
       // lava fluid
       //exp fluid
