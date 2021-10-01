@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cyclic:dark_glass",
-    "cyclic:dark_glass_connected",
-    "cyclic:crate",
-    "cyclic:unbreakable_block",
-    "cyclic:unbreakable_reactive"
+       {"required":false, "id": "cyclic:dark_glass"},
+       {"required":false, "id": "cyclic:dark_glass_connected"},
+       {"required":false, "id": "cyclic:crate"},
+       {"required":false, "id": "cyclic:unbreakable_block"},
+       {"required":false, "id": "cyclic:unbreakable_reactive"}
   ]
 }

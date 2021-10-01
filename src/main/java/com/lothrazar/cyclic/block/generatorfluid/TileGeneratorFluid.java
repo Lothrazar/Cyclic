@@ -75,8 +75,6 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
     if (world.isRemote) {
       return;
     }
-    //    System.out.println("sync fluid gen wtf");
-    //    tank.onContentsChanged();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
@@ -86,17 +84,10 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
       this.burnTimeMax = 0;
       this.burnTime = 0;
     }
-    //    if (currentRecipe != null && burnTime > 0) { // && energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()
     tryConsumeFuel();
-    //
-    //are we EMPTY
-    //    if (this.burnTime == 0) {
-    //      tryConsumeFuel();
-    //    }
   }
 
   private void tryConsumeFuel() {
-    //    this.burnTimeMax = 0;
     //pull in new fuel
     this.findMatchingRecipe();
     if (currentRecipe == null) {

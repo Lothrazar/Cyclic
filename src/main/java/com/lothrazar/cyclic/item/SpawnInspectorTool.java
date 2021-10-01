@@ -73,6 +73,7 @@ public class SpawnInspectorTool extends ItemBase {
         UtilChat.addServerChatMessage(context.getPlayer(), str);
       }
     }
+    context.getPlayer().swingArm(context.getHand());
     return ActionResultType.PASS;
   }
 }

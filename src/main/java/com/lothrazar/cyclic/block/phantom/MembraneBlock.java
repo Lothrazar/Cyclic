@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SoulSandBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,15 +15,37 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class MembraneBlock extends BlockBase {
+
+  protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.5D, 16.0D);
 
   public MembraneBlock(Properties properties) {
     super(properties.hardnessAndResistance(4.0F, 1.0F));
     this.setDefaultState(this.getDefaultState().with(LIT, false));
   }
 
+  @Override
+  public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    return SHAPE;
+  }
+
+  @Override
+  public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos pos) {
+    return VoxelShapes.fullCube();
+  }
+
+  @Override
+  public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+    return VoxelShapes.fullCube();
+  }
+
+  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     //if i am not wet
@@ -53,12 +76,8 @@ public class MembraneBlock extends BlockBase {
   }
 
   @Override
-  public void registerClient() {
-    //    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-  }
-
-  @Override
   public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
+    SoulSandBlock y;
     //    double lenght = entityIn.getMotion().length();
     if (worldIn.isRemote || !(entityIn instanceof PlayerEntity)) {
       //not a server player
@@ -71,6 +90,10 @@ public class MembraneBlock extends BlockBase {
       if (player.isSprinting()) {
         //zscaler
         EffectInstance eff = new EffectInstance(Effects.SPEED, 30, 5);
+        eff.showIcon = false;
+        eff.showParticles = false;
+        player.addPotionEffect(eff);
+        eff = new EffectInstance(Effects.JUMP_BOOST, 30, 5);
         eff.showIcon = false;
         eff.showParticles = false;
         player.addPotionEffect(eff);

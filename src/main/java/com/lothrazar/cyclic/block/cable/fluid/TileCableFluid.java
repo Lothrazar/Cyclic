@@ -93,18 +93,17 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
       //test if its a source block, or a waterlogged block
       BlockState targetState = world.getBlockState(target);
       FluidState fluidState = world.getFluidState(target);
-      if (fluidState != null && fluidState.isSource()) {
-        //not just water. any fluid source block
-        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-          sideHandler.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
-      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
-        //
+      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
         targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
         //for waterlogged it is hardcoded to water
         if (world.setBlockState(target, targetState)) {
           sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
+      }
+      else if (fluidState != null && fluidState.isSource()) {
+        //not just water. any fluid source block
+        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
+          sideHandler.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
     }

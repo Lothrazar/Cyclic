@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "cyclic:flower_cyan"
+        {"required":false, "id": "cyclic:flower_cyan"}
   ]
 }
