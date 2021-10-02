@@ -49,7 +49,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   public static final Set<IHarvesterOverride> HARVEST_OVERRIDES = Sets.newIdentityHashSet();
-  public static final int MAX_SIZE = 12; // TODO: could be config . radius 7 translates to 15x15 area (center block + 7 each side)
+  public static final int MAX_SIZE = 12;
   static final int MAX_ENERGY = 640000;
   static final int MAX_HEIGHT = 16;
   public static IntValue POWERCONF;

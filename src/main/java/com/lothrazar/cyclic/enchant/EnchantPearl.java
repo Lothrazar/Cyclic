@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.item.EnderPearlEntity;
@@ -9,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -67,9 +67,7 @@ public class EnchantPearl extends EnchantBase {
         Vector3d lookVector = player.getLookVec();
         pearl.shoot(lookVector.getX(), lookVector.getY(), lookVector.getZ(), VELOCITY, INNACCURACY);
         UtilEntity.setCooldownItem(player, event.getItemStack().getItem(), adjustedCooldown);
-        world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL,
-            //TODO: UtilSound
-            0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
+        UtilSound.playSound(player, SoundEvents.ENTITY_ENDER_PEARL_THROW, 0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
         world.addEntity(pearl);
         //block propogation of event 
         event.setResult(Result.DENY);

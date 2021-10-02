@@ -33,22 +33,6 @@ public class EnderShelfRenderer extends TileEntityRenderer<TileEnderShelf> {
         renderSlot(tile, i, h.getStackInSlot(i), ms, buffer, combinedLightIn, combinedOverlayIn);
       }
     });
-    //    if (EnderShelfHelper.isController(tile.getBlockState())) { 
-    //      EnderControllerItemHandler h = EnderShelfHelper.getControllerHandler(tile);
-    //      if (h != null) {
-    //        int count = tile.getShelves().size();
-    //        String shelves = count == 1 ? " shelf" : " shelves"; // TODO lang entry
-    //        ms.push();
-    //        FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
-    //        double x = 1.5F / 16F;
-    //        double y = 14 / 16F;
-    //        float scale = 0.1F;
-    //        ms.translate(x, y, 1 - OFFSET);
-    //        ms.scale(1 / 16f * scale, -1 / 16f * scale, 0.00005f);
-    //        fontRenderer.renderString(count + shelves, 0, 0, 421025, false, ms.getLast().getMatrix(), buffer, false, 0, light);
-    //        ms.pop();
-    //      }
-    //    }
   }
 
   private void renderSlot(TileEnderShelf tile, int slot, ItemStack stack, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {

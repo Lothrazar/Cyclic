@@ -239,7 +239,6 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   private static final int spotsSkippablePerTrigger = 50;
 
   private void incrementPosition(List<BlockPos> shape) {
-    //TODO: base class
     if (shape == null || shape.size() == 0) {
       return;
     }

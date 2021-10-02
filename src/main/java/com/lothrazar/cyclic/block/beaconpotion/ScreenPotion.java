@@ -34,7 +34,6 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     y = guiTop + 8;
     btnRedstone = addButton(new ButtonMachineField(x, y, TilePotion.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     y += 51;
-    //TODO  refactor btn
     btnEntity = addButton(new ButtonMachine(x, y, 60, 20, "", (p) -> {
       int f = TilePotion.Fields.ENTITYTYPE.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,

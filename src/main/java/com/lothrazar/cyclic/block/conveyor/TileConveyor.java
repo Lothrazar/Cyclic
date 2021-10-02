@@ -56,7 +56,6 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     //if the normalized values are >1 or <0, they entity is right at the border so dont apply it now
     Direction facing = bs.get(BlockStateProperties.HORIZONTAL_FACING);
     if (facing.getAxis() == Axis.Z && (normalizedX > 1 - offside || normalizedX < 0 + offside)) {
-      //      ModCyclic.LOGGER.info("cancel edge movement  " + entity);
       return;
     }
     if (facing.getAxis() == Axis.X && (normalizedZ > 1 - offside || normalizedZ < 0 + offside)) {
@@ -67,7 +66,6 @@ public class TileConveyor extends TileEntityBase implements ITickableTileEntity 
     double speed = bs.get(BlockConveyor.SPEED).getSpeed(); //0.08D; //temp variable, replace with speed from blockstate later
     double xSpeed = 0.0D, zSpeed = 0.0D, ySpeed = 0.0D;
     if (entity.getPosY() > heightLimit) {
-      //            ModCyclic.LOGGER.info("cancel HEIGHT LIMIT ");
       return;
     }
     xSpeed = facing.getXOffset() * speed;

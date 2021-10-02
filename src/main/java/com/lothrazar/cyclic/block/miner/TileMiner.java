@@ -150,12 +150,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     }
     try {
       TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
-      //TODO: does this target block match filter
       List<BlockPos> shape = getShape();
-      //        resetProgress(); 
-      //        shapeIndex = 0;
-      //        targetPos = null;
-      //      }
       if (shape.size() == 0) {
         return;
       }

@@ -45,7 +45,7 @@ public class PacketTileInventoryToClient extends PacketBase {
           if (message.type == SyncPacketType.SET) {
             if (h instanceof EnderShelfItemHandler) {
               ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);
-            } // TODO better fix lol
+            }
             else if (h instanceof ClientAutoSyncItemHandler) {
               ItemStack extracted = ((ClientAutoSyncItemHandler) h).emptySlot(message.slot);
             }

@@ -43,7 +43,6 @@ public class ConveyorItemRenderer<T extends Entity & IRendersAsItem> extends Ent
 
   @Override
   public boolean shouldRender(ConveyorItemEntity livingEntityIn, ClippingHelper camera, double camX, double camY, double camZ) {
-    //    ConveyorItemEntity stack = livingEntityIn;
     return true;
   }
 }

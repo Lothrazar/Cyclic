@@ -66,10 +66,11 @@ public class UtilSound {
 
   public static void playSoundFromServerById(ServerWorld world, BlockPos pos, String sid) {
     SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(sid));
-    if(sound!=null) {
-    for (ServerPlayerEntity sp : world.getPlayers()) {
-      playSoundFromServer(sp, pos, sound);
-    }}
+    if (sound != null) {
+      for (ServerPlayerEntity sp : world.getPlayers()) {
+        playSoundFromServer(sp, pos, sound);
+      }
+    }
   }
 
   public static void playSoundById(PlayerEntity player, String sid) {

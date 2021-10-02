@@ -98,7 +98,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
       if (this.poweredSides.get(exportToSide)) {
-        moveEnergy(exportToSide, MAX / 4); // TODO : slider GUI
+        moveEnergy(exportToSide, MAX / 4);
       }
     }
   }

@@ -97,7 +97,7 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
   }
 
   /**
-   * From SlimeBlock.java TODO: func_226946_a_
+   * From SlimeBlock.java func_226946_a_
    * 
    * @param entity
    */
@@ -108,8 +108,4 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
       entity.setMotion(vec3d.x, -vec3d.y * d0, vec3d.z);
     }
   }
-  //  @Override
-  //  public int tickRate(IWorldReader worldIn) {
-  //    return super.tickRate(worldIn) * 3;
-  //  }
 }

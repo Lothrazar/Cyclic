@@ -93,8 +93,7 @@ public class EnchantBeheading extends EnchantBase {
       }
       //else the random number was less than 10, so it passed the 10% chance req
       String key = target.getType().getRegistryName().toString();
-      ////we allow all these, which include config, to override the vanilla skulls below
-      //first do my wacky class mapping// TODO delete and go to minecraft:blah
+      ////we allow all these, which include config, to override the vanilla skulls below 
       Map<String, String> mappedBeheading = ConfigRegistry.getMappedBeheading();
       if (mappedBeheading.containsKey(key)) {
         UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mappedBeheading.get(key)));
