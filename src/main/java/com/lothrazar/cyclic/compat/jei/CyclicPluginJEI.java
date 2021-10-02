@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
@@ -51,6 +52,7 @@ public class CyclicPluginJEI implements IModPlugin {
     IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
     registry.addRecipeCategories(new MelterRecipeCategory(guiHelper));
     registry.addRecipeCategories(new SolidifierRecipeCategory(guiHelper));
+    registry.addRecipeCategories(new GenitemRecipeCategory(guiHelper));
   }
 
   @Override
@@ -61,6 +63,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.WORKBENCH.get()), VanillaRecipeCategoryUid.CRAFTING);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.MELTER), MelterRecipeCategory.ID);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.SOLIDIFIER), SolidifierRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.GENERATOR_ITEM.get()), GenitemRecipeCategory.ID);
   }
 
   @Override
@@ -68,11 +71,13 @@ public class CyclicPluginJEI implements IModPlugin {
     ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().world);
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.MELTER), MelterRecipeCategory.ID);
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
-    // 
+    registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_ITEM), GenitemRecipeCategory.ID);
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
       if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
-          && item != BlockRegistry.SOLIDIFIER.asItem() && item != BlockRegistry.MELTER.asItem()) {
+          && item != BlockRegistry.SOLIDIFIER.asItem()
+          && item != BlockRegistry.MELTER.asItem()
+          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()) {
         registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
       }
     }
@@ -92,6 +97,9 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeClickArea(ScreenSolidifier.class,
         75, 20,
         40, 26, SolidifierRecipeCategory.ID);
+    registry.addRecipeClickArea(ScreenGeneratorDrops.class,
+        10, 10,
+        40, 66, GenitemRecipeCategory.ID);
   }
 
   @Override

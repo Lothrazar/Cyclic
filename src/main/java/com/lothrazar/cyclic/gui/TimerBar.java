@@ -54,7 +54,7 @@ public class TimerBar {
   }
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int curr) {
-    if (this.isMouseover(mouseX, mouseY)) {
+    if (this.isMouseover(mouseX, mouseY) && this.visible) {
       String display = "";
       int seconds = curr / Const.TICKS_PER_SEC;
       if (curr > Const.TICKS_PER_SEC * 120) {
