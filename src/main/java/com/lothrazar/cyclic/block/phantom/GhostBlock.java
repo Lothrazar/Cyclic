@@ -19,7 +19,7 @@ public class GhostBlock extends BlockBase {
   private boolean isInvisible;
 
   public GhostBlock(Properties properties, boolean isInvisible) {
-    super(properties.hardnessAndResistance(40.0F, 1200.0F).notSolid());
+    super(properties.hardnessAndResistance(2.0F, 1200.0F).notSolid());
     this.isInvisible = isInvisible;
   }
 

@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class CloudBlock extends BlockBase {
 
   public CloudBlock(Properties properties) {
-    super(properties.hardnessAndResistance(4.0F, 1.0F).notSolid());
+    super(properties.hardnessAndResistance(1.0F, 1.0F).notSolid());
   }
 
   @Override

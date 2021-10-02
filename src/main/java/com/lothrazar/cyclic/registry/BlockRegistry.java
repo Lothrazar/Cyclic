@@ -153,7 +153,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new MembraneLamp(Block.Properties.create(Material.ROCK)));
   //  public static final RegistryObject<Block> BALLOON = BLOCKS.register("balloon", () -> new BalloonBlock(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> SOIL = BLOCKS.register("soil", () -> new SoilBlock(Block.Properties.create(Material.EARTH)));
-  public static final RegistryObject<Block> CLOUD = BLOCKS.register("cloud", () -> new CloudBlock(Block.Properties.create(Material.EARTH)));
+  public static final RegistryObject<Block> CLOUD = BLOCKS.register("cloud", () -> new CloudBlock(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> CLOUD_MEMBRANE = BLOCKS.register("cloud_membrane", () -> new CloudPlayerBlock(Block.Properties.create(Material.EARTH)));
   public static final RegistryObject<Block> GHOST = BLOCKS.register("ghost", () -> new GhostBlock(Block.Properties.create(Material.ROCK), false));
   public static final RegistryObject<Block> GHOST_PHANTOM = BLOCKS.register("ghost_phantom", () -> new GhostBlock(Block.Properties.create(Material.ROCK), true));

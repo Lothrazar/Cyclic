@@ -4,8 +4,8 @@
 		"tag": "forge:dusts/redstone"
 	},
 	"energy": {
-		"ticks": 800,
-		"rfpertick": 100
+		"ticks": 300,
+		"rfpertick": 40
 	},
 	"conditions": [
 		{

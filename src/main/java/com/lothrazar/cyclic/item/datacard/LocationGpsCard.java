@@ -40,12 +40,15 @@ public class LocationGpsCard extends ItemBase {
     BlockPosDim dim = getPosition(stack);
     if (dim != null) {
       tooltip.add(new TranslationTextComponent(dim.toString()).mergeStyle(TextFormatting.GRAY));
-      if (flagIn.isAdvanced() || Screen.hasShiftDown()) {
+      if (Screen.hasShiftDown()) {
         String side = "S: " + dim.getSide().toString().toUpperCase();
         tooltip.add(new TranslationTextComponent(side).mergeStyle(TextFormatting.GRAY));
-        String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
-        tooltip.add(new TranslationTextComponent(sideF).mergeStyle(TextFormatting.GRAY));
+        //        String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
+        //        tooltip.add(new TranslationTextComponent(sideF).mergeStyle(TextFormatting.GRAY));
         tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()).mergeStyle(TextFormatting.GRAY));
+      }
+      else {
+        tooltip.add(new TranslationTextComponent("item.cyclic.shift").mergeStyle(TextFormatting.DARK_GRAY));
       }
     }
     else {

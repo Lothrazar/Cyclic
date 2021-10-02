@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class SoilBlock extends BlockBase {
 
   public SoilBlock(Properties properties) {
-    super(properties.hardnessAndResistance(4.0F, 1.0F));
+    super(properties.hardnessAndResistance(1.0F, 1.0F));
   }
 
   @Override

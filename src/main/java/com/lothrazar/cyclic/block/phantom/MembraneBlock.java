@@ -25,7 +25,7 @@ public class MembraneBlock extends BlockBase {
   protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.5D, 16.0D);
 
   public MembraneBlock(Properties properties) {
-    super(properties.hardnessAndResistance(4.0F, 1.0F));
+    super(properties.hardnessAndResistance(1.5F, 1.0F));
     this.setDefaultState(this.getDefaultState().with(LIT, false));
   }
 
