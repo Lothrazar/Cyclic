@@ -16,7 +16,7 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
 
   public ScreenWirelessFluid(ContainerWirelessFluid screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this, 132, 8, TileMelter.CAPACITY);
+    fluid = new FluidBar(this, 152, 8, TileMelter.CAPACITY);
   }
 
   @Override
@@ -49,5 +49,6 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 79, 35, TextureRegistry.SLOT_GPS);
+    fluid.draw(ms, container.tile.getFluid());
   }
 }

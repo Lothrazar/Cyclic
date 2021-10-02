@@ -82,7 +82,7 @@ public class BlockPosDim {
   }
 
   public Direction getSide() {
-    return side;
+    return side == null ? Direction.UP : side;
   }
 
   public void setSide(Direction side) {

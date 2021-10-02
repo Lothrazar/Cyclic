@@ -33,16 +33,9 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   }
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
-
-  public TileWirelessFluid() {
-    super(TileRegistry.WIRELESS_FLUID.get());
-    this.needsRedstone = 0;
-    tank = new FluidTankBase(this, CAPACITY, f -> true);
-  }
-
   static final int MAX = 64000;
   public static final int MAX_TRANSFER = MAX;
-  private int transferRate = MAX_TRANSFER / 4;
+  private int transferRate = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
@@ -52,6 +45,12 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+
+  public TileWirelessFluid() {
+    super(TileRegistry.WIRELESS_FLUID.get());
+    this.needsRedstone = 0;
+    tank = new FluidTankBase(this, CAPACITY, f -> true);
+  }
 
   @Override
   public ITextComponent getDisplayName() {
@@ -115,8 +114,7 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot(0);
     if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-      this.moveFluids(getCurrentFacing(), loc.getPos(), this.transferRate, tank);
-      //      moved = moveEnergy(Direction.U P, loc.getPos(), transferRate);
+      this.moveFluids(loc.getSide(), loc.getPos(), this.transferRate, tank);
     }
     this.setLitProperty(moved);
   }
