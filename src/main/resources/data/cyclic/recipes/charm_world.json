@@ -7,7 +7,7 @@
   ],
   "key": {
     "f": {
-      "item": "minecraft:feather"
+			"tag": "forge:feathers"
     },
     "g": {
       "item": "minecraft:gold_ingot"
@@ -16,7 +16,7 @@
       "item": "cyclic:gem_amber"
     },
     "q": {
-      "item": "minecraft:quartz_block"
+      "tag": "forge:storage_blocks/quartz"
     }
   },
   "result": {

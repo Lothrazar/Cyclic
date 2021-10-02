@@ -7,7 +7,7 @@
   ],
   "key": {
     "e": {
-      "item": "minecraft:quartz_block"
+      "tag": "forge:storage_blocks/quartz"
     },
     "o": {
       "item": "cyclic:gem_obsidian"

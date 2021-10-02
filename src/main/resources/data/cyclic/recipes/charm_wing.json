@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"wgw",
+		"wew",
+		"i i"
+	],
+	"key": {
+		"w": {
+			"tag": "forge:feathers"
+		},
+		"i": {
+			"tag": "forge:leather"
+		},
+		"e": {
+			"tag": "forge:ingots/iron"
+		},
+		"g": {
+			"tag": "forge:ingots/gold"
+		}
+	},
+	"result": {
+		"item": "cyclic:charm_wing"
+	}
+}

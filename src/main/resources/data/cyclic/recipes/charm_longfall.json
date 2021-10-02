@@ -13,7 +13,7 @@
       "item": "minecraft:nether_bricks"
     },
     "f": {
-      "item": "minecraft:feather"
+			"tag": "forge:feathers"
     },
     "a": {
       "item": "minecraft:diamond_boots"

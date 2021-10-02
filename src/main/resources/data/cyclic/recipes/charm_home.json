@@ -7,10 +7,10 @@
   ],
   "key": {
     "f": {
-      "item": "minecraft:feather"
+			"tag": "forge:feathers"
     },
     "g": {
-      "item": "minecraft:gold_ingot"
+			"tag": "forge:ingots/gold"
     },
     "e": {
       "item": "minecraft:ender_eye"

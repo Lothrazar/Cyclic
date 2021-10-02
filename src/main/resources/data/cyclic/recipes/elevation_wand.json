@@ -10,7 +10,7 @@
       "item": "minecraft:ender_eye"
     },
     "d": {
-      "item": "minecraft:quartz_block"
+      "tag": "forge:storage_blocks/quartz"
     },
     "g": {
       "item": "minecraft:redstone_lamp"
