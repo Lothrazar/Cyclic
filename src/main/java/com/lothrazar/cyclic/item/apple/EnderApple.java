@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.apple;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.server.ServerWorld;
 
-public class EnderCookie extends ItemBase {
+public class EnderApple extends ItemBase {
 
   final String[] ignoreMe = new String[] {
       "minecraft:shipwreck",
@@ -30,7 +30,7 @@ public class EnderCookie extends ItemBase {
   private static final int NUM_PRINTED = 5;
   private static final int COOLDOWN = 60;
 
-  public EnderCookie(Properties properties) {
+  public EnderApple(Properties properties) {
     super(properties); // .food(new Food.Builder().hunger(h).saturation(0)
   }
 

@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SoundCard extends ItemBase {
 
-  private static final String SOUND_ID = "sound_id";
+  public static final String SOUND_ID = "sound_id";
 
   public SoundCard(Properties properties) {
     super(properties);

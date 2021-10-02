@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.soundplay;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.block.Block;
@@ -31,17 +30,13 @@ public class BlockSoundPlayer extends BlockBase {
 
   @Override
   public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-    boolean flag = worldIn.isBlockPowered(pos);
-    if (flag != state.get(POWERED)) {
-      if (flag) {
-        this.tryPlaySound(worldIn, pos);
+    boolean currentPower = worldIn.isBlockPowered(pos);
+    if (currentPower != state.get(POWERED)) {
+      if (currentPower) {
+        ((TileSoundPlayer) worldIn.getTileEntity(pos)).tryPlaySound();
       }
-      worldIn.setBlockState(pos, state.with(POWERED, Boolean.valueOf(flag)), 3);
+      worldIn.setBlockState(pos, state.with(POWERED, currentPower), 3);
     }
-  }
-
-  private void tryPlaySound(World worldIn, BlockPos pos) {
-    ModCyclic.LOGGER.error("TRY PLAY SOUND" + worldIn.getTileEntity(pos));
   }
 
   @Override

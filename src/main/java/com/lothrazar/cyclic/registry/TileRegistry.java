@@ -51,7 +51,6 @@ import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
-import com.lothrazar.cyclic.block.phantom.BalloonTile;
 import com.lothrazar.cyclic.block.phantom.MembraneLampTile;
 import com.lothrazar.cyclic.block.phantom.SoilTile;
 import com.lothrazar.cyclic.block.placer.TilePlacer;
@@ -116,7 +115,7 @@ public class TileRegistry {
   public static final RegistryObject<TileEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> TileEntityType.Builder.create(() -> new TilePackager(), BlockRegistry.PACKAGER.get()).build(null));
   public static final RegistryObject<TileEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> TileEntityType.Builder.create(() -> new MembraneLampTile(), BlockRegistry.LAMP.get()).build(null));
   public static final RegistryObject<TileEntityType<SoilTile>> SOIL = TILES.register("soil", () -> TileEntityType.Builder.create(() -> new SoilTile(), BlockRegistry.SOIL.get()).build(null));
-  public static final RegistryObject<TileEntityType<BalloonTile>> BALLOON = TILES.register("balloon", () -> TileEntityType.Builder.create(() -> new BalloonTile(), BlockRegistry.BALLOON.get()).build(null));
+  //  public static final RegistryObject<TileEntityType<BalloonTile>> BALLOON = TILES.register("balloon", () -> TileEntityType.Builder.create(() -> new BalloonTile(), BlockRegistry.BALLOON.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {

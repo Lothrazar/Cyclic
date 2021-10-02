@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
-import com.lothrazar.cyclic.item.LoftyStatureApple;
+import com.lothrazar.cyclic.item.apple.LoftyStatureApple;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;

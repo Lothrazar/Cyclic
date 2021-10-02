@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.apple;
+package com.lothrazar.cyclic.item.apple;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;

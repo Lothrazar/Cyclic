@@ -28,6 +28,6 @@ public class ScreenSoundPlayer extends ScreenBase<ContainerSoundPlayer> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 60, 60, TextureRegistry.SLOT_SOUND);
+    this.drawSlot(ms, 80, 34, TextureRegistry.SLOT_SOUND);
   }
 }

@@ -64,7 +64,6 @@ import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
 import com.lothrazar.cyclic.block.packager.BlockPackager;
 import com.lothrazar.cyclic.block.peatfarm.BlockPeatFarm;
-import com.lothrazar.cyclic.block.phantom.BalloonBlock;
 import com.lothrazar.cyclic.block.phantom.CloudBlock;
 import com.lothrazar.cyclic.block.phantom.CloudPlayerBlock;
 import com.lothrazar.cyclic.block.phantom.GhostBlock;
@@ -152,7 +151,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.create(Material.PLANTS)));
   public static final RegistryObject<Block> MEMBRANE = BLOCKS.register("membrane", () -> new MembraneBlock(Block.Properties.create(Material.EARTH)));
   public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new MembraneLamp(Block.Properties.create(Material.ROCK)));
-  public static final RegistryObject<Block> BALLOON = BLOCKS.register("balloon", () -> new BalloonBlock(Block.Properties.create(Material.ROCK)));
+  //  public static final RegistryObject<Block> BALLOON = BLOCKS.register("balloon", () -> new BalloonBlock(Block.Properties.create(Material.ROCK)));
   public static final RegistryObject<Block> SOIL = BLOCKS.register("soil", () -> new SoilBlock(Block.Properties.create(Material.EARTH)));
   public static final RegistryObject<Block> CLOUD = BLOCKS.register("cloud", () -> new CloudBlock(Block.Properties.create(Material.EARTH)));
   public static final RegistryObject<Block> CLOUD_MEMBRANE = BLOCKS.register("cloud_membrane", () -> new CloudPlayerBlock(Block.Properties.create(Material.EARTH)));

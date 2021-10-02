@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.block.soundplay;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,6 +15,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -24,6 +27,11 @@ public class TileSoundPlayer extends TileEntityBase implements INamedContainerPr
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+
+    @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() == ItemRegistry.SOUND_DATA.get();
     }
@@ -32,6 +40,14 @@ public class TileSoundPlayer extends TileEntityBase implements INamedContainerPr
 
   public TileSoundPlayer() {
     super(TileRegistry.SOUND_PLAYER.get());
+  }
+
+  public void tryPlaySound() {
+    ItemStack card = this.inventory.getStackInSlot(0);
+    if (card.hasTag() && card.getTag().contains(SoundCard.SOUND_ID) && world instanceof ServerWorld) {
+      String sid = card.getTag().getString(SoundCard.SOUND_ID);
+      UtilSound.playSoundFromServerById((ServerWorld) world, pos, sid);
+    }
   }
 
   @Override

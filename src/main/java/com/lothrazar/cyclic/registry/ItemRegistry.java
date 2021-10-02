@@ -2,8 +2,6 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.block.apple.AppleBuffs;
-import com.lothrazar.cyclic.block.apple.AppleChocolate;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
@@ -15,11 +13,9 @@ import com.lothrazar.cyclic.item.EdibleFlightItem;
 import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
-import com.lothrazar.cyclic.item.EnderCookie;
 import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.LeverRemote;
-import com.lothrazar.cyclic.item.LoftyStatureApple;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
@@ -29,6 +25,10 @@ import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
 import com.lothrazar.cyclic.item.StirrupsItem;
 import com.lothrazar.cyclic.item.StirrupsReverseItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
+import com.lothrazar.cyclic.item.apple.AppleBuffs;
+import com.lothrazar.cyclic.item.apple.AppleChocolate;
+import com.lothrazar.cyclic.item.apple.EnderApple;
+import com.lothrazar.cyclic.item.apple.LoftyStatureApple;
 import com.lothrazar.cyclic.item.bauble.AirAntiGravity;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
@@ -184,7 +184,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> ENDER_BUCKET = ITEMS.register("ender_bucket", () -> new ItemBase(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> MEMBRANE = ITEMS.register("membrane", () -> new BlockItem(BlockRegistry.MEMBRANE.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> LAMP = ITEMS.register("lamp", () -> new BlockItem(BlockRegistry.LAMP.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", () -> new BlockItem(BlockRegistry.BALLOON.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
+  //  public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", () -> new BlockItem(BlockRegistry.BALLOON.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SOIL = ITEMS.register("soil", () -> new BlockItem(BlockRegistry.SOIL.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CLOUD = ITEMS.register("cloud", () -> new BlockItem(BlockRegistry.CLOUD.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CLOUD_MEMBRANE = ITEMS.register("cloud_membrane", () -> new BlockItem(BlockRegistry.CLOUD_MEMBRANE.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
@@ -384,7 +384,7 @@ public class ItemRegistry {
     int h = Foods.APPLE.getHealing();
     float s = Foods.APPLE.getSaturation();
     //honey is basic. fast to eat, gives lots of food but no potion effects 
-    r.register(new EnderCookie(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
+    r.register(new EnderApple(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
         .build())).setRegistryName("apple_ender"));
     //
     r.register(new LoftyStatureApple(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).food(new Food.Builder().hunger(h).saturation(0).setAlwaysEdible()
