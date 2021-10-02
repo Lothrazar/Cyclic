@@ -60,6 +60,7 @@ public class CyclicPluginJEI implements IModPlugin {
 
   @Override
   public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.PACKAGER.get()), VanillaRecipeCategoryUid.CRAFTING);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.crafter), VanillaRecipeCategoryUid.CRAFTING);
     registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_bag), VanillaRecipeCategoryUid.CRAFTING);
     registration.addRecipeCatalyst(new ItemStack(ItemRegistry.crafting_stick), VanillaRecipeCategoryUid.CRAFTING);

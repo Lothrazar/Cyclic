@@ -90,9 +90,9 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
     }
   }
 
-  private int getCostIfMatched(ItemStack stack, ICraftingRecipe rec) {
+  private int getCostIfMatched(ItemStack stack, ICraftingRecipe recipe) {
     int total = 0, matched = 0;
-    for (Ingredient ingr : rec.getIngredients()) {
+    for (Ingredient ingr : recipe.getIngredients()) {
       if (ingr == Ingredient.EMPTY) {
         continue;
       }
@@ -104,7 +104,7 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
     if (total == matched &&
         stack.getCount() >= total &&
         (total == 4 || total == 9) &&
-        (rec.getRecipeOutput().getCount() == 1 || rec.getRecipeOutput().getCount() == total)) {
+        (recipe.getRecipeOutput().getCount() == 1 || recipe.getRecipeOutput().getCount() == total)) {
       return total;
     }
     return -1;
