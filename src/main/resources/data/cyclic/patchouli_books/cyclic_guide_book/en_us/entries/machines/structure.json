@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "block.structure.guide"
+      "text": "block.cyclic.structure.guide"
     },
     {
       "type": "crafting",
