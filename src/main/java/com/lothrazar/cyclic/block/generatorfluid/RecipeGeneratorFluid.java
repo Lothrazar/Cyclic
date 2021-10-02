@@ -144,4 +144,8 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
       buffer.writeInt(recipe.rfpertick);
     }
   }
+
+  public int getRfTotal() {
+    return this.getRfpertick() * this.getTicks();
+  }
 }

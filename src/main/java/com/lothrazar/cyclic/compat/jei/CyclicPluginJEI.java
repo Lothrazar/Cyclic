@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.generatorfluid.ScreenGeneratorFluid;
+import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
 import com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
@@ -53,6 +55,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeCategories(new MelterRecipeCategory(guiHelper));
     registry.addRecipeCategories(new SolidifierRecipeCategory(guiHelper));
     registry.addRecipeCategories(new GenitemRecipeCategory(guiHelper));
+    registry.addRecipeCategories(new GenfluidRecipeCategory(guiHelper));
   }
 
   @Override
@@ -64,6 +67,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.MELTER), MelterRecipeCategory.ID);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.SOLIDIFIER), SolidifierRecipeCategory.ID);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.GENERATOR_ITEM.get()), GenitemRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.GENERATOR_FLUID.get()), GenfluidRecipeCategory.ID);
   }
 
   @Override
@@ -72,21 +76,17 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.MELTER), MelterRecipeCategory.ID);
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_ITEM), GenitemRecipeCategory.ID);
+    registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
       if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
           && item != BlockRegistry.SOLIDIFIER.asItem()
           && item != BlockRegistry.MELTER.asItem()
-          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()) {
+          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
+          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()) {
         registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
       }
     }
-    //    for (Block blk : ForgeRegistries.BLOCKS.getValues()) {
-    //      ItemStack st = new ItemStack(blk);
-    //      if (!st.isEmpty() && blk != Blocks.AIR && UtilString.isCyclic(blk.getRegistryName())) {
-    //        registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslationTextComponent(blk.getTranslationKey() + ".guide"));
-    //      }
-    //    }
   }
 
   @Override
@@ -100,6 +100,9 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeClickArea(ScreenGeneratorDrops.class,
         10, 10,
         40, 66, GenitemRecipeCategory.ID);
+    registry.addRecipeClickArea(ScreenGeneratorFluid.class,
+        10, 20,
+        40, 46, GenfluidRecipeCategory.ID);
   }
 
   @Override
@@ -118,7 +121,10 @@ public class CyclicPluginJEI implements IModPlugin {
         10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerWorkbench.class, VanillaRecipeCategoryUid.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
-        10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
+        10, PLAYER_INV_SIZE);
+    registry.addRecipeTransferHandler(ContainerGeneratorDrops.class, GenitemRecipeCategory.ID,
+        0, 1, //recipeSLotStart, recipeSlotCount
+        1, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
     //JEI bug https://github.com/Lothrazar/Cyclic/issues/1742
     //    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
     //        10, 9, //recipeSLotStart, recipeSlotCount

@@ -92,6 +92,10 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
     this.rfpertick = rfpertick;
   }
 
+  public int getRfTotal() {
+    return this.getRfpertick() * this.getTicks();
+  }
+
   public static final SerializeGenerateItem SERIALGENERATOR = new SerializeGenerateItem();
 
   public static class SerializeGenerateItem extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeGeneratorItem<? extends com.lothrazar.cyclic.base.TileEntityBase>> {

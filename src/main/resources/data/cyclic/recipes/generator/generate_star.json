@@ -1,7 +1,7 @@
 {
 	"type": "cyclic:generator_item",
 	"fuel": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:nether_star"
 	},
 	"energy": {
 		"ticks": 100000,
