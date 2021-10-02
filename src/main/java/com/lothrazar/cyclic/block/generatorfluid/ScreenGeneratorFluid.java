@@ -27,7 +27,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileGeneratorFluid.MAX);
     this.timer = new TimerBar(this, 70, 60, 1);
-    fluid = new FluidBar(this, 8, 8, TileGeneratorFluid.CAPACITY);
+    fluid = new FluidBar(this, 32, 8, TileGeneratorFluid.CAPACITY);
   }
 
   @Override
@@ -63,7 +63,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
-    this.drawName(ms, this.title.getString());
+    //    this.drawName(ms, this.title.getString());
     int fld = TileGeneratorFluid.Fields.FLOWING.ordinal();
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.tile.getField(fld)));
     btnToggle.setTextureId(container.tile.getField(fld) == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);

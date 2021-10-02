@@ -27,7 +27,7 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   public GenfluidRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_fluid.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/machine/fuel_fluid.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
+    icon = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/machine/fuel_fluid_on.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
   }
 
   @Override

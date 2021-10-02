@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+        {"required":false, "id": "cyclic:flower_cyan"},
+        {"required":false, "id": "cyclic:cloud_membrane"},
+        {"required":false, "id": "cyclic:cloud"},
+        {"required":false, "id": "cyclic:ghost"},
+        {"required":false, "id": "cyclic:conveyor"},
+        {"required":false, "id": "cyclic:ghost_phantom"}
+  ]
+}

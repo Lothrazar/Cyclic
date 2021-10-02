@@ -13,7 +13,7 @@
       "item": "minecraft:piston"
     },
     "b": {
-      "item": "minecraft:iron_bars"
+      "item": "cyclic:mason_stone"
     },
     "c": {
       "item": "minecraft:redstone_torch"

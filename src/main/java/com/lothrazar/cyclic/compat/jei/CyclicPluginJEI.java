@@ -101,8 +101,8 @@ public class CyclicPluginJEI implements IModPlugin {
         10, 10,
         40, 66, GenitemRecipeCategory.ID);
     registry.addRecipeClickArea(ScreenGeneratorFluid.class,
-        10, 20,
-        40, 46, GenfluidRecipeCategory.ID);
+        50, 8,
+        20, 20, GenfluidRecipeCategory.ID);
   }
 
   @Override

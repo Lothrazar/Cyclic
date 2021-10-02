@@ -4,9 +4,9 @@
 		"particle": "cyclic:blocks/soil",
 		"down": "cyclic:blocks/soil",
 		"up": "cyclic:blocks/soil",
-		"north": "minecraft:block/dirt",
-		"east": "minecraft:block/dirt",
-		"south": "minecraft:block/dirt",
-		"west": "minecraft:block/dirt"
+		"north": "cyclic:blocks/soil",
+		"east": "cyclic:blocks/soil",
+		"south": "cyclic:blocks/soil",
+		"west": "cyclic:blocks/soil"
 	}
 }
