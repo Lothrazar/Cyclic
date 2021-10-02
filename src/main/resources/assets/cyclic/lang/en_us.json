@@ -312,7 +312,7 @@
 
     "block.cyclic.ender_shelf":"Ender Shelf",
     "block.cyclic.ender_shelf.tooltip": "Enchantment Storage",
-    "block.cyclic.ender_shelf.guide": "Stores 5 slots of enchanted books, also as part of a multiblock structure with $(l:blocks/ender_controller)Ender Shelf Controller$(/l).  Each shelf accepts books with exactly 1 enchantment on them, slots that you can right click on to insert or withdraw a Enchanted Book from storage.  Use any normal $(l:items/cable_wrench)Wrench$(/l) to toggle display mode, or a $(l:items/wrench)Rotation Tool$(/l) to rotate its facing direction ",
+    "block.cyclic.ender_shelf.guide": "Stores 5 stacks of enchanted books. This also counts as a bookshelf for Enchanting tables. A Each shelf accepts books with exactly 1 enchantment on them, slots that you can right click on to insert or withdraw a Enchanted Book from storage.  Use any normal $(l:items/cable_wrench)Wrench$(/l) to toggle display mode, or a $(l:items/wrench)Rotation Tool$(/l) to rotate its facing direction ",
     "block.cyclic.ender_shelf.guide0": "Enchanted Books must have just one enchantment to be inserted. Use a $(l:machines/disenchanter)Disenchanter$(/l) to strip books down to single enchantments if necessary. Use mixed books on the Controller.",
 
     "block.cyclic.ender_controller":"Ender Shelf Controller",

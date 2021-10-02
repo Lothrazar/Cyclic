@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
@@ -34,6 +36,11 @@ public class BlockEnderShelf extends BlockBase {
 
   public BlockEnderShelf(Properties properties, boolean isController) {
     super(properties.hardnessAndResistance(1.2F).notSolid());
+  }
+
+  @Override
+  public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
+    return Blocks.BOOKSHELF.getEnchantPowerBonus(Blocks.BOOKSHELF.getDefaultState(), world, pos);
   }
 
   @Override
