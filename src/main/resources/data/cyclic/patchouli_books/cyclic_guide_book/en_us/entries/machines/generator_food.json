@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.generator_food",
+  "icon": "cyclic:generator_food",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.generator_food.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:generator_food"
+    }
+  ]
+}

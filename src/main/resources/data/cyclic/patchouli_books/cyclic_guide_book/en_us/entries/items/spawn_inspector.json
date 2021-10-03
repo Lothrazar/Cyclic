@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.spawn_inspector",
+  "icon": "cyclic:spawn_inspector",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.spawn_inspector.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:spawn_inspector"
+    }
+  ]
+}

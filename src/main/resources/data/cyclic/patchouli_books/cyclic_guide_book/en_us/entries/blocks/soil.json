@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.soil",
+  "icon": "cyclic:soil",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.soil.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:soil"
+    }
+  ]
+}

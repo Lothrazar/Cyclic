@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.sound_player",
+  "icon": "cyclic:sound_player",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.sound_player.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sound_player"
+    }
+  ]
+}

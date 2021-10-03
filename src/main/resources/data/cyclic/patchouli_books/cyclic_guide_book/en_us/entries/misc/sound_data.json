@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.sound_data",
+  "icon": "cyclic:sound_data",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.sound_data.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sound_data"
+    }
+  ]
+}

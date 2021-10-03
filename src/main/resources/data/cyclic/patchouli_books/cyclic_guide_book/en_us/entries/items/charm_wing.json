@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.charm_wing",
+  "icon": "cyclic:charm_wing",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_wing.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_wing"
+    }
+  ]
+}

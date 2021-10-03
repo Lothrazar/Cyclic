@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.inventory_cake",
+  "icon": "cyclic:inventory_cake",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.inventory_cake.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:inventory_cake"
+    }
+  ]
+}

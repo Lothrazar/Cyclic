@@ -5,12 +5,13 @@
   "pages": [
     {
       "type": "spotlight",
+      "text": "item.cyclic.experience_food.guide",
       "item": "cyclic:experience_food",
-      "text": "item.cyclic.experience_food.guide"
+      "link_recipe": true
     },
     {
-      "type": "text",
-      "text": "item.cyclic.experience_food.guide0"
+      "type": "crafting",
+      "recipe": "cyclic:experience_food"
     }
   ]
 }

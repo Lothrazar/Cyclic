@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.slingshot",
+  "icon": "cyclic:slingshot",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.slingshot.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:slingshot"
+    }
+  ]
+}
