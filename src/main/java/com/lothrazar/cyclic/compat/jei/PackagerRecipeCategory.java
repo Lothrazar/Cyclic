@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   public PackagerRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/packager.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/machine/packager.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.PACKAGER.get())); // helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/machine/packager.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
   }
 
   @Override
@@ -57,39 +56,50 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   @Override
   public boolean isHandled(ICraftingRecipe recipe) {
+    boolean testingBreakpoints = false;
+    testingBreakpoints = true;
+    if (testingBreakpoints) {
+      throw new IllegalArgumentException("returning false does not work is really bad what is happening");
+    }
     System.out.println(recipe.getId() + " ISHANDLED!!");
+    return isRecipeValid(recipe);
+  }
+
+  private boolean isRecipeValid(ICraftingRecipe recipe) {
+    int total = 0, matched = 0;
+    Ingredient first = null;
+    for (Ingredient ingr : recipe.getIngredients()) {
+      if (ingr == Ingredient.EMPTY || ingr.getMatchingStacks().length == 0) {
+        continue;
+      }
+      total++;
+      if (first == null) {
+        first = ingr;
+        matched = 1;
+        continue;
+      }
+      if (first.test(ingr.getMatchingStacks()[0])) {
+        matched++;
+      }
+    }
+    System.out.println(recipe.getId() + " total=" + total + " matched=" + matched);
+    //
+    if (total > 0 && total == matched &&
+    //        stack.getCount() >= total &&
+        (total == 4 || total == 9) &&
+        (recipe.getRecipeOutput().getCount() == 1 || recipe.getRecipeOutput().getCount() == total)) {
+      System.out.println(recipe.getId() + " IS VALID=");
+      return true;
+    }
+    System.out.println(recipe.getId() + " IS NOT");
     return false;
-    //    int total = 0, matched = 0;
-    //    Ingredient first = Ingredient.EMPTY;
-    //    for (Ingredient ingr : recipe.getIngredients()) {
-    //      if (ingr == Ingredient.EMPTY || ingr.hasNoMatchingItems()) {
-    //        continue;
-    //      }
-    //      if (first == Ingredient.EMPTY) {
-    //        first = ingr;
-    //        total++;
-    //        continue;
-    //      }
-    //      //check first against loop var
-    //      total++;
-    //      if (first.test(ingr.getMatchingStacks()[0])) {
-    //        matched++;
-    //      }
-    //    }
-    //    System.out.println(recipe.getId() + " total=" + total + " matched=" + matched);
-    //    //
-    //    if (total == matched &&
-    //    //        stack.getCount() >= total &&
-    //        (total == 4 || total == 9) &&
-    //        (recipe.getRecipeOutput().getCount() == 1 || recipe.getRecipeOutput().getCount() == total)) {
-    //      System.out.println(recipe.getId() + " WINNER=");
-    //      return true;
-    //    }
-    //    return false;
   }
 
   @Override
   public void setIngredients(ICraftingRecipe recipe, IIngredients ingredients) {
+    if (!isRecipeValid(recipe)) {
+      return;
+    }
     //    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
@@ -107,11 +117,24 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, ICraftingRecipe recipe, IIngredients ingredients) {
+    if (!isRecipeValid(recipe)) {
+      return;
+    }
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     guiItemStacks.init(0, true, 5, 6);
-    guiItemStacks.set(0, inputs.get(0));
-    guiItemStacks.init(1, false, 64, 6 + Const.SQ);
+    int sz = recipe.getIngredients().size();
+    for (Ingredient wtf : recipe.getIngredients()) {
+      //      System.out.println(recipe.getId() + " WTF " + wtf);
+    }
+    List<ItemStack> haxor = new ArrayList<>();
+    for (ItemStack st : inputs.get(0)) {
+      ItemStack cpy = st.copy();
+      cpy.setCount(sz);
+      haxor.add(cpy);
+    }
+    guiItemStacks.set(0, haxor);
+    guiItemStacks.init(1, false, 67, 8);
     guiItemStacks.set(1, recipe.getRecipeOutput());
   }
 }
