@@ -24,7 +24,7 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
   @Override
   public void init() {
     super.init();
-    energy.visible = true; //TileGeneratorFuel.POWERCONF.get() > 0;
+    energy.visible = TilePackager.POWERCONF.get() > 0;
     timer.guiLeft = energy.guiLeft = guiLeft;
     timer.guiTop = energy.guiTop = guiTop;
     int x, y;
@@ -52,8 +52,8 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    //    this.drawSlot(ms, 54, 34); 
-    this.drawSlotLarge(ms, 70, 30);
+    this.drawSlot(ms, 50, 40);
+    this.drawSlotLarge(ms, 90, 36);
     energy.draw(ms, container.tile.getEnergy());
     timer.capacity = container.tile.getField(TilePackager.Fields.BURNMAX.ordinal());
     timer.visible = (timer.capacity > 0);

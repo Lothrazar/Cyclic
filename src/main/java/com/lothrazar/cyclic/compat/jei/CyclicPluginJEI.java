@@ -85,12 +85,13 @@ public class CyclicPluginJEI implements IModPlugin {
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
       if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
-          && item != BlockRegistry.SOLIDIFIER.asItem()
-          //          && item != BlockRegistry.MELTER.asItem()
-          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
-          && item != BlockRegistry.PACKAGER.get().asItem()
-          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()) {
-        registry.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
+      //          && item != BlockRegistry.SOLIDIFIER.asItem()
+      //                    && item != BlockRegistry.MELTER.asItem()
+      //          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
+      //          && item != BlockRegistry.PACKAGER.get().asItem()
+      //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
+      ) {
+        registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
       }
     }
   }
@@ -109,9 +110,12 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeClickArea(ScreenGeneratorFluid.class,
         50, 8,
         20, 20, GenfluidRecipeCategory.ID);
+    //    registry.addRecipeClickArea(ScreenPackager.class,
+    //        10, 8,
+    //        50, 50, VanillaRecipeCategoryUid.CRAFTING);
     registry.addRecipeClickArea(ScreenPackager.class,
         10, 8,
-        20, 20, PackagerRecipeCategory.ID);
+        50, 50, PackagerRecipeCategory.ID);
   }
 
   @Override
@@ -133,7 +137,7 @@ public class CyclicPluginJEI implements IModPlugin {
         10, PLAYER_INV_SIZE);
     registry.addRecipeTransferHandler(ContainerGeneratorDrops.class, GenitemRecipeCategory.ID,
         0, 1, //recipeSLotStart, recipeSlotCount
-        1, PLAYER_INV_SIZE);// inventorySlotStart, inventorySlotCount
+        1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     //JEI bug https://github.com/Lothrazar/Cyclic/issues/1742
     //    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
     //        10, 9, //recipeSLotStart, recipeSlotCount
