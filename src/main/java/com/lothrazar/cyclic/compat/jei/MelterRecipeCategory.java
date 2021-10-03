@@ -29,7 +29,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   public MelterRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
-    icon = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/melter.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.MELTER));
   }
 
   @Override

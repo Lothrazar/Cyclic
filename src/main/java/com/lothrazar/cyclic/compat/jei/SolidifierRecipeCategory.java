@@ -29,7 +29,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   public SolidifierRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/solidifier_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
-    icon = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/solidifier.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.SOLIDIFIER));
   }
 
   @Override

@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import mezz.jei.api.constants.VanillaTypes;
@@ -27,7 +28,7 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   public GenfluidRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_fluid.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/machine/fuel_fluid_on.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.GENERATOR_FLUID.get()));
   }
 
   @Override

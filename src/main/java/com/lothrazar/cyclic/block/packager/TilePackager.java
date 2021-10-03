@@ -81,7 +81,7 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
       int total = getCostIfMatched(stack, rec);
       if (total > 0 &&
           outputSlots.insertItem(0, rec.getRecipeOutput().copy(), true).isEmpty()) {
-        ModCyclic.LOGGER.error("Packager recipe match of size " + total + " producing -> " + rec.getRecipeOutput().copy());
+        ModCyclic.LOGGER.info("Packager recipe match of size " + total + " producing -> " + rec.getRecipeOutput().copy());
         //consume items, produce output
         inputSlots.extractItem(0, total, false);
         outputSlots.insertItem(0, rec.getRecipeOutput().copy(), false);
