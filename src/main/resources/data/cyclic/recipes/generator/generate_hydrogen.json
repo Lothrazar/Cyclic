@@ -1,18 +1,22 @@
 {
 	"type": "cyclic:generator_fluid",
 	"fuel": {
-		"fluid": "cyclic:magma",
+		"fluid": "mekanism:hydrogen",
 		"count": 1000
 	},
 	"energy": {
-		"ticks": 800,
-		"rfpertick": 60
+		"ticks": 100,
+		"rfpertick": 40
 	},
 	"conditions": [
 		{
 			"values": [
 				{
 					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"modid": "mekanism",
 					"type": "forge:mod_loaded"
 				},
 				{

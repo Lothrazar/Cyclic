@@ -1,18 +1,22 @@
 {
 	"type": "cyclic:generator_fluid",
 	"fuel": {
-		"fluid": "cyclic:magma",
+		"fluid": "thermal:refined_fuel",
 		"count": 1000
 	},
 	"energy": {
-		"ticks": 800,
-		"rfpertick": 60
+		"ticks": 500,
+		"rfpertick": 100
 	},
 	"conditions": [
 		{
 			"values": [
 				{
 					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"modid": "thermal",
 					"type": "forge:mod_loaded"
 				},
 				{
