@@ -291,6 +291,9 @@
 			#Power per use peat_farm
 			#Range: 0 ~ 64000
 			peat_farm = 500
+			#Power per recipe in the packager
+			#Range: 0 ~ 64000
+			packager = 50
 			#Power per use miner
 			#Range: 0 ~ 64000
 			miner = 10
@@ -325,6 +328,14 @@
 			#Range: 0 ~ 64000
 			solidifier = 5000
 
+		[cyclic.energy.generator_food]
+			#RF energy per tick generated while burning food in this machine
+			#Range: 1 ~ 6400
+			rf_per_tick = 60
+			#This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.
+			#Range: 1 ~ 6400
+			ticks_per_food = 100
+
 		#####################################################################################
 		# Fuel gained by consuming items
 		#####################################################################################
@@ -335,4 +346,9 @@
 			# Power gained burning one of this
 			#Range: 1 ~ 64000
 			peat_fuel = 256
+
+		[cyclic.energy.generator_fuel]
+			#RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks
+			#Range: 1 ~ 6400
+			rf_per_tick = 80
 
