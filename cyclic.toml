@@ -95,6 +95,12 @@
 			#RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item
 			ignore_recipes = ["botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*"]
 
+		#Ender shelf settings
+		[cyclic.blocks.sound]
+			#Sound Recorder - how far out does it listen to record sounds
+			#Range: 1 ~ 64
+			radius = 8
+
 		#Ender Trigger settings
 		[cyclic.blocks.eye_redstone]
 			#Maximum distance to activate
@@ -140,6 +146,9 @@
 	[cyclic.items]
 		#Entity ids that cannot be picked up with the Monster all
 		monster_ball_ignore_list = ["minecraft:ender_dragon", "minecraft:wither"]
+		#Ore Prospector radius around player to search for ores
+		#Range: 1 ~ 99
+		range = 32
 
 		#####################################################################################
 		# Obsidian gear settings

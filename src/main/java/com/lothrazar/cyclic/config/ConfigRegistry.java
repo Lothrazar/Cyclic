@@ -25,6 +25,7 @@ import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
+import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
@@ -311,6 +312,9 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL)
         .push("blocks");
+    CFG.comment("Ender shelf settings").push("sound");
+    BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
+    CFG.pop();
     CFG.comment("Ender shelf settings").push("ender_shelf");
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);

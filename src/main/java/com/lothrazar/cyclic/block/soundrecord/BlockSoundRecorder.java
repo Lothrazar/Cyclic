@@ -18,12 +18,13 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BlockSoundRecorder extends BlockBase {
 
-  private static final int RADIUS = 8; // TODO: config
+  public static IntValue RADIUS;
 
   public BlockSoundRecorder(Properties properties) {
     super(properties.hardnessAndResistance(1F).sound(SoundType.SCAFFOLDING));
@@ -53,7 +54,8 @@ public class BlockSoundRecorder extends BlockBase {
     if (event.getSound() == null || event.getSound().getSoundLocation() == null || event.getResultSound() instanceof ITickableSound || clientWorld == null) {
       return;
     } //long term/repeating/music
-    List<BlockPos> blocks = UtilBlockstates.findBlocks(clientWorld, new BlockPos(event.getSound().getX(), event.getSound().getY(), event.getSound().getZ()), this, RADIUS);
+    List<BlockPos> blocks = UtilBlockstates.findBlocks(clientWorld,
+        new BlockPos(event.getSound().getX(), event.getSound().getY(), event.getSound().getZ()), this, RADIUS.get());
     for (BlockPos nearby : blocks) {
       String sid = event.getSound().getSoundLocation().toString();
       //TODO: only send packet if block is in 'listening' / 'lit' blocksate?
