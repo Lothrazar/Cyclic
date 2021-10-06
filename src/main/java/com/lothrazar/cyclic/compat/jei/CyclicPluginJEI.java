@@ -114,8 +114,8 @@ public class CyclicPluginJEI implements IModPlugin {
     //        10, 8,
     //        50, 50, VanillaRecipeCategoryUid.CRAFTING);
     registry.addRecipeClickArea(ScreenPackager.class,
-        10, 8,
-        50, 50, PackagerRecipeCategory.ID);
+        60, 0,
+        60, 30, PackagerRecipeCategory.ID);
   }
 
   @Override

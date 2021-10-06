@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.ArrayList;
@@ -56,41 +57,14 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   @Override
   public boolean isHandled(ICraftingRecipe recipe) {
-    return isRecipeValid(recipe);
-  }
-
-  private boolean isRecipeValid(ICraftingRecipe recipe) {
-    int total = 0, matched = 0;
-    Ingredient first = null;
-    for (Ingredient ingr : recipe.getIngredients()) {
-      if (ingr == Ingredient.EMPTY || ingr.getMatchingStacks().length == 0) {
-        continue;
-      }
-      total++;
-      if (first == null) {
-        first = ingr;
-        matched = 1;
-        continue;
-      }
-      if (first.test(ingr.getMatchingStacks()[0])) {
-        matched++;
-      }
-    }
-    //
-    if (total > 0 && total == matched &&
-    //        stack.getCount() >= total &&
-        (total == 4 || total == 9) &&
-        (recipe.getRecipeOutput().getCount() == 1 || recipe.getRecipeOutput().getCount() == total)) {
-      return true;
-    }
-    return false;
+    return TilePackager.isRecipeValid(recipe);
   }
 
   @Override
   public void setIngredients(ICraftingRecipe recipe, IIngredients ingredients) {
-    if (!isRecipeValid(recipe)) {
-      return;
-    }
+    //    if (!TilePackager.isRecipeValid(recipe)) {
+    //      return;
+    //    }
     //    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
@@ -99,18 +73,12 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
     in.add(stuff);
     ingredients.setInputLists(VanillaTypes.ITEM, in);
   }
-  //  @Override
-  //  public void draw(ICraftingRecipe recipe, MatrixStack ms, double mouseX, double mouseY) {
-  //    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getTicks() + " t", 60, 0, FONT);
-  //    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
-  //    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getRfTotal() + " RF", 60, 20, FONT);
-  //  }
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, ICraftingRecipe recipe, IIngredients ingredients) {
-    if (!isRecipeValid(recipe)) {
-      return;
-    }
+    //    if (!TilePackager.isRecipeValid(recipe)) {
+    //      return;
+    //    }
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     guiItemStacks.init(0, true, 5, 6);
@@ -122,6 +90,9 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
     }
     List<ItemStack> haxor = new ArrayList<>();
     for (ItemStack st : inputs.get(0)) {
+      if (st.isEmpty()) {
+        continue;
+      }
       ItemStack cpy = st.copy();
       cpy.setCount(sz);
       haxor.add(cpy);

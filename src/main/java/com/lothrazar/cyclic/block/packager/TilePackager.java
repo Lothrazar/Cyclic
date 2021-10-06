@@ -22,6 +22,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -77,6 +78,9 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
     //shapeless recipes / shaped check either
     List<ICraftingRecipe> recipes = world.getRecipeManager().getRecipesForType(IRecipeType.CRAFTING);
     for (ICraftingRecipe rec : recipes) {
+      if (!isRecipeValid(rec)) {
+        continue;
+      }
       //test matching recipe and its size
       int total = getCostIfMatched(stack, rec);
       if (total > 0 &&
@@ -88,6 +92,43 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
         energy.extractEnergy(POWERCONF.get(), false);
       }
     }
+  }
+
+  public static boolean isRecipeValid(ICraftingRecipe recipe) {
+    int total = 0, matched = 0;
+    Ingredient first = null;
+    for (Ingredient ingr : recipe.getIngredients()) {
+      if (ingr == Ingredient.EMPTY || ingr.getMatchingStacks().length == 0) {
+        continue;
+      }
+      total++;
+      if (first == null) {
+        first = ingr;
+        matched = 1;
+        continue;
+      }
+      if (first.test(ingr.getMatchingStacks()[0])) {
+        matched++;
+      }
+    }
+    if (first == null || first.getMatchingStacks() == null || first.getMatchingStacks().length == 0) {
+      return false; //nothing here
+    }
+    boolean outIsStorage = recipe.getRecipeOutput().getItem().isIn(Tags.Items.STORAGE_BLOCKS);
+    boolean inIsIngot = first.getMatchingStacks()[0].getItem().isIn(Tags.Items.INGOTS);
+    if (!outIsStorage && inIsIngot) {
+      //ingots can only go to storage blocks, nothing else
+      //avoids armor/ iron trap doors. kinda hacky
+      return false;
+    }
+    if (total > 0 && total == matched &&
+        recipe.getRecipeOutput().getMaxStackSize() > 1 && //aka not tools/boots/etc
+        //        stack.getCount() >= total &&
+        (total == 4 || total == 9) &&
+        (recipe.getRecipeOutput().getCount() == 1 || recipe.getRecipeOutput().getCount() == total)) {
+      return true;
+    }
+    return false;
   }
 
   private int getCostIfMatched(ItemStack stack, ICraftingRecipe recipe) {
