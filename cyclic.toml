@@ -146,9 +146,6 @@
 	[cyclic.items]
 		#Entity ids that cannot be picked up with the Monster all
 		monster_ball_ignore_list = ["minecraft:ender_dragon", "minecraft:wither"]
-		#Ore Prospector radius around player to search for ores
-		#Range: 1 ~ 99
-		range = 32
 
 		#####################################################################################
 		# Obsidian gear settings
@@ -178,6 +175,11 @@
 			#Block these from being picked up
 			disable_pickup = ["minecraft:spawner", "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller"]
 
+		[cyclic.items.prospector]
+			#Ore Prospector radius around player to search for ores
+			#Range: 1 ~ 99
+			range = 32
+
 		#####################################################################################
 		# Settings for varios charms (curios)
 		#####################################################################################
@@ -191,6 +193,11 @@
 			#Boost given by item charm_speed
 			#Range: 0.0 ~ 2.0
 			speed = 0.5
+
+			[cyclic.items.charms.charm_torch]
+				#Light level limit for placing torches
+				#Range: 0 ~ 15
+				light_level = 9
 
 			#####################################################################################
 			# Caving Torch Charm settings
@@ -297,12 +304,12 @@
 			#Power per use dropper
 			#Range: 0 ~ 64000
 			dropper = 50
-			#Power per use peat_farm
-			#Range: 0 ~ 64000
-			peat_farm = 500
 			#Power per recipe in the packager
 			#Range: 0 ~ 64000
 			packager = 50
+			#Power per use peat_farm
+			#Range: 0 ~ 64000
+			peat_farm = 500
 			#Power per use miner
 			#Range: 0 ~ 64000
 			miner = 10
