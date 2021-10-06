@@ -56,10 +56,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   @Override
   public boolean isHandled(ICraftingRecipe recipe) {
-    boolean testingBreakpoints = true;
-    if (testingBreakpoints) {
-      throw new IllegalArgumentException("returning false does not work is really bad what is happening");
-    }
     return isRecipeValid(recipe);
   }
 
