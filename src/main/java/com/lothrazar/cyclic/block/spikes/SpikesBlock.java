@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.Entity;
@@ -28,7 +29,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class SpikesBlock extends BlockBase {
+public class SpikesBlock extends BlockBase implements IWaterLoggable {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final double CURSE_CHANCE = 0.2;

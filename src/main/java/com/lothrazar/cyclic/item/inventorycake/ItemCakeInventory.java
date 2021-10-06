@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.item.inventorycake;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.net.PacketKeyBind;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -56,7 +56,7 @@ public class ItemCakeInventory extends ItemBase {
     if (!worldIn.isRemote) {
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
       datFile.storageVisible = !datFile.storageVisible;
-      ModCyclic.LOGGER.info(" storage toggle " + datFile);
+      UtilChat.addServerChatMessage(player, "cyclic.unlocks.extended");
     }
     return super.onItemUseFinish(stack, worldIn, entityLiving);
   }

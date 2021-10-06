@@ -17,12 +17,14 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.Tags;
 
 public class OreProspector extends ItemBase {
 
   private static final String ORESIZE = "oresize";
   private static final String NBT_DIM = "dim";
+  public static IntValue RANGE;
 
   public OreProspector(Properties properties) {
     super(properties);
@@ -47,9 +49,10 @@ public class OreProspector extends ItemBase {
       return ActionResultType.PASS;
     }
     player.getCooldownTracker().setCooldown(held.getItem(), 10);
+    //first delete old pos
+    held.setTag(null);
     BlockPos pos = context.getPos();
-    int radius = 32;
-    List<BlockPos> shape = UtilShape.cubeSquareBase(pos.down(), radius, 2);
+    List<BlockPos> shape = UtilShape.cubeSquareBase(pos.down(), RANGE.get(), 2);
     List<BlockPos> ores = new ArrayList<>();
     World world = context.getWorld();
     for (BlockPos p : shape) {
@@ -71,6 +74,18 @@ public class OreProspector extends ItemBase {
     UtilItemStack.damageItem(player, held);
     //    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")      + UtilChat.blockPosToString(pos));
     return ActionResultType.SUCCESS;
+  }
+
+  public static ItemStack getIfHeld(PlayerEntity player) {
+    ItemStack heldItem = player.getHeldItemMainhand();
+    if (heldItem.getItem() instanceof OreProspector) {
+      return heldItem;
+    }
+    heldItem = player.getHeldItemOffhand();
+    if (heldItem.getItem() instanceof OreProspector) {
+      return heldItem;
+    }
+    return ItemStack.EMPTY;
   }
 
   public static ArrayList<BlockPosDim> getPosition(ItemStack item) {

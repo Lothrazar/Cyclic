@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.fanslab;
 import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.fluid.FluidState;
@@ -23,7 +24,7 @@ import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 
-public class BlockFanSlab extends BlockBase {
+public class BlockFanSlab extends BlockBase implements IWaterLoggable {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;

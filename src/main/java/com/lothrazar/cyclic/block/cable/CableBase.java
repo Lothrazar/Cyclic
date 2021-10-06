@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -34,7 +35,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class CableBase extends BlockBase {
+public abstract class CableBase extends BlockBase implements IWaterLoggable {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   //regular connections

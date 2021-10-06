@@ -11,7 +11,7 @@ public class ContainerProviderCake implements INamedContainerProvider {
 
   @Override
   public ITextComponent getDisplayName() {
-    return new TranslationTextComponent("item.cyclic.inventory.name");
+    return new TranslationTextComponent("item.cyclic.inventory_cake");
   }
 
   @Override

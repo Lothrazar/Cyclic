@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.item.inventorycake.ContainerProviderCake;
+import com.lothrazar.cyclic.util.UtilChat;
 import java.util.function.Supplier;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -57,6 +58,9 @@ public class PacketKeyBind extends PacketBase {
       CyclicFile datFile = PlayerDataEvents.getOrCreate(sender);
       if (datFile.storageVisible) {
         NetworkHooks.openGui(sender, new ContainerProviderCake(), sender.getPosition());
+      }
+      else {
+        UtilChat.addServerChatMessage(sender, "cyclic.unlocks.extended.locked");
       }
     });
     message.done(ctx);

@@ -814,7 +814,7 @@
     "item.cyclic.lapis_carrot_variant.guide": "Use the Lapis Carrot on a horse to change its coat to a different variant.$(br2)Keep using additional Lapis Carrots until you find the coat you're looking for.",
 
     "item.cyclic.inventory_cake.guide": "Eating this will unlock a second inventory screen.  ",
-    "item.cyclic.inventory_cake": "Ender Inventory Cupcake",
+    "item.cyclic.inventory_cake": "Ender Inventory Cake",
     "item.cyclic.inventory_cake.tooltip": "Eat to gain a permanent magical backpack",
     
     "item.cyclic.magic_net": "Monster Ball",
@@ -1008,15 +1008,13 @@
     "item.cyclic.antimatter_wand.mode.generic": "Generic",
     "item.cyclic.antimatter_wand.guide": "Left-click to cycle between Water, Lava, and Generic Fluid modes. Right-click to clear a 9x9 area of the selected fluid type from the world.",
 
-    "key.categories.inventorycontrol": "Cyclic Keybindings",
-    "key.columnbardown": "Row Shift Down",
-    "key.columnbarup": "Row Shift Up",
-    "key.columnshiftdown": "Item Shift Down",
-    "key.columnshiftup": "Item Shift Up",
-    "key.keyExtraCraftin": "Inventory Crafting (if unlocked)",
-    "key.keyExtraInvo": "Extended Inventory (if unlocked)",
-    "key.keyWheel": "Extended Inventory Tool Belt (if unlocked)",
-    "minecart.fuel": "Fuel:",
+    "key.cyclic.category": "Cyclic Keybindings",
+    "key.cyclic.cake": "Extended Inventory (if unlocked)",
+
+    "cyclic.unlocks.extended": "Unlocked Extended Inventory - see Key Bindings to open",
+    
+    "cyclic.unlocks.extended.locked": "Extended Inventory still locked - eat the cake",
+
     "screentext.flying.seconds": "Flying:",
     "screentext.noclip.seconds": "NoClip:",
 
@@ -1332,10 +1330,7 @@
     "tool.spelunker.none": "Solid up to distance ",
     "tool.spelunker.water": "Water found at distance ",
     "tooltip.burntime": "Burn Time:",
-    "cyclic.unlocks.crafting": "Unlocked Inventory Crafting",
-    "cyclic.unlocks.extended": "Unlocked Extended Inventory",
-    "locked.crafting": "Inventory Crafting still locked",
-    "locked.extended": "Extended Inventory still locked",
+    
     "toolcircle.swap": "Deposit and swap items here",
     "cyclic.unlocks.stepheight.false": "Step Height Disabled",
     "cyclic.unlocks.stepheight.true": "Step Height Enabled",

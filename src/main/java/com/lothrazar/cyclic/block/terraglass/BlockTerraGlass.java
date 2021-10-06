@@ -10,6 +10,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockTerraGlass extends BlockBase {
 
@@ -21,6 +23,23 @@ public class BlockTerraGlass extends BlockBase {
   }
 
   @Override
+  @OnlyIn(Dist.CLIENT)
+  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    return 1.0F;
+  }
+
+  @Override
+  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+    return true;
+  }
+
+  @Override
+  @Deprecated
+  public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    return 0;
+  }
+
+  @Override
   public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
     return blockState.get(LIT) ? 15 : 0;
   }
@@ -28,11 +47,6 @@ public class BlockTerraGlass extends BlockBase {
   @Override
   public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
     return blockState.get(LIT) ? 15 : 0;
-  }
-
-  @Override
-  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return 1.0f;
   }
 
   @Override

@@ -162,18 +162,13 @@ public class EventRender {
         renderCubes.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
       }
     }
-    stack = player.getHeldItemMainhand();
+    stack = OreProspector.getIfHeld(player);
     if (stack.getItem() instanceof OreProspector) {
-      //      BlockRayTraceResult lookingAt = UtilRender.getLookingAt(player, (int) range);
-      //      if (player.world.getBlockState(lookingAt.getPos()) == Blocks.AIR.getDefaultState()) {
-      //        return;
-      //      }
       List<BlockPosDim> coords = OreProspector.getPosition(stack);
       for (BlockPosDim loc : coords) {
         if (loc != null) {
           if (loc.getDimension() == null ||
               loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
-            //            renderCubes.put(loc.getPos(), Color.ORANGE);
             UtilRender.createBox(event.getMatrixStack(), loc.getPos());
           }
         }
