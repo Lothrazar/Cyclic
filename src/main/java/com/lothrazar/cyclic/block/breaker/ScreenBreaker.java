@@ -21,7 +21,7 @@ public class ScreenBreaker extends ScreenBase<ContainerBreaker> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileBreaker.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileBreaker.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

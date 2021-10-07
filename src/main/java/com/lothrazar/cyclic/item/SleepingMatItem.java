@@ -13,9 +13,9 @@ import net.minecraft.util.Unit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import net.minecraft.world.item.Item.Properties;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class SleepingMatItem extends ItemBase {
 

@@ -54,12 +54,6 @@ public class BlockAnvilAuto extends BlockBase {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     MenuScreens.register(ContainerScreenRegistry.anvil, ScreenAnvil::new);
   }
-
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -67,8 +61,8 @@ public class BlockAnvilAuto extends BlockBase {
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileAnvilAuto();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileAnvilAuto(pos,state);
   }
 
   @Override

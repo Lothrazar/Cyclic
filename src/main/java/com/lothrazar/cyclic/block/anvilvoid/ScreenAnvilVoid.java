@@ -28,7 +28,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileAnvilVoid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileAnvilVoid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

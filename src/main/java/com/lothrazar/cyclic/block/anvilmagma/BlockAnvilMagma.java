@@ -41,10 +41,6 @@ public class BlockAnvilMagma extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.ANVIL_MAGMA, ScreenAnvilMagma::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -53,8 +49,8 @@ public class BlockAnvilMagma extends BlockBase {
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileAnvilMagma();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileAnvilMagma(pos,state);
   }
 
   @Override

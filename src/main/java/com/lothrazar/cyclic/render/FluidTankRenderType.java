@@ -8,8 +8,6 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.renderer.RenderStateShard.AlphaStateShard;
-
 /**
  * Source from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x
  * 
@@ -17,8 +15,8 @@ import net.minecraft.client.renderer.RenderStateShard.AlphaStateShard;
  * 
  */
 public class FluidTankRenderType extends RenderType {
-
-  private static final AlphaStateShard ALPHA = new RenderStateShard.AlphaStateShard(0.1F);
+// AlphaStateShard
+  private static final TransparencyStateShard ALPHA =   RenderStateShard.TRANSLUCENT_TRANSPARENCY;//.AlphaStateShard(0.1F);
 
   private FluidTankRenderType(String nameIn, VertexFormat formatIn, int drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
@@ -35,6 +33,7 @@ public class FluidTankRenderType extends RenderType {
         .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
         .setCullState(CULL)
         .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-        .setShadeModelState(SMOOTH_SHADE);
+//        .setShadeModelState(SMOOTH_SHADE)
+        ;
   }
 }

@@ -22,17 +22,17 @@ public class ScreenClock extends ScreenBase<ContainerClock> {
     int f = TileRedstoneClock.Fields.DURATION.ordinal();
     x = leftPos + 8;
     y = topPos + 18;
-    GuiSliderInteger dur = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger dur = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 200, menu.tile.getField(f)));
     dur.setTooltip("cyclic.clock.duration");
     y += 21;
     f = TileRedstoneClock.Fields.DELAY.ordinal();
-    GuiSliderInteger delay = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger delay = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 200, menu.tile.getField(f)));
     delay.setTooltip("cyclic.clock.delay");
     y += 21;
     f = TileRedstoneClock.Fields.POWER.ordinal();
-    GuiSliderInteger power = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger power = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 15, menu.tile.getField(f)));
     power.setTooltip("cyclic.clock.power");
   }

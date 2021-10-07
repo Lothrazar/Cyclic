@@ -52,8 +52,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 
 @SuppressWarnings("deprecation")
 public class UtilEntity {
@@ -72,13 +71,13 @@ public class UtilEntity {
     if (player.getRootVehicle() != player) {
       return false;
     }
-    EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
-    boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
-    if (wasCancelled == false) {
-      //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
-      UtilEntity.teleportWallSafe(player, world, event.getTargetX(), event.getTargetY(), event.getTargetZ());
-    }
-    return !wasCancelled;
+//    EntityTeleportEvent.EnderPearl event = new EntityTeleportEvent.EnderPearl(player, x, y, z, 0);
+//    boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
+//    if (wasCancelled == false) {
+//      //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
+//      UtilEntity.teleportWallSafe(player, world, event.getTargetX(), event.getTargetY(), event.getTargetZ());
+//    }
+    return  true; //!wasCancelled;
   }
 
   /**

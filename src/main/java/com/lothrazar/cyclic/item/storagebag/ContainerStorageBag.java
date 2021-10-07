@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
-import net.minecraft.item.DyeItem;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -15,13 +15,13 @@ public class ContainerStorageBag extends ContainerBase {
 
   public ItemStack bag = ItemStack.EMPTY;
   public int slot;
-  public int slots;
+  public int slotCount;
 
   public ContainerStorageBag(int i, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.STORAGE_BAG, i);
     if (player.getMainHandItem().getItem() instanceof ItemStorageBag) {
       this.bag = player.getMainHandItem();
-      this.slot = player.inventory.selected;
+      this.slot = player.getInventory().selected;
     }
     else if (player.getOffhandItem().getItem() instanceof ItemStorageBag) {
       this.bag = player.getOffhandItem();
@@ -40,7 +40,7 @@ public class ContainerStorageBag extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.slots = h.getSlots();
+      this.slotCount = h.getSlots();
       this.endInv = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         int row = j / 9;
@@ -66,22 +66,24 @@ public class ContainerStorageBag extends ContainerBase {
   }
 
   @Override
-  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     ItemStorageBag.setTimestamp(bag);
+
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       if (this.slots.get(slotId).getItem().getItem() instanceof ItemStorageBag) {
         // if its a normal click with a Dye item, then update stack color
         if (clickTypeIn == ClickType.PICKUP) {
-          ItemStack mouseStack = player.inventory.getCarried();
+          ItemStack mouseStack = player.containerMenu.getCarried();
+//          mouseStack =  player.getInventory().getSelected();
           if (mouseStack.getItem() instanceof DyeItem) {
             DyeItem dye = (DyeItem) mouseStack.getItem();
             ItemStorageBag.setColour(slots.get(slotId).getItem(), dye.getDyeColor());
           }
         }
         //lock the bag in place by returning empty
-        return ItemStack.EMPTY;
+//        return ItemStack.EMPTY;
       }
     }
-    return super.clicked(slotId, dragType, clickTypeIn, player);
+      super.clicked(slotId, dragType, clickTypeIn, player);
   }
 }

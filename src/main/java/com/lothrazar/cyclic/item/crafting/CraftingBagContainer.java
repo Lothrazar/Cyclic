@@ -42,7 +42,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     //
     if (player.getMainHandItem().getItem() instanceof CraftingBagItem) {
       this.bag = player.getMainHandItem();
-      this.slot = player.inventory.selected;
+      this.slot = player.getInventory().selected;
     }
     else if (player.getOffhandItem().getItem() instanceof CraftingBagItem) {
       this.bag = player.getOffhandItem();

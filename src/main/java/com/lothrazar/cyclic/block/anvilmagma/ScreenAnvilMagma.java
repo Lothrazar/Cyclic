@@ -26,7 +26,7 @@ public class ScreenAnvilMagma extends ScreenBase<ContainerAnvilMagma> {
     fluid.guiTop = topPos;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileAnvilMagma.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileAnvilMagma.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

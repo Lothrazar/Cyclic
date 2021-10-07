@@ -36,20 +36,20 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     energy.guiTop = topPos;
     int x = leftPos + 132, y = topPos + 8;
     int size = 14;
-    btnToggle = addButton(new ButtonMachine(x, y, size, size, "", (p) -> {
+    btnToggle = addWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       menu.tile.setFlowing((menu.tile.getFlowing() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(Fields.FLOWING.ordinal(), menu.tile.getFlowing(), menu.tile.getBlockPos()));
     }));
     x = leftPos + 18;
     y = topPos + 18;
-    btnU = addButton(new ButtonMachine(x, y, size, size, "U", (p) -> {
+    btnU = addWidget(new ButtonMachine(x, y, size, size, "U", (p) -> {
       int f = Fields.U.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
     btnU.setTooltip(UtilChat.lang("gui.cyclic.flowing.up"));
     y = topPos + 60;
-    btnD = addButton(new ButtonMachine(x, y, size, size, "D", (p) -> {
+    btnD = addWidget(new ButtonMachine(x, y, size, size, "D", (p) -> {
       int f = Fields.D.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
@@ -60,7 +60,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     int space = 18;
     x = xCenter;
     y = yCenter - space;
-    btnN = addButton(new ButtonMachine(x, y, size, size, "N", (p) -> {
+    btnN = addWidget(new ButtonMachine(x, y, size, size, "N", (p) -> {
       int f = Fields.N.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
@@ -68,7 +68,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     btnN.setTooltip(UtilChat.lang("gui.cyclic.flowing.north"));
     x = xCenter;
     y = yCenter + space;
-    btnS = addButton(new ButtonMachine(x, y, size, size, "S", (p) -> {
+    btnS = addWidget(new ButtonMachine(x, y, size, size, "S", (p) -> {
       int f = Fields.S.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
@@ -77,7 +77,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     //now east west
     x = xCenter + space;
     y = yCenter;
-    btnE = addButton(new ButtonMachine(x, y, size, size, "E", (p) -> {
+    btnE = addWidget(new ButtonMachine(x, y, size, size, "E", (p) -> {
       int f = Fields.E.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
@@ -85,7 +85,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     btnE.setTooltip(UtilChat.lang("gui.cyclic.flowing.east"));
     x = xCenter - space;
     y = yCenter;
-    btnW = addButton(new ButtonMachine(x, y, size, size, "W", (p) -> {
+    btnW = addWidget(new ButtonMachine(x, y, size, size, "W", (p) -> {
       int f = Fields.W.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));

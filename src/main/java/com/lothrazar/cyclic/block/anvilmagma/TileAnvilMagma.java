@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -50,8 +51,8 @@ public class TileAnvilMagma extends TileEntityBase implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank;
 
-  public TileAnvilMagma() {
-    super(TileRegistry.anvil_magma);
+  public TileAnvilMagma(BlockPos pos, BlockState state) {
+    super(TileRegistry.anvil_magma,pos,state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
@@ -124,10 +125,10 @@ public class TileAnvilMagma extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

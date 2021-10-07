@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item.equipment;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -21,16 +22,14 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ToolType;
-
-import net.minecraft.world.item.Item.Properties;
+import net.minecraftforge.event.ForgeEventFactory;
 
 public class MattockItem extends DiggerItem {
 
   final int radius; //radius 2 is 5x5 area square
 
   public MattockItem(Properties builder, int radius) {
-    super(5.0F, -3.0F, Tiers.DIAMOND, Sets.newHashSet(), builder.addToolType(ToolType.SHOVEL, 4).addToolType(ToolType.PICKAXE, 4));
+    super(5.0F, -3.0F, Tiers.DIAMOND, BlockTags.MINEABLE_WITH_SHOVEL,builder);
     this.radius = radius;
   }
 
@@ -66,7 +65,7 @@ public class MattockItem extends DiggerItem {
         BlockState bsCurrent = world.getBlockState(posCurrent);
         if (bsCurrent.destroySpeed >= 0 // -1 is unbreakable
             && player.mayUseItemAt(posCurrent, sideHit, stack)
-            && ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
+            && ForgeEventFactory.doPlayerHarvestCheck(player,bsCurrent, true)
             && this.getDestroySpeed(stack, bsCurrent) > 1) {
           stack.mineBlock(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
@@ -97,11 +96,11 @@ public class MattockItem extends DiggerItem {
     return super.onBlockStartBreak(stack, pos, player);
   }
 
-  @Override
-  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, Player player, BlockState blockState) {
-    return Math.max(Items.DIAMOND_PICKAXE.getHarvestLevel(stack, tool, player, blockState),
-        Items.DIAMOND_SHOVEL.getHarvestLevel(stack, tool, player, blockState));
-  }
+//  @Override
+//  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, Player player, BlockState blockState) {
+//    return Math.max(Items.DIAMOND_PICKAXE.getHarvestLevel(stack, tool, player, blockState),
+//        Items.DIAMOND_SHOVEL.getHarvestLevel(stack, tool, player, blockState));
+//  }
 
   @Override
   public float getDestroySpeed(ItemStack stack, BlockState state) {

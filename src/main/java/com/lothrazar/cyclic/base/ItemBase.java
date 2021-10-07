@@ -48,8 +48,8 @@ public class ItemBase extends Item {
   }
 
   protected ItemStack findAmmo(Player player, Item item) {
-    for (int i = 0; i < player.inventory.getContainerSize(); ++i) {
-      ItemStack itemstack = player.inventory.getItem(i);
+    for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
+      ItemStack itemstack = player.getInventory().getItem(i);
       if (itemstack.getItem() == item) {
         return itemstack;
       }

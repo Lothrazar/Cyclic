@@ -46,19 +46,14 @@ public class BlockAnvilVoid extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
     return direction.getAxis() == Direction.Axis.X ? BlockAnvilAuto.X_AXIS_AABB : BlockAnvilAuto.Z_AXIS_AABB;
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileAnvilVoid();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileAnvilVoid(pos,state);
   }
 
   @Override
