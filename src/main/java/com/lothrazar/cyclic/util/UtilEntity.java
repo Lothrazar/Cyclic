@@ -106,7 +106,7 @@ public class UtilEntity {
   }
 
   public static Direction getFacing(LivingEntity entity) {
-    int yaw = (int) entity.yRot;
+    int yaw = (int) entity.getYRot();
     if (yaw < 0) { // due to the yaw running a -360 to positive 360
       yaw += 360; // not sure why it's that way
     }

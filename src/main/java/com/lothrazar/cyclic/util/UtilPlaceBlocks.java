@@ -27,7 +27,7 @@ public class UtilPlaceBlocks {
     }
     Block clickedBlock = clicked.getBlock();
     BlockState newState = null;
-    if (clickedBlock.is(BlockTags.SLABS)) {
+    if (clicked.is(BlockTags.SLABS)) {
       final String key = "type"; //top or bottom
       final String valueDupe = "double"; //actually theres 3 but dont worry about it
       //      clicked.get(property)

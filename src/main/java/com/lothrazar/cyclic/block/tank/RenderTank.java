@@ -8,15 +8,16 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class RenderTank implements BlockEntityRenderer<TileTank> {
 
-//  public RenderTank(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public RenderTank(BlockEntityRendererProvider.Context d) {   }
+
 
   @Override
   public void render(TileTank tankHere, float v, PoseStack matrix,

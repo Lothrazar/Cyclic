@@ -70,9 +70,9 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
         new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
             new TranslatableComponent("item.cyclic.storage_bag.refill.hotbar")),
         StringTag.valueOf("hotbar"));
-    this.addButton(pickup);
-    this.addButton(dump);
-    this.addButton(refill);
+    this.addWidget(pickup);
+    this.addWidget(dump);
+    this.addWidget(refill);
   }
 
   @Override

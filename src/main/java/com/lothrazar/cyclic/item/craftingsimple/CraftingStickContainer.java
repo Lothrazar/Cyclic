@@ -64,7 +64,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
         }
       }
       craftResult.setItem(0, itemstack);
-      player.connection.send(new ClientboundContainerSetSlotPacket(containerId, 0, itemstack));
+      player.connection.send(new ClientboundContainerSetSlotPacket(containerId,this.getStateId(), 0, itemstack));
     }
   }
 

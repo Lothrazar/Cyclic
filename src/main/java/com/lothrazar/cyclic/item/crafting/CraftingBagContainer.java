@@ -114,7 +114,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
         }
       }
       craftResult.setItem(0, itemstack);
-      player.connection.send(new ClientboundContainerSetSlotPacket(containerId, 0, itemstack));
+      player.connection.send(new ClientboundContainerSetSlotPacket(containerId,this.getStateId() , 0, itemstack));
     }
   }
 
@@ -146,12 +146,12 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   }
 
   @Override
-  public CraftingInventory getCraftMatrix() {
+  public CraftingContainer getCraftMatrix() {
     return this.craftMatrix;
   }
 
   @Override
-  public CraftResultInventory getCraftResult() {
+  public ResultContainer getCraftResult() {
     return this.craftResult;
   }
 }

@@ -24,7 +24,7 @@ public class FluidTankRenderType extends RenderType {
 
   public static RenderType resizableCuboid() {
     RenderType.CompositeState.CompositeStateBuilder stateBuilder = preset(InventoryMenu.BLOCK_ATLAS).setAlphaState(ALPHA);
-    return create("resizable_cuboid", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, GL11.GL_QUADS, 256, true, false,
+    return create("resizable_cuboid", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
         stateBuilder.createCompositeState(true));
   }
 

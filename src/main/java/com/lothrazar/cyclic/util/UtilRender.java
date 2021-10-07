@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.render.RenderResizableCuboid;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,9 @@ public class UtilRender {
     RenderSystem.enableBlend();
     //    RenderSystem.enableAlphaTest();
     BufferBuilder vertexBuffer = Tesselator.getInstance().getBuilder();
-    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
+
+    vertexBuffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+//    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
     for (int xTile = 0; xTile <= xTileCount; xTile++) {
       int width = (xTile == xTileCount) ? xRemainder : textureWidth;
       if (width == 0) {
@@ -401,7 +404,7 @@ public class UtilRender {
     RenderSystem.disableTexture();
     RenderSystem.disableBlend();
     RenderSystem.disableDepthTest();
-    RenderSystem.pushMatrix();
+//    RenderSystem.pushMatrix();
     Vec3 viewPosition = mc.gameRenderer.getMainCamera().getPosition();
     long c = (System.currentTimeMillis() / 15L) % 360L;
     float[] color = getHSBtoRGBF(c / 360f, 1f, 1f);
@@ -449,7 +452,7 @@ public class UtilRender {
     renderer.vertex(x, y + offset, z + offset).endVertex();
     tessellator.end();
     matrixStack.popPose();
-    RenderSystem.popMatrix();
+//    RenderSystem.popMatrix();
     RenderSystem.lineWidth(1f);
     RenderSystem.enableDepthTest();
     RenderSystem.enableBlend();

@@ -27,8 +27,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>
-    implements IContainerCraftingAction {
+public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>    implements IContainerCraftingAction {
 
   private TileWorkbench tile;
   public static final int GRID_START_X = 30;
@@ -122,6 +121,12 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>
   }
 
   @Override
+  public boolean shouldMoveToInventory(int s) {
+    System.out.println("WAT is this shouldMoveToInventory"+s);
+    return false;
+  }
+
+  @Override
   public void slotsChanged(Container inventoryIn) {
     if (!doneOpening) {
       return;
@@ -133,7 +138,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>
       }
     });
     this.worldPosCallable.execute((wrld, posIn) -> {
-      updateCraftingResult(this.containerId, wrld, this.player, this.craftMatrix, this.craftResult);
+      updateCraftingResult(this.containerId,this.getStateId(), wrld, this.player, this.craftMatrix, this.craftResult);
     });
   }
 
@@ -182,7 +187,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>
     }
   }
 
-  protected static void updateCraftingResult(int id, Level world, Player player, CraftingContainer inventory, ResultContainer inventoryResult) {
+  protected static void updateCraftingResult(int id,int stateId, Level world, Player player, CraftingContainer inventory, ResultContainer inventoryResult) {
     if (!world.isClientSide) {
       ServerPlayer sp = (ServerPlayer) player;
       ItemStack itemstack = ItemStack.EMPTY;
@@ -194,7 +199,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>
         }
       }
       inventoryResult.setItem(0, itemstack);
-      sp.connection.send(new ClientboundContainerSetSlotPacket(id, 0, itemstack));
+      sp.connection.send(new ClientboundContainerSetSlotPacket(id,stateId, 0, itemstack));
     }
   }
 

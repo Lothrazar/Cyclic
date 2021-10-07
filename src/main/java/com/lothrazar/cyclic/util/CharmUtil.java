@@ -60,8 +60,8 @@ public class CharmUtil {
     //        return Triple.of("ender", i, temp);
     //      }
     //    }
-    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-      ItemStack temp = player.inventory.getItem(i);
+    for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+      ItemStack temp = player.getInventory().getItem(i);
       if (isMatching(temp, match)) {
         if (temp.getItem() instanceof IHasClickToggle) {
           IHasClickToggle testMe = (IHasClickToggle) temp.getItem();

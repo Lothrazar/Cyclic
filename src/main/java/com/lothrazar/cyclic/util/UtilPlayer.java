@@ -54,8 +54,8 @@ public class UtilPlayer {
   public static int getFirstSlotWithBlock(Player player, BlockState targetState) {
     int ret = -1;
     ItemStack stack;
-    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-      stack = player.inventory.getItem(i);
+    for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+      stack = player.getInventory().getItem(i);
       if (!stack.isEmpty() &&
           stack.getItem() != null &&
           Block.byItem(stack.getItem()) == targetState.getBlock()) {
@@ -66,7 +66,7 @@ public class UtilPlayer {
   }
 
   public static BlockState getBlockstateFromSlot(Player player, int slot) {
-    ItemStack stack = player.inventory.getItem(slot);
+    ItemStack stack = player.getInventory().getItem(slot);
     if (!stack.isEmpty() &&
         stack.getItem() != null &&
         Block.byItem(stack.getItem()) != null) {
@@ -78,12 +78,12 @@ public class UtilPlayer {
 
   public static void decrStackSize(Player player, int slot) {
     if (player.isCreative() == false && slot >= 0) {
-      player.inventory.removeItem(slot, 1);
+      player.getInventory().removeItem(slot, 1);
     }
   }
 
   public static Item getItemArmorSlot(Player player, EquipmentSlot slot) {
-    ItemStack inslot = player.inventory.armor.get(slot.getIndex());
+    ItemStack inslot = player.getInventory().armor.get(slot.getIndex());
     //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
     Item item = (inslot.isEmpty()) ? null : inslot.getItem();
     return item;

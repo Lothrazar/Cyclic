@@ -69,8 +69,8 @@ public class CarbonPaperItem extends ItemBase {
       SignBlockEntity sign = (SignBlockEntity) tile;
       if (held.hasTag()) {
         //write to fake sign to parse nbt internally
-        SignBlockEntity fakeSign = new SignBlockEntity();
-        fakeSign.load(Blocks.OAK_SIGN.defaultBlockState(), held.getTag());
+        SignBlockEntity fakeSign = new SignBlockEntity(context.getClickedPos(),Blocks.OAK_SIGN.defaultBlockState());
+        fakeSign.load( held.getTag());
         sign.setColor(fakeSign.getColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());
