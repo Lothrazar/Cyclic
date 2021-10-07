@@ -21,11 +21,11 @@ import com.mojang.math.Vector3f;
  * https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
  *
  */
-public class RenderLaser extends BlockEntityRenderer<TileLaser> {
+public class RenderLaser implements BlockEntityRenderer<TileLaser> {
 
-  public RenderLaser(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderLaser(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileLaser te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

@@ -11,14 +11,13 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class DarkGlassBlock extends BlockBase {
 
   public DarkGlassBlock(Properties properties) {
-    super(properties.strength(0.5F, 3600000.0F).harvestTool(ToolType.PICKAXE).sound(SoundType.GLASS).noOcclusion());
+    super(properties.strength(0.5F, 3600000.0F)        .sound(SoundType.GLASS).noOcclusion());
   }
 
   @Override

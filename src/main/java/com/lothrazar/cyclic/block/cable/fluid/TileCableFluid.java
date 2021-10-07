@@ -25,7 +25,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -39,7 +38,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableFluid extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileCableFluid extends TileEntityBase implements MenuProvider {
 
   final ItemStackHandler filter = new ItemStackHandler(1) {
 
@@ -63,7 +62,7 @@ public class TileCableFluid extends TileEntityBase implements TickableBlockEntit
 
   List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
 
-  @Override
+//  @Override
   public void tick() {
     for (Direction side : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(side));

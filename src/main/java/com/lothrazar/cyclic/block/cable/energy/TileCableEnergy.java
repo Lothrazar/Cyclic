@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
@@ -22,7 +21,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableEnergy extends TileEntityBase implements TickableBlockEntity {
+public class TileCableEnergy extends TileEntityBase  {
 
   private static final int MAX = 32000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -36,7 +35,7 @@ public class TileCableEnergy extends TileEntityBase implements TickableBlockEnti
     }
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     this.tickDownIncomingPowerFaces();

@@ -18,11 +18,11 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class RenderMelter extends BlockEntityRenderer<TileMelter> {
+public class RenderMelter implements BlockEntityRenderer<TileMelter> {
 
-  public RenderMelter(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderMelter(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileMelter tankHere, float v, PoseStack matrixStack,
@@ -34,14 +34,14 @@ public class RenderMelter extends BlockEntityRenderer<TileMelter> {
       if (!stack.isEmpty()) {
         matrixStack.pushPose();
         matrixStack.translate(0.5, 0.60, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x111111, 200, matrixStack, buffer);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x111111, 200, matrixStack, buffer,light);
         matrixStack.popPose();
       }
       stack = itemHandler.getStackInSlot(1);
       if (!stack.isEmpty()) {
         matrixStack.pushPose();
         matrixStack.translate(0.5, 0.10, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x999999, 0, matrixStack, buffer);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x999999, 0, matrixStack, buffer,light);
         matrixStack.popPose();
       }
     }

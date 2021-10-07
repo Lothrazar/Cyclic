@@ -15,15 +15,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 public class BlockMelter extends BlockBase {
 
   public BlockMelter(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).strength(1.2F).noOcclusion());
+    super(properties.strength(1.2F).noOcclusion());
     this.setHasGui();
   }
 
@@ -44,13 +43,8 @@ public class BlockMelter extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileMelter();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileMelter(pos,state);
   }
 
   @Override

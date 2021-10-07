@@ -8,28 +8,27 @@ import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -40,7 +39,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileForester extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileForester extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE;
@@ -65,13 +64,13 @@ public class TileForester extends TileEntityBase implements MenuProvider, Tickab
   private WeakReference<FakePlayer> fakePlayer;
   private int shapeIndex = 0;
 
-  public TileForester() {
-    super(TileRegistry.FORESTER);
+  public TileForester(BlockPos pos, BlockState state) {
+    super(TileRegistry.FORESTER, pos, state);
     this.needsRedstone = 1;
     this.render = 0;
   }
 
-  @Override
+  //  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -153,12 +152,12 @@ public class TileForester extends TileEntityBase implements MenuProvider, Tickab
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load(CompoundTag tag) {
     shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -223,16 +222,15 @@ public class TileForester extends TileEntityBase implements MenuProvider, Tickab
   private boolean isSapling(ItemStack dropMe) {
     //    if(dropMe.getItem().isIn(Tags.Blocks.SAND))
     //sapling tag SHOULD exist. it doesnt. idk WHY
-    Block block = Block.byItem(dropMe.getItem());
-    return block.is(BlockTags.SAPLINGS) ||
-        block instanceof SaplingBlock;
+    BlockState block = Block.byItem(dropMe.getItem()).defaultBlockState();
+    return block.is(BlockTags.SAPLINGS) || block.getBlock() instanceof SaplingBlock;
   }
 
   private boolean isTree(BlockPos targetPos) {
     if (targetPos == null) {
       return false;
     }
-    Block block = level.getBlockState(targetPos).getBlock();
+    BlockState block = level.getBlockState(targetPos);
     return block.is(BlockTags.LOGS) ||
         block.is(BlockTags.LEAVES);
   }
@@ -255,13 +253,13 @@ public class TileForester extends TileEntityBase implements MenuProvider, Tickab
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
       case SIZE:
         radius = value % MAX_SIZE;
-      break;
+        break;
     }
   }
 }

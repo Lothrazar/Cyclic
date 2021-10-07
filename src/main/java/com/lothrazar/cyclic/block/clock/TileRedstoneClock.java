@@ -11,12 +11,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 
-public class TileRedstoneClock extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, DELAY, DURATION, POWER, REDSTONE, N, E, S, W, U, D;
@@ -37,7 +36,7 @@ public class TileRedstoneClock extends TileEntityBase implements TickableBlockEn
     this.facingResetAllOn();
   }
 
-  @Override
+//  @Override
   public void tick() {
     try {
       updateMyState();

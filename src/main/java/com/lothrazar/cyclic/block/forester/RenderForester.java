@@ -7,11 +7,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
-public class RenderForester extends BlockEntityRenderer<TileForester> {
+public class RenderForester implements BlockEntityRenderer<TileForester> {
 
-  public RenderForester(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderForester(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileForester te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

@@ -2,16 +2,17 @@ package com.lothrazar.cyclic.block.detectweather;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class TileWeather extends TileEntityBase implements TickableBlockEntity {
+public class TileWeather extends TileEntityBase {
 
-  public TileWeather() {
-    super(TileRegistry.DETECTORWEATHER.get());
+  public TileWeather(BlockPos pos, BlockState state) {
+    super(TileRegistry.DETECTORWEATHER.get(),pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     //if we are going from unpowered to powered, meaning state isnt set but power is
     if (level instanceof ServerLevel) {
@@ -30,7 +31,8 @@ public class TileWeather extends TileEntityBase implements TickableBlockEntity {
       }
       int level = this.getBlockState().getValue(BlockWeather.LEVEL);
       if (level != newPower) {
-        level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(BlockWeather.LEVEL, newPower));
+//        level.se
+        this.getLevel().setBlockAndUpdate(worldPosition, this.getBlockState().setValue(BlockWeather.LEVEL, newPower));
         //        world.notifyNeighborsOfStateChange(pos, this.getBlockState().getBlock());
       }
     } //       world.getWorldInfo().

@@ -13,7 +13,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
@@ -29,7 +28,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileDropper extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileDropper extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, RENDER;
@@ -45,11 +44,11 @@ public class TileDropper extends TileEntityBase implements MenuProvider, Tickabl
   private int delay = 10;
   private int hOffset = 0;
 
-  public TileDropper() {
-    super(TileRegistry.DROPPER);
+  public TileDropper(BlockPos pos, BlockState state) {
+    super(TileRegistry.DROPPER,pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -107,13 +106,13 @@ public class TileDropper extends TileEntityBase implements MenuProvider, Tickabl
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.delay = tag.getInt("delay");
     this.dropCount = tag.getInt("dropCount");
     this.hOffset = tag.getInt("hOffset");
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

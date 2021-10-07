@@ -6,11 +6,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
-public class RenderPeatFarm extends BlockEntityRenderer<TilePeatFarm> {
+public class RenderPeatFarm implements BlockEntityRenderer<TilePeatFarm> {
 
-  public RenderPeatFarm(BlockEntityRenderDispatcher d) {
-    super(d);
+  public RenderPeatFarm(BlockEntityRendererProvider.Context d) {
+//    super(d);
   }
 
   @Override

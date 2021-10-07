@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.block.creativeitem;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -16,10 +16,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileItemInfinite extends TileEntityBase implements TickableBlockEntity {
+public class TileItemInfinite extends TileEntityBase {
 
-  public TileItemInfinite() {
-    super(TileRegistry.item_infinite);
+  public TileItemInfinite(BlockPos pos, BlockState state) {
+    super(TileRegistry.item_infinite,pos,state);
   }
 
   ItemStackHandler inputSlots = new ItemStackHandler(1);
@@ -28,8 +28,8 @@ public class TileItemInfinite extends TileEntityBase implements TickableBlockEnt
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
-    super.load(bs, tag);
+  public void load( CompoundTag tag) {
+    super.load(tag);
     inventory.deserializeNBT(tag.getCompound(NBTINV));
   }
 
@@ -52,7 +52,7 @@ public class TileItemInfinite extends TileEntityBase implements TickableBlockEnt
     return new TextComponent(getType().getRegistryName().getPath());
   }
 
-  @Override
+//  @Override
   public void tick() {
     ItemStack stackHere = inputSlots.getStackInSlot(0);
     if (!stackHere.isEmpty()) {

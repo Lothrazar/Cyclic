@@ -13,36 +13,35 @@ import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.StemBlock;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.level.Level;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileHarvester extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileHarvester extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
@@ -60,12 +59,12 @@ public class TileHarvester extends TileEntityBase implements TickableBlockEntity
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX_ENERGY, MAX_ENERGY / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
-  public TileHarvester() {
-    super(TileRegistry.HARVESTER);
+  public TileHarvester(BlockPos pos, BlockState state) {
+    super(TileRegistry.HARVESTER, pos, state);
     timer = 1;
   }
 
-  @Override
+  //  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -245,19 +244,19 @@ public class TileHarvester extends TileEntityBase implements TickableBlockEntity
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
+        break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-      break;
+        break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
     }
   }
 
@@ -270,13 +269,13 @@ public class TileHarvester extends TileEntityBase implements TickableBlockEntity
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     radius = tag.getInt("radius");
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
     shapeIndex = tag.getInt("shapeIndex");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

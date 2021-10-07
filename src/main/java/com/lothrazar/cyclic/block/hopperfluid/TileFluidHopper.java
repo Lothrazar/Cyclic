@@ -10,7 +10,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
@@ -21,14 +20,14 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileFluidHopper extends TileEntityBase implements TickableBlockEntity {
+public class TileFluidHopper extends TileEntityBase {
 
   private static final int FLOW = FluidAttributes.BUCKET_VOLUME;
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
 
-  public TileFluidHopper() {
-    super(TileRegistry.FLUIDHOPPER.get());
+  public TileFluidHopper(BlockPos pos, BlockState state) {
+    super(TileRegistry.FLUIDHOPPER.get(),pos,state);
   }
 
   @Override
@@ -39,7 +38,7 @@ public class TileFluidHopper extends TileEntityBase implements TickableBlockEnti
     return super.getCapability(cap, side);
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.isPowered()) {
       return;
@@ -95,9 +94,9 @@ public class TileFluidHopper extends TileEntityBase implements TickableBlockEnti
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

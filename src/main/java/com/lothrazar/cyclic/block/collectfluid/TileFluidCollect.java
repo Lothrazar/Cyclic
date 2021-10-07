@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
@@ -36,7 +35,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileFluidCollect extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileFluidCollect extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT;
@@ -69,7 +68,7 @@ public class TileFluidCollect extends TileEntityBase implements TickableBlockEnt
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {

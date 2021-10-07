@@ -8,17 +8,17 @@ import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import java.util.function.Predicate;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -33,7 +33,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
-public class TileMelter extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileMelter extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER, RENDER;
@@ -51,12 +51,12 @@ public class TileMelter extends TileEntityBase implements TickableBlockEntity, M
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private RecipeMelter currentRecipe;
 
-  public TileMelter() {
-    super(TileRegistry.melter);
+  public TileMelter(BlockPos pos, BlockState state) {
+    super(TileRegistry.melter, pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
-  @Override
+  //  @Override
   public void tick() {
     this.syncEnergy();
     this.findMatchingRecipe();
@@ -82,13 +82,13 @@ public class TileMelter extends TileEntityBase implements TickableBlockEntity, M
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 
@@ -120,11 +120,11 @@ public class TileMelter extends TileEntityBase implements TickableBlockEntity, M
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load(CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

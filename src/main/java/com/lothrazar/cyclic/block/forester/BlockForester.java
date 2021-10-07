@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -32,14 +32,10 @@ public class BlockForester extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.FORESTER, ScreenForester::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileForester();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileForester(pos,state);
   }
 
   @Override

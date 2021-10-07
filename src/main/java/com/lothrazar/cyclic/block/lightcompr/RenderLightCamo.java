@@ -9,11 +9,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class RenderLightCamo extends BlockEntityRenderer<TileLightCamo> {
+public class RenderLightCamo implements BlockEntityRenderer<TileLightCamo> {
 
-  public RenderLightCamo(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderLightCamo(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public boolean shouldRenderOffScreen(TileLightCamo te) {

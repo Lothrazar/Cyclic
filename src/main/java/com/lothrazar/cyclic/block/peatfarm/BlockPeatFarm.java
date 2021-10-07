@@ -26,38 +26,31 @@ package com.lothrazar.cyclic.block.peatfarm;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockPeatFarm extends BlockBase {
 
   public BlockPeatFarm(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).strength(1.2F).noOcclusion());
+    super(properties.strength(1.2F).noOcclusion());
     this.setHasGui();
   }
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
     MenuScreens.register(ContainerScreenRegistry.peat_farm, ScreenPeatFarm::new);
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TilePeatFarm();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TilePeatFarm(pos,state);
   }
 
   @Override

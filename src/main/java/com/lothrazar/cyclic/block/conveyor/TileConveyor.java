@@ -8,17 +8,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-public class TileConveyor extends TileEntityBase implements TickableBlockEntity {
+public class TileConveyor extends TileEntityBase  {
 
-  public TileConveyor() {
-    super(TileRegistry.conveyor);
+  public TileConveyor(BlockPos pos, BlockState state) {
+    super(TileRegistry.conveyor,pos,state);
   }
 
   @Override

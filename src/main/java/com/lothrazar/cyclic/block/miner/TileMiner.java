@@ -11,24 +11,23 @@ import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -39,7 +38,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileMiner extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileMiner extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
@@ -86,8 +85,8 @@ public class TileMiner extends TileEntityBase implements MenuProvider, TickableB
   private BlockPos targetPos = BlockPos.ZERO;
   private boolean directionIsUp = false;
 
-  public TileMiner() {
-    super(TileRegistry.MINER);
+  public TileMiner(BlockPos pos, BlockState state) {
+    super(TileRegistry.MINER, pos, state);
   }
 
   @Override
@@ -117,14 +116,14 @@ public class TileMiner extends TileEntityBase implements MenuProvider, TickableB
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load(CompoundTag tag) {
     radius = tag.getInt("size");
     height = tag.getInt("height");
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
     directionIsUp = tag.getBoolean("directionIsUp");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -138,7 +137,7 @@ public class TileMiner extends TileEntityBase implements MenuProvider, TickableB
     return super.save(tag);
   }
 
-  @Override
+  //  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -340,19 +339,19 @@ public class TileMiner extends TileEntityBase implements MenuProvider, TickableB
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-      break;
+        break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
+        break;
     }
   }
 }

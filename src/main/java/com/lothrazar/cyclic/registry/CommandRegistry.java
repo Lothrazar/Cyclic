@@ -162,7 +162,7 @@ public class CommandRegistry {
 
   private static int executeGlowing(CommandContext<CommandSourceStack> x, Collection<ServerPlayer> players, boolean bool) {
     for (ServerPlayer p : players) {
-      p.setGlowing(bool);
+      p.setGlowingTag(bool);
     }
     return 0;
   }

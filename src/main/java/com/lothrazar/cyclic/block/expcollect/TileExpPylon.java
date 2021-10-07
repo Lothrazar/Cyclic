@@ -9,6 +9,8 @@ import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +18,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.AABB;
@@ -29,7 +30,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileExpPylon extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileExpPylon extends TileEntityBase implements  MenuProvider {
 
   static enum Fields {
     REDSTONE;
@@ -43,13 +44,13 @@ public class TileExpPylon extends TileEntityBase implements TickableBlockEntity,
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
 
-  public TileExpPylon() {
-    super(TileRegistry.experience_pylontile);
+  public TileExpPylon(BlockPos pos, BlockState state) {
+    super(TileRegistry.experience_pylontile,pos,state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (!level.isClientSide) {
       //ignore on/off state, for player standing on top collecting exp
@@ -75,13 +76,13 @@ public class TileExpPylon extends TileEntityBase implements TickableBlockEntity,
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     int legacy = tag.getInt("storedXp");
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override
@@ -148,7 +149,7 @@ public class TileExpPylon extends TileEntityBase implements TickableBlockEntity,
       if (getStoredXp() + addMeXp <= tank.getCapacity()) {
         myOrb.value = 0;
         // myOrb.setPosition(this.pos.getX(), this.pos.getY(), this.pos.getZ());
-        myOrb.remove();
+        myOrb.remove(Entity.RemovalReason.DISCARDED);
         int addMeFluid = addMeXp * FLUID_PER_EXP;
         tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
       }

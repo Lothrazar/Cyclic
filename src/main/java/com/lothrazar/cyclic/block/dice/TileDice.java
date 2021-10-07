@@ -2,13 +2,13 @@ package com.lothrazar.cyclic.block.dice;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 
-public class TileDice extends TileEntityBase implements TickableBlockEntity {
+public class TileDice extends TileEntityBase  {
 
   private static final int TICKS_MAX_SPINNING = 45;
   private static final int TICKS_PER_CHANGE = 4;
@@ -18,14 +18,14 @@ public class TileDice extends TileEntityBase implements TickableBlockEntity {
     TIMER, SPINNING;
   }
 
-  public TileDice() {
-    super(TileRegistry.dice);
+  public TileDice(BlockPos pos, BlockState state) {
+    super(TileRegistry.dice,pos,state);
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tag.putInt("spinningIfZero", spinningIfZero);
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override
@@ -39,7 +39,7 @@ public class TileDice extends TileEntityBase implements TickableBlockEntity {
     spinningIfZero = 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.timer == 0) {
       this.spinningIfZero = 1;

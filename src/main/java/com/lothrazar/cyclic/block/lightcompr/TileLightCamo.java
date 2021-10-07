@@ -21,12 +21,13 @@ public class TileLightCamo extends TileEntityBase {
   ItemStackHandler notInventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> notInventory);
 
-  public TileLightCamo() {
-    super(TileRegistry.light_camo);
+  public TileLightCamo(BlockPos pos, BlockState state) {
+    super(TileRegistry.light_camo,pos,state);
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
+    super.load(tag);
     notInventory.deserializeNBT(tag.getCompound(NBTINV));
   }
 

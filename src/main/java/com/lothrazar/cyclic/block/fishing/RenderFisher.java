@@ -11,11 +11,11 @@ import net.minecraft.core.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class RenderFisher extends BlockEntityRenderer<TileFisher> {
+public class RenderFisher implements BlockEntityRenderer<TileFisher> {
 
-  public RenderFisher(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderFisher(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileFisher tankHere, float v, PoseStack matrixStack,
@@ -27,7 +27,7 @@ public class RenderFisher extends BlockEntityRenderer<TileFisher> {
         matrixStack.pushPose();
         //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.4, 0.45, 0.4);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x910911, 0, matrixStack, buffer);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x910911, 0, matrixStack, buffer,light);
         matrixStack.popPose();
       }
     }

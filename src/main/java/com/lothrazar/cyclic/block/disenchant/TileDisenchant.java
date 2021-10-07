@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Map;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -22,7 +23,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
@@ -40,7 +40,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileDisenchant extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileDisenchant extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER;
@@ -73,14 +73,14 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider, Tick
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   public FluidTankBase tank;
 
-  public TileDisenchant() {
-    super(TileRegistry.disenchanter);
+  public TileDisenchant(BlockPos pos, BlockState state) {
+    super(TileRegistry.disenchanter,pos,state);
     tank = new FluidTankBase(this, CAPACITY, p -> {
       return p.getFluid().is(DataTags.EXPERIENCE);
     });
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -206,11 +206,11 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider, Tick
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

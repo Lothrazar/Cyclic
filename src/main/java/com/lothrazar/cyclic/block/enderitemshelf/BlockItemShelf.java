@@ -27,7 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -47,14 +47,11 @@ public class BlockItemShelf extends BlockBase {
     builder.add(BlockStateProperties.HORIZONTAL_FACING);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
+
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileItemShelf();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileItemShelf(pos,state);
   }
 
   @Override
@@ -73,7 +70,7 @@ public class BlockItemShelf extends BlockBase {
       return InteractionResult.PASS;
     }
     TileItemShelf shelf = getTileEntity(world, pos);
-    if (heldItem.getItem().is(DataTags.WRENCH)) {
+    if (heldItem.is(DataTags.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
       player.swing(hand);

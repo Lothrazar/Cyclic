@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -31,7 +30,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileAnvilMagma extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileAnvilMagma extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -57,7 +56,7 @@ public class TileAnvilMagma extends TileEntityBase implements MenuProvider, Tick
     this.needsRedstone = 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -65,7 +64,7 @@ public class TileAnvilMagma extends TileEntityBase implements MenuProvider, Tick
     }
     setLitProperty(true);
     ItemStack stack = inputSlots.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().is(DataTags.ANVIL_IMMUNE)) {
+    if (stack.isEmpty() || stack.is(DataTags.ANVIL_IMMUNE)) {
       //move it over and then done
       if (outputSlots.getStackInSlot(0).isEmpty()) {
         outputSlots.insertItem(0, stack.copy(), false);

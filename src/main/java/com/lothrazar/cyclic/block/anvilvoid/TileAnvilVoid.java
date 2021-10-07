@@ -16,7 +16,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
@@ -32,7 +31,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileAnvilVoid extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileAnvilVoid extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -98,7 +97,7 @@ public class TileAnvilVoid extends TileEntityBase implements MenuProvider, Ticka
     return super.save(tag);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -117,7 +116,7 @@ public class TileAnvilVoid extends TileEntityBase implements MenuProvider, Ticka
       outputSlots.insertItem(0, new ItemStack(Items.BOOK), false);
       doCost = true;
     }
-    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.getItem().is(DataTags.ANVIL_IMMUNE)) {
+    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.is(DataTags.ANVIL_IMMUNE)) {
       //is enchanted
       stack.getTag().remove("Enchantments");
       outputSlots.insertItem(0, stack.copy(), false);

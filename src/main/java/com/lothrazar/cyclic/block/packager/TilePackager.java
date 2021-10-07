@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +18,6 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -31,7 +31,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePackager extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TilePackager extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX;
@@ -49,12 +49,12 @@ public class TilePackager extends TileEntityBase implements MenuProvider, Tickab
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
 
-  public TilePackager() {
-    super(TileRegistry.PACKAGER.get());
+  public TilePackager(BlockPos pos, BlockState state) {
+    super(TileRegistry.PACKAGER.get(),pos,state);
     this.needsRedstone = 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -114,8 +114,8 @@ public class TilePackager extends TileEntityBase implements MenuProvider, Tickab
     if (first == null || first.getItems() == null || first.getItems().length == 0) {
       return false; //nothing here
     }
-    boolean outIsStorage = recipe.getResultItem().getItem().is(Tags.Items.STORAGE_BLOCKS);
-    boolean inIsIngot = first.getItems()[0].getItem().is(Tags.Items.INGOTS);
+    boolean outIsStorage = recipe.getResultItem().is(Tags.Items.STORAGE_BLOCKS);
+    boolean inIsIngot = first.getItems()[0].is(Tags.Items.INGOTS);
     if (!outIsStorage && inIsIngot) {
       //ingots can only go to storage blocks, nothing else
       //avoids armor/ iron trap doors. kinda hacky
@@ -173,10 +173,10 @@ public class TilePackager extends TileEntityBase implements MenuProvider, Tickab
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

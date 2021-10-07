@@ -8,13 +8,13 @@ import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -30,7 +30,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorFluid extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX, FLOWING;
@@ -50,8 +50,8 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider, 
   private int burnTime = 0; //how much of current fuel is left
   private RecipeGeneratorFluid<?> currentRecipe;
 
-  public TileGeneratorFluid() {
-    super(TileRegistry.GENERATOR_FLUID.get());
+  public TileGeneratorFluid(BlockPos pos, BlockState state) {
+    super(TileRegistry.GENERATOR_FLUID.get(),pos,state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
     this.needsRedstone = 0;
   }
@@ -65,7 +65,7 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider, 
     tank.setFluid(fluid);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.flowing == 1) {
@@ -147,11 +147,11 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider, 
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

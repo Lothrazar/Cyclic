@@ -33,7 +33,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -140,7 +140,7 @@ public abstract class CableBase extends BlockBase implements SimpleWaterloggedBl
       return super.use(state, world, pos, player, handIn, hit);
     }
     ItemStack stack = player.getItemInHand(handIn);
-    if (!stack.getItem().is(DataTags.WRENCH)) {
+    if (!stack.is(DataTags.WRENCH)) {
       //ex
       boolean hasExtractor = false;
       for (Direction side : Direction.values()) {

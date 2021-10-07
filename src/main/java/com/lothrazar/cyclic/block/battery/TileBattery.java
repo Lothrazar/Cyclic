@@ -15,7 +15,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -24,7 +23,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileBattery extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileBattery extends TileEntityBase implements MenuProvider {
 
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
@@ -44,7 +43,7 @@ public class TileBattery extends TileEntityBase implements MenuProvider, Tickabl
     }
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     setPercentFilled();

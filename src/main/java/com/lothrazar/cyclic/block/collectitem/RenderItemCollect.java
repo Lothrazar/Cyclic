@@ -7,11 +7,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
-public class RenderItemCollect extends BlockEntityRenderer<TileItemCollector> {
+public class RenderItemCollect implements BlockEntityRenderer<TileItemCollector> {
 
-  public RenderItemCollect(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderItemCollect(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileItemCollector te, float v, PoseStack matrix,

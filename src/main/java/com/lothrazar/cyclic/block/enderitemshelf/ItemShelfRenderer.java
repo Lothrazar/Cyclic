@@ -12,11 +12,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
 
-public class ItemShelfRenderer extends BlockEntityRenderer<TileItemShelf> {
+public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
 
-  public ItemShelfRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
-    super(rendererDispatcherIn);
-  }
+//  public ItemShelfRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
+//    super(rendererDispatcherIn);
+//  }
 
   @Override
   public void render(TileItemShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {

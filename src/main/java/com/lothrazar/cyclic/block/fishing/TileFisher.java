@@ -23,7 +23,6 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
@@ -37,7 +36,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileFisher extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileFisher extends TileEntityBase implements   MenuProvider {
 
   private static final int RADIUS = 12;
   private static final double CHANCE = 0.1;
@@ -45,7 +44,7 @@ public class TileFisher extends TileEntityBase implements TickableBlockEntity, M
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem().is(DataTags.FISHING_RODS);
+      return stack.is(DataTags.FISHING_RODS);
     }
   };
   LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -54,8 +53,8 @@ public class TileFisher extends TileEntityBase implements TickableBlockEntity, M
     REDSTONE;
   }
 
-  public TileFisher() {
-    super(TileRegistry.fisher);
+  public TileFisher(BlockPos pos, BlockState state) {
+    super(TileRegistry.fisher,pos,state);
     this.needsRedstone = 0;
   }
 
@@ -78,9 +77,9 @@ public class TileFisher extends TileEntityBase implements TickableBlockEntity, M
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -89,13 +88,13 @@ public class TileFisher extends TileEntityBase implements TickableBlockEntity, M
     return super.save(tag);
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.getItem().is(DataTags.FISHING_RODS)) {
+    if (stack.is(DataTags.FISHING_RODS)) {
       int x = worldPosition.getX() + level.random.nextInt(RADIUS * 2) - RADIUS;
       int y = worldPosition.getY();
       int z = worldPosition.getZ() + level.random.nextInt(RADIUS * 2) - RADIUS;

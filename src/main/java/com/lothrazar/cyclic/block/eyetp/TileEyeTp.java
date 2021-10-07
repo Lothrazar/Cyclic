@@ -4,34 +4,25 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TileEyeTp extends TileEntityBase implements TickableBlockEntity {
+public class TileEyeTp extends TileEntityBase  {
 
   public static IntValue RANGE;
   public static IntValue HUNGER;
   public static IntValue EXP;
   public static IntValue FREQUENCY;
 
-  public TileEyeTp() {
-    super(TileRegistry.eye_teleport);
+  public TileEyeTp(BlockPos pos, BlockState state) {
+    super(TileRegistry.eye_teleport,pos,state);
   }
 
-  @Override
-  public void load(BlockState bs, CompoundTag tag) {
-    super.load(bs, tag);
-  }
 
-  @Override
-  public CompoundTag save(CompoundTag tag) {
-    return super.save(tag);
-  }
-
-  @Override
+//  @Override
   public void tick() {
     if (level.isClientSide) {
       return;

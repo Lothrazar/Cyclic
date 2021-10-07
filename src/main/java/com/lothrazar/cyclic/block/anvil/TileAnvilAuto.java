@@ -13,7 +13,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -26,7 +25,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileAnvilAuto extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileAnvilAuto extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -86,7 +85,6 @@ public class TileAnvilAuto extends TileEntityBase implements MenuProvider, Ticka
     return super.save(tag);
   }
 
-  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -96,7 +94,7 @@ public class TileAnvilAuto extends TileEntityBase implements MenuProvider, Ticka
     setLitProperty(true);
     //
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().is(DataTags.ANVIL_IMMUNE)) {
+    if (stack.isEmpty() || stack.is(DataTags.ANVIL_IMMUNE)) {
       return;
     }
     final int repair = POWERCONF.get();

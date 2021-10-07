@@ -7,10 +7,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
-public class RenderFluidCollect extends BlockEntityRenderer<TileFluidCollect> {
+public class RenderFluidCollect implements BlockEntityRenderer<TileFluidCollect> {
 
   public RenderFluidCollect(BlockEntityRenderDispatcher d) {
-    super(d);
+
+//    super(d);
   }
 
   @Override

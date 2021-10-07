@@ -18,11 +18,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class EnderShelfRenderer extends BlockEntityRenderer<TileEnderShelf> {
+public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
 
-  public EnderShelfRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
-    super(rendererDispatcherIn);
-  }
+//  public EnderShelfRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
+//    super(rendererDispatcherIn);
+//  }
 
   @Override
   public void render(TileEnderShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {

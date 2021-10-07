@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import java.util.function.Supplier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketItemScroll extends PacketBase {
 

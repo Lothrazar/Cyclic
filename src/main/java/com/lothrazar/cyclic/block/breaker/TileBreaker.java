@@ -9,12 +9,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 
-public class TileBreaker extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileBreaker extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER;
@@ -30,7 +29,7 @@ public class TileBreaker extends TileEntityBase implements MenuProvider, Tickabl
     super(TileRegistry.breakerTile);
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);

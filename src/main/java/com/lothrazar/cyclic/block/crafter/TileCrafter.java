@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -46,7 +47,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -61,7 +61,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("unchecked")
-public class TileCrafter extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileCrafter extends TileEntityBase implements MenuProvider {
 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
@@ -102,8 +102,8 @@ public class TileCrafter extends TileEntityBase implements MenuProvider, Tickabl
     TIMER, REDSTONE, RENDER;
   }
 
-  public TileCrafter() {
-    super(TileRegistry.crafter);
+  public TileCrafter(BlockPos pos, BlockState state) {
+    super(TileRegistry.crafter,pos,state);
   }
 
   @Override
@@ -115,7 +115,7 @@ public class TileCrafter extends TileEntityBase implements MenuProvider, Tickabl
     return false;
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (level == null || level.getServer() == null) {
@@ -474,13 +474,13 @@ public class TileCrafter extends TileEntityBase implements MenuProvider, Tickabl
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     energyCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("energy")));
     input.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("input")));
     output.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("output")));
     gridCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("grid")));
     preview.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("preview")));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

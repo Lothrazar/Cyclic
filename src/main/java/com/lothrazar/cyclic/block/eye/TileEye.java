@@ -2,31 +2,22 @@ package com.lothrazar.cyclic.block.eye;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TileEye extends TileEntityBase implements TickableBlockEntity {
+public class TileEye extends TileEntityBase  {
 
   public static IntValue RANGE;
   public static IntValue FREQUENCY;
 
-  public TileEye() {
-    super(TileRegistry.eye_redstone);
+  public TileEye(BlockPos pos, BlockState state) {
+    super(TileRegistry.eye_redstone,pos,state);
   }
 
-  @Override
-  public void load(BlockState bs, CompoundTag tag) {
-    super.load(bs, tag);
-  }
 
-  @Override
-  public CompoundTag save(CompoundTag tag) {
-    return super.save(tag);
-  }
-
-  @Override
+//  @Override
   public void tick() {
     if (level.isClientSide) {
       return;

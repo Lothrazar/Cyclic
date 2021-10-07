@@ -18,7 +18,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -29,7 +28,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableItem extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileCableItem extends TileEntityBase implements MenuProvider {
 
   private static final int FLOW_QTY = 64; // fixed, for non-extract motion
   private int extractQty = 64; // default
@@ -57,7 +56,7 @@ public class TileCableItem extends TileEntityBase implements TickableBlockEntity
       0,
       5).boxed().collect(Collectors.toList());
 
-  @Override
+//  @Override
   public void tick() {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));

@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +15,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
@@ -26,7 +26,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileItemCollector extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileItemCollector extends TileEntityBase implements MenuProvider {
+
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
@@ -48,12 +49,12 @@ public class TileItemCollector extends TileEntityBase implements TickableBlockEn
   };
   private int radius = 8;
 
-  public TileItemCollector() {
-    super(TileRegistry.COLLECTOR_ITEM);
+  public TileItemCollector(BlockPos pos, BlockState state) {
+    super(TileRegistry.COLLECTOR_ITEM,pos,state);
     this.needsRedstone = 0; // default on
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -82,7 +83,7 @@ public class TileItemCollector extends TileEntityBase implements TickableBlockEn
       }
       stackEntity.setItem(remainder);
       if (remainder.isEmpty()) {
-        stackEntity.remove();
+        stackEntity.remove(Entity.RemovalReason.DISCARDED);
       }
     }
   }

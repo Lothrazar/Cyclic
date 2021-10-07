@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,7 +14,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -27,7 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorFuel extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileGeneratorFuel extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX, FLOWING;
@@ -51,12 +51,12 @@ public class TileGeneratorFuel extends TileEntityBase implements MenuProvider, T
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
 
-  public TileGeneratorFuel() {
-    super(TileRegistry.GENERATOR_FUEL.get());
+  public TileGeneratorFuel(BlockPos pos, BlockState state) {
+    super(TileRegistry.GENERATOR_FUEL.get(),pos,state );
     this.needsRedstone = 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.flowing == 1) {
@@ -117,10 +117,10 @@ public class TileGeneratorFuel extends TileEntityBase implements MenuProvider, T
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

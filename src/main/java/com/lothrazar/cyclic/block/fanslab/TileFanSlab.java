@@ -10,12 +10,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 
-public class TileFanSlab extends TileEntityBase implements TickableBlockEntity {
+public class TileFanSlab extends TileEntityBase  {
 
   static enum Fields {
     REDSTONE, RANGE, SPEED;
@@ -28,11 +27,11 @@ public class TileFanSlab extends TileEntityBase implements TickableBlockEntity {
   private int range = 5;
   private int speed = 5;
 
-  public TileFanSlab() {
-    super(TileRegistry.FANSLAB.get());
+  public TileFanSlab(BlockPos pos, BlockState state) {
+    super(TileRegistry.FANSLAB.get(),pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     boolean powered = this.isPowered();
     boolean previous = this.getBlockState().getValue(BlockFanSlab.POWERED);
@@ -180,11 +179,10 @@ public class TileFanSlab extends TileEntityBase implements TickableBlockEntity {
     return moved;
   }
 
-  @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     speed = tag.getInt("speed");
     range = tag.getInt("range");
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

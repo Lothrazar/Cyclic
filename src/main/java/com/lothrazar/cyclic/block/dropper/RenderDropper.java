@@ -7,11 +7,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
-public class RenderDropper extends BlockEntityRenderer<TileDropper> {
+public class RenderDropper implements BlockEntityRenderer<TileDropper> {
 
-  public RenderDropper(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderDropper(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileDropper te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

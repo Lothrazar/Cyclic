@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -27,7 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorDrops extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileGeneratorDrops extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX, FLOWING;
@@ -50,8 +50,8 @@ public class TileGeneratorDrops extends TileEntityBase implements MenuProvider, 
   private int burnTime = 0; //how much of current fuel is left
   private RecipeGeneratorItem<?> currentRecipe;
 
-  public TileGeneratorDrops() {
-    super(TileRegistry.GENERATOR_ITEM.get());
+  public TileGeneratorDrops(BlockPos pos, BlockState state) {
+    super(TileRegistry.GENERATOR_ITEM.get(),pos,state );
     this.needsRedstone = 0;
   }
 
@@ -133,10 +133,10 @@ public class TileGeneratorDrops extends TileEntityBase implements MenuProvider, 
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

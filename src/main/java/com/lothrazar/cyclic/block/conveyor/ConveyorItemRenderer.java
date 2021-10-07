@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.conveyor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -19,9 +20,9 @@ public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends Entit
 
   private final ItemRenderer renderer;
 
-  public ConveyorItemRenderer(EntityRenderDispatcher renderManager, ItemRenderer renderer) {
+  public ConveyorItemRenderer(EntityRendererProvider.Context renderManager, float scale, float fullBright){
     super(renderManager);
-    this.renderer = renderer;
+    this.renderer = renderManager.getItemRenderer();
     this.shadowRadius = 0.0F;
     this.shadowStrength = 0.0F;
   }
@@ -30,7 +31,7 @@ public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends Entit
   public void render(ConveyorItemEntity entity, float entityYaw, float partialTicks, PoseStack ms, MultiBufferSource buffer, int packedLightIn) {
     ms.pushPose();
     ItemStack stack = entity.getItem();
-    BakedModel model = this.renderer.getModel(stack, entity.level, null);
+    BakedModel model = this.renderer.getModel(stack, entity.level, null,packedLightIn);
     this.renderer.render(stack, ItemTransforms.TransformType.GROUND, false, ms, buffer, packedLightIn, OverlayTexture.NO_OVERLAY, model);
     ms.popPose();
     super.render(entity, entityYaw, partialTicks, ms, buffer, packedLightIn);

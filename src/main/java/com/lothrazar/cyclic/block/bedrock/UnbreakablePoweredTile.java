@@ -4,15 +4,14 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 
-public class UnbreakablePoweredTile extends TileEntityBase implements TickableBlockEntity {
+public class UnbreakablePoweredTile extends TileEntityBase  {
 
   public UnbreakablePoweredTile() {
     super(TileRegistry.unbreakable_reactive);
   }
 
-  @Override
+//  @Override
   public void tick() {
     boolean isBreakable = !this.isPowered();
     UnbreakablePoweredBlock.setBreakable(level, worldPosition, isBreakable);

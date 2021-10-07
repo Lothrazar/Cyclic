@@ -42,7 +42,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -60,7 +59,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePeatFarm extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TilePeatFarm extends TileEntityBase implements  MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER;
@@ -109,7 +108,7 @@ public class TilePeatFarm extends TileEntityBase implements TickableBlockEntity,
     }
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     this.init();
@@ -172,8 +171,8 @@ public class TilePeatFarm extends TileEntityBase implements TickableBlockEntity,
     return 0;
   }
 
-  public TilePeatFarm() {
-    super(TileRegistry.PEAT_FARM);
+  public TilePeatFarm(BlockPos pos, BlockState state) {
+    super(TileRegistry.PEAT_FARM,pos,state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
@@ -251,11 +250,11 @@ public class TilePeatFarm extends TileEntityBase implements TickableBlockEntity,
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

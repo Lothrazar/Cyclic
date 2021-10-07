@@ -1,13 +1,15 @@
 package com.lothrazar.cyclic.gui;
 
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import net.minecraftforge.fmlclient.gui.widget.ExtendedButton;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.components.Button.OnPress;
@@ -42,7 +44,9 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   public void renderButton(PoseStack ms, int mouseX, int mouseY, float partial) {
     super.renderButton(ms, mouseX, mouseY, partial);
     Minecraft minecraft = Minecraft.getInstance();
-    minecraft.getTextureManager().bind(TextureRegistry.WIDGETS);
+//    minecraft.getTextureManager().bind(TextureRegistry.WIDGETS);
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, TextureRegistry.WIDGETS);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, this.alpha);
     GL11.glEnable(GL11.GL_BLEND);
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

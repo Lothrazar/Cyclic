@@ -4,12 +4,12 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.Hopper;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
@@ -20,18 +20,18 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileSimpleHopper extends TileEntityBase implements TickableBlockEntity, Hopper {
+public class TileSimpleHopper extends TileEntityBase implements  Hopper {
 
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public TileSimpleHopper() {
-    super(TileRegistry.HOPPER.get());
+  public TileSimpleHopper(BlockPos pos, BlockState state) {
+    super(TileRegistry.HOPPER.get(),pos,state );
   }
 
-  public TileSimpleHopper(BlockEntityType<? extends TileSimpleHopper> tileEntityType) {
-    super(tileEntityType);
-  }
+//  public TileSimpleHopper(BlockEntityType<? extends TileSimpleHopper> tileEntityType) {
+//    super(tileEntityType);
+//  }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -75,15 +75,15 @@ public class TileSimpleHopper extends TileEntityBase implements TickableBlockEnt
       remainder = inventory.insertItem(0, remainder, false);
       stackEntity.setItem(remainder);
       if (remainder.isEmpty()) {
-        stackEntity.remove();
+        stackEntity.remove(Entity.RemovalReason.KILLED );
       }
     }
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

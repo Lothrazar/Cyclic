@@ -7,11 +7,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
-public class RenderHarvester extends BlockEntityRenderer<TileHarvester> {
+public class RenderHarvester implements BlockEntityRenderer<TileHarvester> {
 
-  public RenderHarvester(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderHarvester(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileHarvester te, float v, PoseStack matrix,

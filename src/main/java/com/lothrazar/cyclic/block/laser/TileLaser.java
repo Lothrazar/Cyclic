@@ -12,7 +12,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
@@ -25,7 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileLaser extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileLaser extends TileEntityBase implements  MenuProvider {
 
   static enum Fields {
     REDSTONE, THICK, RED, GREEN, BLUE, ALPHA, XOFF, YOFF, ZOFF;
@@ -48,8 +47,8 @@ public class TileLaser extends TileEntityBase implements TickableBlockEntity, Me
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public TileLaser() {
-    super(TileRegistry.laser);
+  public TileLaser(BlockPos pos, BlockState state) {
+    super(TileRegistry.laser,pos,state );
     this.needsRedstone = 0;
   }
 
@@ -81,8 +80,6 @@ public class TileLaser extends TileEntityBase implements TickableBlockEntity, Me
     return this.getBlockPos();
   }
 
-  @Override
-  public void tick() {}
 
   @Override
   public AABB getRenderBoundingBox() {
@@ -157,14 +154,14 @@ public class TileLaser extends TileEntityBase implements TickableBlockEntity, Me
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     red = tag.getInt("red");
     green = tag.getInt("green");
     blue = tag.getInt("blue");
     alpha = tag.getInt("alpha");
     thick = tag.getInt("thick");
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

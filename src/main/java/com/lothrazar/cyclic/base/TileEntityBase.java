@@ -58,8 +58,8 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
   protected int render = 0; // default to do not render
   protected int timer;
 
-  public TileEntityBase(BlockEntityType<?> tileEntityTypeIn) {
-    super(tileEntityTypeIn);
+  public TileEntityBase(BlockEntityType<?> tileEntityTypeIn,BlockPos pos, BlockState state) {
+    super(tileEntityTypeIn,pos,state);
   }
 
   public int getTimer() {
@@ -92,11 +92,11 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
   public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
     int start = (includeMainHand) ? 0 : 1;
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (int i = start; i < fp.get().inventory.items.size(); i++) {
-      ItemStack s = fp.get().inventory.items.get(i);
+    for (int i = start; i < fp.get().getInventory().items.size(); i++) {
+      ItemStack s = fp.get().getInventory().items.get(i);
       if (s.isEmpty() == false) {
         toDrop.add(s.copy());
-        fp.get().inventory.items.set(i, ItemStack.EMPTY);
+        fp.get().getInventory().items.set(i, ItemStack.EMPTY);
       }
     }
     UtilItemStack.drop(this.level, this.worldPosition.above(), toDrop);
@@ -167,7 +167,7 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
     }
     //fake player facing the same direction as tile. for throwables
     fakePlayer.get().setPos(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()); //seems to help interact() mob drops like milk
-    fakePlayer.get().yRot = UtilEntity.getYawFromFacing(this.getCurrentFacing());
+    fakePlayer.get().setYRot(UtilEntity.getYawFromFacing(this.getCurrentFacing()));
     return fakePlayer;
   }
 
@@ -218,7 +218,7 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
 
   @Override
   public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-    this.load(this.getBlockState(), pkt.getTag());
+    this.load( pkt.getTag());
     super.onDataPacket(net, pkt);
   }
 
@@ -366,12 +366,12 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     flowing = tag.getInt("flowing");
     needsRedstone = tag.getInt("needsRedstone");
     render = tag.getInt("renderParticles");
     timer = tag.getInt("timer");
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

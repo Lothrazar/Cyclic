@@ -13,14 +13,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 
-public class TileDetector extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileDetector extends TileEntityBase  implements MenuProvider {
 
   static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDER;
@@ -37,11 +36,11 @@ public class TileDetector extends TileEntityBase implements TickableBlockEntity,
   EntityFilterType entityFilter = EntityFilterType.LIVING;
   private boolean isPoweredNow = false;
 
-  public TileDetector() {
-    super(TileRegistry.DETECTOR_ENTITY);
+  public TileDetector(BlockPos pos, BlockState state) {
+    super(TileRegistry.DETECTOR_ENTITY,pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     timer--;
     if (level.isClientSide || timer > 0) {
@@ -189,7 +188,7 @@ public class TileDetector extends TileEntityBase implements TickableBlockEntity,
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     this.rangeX = tag.getInt("ox");
     this.rangeY = tag.getInt("oy");
     this.rangeZ = tag.getInt("oz");
@@ -202,7 +201,7 @@ public class TileDetector extends TileEntityBase implements TickableBlockEntity,
     if (eType >= 0 && eType < EntityFilterType.values().length) {
       this.entityFilter = EntityFilterType.values()[eType];
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

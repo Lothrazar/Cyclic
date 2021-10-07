@@ -13,14 +13,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 
-public class TileFan extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileFan extends TileEntityBase implements  MenuProvider {
 
   static enum Fields {
     REDSTONE, RANGE, SPEED;
@@ -33,11 +32,11 @@ public class TileFan extends TileEntityBase implements TickableBlockEntity, Menu
   private int range = 7;
   private int speed = 5;
 
-  public TileFan() {
-    super(TileRegistry.fantile);
+  public TileFan(BlockPos pos, BlockState state) {
+    super(TileRegistry.fantile,pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -182,10 +181,10 @@ public class TileFan extends TileEntityBase implements TickableBlockEntity, Menu
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     speed = tag.getInt("speed");
     range = tag.getInt("range");
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

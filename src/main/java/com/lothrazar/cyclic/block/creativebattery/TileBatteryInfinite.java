@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -20,7 +20,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileBatteryInfinite extends TileEntityBase implements TickableBlockEntity {
+public class TileBatteryInfinite extends TileEntityBase  {
 
   static final int MAX = 960000000;
 
@@ -32,8 +32,8 @@ public class TileBatteryInfinite extends TileEntityBase implements TickableBlock
   private Map<Direction, Boolean> poweredSides;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
-  public TileBatteryInfinite() {
-    super(TileRegistry.battery_infinite);
+  public TileBatteryInfinite(BlockPos pos, BlockState state) {
+    super(TileRegistry.battery_infinite,pos,state);
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, true);
@@ -61,12 +61,12 @@ public class TileBatteryInfinite extends TileEntityBase implements TickableBlock
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override
@@ -83,7 +83,7 @@ public class TileBatteryInfinite extends TileEntityBase implements TickableBlock
     return new TextComponent(getType().getRegistryName().getPath());
   }
 
-  @Override
+//  @Override
   public void tick() {
     energy.receiveEnergy(MAX, false);
     //now go
