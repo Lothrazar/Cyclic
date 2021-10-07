@@ -17,7 +17,7 @@ public class ContainerFilterCard extends ContainerBase {
 
   public ItemStack bag;
   public int slot;
-  public int slots;
+  public int slotcount;
   public CompoundTag nbt;
 
   public ContainerFilterCard(int id, Inventory playerInventory, Player player) {
@@ -36,7 +36,7 @@ public class ContainerFilterCard extends ContainerBase {
     //
     this.nbt = bag.getOrCreateTag();
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.slots = h.getSlots();
+      this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         int row = j / 9;
         int col = j % 9;
@@ -63,14 +63,14 @@ public class ContainerFilterCard extends ContainerBase {
   }
 
   @Override
-  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       ItemStack myBag = this.slots.get(slotId).getItem();
       if (myBag.getItem() instanceof FilterCardItem) {
         //lock the bag in place by returning empty
-        return ItemStack.EMPTY;
+        return  ; //ItemStack.EMPTY;
       }
     }
-    return super.clicked(slotId, dragType, clickTypeIn, player);
+//    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 }

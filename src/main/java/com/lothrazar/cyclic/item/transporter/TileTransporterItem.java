@@ -111,10 +111,10 @@ public class TileTransporterItem extends ItemBase {
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
-        tile.load(toPlace, tileData); // can cause errors in 3rd party mod
+        tile.load( tileData); // can cause errors in 3rd party mod
         //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
         tile.setChanged();
-        world.blockEntityChanged(pos, tile);
+        world.blockEntityChanged(pos);
       }
     }
     catch (Exception e) {

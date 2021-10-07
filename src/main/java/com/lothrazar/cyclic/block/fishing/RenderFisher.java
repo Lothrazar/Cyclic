@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -13,10 +14,8 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderFisher implements BlockEntityRenderer<TileFisher> {
 
-//  public RenderFisher(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
 
+  public RenderFisher(BlockEntityRendererProvider.Context d) {   }
   @Override
   public void render(TileFisher tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {

@@ -55,7 +55,10 @@ public class BlockItemShelf extends BlockBase {
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+//    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+//      worldIn.removeBlockEntity(pos);
+//    }
+    if ( !state.is(newState.getBlock()) ) {
       worldIn.removeBlockEntity(pos);
     }
   }

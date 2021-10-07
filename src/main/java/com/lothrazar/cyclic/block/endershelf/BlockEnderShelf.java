@@ -62,25 +62,13 @@ public class BlockEnderShelf extends BlockBase {
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+//    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+//      worldIn.removeBlockEntity(pos);
+//    }
+
+    if ( !state.is(newState.getBlock()) ) {
       worldIn.removeBlockEntity(pos);
     }
-    //    if (state.getBlock() != newState.getBlock()) {
-    //      TileEntity tileentity = worldIn.getTileEntity(pos);
-    //      if (tileentity != null) {
-    //        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-    //        if (items != null) {
-    //          for (int i = 0; i < items.getSlots(); ++i) {
-    //            ItemStack is = items.getStackInSlot(i);
-    //            while (!is.isEmpty()) {
-    //              InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), is.split(1));
-    //            }
-    //          }
-    //          worldIn.updateComparatorOutputLevel(pos, this);
-    //          worldIn.removeTileEntity(pos);
-    //        }
-    //      }
-    //    }
   }
 
   @Override

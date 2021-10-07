@@ -68,7 +68,7 @@ public class FireEntity extends ThrowableItemProjectile {
       //        this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
       //      }
     }
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

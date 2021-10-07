@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
 import net.minecraftforge.fluids.FluidStack;
@@ -20,9 +21,8 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderMelter implements BlockEntityRenderer<TileMelter> {
 
-//  public RenderMelter(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public RenderMelter(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileMelter tankHere, float v, PoseStack matrixStack,

@@ -102,7 +102,7 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
         UtilItemStack.drop(level, this.blockPosition(), new ItemStack(Items.TORCH));
       }
     }
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

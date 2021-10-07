@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 
 /**
@@ -17,9 +18,8 @@ import net.minecraft.core.Direction;
  */
 public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
 
-//  public RenderScreentext(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public RenderScreentext(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileScreentext tile, float v, PoseStack matrix,

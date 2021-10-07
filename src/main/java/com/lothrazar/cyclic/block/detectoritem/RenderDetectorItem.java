@@ -6,12 +6,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderDetectorItem implements BlockEntityRenderer<TileDetectorItem> {
 
-//  public RenderDetectorItem(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public RenderDetectorItem(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileDetectorItem te, float v, PoseStack matrixStack,

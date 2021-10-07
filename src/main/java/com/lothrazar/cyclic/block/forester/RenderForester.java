@@ -6,12 +6,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderForester implements BlockEntityRenderer<TileForester> {
 
-//  public RenderForester(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public RenderForester(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileForester te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

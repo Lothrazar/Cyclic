@@ -71,27 +71,27 @@ public class ClientRegistryCyclic {
     BlockEntityRendererProvider.Context lol; //  is required in constructor
     event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
     event.registerBlockEntityRenderer(TileRegistry.STRUCTURE, RenderStructure::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_FLUID, RenderFluidCollect::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_ITEM, RenderItemCollect::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.DETECTOR_ENTITY, RenderDetector::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.DETECTOR_ITEM, RenderDetectorItem::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.DROPPER, RenderDropper::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.ENDER_ITEM_SHELF.get(), ItemShelfRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.ender_shelf, EnderShelfRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.fisher, RenderFisher::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.FORESTER, RenderForester::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.HARVESTER, RenderHarvester::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.laser, RenderLaser::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.light_camo, RenderLightCamo::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.melter, RenderMelter::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.MINER, RenderMiner::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.screen, RenderScreentext::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.computer_shape, RenderShapedata::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.solidifier, RenderSolidifier::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.soundproofing_ghost, SoundmuffRender::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.tank, RenderTank::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
+    event.registerBlockEntityRenderer(TileRegistry.COLLECTOR_FLUID, RenderFluidCollect::new);
+    event.registerBlockEntityRenderer(TileRegistry.COLLECTOR_ITEM, RenderItemCollect::new);
+    event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ENTITY, RenderDetector::new);
+    event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ITEM, RenderDetectorItem::new);
+    event.registerBlockEntityRenderer(TileRegistry.DROPPER, RenderDropper::new);
+    event.registerBlockEntityRenderer(TileRegistry.ENDER_ITEM_SHELF.get(), ItemShelfRenderer::new);
+    event.registerBlockEntityRenderer(TileRegistry.ender_shelf, EnderShelfRenderer::new);
+    event.registerBlockEntityRenderer(TileRegistry.fisher, RenderFisher::new);
+    event.registerBlockEntityRenderer(TileRegistry.FORESTER, RenderForester::new);
+    event.registerBlockEntityRenderer(TileRegistry.HARVESTER, RenderHarvester::new);
+    event.registerBlockEntityRenderer(TileRegistry.laser, RenderLaser::new);
+    event.registerBlockEntityRenderer(TileRegistry.light_camo, RenderLightCamo::new);
+    event.registerBlockEntityRenderer(TileRegistry.melter, RenderMelter::new);
+    event.registerBlockEntityRenderer(TileRegistry.MINER, RenderMiner::new);
+    event.registerBlockEntityRenderer(TileRegistry.screen, RenderScreentext::new);
+    event.registerBlockEntityRenderer(TileRegistry.computer_shape, RenderShapedata::new);
+    event.registerBlockEntityRenderer(TileRegistry.solidifier, RenderSolidifier::new);
+    event.registerBlockEntityRenderer(TileRegistry.soundproofing_ghost, SoundmuffRender::new);
+    event.registerBlockEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
+    event.registerBlockEntityRenderer(TileRegistry.tank, RenderTank::new);
+    event.registerBlockEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {

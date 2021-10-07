@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -20,9 +21,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
 
-//  public EnderShelfRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
-//    super(rendererDispatcherIn);
-//  }
+
+  public EnderShelfRenderer(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileEnderShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {

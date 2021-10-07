@@ -6,14 +6,13 @@ import java.awt.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class RenderShapedata implements BlockEntityRenderer<TileShapedata> {
 
-//  public RenderShapedata(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+  public RenderShapedata(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileShapedata te, float v, PoseStack matrixStack,

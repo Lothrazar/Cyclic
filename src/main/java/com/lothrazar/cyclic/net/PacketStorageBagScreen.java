@@ -44,8 +44,8 @@ public class PacketStorageBagScreen extends PacketBase {
       ServerPlayer player = context.get().getSender();
       if (player != null) {
         ItemStack serverStack = ItemStack.EMPTY;
-        if (0 <= message.slot && message.slot < player.inventory.getContainerSize()) {
-          serverStack = player.inventory.getItem(message.slot);
+        if (0 <= message.slot && message.slot < player.getInventory().getContainerSize()) {
+          serverStack = player.getInventory().getItem(message.slot);
         }
         //TODO: fix refactor this whole thing with a RefilMode Enum 
         String key = message.nbtKey.getAsString();

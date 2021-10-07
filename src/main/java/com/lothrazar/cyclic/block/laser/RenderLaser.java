@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
@@ -23,9 +24,8 @@ import com.mojang.math.Vector3f;
  */
 public class RenderLaser implements BlockEntityRenderer<TileLaser> {
 
-//  public RenderLaser(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public RenderLaser(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileLaser te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

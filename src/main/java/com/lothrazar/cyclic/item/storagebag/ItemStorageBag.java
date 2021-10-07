@@ -61,13 +61,13 @@ public class ItemStorageBag extends ItemBase {
 
   public static void setColour(ItemStack stack, DyeColor col) {
     CompoundTag tags = stack.getOrCreateTag();
-    tags.putInt(NBT_COLOUR, col.getColorValue());
+    tags.putInt(NBT_COLOUR, col.getTextColor()); // getColorValue
   }
 
   public static int getColour(ItemStack stack) {
     CompoundTag tags = stack.getOrCreateTag();
     if (tags.contains(NBT_COLOUR) == false) {
-      return DyeColor.BROWN.getColorValue(); //BROWN as default for normal look
+      return DyeColor.BROWN.getTextColor(); //BROWN as default for normal look
     }
     return tags.getInt(NBT_COLOUR);
   }

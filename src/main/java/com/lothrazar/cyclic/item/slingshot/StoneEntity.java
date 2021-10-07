@@ -54,7 +54,7 @@ public class StoneEntity extends ThrowableItemProjectile {
         }
       }
     }
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

@@ -46,7 +46,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   public void removed(Player playerIn) {
     super.removed(playerIn);
     //this is not the saving version
-    clearContainer(playerIn, playerIn.level, craftMatrix);
+    clearContainer(playerIn,  craftMatrix);
   }
 
   @Override

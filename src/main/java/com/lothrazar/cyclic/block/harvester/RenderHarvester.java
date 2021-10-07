@@ -6,12 +6,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderHarvester implements BlockEntityRenderer<TileHarvester> {
 
-//  public RenderHarvester(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public RenderHarvester(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public void render(TileHarvester te, float v, PoseStack matrix,

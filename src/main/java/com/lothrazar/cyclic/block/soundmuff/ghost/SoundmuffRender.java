@@ -5,15 +5,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class SoundmuffRender implements BlockEntityRenderer<SoundmuffTile> {
 
-//  public SoundmuffRender(BlockEntityRenderDispatcher d) {
-//    super(d);
-//  }
+
+  public SoundmuffRender(BlockEntityRendererProvider.Context d) {   }
 
   @Override
   public boolean shouldRenderOffScreen(SoundmuffTile te) {

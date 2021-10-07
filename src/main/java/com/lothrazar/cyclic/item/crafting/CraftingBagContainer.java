@@ -29,7 +29,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   //
   public ItemStack bag;
   public int slot;
-  public int slots;
+  public int slotcount;
   public CompoundTag nbt;
 
   public CraftingBagContainer(int id, Inventory playerInventory, Player player) {
@@ -63,7 +63,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     //
     this.nbt = bag.getOrCreateTag();
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.slots = h.getSlots();
+      this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {
@@ -129,15 +129,15 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   }
 
   @Override
-  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       ItemStack myBag = this.slots.get(slotId).getItem();
       if (myBag.getItem() instanceof CraftingBagItem) {
         //lock the bag in place by returning empty
-        return ItemStack.EMPTY;
+        return ; // ItemStack.EMPTY;
       }
     }
-    return super.clicked(slotId, dragType, clickTypeIn, player);
+//    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 
   @Override

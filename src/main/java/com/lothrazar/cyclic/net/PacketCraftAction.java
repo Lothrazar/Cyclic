@@ -106,7 +106,7 @@ public class PacketCraftAction extends PacketBase {
       if (tmp.isEmpty() && !onlyExisting) {
         slotTargest.add(i);
       }
-      if (AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
+      if (ItemStack.isSameItemSameTags(tmp,biggest)) {  // AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
         slotTargest.add(i);
         totalQuantity += tmp.getCount();
       }

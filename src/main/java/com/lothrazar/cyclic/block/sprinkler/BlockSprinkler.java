@@ -64,7 +64,7 @@ public class BlockSprinkler extends BlockBase {
 
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state, BlockGetter world) {
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return new TileSprinkler(pos,state);
   }
 }
