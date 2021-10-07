@@ -46,13 +46,9 @@ public class BlockSoundPlayer extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.SOUND_PLAYER, ScreenSoundPlayer::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileSoundPlayer();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileSoundPlayer(pos,state);
   }
 }

@@ -40,7 +40,8 @@ public class EventRender {
     //Build scepter feature : render selected blockstate in cross hair
     Player player = Minecraft.getInstance().player;
     Minecraft mc = Minecraft.getInstance();
-    if (event.getType() == ElementType.CROSSHAIRS) {
+    System.out.println("TESTME : ElementType.CROSSHAIRS is gone deleted");
+    if (event.getType() == ElementType.ALL) {
       ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
       if (itemStackHeld.getItem() instanceof BuilderItem) {
         //

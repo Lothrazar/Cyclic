@@ -33,8 +33,8 @@ public class CarbonPaperItem extends ItemBase {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
-      SignBlockEntity fakeSign = new SignBlockEntity();
-      fakeSign.load(Blocks.OAK_SIGN.defaultBlockState(), stack.getTag());
+      SignBlockEntity fakeSign = new SignBlockEntity(BlockPos.ZERO, Blocks.OAK_SIGN.defaultBlockState());
+      fakeSign.load(stack.getTag());
       tooltip.add(new TranslatableComponent("[" + fakeSign.getColor().getSerializedName() + "]"));
       for (int i = 0; i <= 3; i++) {
         //        fakeSign.setText(line, p_212365_2_);

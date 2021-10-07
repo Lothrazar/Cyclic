@@ -28,7 +28,6 @@ public class BlockFluidCollect extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_FLUID, RenderFluidCollect::new);
     MenuScreens.register(ContainerScreenRegistry.COLLECTOR_FLUID, ScreenFluidCollect::new);
   }
 

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import mezz.jei.api.constants.VanillaTypes;
@@ -34,8 +35,8 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
   }
 
   @Override
-  public String getTitle() {
-    return UtilChat.lang(BlockRegistry.GENERATOR_ITEM.get().getDescriptionId());
+  public Component getTitle() {
+    return UtilChat.ilang(BlockRegistry.GENERATOR_ITEM.get().getDescriptionId());
   }
 
   @Override

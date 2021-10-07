@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -48,8 +49,8 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
   private NonNullList<String> sounds = NonNullList.withSize(MAX_SOUNDS, "");
   private List<String> ignored = new ArrayList<>();
 
-  public TileSoundRecorder() {
-    super(TileRegistry.SOUND_RECORDER.get());
+  public TileSoundRecorder(BlockPos pos, BlockState state) {
+    super(TileRegistry.SOUND_RECORDER.get(),pos,state);
   }
 
   @Override
@@ -63,7 +64,7 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     for (int i = 0; i < MAX_SOUNDS; i++) {
       if (tag.contains(SOUNDAT + i)) {
@@ -75,7 +76,7 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
         ignored.add(tag.getString(IGNORED + i));
       }
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

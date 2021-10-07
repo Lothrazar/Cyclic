@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.workbench;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -38,8 +39,8 @@ public class TileWorkbench extends TileEntityBase implements MenuProvider {
     GRID, OUTPUT
   };
 
-  public TileWorkbench() {
-    super(TileRegistry.workbench);
+  public TileWorkbench(BlockPos pos, BlockState state) {
+    super(TileRegistry.workbench,pos,state );
   }
 
   protected <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers handler) {
@@ -55,9 +56,9 @@ public class TileWorkbench extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("inv")));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

@@ -50,13 +50,9 @@ public class BlockWirelessEnergy extends BlockBase {
     //    ClientRegistry.bindTileEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileWirelessEnergy();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileWirelessEnergy(pos,state);
   }
 }

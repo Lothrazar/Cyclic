@@ -24,7 +24,7 @@ public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 16;
-    btnRender = addButton(new ButtonMachineField(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
+    btnRender = addWidget(new ButtonMachineField(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 

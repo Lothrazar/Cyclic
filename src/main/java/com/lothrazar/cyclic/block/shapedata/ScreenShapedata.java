@@ -30,7 +30,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 6;
-    btnRender = addButton(new ButtonMachineField(x, y, TileShapedata.Fields.RENDER.ordinal(),
+    btnRender = addWidget(new ButtonMachineField(x, y, TileShapedata.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //
@@ -38,7 +38,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
     int width = 42;
     x = leftPos + 126;
     for (StructCommands shape : StructCommands.values()) {
-      ButtonMachine btnShape = addButton(new ButtonMachine(x, y, width, 20,
+      ButtonMachine btnShape = addWidget(new ButtonMachine(x, y, width, 20,
           shape.name(), (p) -> {
             //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
             PacketRegistry.INSTANCE.sendToServer(

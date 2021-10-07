@@ -164,8 +164,8 @@ public class ItemStorageBag extends ItemBase {
     if (handler == null) {
       return;
     }
-    for (int i = 0; i < Math.min(9, player.inventory.getContainerSize()); i++) { //hotbar is 0-8, but do a Math.min in case some mod reduces inventory size? Idk, why not.
-      ItemStack stack = player.inventory.getItem(i);
+    for (int i = 0; i < Math.min(9, player.getInventory().getContainerSize()); i++) { //hotbar is 0-8, but do a Math.min in case some mod reduces inventory size? Idk, why not.
+      ItemStack stack = player.getInventory().getItem(i);
       if (!stack.isEmpty()) {
         //we found a non
         int slot = getLastSlotWithStack(bag, stack);
@@ -185,7 +185,7 @@ public class ItemStorageBag extends ItemBase {
     boolean success = false;
     if (handler != null) {
       ItemStack extracted = handler.extractItem(bagSlot, 1, true);
-      success = player.inventory.add(invSlot, extracted);
+      success = player.getInventory().add(invSlot, extracted);
     }
     return success;
   }
@@ -281,8 +281,8 @@ public class ItemStorageBag extends ItemBase {
 
   public static List<Integer> getAllBagSlots(Player player) {
     List<Integer> slots = new ArrayList<>();
-    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-      if (isBag(player.inventory.getItem(i))) {
+    for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+      if (isBag(player.getInventory().getItem(i))) {
         slots.add(i);
       }
     }
@@ -291,8 +291,8 @@ public class ItemStorageBag extends ItemBase {
 
   //unused but possibly useful
   public static int getFirstBagSlot(Player player) {
-    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-      if (isBag(player.inventory.getItem(i))) {
+    for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+      if (isBag(player.getInventory().getItem(i))) {
         return i;
       }
     }

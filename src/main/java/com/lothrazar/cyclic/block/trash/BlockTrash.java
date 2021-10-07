@@ -40,13 +40,10 @@ public class BlockTrash extends BlockBase {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
+
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileTrash();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileTrash(pos,state);
   }
 }

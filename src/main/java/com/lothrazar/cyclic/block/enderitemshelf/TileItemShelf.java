@@ -40,13 +40,13 @@ public class TileItemShelf extends TileEntityBase {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

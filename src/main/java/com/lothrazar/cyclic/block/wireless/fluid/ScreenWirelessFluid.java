@@ -27,7 +27,7 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileWirelessFluid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileWirelessFluid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

@@ -23,39 +23,39 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     super.init();
     int x = leftPos + 6;
     int y = topPos + 6;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileScreentext.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileScreentext.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     int w = 140;
     x = leftPos + 28;
     y = topPos + 8;
     txtString = new TextBoxAutosave(this.font, x, y, w, menu.tile.getBlockPos(), 0);
     txtString.setValue(menu.tile.getFieldString(0));
-    this.children.add(txtString);
+    this.addWidget(txtString);
     w = 160;
     x = leftPos + 8;
     y = topPos + 28;
     int h = 20;
     int f = TileScreentext.Fields.RED.ordinal();
-    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger red = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.GREEN.ordinal();
-    GuiSliderInteger green = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger green = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.BLUE.ordinal();
-    GuiSliderInteger blue = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger blue = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.PADDING.ordinal();
-    GuiSliderInteger pad = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger pad = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 20, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.FONT.ordinal();
-    GuiSliderInteger font = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger font = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 100, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.OFFSET.ordinal();
-    GuiSliderInteger offset = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger offset = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 10, menu.tile.getField(f)));
     red.setTooltip("cyclic.screen.red");
     green.setTooltip("cyclic.screen.green");
@@ -65,10 +65,10 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     pad.setTooltip("cyclic.screen.padding");
   }
 
-  @Override
-  public void tick() {
-    this.txtString.tick();
-  }
+//  @Override
+//  public void tick() {
+//    this.txtString.tick();
+//  }
 
   @Override
   public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {

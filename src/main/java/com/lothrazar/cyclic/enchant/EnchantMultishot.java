@@ -69,7 +69,7 @@ public class EnchantMultishot extends EnchantBase {
     AbstractArrow abstractarrowentity = arrowitem.createArrow(worldIn, stackBow, player);
     abstractarrowentity.setPosAndOldPos(abstractarrowentity.getX() + offsetVector.x(), abstractarrowentity.getY(), abstractarrowentity.getZ() + offsetVector.z());
     float f = BowItem.getPowerForTime(charge); // i
-    abstractarrowentity.shootFromRotation(player, player.xRot, player.yRot, 0.0F, f * 3.0F, 1.0F);
+    abstractarrowentity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
     if (f == 1.0F) {
       abstractarrowentity.setCritArrow(true);
     }

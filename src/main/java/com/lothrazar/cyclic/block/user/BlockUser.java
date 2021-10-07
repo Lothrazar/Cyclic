@@ -29,14 +29,11 @@ public class BlockUser extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.USER, ScreenUser::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
+
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileUser();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileUser(pos,state );
   }
 
   @Override

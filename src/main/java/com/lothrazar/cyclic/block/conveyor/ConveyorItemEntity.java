@@ -98,7 +98,7 @@ public class ConveyorItemEntity extends ItemEntity {
     CompoundTag compoundnbt = compound.getCompound("Item");
     this.setItem(ItemStack.of(compoundnbt));
     if (this.getItem().isEmpty()) {
-      this.remove();
+      this.remove(RemovalReason.KILLED);
     }
   }
 }

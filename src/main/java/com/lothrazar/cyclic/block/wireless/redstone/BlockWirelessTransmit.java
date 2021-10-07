@@ -32,7 +32,6 @@ public class BlockWirelessTransmit extends BlockBase {
   public void registerClient() {
     MenuScreens.register(ContainerScreenRegistry.WIRELESS_TRANSMITTER, ScreenTransmit::new);
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
   }
 
   @Override

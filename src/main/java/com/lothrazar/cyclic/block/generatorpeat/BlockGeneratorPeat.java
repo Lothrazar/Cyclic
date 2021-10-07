@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -18,14 +19,10 @@ public class BlockGeneratorPeat extends BlockBase {
     this.setHasGui();
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileGeneratorPeat();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileGeneratorPeat(pos,state);
   }
 
   @Override

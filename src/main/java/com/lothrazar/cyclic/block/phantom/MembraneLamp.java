@@ -32,14 +32,11 @@ public class MembraneLamp extends BlockBase {
     builder.add(POWER);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
+
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new MembraneLampTile();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new MembraneLampTile(pos,state);
   }
 
   @Override

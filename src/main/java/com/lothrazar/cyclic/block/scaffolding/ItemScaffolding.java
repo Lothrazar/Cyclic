@@ -31,32 +31,32 @@ public class ItemScaffolding extends BlockItem {
     //skip if sneaking
     BlockPos pos = player.blockPosition().above();
     // at eye level
-    int direction = Mth.floor((player.yRot * 4F) / 360F + 0.5D) & 3;
+    int direction = Mth.floor((player.getYRot() * 4F) / 360F + 0.5D) & 3;
     //imported from my scaffolding spell https://github.com/PrinceOfAmber/CyclicMagic/blob/37ebb722378cbf940aa9cfb4fa99ce0e80127533/src/main/java/com/lothrazar/cyclicmagic/spell/SpellScaffolding.java
     // -45 is up
     // +45 is pitch down
     // first; is it up or down?
     boolean doHoriz = true;
     //    Direction facing = Direction.UP;
-    if (player.xRot < -82) {
+    if (player.getXRot() < -82) {
       // really really up
       doHoriz = false;
       pos = pos.above().above();
       //      facing = Direction.UP;
     }
-    else if (player.xRot > 82) {
+    else if (player.getXRot() > 82) {
       // really really down
       doHoriz = false;
       pos = pos.below();
       //      facing = Direction.DOWN;
     }
-    else if (player.xRot < -45) {
+    else if (player.getXRot() < -45) {
       // angle is pretty high up. so offset up again
       pos = pos.above();
       //      facing = Direction.UP;
       doHoriz = true;
     }
-    else if (player.xRot > 45) {
+    else if (player.getXRot() > 45) {
       // you are angled down, so bring down from eye level
       pos = pos.below();
       //      facing = Direction.DOWN;

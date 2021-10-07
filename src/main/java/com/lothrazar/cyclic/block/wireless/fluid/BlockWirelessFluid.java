@@ -50,13 +50,9 @@ public class BlockWirelessFluid extends BlockBase {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileWirelessFluid();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileWirelessFluid(pos,state);
   }
 }

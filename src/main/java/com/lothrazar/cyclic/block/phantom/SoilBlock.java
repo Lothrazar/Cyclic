@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -17,14 +18,11 @@ public class SoilBlock extends BlockBase {
     super(properties.strength(1.0F, 1.0F));
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
+
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new SoilTile();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new SoilTile(pos,state);
   }
 
   @Override

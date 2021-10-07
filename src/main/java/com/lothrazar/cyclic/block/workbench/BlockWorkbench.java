@@ -32,13 +32,9 @@ public class BlockWorkbench extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.WORKBENCH, ScreenWorkbench::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileWorkbench();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileWorkbench(pos,state);
   }
 }

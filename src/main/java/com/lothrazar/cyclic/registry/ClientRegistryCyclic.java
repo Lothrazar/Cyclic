@@ -3,9 +3,30 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
+import com.lothrazar.cyclic.block.collectitem.RenderItemCollect;
 import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
+import com.lothrazar.cyclic.block.detectorentity.RenderDetector;
+import com.lothrazar.cyclic.block.detectoritem.RenderDetectorItem;
+import com.lothrazar.cyclic.block.dropper.RenderDropper;
+import com.lothrazar.cyclic.block.enderitemshelf.ItemShelfRenderer;
+import com.lothrazar.cyclic.block.endershelf.EnderShelfRenderer;
+import com.lothrazar.cyclic.block.fishing.RenderFisher;
+import com.lothrazar.cyclic.block.forester.RenderForester;
+import com.lothrazar.cyclic.block.harvester.RenderHarvester;
+import com.lothrazar.cyclic.block.laser.RenderLaser;
+import com.lothrazar.cyclic.block.lightcompr.RenderLightCamo;
+import com.lothrazar.cyclic.block.melter.RenderMelter;
+import com.lothrazar.cyclic.block.miner.RenderMiner;
 import com.lothrazar.cyclic.block.peatfarm.RenderPeatFarm;
+import com.lothrazar.cyclic.block.screen.RenderScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.RenderStructure;
+import com.lothrazar.cyclic.block.shapedata.RenderShapedata;
+import com.lothrazar.cyclic.block.solidifier.RenderSolidifier;
+import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmuffRender;
+import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
+import com.lothrazar.cyclic.block.tank.RenderTank;
+import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
@@ -50,6 +71,27 @@ public class ClientRegistryCyclic {
     BlockEntityRendererProvider.Context lol; //  is required in constructor
     event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
     event.registerBlockEntityRenderer(TileRegistry.STRUCTURE, RenderStructure::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_FLUID, RenderFluidCollect::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_ITEM, RenderItemCollect::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.DETECTOR_ENTITY, RenderDetector::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.DETECTOR_ITEM, RenderDetectorItem::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.DROPPER, RenderDropper::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.ENDER_ITEM_SHELF.get(), ItemShelfRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.ender_shelf, EnderShelfRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.fisher, RenderFisher::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.FORESTER, RenderForester::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.HARVESTER, RenderHarvester::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.laser, RenderLaser::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.light_camo, RenderLightCamo::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.melter, RenderMelter::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.MINER, RenderMiner::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.screen, RenderScreentext::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.computer_shape, RenderShapedata::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.solidifier, RenderSolidifier::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.soundproofing_ghost, SoundmuffRender::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.tank, RenderTank::new);
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {

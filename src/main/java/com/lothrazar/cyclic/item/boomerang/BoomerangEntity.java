@@ -110,9 +110,11 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   private void moveTowardsTarget() {
-    yRot = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
-    xRot = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
-    Vec3 moveVec = UtilEntity.lookVector(this.yRot, this.xRot).scale(SPEED);
+   float  newyRot = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
+    float newxRot = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
+   this.setYRot(newyRot);
+   this.setXRot(newxRot);
+    Vec3 moveVec = UtilEntity.lookVector(this.getYRot(), this.getXRot()).scale(SPEED);
     this.setDeltaMovement(
         0.5f * this.getDeltaMovement().x() + 0.5f * moveVec.x,
         0.5f * this.getDeltaMovement().y() + 0.503f * moveVec.y,
@@ -192,7 +194,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         boomerangThrown = ItemStack.EMPTY;
       }
     }
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

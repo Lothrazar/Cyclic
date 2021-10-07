@@ -52,7 +52,7 @@ public class LightningEntity extends ThrowableItemProjectile {
       lightningboltentity.moveTo(this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ());
       level.addFreshEntity(lightningboltentity);
     }
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

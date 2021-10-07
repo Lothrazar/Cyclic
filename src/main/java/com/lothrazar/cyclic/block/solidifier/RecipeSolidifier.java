@@ -130,7 +130,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         if (GsonHelper.isValidNode(json, "inputBottom")) {
           inputBottom = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputBottom"));
         }
-        ItemStack resultStack = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result"));
+        ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
         if (inputTop == Ingredient.EMPTY) {
           throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
         }

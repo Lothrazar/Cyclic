@@ -32,8 +32,8 @@ public class ShearsMaterial extends ShearsItem {
     Block block = state.getBlock();
     if (block == Blocks.MELON
         || block == Blocks.PUMPKIN
-        || block.is(BlockTags.CARPETS)
-        || block.is(BlockTags.WOOL)
+        || state.is(BlockTags.CARPETS)
+        || state.is(BlockTags.WOOL)
         || state.is(BlockTags.LEAVES)) {
       return 15F;
     }

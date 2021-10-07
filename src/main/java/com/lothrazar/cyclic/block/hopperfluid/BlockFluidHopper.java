@@ -57,12 +57,7 @@ public class BlockFluidHopper extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileFluidHopper();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileFluidHopper(pos,state);
   }
 }

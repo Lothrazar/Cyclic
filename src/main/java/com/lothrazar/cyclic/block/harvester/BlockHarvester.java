@@ -28,7 +28,6 @@ public class BlockHarvester extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.HARVESTER, RenderHarvester::new);
     MenuScreens.register(ContainerScreenRegistry.harvester, ScreenHarvester::new);
   }
 

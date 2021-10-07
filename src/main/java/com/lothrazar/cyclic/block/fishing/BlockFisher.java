@@ -31,7 +31,6 @@ public class BlockFisher extends BlockBase {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.fisher, RenderFisher::new);
     MenuScreens.register(ContainerScreenRegistry.fisher, ScreenFisher::new);
   }
 

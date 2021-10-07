@@ -29,6 +29,7 @@ import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import java.util.Random;
+import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
@@ -169,12 +170,16 @@ public class WaterCandleBlock extends BlockBase {
   }
 
   private Mob findMonsterToSpawn(Level world, BlockPos pos, Random rand) {
-    List<MobSpawnSettings.SpawnerData> spawners = world.getBiome(pos).getMobSettings().getMobs(type);
+    WeightedRandomList<MobSpawnSettings.SpawnerData> spawners = world.getBiome(pos).getMobSettings().getMobs(type);
     if (spawners.isEmpty()) {
       return null;
     }
+
     //end is inclusive
-    MobSpawnSettings.SpawnerData spawner = WeighedRandom.getRandomItem(rand, spawners);
+    MobSpawnSettings.SpawnerData spawner = spawners.getRandom(rand).orElse(null);
+    if(spawner==null){
+      return null;
+    }
     Mob monster = null;
     Entity ent = spawner.type.create(world);
     if (ent instanceof Mob) {

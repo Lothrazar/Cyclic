@@ -87,7 +87,7 @@ public class BlockFluidTank extends BlockBase {
 
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state, BlockGetter world) {
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return new TileTank(pos,state);
   }
 
@@ -99,7 +99,6 @@ public class BlockFluidTank extends BlockBase {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.tank, RenderTank::new);
   }
 
   @Override

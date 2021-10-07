@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.hoppergold;
 
 import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.BlockGetter;
@@ -14,7 +15,7 @@ public class BlockGoldHopper extends BlockSimpleHopper {
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileGoldHopper();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileGoldHopper(pos,state);
   }
 }

@@ -28,7 +28,6 @@ public class BlockForester extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.FORESTER, RenderForester::new);
     MenuScreens.register(ContainerScreenRegistry.FORESTER, ScreenForester::new);
   }
 

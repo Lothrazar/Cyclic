@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.screen;
 
 import com.lothrazar.cyclic.util.UtilRenderText;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -50,7 +51,7 @@ public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
     matrix.scale(scaleX * fontSize, scaleY * fontSize, 1);
     //then draw it
 
-    Font fontRenderer = this.renderer.getFont();
+    Font fontRenderer = Minecraft.getInstance().font; //this.renderer.getFont();
     fontRenderer.drawInBatch(text, 0, 0, tile.getColor(),
         tile.getDropShadow(), matrix.last().pose(), buffer, false, 0, light); // 15728880
     matrix.popPose();

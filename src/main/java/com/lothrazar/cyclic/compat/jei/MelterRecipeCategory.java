@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.util.UtilChat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -33,8 +34,8 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   }
 
   @Override
-  public String getTitle() {
-    return UtilChat.lang(BlockRegistry.MELTER.getDescriptionId());
+  public Component getTitle() {
+    return UtilChat.ilang(BlockRegistry.MELTER.getDescriptionId());
   }
 
   @Override

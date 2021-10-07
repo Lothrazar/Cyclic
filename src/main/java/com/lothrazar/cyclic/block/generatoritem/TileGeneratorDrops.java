@@ -55,7 +55,7 @@ public class TileGeneratorDrops extends TileEntityBase implements MenuProvider {
     this.needsRedstone = 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.flowing == 1) {

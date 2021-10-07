@@ -26,7 +26,6 @@ public class BlockLaser extends BlockBase {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.laser, RenderLaser::new);
     MenuScreens.register(ContainerScreenRegistry.laser, ScreenLaser::new);
   }
 

@@ -44,14 +44,10 @@ public class BlockWirelessRec extends BlockBase {
     return true;
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileWirelessRec();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileWirelessRec(pos,state );
   }
 
   @Override

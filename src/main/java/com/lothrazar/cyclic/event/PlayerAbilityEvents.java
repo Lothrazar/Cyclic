@@ -40,14 +40,12 @@ public class PlayerAbilityEvents {
       return;
     }
     if (datFile.flyTicks > DISABLE_OFFSET) {
-      player.abilities.mayfly = true;
-      ModCyclic.LOGGER.info("allowFlying");
+      player.getAbilities().mayfly = true;
     }
     else if (datFile.flyTicks <= DISABLE_OFFSET) {
-      player.abilities.mayfly = false;
-      player.abilities.flying = false;
+      player.getAbilities().mayfly = false;
+      player.getAbilities().flying = false;
       player.fallDistance = 0.0F;
-      ModCyclic.LOGGER.info("DIsable flying");
     }
     datFile.flyTicks--;
   }

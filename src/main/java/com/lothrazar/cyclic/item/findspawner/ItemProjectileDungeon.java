@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -41,7 +42,7 @@ public class ItemProjectileDungeon extends ItemBase {
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.SPAWNER, DUNGEONRADIUS);
     if (blockpos == null) {
       UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.spawner_seeker.notfound") + " " + DUNGEONRADIUS);
-      entityendereye.remove();
+      entityendereye.remove(Entity.RemovalReason.DISCARDED);
     }
     else {
       UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.spawner_seeker.found"));

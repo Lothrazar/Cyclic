@@ -79,7 +79,7 @@ public class EnchantExcavation extends EnchantBase {
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    return super.canEnchant(stack) || stack.getItem().is(Tags.Items.SHEARS);
+    return super.canEnchant(stack) || stack.is(Tags.Items.SHEARS);
   }
 
   @Override

@@ -56,14 +56,10 @@ public class BlockTerraGlass extends BlockBase {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileTerraGlass();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileTerraGlass(pos,state);
   }
 
   @Override

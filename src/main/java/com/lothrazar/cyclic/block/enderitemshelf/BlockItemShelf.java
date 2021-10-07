@@ -39,7 +39,6 @@ public class BlockItemShelf extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.ENDER_ITEM_SHELF.get(), ItemShelfRenderer::new);
   }
 
   @Override

@@ -21,14 +21,10 @@ public class BlockRotator extends BlockBase {
     super(properties.strength(1.8F));
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileRotator();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileRotator(pos,state);
   }
 
   @Override

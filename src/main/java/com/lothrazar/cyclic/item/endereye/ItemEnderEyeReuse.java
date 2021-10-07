@@ -71,7 +71,7 @@ public class ItemEnderEyeReuse extends ItemBase {
           CriteriaTriggers.USED_ENDER_EYE.trigger((ServerPlayer) player, closestBlockPos);
         }
         worldIn.playSound((Player) null, posX, posY, posZ, SoundEvents.ENDER_EYE_LAUNCH, SoundSource.NEUTRAL, 0.5F,
-            0.4F / (random.nextFloat() * 0.4F + 0.8F));
+            0.4F / (worldIn.random.nextFloat() * 0.4F + 0.8F));
         worldIn.levelEvent((Player) null, 1003, new BlockPos(player.blockPosition()), 0);
         UtilItemStack.damageItem(player, stack);
         player.awardStat(Stats.ITEM_USED.get(this));

@@ -77,7 +77,7 @@ public class ShapeCard extends ItemBase {
         BlockPos posBuild = null;
         for (BlockPos s : shape.getShape()) {
           posBuild = centerPos.offset(s);
-          if (Level.isOutsideBuildHeight(posBuild) || !world.isEmptyBlock(posBuild)) {
+          if (world.isOutsideBuildHeight(posBuild) || !world.isEmptyBlock(posBuild)) {
             //if outside, or not air, then continue
             continue;
           }

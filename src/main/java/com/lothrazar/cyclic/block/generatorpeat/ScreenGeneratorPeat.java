@@ -35,13 +35,13 @@ public class ScreenGeneratorPeat extends ScreenBase<ContainerGeneratorPeat> {
     timer.guiTop = energy.guiTop = topPos;
     energy.guiTop = topPos;
     int x = leftPos + 132, y = topPos + 8;
-    btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
+    btnToggle = addWidget(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       menu.tile.setFlowing((menu.tile.getFlowing() + 1) % 2);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileGeneratorPeat.Fields.FLOWING.ordinal(), menu.tile.getFlowing(), menu.tile.getBlockPos()));
     }));
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileGeneratorPeat.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileGeneratorPeat.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

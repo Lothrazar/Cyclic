@@ -39,14 +39,11 @@ public class BlockSoundRecorder extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.SOUND_RECORDER, ScreenSoundRecorder::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
+
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileSoundRecorder();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileSoundRecorder(pos,state);
   }
 
   @OnlyIn(Dist.CLIENT)

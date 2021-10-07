@@ -81,7 +81,7 @@ public class BlockEnderCtrl extends BlockBase {
       //otherwise: main hand inserts, off hand takes out right away
       return InteractionResult.PASS;
     }
-    if (heldItem.getItem().is(DataTags.WRENCH)) {
+    if (heldItem.is(DataTags.WRENCH)) {
       TileEnderCtrl contrl = (TileEnderCtrl) world.getBlockEntity(pos);
       contrl.toggleShowText();
       RenderTextType nt = contrl.renderStyle;

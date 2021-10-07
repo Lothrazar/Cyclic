@@ -81,7 +81,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
       posY += motionY;
       posZ += motionZ;
       this.setPos(posX, posY, posZ);
-      float f = Mth.sqrt(motionX * motionX + motionZ * motionZ);
+      double f = Math.sqrt(motionX * motionX + motionZ * motionZ);
       double distX = Math.abs(this.targetX - posX);
       double distY = Math.abs(this.targetY - posY);
       double distZ = Math.abs(this.targetZ - posZ);
@@ -92,7 +92,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
       if (distLine < 1.0F) {
         horizFactor *= 0.8D;
         //        this.motionY *= 0.8D; 
-        this.remove();
+        this.remove(RemovalReason.DISCARDED);
       }
       motionX = Math.cos(atan) * horizFactor;
       motionZ = Math.sin(atan) * horizFactor;
@@ -144,10 +144,10 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
       motionY /= speedVReduction;
       motionZ /= speedHReduction;
       if (this.tickCount > 9999) {
-        this.remove();
+        this.remove(RemovalReason.DISCARDED);
       }
       if (motionX == 0 && motionY == 0 && motionZ == 0) {
-        this.remove();
+        this.remove(RemovalReason.DISCARDED);
       }
       this.setDeltaMovement(motionX, motionY, motionZ);
       //      int particleCount = (this.ticksExisted < 100) ? 30 : 14;

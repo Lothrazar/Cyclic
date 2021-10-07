@@ -25,7 +25,6 @@ public class BlockLightCamo extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.light_camo, RenderLightCamo::new);
   }
 
   @Override

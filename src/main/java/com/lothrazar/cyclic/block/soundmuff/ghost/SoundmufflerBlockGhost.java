@@ -25,12 +25,11 @@ public class SoundmufflerBlockGhost extends SoundmufflerBlock {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.soundproofing_ghost, SoundmuffRender::new);
   }
 
 
   @Override
-  public BlockEntity newBkicjEntity(BlockPos pos, BlockState state, BlockGetter world) {
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new SoundmuffTile(pos,state);
   }
 

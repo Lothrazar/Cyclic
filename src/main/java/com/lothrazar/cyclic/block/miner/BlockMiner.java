@@ -28,7 +28,6 @@ public class BlockMiner extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.MINER, RenderMiner::new);
     MenuScreens.register(ContainerScreenRegistry.MINER, ScreenMiner::new);
   }
 

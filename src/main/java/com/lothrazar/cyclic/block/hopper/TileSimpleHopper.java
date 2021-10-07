@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.hopper;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
+import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
@@ -29,9 +30,9 @@ public class TileSimpleHopper extends TileEntityBase implements  Hopper {
     super(TileRegistry.HOPPER.get(),pos,state );
   }
 
-//  public TileSimpleHopper(BlockEntityType<? extends TileSimpleHopper> tileEntityType) {
-//    super(tileEntityType);
-//  }
+  public TileSimpleHopper(BlockEntityType<TileGoldHopper> t, BlockPos pos, BlockState state) {
+    super(t,pos,state);
+  }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -41,7 +42,7 @@ public class TileSimpleHopper extends TileEntityBase implements  Hopper {
     return super.getCapability(cap, side);
   }
 
-  @Override
+//  @Override
   public void tick() {
     //block if redstone powered
     if (this.isPowered()) {

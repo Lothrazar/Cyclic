@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generatorfood;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -33,13 +34,9 @@ public class BlockGeneratorFood extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.GENERATOR_FOOD, ScreenGeneratorFood::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileGeneratorFood();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileGeneratorFood(pos,state);
   }
 }

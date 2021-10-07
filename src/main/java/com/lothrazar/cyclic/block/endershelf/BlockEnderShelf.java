@@ -47,7 +47,6 @@ public class BlockEnderShelf extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.ender_shelf, EnderShelfRenderer::new);
   }
 
   @Override
@@ -93,7 +92,7 @@ public class BlockEnderShelf extends BlockBase {
       return InteractionResult.PASS;
     }
     TileEnderShelf shelf = getTileEntity(world, pos);
-    if (heldItem.getItem().is(DataTags.WRENCH)) {
+    if (heldItem.is(DataTags.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
       player.swing(hand);

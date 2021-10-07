@@ -21,7 +21,7 @@ public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TilePlacer.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TilePlacer.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

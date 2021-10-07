@@ -56,7 +56,6 @@ public class BlockMelter extends BlockBase {
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
     MenuScreens.register(ContainerScreenRegistry.melter, ScreenMelter::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.melter, RenderMelter::new);
   }
 
   @Override

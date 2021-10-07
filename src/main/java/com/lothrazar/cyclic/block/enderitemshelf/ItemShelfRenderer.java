@@ -37,7 +37,7 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
     final double y = (3 * slot + 2) / sh;
     final double z = 1.01;
     final float scaleNum = 0.094F;
-    Font fontRenderer = this.renderer.getFont();
+    Font fontRenderer = Minecraft.getInstance().font; // this.renderer.getFont();
     if (tile.renderStyle == RenderTextType.STACK) {
       final float sp = 0.19F;
       final float xf = 0.16F + slot * sp / 1.5F;
@@ -51,7 +51,7 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
       ms.scale(size, size, size);
       // TODO: use light offset
       //      float lf = tile.getWorld().getLight(tile.getPos().offset(tile.getCurrentFacing()));
-      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer);
+      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer, combinedLightIn);
       ms.popPose();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {

@@ -44,7 +44,6 @@ public class BlockDetector extends BlockBase {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.DETECTOR_ENTITY, RenderDetector::new);
     MenuScreens.register(ContainerScreenRegistry.DETECTOR_ENTITY, ScreenDetector::new);
   }
 

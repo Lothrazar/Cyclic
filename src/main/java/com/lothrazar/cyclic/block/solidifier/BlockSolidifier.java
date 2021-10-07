@@ -44,7 +44,7 @@ public class BlockSolidifier extends BlockBase {
 
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state, BlockGetter world) {
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return new TileSolidifier(pos,state);
   }
 
@@ -62,6 +62,5 @@ public class BlockSolidifier extends BlockBase {
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
     MenuScreens.register(ContainerScreenRegistry.solidifier, ScreenSolidifier::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.solidifier, RenderSolidifier::new);
   }
 }

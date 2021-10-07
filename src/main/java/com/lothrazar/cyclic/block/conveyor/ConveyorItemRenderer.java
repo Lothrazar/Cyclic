@@ -20,7 +20,7 @@ public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends Entit
 
   private final ItemRenderer renderer;
 
-  public ConveyorItemRenderer(EntityRendererProvider.Context renderManager, float scale, float fullBright){
+  public ConveyorItemRenderer(EntityRendererProvider.Context renderManager){
     super(renderManager);
     this.renderer = renderManager.getItemRenderer();
     this.shadowRadius = 0.0F;

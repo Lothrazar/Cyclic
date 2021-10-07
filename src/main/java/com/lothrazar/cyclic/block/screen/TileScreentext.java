@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.screen;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -30,8 +31,8 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
     REDSTONE, RED, GREEN, BLUE, PADDING, FONT, OFFSET;
   }
 
-  public TileScreentext() {
-    super(TileRegistry.screen);
+  public TileScreentext(BlockPos pos, BlockState state) {
+    super(TileRegistry.screen,pos,state);
     this.needsRedstone = 0;
   }
 
@@ -57,7 +58,7 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tags) {
+  public void load( CompoundTag tags) {
     text = new String[STRINGS];
     for (int i = 0; i < STRINGS; i++) {
       text[i] = tags.getString("text" + i);
@@ -69,7 +70,7 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
     fontSize = tags.getInt("font");
     offset = tags.getInt("offset");
     dropShadow = tags.getBoolean("dropShadow");
-    super.load(bs, tags);
+    super.load( tags);
   }
 
   @Override

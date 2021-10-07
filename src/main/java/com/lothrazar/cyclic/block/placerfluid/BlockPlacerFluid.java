@@ -29,14 +29,10 @@ public class BlockPlacerFluid extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.PLACER_FLUID, ScreenPlacerFluid::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TilePlacerFluid();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TilePlacerFluid(pos,state );
   }
 
   @Override

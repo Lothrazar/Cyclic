@@ -187,7 +187,7 @@ public class EnderBookItem extends ItemBase {
   }
 
   public static void scroll(ServerPlayer player, int slot, boolean isDown) {
-    ItemStack book = player.inventory.getItem(slot);
+    ItemStack book = player.getInventory().getItem(slot);
     if (book.hasTag()) {
       int enderslot = book.getTag().getInt(ENDERSLOT);
       enderslot = scrollSlot(isDown, enderslot);

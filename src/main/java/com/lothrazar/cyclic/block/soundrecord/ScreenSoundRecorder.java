@@ -25,7 +25,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
     y = topPos + 174;
     int bsize = 20;
     final String pf = "block.cyclic.sound_recorder.";
-    ButtonMachine buttonClear = addButton(new ButtonMachine(x, y, bsize, bsize, TextureEnum.CRAFT_EMPTY, TileSoundRecorder.Fields.CLEARALL.ordinal(), (p) -> {
+    ButtonMachine buttonClear = addWidget(new ButtonMachine(x, y, bsize, bsize, TextureEnum.CRAFT_EMPTY, TileSoundRecorder.Fields.CLEARALL.ordinal(), (p) -> {
       menu.tile.clearSounds();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.CLEARALL.ordinal(), 1, menu.tile.getBlockPos()));
     }));
@@ -35,7 +35,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
     bsize = 16;
     y = topPos + 8;
     for (int i = 0; i < TileSoundRecorder.MAX_SOUNDS; i++) {
-      ButtonMachine btnSave = addButton(new ButtonMachine(x, y, bsize, bsize,
+      ButtonMachine btnSave = addWidget(new ButtonMachine(x, y, bsize, bsize,
           TextureEnum.RENDER_SHOW, i, (p) -> {
             int soundIndex = ((ButtonMachine) p).getTileField();
             PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.SAVE.ordinal(), soundIndex, menu.tile.getBlockPos()));
@@ -45,7 +45,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
       btnSave.yOffset = 2;
       btnSave.setTooltip(pf + "save");
       //      btnSave.setTextureId(TextureEnum.RENDER_SHOW);
-      ButtonMachine btnIgnore = addButton(new ButtonMachine(x + bsize, y, bsize, bsize,
+      ButtonMachine btnIgnore = addWidget(new ButtonMachine(x + bsize, y, bsize, bsize,
           TextureEnum.POWER_STOP, i, (p) -> {
             int soundIndex = ((ButtonMachine) p).getTileField();
             menu.tile.ignoreSound(soundIndex);

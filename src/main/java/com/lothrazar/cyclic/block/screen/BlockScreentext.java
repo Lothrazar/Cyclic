@@ -40,7 +40,6 @@ public class BlockScreentext extends BlockBase {
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     MenuScreens.register(ContainerScreenRegistry.SCREEN, ScreenScreentext::new);
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.screen, RenderScreentext::new);
   }
 
   @Override

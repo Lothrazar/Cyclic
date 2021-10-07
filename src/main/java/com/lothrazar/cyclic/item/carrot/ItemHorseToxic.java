@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -72,7 +73,7 @@ public class ItemHorseToxic extends ItemEntityInteractable {
         zombie.setCustomName(ahorse.getCustomName());
       }
       //remove the horse    
-      ahorse.remove();
+      ahorse.remove(Entity.RemovalReason.DISCARDED);
       event.setCanceled(true);
       event.setCancellationResult(InteractionResult.SUCCESS);
       event.getPlayer().getCooldowns().addCooldown(this, 10);

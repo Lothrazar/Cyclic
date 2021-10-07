@@ -41,7 +41,7 @@ public class ClientInputEvents {
       event.setCanceled(true);
       if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
         boolean isDown = event.getScrollDelta() < 0;
-        PacketRegistry.INSTANCE.sendToServer(new PacketItemScroll(player.inventory.selected, isDown));
+        PacketRegistry.INSTANCE.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
       }
     }
   }

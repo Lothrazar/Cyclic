@@ -52,14 +52,10 @@ public class BlockSimpleHopper extends BlockBase {
     return BlockSimpleHopper.getRaytraceShapeHopper(state, worldIn, pos);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileSimpleHopper();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileSimpleHopper(pos,state);
   }
 
   public static VoxelShape getShapeHopper(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

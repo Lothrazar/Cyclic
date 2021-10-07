@@ -21,7 +21,6 @@ public class BlockShapedata extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.computer_shape, RenderShapedata::new);
     MenuScreens.register(ContainerScreenRegistry.computer_shape, ScreenShapedata::new);
   }
 

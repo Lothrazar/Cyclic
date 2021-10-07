@@ -78,7 +78,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       particleType = ParticleTypes.PORTAL;
       UtilItemStack.drop(level, this.blockPosition(), drop);
       UtilSound.playSound(target, SoundRegistry.MONSTER_BALL_CAPTURE);
-      target.remove();
+      target.remove(RemovalReason.DISCARDED);
     }
     else if (type == HitResult.Type.BLOCK) {
       //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
@@ -93,7 +93,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
         level.addParticle(particleType, hitVec.x(), hitVec.y() + targetHeightOffset, hitVec.z(), this.random.nextGaussian() * 0.1D, 0.0D, this.random.nextGaussian() * 0.1D);
       }
     }
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

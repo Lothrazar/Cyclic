@@ -18,14 +18,11 @@ public class SpikesDiamond extends SpikesBlock {
     super(properties, EnumSpikeType.NONE);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
+
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileDiamondSpikes();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
+    return new TileDiamondSpikes(pos,state);
   }
 
   @Override

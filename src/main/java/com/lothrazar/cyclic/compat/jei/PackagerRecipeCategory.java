@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.util.UtilChat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -31,8 +32,8 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
   }
 
   @Override
-  public String getTitle() {
-    return UtilChat.lang(BlockRegistry.PACKAGER.get().getDescriptionId());
+  public Component getTitle() {
+    return UtilChat.ilang(BlockRegistry.PACKAGER.get().getDescriptionId());
   }
 
   @Override

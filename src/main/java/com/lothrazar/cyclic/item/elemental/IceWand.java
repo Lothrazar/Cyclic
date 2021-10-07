@@ -68,9 +68,10 @@ public class IceWand extends ItemBase {
     List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
     for (BlockPos pos : water) {
       FluidState fluidState = world.getBlockState(pos).getFluidState();
+
       if (fluidState != null &&
-          fluidState.getFluidState() != null &&
-          fluidState.getFluidState().getAmount() >= 8) {
+//          fluidState.getFluidState() != null &&
+          fluidState.getAmount() >= 8) { // .getFluidState()
         world.setBlock(pos, Blocks.ICE.defaultBlockState(), 3);
       }
       count++;

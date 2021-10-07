@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generatoritem;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -32,13 +33,9 @@ public class BlockGeneratorDrops extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.GENERATOR_ITEM, ScreenGeneratorDrops::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileGeneratorDrops();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileGeneratorDrops(pos,state);
   }
 }

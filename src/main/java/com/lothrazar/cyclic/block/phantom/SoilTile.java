@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.FarmlandWaterManager;
 import net.minecraftforge.common.ticket.AABBTicket;
@@ -12,8 +14,8 @@ public class SoilTile extends TileEntityBase {
   public static final int RANGE = 4;
   private AABBTicket farmWater;
 
-  public SoilTile() {
-    super(TileRegistry.SOIL.get());
+  public SoilTile(BlockPos pos, BlockState state) {
+    super(TileRegistry.SOIL.get(),pos,state);
   }
 
   @Override

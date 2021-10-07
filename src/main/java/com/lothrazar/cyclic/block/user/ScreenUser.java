@@ -28,14 +28,14 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileUser.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileUser.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     //
     x = leftPos + 32;
     y = topPos + 26;
     int w = 120;
     int h = 20;
     int f = TileUser.Fields.TIMERDEL.ordinal();
-    GuiSliderInteger slider = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger slider = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
     slider.setTooltip("block.cyclic.user.delay");
   }

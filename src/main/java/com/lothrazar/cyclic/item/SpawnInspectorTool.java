@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.List;
+import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.EntityType;
@@ -60,9 +61,9 @@ public class SpawnInspectorTool extends ItemBase {
     //    EntityClassification classif = context.getPlayer().isCrouching() ? EntityClassification.CREATURE : EntityClassification.MONSTER;
     for (MobCategory classif : MobCategory.values()) {
       //      UtilChat.addChatMessage(context.getPlayer(), new StringTextComponent(classif.getName()).mergeStyle(TextFormatting.DARK_PURPLE));
-      List<MobSpawnSettings.SpawnerData> list = context.getLevel().getBiome(pos).getMobSettings().getMobs(classif);
+      WeightedRandomList<MobSpawnSettings.SpawnerData> list = context.getLevel().getBiome(pos).getMobSettings().getMobs(classif);
       //lop on abobe 
-      for (MobSpawnSettings.SpawnerData spawnerInfo : list) {
+      for (MobSpawnSettings.SpawnerData spawnerInfo : list.unwrap()) {
         //        int weight = mobspawninfo$spawners.itemWeight;
         TextComponent str = new TextComponent("[" + classif.getName() + "] ");
         BlockPos top = getTopSolidOrLiquidBlock(world, spawnerInfo.type, pos.getX(), pos.getZ());

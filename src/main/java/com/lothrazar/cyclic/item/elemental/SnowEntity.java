@@ -76,7 +76,7 @@ public class SnowEntity extends ThrowableItemProjectile {
       //        }
       //      }
     }
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

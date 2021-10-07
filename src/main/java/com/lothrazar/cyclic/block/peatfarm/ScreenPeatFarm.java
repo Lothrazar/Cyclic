@@ -34,8 +34,8 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
-    btnRender = addButton(new ButtonMachineField(x, y + 20, TilePeatFarm.Fields.RENDER.ordinal(),
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRender = addWidget(new ButtonMachineField(x, y + 20, TilePeatFarm.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 

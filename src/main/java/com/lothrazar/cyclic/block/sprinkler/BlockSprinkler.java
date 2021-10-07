@@ -54,7 +54,6 @@ public class BlockSprinkler extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 

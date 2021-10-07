@@ -29,14 +29,10 @@ public class BlockPlacer extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.placer, ScreenPlacer::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TilePlacer();
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state ) {
+    return new TilePlacer(pos,state);
   }
 
   @Override

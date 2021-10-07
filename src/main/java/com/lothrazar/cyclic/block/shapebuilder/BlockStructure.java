@@ -38,14 +38,10 @@ public class BlockStructure extends BlockBase {
     }
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileStructure();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileStructure(pos,state);
   }
 
   @Override

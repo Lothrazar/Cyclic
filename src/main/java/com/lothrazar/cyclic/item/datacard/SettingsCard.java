@@ -99,8 +99,8 @@ public class SettingsCard extends ItemBase {
           //
           ModCyclic.LOGGER.error("MERGE data tack settingsSaved : " + tiledata + " -> ");
           //
-          //
-          tile.load(player.level.getBlockState(pos), tiledata);
+          //player.level.getBlockState(pos),
+          tile.load(tiledata);
           UtilChat.addChatMessage(player, getDescriptionId() + ".written");
         }
       }

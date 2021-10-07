@@ -35,7 +35,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
     int x = leftPos + 150;
     int y = topPos + 8;
     final int size = 20;
-    btnType = this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.RENDER_HIDE, "", b -> {
+    btnType = this.addWidget(new ButtonTextured(x, y, size, size, TextureEnum.RENDER_HIDE, "", b -> {
       //pressed
       PacketRegistry.INSTANCE.sendToServer(new PacketFilterCard(CraftingActionEnum.EMPTY));
       FilterCardItem.toggleFilterType(screenContainer.bag);

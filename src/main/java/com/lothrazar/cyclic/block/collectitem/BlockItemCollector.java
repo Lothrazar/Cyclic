@@ -47,7 +47,6 @@ public class BlockItemCollector extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_ITEM, RenderItemCollect::new);
     MenuScreens.register(ContainerScreenRegistry.collector, ScreenItemCollector::new);
   }
 }

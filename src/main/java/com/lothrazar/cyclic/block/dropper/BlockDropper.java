@@ -28,7 +28,6 @@ public class BlockDropper extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.DROPPER, RenderDropper::new);
     MenuScreens.register(ContainerScreenRegistry.DROPPER, ScreenDropper::new);
   }
 

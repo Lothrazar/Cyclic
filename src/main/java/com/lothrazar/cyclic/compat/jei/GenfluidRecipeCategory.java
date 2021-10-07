@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -32,8 +33,8 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
   }
 
   @Override
-  public String getTitle() {
-    return UtilChat.lang(BlockRegistry.GENERATOR_FLUID.get().getDescriptionId());
+  public Component getTitle() {
+    return UtilChat.ilang(BlockRegistry.GENERATOR_FLUID.get().getDescriptionId());
   }
 
   @Override
