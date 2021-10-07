@@ -28,8 +28,8 @@ public class TileEnderCtrl extends TileEntityBase {
   private List<BlockPos> connectedShelves = new ArrayList<>();
   RenderTextType renderStyle = RenderTextType.TEXT;
 
-  public TileEnderCtrl() {
-    super(TileRegistry.ender_controller);
+  public TileEnderCtrl(BlockPos pos, BlockState state) {
+    super(TileRegistry.ender_controller,pos,state );
   }
 
   @Override
@@ -66,7 +66,7 @@ public class TileEnderCtrl extends TileEntityBase {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
@@ -78,7 +78,7 @@ public class TileEnderCtrl extends TileEntityBase {
         this.connectedShelves.add(pos);
       }
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

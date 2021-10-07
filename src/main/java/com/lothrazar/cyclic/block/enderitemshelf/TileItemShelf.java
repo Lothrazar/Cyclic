@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
@@ -18,8 +19,8 @@ public class TileItemShelf extends TileEntityBase {
   private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public RenderTextType renderStyle = RenderTextType.STACK;
 
-  public TileItemShelf() {
-    super(TileRegistry.ENDER_ITEM_SHELF.get());
+  public TileItemShelf(BlockPos pos, BlockState state) {
+    super(TileRegistry.ENDER_ITEM_SHELF.get(),pos,state);
   }
 
   @Override

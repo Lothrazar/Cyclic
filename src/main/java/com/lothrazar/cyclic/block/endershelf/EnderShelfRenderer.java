@@ -45,7 +45,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
     final double y = (3 * slot + 2) / sh;
     final double z = 1.01;
     final float scaleNum = 0.094F;
-    Font fontRenderer = this.renderer.getFont();
+    Font fontRenderer = Minecraft.getInstance().font; //this.renderer.getFont();
     if (tile.renderStyle == RenderTextType.STACK) {
       final float sp = 0.19F;
       final float xf = 0.16F + slot * sp / 1.5F;
@@ -58,7 +58,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
       // 0xF000F0
-      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer);
+      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer, combinedLightIn);
       ms.popPose();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {

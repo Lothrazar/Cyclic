@@ -32,16 +32,16 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     energy.visible = TileForester.POWERCONF.get() > 0;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileForester.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileForester.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     y += 20;
-    btnRender = addButton(new ButtonMachineField(x, y, TileForester.Fields.RENDER.ordinal(),
+    btnRender = addWidget(new ButtonMachineField(x, y, TileForester.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     int w = 110;
     int h = 18;
     int f = TileForester.Fields.SIZE.ordinal();
     x += 28;
     y += 20;
-    size = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 0, 10, menu.tile.getField(f)));
+    size = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 0, 10, menu.tile.getField(f)));
   }
 
   @Override

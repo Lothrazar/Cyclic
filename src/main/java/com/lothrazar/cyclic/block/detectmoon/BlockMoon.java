@@ -32,13 +32,8 @@ public class BlockMoon extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileMoon();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileMoon(pos,state);
   }
 
   @Override

@@ -64,10 +64,6 @@ public class BlockCableItem extends CableBase {
     return ShapeCache.getOrCreate(state, CableBase::createShape);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -90,8 +86,8 @@ public class BlockCableItem extends CableBase {
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileCableItem();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileCableItem(pos,state);
   }
 
   @Override

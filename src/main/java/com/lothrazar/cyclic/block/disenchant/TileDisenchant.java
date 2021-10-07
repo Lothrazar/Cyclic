@@ -87,7 +87,7 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
       return;
     }
     ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
-    if (input.isEmpty() || input.getItem().is(DataTags.DISENCHANTER_IMMUNE)) {
+    if (input.isEmpty() || input.is(DataTags.DISENCHANTER_IMMUNE)) {
       return;
     }
     Integer cost = POWERCONF.get();

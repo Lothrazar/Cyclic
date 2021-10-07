@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.recipe;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -82,7 +83,8 @@ public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
     }
     //if the fluids are not identical, they might have a matching tag
     //see /data/forge/tags/fluids/
-    for (Named<Fluid> fluidTag : FluidTags.getWrappers()) {
+
+    for (Tag<Fluid> fluidTag :     FluidTags.getAllTags().getAllTags().values()){ // FluidTags.getStaticTags()) {
       if (getRecipeFluid().getFluid().is(fluidTag) && tileFluid.getFluid().is(fluidTag)) {
         return true;
       }

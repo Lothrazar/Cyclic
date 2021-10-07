@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.crate;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,8 +23,8 @@ public class TileCrate extends TileEntityBase implements MenuProvider {
   ItemStackHandler inventory = new ItemStackHandler(9 * 9);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public TileCrate() {
-    super(TileRegistry.crate);
+  public TileCrate(BlockPos pos, BlockState state) {
+    super(TileRegistry.crate,pos,state);
   }
 
   @Override
@@ -45,9 +46,9 @@ public class TileCrate extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

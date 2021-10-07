@@ -141,7 +141,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   }
 
   @Override
-  public ItemStack transferStack(PlayerEntity playerIn, int index) {
+  public ItemStack transferStack(Player playerIn, int index) {
     return super.quickMoveStack(playerIn, index);
   }
 

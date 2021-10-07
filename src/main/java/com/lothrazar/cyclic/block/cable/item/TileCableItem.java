@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -41,8 +42,8 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
   };
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
 
-  public TileCableItem() {
-    super(TileRegistry.item_pipeTile);
+  public TileCableItem(BlockPos pos, BlockState state) {
+    super(TileRegistry.item_pipeTile,pos,state);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(TileCableItem::createHandler));
     }
@@ -105,7 +106,7 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
 
   @SuppressWarnings("unchecked")
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     extractQty = tag.getInt("extractCount");
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
@@ -116,7 +117,7 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
       });
     }
     filter.deserializeNBT(tag.getCompound("filter"));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @SuppressWarnings("unchecked")

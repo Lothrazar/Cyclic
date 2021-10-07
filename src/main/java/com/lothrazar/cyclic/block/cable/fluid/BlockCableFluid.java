@@ -79,14 +79,10 @@ public class BlockCableFluid extends CableBase {
     return ShapeCache.getOrCreate(state, CableBase::createShape);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileCableFluid();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileCableFluid(pos,state);
   }
 
   @Override

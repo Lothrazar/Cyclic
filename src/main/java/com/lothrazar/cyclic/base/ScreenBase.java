@@ -6,12 +6,16 @@ import com.lothrazar.cyclic.gui.IHasTooltip;
 import com.lothrazar.cyclic.gui.TextBoxAutosave;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +28,9 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
   }
 
   protected void drawBackground(PoseStack ms, ResourceLocation gui) {
-    this.minecraft.getTextureManager().bind(gui);
+//    this.minecraft.getTextureManager().bind(gui);
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, gui);
     int relX = (this.width - this.imageWidth) / 2;
     int relY = (this.height - this.imageHeight) / 2;
     this.blit(ms, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
@@ -32,7 +38,7 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
 
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-    for (AbstractWidget btn : this.buttons) {
+    for (GuiEventListener btn : this.children()) {
       Minecraft mc = Minecraft.getInstance();
       int mouseX = (int) (mc.mouseHandler.xpos() * mc.getWindow().getGuiScaledWidth() / mc.getWindow().getScreenWidth());
       int mouseY = (int) (mc.mouseHandler.ypos() * mc.getWindow().getGuiScaledHeight() / mc.getWindow().getScreenHeight());
@@ -40,7 +46,7 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
         return btn.keyPressed(keyCode, scanCode, modifiers);
       }
     }
-    for (GuiEventListener widget : this.children) {
+    for (GuiEventListener widget : this.children()) {
       if (widget instanceof TextBoxAutosave) {
         //without this, txt boxes still work BUT:
         //keybindings like E OPEN INVENTORY dont make trigger the textbox, oops
@@ -58,7 +64,9 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
   }
 
   protected void drawSlot(PoseStack ms, int x, int y, ResourceLocation texture, int size) {
-    this.minecraft.getTextureManager().bind(texture);
+//    this.minecraft.getTextureManager().bind(texture);
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, texture);
     blit(ms, leftPos + x, topPos + y, 0, 0, size, size, size, size);
   }
 
@@ -87,16 +95,18 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
   }
 
   public void drawButtonTooltips(PoseStack ms, int mouseX, int mouseY) {
-    for (AbstractWidget btn : this.buttons) {
-      if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)) {
-        btn.renderToolTip(ms, mouseX, mouseY);
+    for (GuiEventListener btn : this.children()) {
+      if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)
+      && btn instanceof AbstractWidget) {
+
+        ((AbstractWidget)btn).renderToolTip(ms, mouseX, mouseY);
         List<Component> localTooltip = ((IHasTooltip) btn).getTooltip();
         if (localTooltip != null) {
           this.renderComponentTooltip(ms, localTooltip, mouseX - leftPos, mouseY - topPos);
         }
       }
     }
-    for (GuiEventListener widget : this.children) {
+    for (GuiEventListener widget : this.children()) {
       if (widget instanceof IHasTooltip && widget.isMouseOver(mouseX, mouseY)) {
         IHasTooltip txt = (IHasTooltip) widget;
         if (txt.getTooltip() != null) {

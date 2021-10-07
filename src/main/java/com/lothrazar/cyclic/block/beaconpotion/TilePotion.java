@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -59,12 +60,12 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public TilePotion() {
-    super(TileRegistry.beacon);
+  public TilePotion(BlockPos pos, BlockState state) {
+    super(TileRegistry.beacon,pos,state );
     timer = 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -118,7 +119,7 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
@@ -133,7 +134,7 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
         }
       }
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

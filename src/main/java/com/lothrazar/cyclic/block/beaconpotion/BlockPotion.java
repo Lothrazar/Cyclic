@@ -42,13 +42,8 @@ public class BlockPotion extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TilePotion();
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TilePotion(pos,state);
   }
 
   @Override

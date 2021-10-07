@@ -46,11 +46,6 @@ public class BlockDice extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
   public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
@@ -61,8 +56,8 @@ public class BlockDice extends BlockBase {
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileDice();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileDice(pos,state);
   }
 
   @Override

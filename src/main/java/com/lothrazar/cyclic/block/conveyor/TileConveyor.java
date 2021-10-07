@@ -28,7 +28,7 @@ public class TileConveyor extends TileEntityBase  {
     return 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (level == null || worldPosition == null) {
       return;

@@ -146,19 +146,19 @@ public class ContainerCrafter extends ContainerBase {
   }
 
   @Override
-  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     if (slotId == TileCrafter.PREVIEW_SLOT) {
-      return ItemStack.EMPTY;
+      return ; //ItemStack.EMPTY;
     }
     // [ 10 - 18 ]
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
-      ItemStack ghostStack = player.inventory.getCarried().copy();
+      ItemStack ghostStack = player.containerMenu.getCarried().copy();
       ghostStack.setCount(1);
       slots.get(slotId).set(ghostStack);
       tile.shouldSearch = true;
-      return ItemStack.EMPTY;
+      return ; //ItemStack.EMPTY;
     }
-    return super.clicked(slotId, dragType, clickTypeIn, player);
+//    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 
   @Override

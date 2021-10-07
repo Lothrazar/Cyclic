@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,8 +27,8 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
   private int power;
   private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
 
-  public TileRedstoneClock() {
-    super(TileRegistry.clock);
+  public TileRedstoneClock(BlockPos pos, BlockState state) {
+    super(TileRegistry.clock,pos,state);
     timer = 0;
     delay = 60;
     duration = 60;
@@ -96,7 +97,7 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     delay = tag.getInt("redstone_delay");
     duration = tag.getInt("redstone_duration");
     power = tag.getInt("redstone_power");
@@ -106,7 +107,7 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
     if (this.detectAllOff()) {
       this.facingResetAllOn(); //fix legacy data for one
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

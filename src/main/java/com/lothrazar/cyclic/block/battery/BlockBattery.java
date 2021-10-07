@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -68,13 +69,8 @@ public class BlockBattery extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileBattery();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileBattery(pos,state);
   }
 
   @Override
@@ -93,4 +89,6 @@ public class BlockBattery extends BlockBase {
       //
     }
   }
+
+
 }

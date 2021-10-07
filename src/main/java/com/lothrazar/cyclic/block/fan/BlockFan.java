@@ -35,11 +35,6 @@ public class BlockFan extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return AABB;
   }
@@ -56,8 +51,8 @@ public class BlockFan extends BlockBase {
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileFan();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileFan(pos,state);
   }
 
   @Override

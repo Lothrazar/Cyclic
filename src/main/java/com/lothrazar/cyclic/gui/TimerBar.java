@@ -2,12 +2,14 @@ package com.lothrazar.cyclic.gui;
 
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
@@ -40,7 +42,9 @@ public class TimerBar {
     if (!visible) {
       return;
     }
-    parent.getMinecraft().getTextureManager().bind(TextureRegistry.PROGRESS);
+//    parent.getMinecraft().getTextureManager().bind(TextureRegistry.PROGRESS);
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, TextureRegistry.PROGRESS);
     float pct = Math.min(timer / capacity, 1.0F);
     Screen.blit(ms, guiLeft + x, guiTop + y,
         0, 0,

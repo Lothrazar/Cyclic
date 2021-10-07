@@ -26,7 +26,7 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileExpPylon.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileExpPylon.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

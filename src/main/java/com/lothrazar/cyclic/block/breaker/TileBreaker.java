@@ -21,12 +21,10 @@ public class TileBreaker extends TileEntityBase implements MenuProvider {
 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 500;
-  //  public static IntValue POWERCONF;
-  //  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  //  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
-  public TileBreaker() {
-    super(TileRegistry.breakerTile);
+
+  public TileBreaker(BlockPos pos, BlockState state) {
+    super(TileRegistry.breakerTile,pos,state);
   }
 
 //  @Override
@@ -70,17 +68,6 @@ public class TileBreaker extends TileEntityBase implements MenuProvider {
     return new ContainerBreaker(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void load(BlockState bs, CompoundTag tag) {
-    //    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load(bs, tag);
-  }
-
-  @Override
-  public CompoundTag save(CompoundTag tag) {
-    //    tag.put(NBTENERGY, energy.serializeNBT());
-    return super.save(tag);
-  }
 
   @Override
   public void setField(int field, int value) {

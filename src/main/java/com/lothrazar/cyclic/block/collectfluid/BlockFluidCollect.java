@@ -32,14 +32,10 @@ public class BlockFluidCollect extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.COLLECTOR_FLUID, ScreenFluidCollect::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileFluidCollect();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileFluidCollect(pos,state);
   }
 
   @Override

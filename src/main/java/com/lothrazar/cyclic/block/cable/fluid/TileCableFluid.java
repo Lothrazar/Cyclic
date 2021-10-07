@@ -53,8 +53,8 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 2;
   private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
-  public TileCableFluid() {
-    super(TileRegistry.fluid_pipeTile);
+  public TileCableFluid(BlockPos pos, BlockState state) {
+    super(TileRegistry.fluid_pipeTile,pos,state );
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, CAPACITY, p -> true)));
     }
@@ -140,7 +140,7 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
@@ -149,7 +149,7 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
         fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
       }
     }
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

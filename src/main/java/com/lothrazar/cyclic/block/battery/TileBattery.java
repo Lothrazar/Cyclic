@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -34,8 +35,8 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
     FLOWING, N, E, S, W, U, D;
   }
 
-  public TileBattery() {
-    super(TileRegistry.batterytile);
+  public TileBattery(BlockPos pos, BlockState state) {
+    super(TileRegistry.batterytile,pos,state);
     flowing = 0;
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
@@ -110,12 +111,12 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

@@ -79,14 +79,10 @@ public class BlockCrafter extends BlockBase {
     super.destroy(worldIn, pos, state);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileCrafter();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileCrafter(pos,state);
   }
 
   @Override

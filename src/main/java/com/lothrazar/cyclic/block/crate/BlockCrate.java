@@ -28,19 +28,16 @@ public class BlockCrate extends BlockBase {
     this.setHasGui();
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileCrate();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileCrate(pos,state);
   }
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+//    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+    if (!state.is(newState.getBlock())) {
       worldIn.removeBlockEntity(pos);
     }
   }

@@ -63,8 +63,8 @@ public class TileFluidCollect extends TileEntityBase implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
-  public TileFluidCollect() {
-    super(TileRegistry.COLLECTOR_FLUID);
+  public TileFluidCollect(BlockPos pos, BlockState state) {
+    super(TileRegistry.COLLECTOR_FLUID,pos,state );
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
@@ -167,12 +167,12 @@ public class TileFluidCollect extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     shapeIndex = tag.getInt("shapeIndex");
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

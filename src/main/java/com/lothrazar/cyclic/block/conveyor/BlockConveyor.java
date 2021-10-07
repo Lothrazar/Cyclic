@@ -208,7 +208,8 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
 
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    Item heldItem = player.getItemInHand(hand).getItem();
+    ItemStack heldStack = player.getItemInHand(hand);
+    Item heldItem = heldStack.getItem();
     if (heldItem instanceof DyeItem) {
       //
       DyeItem dye = (DyeItem) heldItem;
@@ -227,7 +228,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
         return InteractionResult.SUCCESS;
       }
     }
-    else if (heldItem.is(DataTags.WRENCH)) {
+    else if (heldStack.is(DataTags.WRENCH)) {
       SimpleImmutableEntry<ConveyorType, Direction> nextState = nextConnectedState(state.getValue(TYPE), state.getValue(BlockStateProperties.HORIZONTAL_FACING));
       boolean success = world.setBlockAndUpdate(pos, state.setValue(TYPE, nextState.getKey()).setValue(BlockStateProperties.HORIZONTAL_FACING, nextState.getValue()));
       if (success) {
@@ -284,13 +285,8 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileConveyor();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileConveyor(pos,state);
   }
 
   @Override

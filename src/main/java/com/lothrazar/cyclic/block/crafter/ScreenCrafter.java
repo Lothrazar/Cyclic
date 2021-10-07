@@ -56,7 +56,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
     energy.visible = TileCrafter.POWERCONF.get() > 0;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileCrafter.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileCrafter.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

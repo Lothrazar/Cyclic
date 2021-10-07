@@ -1,10 +1,12 @@
 package com.lothrazar.cyclic.gui;
 
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
@@ -36,11 +38,16 @@ public class EnergyBar {
     }
     int relX;
     int relY;
-    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_CTR);
+//    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_CTR);
+
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, TextureRegistry.ENERGY_CTR);
     relX = guiLeft + x;
     relY = guiTop + y;
     Screen.blit(ms, relX, relY, 0, 0, width, getHeight(), width, getHeight());
-    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_INNER);
+//    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_INNER);
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, TextureRegistry.ENERGY_INNER);
     relX = relX + 1;
     relY = relY + 1;
     float pct = Math.min(energ / capacity, 1.0F);

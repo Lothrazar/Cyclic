@@ -68,10 +68,6 @@ public class BlockFanSlab extends BlockBase implements SimpleWaterloggedBlock {
     this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false).setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(POWERED, Boolean.valueOf(false)).setValue(FACE, AttachFace.WALL));
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
   @SuppressWarnings("deprecation")
@@ -132,8 +128,8 @@ public class BlockFanSlab extends BlockBase implements SimpleWaterloggedBlock {
   }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileFanSlab();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileFanSlab(pos,state);
   }
 
   @Override

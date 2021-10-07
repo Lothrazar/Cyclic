@@ -79,12 +79,7 @@ public class BlockDisenchant extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileDisenchant();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileDisenchant(pos,state);
   }
 }

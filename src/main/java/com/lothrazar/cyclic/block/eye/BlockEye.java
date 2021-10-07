@@ -17,14 +17,10 @@ public class BlockEye extends BlockBase {
     super(properties.strength(1.8F));
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileEye();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileEye(pos,state);
   }
 
   @Override

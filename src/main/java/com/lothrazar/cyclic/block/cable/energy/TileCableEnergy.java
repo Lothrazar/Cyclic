@@ -28,8 +28,8 @@ public class TileCableEnergy extends TileEntityBase  {
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
 
-  public TileCableEnergy() {
-    super(TileRegistry.energy_pipeTile);
+  public TileCableEnergy(BlockPos pos, BlockState state) {
+    super(TileRegistry.energy_pipeTile,pos,state );
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }
@@ -105,12 +105,12 @@ public class TileCableEnergy extends TileEntityBase  {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, tag.getInt(f.getSerializedName() + "_incenergy"));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

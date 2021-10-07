@@ -37,13 +37,8 @@ public class BlockWeather extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileWeather();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileWeather(pos,state);
   }
 
   @Override

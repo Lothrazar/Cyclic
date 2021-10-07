@@ -30,26 +30,26 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     energy.visible = TileDropper.POWERCONF.get() > 0;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileDropper.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileDropper.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     y += 20;
-    btnRender = addButton(new ButtonMachineField(x, y, TileDropper.Fields.RENDER.ordinal(),
+    btnRender = addWidget(new ButtonMachineField(x, y, TileDropper.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x = leftPos + 32;
     y = topPos + 18;
     w = 120;
     h = 20;
     int f = TileDropper.Fields.DROPCOUNT.ordinal();
-    GuiSliderInteger dropcount = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger dropcount = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
     dropcount.setTooltip("cyclic.dropper.count");
     y += h + 1;
     f = TileDropper.Fields.OFFSET.ordinal();
-    GuiSliderInteger offsetsli = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger offsetsli = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 16, menu.tile.getField(f)));
     offsetsli.setTooltip("cyclic.dropper.offset");
     y += h + 1;
     f = TileDropper.Fields.DELAY.ordinal();
-    GuiSliderInteger delaysli = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger delaysli = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 500, menu.tile.getField(f)));
     delaysli.setTooltip("cyclic.dropper.delay");
     //    y += 22;

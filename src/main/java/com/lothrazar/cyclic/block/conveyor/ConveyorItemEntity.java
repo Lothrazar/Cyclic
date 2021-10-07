@@ -55,7 +55,7 @@ public class ConveyorItemEntity extends ItemEntity {
     ItemEntity e = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), this.getItem());
     this.level.addFreshEntity(e);
     this.setItem(ItemStack.EMPTY);
-    this.remove();
+    this.remove(RemovalReason.DISCARDED);
   }
 
   @Override

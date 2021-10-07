@@ -24,13 +24,8 @@ public class UnbreakablePoweredBlock extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new UnbreakablePoweredTile();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new UnbreakablePoweredTile(pos,state);
   }
 
   public static void setBreakable(Level world, BlockPos pos, boolean isBreakable) {

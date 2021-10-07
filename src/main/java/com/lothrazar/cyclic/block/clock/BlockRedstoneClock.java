@@ -42,13 +42,8 @@ public class BlockRedstoneClock extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileRedstoneClock();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileRedstoneClock(pos,state);
   }
 
   @Override

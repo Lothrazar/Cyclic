@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.base;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
@@ -40,7 +41,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class BlockBase extends Block {
+public class BlockBase extends BaseEntityBlock {
 
   public static final BooleanProperty LIT = BooleanProperty.create("lit");
   private boolean hasGui = false;
@@ -59,6 +60,10 @@ public class BlockBase extends Block {
   protected BlockBase setHasFluidInteract() {
     this.hasFluidInteract = true;
     return this;
+  }
+  @Override
+  public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+    return null;
   }
 
   @SuppressWarnings("deprecation")

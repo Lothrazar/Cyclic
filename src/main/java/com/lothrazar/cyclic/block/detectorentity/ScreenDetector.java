@@ -29,17 +29,17 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 18;
-    btnRender = addButton(new ButtonMachineField(x, y, TileDetector.Fields.RENDER.ordinal(),
+    btnRender = addWidget(new ButtonMachineField(x, y, TileDetector.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x += 22;
     int w = 50, h = 20;
-    btnEntity = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {
+    btnEntity = addWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetector.Fields.ENTITYTYPE.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     x += 58;
-    btnComp = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {
+    btnComp = addWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetector.Fields.GREATERTHAN.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
@@ -50,22 +50,22 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     x = leftPos + 8;
     y += h + 1;
     int f = TileDetector.Fields.RANGEX.ordinal();
-    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger red = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
     red.setTooltip("cyclic.detector.rangex");
     y += h + 1;
     f = TileDetector.Fields.RANGEY.ordinal();
-    GuiSliderInteger rangey = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger rangey = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
     rangey.setTooltip("cyclic.detector.rangey");
     y += h + 1;
     f = TileDetector.Fields.RANGEZ.ordinal();
-    GuiSliderInteger rangez = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger rangez = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
     rangez.setTooltip("cyclic.detector.rangez");
     y += h + 1;
     f = TileDetector.Fields.LIMIT.ordinal();
-    GuiSliderInteger limit = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger limit = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
     limit.setTooltip("cyclic.detector.limit");
   }

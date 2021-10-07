@@ -31,7 +31,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addWidget(new ButtonMachineField(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     energy.visible = TileDisenchant.POWERCONF.get() > 0;
   }
 
